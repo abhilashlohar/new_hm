@@ -17892,7 +17892,7 @@ if($this->RequestHandler->isAjax()){
 	}else{
 		$this->layout='session';
 	}
-$this->check_user_privilages();
+//$this->check_user_privilages();
 $this->ath();
 $s_society_id=$this->Session->read('society_id');
 
@@ -22383,7 +22383,7 @@ $this->layout='session';
 }
 $this->ath();
 $s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('user_id');	
 
 $this->loadmodel('flat');
@@ -24290,51 +24290,27 @@ foreach($myArray as $child)
 			}
 		}
 
-		/////////// insert code user table ///////////////////////
 		
-		$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email' => $email, 'password' => @$random, 'mobile' => $mobile,  'society_id' => $s_society_id, 'tenant' => $tenant, 'wing' => $wing, 'flat' => $flat, 'date' => $date, 'time' => $time,"profile_pic"=>'blank.jpg','sex'=>'','role_id'=>$role_id,'default_role_id'=>$default_role_id,'signup_random'=>$random,'deactive'=>0,'login_id'=>$log_i,'s_default'=>1,'profile_status'=>1,'private'=>array('mobile','email')));
-	      ///////////  code end insert //////////////////////////////////
-         // $this->loadmodel('flat');
-         // $this->flat->updateAll(array("noc_ch_tp" =>$residing),array("flat_id" =>$flat));
+		
+$this->user->saveAll(array('user_id' => $i,'user_name' => $name,'email' => $email, 'password' => @$random, 'mobile' => $mobile,'society_id' => $s_society_id,'date' => $date, 'time' => $time,'signup_random'=>$random));
+ 
 
-			$user_flat_id=$this->autoincrement('user_flat','user_flat_id');
-			$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$s_society_id,'flat_id'=>$flat,'status'=>$tenant,'active'=>0,'exit_date'=>'','time'=>''));
+$user_flat_id=$this->autoincrement('user_flat','user_flat_id');
+$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$s_society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no'));
 		 
-	      ///////////////  Insert code ledger Sub Accounts //////////////////////
-			if($tenant==1){
-			$this->loadmodel('ledger_sub_account');
-			$j=$this->autoincrement('ledger_sub_account','auto_id');
-			$this->ledger_sub_account->saveAll(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$name,'society_id' => $s_society_id,'user_id'=>$i,'deactive'=>0,'flat_id'=>$flat));
-			}
-		/////////////  End code ledger sub accounts //////////////////////////
+	     
+if($tenant==1){
+$this->loadmodel('ledger_sub_account');
+$j=$this->autoincrement('ledger_sub_account','auto_id');
+$this->ledger_sub_account->saveAll(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$name,'society_id' => $s_society_id,'user_id'=>$i,'deactive'=>0,'flat_id'=>$flat));
+}
+	
 		$special="'";
 		if(!empty($email) && !empty($mobile))
 		{
 		$login_user=$email;	
 
-		/* $message_web="<div>
-		<img src='$ip".$this->webroot."/as/hm/hm-logo.png'/><span  style='float:right; margin:2.2%;'>
-		<span class='test' style='margin-left:5px;'><a href='https://www.facebook.com/HousingMatters.co.in' target='_blank' ><img src='$ip".$this->webroot."/as/hm/fb.png'/></a></span>
-		<a href='#' target='_blank'><img src='$ip".$this->webroot."/as/hm/tw.png'/></a><a href'#'><img src='$ip".$this->webroot."/as/hm/ln.png'/ class='test' style='margin-left:5px;'></a></span>
-		</br><p>Dear $name,</p>
-		<p>'We at $society_name use HousingMatters - a dynamic web portal to interact with all owners/residents/staff for transparent & smart management of housing society affairs.</p>
-		<p>As you are an owner/resident/staff of $society_name, we have added your email address in HousingMatters portal.</p>
-		<p>Here are some of the important features related to our portal on HousingMatters:</p>
-		<p>You can log & track complaints, start new discussions, check your dues, post classifieds and many more in the portal.</p>
-		<p>You can receive important SMS & emails from your committee.</p>
-		<br/>				
-		<p><b>
-		<a href='$ip".$this->webroot."/hms/send_sms_for_verify_mobile?q=$random'>Click here</a> for one time verification of your mobile number and Login into HousingMatters  for making life simpler for all your housing matters!</b></p>
-		<br/>
-		<p>Pls add www.housingmatters.co.in in your favorite bookmarks for future use.</p>
-		<p>Regards,</p>	
-		<p>Administrator of $society_name</p><br/>
-		www.housingmatters.co.in
-		</div >
-		</div>"; */
-		
-		
-		   $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+		$message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
           <tbody>
 			<tr>
                 <td>

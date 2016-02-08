@@ -4593,6 +4593,7 @@ if ($this->request->is('post'))
 	));
 	$result_user=$this->user->find('all',array('conditions'=>$conditions));
 	$user_id=$result_user[0]["user"]["user_id"];
+	$user_id=$result_user[0]["user"]["user_id"];
 	
 	$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));
 	$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
@@ -10408,7 +10409,11 @@ $this->set('result_user_temp',$result);
 
 function new_society_enrollment()
 {
-$this->layout='session';
+if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+}else{
+	$this->layout='session';
+}
 $this->ath();
 if ($this->request->is('POST')) 
 {

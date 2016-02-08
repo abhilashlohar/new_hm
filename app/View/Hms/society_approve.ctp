@@ -1,45 +1,5 @@
-<!--<script type="text/javascript">
-   var xobj;
-   //modern browers
-   if(window.XMLHttpRequest)
-    {
-	  xobj=new XMLHttpRequest();
-	  }
-	  //for ie
-	  else if(window.ActiveXObject)
-	   {
-	    xobj=new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		else
-		{
-		  alert("Your broweser doesnot support ajax");
-		  }
-		  function approve_reg_mail(c1,c2)
-		  {		
-		    if(xobj)
-			{
-			
-				document.getElementById("apz" + c2).innerHTML=xobj.innerHTML='<div align="center"><h6>loding...</h6></div>';
-				var query="?con1=" + c1 ;
-				
-				xobj.open("GET","society_approve_mail" +query,true);
-				xobj.onreadystatechange=function()
-				{
-				if(xobj.readyState==4 && xobj.status==200)
-				{	
-			
-				document.getElementById("apz" + c2).innerHTML=xobj.responseText;
-				}
-				}
-			}
-			 xobj.send(null);
-		  } 
-</script>-->
-
 <div class="container-fluid" style="padding:0px; ">
-				<!-- BEGIN PAGE HEADER-->
-				
-               
+			
                
                        
                 

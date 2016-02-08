@@ -697,6 +697,11 @@ $(document).ready(function() {
 					<i class="icon-home"></i> Dashboard
 					</a>					
 				</li>
+				<li>
+					<a href="<?php echo $this->webroot; ?>Hms/new_society_enrollment" rel='tab'>
+					<i class="icon-home"></i> new_society_enrollment
+					</a>					
+				</li>
 			</ul>
 			<!-- END SIDEBAR MENU -->
 		</div>

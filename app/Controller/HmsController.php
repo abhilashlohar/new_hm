@@ -19824,7 +19824,7 @@ $this->ath();
 	
 	
 	
-$s_society_id=$this->Session->read('hm_society_id');
+$s_society_id=$this->Session->read('hm_society_id'); 
 if(isset($this->request->data['sub'])) 
 {
 echo $wing_name=htmlentities($this->request->data['wing_name']);

@@ -9386,7 +9386,7 @@ if($this->RequestHandler->isAjax()){
 	}
 $this->ath();
 //$this->check_user_privilages();
-$society_id=(int)$this->Session->read('society_id');
+$society_id=(int)$this->Session->read('hm_society_id');
 $user_id=(int)$this->Session->read('user_id');
 $this->seen_notification(100,$user_id);
 

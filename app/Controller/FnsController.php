@@ -23,7 +23,6 @@ function user_info_via_user_id($user_id){
 }
 
 function hms_sms_ip(){
-	
 	$this->loadmodel('assistant');
 	$conditions=array('auto_id'=>2);
 	$assistant_info=$this->assistant->find('all',array('conditions'=>$conditions));
@@ -35,6 +34,17 @@ function hms_sms_ip(){
 		
 		return $sms=(object)array("working_key"=>$w,"sms_sender"=>$s,"sms_allow"=>$alow);
 	}
+}
+
+function hms_email_ip(){
+	$this->loadmodel('assistant');
+	$conditions=array('auto_id'=>2);
+	$assistant_info=$this->assistant->find('all',array('conditions'=>$conditions));
+	foreach($assistant_info as $data)
+	{
+		return @$data['assistant']['email_ip'];
+	}
+
 }
 
 }

@@ -702,6 +702,11 @@ $(document).ready(function() {
 					<i class="icon-home"></i> new_society_enrollment
 					</a>					
 				</li>
+				<li>
+					<a href="<?php echo $this->webroot; ?>Hms/master_sm_wing" rel='tab'>
+					<i class="icon-home"></i> master_sm_wing
+					</a>					
+				</li>
 			</ul>
 			<!-- END SIDEBAR MENU -->
 		</div>

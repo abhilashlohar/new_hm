@@ -4796,8 +4796,9 @@ $this->set('user_id', $user);
 $this->loadmodel('society');
 $this->set('result', $this->society->find('all'));
 		if($this->request->is('post')) 
-		{
+		{ 
 			$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
+			
 		$society_id=(int)$this->request->data['society'];
 		$tenant=$this->request->data['tenant'];
 		if($tenant=="yes")

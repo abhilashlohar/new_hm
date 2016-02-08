@@ -986,7 +986,7 @@ $this->redirect(array('action' => 'index'));
 
 function beforeFilter()
 {
-//Configure::write('debug', 0);
+Configure::write('debug', 0);
 }
 
 
@@ -10233,7 +10233,7 @@ function send_sms_for_verify_mobile(){
 	foreach($result_check as $data9)
 	{
 		$user_name=$data9['user']['user_name'];
-		$active=$data9['user']['active'];
+		$active=@$data9['user']['active'];
 		$one_time_sms=(int)@$data9['user']["one_time_sms"];
 	}
 	$n= sizeof($result_check);
@@ -17894,7 +17894,7 @@ if($this->RequestHandler->isAjax()){
 	}
 //$this->check_user_privilages();
 $this->ath();
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 
 $this->loadmodel('wing');
 $conditions=array("society_id" => $s_society_id);
@@ -18124,7 +18124,7 @@ function user_enrollment_ajax_add_row()
 $this->layout="blank";
 $h=(int)$this->request->query('q');
 $this->set('h',$h);
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 
 $this->loadmodel('wing');
 $conditions=array("society_id" => $s_society_id);
@@ -19855,7 +19855,7 @@ $this->layout='blank';
 $this->layout='session';
 }
 $this->ath();
-$s_society_id= (int)$this->Session->read('society_id');
+$s_society_id= (int)$this->Session->read('hm_society_id');
 $nnn = 0;
 
 if(isset($this->request->data['sssbbb']))
@@ -22206,7 +22206,7 @@ function master_sm_flat_add_row()
 {
 $this->layout='blank';
 $s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('user_id');	
 
 $t = $this->request->query('con');
@@ -24043,7 +24043,7 @@ function check_email_already_exist()
 $this->layout='blank';
 $q=$this->request->query('q'); 
 
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 
 $res_society=$this->society_name($s_society_id);
 foreach($res_society as $data)
@@ -24430,25 +24430,7 @@ $this->ledger_sub_account->saveAll(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$
 		{
 			
 			$login_user=$email;	
-			/* $message_web="<div>
-			<img src='$ip".$this->webroot."/as/hm/hm-logo.png'/><span  style='float:right; margin:2.2%;'>
-			<span class='test' style='margin-left:5px;'><a href='https://www.facebook.com/HousingMatters.co.in' target='_blank' ><img src='$ip".$this->webroot."/as/hm/fb.png'/></a></span>
-			<a href='#' target='_blank'><img src='$ip".$this->webroot."/as/hm/tw.png'/></a><a href'#'><img src='$ip".$this->webroot."/as/hm/ln.png'/ class='test' style='margin-left:5px;'></a></span>
-			</br><p>Dear $name,</p>
-			<p>'We at $society_name use HousingMatters - a dynamic web portal to interact with all owners/residents/staff for transparent & smart management of housing society affairs.</p>
-			<p>As you are an owner/resident/staff of $society_name, we have added your email address in HousingMatters portal.</p>
-			<p>Here are some of the important features related to our portal on HousingMatters:</p>
-			<p>You can log & track complaints, start new discussions, check your dues, post classifieds and many more in the portal.</p>
-			<p>You can receive important SMS & emails from your committee.</p>
-			<br/>				
-			<p><b><a href='$ip".$this->webroot."/hms/set_new_password?q=$random'>Click here</a> for one time verification of your email and Login into HousingMatters  for making life simpler for all your housing matters!</b></p>
-			<br/>
-			<p>Pls add www.housingmatters.co.in in your favorite bookmarks for future use.</p>
-			<p>Regards,</p>	
-			<p>Administrator of $society_name</p><br>
-			www.housingmatters.co.in
-			</div >
-			</div>"; */
+		
 			
 			
 			
@@ -24601,12 +24583,8 @@ $this->ledger_sub_account->saveAll(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$
 
 			if(empty($email) && empty($mobile))
 			{
-			}else{
-				////////////////////  insert login table  ///////////////////
-				$this->loadmodel('login');
-				$this->login->saveAll(array('login_id'=>$log_i,'user_name'=>$login_user,'password'=>$random,'signup_random'=>$random,'mobile'=>$mobile));
-			}
-			//////////////////////////////////////////////////////////////////
+			}else{}
+			
 		
 unset($role_id);
 }
@@ -24645,7 +24623,7 @@ $q = html_entity_decode($q);
 $wing = $this->request->query('b');
 $wing = html_entity_decode($wing);
 
-$s_society_id = (int)$this->Session->read('society_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id  = (int)$this->Session->read('user_id');
 
 $wing = json_decode($wing, true);
@@ -24768,7 +24746,7 @@ $this->ledger_sub_account->saveAll($multipleRowData);
 //////////////////////////////// Start Master Sm Flat Vali //////////////////////////////////////////////////
 function master_sm_flat_vali()
 {
-$s_society_id = (int)$this->Session->read('society_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id  = (int)$this->Session->read('user_id');
 $s_role_id = (int)$this->Session->read('role_id');
 

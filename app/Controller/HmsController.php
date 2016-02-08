@@ -19799,7 +19799,7 @@ function master_sm_wing_ajax()
 {
 $this->layout='blank';
 
-$s_society_id=(int)$this->Session->read('society_id');
+$s_society_id=(int)$this->Session->read('hm_society_id');
 $wing=$this->request->query['wing_name'];
 $this->loadmodel('wing');
 $conditions=array("wing_name" => $wing,'society_id'=>$s_society_id);
@@ -25139,7 +25139,7 @@ function wing_json()
 $this->layout=null;
 $post_data=$this->request->data;
 $this->ath();
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('user_id');
 $date=date('d-m-Y');
 $time = date(' h:i a', time());

@@ -9598,8 +9598,7 @@ if($multiple_society==0)
 {
 	$login_id=$this->autoincrement('login','login_id');
 	$s_default=1;
-	$this->loadmodel('login');
-	$this->login->save(array('login_id'=>$login_id,'user_name'=>$email,'mobile'=>$mobile,'signup_random'=>$random,'password'=>$random));
+	
 	
 }
 if($multiple_society==1)
@@ -9608,13 +9607,13 @@ if($multiple_society==1)
 }
 
 
-$this->user->save(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'password' => $password, 'mobile' => $mobile,  'society_id' => $society_id, 'tenant' => $tenant, 'wing' => $wing, 'flat' => $flat,'date' => $date, 'time' => $time,"profile_pic"=>'blank.jpg','sex'=>'','role_id'=>$role_id,'default_role_id'=>$default_role_id,'signup_random'=>$random,'deactive'=>0,'login_id'=>$login_id,'profile_status'=>1,'s_default'=>$s_default,'private'=>array('mobile','email')));
+$this->user->save(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'password' => $password, 'mobile' => $mobile,  'society_id' => $society_id, 'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes'));
 
 //$this->loadmodel('flat');
 //$this->flat->updateAll(array("noc_ch_tp" =>$residing),array("flat_id" =>$flat));	
 
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
-$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'flat_id'=>$flat,'status'=>$tenant,'active'=>0,'exit_date'=>'','time'=>''));
+$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no'));
 
 
 //////////////// end insert code  //////////////////////////

@@ -10399,7 +10399,7 @@ function society_approve()
 
 $this->layout='session';
 $this->ath();
-$this->check_housingmatters_privilages();
+//$this->check_housingmatters_privilages();
 $society_id=(int)$this->Session->read('society_id');
 $user_id=(int)$this->Session->read('user_id');
 $this->loadmodel('user_temp');

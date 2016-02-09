@@ -24086,6 +24086,16 @@ foreach($myArray as $child){
 			}
 	}
 	
+	if($child[5] == 1)
+	{
+	$tenant2="yes";	
+	}
+	else
+	{
+	$tenant2="no";	
+	}
+	
+	
 	if(!empty($child[2])) {
 		
 		$this->loadmodel('user_flat');

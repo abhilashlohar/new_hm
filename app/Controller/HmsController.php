@@ -968,7 +968,7 @@ $this->redirect(array('action' => 'index'));
 
 function beforeFilter()
 {
-Configure::write('debug', 0);
+//Configure::write('debug', 0);
 }
 
 
@@ -10535,20 +10535,7 @@ $this->role->saveAll(array("auto_id" => $k, "role_name" => $d, 'role_id'=>$p, "s
 //////////////// Role to assign end   //////////////////////////
 
 
-?>
-<!----alert-------------->
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body" style="font-size:16px;">
-New society registered successfully.
-</div> 
-<div class="modal-footer">
-<a href="new_society_enrollment" class="btn green">OK</a>
-</div>
-</div>
-<!----alert-------------->
-<?php
-
+$this->redirect(array('action' => 'assign_default_modules_to_society'));
 }
 }
 
@@ -10927,7 +10914,11 @@ return $result_role_privileges=$this->role_privilege->find('count',array('condit
 
 function hm_assign_module()
 {
-$this->layout='session';
+if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
 $da_society_id=(int)$this->request->query('q');
 if(!empty($da_society_id))
 {	
@@ -25847,6 +25838,30 @@ $wing_flat= $this->requestAction(array('controller' => 'hms', 'action' => 'wing_
 	
 function menus_as_per_user_rights(){
 	$this->layout=null;
+}
+
+function assign_default_modules_to_society($society_id=null){
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	
+	
+	$this->loadmodel('hm_modules_assign');
+	$conditions=array("society_id" => $society_id);
+	$this->hm_modules_assign->deleteAll($conditions);
+		
+	$this->loadmodel('main_module');
+	$conditions=array('default_assign'=>"yes");
+	$main_modules=$this->main_module->find('all',array('conditions'=>$conditions));
+	foreach($main_modules as $module_data){
+		$module_id=$module_data["main_module"]["auto_id"];
+		
+		$this->loadmodel('hm_modules_assign');
+		$auto_id=$this->autoincrement('hm_modules_assign','auto_id');
+		$this->hm_modules_assign->saveAll(array("auto_id" => $auto_id, "module_id" => $module_id , "society_id" => $society_id));
+	}
 }
 	
 	

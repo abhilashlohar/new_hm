@@ -340,10 +340,10 @@ $(document).ready(function() {
 			},"slow");
 			 $('#submit_success').hide();
 			});
-		
 		window.history.pushState({path:pageurl},'',pageurl);
-		
 	});
+	
+	
 	
 	
 	
@@ -366,11 +366,6 @@ $(document).ready(function() {
 		$('.page-content').load(pageurl+'?rel=tab');
 		
 	};
-	
-	
-		
-
-		
 
 });
 </script>
@@ -719,7 +714,11 @@ $(document).ready(function() {
 					<a href="<?php echo $this->webroot; ?>Hms/society_approve" rel='tab'>
 					<i class="icon-home"></i> society_approve
 					</a>	
-					
+				</li>
+				<li>
+					<a href="<?php echo $this->webroot; ?>Hms/hm_assign_module" rel='tab'>
+					<i class="icon-home"></i> hm_assign_module
+					</a>	
 				</li>
 			</ul>
 			<!-- END SIDEBAR MENU -->
@@ -802,6 +801,28 @@ $(document).ready(function() {
 	}).done(function(response) {
 		alert(response);
 	});
+	
+	
+		function change_page_automatically(pageurl){
+			$(document).ready(function() { 
+				alert(pageurl);
+				$("#loading").show();
+				$.ajax({
+				url: pageurl,
+				}).done(function(response) {
+				
+				$("#loading_ajax").html('');
+				
+				$(".page-content").html(response);
+				$("#loading").hide();
+				$("html, body").animate({
+					scrollTop:0
+				},"slow");
+				 $('#submit_success').hide();
+				});
+			});
+		}
+	
 	</script>
 </body>
 </html>

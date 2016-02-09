@@ -59,7 +59,7 @@ $("#fix<?php echo $id_current_page; ?>").addClass("red");
 	<tr id="tr1">
 		<td width="15%"><input type="text" class="span12 m-wrap textbox" name="name" id="name1" style="font-size:16px;  background-color: white !important;" placeholder="Name*" value=""></td>
 		<td width="10%"><?php
-		pr($result_wing);
+		
 		?>
 		<select class="span12 m-wrap wing" id="wing2" name="wing" inc_id="1">
 		<option value="">-Wing-</option>

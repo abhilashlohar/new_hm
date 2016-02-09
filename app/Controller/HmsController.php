@@ -9489,6 +9489,10 @@ $tenant=(int)$collection['user_temp']['tenant'];
   @$multiple_society=$collection['user_temp']['multiple_society'];
 }
 ///////////end fetch data ////////////////////
+if($tenant == 1)
+{
+$type = "yes";	
+}else { $type = "no";  }
 
 ///// flat already exit checked code start ////////////////
 
@@ -9566,7 +9570,7 @@ $this->user->save(array('user_id' => $i, 'user_name' => $user_name,'email' => $e
 //$this->flat->updateAll(array("noc_ch_tp" =>$residing),array("flat_id" =>$flat));	
 
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
-$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no'));
+$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no','owner'=>$type));
 
 
 //////////////// end insert code  //////////////////////////

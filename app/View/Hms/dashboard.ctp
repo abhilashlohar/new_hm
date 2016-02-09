@@ -158,7 +158,7 @@ function substrwords($text, $maxchar, $end='...') {
 }
 ?>
 
-
+<a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share">Share via Whatsapp</a>
 <div class="row-fluid" style="background-color:#fff;">
 <!---------left section start------------------>
 	<div class="span9" >

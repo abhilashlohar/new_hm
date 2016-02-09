@@ -158,7 +158,7 @@ function substrwords($text, $maxchar, $end='...') {
 }
 ?>
 
-<a href="intent://send/0123456789#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end">Share via Whatsapp</a>
+<a href="intent://send/8233199728#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end">Share via Whatsapp</a>
 <div class="row-fluid" style="background-color:#fff;">
 <!---------left section start------------------>
 	<div class="span9" >

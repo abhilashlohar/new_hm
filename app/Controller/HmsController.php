@@ -24090,7 +24090,7 @@ foreach($myArray as $child){
 	if(!empty($child[2])) {
 		
 		$this->loadmodel('user_flat');
-		$conditions=array("flat_id" => (int)$child[2]);
+		$conditions=array("flat" => (int)$child[2]);
 		$result4 = $this->user_flat->find('all',array('conditions'=>$conditions));
 		
 		

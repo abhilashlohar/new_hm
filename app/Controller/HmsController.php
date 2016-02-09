@@ -24093,6 +24093,29 @@ foreach($myArray as $child){
 		$conditions=array("flat" => (int)$child[2]);
 		$result4 = $this->user_flat->find('all',array('conditions'=>$conditions));
 		
+		$this->loadmodel('flat');
+		$conditions=array("flat_id" => (int)$child[2]);
+		$result66 = $this->flat->find('all',array('conditions'=>$conditions));
+		foreach($result66 as $dataa)
+		{
+		$flat_type = (int)$dataa['flat']['noc_ch_tp'];	
+		}
+		
+		if($flat_type == 1)
+		{
+			if($tenant2 == 'no')
+			{
+			 $report[]=array('tr'=>$c,'td'=>3, 'text' => 'Flat is self Occupied');	
+			}
+			
+		}
+		
+		
+		
+		
+		
+		
+		
 		
 		$n4 = sizeof($result4);
 		if($n4==1){

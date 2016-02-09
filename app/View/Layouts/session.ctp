@@ -693,6 +693,9 @@ $(document).ready(function() {
 			<!-- BEGIN SIDEBAR MENU -->
 			<ul>
 				<li>
+				<div align="center"><i style="font-size: 26px; color: rgba(207, 207, 207, 0.63);" class="fa fa-circle-o-notch fa-spin fa-3x fa-fw margin-bottom"></i></div>
+				</li>
+				<li>
 					<a href="<?php echo $this->webroot; ?>Hms/dashboard" rel='tab'>
 					<i class="icon-home"></i> Dashboard
 					</a>					
@@ -715,7 +718,8 @@ $(document).ready(function() {
 				<li>
 					<a href="<?php echo $this->webroot; ?>Hms/society_approve" rel='tab'>
 					<i class="icon-home"></i> society_approve
-					</a>					
+					</a>	
+					
 				</li>
 			</ul>
 			<!-- END SIDEBAR MENU -->
@@ -792,5 +796,12 @@ $(document).ready(function() {
 		</div>
 	</div>
 	<!-----end---->
+	<script>
+	$.ajax({
+		url: "<?php echo Router::url(array('controller' => 'Hms', 'action' =>'menus_as_per_user_rights'), true); ?>",
+	}).done(function(response) {
+		alert(response);
+	});
+	</script>
 </body>
 </html>

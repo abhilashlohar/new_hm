@@ -10787,7 +10787,7 @@ if($this->RequestHandler->isAjax()){
 	}
 $this->ath();
 $this->check_user_privilages();
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 
 //$role_id=$this->request->query('con');
 
@@ -25825,9 +25825,18 @@ $wing_flat= $this->requestAction(array('controller' => 'hms', 'action' => 'wing_
 	} }
 	?>
 </select>
-<?php	
+<?php
 }
+
+
+
 ////////////////////////// End Resident drop down ////////////////////////////////////	
+	
+	
+function menus_as_per_user_rights(){
+	$this->layout=null;
+}
+	
 	
 }
 ?>

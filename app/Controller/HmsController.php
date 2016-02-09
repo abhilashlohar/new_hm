@@ -24097,9 +24097,9 @@ foreach($myArray as $child){
 		$n4 = sizeof($result4);
 		if($n4==1){
 			
-			$tenant=$result4[0]['user_flat']['status'];
-			if($tenant==1){
-				if($tenant==(int)$child[5]){
+			$tenant=$result4[0]['user_flat']['owner'];
+			if($tenant=='yes'){
+				if($tenant==$tenant2){
 					
 				 $report[]=array('tr'=>$c,'td'=>3, 'text' => 'already exist owner');	
 					
@@ -24108,7 +24108,7 @@ foreach($myArray as $child){
 				
 			}else{
 				
-				if($tenant==(int)$child[5]){
+				if($tenant==$tenant2){
 					
 				 $report[]=array('tr'=>$c,'td'=>3, 'text' => 'already exist tenant');	
 					

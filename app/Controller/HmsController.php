@@ -25926,6 +25926,19 @@ function assign_default_modules_to_society($society_id=null){
 		$this->hm_modules_assign->saveAll(array("auto_id" => $auto_id, "module_id" => $module_id , "society_id" => $society_id));
 	}
 }
+
+function update_default_package(){
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	$this->ath();
+	$this->loadmodel('main_module');
+	$order=array('main_module.module_name'=>'ASC');
+	$main_modules=$this->main_module->find('all', array('order' => $order));
+	$this->set("main_modules",$main_modules);
+}
 	
 	
 }

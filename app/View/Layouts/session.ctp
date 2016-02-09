@@ -720,6 +720,11 @@ $(document).ready(function() {
 					<i class="icon-home"></i> hm_assign_module
 					</a>	
 				</li>
+				<li>
+					<a href="<?php echo $this->webroot; ?>Hms/update_default_package" rel='tab'>
+					<i class="icon-home"></i> default package
+					</a>	
+				</li>
 			</ul>
 			<!-- END SIDEBAR MENU -->
 		</div>

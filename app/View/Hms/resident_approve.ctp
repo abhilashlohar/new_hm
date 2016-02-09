@@ -29,7 +29,6 @@
 			  if(xobj.readyState==4 && xobj.status==200)
 			   {	 
 			   document.getElementById("apz" + c2).innerHTML=xobj.responseText;
-			   
 			   }
 			  }
 			  

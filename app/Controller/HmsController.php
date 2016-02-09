@@ -5417,46 +5417,11 @@ $this->layout='blank_signup';
 //$flat=(int)$this->request->query['flat'];
 $society=(int)$this->request->data['society'];
 $flat=(int)$this->request->data['flat'];
-$tenant_fetch=(int)$this->request->data['tenant'];
+$tenant_fetch=$this->request->data['tenant'];
 $this->loadmodel('user_flat');
 $conditions=array("flat" => $flat,'society_id'=>$society);
 $result4 = $this->user_flat->find('all',array('conditions'=>$conditions));
 $n4 = sizeof($result4);
-if($tenant_fetch == 1)
-{
-$tenant_fetch2 = "yes";	
-}
-else
-{
-$tenant_fetch2 = "no";	
-}
-
-$this->loadmodel('flat');
-$conditions=array("flat_id" => $flat);
-$result66 = $this->flat->find('all',array('conditions'=>$conditions));
-foreach($result66 as $dataa)
-{
-$flat_type = (int)$dataa['flat']['noc_ch_tp'];	
-}
-		
-		if($flat_type == 1)
-		{
-			if($tenant_fetch2 == 'no')
-			{
-			 echo'false';	
-			}
-			
-		}
-
-
-
-
-
-
-
-
-
-
 
 if($n4==0){
 	
@@ -5469,7 +5434,7 @@ if($n4==0){
 		$database_tenat=$data['user_flat']['owner'];
 		if($database_tenat=='yes'){
 			
-			if($tenant_fetch2==$database_tenat){
+			if($tenant_fetch==$database_tenat){
 				
 				echo'false';
 				
@@ -5501,17 +5466,23 @@ if($n4==0){
 	echo'false';
 	
 }
-	
+
+$this->loadmodel('flat');
+$conditions=array("flat_id" => $flat);
+$result66 = $this->flat->find('all',array('conditions'=>$conditions));
+foreach($result66 as $dataa)
+{
+$flat_type = (int)$dataa['flat']['noc_ch_tp'];	
+}
+if($flat_type == 1)
+{
+if($tenant_fetch == 'no')
+{
+echo'false';	
+}
+}
 
 
-
-/*$n4 = sizeof($result4);
-$e=$n4;
-if ($tenant_fetch==1) {
-echo "true";
-} else {
-echo "false";
-} */
 }
 
 

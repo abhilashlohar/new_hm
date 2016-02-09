@@ -25846,6 +25846,7 @@ function assign_default_modules_to_society($society_id=null){
 	}else{
 		$this->layout='session';
 	}
+	$this->ath();
 	
 	
 	$this->loadmodel('hm_modules_assign');

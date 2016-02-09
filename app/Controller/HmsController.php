@@ -17850,7 +17850,7 @@ if($this->RequestHandler->isAjax()){
 	}
 //$this->check_user_privilages();
 $this->ath();
-$s_society_id=$this->Session->read('hm_society_id');
+$s_society_id=(int)$this->Session->read('hm_society_id');
 
 $this->loadmodel('wing');
 $conditions=array("society_id" => $s_society_id);

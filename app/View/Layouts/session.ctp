@@ -707,6 +707,16 @@ $(document).ready(function() {
 					<i class="icon-home"></i> master_sm_wing
 					</a>					
 				</li>
+				<li>
+					<a href="<?php echo $this->webroot; ?>Hms/asisgn_module_to_role" rel='tab'>
+					<i class="icon-home"></i> asisgn_module_to_role
+					</a>					
+				</li>
+				<li>
+					<a href="<?php echo $this->webroot; ?>Hms/society_approve" rel='tab'>
+					<i class="icon-home"></i> society_approve
+					</a>					
+				</li>
 			</ul>
 			<!-- END SIDEBAR MENU -->
 		</div>

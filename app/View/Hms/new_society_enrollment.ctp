@@ -10,7 +10,7 @@ New Enrollment
 <li class="" ><a href="hm_new_user_enrollment" >New User Enrollment </a></li>
 </ul> 
 <div class="tab-content" style="min-height:300px;">
-<form id="contact-form" method="POST" class="" />
+<form id="contact-form" method="POST" >
 <center>
 <table>
 <tr>

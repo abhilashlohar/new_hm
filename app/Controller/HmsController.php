@@ -29,24 +29,6 @@ function check_charecter_name($name){
 	}
 	
 	
-	/*$dd=explode(' ',$name);
-	$first=$dd[0];
-	$r=strtr($first, array('.' => '', ',' => ''));
-	if(strlen($r)>2){
-		return $first=$dd[0];
-		
-	}else{
-		$z=strtr($dd[1], array('.' => '', ',' => ''));
-		if(strlen($z)>2){
-			return $first=$dd[1];
-			
-		}else{
-			return $first=$dd[2];
-		}
-		
-	}
-	
-	*/
 	
 	
 }
@@ -2592,36 +2574,7 @@ $this->layout='resricted';
 function check_user_privilages()
 {
 
-$s_society_id=$this->Session->read('society_id');
-$s_role_id=$this->Session->read('role_id');
 
-$page_namr_url=strtolower($this->request->params['action']); 
- 
-$this->loadmodel('page');
-$conditions=array("page_name" => $page_namr_url);
-$cursor=$this->page->find('all',array('conditions'=>$conditions));
-foreach ($cursor as $collection) 
-{					
-$module_id=$collection["page"]["module_id"];
-$sub_module_id=$collection["page"]["sub_module_id"];
-$this->set('id_current_page',$sub_module_id);
-}
-
-$this->loadmodel('role_privilege');
-$conditions=array("module_id" => @$module_id,"sub_module_id" => @$sub_module_id,"society_id" => $s_society_id,"role_id" => $s_role_id);
-$num=$this->role_privilege->find('count',array('conditions'=>$conditions));
-if($num==0)
-{
-$this->layout='resricted';
-?>
-<div style="min-height: 85%;margin-top: 60px; " align="center">
-<h2>Sorry<br/>You are not allowed to access this page.</h2>
-<img src="<?php echo $this->webroot ; ?>/as/hm/hm-logo.png" alt="logo" >
-<br/><h4>Back to <a href="<?php echo $this->webroot_path(); ?>Hms/dashboard">Dashboard</a></h4>
-</div>
-<?php
-
-}
 
 }
 
@@ -10396,7 +10349,11 @@ $this->user->updateAll(array('password'=>$random_otp),array('user.user_id'=>$id)
 function society_approve()
 {
 
-$this->layout='session';
+if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+}else{
+	$this->layout='session';
+}
 $this->ath();
 //$this->check_housingmatters_privilages();
 $society_id=(int)$this->Session->read('society_id');

@@ -24201,10 +24201,12 @@ foreach($myArray as $child)
 
 	if($tenant==1)
 	{
+		$type = "yes";
 	 $committee=(int)$child[6];
 	}
 	else
 	{
+		$type = "no";
 	 $committee=2;
 	}
 
@@ -24248,11 +24250,11 @@ foreach($myArray as $child)
 
 		
 		
-$this->user->saveAll(array('user_id' => $i,'user_name' => $name,'email' => $email, 'password' => @$random, 'mobile' => $mobile,'society_id' => $s_society_id,'date' => $date, 'time' => $time,'signup_random'=>$random));
+$this->user->saveAll(array('user_id' => $i,'user_name' => $name,'email' => $email, 'password' => @$random, 'mobile' => $mobile,'society_id' => $s_society_id,'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes'));
  
 
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
-$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$s_society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no'));
+$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$s_society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no','owner'=>$type));
 		 
 	     
 if($tenant==1){

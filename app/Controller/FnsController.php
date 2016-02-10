@@ -44,7 +44,12 @@ function hms_email_ip(){
 	{
 		return @$data['assistant']['email_ip'];
 	}
+}
 
+function sub_module_info_via_module_id($module_id){
+	$this->loadmodel('sub_module');
+	$conditions=array('module_id'=>$module_id);
+	return $this->sub_module->find('all',array('conditions'=>$conditions));
 }
 
 }

@@ -25896,6 +25896,25 @@ function assign_default_modules_to_society($society_id=null){
 		$auto_id=$this->autoincrement('hm_modules_assign','auto_id');
 		$this->hm_modules_assign->saveAll(array("auto_id" => $auto_id, "module_id" => $module_id , "society_id" => $society_id));
 	}
+	
+	$this->loadmodel('sub_module');
+	$sub_modules=$this->sub_module->find('all');
+	foreach($sub_modules as $sub_module_data){
+		$module_id=$sub_module_data["sub_module"]["module_id"];
+		$sub_module_id=$sub_module_data["sub_module"]["auto_id"];
+		$admin=@$sub_module_data["sub_module"]["admin"];
+		$resident=@$sub_module_data["sub_module"]["resident"];
+		if($admin=="yes"){
+			$this->loadmodel('role_privileges');
+			$auto_id=$this->autoincrement('role_privileges','auto_id');
+			$this->role_privileges->saveAll(array("auto_id" => $auto_id, "society_id" => $society_id , "role_id" => 1,"module_id" => $module_id,"sub_module_id" => $sub_module_id));
+		}
+		if($resident=="yes"){
+			$this->loadmodel('role_privileges');
+			$auto_id=$this->autoincrement('role_privileges','auto_id');
+			$this->role_privileges->saveAll(array("auto_id" => $auto_id, "society_id" => $society_id , "role_id" => 2,"module_id" => $module_id,"sub_module_id" => $sub_module_id));
+		}
+	}
 }
 
 function update_default_package(){
@@ -25905,10 +25924,36 @@ function update_default_package(){
 		$this->layout='session';
 	}
 	$this->ath();
+	
 	$this->loadmodel('main_module');
 	$order=array('main_module.module_name'=>'ASC');
 	$main_modules=$this->main_module->find('all', array('order' => $order));
 	$this->set("main_modules",$main_modules);
+	 
+}
+
+function update_default_module_by_hm_ajax($module_id,$status){
+	$this->layout=null;
+	$this->loadmodel('main_module');
+	$this->main_module->updateAll(array('default_assign'=>$status),array('main_module.auto_id'=>(int)$module_id));
+	
+	if($status=="no"){
+		$this->loadmodel('sub_module');
+		$conditions=array('module_id'=>(int)$module_id);
+		$this->sub_module->updateAll(array('admin'=>"no",'resident'=>"no"),array('sub_module.module_id'=>(int)$module_id));
+	}
+}
+
+function update_default_sub_module_by_hm_ajax($sub_module_id,$role,$status){
+	$this->layout=null;
+	if($role=="admin"){
+		$this->loadmodel('sub_module');
+		$this->sub_module->updateAll(array('admin'=>$status),array('sub_module.auto_id'=>(int)$sub_module_id));
+	}else{
+		$this->loadmodel('sub_module');
+		$this->sub_module->updateAll(array('resident'=>$status),array('sub_module.auto_id'=>(int)$sub_module_id));
+	}
+	
 }
 	
 	

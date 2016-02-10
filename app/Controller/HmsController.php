@@ -4710,7 +4710,6 @@ $this->set('webroot_path',$webroot_path);
 if ($this->request->is('POST')) 
 {
 
-
 date_default_timezone_set('Asia/kolkata');
 $date=date("d-m-Y");
 $time=date('h:i:a',time());
@@ -4719,7 +4718,7 @@ $email=htmlentities($this->request->data['email']);
 $mobile=htmlentities($this->request->data['mobile']);
 $i=$this->autoincrement('user_temp','user_temp_id');
 $this->loadmodel('user_temp');
-$this->user_temp->save(array('user_temp_id' => $i, 'user_name' => $name,'email' => $email, 'password' => '', 'mobile' => $mobile,  'society_id' => 0, 'role' => 0,  'wing' => 0, 'flat' => 0,'residing' => 1,'complete_signup' => 0 , 'reply_mail' => "", 'date' => $date, 'time' => $time,'reject' =>0 ));
+$this->user_temp->save(array('user_temp_id' => $i, 'user_name' => $name,'email' => $email, 'mobile' => $mobile,'complete_signup' => 0 , 'reply_mail' => "", 'date' => $date, 'time' => $time,'reject' =>0 ));
 $this->response->header('Location', 'sign_up_next?user='.$i.' ');
 
 
@@ -4755,21 +4754,18 @@ $this->set('result', $this->society->find('all'));
 			
 		$society_id=(int)$this->request->data['society'];
 		$tenant=$this->request->data['tenant'];
-		if($tenant=="yes")
-		{
-		$committe=$this->request->data['committe'];
-		}
-			else
-			{
+		if($tenant=="yes"){
+			$committe=$this->request->data['committe'];
+		}else{
 			$committe="no";
-			}
+		}
 	$wing=(int)$this->request->data['wing'];
 	$flat=(int)$this->request->data['flat'];
 	
 	
 $this->loadmodel('user_temp');
 $this->user_temp->updateAll(array("society_id" => $society_id,"committee" => $committe, 
-'owner' => $tenant, 'wing' => $wing, 'flat' => $flat,"role"=>2,"complete_signup"=>1,'multiple_society'=>0),array("user_temp.user_temp_id" => $user));
+'owner' => $tenant, 'wing' => $wing, 'flat' => $flat,"role"=>2,"complete_signup"=>1,'user_type'=>"member"),array("user_temp.user_temp_id" => $user));
 
 
 $this->loadmodel('user_temp');
@@ -4934,7 +4930,7 @@ $to=$email;
 										
 										<tr>
 										<td align="center" style="background-color:#00A0E3;color:white;" >Owner</td>
-										<td align="left" style="background-color:#f8f8f8;" >'.$owner.'</td>
+										<td align="left" style="background-color:#f8f8f8;" >'.$tenant.'</td>
 										</tr>
 									
 										</table> 
@@ -5132,7 +5128,7 @@ $user=(int)$this->request->query['user'];
 $this->set('user_id', $user);
 if($this->request->is('post')) 
 {
-	@$ip=$this->hms_email_ip();
+	$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
 
 $society_name=htmlentities($this->request->data['society_name']);
 $pin_code=htmlentities($this->request->data['pin_code']);
@@ -5144,7 +5140,7 @@ $this->loadmodel('society');
 $this->society->save(array('society_id' => $i, 'society_name' => $society_name, 
 'association_formed' => $association, 'user_id' => $user,"aprvl_status"=>0,"pin_code"=>$pin_code,"flats"=>$no_flat));
 $this->loadmodel('user_temp');
-$this->user_temp->updateAll(array("society_id" => $i,"role" => 3,"complete_signup"=>1),array("user_temp.user_temp_id" => $user));
+$this->user_temp->updateAll(array("society_id" => $i,"role" => 1,"complete_signup"=>1,"user_type"=>"third_party"),array("user_temp.user_temp_id" => $user));
 
 //////////////////////mail functionality//////////////////////////////////////////////////////////////////////////////////////////
 
@@ -5604,7 +5600,8 @@ echo "true";
 function forget() 
 {
 $this->layout='without_session';
-$this->set('webroot_path',$this->webroot_path());
+$webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'webroot_path'));
+$this->set('webroot_path',$webroot_path);
 if ($this->request->is('POST')) 
 {
 $ip=$this->hms_email_ip();
@@ -10365,11 +10362,10 @@ if($this->RequestHandler->isAjax()){
 	$this->layout='session';
 }
 $this->ath();
-//$this->check_housingmatters_privilages();
-$society_id=(int)$this->Session->read('society_id');
-$user_id=(int)$this->Session->read('user_id');
+$society_id=(int)$this->Session->read('hm_society_id');
+$user_id=(int)$this->Session->read('hm_user_id');
 $this->loadmodel('user_temp');
-$conditions=array("complete_signup"=>1,"reject"=>0,"role"=>3);
+$conditions=array("complete_signup"=>1,"reject"=>0,"role"=>1);
 $result=$this->user_temp->find('all',array('conditions'=>$conditions));
 $this->set('result_user_temp',$result);
 }
@@ -10418,7 +10414,7 @@ $time=date('h:i:a',time());
 $role_id[]=3;
 $default_role_id=3;
 $this->loadmodel('user');
-$this->user->save(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'password' =>'', 'mobile' => $mobile,  'society_id' => $society_id,'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes'));
+$this->user->save(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'password' =>'', 'mobile' => $mobile,  'society_id' => $society_id,'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes','user_type'=>'third_party'));
 
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'exited'=>'no'));
@@ -10533,11 +10529,11 @@ $this->notification_email->saveAll(array("notification_id" => $lo, "module_id" =
 //////////////////// end code login table ///////////////////////////////
 
 //////////////// Role to assign code for Society  //////////////////////////
-for($p=1;$p<=2;$p++)
+for($p=1;$p<=3;$p++)
 {
 if($p==1) { $d="Admin"; }
 if($p==2) { $d="Resident"; }
-
+if($p==3) { $d="Committee member"; }
 $this->loadmodel('role');
 $k=$this->autoincrement('role','auto_id');
 $this->role->saveAll(array("auto_id" => $k, "role_name" => $d, 'role_id'=>$p, "society_id" => $society_id));
@@ -10570,8 +10566,9 @@ $wing=(int)$collection['user_temp']['wing'];
 $flat=(int)$collection['user_temp']['flat'];
 $committee=(int)$collection['user_temp']['committee'];
 $tenant=(int)$collection['user_temp']['tenant']; 
+$user_type=$collection['user_temp']['user_type']; 
 } 
-$ip=$this->hms_email_ip();
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
 
 $i=$this->autoincrement('user','user_id'); 
 $random1=mt_rand(1000000000,9999999999);
@@ -10670,12 +10667,11 @@ $this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
 
 //////////////////////////////////////// Insert data user table ///////////////////// ///////////////////////////////////
 
-$login_id=$this->autoincrement('login','login_id');
 
 $role_id[]=3;
 $default_role_id=3;
 $this->loadmodel('user');
-$this->user->save(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'password' => $password, 'mobile' => $mobile,  'society_id' => $society_id,'date' => $date, 'time' => $time,"profile_pic"=>'blank.jpg','signup_random'=>$random,'active'=>'yes'));
+$this->user->save(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'password' => $password, 'mobile' => $mobile,  'society_id' => $society_id,'date' => $date, 'time' => $time,"profile_pic"=>'blank.jpg','signup_random'=>$random,'active'=>'yes','user_type'=>$user_type));
 
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'exited'=>'no'));
@@ -10715,11 +10711,11 @@ $this->user_temp->deleteAll($conditions);
 
 
 //////////////// Role to assign code for Society  //////////////////////////
-for($p=1;$p<=2;$p++)
+for($p=1;$p<=3;$p++)
 {
 if($p==1) { $d="Admin"; }
 if($p==2) { $d="Resident"; }
-
+if($p==3) { $d="Committee member"; }
 $this->loadmodel('role');
 $k=$this->autoincrement('role','auto_id');
 $this->role->saveAll(array("auto_id" => $k, "role_name" => $d, 'role_id'=>$p, "society_id" => $society_id));
@@ -22339,9 +22335,8 @@ $this->layout='blank';
 $this->layout='session';
 }
 $this->ath();
-$s_role_id=$this->Session->read('role_id');
 $s_society_id = (int)$this->Session->read('hm_society_id');
-$s_user_id=$this->Session->read('user_id');	
+$s_user_id=$this->Session->read('hm_user_id');	
 
 $this->loadmodel('flat');
 $conditions=array("society_id" => $s_society_id);
@@ -25110,7 +25105,7 @@ $this->layout=null;
 $post_data=$this->request->data;
 $this->ath();
 $s_society_id=$this->Session->read('hm_society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $date=date('d-m-Y');
 $time = date(' h:i a', time());
 

@@ -39,7 +39,6 @@ foreach ($result_user_temp as $collection)
 { 
  $da_society_id=(int)$collection['user_temp']["society_id"];
  $da_user_id=(int)$collection['user_temp']["user_temp_id"];
- $password=$collection['user_temp']["password"];
  $user_name=$collection['user_temp']["user_name"];
  $email=$collection['user_temp']["email"];
  $mobile=$collection['user_temp']['mobile'];
@@ -75,7 +74,7 @@ $i++;
                                         <tr>
                                         <td>Subject</td><td>HousingMatters</td></tr>
                                         <tr>
-                                        <td>Message</td><td>Username:<?php echo "    ".$email; ?><br/>Password:<?php echo "   ".$password ;?></td></tr></table> </div>
+                                        <td>Message</td><td>Username:<?php echo "    ".$email; ?><br/></td></tr></table> </div>
 									</div>
 									<div class="modal-footer">
 										<button type="button"  data-dismiss="modal" id1="<?php echo $da_user_id;?>"  id2="<?php echo $i;?>" id3="<?php echo $da_society_id;?>" class="btn blue approve">Send Email</button>

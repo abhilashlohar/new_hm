@@ -52,5 +52,12 @@ function sub_module_info_via_module_id($module_id){
 	return $this->sub_module->find('all',array('conditions'=>$conditions));
 }
 
+function fetch_user_type_via_user_id($user_id){
+	$this->loadmodel('user');
+	$conditions=array('user_id'=>$user_id);
+	$user_info=$this->user->find('all',array('conditions'=>$conditions));
+	return $user_info[0]["user"]["user_type"];
+}
+
 }
 ?>

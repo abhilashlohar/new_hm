@@ -159,13 +159,7 @@ foreach ($result_wing as $db)
 <label>Note : <span class="tooltips" data-placement="right" data-original-title="Minimum one contact detail (email or mobile number ) is required to send any communication"> <i class='icon-info-sign'></i> </span></label>
 </td></tr>
 <tr><td> 
-<!--<div class="control-group">
-<div class="controls">
-<div class="input-icon left"><i class="icon-lock"></i>
-<input type="password"   class="m-wrap" placeholder="Password*" style="font-size:16px;"  " name="password" >
-</div>
-</div>
-</div>--> 
+ 
 </td></tr>
  <tr><td>                
 
@@ -173,11 +167,11 @@ foreach ($result_wing as $db)
 <label class="control-label" style="font-size:16px;">Owner </label>
 <div class="controls">
 <label class="radio">
-<div class="radio" id="uniform-undefined"><span><input type="radio" id="ty" onClick="commite()"name="tenant"  value="1"  style="opacity: 0; font-size:14px;""  ></span></div>
+<div class="radio" id="uniform-undefined"><span><input type="radio" id="ty" onClick="commite()"name="owner"  value="yes"  style="opacity: 0; font-size:14px;""  ></span></div>
 <span style="font-size:16px;"> Yes</span>
 </label>
 <label class="radio">
-<div class="radio" id="uniform-undefined"><span class="checked"><input type="radio" onClick="commite()" name="tenant" id="tno" value="2" checked  style="opacity: 0; font-size:14px;""   ></span></div>
+<div class="radio" id="uniform-undefined"><span class="checked"><input type="radio" onClick="commite()" name="tenant" id="tno" value="no" checked  style="opacity: 0; font-size:14px;""   ></span></div>
 <span style="font-size:16px;"> No </span>
 </label>  
 
@@ -195,13 +189,13 @@ foreach ($result_wing as $db)
 <div class="controls">
 <label class="radio">
 <div class="radio" id="uniform-undefined"><span>
-<input type="radio" name="committe" value="1" id="cmy"   style="opacity: 0; font-size:14px;" >
+<input type="radio" name="committe" value="yes" id="cmy"   style="opacity: 0; font-size:14px;" >
 </span></div>
 <span style="font-size:16px;">Yes</span>
 </label>
 <label class="radio">
 <div class="radio" id="uniform-undefined"><span class="checked">
-<input type="radio"  name="committe" value="2" checked style="opacity: 0; font-size:14px;"" ></span></div>
+<input type="radio"  name="committe" value="no" checked style="opacity: 0; font-size:14px;"" ></span></div>
 <span style="font-size:16px;"> No </span>
 </label>  
 </div>

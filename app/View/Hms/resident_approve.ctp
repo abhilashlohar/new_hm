@@ -115,12 +115,11 @@ foreach ($result_user_temp as $collection)
 	$date=$collection['user_temp']['date'];
 	$mobile=$collection['user_temp']['mobile'];
 	$email=$collection['user_temp']['email'];
-	$password=$collection['user_temp']['password'];
 	$wing=(int)$collection['user_temp']['wing'];
 	$flat=(int)$collection['user_temp']['flat'];
-	$tenant=(int)$collection['user_temp']['tenant'];
-	if($tenant==2) { $status='Tenant'; }
-	if($tenant==1) { $status='Owner'; }
+	$owner=$collection['user_temp']['owner'];
+	if($owner=="no") { $status='Tenant'; }
+	if($owner=="yes") { $status='Owner'; }
 	$i++;
  $wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'),array('pass'=>array($wing,$flat)));
 

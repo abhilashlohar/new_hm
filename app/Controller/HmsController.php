@@ -5857,247 +5857,16 @@ function tenant_access(){
 	$this->layout='without_session';	
 	
 }
-function dashboard() 
-{
-if($this->RequestHandler->isAjax()){
-	$this->layout='blank';
+function dashboard(){
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
 	}else{
-	$this->layout='session';
+		$this->layout='session';
 	}
-	
-	$s_society_id = $this->Session->read('society_id');
-	/*$this->loadmodel('flat');
-	$conditions=array("society_id" => $s_society_id);
-	$result_flat = $this->flat->find('all',array('conditions'=>$conditions));
-	foreach($result_flat as $data){
-		$flat_id=(int)$data["flat"]["flat_id"];
-		$flat_name=$data["flat"]["flat_name"];
-		
-		$this->loadmodel('flat');
-		$this->flat->updateAll(array("flat_name" => (int)$flat_name),array("flat_id" => $flat_id));
-	}*/
-	
-	//echo "hello";
-	//exit;
-	//$sms='You one Product is liked by some one. Kindly login into the portal for more details.';
-	//$sms1=str_replace(" ", '+', $sms);
-	//echo file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey=Ac47f5663efae985cc42d0081ef8e95b7&sender=NMINVT&to=9636653883&message='.$sms1);
-	//exit;
-	
-
-$this->ath();
-$r=$this->request->query('try');
-$s_user_id=$this->Session->read('user_id');
-$s_society_id=$this->Session->read('society_id');
-$this->response->disableCache();
-
-
-	/*
-	$result_society=$this->society_name($s_society_id);
-	$access_tenant=@$result_society[0]['society']['access_tenant'];
-	$result_user=$this->profile_picture($s_user_id);
-    $tenant=@$result_user[0]['user']['tenant'];
-	if($tenant==2 && $access_tenant==0){
-		$this->redirect(array('action' => 'tenant_access'));
-
-	 }
-*/
-
-$tenant=$this->Session->read('tenant');
-$role_id=$this->Session->read('role_id');
-$this->set('role_id',$role_id);
-$this->set('s_society_id',$s_society_id);
-
-$wing=$this->Session->read('wing');
-
-
-$current_date = new MongoDate(strtotime(date("Y-m-d")));
-
-
-if(!empty($r))
-{
-$this->loadmodel('user');
-$this->user->updateAll(array('profile_status'=>2),array('user_id'=>$s_user_id));
-$this->redirect(array('action' => 'dashboard'));
-}
-$this->loadmodel('user');
-$conditions=array("user_id" => $s_user_id);
-$this->set('result_user',$this->user->find('all',array('conditions'=>$conditions))); 
-
-//////////////recent activity/////////////////
-$this->loadmodel('activity');
-$conditions=array("module_id" => 1,"society_id" => $s_society_id);
-$this->set('result_activity',$this->activity->find('all',array('conditions'=>$conditions)));
-//////////////recent activity///////////////// 
-
-
-//////////////Help-desk  last 3 tickets///////////////// 
-$this->loadmodel('help_desk');
-if($role_id==3) { 
-$conditions=array("society_id" => $s_society_id);
-}
-
-if($role_id!=3) { 
-$conditions=array("society_id" => $s_society_id,"user_id" => $s_user_id);
-}
-
-$order=array('help_desk.ticket_id'=> 'DESC');
-$result_help_desk=$this->help_desk->find('all',array('conditions'=>$conditions,'order' =>$order,'limit' =>3));
-$this->set('result_help_desk',$result_help_desk);
-//////////////Help-desk  last 3 tickets///////////////// 
-
-//////////////discussion  last 3 topic///////////////// 
-$this->loadmodel('discussion_post');
-$conditions =array( '$or' => array( 
-array('society_id' =>$s_society_id,'delete_id' =>0,'visible' =>1),
-array('society_id' =>$s_society_id,'delete_id' =>0,'visible' =>2,'sub_visible' =>array('$in' => array($role_id))),
-array('society_id' =>$s_society_id,'delete_id' =>0,'visible' =>3,'sub_visible' =>array('$in' => array($wing))),
-array('society_id' =>$s_society_id,'delete_id' =>0,'visible' =>4),
-array('society_id' =>$s_society_id,'delete_id' =>0,'visible' =>5)
-));
-$order=array('discussion_post.discussion_post_id'=>'DESC');
-$this->set('result_discussion_topics',$this->discussion_post->find('all',array('conditions'=>$conditions,'order'=>$order,'limit' =>3)));
-//////////////discussion  last 3 topic///////////////// 
-
-
-//////////////event  last 3///////////////// 
-$this->loadmodel('event');
-$conditions=array("society_id" => $s_society_id,"visible_user_id" =>array('$in' => array($s_user_id)));
-$order=array('event.event_id'=>'DESC');
-$this->set('result_event_last',$this->event->find('all', array('conditions' => $conditions,'order' => $order,'limit' =>3)));
-//////////////event  last 3 topic///////////////// 
-
-
-//////////////pie chart help_desk///////////////// 
-$this->loadmodel('help_desk');
-$conditions=array("society_id" => $s_society_id);
-$result_help_desk_report1=$this->help_desk->find('all',array('conditions'=>$conditions));
-$this->set('result_help_desk_report1',$result_help_desk_report1);
-//////////////pie chart help_desk///////////////// 
-
-
-
-//////////////notice///////////////// 
-$this->loadmodel('notice');
-$result_notice_visible_last=array();
-if($role_id==3) { 
-$conditions=array("n_draft_id" => 0, "n_delete_id" => 0,"society_id"=> $s_society_id);
-$order=array('notice_id'=>'DESC');
-}
-
-if($role_id!=3) { 
-$conditions =array( '$or' => array( 
-array('society_id' =>$s_society_id,'visible' =>1,'n_expire_date' => array('$gte'=>$current_date)),
-array('society_id' =>$s_society_id,'visible' =>2,'sub_visible' =>array('$in' => array($role_id)),'n_expire_date' => array('$gte'=>$current_date)),
-array('society_id' =>$s_society_id,'visible' =>3,'sub_visible' =>array('$in' => array($wing)),'n_expire_date' => array('$gte'=>$current_date)),
-array('society_id' =>$s_society_id,'visible' =>4,'sub_visible' =>$tenant,'n_expire_date' => array('$gte'=>$current_date)),
-array('society_id' =>$s_society_id,'visible' =>5,'sub_visible' =>$tenant,'n_expire_date' => array('$gte'=>$current_date))
-));
-}
-
-
-$order=array('notice.notice_id'=>'DESC');
-$result_notice_visible_last_q=$this->notice->find('all', array('conditions' => $conditions,'order' => $order,'limit' =>3));
-$current_date=date("d-m-Y");
-
-
-$result_notice_visible_last=array();
-foreach($result_notice_visible_last_q as $data)
-{
-$n_expire_date=$data['notice']['n_expire_date'];
-$n_expire_date= date('d-m-Y', $n_expire_date->sec);
-
-
-if(strtotime($n_expire_date) >= strtotime($current_date))
-{
-$result_notice_visible_last[]=$data;
-
-}
-
-
-}
-
-
-
-$this->set('result_notice_visible_last',$result_notice_visible_last);
-
-
-//////////////notice///////////////// 
-
-
-//////////////polls  last 3///////////////// 
-$current_date3=date("Y-m-d");
-$current_date3 = new MongoDate(strtotime($current_date3));
-$this->loadmodel('poll');
-$conditions=array("society_id" => $s_society_id,"visible_user_id" =>array('$in' => array($s_user_id)),"deleted" => 0,'close_date' => array('$gt' => $current_date3));
-$order=array('poll.poll_id'=>'DESC');
-$this->set('result_poll_last',$this->poll->find('all', array('conditions' => $conditions,'order' => $order,'limit' =>3)));
-
-//////////////polls  last 3///////////////// 
-
-//////////////documents  last 3///////////////// 
-$this->loadmodel('resource');
-
-if($role_id==3) { 
-$conditions=array('society_id'=>$s_society_id);
-}
-
-if($role_id!=3) { 
-$conditions =array( '$or' => array( 
-array('society_id' =>$s_society_id,'visible' =>1),
-array('society_id' =>$s_society_id,'visible' =>2,'sub_visible' =>array('$in' => array($role_id))),
-array('society_id' =>$s_society_id,'visible' =>3,'sub_visible' =>array('$in' => array($wing))),
-array('society_id' =>$s_society_id,'visible' =>4,'sub_visible' =>$tenant),
-array('society_id' =>$s_society_id,'visible' =>5,'sub_visible' =>$tenant)
-));
-}
-
-$order=array('resource.resource_id'=>'DESC');
-$result_resource_last=$this->resource->find('all',array('conditions'=>$conditions,'order' => $order,'limit' =>3));
-$this->set('result_resource_last',$result_resource_last);
-//////////////documents  last 3///////////////// 
-
-/////////////// Discussion information reject //////////////////
-
-$this->loadmodel('discussion_post');
-$conditions=array('delete_id'=>5,'society_id'=>$s_society_id,'user_id'=>$s_user_id);
-$res_dis=$this->discussion_post->find('all',array('conditions'=>$conditions));
-$this->set('disc_res',$res_dis);
-
-//////////////// end ///////////////////////////////////////
-
-
-/////////////// Notice information reject //////////////////
-$this->loadmodel('notice');
-$conditions=array('n_draft_id'=>5,'society_id'=>$s_society_id,'user_id'=>$s_user_id);
-$res_not=$this->notice->find('all',array('conditions'=>$conditions));
-
-$this->set('not_res',$res_not);
-
-//////////////// end ///////////////////////////////////////
-
-
-/////////////// Poll information reject //////////////////
-$this->loadmodel('poll');
-$conditions=array('deleted'=>5,'society_id'=>$s_society_id,'user_id'=>$s_user_id);
-$res_poll=$this->poll->find('all',array('conditions'=>$conditions));
-$this->set('poll_res',$res_poll);
-
-//////////////// end ///////////////////////////////////////
-
-
-
-/////////////// Documents information reject //////////////////
-
-$this->loadmodel('resource');
-$conditions=array('resource_delete'=>5,'society_id'=>$s_society_id,'user_id'=>$s_user_id);
-$res_resource=$this->resource->find('all',array('conditions'=>$conditions));
-$this->set('resource_res',$res_resource);
-
-//////////////// end ///////////////////////////////////////
-
-
-
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id = $this->Session->read('hm_user_id');
+	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 }
 function reject_notification($id,$change)
 {
@@ -9482,17 +9251,16 @@ $date=$collection['user_temp']['date'];
 $time=$collection['user_temp']['time'];
 $mobile=$collection['user_temp']['mobile'];
 $email=$collection['user_temp']['email'];
-$password=$collection['user_temp']['password'];
 $wing=(int)$collection['user_temp']['wing'];
 $flat=(int)$collection['user_temp']['flat'];
-$committee=(int)$collection['user_temp']['committee'];
-$tenant=(int)$collection['user_temp']['tenant'];
+$committee=$collection['user_temp']['committee'];
+$owner=$collection['user_temp']['owner'];
 //$residing=(int)$collection['user_temp']['residing'];
   @$login_id=(int)$collection['user_temp']['login_id'];
   @$multiple_society=$collection['user_temp']['multiple_society'];
 }
 ///////////end fetch data ////////////////////
-if($tenant == 1)
+if($owner == "yes")
 {
 $type = "yes";	
 }else { $type = "no";  }
@@ -9534,14 +9302,8 @@ if($n5==2){
 
 //////////////////////////////// end cod ///////////////////
 
-$role_id[]=2;
-$default_role_id=2;
-if($committee==1)
-{
-$role_id[]=1;
-}
 
-$ip=$this->hms_email_ip();
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
 
 $random1=mt_rand(1000000000,9999999999);
 $random2=mt_rand(1000000000,9999999999);
@@ -9567,10 +9329,15 @@ if($multiple_society==1)
 }
 
 
-$this->user->save(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'password' => $password, 'mobile' => $mobile,  'society_id' => $society_id, 'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes'));
+$this->user->saveAll(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'mobile' => $mobile,  'society_id' => $society_id, 'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes',"user_type"=>"member"));
 
-//$this->loadmodel('flat');
-//$this->flat->updateAll(array("noc_ch_tp" =>$residing),array("flat_id" =>$flat));	
+$this->loadmodel('user_role');
+$auto_id=$this->autoincrement('user_role','auto_id');
+$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => 2));
+if($committee=="yes"){
+	$auto_id=$this->autoincrement('user_role','auto_id');
+	$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => 3));
+}
 
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no','owner'=>$type));
@@ -9579,10 +9346,10 @@ $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'soc
 //////////////// end insert code  //////////////////////////
 
 ///////////////  Insert code ledger Sub Accounts //////////////////////
-if($tenant==1){
+if($owner=="yes"){
 $this->loadmodel('ledger_sub_account');
 $j=$this->autoincrement('ledger_sub_account','auto_id');
-$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$user_name,'society_id' => $society_id,'user_id'=>$i,'deactive'=>0,"flat_id"=>$flat));
+$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$user_name,'society_id' => $society_id,'user_flat_id'=>$user_flat_id,'exited'=>"no"));
 }
 /////////////  End code ledger sub accounts //////////////////////////
 
@@ -10381,7 +10148,7 @@ if($this->RequestHandler->isAjax()){
 $this->ath();
 if ($this->request->is('POST')) 
 {
-	$ip=$this->hms_email_ip();
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
  $society_name=htmlentities($this->request->data['society_name']);
  $user_name=htmlentities($this->request->data['user_name']);
  $email=htmlentities($this->request->data['email']);
@@ -10419,6 +10186,8 @@ $this->user->save(array('user_id' => $i, 'user_name' => $user_name,'email' => $e
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'exited'=>'no'));
 
+$auro_id=$this->autoincrement('user_role','auro_id');
+$this->user_role->saveAll(array('auro_id'=>$auro_id,'user_id'=>$i,'role_id'=>1));
 
 
  $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -10668,10 +10437,13 @@ $this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
 //////////////////////////////////////// Insert data user table ///////////////////// ///////////////////////////////////
 
 
-$role_id[]=3;
-$default_role_id=3;
+
 $this->loadmodel('user');
 $this->user->save(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'password' => $password, 'mobile' => $mobile,  'society_id' => $society_id,'date' => $date, 'time' => $time,"profile_pic"=>'blank.jpg','signup_random'=>$random,'active'=>'yes','user_type'=>$user_type));
+
+$this->loadmodel('user_role');
+$auto_id=$this->autoincrement('user_role','auto_id');
+$this->user_role->saveAll(array('auto_id' => $auto_id, 'role_id' => 1,'user_id' => $i));
 
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'exited'=>'no'));
@@ -17364,7 +17136,6 @@ $result_society=$this->society_name($society_id);
 foreach($result_society as $data)
 {
 	 $society_name=$data['society']['society_name'];
-	
 }
 
 $s_n='';
@@ -17381,7 +17152,7 @@ $mobile=$this->request->data['mobile'];
 $wing=(int)$this->request->data['wing'];
 $flat=(int)$this->request->data['flat'];
 //$residing=(int)$this->request->data['residing'];
-$tenant=(int)$this->request->data['tenant'];
+$owner=(int)$this->request->data['owner'];
 
 
 $this->loadmodel('user_flat');
@@ -17448,8 +17219,8 @@ if(empty($email))
 {
 $login_user=$mobile;
 $random=(string)mt_rand(1000,9999);
-	
-$r_sms=$this->hms_sms_ip();
+
+$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip'));
 $working_key=$r_sms->working_key;
 $sms_sender=$r_sms->sms_sender; 	
 $sms_allow=(int)$r_sms->sms_allow;
@@ -17464,7 +17235,7 @@ $payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingk
 }
 }
 
-$this->user->save(array('user_id' => $i, 'user_name' => $name,'email' => $email, 'password' => @$random, 'mobile' => $mobile,  'society_id' => $society_id, 'tenant' => $tenant, 'wing' => $wing, 'flat' => $flat, 'date' => $date, 'time' => $time,"profile_pic"=>'blank.jpg','sex'=>'','role_id'=>$role_id,'default_role_id'=>$default_role_id,'signup_random'=>$random,'deactive'=>0,'login_id'=>$log_i,'s_default'=>1,'profile_status'=>1,'private'=>array('mobile','email')));
+$this->user->save(array('user_id' => $i, 'user_name' => $name,'email' => $email, 'password' => @$random, 'mobile' => $mobile,  'society_id' => $society_id, 'owner' => $tenant, 'wing' => $wing, 'flat' => $flat, 'date' => $date, 'time' => $time,"profile_pic"=>'blank.jpg','sex'=>'','role_id'=>$role_id,'default_role_id'=>$default_role_id,'signup_random'=>$random,'deactive'=>0,'login_id'=>$log_i,'s_default'=>1,'profile_status'=>1,'private'=>array('mobile','email')));
 
 
  
@@ -24076,9 +23847,7 @@ foreach($myArray as $child){
 						$report[]=array('tr'=>$c,'td'=>7, 'text' => 'Required');
 					}
 					
-					/*if (empty($child[7])) {
-						$report[]=array('tr'=>$c,'td'=>8, 'text' => 'Required');
-					}*/
+					
 			}
 	}
 	
@@ -24114,11 +23883,6 @@ foreach($myArray as $child){
 			}
 			
 		}
-		
-		
-		
-		
-		
 		
 		
 		
@@ -24163,15 +23927,7 @@ foreach($myArray as $child){
 			 $flat_id2[]=$child[2];
 	}
 	
-		
-	
-/*	if((sizeof(@$flat_id1)>1) && (sizeof(@$flat_id2)>1)){
-	$flat_id1 = array_unique($flat_id1);
-	if(sizeof(@$flat_id1)!=sizeof(@$flat_id2)){
-	$output = json_encode(array('report_type'=>'already_error', 'text' => 'Flat should not be same in two or more rows.'));
-        die($output);
-		}
-	  } */
+
 	
 	if (!empty($child[3])) {
 	  $email_addrs1[]=$child[3];
@@ -24279,17 +24035,19 @@ foreach($myArray as $child)
 
 		
 		
-$this->user->saveAll(array('user_id' => $i,'user_name' => $name,'email' => $email, 'password' => @$random, 'mobile' => $mobile,'society_id' => $s_society_id,'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes'));
+$this->user->saveAll(array('user_id' => $i,'user_name' => $name,'email' => $email, 'password' => @$random, 'mobile' => $mobile,'society_id' => $s_society_id,'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes','user_type'=>'member'));
  
 
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$s_society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no','owner'=>$type));
-		 
-	     
+
+$auto_id=$this->autoincrement('user_role','auto_id');
+$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>2));	 
+     
 if($tenant==1){
 $this->loadmodel('ledger_sub_account');
 $j=$this->autoincrement('ledger_sub_account','auto_id');
-$this->ledger_sub_account->saveAll(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$name,'society_id' => $s_society_id,'user_id'=>$i,'deactive'=>0,'flat_id'=>$flat));
+$this->ledger_sub_account->saveAll(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$name,'society_id' => $s_society_id,'user_id'=>$i,'user_flat_id'=>$user_flat_id));
 }
 	
 		$special="'";

@@ -725,6 +725,16 @@ $(document).ready(function() {
 					<i class="icon-home"></i> default package
 					</a>	
 				</li>
+				<li>
+					<a href="<?php echo $this->webroot; ?>Hms/resident_approve" rel='tab'>
+					<i class="icon-home"></i> resident_approve
+					</a>	
+				</li>
+				<li>
+					<a href="<?php echo $this->webroot; ?>Hms/new_user_enrollment2" rel='tab'>
+					<i class="icon-home"></i> new_user_enrollment2
+					</a>	
+				</li>
 			</ul>
 			<!-- END SIDEBAR MENU -->
 		</div>

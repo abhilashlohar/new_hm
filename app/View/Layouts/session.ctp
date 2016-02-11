@@ -825,7 +825,13 @@
 	<![endif]-->
 	<script type="text/javascript" src="<?php echo $webroot_path; ?>assets/uniform/jquery.uniform.min.js"></script>	
 	<script type="text/javascript" src="<?php echo $webroot_path; ?>assets/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
-	<script src="<?php echo $webroot_path; ?>assets/js/app.js"></script>		
+	<script src="<?php echo $webroot_path; ?>assets/js/app.js"></script>
+	<script>
+		jQuery(document).ready(function() {			
+			// initiate layout and plugins
+			App.init();
+		});
+	</script>	
 </body>
 <!-- END BODY -->
 </html>

@@ -25626,9 +25626,32 @@ function menus_as_per_user_rights(){
 	$this->layout=null;
 	$s_user_id=$this->Session->read('hm_user_id');
 	$s_user_flat_id=$this->Session->read('hm_user_flat_id');
+	$s_society_id=$this->Session->read('hm_society_id');
 	$user_type= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'),array('pass'=>array($s_user_id)));
-	if($user_type=="third_party" && $user_type=="member"){
+	if($user_type=="third_party" or $user_type=="member"){
 		$default_role= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id'),array('pass'=>array($s_user_id)));
+		
+		$this->loadmodel('role_privilege');
+		$conditions=array('society_id'=>$s_society_id,'role_id'=>$default_role);
+		$main_modules=$this->role_privilege->find('all',array('conditions'=>$conditions));
+		foreach($main_modules as $main_module){
+			$assigned_modules[]=$main_module["role_privilege"]["module_id"];
+			$assigned_sub_modules[]=$main_module["role_privilege"]["sub_module_id"];
+		}
+		
+		$this->loadmodel('module_type');
+		$order=array("module_type.order" => "ASC");
+		$module_types=$this->module_type->find('all',array('order'=>$order));
+		foreach($module_types as $data){
+			$module_type_id=$data["module_type"]["module_type_id"];
+			
+			$this->loadmodel('main_module');
+			$order=array("main_module.module_name" => "ASC");
+			$main_modules=$this->main_module->find('all',array('order'=>$order));
+			foreach($main_modules as $data2){
+				$module_name=$data2["main_module"]["module_name"];
+			}
+		}
 	}
 	
 }

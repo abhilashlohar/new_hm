@@ -58,7 +58,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
                <!-- BEGIN USER LOGIN DROPDOWN -->
                <li class="dropdown user">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img alt="" src="assets/img/avatar1_small.jpg" />
+                  <img alt="" src="<?php echo $webroot_path; ?>assets/img/avatar1_small.jpg" />
                   <span class="username">Bob Nilson</span>
                   <i class="icon-angle-down"></i>
                   </a>

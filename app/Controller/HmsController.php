@@ -5462,7 +5462,7 @@ if($n4==0){
 	echo'false';
 	
 }
-
+/*
 $this->loadmodel('flat');
 $conditions=array("flat_id" => $flat);
 $result66 = $this->flat->find('all',array('conditions'=>$conditions));
@@ -5477,7 +5477,7 @@ if($tenant_fetch == 'no')
 echo'false';	
 }
 }
-
+*/
 
 }
 
@@ -9256,14 +9256,11 @@ $flat=(int)$collection['user_temp']['flat'];
 $committee=$collection['user_temp']['committee'];
 $owner=$collection['user_temp']['owner'];
 //$residing=(int)$collection['user_temp']['residing'];
-  @$login_id=(int)$collection['user_temp']['login_id'];
-  @$multiple_society=$collection['user_temp']['multiple_society'];
+ // @$login_id=(int)$collection['user_temp']['login_id'];
+  //@$multiple_society=$collection['user_temp']['multiple_society'];
 }
 ///////////end fetch data ////////////////////
-if($owner == "yes")
-{
-$type = "yes";	
-}else { $type = "no";  }
+if($owner == "yes"){ $type = "yes";	}else { $type = "no";  }
 
 ///// flat already exit checked code start ////////////////
 
@@ -9272,9 +9269,9 @@ $conditions=array('flat_id'=>$flat,'society_id'=>$society_id);
 $result_user=$this->user_flat->find('all',array('conditions'=>$conditions));
 $n5=sizeof($result_user);
 if($n5==1){
-	$tenant_database=$result_user[0]['user_flat']['status'];
-	if($tenant_database==1){
-		if($tenant_database==$tenant){
+	$tenant_database=$result_user[0]['user_flat']['owner'];
+	if($tenant_database=='yes'){
+		if($tenant_database==$owner){
 			
 			echo'<tr><td colspan="9">This flat is already exist owner.</td></tr>';
 			exit;
@@ -9283,7 +9280,7 @@ if($n5==1){
 		
 	}else{
 		
-		if($tenant_database==$tenant){
+		if($tenant_database==$owner){
 			
 			echo'<tr><td colspan="9">This flat is already exist tenant.</td></tr>';
 			exit;
@@ -9316,24 +9313,12 @@ $de_user_id=$this->encode($i,'housingmatters');
 $random=$de_user_id.'/'.$random;
 
 
-if($multiple_society==0)
-{
-	$login_id=$this->autoincrement('login','login_id');
-	$s_default=1;
-	
-	
-}
-if($multiple_society==1)
-{
-	$s_default=0;
-}
-
 
 $this->user->saveAll(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'mobile' => $mobile,  'society_id' => $society_id, 'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes',"user_type"=>"member"));
 
 $this->loadmodel('user_role');
 $auto_id=$this->autoincrement('user_role','auto_id');
-$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => 2));
+$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => 2,'default'=>'yes'));
 if($committee=="yes"){
 	$auto_id=$this->autoincrement('user_role','auto_id');
 	$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => 3));
@@ -9354,13 +9339,8 @@ $this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$use
 /////////////  End code ledger sub accounts //////////////////////////
 
 ///////////////////////////////////////////// approve mail functionality ///////////////////////////////////////
-if($multiple_society==0)
-{
+
 $to=$email;
-
-
-
-
 
   $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
           <tbody>
@@ -9443,7 +9423,7 @@ $from=$collection['email']['from'];
 }
 $this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
 
-}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -23972,6 +23952,7 @@ foreach($owner_tenant_set as $data){
 /*------code here insert start -------*/
 
 $ip=$this->hms_email_ip();
+
 foreach($myArray as $child)
 {
 	$name=$child[0];
@@ -24025,7 +24006,7 @@ foreach($myArray as $child)
 		if($sms_allow==1){
 			
 			$user_name_short=$this->check_charecter_name($name);
-			$sms="".$user_name_short.", Your housing society ".$s_n." has enrolled you in HousingMatters portal. Pls log into www.housingmatters.co.in One Time Password ".$random."";
+			$sms="".$user_name_short.", Your housing society ".$s_n." has enrolled you in HousingMatters portal. Pls log into www.housingmatters.in One Time Password ".$random."";
 			$sms1=str_replace(" ", '+', $sms);
 			$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');
 			}
@@ -24040,7 +24021,7 @@ $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$s_society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no','owner'=>$type));
 
 $auto_id=$this->autoincrement('user_role','auto_id');
-$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>2));	 
+$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>2,'default'=>'yes'));	 
      
 if($tenant==1){
 $this->loadmodel('ledger_sub_account');
@@ -24324,9 +24305,7 @@ $this->ledger_sub_account->saveAll(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$
 
 				//////////////// End all checked code   //////////////////////////
 
-			if(empty($email) && empty($mobile))
-			{
-			}else{}
+			
 			
 		
 unset($role_id);

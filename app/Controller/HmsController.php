@@ -25624,6 +25624,13 @@ $wing_flat= $this->requestAction(array('controller' => 'hms', 'action' => 'wing_
 	
 function menus_as_per_user_rights(){
 	$this->layout=null;
+	$s_user_id=$this->Session->read('hm_user_id');
+	$s_user_flat_id=$this->Session->read('hm_user_flat_id');
+	$user_type= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'),array('pass'=>array($s_user_id)));
+	if($user_type=="third_party" && $user_type=="member"){
+		$default_role= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id'),array('pass'=>array($s_user_id)));
+	}
+	
 }
 
 function assign_default_modules_to_society($society_id=null){

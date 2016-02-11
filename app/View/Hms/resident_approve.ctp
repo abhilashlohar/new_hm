@@ -35,9 +35,6 @@
 			 }
 			 xobj.send(null);
 		  }
-		  
-		  
-		
 </script>
 			<!-- BEGIN PAGE CONTAINER-->
 			<div class="container-fluid" style="padding:0px; ">

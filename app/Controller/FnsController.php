@@ -59,5 +59,12 @@ function fetch_user_type_via_user_id($user_id){
 	return $user_info[0]["user"]["user_type"];
 }
 
+function fetch_default_role_via_user_id($user_id){
+	$this->loadmodel('user_role');
+	$conditions=array('user_id'=>$user_id,'default'=>'yes');
+	$role_info=$this->user_role->find('all',array('conditions'=>$conditions));
+	return $role_info[0]["user_role"]["role_id"];
+}
+
 }
 ?>

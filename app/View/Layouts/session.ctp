@@ -98,21 +98,6 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
                <i class="icon-home"></i> Dashboard               
                </a>              
             </li>
-           
-            <li><a class="" href="gallery.html"><i class="icon-camera"></i> Gallery</a></li>
-            <li class="has-sub">
-               <a href="javascript:;" class="">
-               <i class="icon-briefcase"></i> Extra
-               <span class="arrow"></span>
-               </a>
-               <ul class="sub">
-                  <li><a class="" href="extra_pricing_table.html">Pricing Tables</a></li>
-                  <li><a class="" href="extra_404.html">404 Page</a></li>
-                  <li><a class="" href="extra_500.html">500 Page</a></li>
-                  <li><a class="" href="extra_blank.html">Blank Page</a></li>
-               </ul>
-            </li>
-            <li><a class="" href="login.html"><i class="icon-user"></i> Login Page</a></li>
          </ul>
          <!-- END SIDEBAR MENU -->
       </div>

@@ -9834,10 +9834,12 @@ $user_id=$collection['user']["user_id"];
 $society_id=$collection['user']["society_id"];
 $user_name=$collection['user']["user_name"];
 }
-
-
-$this->Session->write('user_id', $user_id);
-$this->Session->write('society_id', $society_id);
+$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));
+	$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
+	
+	$this->Session->write('hm_user_id', $user_id);
+	$this->Session->write('hm_user_flat_id', $user_flat_id);
+	$this->Session->write('hm_society_id', $society_id);
 $this->loadmodel('user');
 $this->user->updateAll(array('password'=>$pass,'signup_random'=>''),array('user.user_id'=>$user_id));
 $this->redirect(array('action' => 'dashboard'));

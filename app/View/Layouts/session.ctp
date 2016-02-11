@@ -686,7 +686,16 @@ $(document).ready(function() {
 			<div class="clearfix"></div>
 			<!-- END RESPONSIVE QUICK SEARCH FORM -->
 			<!-- BEGIN SIDEBAR MENU -->
-			<ul>
+			<ul id="menus_area">
+				<li class="has-sub">
+					<a href="javascript:;" class="">
+					<i class="icon-bookmark-empty"></i> qqqqqq
+					<span class="arrow"></span>
+					</a>
+					<ul style="display: none;" class="sub">
+						<li><a class="" href="ui_general.html">General</a></li>
+					</ul>
+				</li>
 				<li>
 				<div align="center"><i style="font-size: 26px; color: rgba(207, 207, 207, 0.63);" class="fa fa-circle-o-notch fa-spin fa-3x fa-fw margin-bottom"></i></div>
 				</li>
@@ -746,12 +755,79 @@ $(document).ready(function() {
 				
 				<!-- BEGIN PAGE CONTENT-->
 				<div class="row-fluid">
-					<div  id="content">
-						
+					<div style="border: 1px solid; width: 200px;" id="content">
+	<div style="background-color: rgb(0, 0, 0); position: fixed; top: 0px; bottom: 0px; left: 0px; right: 0px; opacity: 0.5;"></div><div style="position: fixed; top: 0px; overflow: auto; z-index: 9999; background-color: rgb(255, 255, 255); left: 0px; padding: 10px;"><ul>
+				<li class="active">
+					<a href="index.html">
+					<i class="icon-home"></i> Dashboard
+					<span class="selected"></span>
+					</a>					
+				</li>
+				<li class="has-sub">
+					<a href="javascript:;" class="">
+					<i class="icon-bookmark-empty"></i> UI Features
+					<span class="arrow"></span>
+					</a>
+					<ul style="display: none;" class="sub">
+						<li><a class="" href="ui_general.html">General</a></li>
+						<li><a class="" href="ui_buttons.html">Buttons</a></li>
+						<li><a class="" href="ui_tabs_accordions.html">Tabs &amp; Accordions</a></li>
+						<li><a class="" href="ui_typography.html">Typography</a></li>
+					</ul>
+				</li>
+				<li class="has-sub">
+					<a href="javascript:;" class="">
+					<i class="icon-table"></i> Form Stuff
+					<span class="arrow"></span>
+					</a>
+					<ul class="sub">
+						<li><a class="" href="form_layout.html">Form Layouts</a></li>
+						<li><a class="" href="form_component.html">Form Components</a></li>
+						<li><a class="" href="form_wizard.html">Form Wizard</a></li>
+						<li><a class="" href="form_validation.html">Form Validation</a></li>
+					</ul>
+				</li>
+				<li class="has-sub">
+					<a href="javascript:;" class="">
+					<i class="icon-th-list"></i> Data Tables
+					<span class="arrow"></span>
+					</a>
+					<ul class="sub">
+						<li><a class="" href="table_basic.html">Basic Tables</a></li>
+						<li><a class="" href="table_managed.html">Managed Tables</a></li>
+					</ul>
+				</li>
+				<li><a class="" href="grids.html"><i class="icon-th"></i> Grids &amp; Portlets</a></li>
+				<li class="has-sub">
+					<a href="javascript:;" class="">
+					<i class="icon-map-marker"></i> Maps
+					<span class="arrow"></span>
+					</a>
+					<ul class="sub">
+						<li><a class="" href="maps_google.html">Google Maps</a></li>
+						<li><a class="" href="maps_vector.html">Vector Maps</a></li>
+					</ul>
+				</li>
+				<li><a class="" href="charts.html"><i class="icon-bar-chart"></i> Visual Charts</a></li>
+				<li><a class="" href="calendar.html"><i class="icon-calendar"></i> Calendar</a></li>
+				<li><a class="" href="gallery.html"><i class="icon-camera"></i> Gallery</a></li>
+				<li class="has-sub">
+					<a href="javascript:;" class="">
+					<i class="icon-briefcase"></i> Extra
+					<span class="arrow"></span>
+					</a>
+					<ul class="sub">
+						<li><a class="" href="extra_pricing_table.html">Pricing Tables</a></li>
+						<li><a class="" href="extra_404.html">404 Page</a></li>
+						<li><a class="" href="extra_500.html">500 Page</a></li>
+						<li><a class="" href="extra_blank.html">Blank Page</a></li>
+					</ul>
+				</li>
+				<li><a class="" href="login.html"><i class="icon-user"></i> Login Page</a></li>
+			</ul></div>
 						
 						<!-- Here's where I want my views to be displayed-->
-						<?php echo $this->fetch('content'); ?>
-						
+												
 						
 					</div>
 				</div>
@@ -814,7 +890,7 @@ $(document).ready(function() {
 	$.ajax({
 		url: "<?php echo Router::url(array('controller' => 'Hms', 'action' =>'menus_as_per_user_rights'), true); ?>",
 	}).done(function(response) {
-		alert(response);
+		$("#menus_area").append(response);
 	});
 	
 	

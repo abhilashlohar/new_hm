@@ -25636,18 +25636,41 @@ function menus_as_per_user_rights(){
 			$assigned_modules[]=$main_module["role_privilege"]["module_id"];
 			$assigned_sub_modules[]=$main_module["role_privilege"]["sub_module_id"];
 		}
+		$assigned_modules = array_unique($assigned_modules);
+		$assigned_sub_modules = array_unique($assigned_sub_modules);
 		
 		$this->loadmodel('module_type');
 		$order=array("module_type.order" => "ASC");
 		$module_types=$this->module_type->find('all',array('order'=>$order));
 		foreach($module_types as $data){
 			$module_type_id=$data["module_type"]["module_type_id"];
+			$menus_array[$module_type_id]=array();
 			
 			$this->loadmodel('main_module');
+			$conditions=array("mt_id" => $module_type_id);
 			$order=array("main_module.module_name" => "ASC");
-			$main_modules=$this->main_module->find('all',array('order'=>$order));
+			$main_modules=$this->main_module->find('all',array('conditions'=>$conditions,'order'=>$order));
 			foreach($main_modules as $data2){
-				$module_name=$data2["main_module"]["module_name"];
+				$module_id=$data2["main_module"]["auto_id"];
+				if (in_array($module_id, $assigned_modules)){
+					$menus_array[$module_type_id][]=array($module_id);
+				}
+			}
+		}
+		
+		foreach($menus_array as $module_type_id=>$modules_data){
+			if(sizeof($modules_data)>0){
+				$module_type_name= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_module_type_name_via_module_type_id'),array('pass'=>array($module_type_id)));
+				?>
+				<li>
+					<div><?php echo $module_type_name; ?></div>	
+				</li>
+				<li>
+					<a href="/new_hm/Hms/update_default_package" rel="tab">
+					<i class="icon-home"></i> default package
+					</a>	
+				</li>
+				<?php
 			}
 		}
 	}

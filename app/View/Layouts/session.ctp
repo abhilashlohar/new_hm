@@ -34,6 +34,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
    <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/bootstrap-daterangepicker/daterangepicker.css" />
    <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/uniform/css/uniform.default.css" />
    <link rel="shortcut icon" href="favicon.ico" />
+   <script src="<?php echo $webroot_path; ?>assets/js/jquery-1.8.3.min.js"></script> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -57,9 +58,14 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
             <ul class="nav pull-right">
                <!-- BEGIN USER LOGIN DROPDOWN -->
                <li class="dropdown user">
+					<?php
+					$s_user_id=$this->Session->read('hm_user_id');
+					$user_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_info_via_user_id'), array('pass' => array($s_user_id)));
+					$name=$user_info[0]["user"]["user_name"];
+					?>
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <img alt="" src="<?php echo $webroot_path; ?>assets/img/avatar1_small.jpg" />
-                  <span class="username">Bob Nilson</span>
+                  <span class="username"><?php echo $name; ?></span>
                   <i class="icon-angle-down"></i>
                   </a>
                   <ul class="dropdown-menu">
@@ -145,7 +151,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
    <!-- END FOOTER -->
    <!-- BEGIN JAVASCRIPTS -->    
    <!-- Load javascripts at bottom, this will reduce page load time -->
-   <script src="<?php echo $webroot_path; ?>assets/js/jquery-1.8.3.min.js"></script>    
+    
    <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/ckeditor/ckeditor.js"></script>  
    <script src="<?php echo $webroot_path; ?>assets/breakpoints/breakpoints.js"></script>       
    <script src="<?php echo $webroot_path; ?>assets/bootstrap/js/bootstrap.min.js"></script>   

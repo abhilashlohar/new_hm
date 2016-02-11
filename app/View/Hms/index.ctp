@@ -104,7 +104,6 @@ $(document).ready(function(){
 		$('#contact-form').validate({
 	    rules: {
 	      username: {
-	       
 	        required: true
 	      },
 	      password: {

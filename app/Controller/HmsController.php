@@ -15512,7 +15512,7 @@ $conditions=array("wing_id" => $c_wing_id);
 return $this->flat->find('all',array('conditions'=>$conditions));
 
 }
-
+/*
 function hms_email_ip()
 {
 	
@@ -15544,7 +15544,7 @@ function hms_sms_ip()
 		
 	}
 }
-
+*/
 
 function hobbies_category_fetch($id){
 	
@@ -23947,11 +23947,12 @@ foreach($owner_tenant_set as $data){
 			die($output);
 		}
 	}
-
+	
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 
 /*------code here insert start -------*/
 
-$ip=$this->hms_email_ip();
+//echo $ip=$this->hms_email_ip(); exit;
 
 foreach($myArray as $child)
 {
@@ -23996,7 +23997,8 @@ foreach($myArray as $child)
 
 		if(!empty($mobile) && empty($email))
 		{
-			$r_sms=$this->hms_sms_ip();
+			$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
+			
 			$working_key=$r_sms->working_key;
 			$sms_sender=$r_sms->sms_sender;
 			$sms_allow=(int)$r_sms->sms_allow;

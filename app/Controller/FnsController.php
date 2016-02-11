@@ -38,7 +38,7 @@ function hms_sms_ip(){
 
 function hms_email_ip(){
 	$this->loadmodel('assistant');
-	$conditions=array('auto_id'=>2);
+	$conditions=array('auto_id'=>3);
 	$assistant_info=$this->assistant->find('all',array('conditions'=>$conditions));
 	foreach($assistant_info as $data)
 	{

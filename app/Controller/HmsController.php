@@ -25640,7 +25640,7 @@ function assign_default_modules_to_society($society_id=null){
 		$this->layout='session';
 	}
 	$this->ath();
-	
+	$society_id=(int)$society_id;
 	
 	$this->loadmodel('hm_modules_assign');
 	$conditions=array("society_id" => $society_id);

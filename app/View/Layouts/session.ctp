@@ -820,21 +820,19 @@ $(document).ready(function() {
 	
 		function change_page_automatically(pageurl){
 			$(document).ready(function() { 
-				alert(pageurl);
 				$("#loading").show();
 				$.ajax({
 				url: pageurl,
 				}).done(function(response) {
-				
-				$("#loading_ajax").html('');
-				
-				$(".page-content").html(response);
-				$("#loading").hide();
-				$("html, body").animate({
-					scrollTop:0
-				},"slow");
-				 $('#submit_success').hide();
+					$("#loading_ajax").html('');
+					$(".page-content").html(response);
+					$("#loading").hide();
+					$("html, body").animate({
+						scrollTop:0
+					},"slow");
+					$('#submit_success').hide();
 				});
+				window.history.pushState({path:pageurl},'',pageurl);
 			});
 		}
 	

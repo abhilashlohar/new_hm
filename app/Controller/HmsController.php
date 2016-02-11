@@ -10178,16 +10178,14 @@ $this->society->save(array('society_id' => $society_id, 'society_name' => $socie
 date_default_timezone_set('Asia/kolkata');
 $date=date("d-m-Y");
 $time=date('h:i:a',time());
-$role_id[]=3;
-$default_role_id=3;
 $this->loadmodel('user');
-$this->user->save(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'password' =>'', 'mobile' => $mobile,  'society_id' => $society_id,'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes','user_type'=>'third_party'));
+$this->user->save(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'password' =>'', 'mobile' => $mobile,'society_id' => $society_id,'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes','user_type'=>'third_party'));
 
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'exited'=>'no'));
 
-$auro_id=$this->autoincrement('user_role','auro_id');
-$this->user_role->saveAll(array('auro_id'=>$auro_id,'user_id'=>$i,'role_id'=>1));
+$auro_id=$this->autoincrement('user_role','auto_id');
+$this->user_role->saveAll(array('auto_id'=>$auro_id,'user_id'=>$i,'role_id'=>1,'default'=>'yes'));
 
 
  $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -10298,11 +10296,12 @@ $this->notification_email->saveAll(array("notification_id" => $lo, "module_id" =
 //////////////////// end code login table ///////////////////////////////
 
 //////////////// Role to assign code for Society  //////////////////////////
-for($p=1;$p<=3;$p++)
+for($p=1;$p<=4;$p++)
 {
 if($p==1) { $d="Admin"; }
 if($p==2) { $d="Resident"; }
 if($p==3) { $d="Committee member"; }
+if($p==4) { $d="Family member"; }
 $this->loadmodel('role');
 $k=$this->autoincrement('role','auto_id');
 $this->role->saveAll(array("auto_id" => $k, "role_name" => $d, 'role_id'=>$p, "society_id" => $society_id));

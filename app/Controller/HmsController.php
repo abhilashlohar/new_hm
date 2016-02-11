@@ -10330,11 +10330,7 @@ $date=$collection['user_temp']['date'];
 $time=$collection['user_temp']['time'];
 $mobile=$collection['user_temp']['mobile'];
 $email=$collection['user_temp']['email'];
-$password=$collection['user_temp']['password'];
-$wing=(int)$collection['user_temp']['wing'];
-$flat=(int)$collection['user_temp']['flat'];
-$committee=(int)$collection['user_temp']['committee'];
-$tenant=(int)$collection['user_temp']['tenant']; 
+$password=@$collection['user_temp']['password'];
 $user_type=$collection['user_temp']['user_type']; 
 } 
 $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
@@ -10443,7 +10439,7 @@ $this->user->save(array('user_id' => $i, 'user_name' => $user_name,'email' => $e
 
 $this->loadmodel('user_role');
 $auto_id=$this->autoincrement('user_role','auto_id');
-$this->user_role->saveAll(array('auto_id' => $auto_id, 'role_id' => 1,'user_id' => $i));
+$this->user_role->saveAll(array('auto_id' => $auto_id, 'role_id' => 1,'user_id' => $i,'default'=>'yes'));
 
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'exited'=>'no'));
@@ -10483,11 +10479,12 @@ $this->user_temp->deleteAll($conditions);
 
 
 //////////////// Role to assign code for Society  //////////////////////////
-for($p=1;$p<=3;$p++)
+for($p=1;$p<=4;$p++)
 {
 if($p==1) { $d="Admin"; }
 if($p==2) { $d="Resident"; }
 if($p==3) { $d="Committee member"; }
+if($p==4) { $d="Family member"; }
 $this->loadmodel('role');
 $k=$this->autoincrement('role','auto_id');
 $this->role->saveAll(array("auto_id" => $k, "role_name" => $d, 'role_id'=>$p, "society_id" => $society_id));

@@ -168,7 +168,8 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
    <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/bootstrap-daterangepicker/daterangepicker.js"></script> 
    <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>  
    <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-   <script src="<?php echo $webroot_path; ?>assets/js/app.js"></script>     
+   <script src="<?php echo $webroot_path; ?>assets/js/app.js"></script>  
+	    
    <script>
       jQuery(document).ready(function() {       
          // initiate layout and plugins

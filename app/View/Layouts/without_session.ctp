@@ -20,11 +20,30 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
   <link href="<?php echo $webroot_path; ?>assets/css/style_default.css" rel="stylesheet" id="style_color" />
   <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/uniform/css/uniform.default.css" />
   <link rel="shortcut icon" href="favicon.ico" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+label.valid {
+  width: 24px;
+  height: 0px;
+  background: url(as/img/valid.png) center center no-repeat;
+  text-indent: -9999px;
+  position:fixed;
+}
+label.error {
+	font-style: italic;
+	color: red;
+	padding: 2px 8px;
+	font-size: 12px;
+}
+</style>
+</head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
 <body class="login">
+<script src="<?php echo $webroot_path; ?>assets/js/jquery-1.8.3.min.js"></script>  
+<script src="<?php echo $webroot_path; ?>as/js/jquery.validate.js"></script> 
   <?php echo $this->fetch('content'); ?>
+  
 </body>
 <!-- END BODY -->
 </html>

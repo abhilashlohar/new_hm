@@ -127,11 +127,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
          <!-- BEGIN PAGE CONTAINER-->
          <div class="container-fluid">
             <!-- BEGIN PAGE CONTENT-->
-            <div class="row-fluid">
-               <div class="span12">
-                  hello
-               </div>
-            </div>
+            <?php echo $this->fetch('content'); ?>
             <!-- END PAGE CONTENT-->         
          </div>
          <!-- END PAGE CONTAINER-->

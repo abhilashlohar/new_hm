@@ -73,7 +73,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
                      <li><a href="#"><i class="icon-calendar"></i> My Calendar</a></li>
                      <li><a href="#"><i class="icon-tasks"></i> My Tasks</a></li>
                      <li class="divider"></li>
-                     <li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
+                     <li><a href="<?php echo $webroot_path; ?>Hms/logout"><i class="icon-key"></i> Log Out</a></li>
                   </ul>
                </li>
                <!-- END USER LOGIN DROPDOWN -->
@@ -92,7 +92,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
          <div class="clearfix"></div>
          <!-- END RESPONSIVE QUICK SEARCH FORM -->
          <!-- BEGIN SIDEBAR MENU -->
-         <ul>
+         <ul id="menus_area">
             <li class="">
                <a href="index.html">
                <i class="icon-home"></i> Dashboard               
@@ -182,6 +182,33 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
          App.init();
       });
    </script>
+   <script>
+	$(document).ready(function() { 
+		$.ajax({
+			url: "<?php echo Router::url(array('controller' => 'Hms', 'action' =>'menus_as_per_user_rights'), true); ?>",
+		}).done(function(response) {
+			alert(response);
+			$("#menus_area").append(response);
+		});
+	});
+	function change_page_automatically(pageurl){
+		$(document).ready(function() { 
+			$("#loading").show();
+			$.ajax({
+			url: pageurl,
+			}).done(function(response) {
+				$("#loading_ajax").html('');
+				$(".page-content").html(response);
+				$("#loading").hide();
+				$("html, body").animate({
+					scrollTop:0
+				},"slow");
+				$('#submit_success').hide();
+			});
+			window.history.pushState({path:pageurl},'',pageurl);
+		});
+	}
+	</script>
    <!-- END JAVASCRIPTS -->   
 </body>
 <!-- END BODY -->

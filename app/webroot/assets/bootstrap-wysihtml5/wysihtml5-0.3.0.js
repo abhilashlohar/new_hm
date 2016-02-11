@@ -675,7 +675,7 @@ rangy.createModule("DomUtil", function(api, module) {
         getNodeIndex: getNodeIndex,
         getNodeLength: getNodeLength,
         getCommonAncestor: getCommonAncestor,
-        //isAncestorOf: isAncestorOf,
+        isAncestorOf: isAncestorOf,
         getClosestAncestorIn: getClosestAncestorIn,
         isCharacterDataNode: isCharacterDataNode,
         insertAfter: insertAfter,
@@ -1241,12 +1241,15 @@ rangy.createModule("DomUtil", function(api, module) {
             assertRangeValid(this);
             assertValidNodeType(node, insertableNodeTypes);
             assertNodeNotReadOnly(this.startContainer);
+
             if (dom.isAncestorOf(node, this.startContainer, true)) {
                 throw new DOMException("HIERARCHY_REQUEST_ERR");
             }
+
             // No check for whether the container of the start of the Range is of a type that does not allow
             // children of the type of node: the browser's DOM implementation should do this for us when we attempt
             // to add the node
+
             var firstNodeInserted = insertNodeAtPosition(node, this.startContainer, this.startOffset);
             this.setStartBefore(firstNodeInserted);
         },

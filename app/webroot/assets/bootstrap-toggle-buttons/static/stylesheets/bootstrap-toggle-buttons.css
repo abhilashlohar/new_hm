@@ -106,7 +106,7 @@
 /* line 91, ../sass/bootstrap-toggle-buttons.scss */
 .toggle-button span.primary, .toggle-button span.labelLeft {
   color: #fefefe;
-  background: #CC0000;
+  background: #0088cc;
   background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #0088cc), color-stop(100%, #0055cc));
   background-image: -webkit-linear-gradient(bottom, #0088cc, #0055cc);
   background-image: -moz-linear-gradient(bottom, #0088cc, #0055cc);

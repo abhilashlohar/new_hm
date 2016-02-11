@@ -126,10 +126,10 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 	<link href="<?php echo $webroot_path; ?>assets/bootstrap/css/bootstrap-responsive.min.1.css" rel="stylesheet" />
 	<link href="<?php echo $webroot_path; ?>assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
 	<link href="<?php echo $webroot_path; ?>assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
-	<link href="<?php echo $webroot_path; ?>assets/css/style.1.css" rel="stylesheet" />
+	<link href="<?php echo $webroot_path; ?>assets/css/style.css" rel="stylesheet" />
 	<link href="<?php echo $webroot_path; ?>assets/css/flash.css" rel="stylesheet" />
 	<link href="<?php echo $webroot_path; ?>assets/css/style_responsive.css" rel="stylesheet" />
-	<link href="<?php echo $webroot_path; ?>assets/css/style_default.1.css" rel="stylesheet" id="style_color" />
+	<link href="<?php echo $webroot_path; ?>assets/css/style_default.css" rel="stylesheet" id="style_color" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/uniform/css/uniform.default.css" />
 	    <link href="<?php echo $webroot_path; ?>assets/bootstrap/css/bootstrap-fileupload.css" rel="stylesheet" />
      <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/gritter/css/jquery.gritter.css" />
@@ -273,40 +273,8 @@ type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
 </script>
 
 <!--------------------url ajx------------------>
-
-
 <script>
-
 $(document).ready(function() {
-	
-	(function(){
-		//check_session_destroy();
-		setTimeout(arguments.callee, 2000);
-	})();
-	
-	function check_session_destroy(){
-		$.ajax({
-			url: "<?php echo Router::url(array('controller' => 'Hms', 'action' =>'check_session_destroy_or_not'), true); ?>",
-		}).done(function(response) {
-			if(response==0){
-				$(".modal-backdrop").show();
-				$(".session_destroy_container").show();
-			}
-		});
-	}
-	
-	
-	
-	
-	
-	setTimeout(function() { 
-		//slide_show();
-   }, 500);
-	
-	
-	
-	
-	
 	function slide_show(){
 		$.ajax({
 			url: "<?php echo Router::url(array('controller' => 'Hms', 'action' =>'check_slide_show_displayed_or_not'), true); ?>",
@@ -344,12 +312,6 @@ $(document).ready(function() {
 	});
 	
 	
-	
-	
-	
-	
-	
-	
 	$("a[role='button']").live('click',function(e){
 		e.preventDefault();
 	});
@@ -357,9 +319,6 @@ $(document).ready(function() {
 	$('a[role="button"]').live('click',function(e){
 		e.preventDefault();
 	});
-	
-	
-	
 	
 	window.onpopstate = function(s) {
 		pageurl = location.pathname;
@@ -369,90 +328,14 @@ $(document).ready(function() {
 
 });
 </script>
-
-
-<!--------notification start--------------->
-<script>
-$(document).ready(function() {
-	$(window).bind("load", function() {
-	   $('#notification_count').load('<?php echo Router::url(array('controller' => 'Hms', 'action' =>'notifications_count'), true); ?>');
-	   $('#alert_count').load('<?php echo Router::url(array('controller' => 'Hms', 'action' =>'alerts_count'), true); ?>');
-	   
-	   setTimeout(
-		  function() 
-		  {
-			//get_flash_message_output();
-		  }, 5000);
-	   
-	});
-	
-	function get_flash_message_output(){
-		$.ajax({
-			url: "<?php echo Router::url(array('controller' => 'Hms', 'action' =>'flash_output'), true); ?>",
-		}).done(function(response) {
-			$('#flash_output_div').prepend(response);
-			var h=$("#flash_div").height();
-			h=h+0;
-			
-			$("#header_div_container").css("margin-top","+="+h);
-		
-		});
-		
-		
-	}
-	
-	$(".remove_flash").live("click", function() {
-		var h=$("#flash_div").height();
-		h=h+2;
-		$("#header_div_container").css("margin-top","-="+h);
-		$("#flash_div").remove();
-	});
-	
-	setInterval(function(){ 
-	   $('#notification_count').load('<?php echo Router::url(array('controller' => 'Hms', 'action' =>'notifications_count'), true); ?>');
-	   $('#alert_count').load('<?php echo Router::url(array('controller' => 'Hms', 'action' =>'alerts_count'), true); ?>');
-	   $('#alert_div').load('<?php echo Router::url(array('controller' => 'Hms', 'action' =>'alerts'), true); ?>');
-	}, 3000);
-	
-	$(".notification_button").live('click',function(){
-	   $('#notification_div').html('<div align="center" style="padding: 20px;"><img src="<?php echo $webroot_path; ?>as/windows.gif" /></div>').load('<?php echo Router::url(array('controller' => 'Hms', 'action' =>'notifications'), true); ?>');
-	});
-	
-	$(".alert_button").live('click',function(){
-	   $('#alert_div').html('<div align="center" style="padding: 20px;"><img src="<?php echo $webroot_path; ?>as/windows.gif" /></div>').load('<?php echo Router::url(array('controller' => 'Hms', 'action' =>'alerts'), true); ?>');
-	});
-});
-</script>
-<!--------notification end--------------->
 <!------------JS-------------------->
-
-
-
-<script type="text/javascript">
- 
-  /* Replace #your_subdomain# by the subdomain of a Site in your OneAll account */    
-  var oneall_subdomain = '#your_subdomain#';
- 
-  /* The library is loaded asynchronously */
-  var oa = document.createElement('script');
-  oa.type = 'text/javascript'; oa.async = true;
-  oa.src = '//' + oneall_subdomain + '.api.oneall.com/socialize/library.js';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(oa, s);
-       
-</script>
-
-
 </head>
 <body class="fixed-top">
 <!-- BEGIN HEADER -->
-<div id="loading_ajax"></div>
-	<div class="header navbar navbar-inverse navbar-fixed-top" id="flash_output_div">
-
-
+	<div class="header navbar navbar-inverse navbar-fixed-top" >
 		<!-- BEGIN TOP NAVIGATION BAR -->
 		<div class="navbar-inner hide_at_print">
-			<div class="container-fluid" style="padding-right: 0px;">
+			<div class="container-fluid">
 				<!-- BEGIN LOGO -->
 				<a class="brand" href="<?php echo $webroot_path; ?>Hms/dashboard" style="margin-top:-9px;">
 				<img src="<?php echo $webroot_path; ?>as/hm/hm-logo.png" alt="logo" height="16px" width="120px"/>
@@ -590,5 +473,6 @@ $(document).ready(function() {
 		}
 	
 	</script>
+	<div id="loading_ajax"></div>
 </body>
 </html>

@@ -3,16 +3,10 @@ Modify bootstrap buttons
 ***/
 
 /* remove rounds from all elements */
-div, input, select, textarea, span, img, table, p, a, button, ul, li {
+div, input, select, textarea, span, img, table, td, th, p, a, button, ul, li {
   -webkit-border-radius: 0 !important;
      -moz-border-radius: 0 !important;
-          border-radius: 0px !important;
-}
-
-td, th {
-  -webkit-border-radius: 0 !important;
-     -moz-border-radius: 0 !important;
-          border-radius: 0px !important;
+          border-radius: 0 !important;
 }
 
 a:focus {
@@ -42,7 +36,7 @@ select:focus {
 	outline: none;
   -webkit-border-radius: 0 !important;
      -moz-border-radius: 0 !important;
-          border-radius: 0px !important;
+          border-radius: 0 !important;
 }
 .btn:hover, 
 .btn:focus, 
@@ -91,10 +85,6 @@ select:focus {
   background-color: #bb2413 !important;
   color: #fff !important;
 }
-
-
-
-
 
 /*  Blue */
 .btn.blue   
@@ -394,7 +384,7 @@ input[type="color"].m-wrap {
 	          box-shadow: none !important;
 	  -webkit-border-radius: 0px;
 	     -moz-border-radius: 0px;
-	          border-radius: 5px;
+	          border-radius: 0px;
   background: transparent !important;   
 }
 

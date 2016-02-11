@@ -63,7 +63,7 @@
         "image": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
             return "<li>" +
-              /*"<div class='bootstrap-wysihtml5-insert-image-modal modal hide fade'>" +
+              "<div class='bootstrap-wysihtml5-insert-image-modal modal hide fade'>" +
                 "<div class='modal-header'>" +
                   "<a class='close' data-dismiss='modal'></a>" +
                   "<h3>" + locale.image.insert + "</h3>" +
@@ -77,7 +77,7 @@
                 "</div>" +
               "</div>" +
               "<a class='btn" + size + "' data-wysihtml5-command='insertImage' title='" + locale.image.insert + "'><i class='icon-picture'></i></a>" +
-            */"</li>";
+            "</li>";
         },
 
         "html": function(locale, options) {

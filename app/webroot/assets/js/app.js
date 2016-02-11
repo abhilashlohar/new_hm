@@ -268,6 +268,7 @@ var App = function () {
         }
 
         $('#calendar').html("");
+		
         $('#calendar').fullCalendar({
             header: h,
             editable: true,
@@ -275,6 +276,10 @@ var App = function () {
                 title: 'All Day Event',
                 start: new Date(y, m, 1),
             }, {
+                title: 'Abhilash lohar Abhilash loharAbhilash loharAbhilash loharAbhilash lohar',
+                start: new Date(y, m, 5),
+				url: 'http://localhost/cakephp/hms/events/'
+            },{
                 title: 'Long Event',
                 start: new Date(y, m, d - 5),
                 end: new Date(y, m, d - 2),
@@ -2039,23 +2044,7 @@ var App = function () {
             return;
         }
 
-        //$('.date-picker').datepicker();
-		//Date datePickerDate = new Date(year - 1900, month, day); // get the value here;
-		//Date currentDate = new Date();
-		
-		$('.date-picker').datepicker().on('changeDate', function(){
-			
-			
-         $(this).blur();
-		// var d=$(this).val();
-		 
-		 //var dd = new Date(d);
-		 //alert(d);
-		// date1 = new Date().setHours('','','','');
-		//alert(date1);
-		
-        }); 
-		
+        $('.date-picker').datepicker();
 
         $('.timepicker-default').timepicker();
 
@@ -2073,8 +2062,7 @@ var App = function () {
         }
 
         $('#clockface_1').clockface();
-		$('#clockface_5').clockface();
-		
+
         $('#clockface_2').clockface({
             format: 'HH:mm',
             trigger: 'manual'
@@ -2455,6 +2443,7 @@ var App = function () {
                 return false;
             }
         }
+
     };
 
 }();

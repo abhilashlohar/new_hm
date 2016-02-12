@@ -92,7 +92,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
          <div class="clearfix"></div>
          <!-- END RESPONSIVE QUICK SEARCH FORM -->
          <!-- BEGIN SIDEBAR MENU -->
-         <ul id="menus_area">
+         <ul id="menus_area" >
             <li class="">
                <a href="index.html">
                <i class="icon-home"></i> Dashboard               

@@ -80,5 +80,12 @@ function fetch_module_type_name_via_module_type_id($module_type_id){
 	return $module_type_info[0]["module_type"]["module_type_name"];
 }
 
+function fetch_module_name_via_module_id($module_id){
+	$this->loadmodel('main_module');
+	$conditions=array('auto_id'=>$module_id);
+	$module_info=$this->main_module->find('all',array('conditions'=>$conditions));
+	return $module_info[0]["main_module"]["module_name"];
+}
+
 }
 ?>

@@ -25645,7 +25645,18 @@ function menus_as_per_user_rights(){
 					<li>
 						<div style="padding: 5px; color: rgb(255, 255, 255); font-weight: bold;"><?php echo $module_type_name; ?></div>	
 					</li>
-					<li><a class="" href="gallery.html"><i class="icon-camera"></i> Gallery</a></li>
+					<?php
+					foreach($modules_data as $data4){
+						$module_id=$data4[0]; 
+						$module_name= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_module_name_via_module_id'),array('pass'=>array($module_id)));
+						?>
+						
+						
+						
+						<li><a class="" href="grids.html"><i class="icon-th"></i> <?php echo $module_name; ?></a></li>
+					<?php }
+					?>
+					
 					<?php
 				}
 			}

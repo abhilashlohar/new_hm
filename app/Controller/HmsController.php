@@ -1783,7 +1783,7 @@ if($this->RequestHandler->isAjax()){
 	}else{
 		$this->layout='session';
 	}
-	$this->layout='blank';
+	
 $this->ath();
 }
 

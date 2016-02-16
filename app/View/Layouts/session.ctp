@@ -13,15 +13,21 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
    <meta content="" name="author" />
-   <link href="<?php echo $webroot_path; ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-   <link href="<?php echo $webroot_path; ?>assets/css/metro.css" rel="stylesheet" />
-   <link href="<?php echo $webroot_path; ?>assets/bootstrap/css/bootstrap-fileupload.css" rel="stylesheet" />
-   <link href="<?php echo $webroot_path; ?>assets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
-   <link href="<?php echo $webroot_path; ?>assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-   <link href="<?php echo $webroot_path; ?>assets/css/style.css" rel="stylesheet" />
-   <link href="<?php echo $webroot_path; ?>assets/css/style_responsive.css" rel="stylesheet" />
-   <link href="<?php echo $webroot_path; ?>assets/css/style_default.css" rel="stylesheet" id="style_color" />
-   <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/gritter/css/jquery.gritter.css" />
+   <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>css/loding_img.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link href="<?php echo $webroot_path; ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="<?php echo $webroot_path; ?>assets/css/metro.css" rel="stylesheet" />
+	
+	<link href="<?php echo $webroot_path; ?>assets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+	<link href="<?php echo $webroot_path; ?>assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+	<link href="<?php echo $webroot_path; ?>assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
+	<link href="<?php echo $webroot_path; ?>assets/css/style.css" rel="stylesheet" />
+	<link href="<?php echo $webroot_path; ?>assets/css/flash.css" rel="stylesheet" />
+	<link href="<?php echo $webroot_path; ?>assets/css/style_responsive.css" rel="stylesheet" />
+	<link href="<?php echo $webroot_path; ?>assets/css/style_default.css" rel="stylesheet" id="style_color" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/uniform/css/uniform.default.css" />
+	    <link href="<?php echo $webroot_path; ?>assets/bootstrap/css/bootstrap-fileupload.css" rel="stylesheet" />
+     <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/gritter/css/jquery.gritter.css" />
    <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/chosen-bootstrap/chosen/chosen.css" />
    <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/jquery-tags-input/jquery.tagsinput.css" />
    <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/clockface/css/clockface.css" />
@@ -32,27 +38,77 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
    <link rel="stylesheet" href="<?php echo $webroot_path; ?>assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
    <link rel="stylesheet" href="<?php echo $webroot_path; ?>assets/data-tables/DT_bootstrap.css" />
    <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/bootstrap-daterangepicker/daterangepicker.css" />
-   <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/uniform/css/uniform.default.css" />
-   <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>css/loding_img.css" />
-   <link rel="shortcut icon" href="favicon.ico" />
-   <script src="<?php echo $webroot_path; ?>assets/js/jquery-1.8.3.min.js"></script> 
-   
-<!-- BEGIN JAVASCRIPTS -->    
-   <!-- Load javascripts at bottom, this will reduce page load time -->
-    
-   <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/ckeditor/ckeditor.js"></script>  
-   <script src="<?php echo $webroot_path; ?>assets/breakpoints/breakpoints.js"></script>       
-   <script src="<?php echo $webroot_path; ?>assets/bootstrap/js/bootstrap.min.js"></script>   
+   <link href="<?php echo $webroot_path; ?>assets/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
+	<link href="<?php echo $webroot_path; ?>assets/jqvmap/jqvmap/jqvmap.css" media="screen" rel="stylesheet" type="text/css" />
+	<link rel="shortcut icon" href="favicon.ico" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="<?php echo $webroot_path; ?>as/bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo $webroot_path; ?>as/animate.css" rel="stylesheet" />
+<link href="<?php echo $webroot_path; ?>as/demo-styles.css" rel="stylesheet" />
+
+		<style>
+		label.valid {
+		  width: 24px;
+		  height: 0px;
+		  background: url(as/img/valid.png) center center no-repeat;
+		  text-indent: -9999px;
+		  position:fixed;
+		}
+		label.error {
+			/*font-weight: bold;*/
+			color: red;
+			padding: 2px 8px;
+			margin-top: 10px;
+		}
+		</style>
+		<style media="print">
+		.hide_at_print {
+			display:none !important;
+		}
+		.print_margin {
+			margin-left:5%;
+			}
+			.hide_to_show{
+			    display: block !important;
+			
+			}
+		</style>
+		
+		
+		
+	<!-----notification css--------------->
+	<style>
+	.ntfction_list {
+		padding:10px;
+		color:#313131;
+		border-bottom: solid 1px #ddd;
+		cursor: pointer;
+	}
+	.ntfction_list:hover {
+		color:#000;
+		background-color:#f5f5f5;
+	}
+	</style>
+	<!-----notification css--------------->
+	
+<!-----js--------------->
+    <script src="<?php echo $webroot_path; ?>assets/js/shortcut.js"></script> 	
+	<script src="<?php echo $webroot_path; ?>assets/js/jquery-1.8.3.min.js"></script>			
+	<script src="<?php echo $webroot_path; ?>assets/breakpoints/breakpoints.js"></script>			
+	<script src="<?php echo $webroot_path; ?>assets/jquery-slimscroll/jquery-ui-1.9.2.custom.min.js"></script>	
+	<script src="<?php echo $webroot_path; ?>assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="<?php echo $webroot_path; ?>assets/js/jquery.blockui.js"></script>
+	<script src="<?php echo $webroot_path; ?>assets/fullcalendar/fullcalendar/fullcalendar.min.js"></script>	
+	<script type="text/javascript" src="<?php echo $webroot_path; ?>assets/uniform/jquery.uniform.min.js"></script>
+	<script type="text/javascript" src="<?php echo $webroot_path; ?>assets/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
+	<script src="<?php echo $webroot_path; ?>assets/flot/jquery.flot.js"></script>
+	<script src="<?php echo $webroot_path; ?>assets/flot/jquery.flot.resize.js"></script>
+	<script src="<?php echo $webroot_path; ?>assets/flot/jquery.flot.pie.js"></script>
+	<script src="<?php echo $webroot_path; ?>assets/flot/jquery.flot.stack.js"></script>
+	<script src="<?php echo $webroot_path; ?>assets/flot/jquery.flot.crosshair.js"></script>
+	   <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/ckeditor/ckeditor.js"></script>  
    <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/bootstrap/js/bootstrap-fileupload.js"></script>
-   <script src="<?php echo $webroot_path; ?>assets/js/jquery.blockui.js"></script>
-   <!-- ie8 fixes -->
-   <!--[if lt IE 9]>
-   <script src="assets/js/excanvas.js"></script>
-   <script src="assets/js/respond.js"></script>
-   <![endif]-->
-   <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
-   <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/uniform/jquery.uniform.min.js"></script>
-   <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script> 
+     <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script> 
    <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
    <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/jquery-tags-input/jquery.tagsinput.min.js"></script>
    <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/bootstrap-toggle-buttons/static/js/jquery.toggle.buttons.js"></script>
@@ -62,14 +118,35 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
    <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/bootstrap-daterangepicker/daterangepicker.js"></script> 
    <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>  
    <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-   <script src="<?php echo $webroot_path; ?>assets/js/app.js"></script>  
-	    
-   <script>
-      jQuery(document).ready(function() {       
-         // initiate layout and plugins
-         App.init();
-      });
-   </script>
+    <script src="<?php echo $webroot_path; ?>assets/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+   	<script src="<?php echo $webroot_path; ?>assets/fancybox/source/jquery.fancybox.pack.js"></script>
+	<script src="<?php echo $webroot_path; ?>assets/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="<?php echo $webroot_path; ?>assets/js/jquery.cookie.js"></script>
+	<script src="<?php echo $webroot_path; ?>assets/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>	
+	<script src="<?php echo $webroot_path; ?>assets/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
+	<script src="<?php echo $webroot_path; ?>assets/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
+	<script src="<?php echo $webroot_path; ?>assets/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
+	<script src="<?php echo $webroot_path; ?>assets/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
+	<script src="<?php echo $webroot_path; ?>assets/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
+	<script src="<?php echo $webroot_path; ?>assets/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>	
+		<script type="text/javascript" src="<?php echo $webroot_path; ?>assets/gritter/js/jquery.gritter.js"></script>
+	<script type="text/javascript" src="<?php echo $webroot_path; ?>assets/js/jquery.pulsate.min.js"></script>	
+	  <script src="<?php echo $webroot_path; ?>assets/uniform/jquery.uniform.min.js"></script> 
+ 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<script src="<?php echo $webroot_path; ?>assets/js/gmaps.js"></script>
+	<script src="<?php echo $webroot_path; ?>assets/js/demo.gmaps.js"></script>
+		<script type="text/javascript" src="<?php echo $webroot_path; ?>assets/data-tables/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="<?php echo $webroot_path; ?>assets/data-tables/DT_bootstrap.js"></script>
+		<script src="<?php echo $webroot_path; ?>assets/js/app.js"></script>		
+	<script>
+		jQuery(document).ready(function() {			
+			// initiate layout and plugins
+			App.setPage('calendar');
+			App.init();
+		});
+	</script>
+	
+<script src="<?php echo $webroot_path; ?>as/js/jquery.validate.min.js"></script>
    <script>
 	$(document).ready(function() {
 		$.ajax({
@@ -81,23 +158,6 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 	});
 	
 	
-	
-	
-	function change_page_automatically(pageurl){
-		$(document).ready(function() { 
-			$("#loading").show();
-			$.ajax({
-			url: pageurl,
-			}).done(function(response) {
-				$(".page-content").html(response);
-				$("#loading").hide();
-				$("html, body").animate({
-					scrollTop:0
-				},"slow");
-			});
-			window.history.pushState({path:pageurl},'',pageurl);
-		});
-	}
 	</script>
    <!-- END JAVASCRIPTS -->    
    

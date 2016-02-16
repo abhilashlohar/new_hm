@@ -1,5 +1,6 @@
 <?php echo $this->fetch('content'); ?>
 <script>
+$(document).ready(function() {
 var test = $("input[type=radio]:not(.toggle),input[type=checkbox]:not(.toggle)");
 if (test) {
 	test.uniform();
@@ -50,4 +51,5 @@ $('.scroller').each(function () {
 	});
 });
 jQuery('.popovers').popover();
+});
 </script>

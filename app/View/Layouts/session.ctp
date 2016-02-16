@@ -168,7 +168,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
       });
    </script>
    <script>
-	$(document).ready(function() { 
+	$(document).ready(function() {
 		$.ajax({
 			url: "<?php echo Router::url(array('controller' => 'Hms', 'action' =>'menus_as_per_user_rights'), true); ?>",
 		}).done(function(response) {

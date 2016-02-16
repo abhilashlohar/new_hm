@@ -1,5 +1,5 @@
-<style><link href="<?php echo $webroot_path; ?>as/bootstrap.icon-large.css" rel="stylesheet" />
-<link href="<?php echo $webroot_path; ?>as/bootstrap.icon-large.min.css" rel="stylesheet" /></style>
+<link href="<?php echo $webroot_path; ?>as/bootstrap.icon-large.css" rel="stylesheet" />
+<link href="<?php echo $webroot_path; ?>as/bootstrap.icon-large.min.css" rel="stylesheet" />
 
 <table width="100%" >
 <tr >
@@ -20,7 +20,7 @@
 <div><a href="sp_performance_report" target="_blank">Vendor Performance Report</a></div>
 <b> <i class="icon-group"></i> Contact Reports </b>
 <div>  <a href="contact_report" target="_blank"> Contact Report </a> </div>
-</div>
+
 
 <div style="padding:2px;">
 

@@ -1783,6 +1783,7 @@ if($this->RequestHandler->isAjax()){
 	}else{
 		$this->layout='session';
 	}
+	$this->layout='blank';
 $this->ath();
 }
 
@@ -25603,6 +25604,7 @@ $wing_flat= $this->requestAction(array('controller' => 'hms', 'action' => 'wing_
 	
 function menus_as_per_user_rights(){
 	$this->layout=null;
+	$webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'webroot_path'));
 	$s_user_id=$this->Session->read('hm_user_id');
 	$s_user_flat_id=$this->Session->read('hm_user_flat_id');
 	$s_society_id=$this->Session->read('hm_society_id');
@@ -25656,8 +25658,12 @@ function menus_as_per_user_rights(){
 						$module_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_module_info_via_module_id'),array('pass'=>array($module_id)));
 						$module_name=$module_info[0]["main_module"]["module_name"];
 						$icon=$module_info[0]["main_module"]["icon"];
+						
+						$page_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_page_info_via_module_id'),array('pass'=>array($module_id)));
+						$controller=$page_info[0]["page"]["controller"];
+						$page_name=$page_info[0]["page"]["page_name"];
 						?>
-								<li><a class="" href="table_basic.html"><i class="<?php echo $icon; ?>"></i> <?php echo $module_name; ?></a></li>
+								<li><a class="" rel='tab' role="button" href="<?php echo $webroot_path.$controller.'/'.$page_name; ?>"><i class="<?php echo $icon; ?>"></i> <?php echo $module_name; ?></a></li>
 					<?php }	?>
 							</ul>
 					</li>
@@ -25669,6 +25675,45 @@ function menus_as_per_user_rights(){
 			echo '<li style="color:#FFF; padding: 5px;">There is no any module assigned to you.</li>';
 		}
 		
+	}
+	if($user_type=="hm"){
+		?>
+		<li>
+			<a href="hm_assign_module">
+			<i class="icon-home"></i> Assign Modules
+			</a>					
+		</li>
+
+		<li>
+			<a href="new_society_enrollment">
+			<i class="icon-home"></i> New Enrollment
+			</a>					
+		</li>
+		<li>
+			<a href="society_approve">
+			<i class="icon-home"></i> Approve Society
+			</a>					
+		</li>
+
+		<li>
+			<a href="feedback_view">
+			<i class="icon-home"></i> Feedback
+			</a>					
+		</li>	
+
+		<li>
+			<a href="hm_society_member_view">
+			<i class="icon-home"></i> Society View
+			</a>					
+		</li>	
+
+
+		<li>
+			<a href="master_accounts_category_hm">
+			<i class="icon-home"></i>Master Charts Of Account HM
+			</a>					
+		</li>
+		<?php
 	}
 	
 }

@@ -85,5 +85,11 @@ function fetch_module_info_via_module_id($module_id){
 	return $this->main_module->find('all',array('conditions'=>$conditions));
 }
 
+function fetch_page_info_via_module_id($module_id){
+	$this->loadmodel('page');
+	$conditions=array('module_id'=>$module_id);
+	return $this->page->find('all',array('conditions'=>$conditions));
+}
+
 }
 ?>

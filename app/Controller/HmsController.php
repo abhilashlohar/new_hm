@@ -10497,8 +10497,8 @@ if($this->RequestHandler->isAjax()){
 		$this->layout='session';
 	}
 $this->ath();
-$this->check_user_privilages();
-$s_society_id=$this->Session->read('society_id');
+//$this->check_user_privilages();
+$s_society_id=$this->Session->read('hm_society_id');
 
 if (isset($this->request->data['add_role'])) 
 {

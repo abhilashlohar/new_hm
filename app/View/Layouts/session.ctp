@@ -9,7 +9,7 @@ echo $this->fetch('meta');
 $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'webroot_path'));
 ?>
    <meta charset="utf-8" />
-   <title>Metronic | Form Stuff - Form Components</title>
+   <title>HousingMatters | Making life simpler</title>
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
    <meta content="" name="author" />
@@ -73,23 +73,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 			
 			}
 		</style>
-		
-		
-		
-	<!-----notification css--------------->
-	<style>
-	.ntfction_list {
-		padding:10px;
-		color:#313131;
-		border-bottom: solid 1px #ddd;
-		cursor: pointer;
-	}
-	.ntfction_list:hover {
-		color:#000;
-		background-color:#f5f5f5;
-	}
-	</style>
-	<!-----notification css--------------->
+
 	
 <!-----js--------------->
     <script src="<?php echo $webroot_path; ?>assets/js/shortcut.js"></script> 	
@@ -170,11 +154,11 @@ $(document).ready(function() {
 		$.ajax({
 			url: pageurl,
 			}).done(function(response) {
-			alert(response);
+			
 			$(".page-content").html(response);
-			alert();
+		
 			$("#loading").hide();
-			alert(2);
+		
 			$("html, body").animate({
 				scrollTop:0
 			},"slow");

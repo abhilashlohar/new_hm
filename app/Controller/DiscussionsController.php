@@ -25,8 +25,8 @@ function index($id=null,$list=null){
 	$this->set('list',$list);
 	
 	
-	$s_user_id=$this->Session->read('user_id'); 
-	$s_society_id=$this->Session->read('society_id');
+	$s_user_id=$this->Session->read('hm_user_id'); 
+	$s_society_id=$this->Session->read('hm_society_id');
 	$s_role_id=$this->Session->read('role_id');
 	$this->set('s_user_id',$s_user_id);
 	$tenant=$this->Session->read('tenant');

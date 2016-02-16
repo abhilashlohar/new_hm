@@ -25640,33 +25640,32 @@ function menus_as_per_user_rights(){
 			
 			foreach($menus_array as $module_type_id=>$modules_data){
 				if(sizeof($modules_data)>0){
-					$module_type_name= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_module_type_name_via_module_type_id'),array('pass'=>array($module_type_id)));
+					$module_type_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_module_type_info_via_module_type_id'),array('pass'=>array($module_type_id)));
+					$module_type_name=$module_type_info[0]["module_type"]["module_type_name"];
+					$icon=$module_type_info[0]["module_type"]["icon"];
 					?>
-					<li>
-						<div style="padding: 5px; color: rgb(255, 255, 255); font-weight: bold;"><?php echo $module_type_name; ?></div>	
-					</li>
+					<li class="has-sub">
+							<a href="javascript:;" class=""><i class="<?php echo $icon; ?>"></i> <?php echo $module_type_name; ?>
+							<span class="arrow"></span></a>
+							<ul class="sub">
 					<?php
 					foreach($modules_data as $data4){
 						$module_id=$data4[0]; 
-						$module_name= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_module_name_via_module_id'),array('pass'=>array($module_id)));
+						$module_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_module_info_via_module_id'),array('pass'=>array($module_id)));
+						$module_name=$module_info[0]["main_module"]["module_name"];
+						$icon=$module_info[0]["main_module"]["icon"];
 						?>
-						
-						
-						
-						<li><a class="" href="grids.html"><i class="icon-th"></i> <?php echo $module_name; ?></a></li>
-					<?php }
-					?>
-					
+								<li><a class="" href="table_basic.html"><i class="<?php echo $icon; ?>"></i> <?php echo $module_name; ?></a></li>
+					<?php }	?>
+							</ul>
+					</li>
 					<?php
 				}
 			}
+		
 		}else{
 			echo '<li style="color:#FFF; padding: 5px;">There is no any module assigned to you.</li>';
 		}
-		
-		
-		
-		
 		
 	}
 	

@@ -172,10 +172,14 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 		$.ajax({
 			url: "<?php echo Router::url(array('controller' => 'Hms', 'action' =>'menus_as_per_user_rights'), true); ?>",
 		}).done(function(response) {
-			alert(response);
+			//alert(response);
 			$("#menus_area").append(response);
 		});
 	});
+	
+	
+	
+	
 	function change_page_automatically(pageurl){
 		$(document).ready(function() { 
 			$("#loading").show();

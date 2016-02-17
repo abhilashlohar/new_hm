@@ -25816,12 +25816,33 @@ $this->layout='blank';
 }else{
 $this->layout='session';
 }
-
-
-
 	$this->ath();
 	$s_society_id = $this->Session->read('society_id');
 	$s_user_id=$this->Session->read('user_id');	
+
+
+
+if(isset($this->request->data['sub']))
+{
+	
+$name = $this->request->data[''];	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 }
 ////////////////////// End create_login ////////////////////////////////////////	

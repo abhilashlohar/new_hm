@@ -38,7 +38,7 @@
 
 
 <div class="form-actions">
-<button type="submit" class="btn blue" id="submit">Submit</button>
+<button type="submit" class="btn blue" id="submit" name="sub">Submit</button>
 <button type="button" class="btn">Cancel</button>
 </div>
 </div>
@@ -72,8 +72,23 @@ ttt = 555;
 }
 else
 {
+
 $("#mail").html('');	
 $("#mob").html('');	
+
+if(email != "")
+{
+if(email == '' || email.indexOf('@') == -1 || email.indexOf('.') == -1){
+ttt = 555;
+$("#mail").html('Email is not Valid');
+}
+else
+{
+$("#mail").html('');	
+}
+}
+
+
 }
 if(password == "")
 {

@@ -1,3 +1,6 @@
+<?php
+echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
+?>
 <div class="tabbable tabbable-custom">
 <ul class="nav nav-tabs">
 	

@@ -73,10 +73,9 @@ xobj.send(null);
 <!-- BEGIN LOGIN -->
 <div class="content">
 <!-- BEGIN LOGIN FORM -->
-<form id="contact-form" method="post" class="form-vertical login-form"  />
+<form id="contact-form" method="post" class="form-vertical login-form" >
 <fieldset>
 <h3 class="form-title">Sign Up</h3>
-
 
 <div class="control-group">
 <label class="control-label" style="font-size:16px;">Society </label>
@@ -167,11 +166,7 @@ $society_name=$db['society']["society_name"];
 <!-- END LOGIN FORM -->        
 </div>
 <!-- END LOGIN -->
-<!-- BEGIN COPYRIGHT -->
-<div class="copyright">
-HousingMatters.
-</div>
-<!-- END COPYRIGHT -->
+
 <script>
 $(document).ready(function(){
 	   

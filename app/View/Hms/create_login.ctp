@@ -1,7 +1,7 @@
 <form method="post">          
 <div class="portlet box blue">
 <div class="portlet-title">
-<h4 class="block">Validation States</h4>
+<h4 class="block">Create Login</h4>
 </div>
 <div class="portlet-body form">
 

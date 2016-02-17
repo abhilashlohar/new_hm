@@ -25970,6 +25970,21 @@ $this->layout='session';
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=(int)$this->Session->read('user_id');
 
+	
+	
+if(isset($this->request->data['add_role'])) 
+{
+echo  $role_id=(int)$this->request->data['role_name'];	
+exit;	
+	
+	
+	
+	
+}	
+	
+	
+	
+	
 $this->loadmodel('hms_role');
 $result_hms_role=$this->hms_role->find('all');
 $this->set('result_hms_role',$result_hms_role);

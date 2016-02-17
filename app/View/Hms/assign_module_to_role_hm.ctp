@@ -1,7 +1,7 @@
-
+<form method="post">
 <label style="font-size:14px;">Select Role</label>
 <div class="controls">
-<select class="m-wrap span6" data-placeholder="Choose A Role" onchange="assign_module_ajax(this.value)">
+<select class="m-wrap span6" data-placeholder="Choose A Role" onchange="assign_module_ajax(this.value)" name="role_name">
 <option value="">Select Role</option>
 <?php 
 foreach($result_hms_role as $data)
@@ -17,7 +17,7 @@ $role_name = $data['hms_role']['role_name'];
 </div>
 <br>
 <div id="ajax_content"></div>
-
+</form>
 <script>
 function assign_module_ajax(vv)
 {

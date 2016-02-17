@@ -25824,9 +25824,12 @@ $this->layout='session';
 
 if(isset($this->request->data['sub']))
 {
+$name = $this->request->data['name'];
+$email = $this->request->data['email'];
+$mobile = $this->request->data['mobile'];
+$password = $this->request->data['password'];
 	
-$name = $this->request->data[''];	
-	
+exit;	
 }
 
 

@@ -24,7 +24,7 @@
 
 <label style="font-size:14px;">Mobile<span style="color:red;">*</span></label>
 <div class="controls">
-<input type="text" class="m-wrap span4" name="mobile" id="mobile"><br>
+<input type="text" class="m-wrap span4" name="mobile" id="mobile" maxlength="10"><br>
 <span id="mob" style="color:red;"></span>
 </div>
 <br>

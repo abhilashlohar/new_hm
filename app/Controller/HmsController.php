@@ -10672,6 +10672,19 @@ $this->set('result_module_type',$this->module_type->find('all',array('order'=>$o
 
 }
 
+
+function fetch_main_module_name_hm($module_id)
+{
+$this->layout='blank';
+$this->ath();
+
+$this->loadmodel('main_module');
+$conditions=array("mt_id" => $module_id);
+return $result_main_module=$this->main_module->find('all',array('conditions'=>$conditions));
+}
+
+
+
 function fetch_main_module_name($module_id)
 {
 $this->layout='blank';
@@ -10686,13 +10699,23 @@ function fetch_sub_module($main_module_id)
 {
 $this->layout='blank';
 $this->ath();
-
 $this->loadmodel('sub_modules');
 $conditions=array("module_id" => $main_module_id);
 return $result_sub_modules=$this->sub_modules->find('all',array('conditions'=>$conditions));
 }
 
+function fetch_hm_assign_module_hm($mt_id)
+{
+$this->layout='blank';
+$this->ath();
+$role_id=(int)$this->request->query('con');
 
+$s_society_id=$this->Session->read('society_id');
+$this->loadmodel('hm_modules_assign');
+$conditions=array('mt_id'=>$mt_id);
+return $this->hm_modules_assign->find('all',array('conditions'=>$conditions));
+	
+}
 
 function fetch_hm_assign_module($mt_id)
 {

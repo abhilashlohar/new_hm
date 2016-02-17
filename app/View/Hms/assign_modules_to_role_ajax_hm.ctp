@@ -1,16 +1,27 @@
+<script>
+$( document ).ready( function() {
+   jQuery('.tooltips').tooltip();
+   
+   
+    var test = $("input[type=checkbox]:not(.toggle), input[type=radio]:not(.toggle)");
+        if (test) {
+            test.uniform();
+        }
+});
+</script>
+
 <div class="portlet-body" style=''>
 <div class="accordion in collapse" id="accordion1" style="height:auto;">
-								
 <?php
 $i=0;
 $k=15;
 foreach ($result_module_type as $collection) 
 {
 $k++;
-	$i++;	
-	$module_type_id=(int)$collection["module_type"]["module_type_id"];
-	$module_type_name=$collection["module_type"]["module_type_name"];
-	$icon=$collection["module_type"]["icon"];
+$i++;	
+$module_type_id=(int)$collection["module_type"]["module_type_id"];
+$module_type_name=$collection["module_type"]["module_type_name"];
+$icon=$collection["module_type"]["icon"];
 
 	?>
 <div class="accordion-group" style="";>
@@ -27,30 +38,18 @@ $k++;
 	</table>
 	</div>
 	
-
-
 <div id="collapse_m<?php echo $i; ?>" class="accordion-body collapse" style="height: 0px;">
-		<div class="accordion-inner">
-		<div class="accordion in collapse" id="accordion<?php echo $k; ?>" style="height: auto;">
-			<?php
-			$result_hm_assign_module=$this->requestAction(array('controller' => 'hms', 'action' => 'fetch_hm_assign_module'), array('pass' => array($module_type_id)));
-			
-				/////////////////////////////////////////
-				
-				$j=0;
-foreach($result_hm_assign_module as $collection) 
-{
-	$j++;	
-	$module_id=(int)$collection["hm_modules_assign"]["module_id"];
-	
-$result_data=$this->requestAction(array('controller' => 'hms', 'action' => 'fetch_main_module_name'), array('pass' => array($module_id)));
-
+<div class="accordion-inner">
+<div class="accordion in collapse" id="accordion<?php echo $k; ?>" style="height: auto;">
+		
+<?php
+$result_data=$this->requestAction(array('controller' => 'hms', 'action' => 'fetch_main_module_name_hm'), array('pass' => array($module_type_id)));
 foreach ($result_data as $collection) 
 {	
-	$module_name=$collection["main_module"]["module_name"];
-	$icon=$collection["main_module"]["icon"];
-}
-	?>
+$module_name=$collection["main_module"]["module_name"];
+$icon=$collection["main_module"]["icon"];
+$module_id = (int)$collection['main_module']['auto_id'];
+?>
 
 <div class="accordion-group" style="width:49%;margin-left:20%;">
 	<div class="accordion-heading" style="padding: 5px;">
@@ -98,27 +97,17 @@ foreach ($result_data as $collection)
 				<?php
 			} ?>
 				
-			</div>
-			</div>
-		</div>
-	
+</div>
+</div>
+</div>
+<?php } ?>			
+</div>			
+		
+</div>
+</div>
+</div>
 									
 <?php }  ?>	
-				
-	</div>			
-				
-				
-				
-				
-			
-				
-				
-			</div>
-		</div>
-	</div>
-									
-<?php }  ?>	
-								
 <div style="padding: 10px;" >
 <button type="submit" name="add_role"  class="btn blue">Assign Modules</button>
 </div>	
@@ -147,3 +136,6 @@ $(".all_chk" +c).attr('checked','checked');
 });
 
 </script>
+
+	
+

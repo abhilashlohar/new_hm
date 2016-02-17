@@ -25717,7 +25717,7 @@ function menus_as_per_user_rights(){
 			</a>					
 		</li>
 		<li>
-			<a href="master_accounts_category_hm">
+			<a href="create_login">
 			<i class="icon-home"></i>Create Login
 			</a>					
 		</li>
@@ -25808,7 +25808,23 @@ function update_default_sub_module_by_hm_ajax($sub_module_id,$role,$status){
 	}
 	
 }
+/////////////////////// Start create_login ////////////////////////////////////////
+function create_login()
+{
+if($this->RequestHandler->isAjax()){
+$this->layout='blank';
+}else{
+$this->layout='session';
+}
+
+
+
+	$this->ath();
+	$s_society_id = $this->Session->read('society_id');
+	$s_user_id=$this->Session->read('user_id');	
 	
+}
+////////////////////// End create_login ////////////////////////////////////////	
 	
 }
 ?>

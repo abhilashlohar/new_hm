@@ -25706,11 +25706,14 @@ function menus_as_per_user_rights(){
 			<i class="icon-home"></i> Society View
 			</a>					
 		</li>	
-
-
 		<li>
 			<a href="master_accounts_category_hm">
 			<i class="icon-home"></i>Master Charts Of Account HM
+			</a>					
+		</li>
+		<li>
+			<a href="master_accounts_category_hm">
+			<i class="icon-home"></i>Create Login
 			</a>					
 		</li>
 		<?php

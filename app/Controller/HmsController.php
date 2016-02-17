@@ -25898,11 +25898,11 @@ $password = $this->request->data['password'];
 
 $this->loadmodel('user');
 $i=$this->autoincrement('user','user_id');
-$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email' => $email, 'mobile' => $mobile,'society_id' =>$s_society_id,'signup_random'=>"",'active'=>'yes',"user_type"=>"hm_child"));
+$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email' => $email, 'mobile' => $mobile,'society_id' =>null,'signup_random'=>"",'active'=>'yes',"user_type"=>"hm_child"));
 
 $this->loadmodel('user_flat');
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
-$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$s_society_id,'exited'=>'no'));
+$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>null,'exited'=>'no'));
 
 }
 	
@@ -25917,10 +25917,23 @@ $this->layout='blank';
 $this->layout='session';
 }
 	$this->ath();
-	$s_society_id = $this->Session->read('hm_society_id');
-	$s_user_id=$this->Session->read('user_id');		
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=(int)$this->Session->read('user_id');		
 	
-	
+
+if(isset($this->request->data['sub']))
+{
+$role_name = $this->request->data['role'];
+
+$this->loadmodel('hms_role');
+$i=$this->autoincrement('hms_role','auto_id');
+$this->hms_role->saveAll(array('auto_id'=>$i,'role_name'=>$role_name));
+}
+
+$this->loadmodel('hms_role');
+$result_hms_role=$this->hms_role->find('all');
+$this->set('result_hms_role',$result_hms_role);
+
 }
 ////////////////// End hm_create_role //////////////////////////////////////	
 }

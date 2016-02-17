@@ -22706,7 +22706,7 @@ return $this->due_tax->find('all',array('conditions'=>$conditions));
 /////////////////////// Start Wing Fetch(Accounts) //////////////////////////////////
 function wing_fetch($wing) 
 {
-$s_society_id = $this->Session->read('society_id');
+$s_society_id = $this->Session->read('hm_society_id');
 
 $this->loadmodel('wing');
 $conditions=array("wing_id" => $wing,"society_id"=>$s_society_id);

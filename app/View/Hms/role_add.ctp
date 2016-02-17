@@ -1,5 +1,3 @@
-
-
 <div class="tabbable tabbable-custom">
 <ul class="nav nav-tabs">
 	

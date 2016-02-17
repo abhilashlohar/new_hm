@@ -25712,6 +25712,11 @@ function menus_as_per_user_rights(){
 			</a>					
 		</li>
 		<li>
+			<a href="update_default_package">
+			<i class="icon-home"></i>Update default package of modules
+			</a>					
+		</li>
+		<li>
 			<a href="master_accounts_category_hm">
 			<i class="icon-home"></i>Create Login
 			</a>					

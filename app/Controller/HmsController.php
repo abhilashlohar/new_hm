@@ -25774,6 +25774,19 @@ function menus_as_per_user_rights(){
 			<i class="icon-home"></i>Create Login
 			</a>					
 		</li>
+		
+		<li>
+			<a href="hm_create_role">
+			<i class="icon-home"></i>Create Role
+			</a>					
+		</li>
+		
+		
+		
+		
+		
+		
+		
 		<?php
 	}
 	
@@ -25878,8 +25891,8 @@ $this->layout='session';
 if(isset($this->request->data['sub']))
 {
 $name = $this->request->data['name'];
-$email = $this->request->data['email'];
-$mobile = $this->request->data['mobile'];
+$email = @$this->request->data['email'];
+$mobile = @$this->request->data['mobile'];
 $password = $this->request->data['password'];
 
 
@@ -25889,14 +25902,26 @@ $this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email' => $ema
 
 $this->loadmodel('user_flat');
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
-$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'exited'=>'no'));
+$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$s_society_id,'exited'=>'no'));
 
 }
-
-
 	
 }
 ////////////////////// End create_login ////////////////////////////////////////	
+/////////////////// Start hm_create_role ///////////////////////////////////
+function hm_create_role()
+{
+if($this->RequestHandler->isAjax()){
+$this->layout='blank';
+}else{
+$this->layout='session';
+}
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('user_id');		
 	
+	
+}
+////////////////// End hm_create_role //////////////////////////////////////	
 }
 ?>

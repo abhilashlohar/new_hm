@@ -25781,12 +25781,11 @@ function menus_as_per_user_rights(){
 			</a>					
 		</li>
 		
-		
-		
-		
-		
-		
-		
+		<li>
+			<a href="assign_module_to_role_hm">
+			<i class="icon-home"></i>Assign Module to Role
+			</a>					
+		</li>
 		<?php
 	}
 	
@@ -25936,5 +25935,38 @@ $this->set('result_hms_role',$result_hms_role);
 
 }
 ////////////////// End hm_create_role //////////////////////////////////////	
+////////////////// Start assign_module_to_role_hm /////////////////////////
+function assign_module_to_role_hm()
+{
+if($this->RequestHandler->isAjax()){
+$this->layout='blank';
+}else{
+$this->layout='session';
+}
+	$this->ath();
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=(int)$this->Session->read('user_id');
+
+$this->loadmodel('hms_role');
+$result_hms_role=$this->hms_role->find('all');
+$this->set('result_hms_role',$result_hms_role);
+	
+}
+//////////////////// End assign_module_to_role_hm //////////////////////////
+////////////////////// Start assign_modules_to_role_ajax_hm ////////////////////
+function assign_modules_to_role_ajax_hm()
+{
+$this->layout='blank';
+$this->ath();
+
+$s_society_id=$this->Session->read('society_id');
+$s_role_id=$this->Session->read('role_id');	
+
+$this->loadmodel('module_type');
+$order=array('module_type.module_type_name'=>'ASC');		
+$this->set('result_module_type',$this->module_type->find('all',array('order'=>$order)));
+	
+}
+//////////////////// End assign_modules_to_role_ajax_hm ////////////////////////
 }
 ?>

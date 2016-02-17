@@ -25870,7 +25870,7 @@ $this->layout='blank';
 $this->layout='session';
 }
 	$this->ath();
-	$s_society_id = $this->Session->read('society_id');
+	$s_society_id = $this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('user_id');	
 
 
@@ -25881,22 +25881,17 @@ $name = $this->request->data['name'];
 $email = $this->request->data['email'];
 $mobile = $this->request->data['mobile'];
 $password = $this->request->data['password'];
-	
-exit;	
+
+
+$this->loadmodel('user');
+$i=$this->autoincrement('user','user_id');
+$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email' => $email, 'mobile' => $mobile,'society_id' =>$s_society_id,'signup_random'=>"",'active'=>'yes',"user_type"=>"hm_child"));
+
+$this->loadmodel('user_flat');
+$user_flat_id=$this->autoincrement('user_flat','user_flat_id');
+$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'exited'=>'no'));
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	

@@ -20,6 +20,18 @@
 <th> #</th>
 <th>Role Name</th>
 </tr>
+<?php
+$ii = 0;
+foreach($result_hms_role as $data)
+{
+$ii++;
+$role_name = $data['hms_role']['role_name'];	
+?>
+<tr>
+<td><?php echo $ii; ?></td>
+<td><?php echo $role_name; ?></td>
+</tr>
+<?php } ?>
 </table>
 </div>
 </div>

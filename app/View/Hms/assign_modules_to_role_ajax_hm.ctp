@@ -51,6 +51,7 @@ $icon=$collection["main_module"]["icon"];
 $module_id = (int)$collection['main_module']['auto_id'];
 ?>
 
+
 <div class="accordion-group" style="width:49%;margin-left:20%;">
 	<div class="accordion-heading" style="padding: 5px;">
 	<table width="100%" style="font-size: 15px;">

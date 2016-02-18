@@ -26059,6 +26059,32 @@ $this->layout='session';
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=(int)$this->Session->read('user_id');	
 	
+	
+if(isset($this->request->data['sub']))
+{
+$user_id = (int)$this->request->data['user'];
+$society_id = (int)$this->request->data['society'];
+$role_id = (int)$this->request->data['role'];
+
+
+$this->loadmodel('hms_rights');
+$auto_id=$this->autoincrement('hms_rights','auto_id');
+$data_row=Array(Array("auto_id"=>$auto_id,"user_id"=>$user_id,"society_id"=>$society_id,'role_id'=>$role_id));
+$this->hms_rights->saveAll($data_row); 
+
+}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 $this->loadmodel('society');
 $result_society=$this->society->find('all');
 $this->set('result_society',$result_society);

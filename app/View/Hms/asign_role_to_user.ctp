@@ -65,7 +65,7 @@ $role_name = $data['hms_role']['role_name'];
 <br>
                           
 <div class="form-actions">
-<button type="submit" class="btn blue">Submit</button>
+<button type="submit" class="btn blue" name="sub">Submit</button>
 <button type="button" class="btn">Cancel</button>
 </div>
 </div>

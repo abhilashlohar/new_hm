@@ -10600,35 +10600,7 @@ $s_society_id=$this->Session->read('hm_society_id');
 $this->loadmodel('module_type');
 $order=array('module_type.module_type_name'=>'ASC');		
 $result_module_type=$this->module_type->find('all',array('order'=>$order));
-?>
-<div class="portlet-body">
-	<div style="height: auto;" class="accordion in collapse" id="accordion1">
-	<?php foreach($result_module_type as $data){ 
-		$module_type_id=$data["module_type"]["module_type_id"];
-		$module_type_name=$data["module_type"]["module_type_name"];
-		$icon=$data["module_type"]["icon"];?>
-		<div class="accordion-group">
-			<div class="accordion-heading">
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapse_<?php echo $module_type_id; ?>">
-				<i class="<?php echo $icon; ?>"></i>
-				<?php echo $module_type_name; ?>
-				</a>
-			</div>
-			<div style="height: 0px;" id="collapse_<?php echo $module_type_id; ?>" class="accordion-body collapse">
-				<div class="accordion-inner">
-					<div style="min-height:300px;">
-						hello
-					</div>
-				</div>
-			</div>
-		</div>
-	<?php } ?>
-	</div>
-</div>
-
-<?php
-
-
+$this->set(compact("result_module_type"));
 
 }
 

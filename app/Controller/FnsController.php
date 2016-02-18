@@ -66,6 +66,14 @@ function fetch_default_role_via_user_id($user_id){
 	return $role_info[0]["user_role"]["role_id"];
 }
 
+function fetch_default_role_via_user_id_hm($user_id){
+	$this->loadmodel('hms_right');
+	$conditions=array('user_id'=>$user_id,'default'=>'yes');
+	$role_info=$this->hms_right->find('all',array('conditions'=>$conditions));
+	return $role_info[0]["hms_right"]["role_id"];
+}
+
+
 function fetch_module_type_id_via_module_id($module_id){
 	$this->loadmodel('main_module');
 	$conditions=array('auto_id'=>$module_id);

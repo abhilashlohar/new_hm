@@ -968,7 +968,7 @@ $this->redirect(array('action' => 'index'));
 
 function beforeFilter()
 {
-//Configure::write('debug', 0);
+Configure::write('debug', 0);
 }
 
 
@@ -4599,7 +4599,6 @@ if ($this->request->is('post'))
 		array("mobile" => $username, "password" => $password),
 	));
 	$result_user=$this->user->find('all',array('conditions'=>$conditions));
-	$user_id=$result_user[0]["user"]["user_id"];
 	$user_id=$result_user[0]["user"]["user_id"];
 	$society_id=$result_user[0]["user"]["society_id"];
 	
@@ -25646,17 +25645,19 @@ function menus_as_per_user_rights(){
 	$s_user_flat_id=$this->Session->read('hm_user_flat_id');
 	$s_society_id=$this->Session->read('hm_society_id');
 	$user_type= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'),array('pass'=>array($s_user_id)));
+	
 	if($user_type=="third_party" or $user_type=="member"){
-		$default_role= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id'),array('pass'=>array($s_user_id)));
+	$default_role= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id'),array('pass'=>array($s_user_id)));
 		
 		$this->loadmodel('role_privilege');
 		$conditions=array('society_id'=>$s_society_id,'role_id'=>$default_role);
 		$main_modules=$this->role_privilege->find('all',array('conditions'=>$conditions));
-		if(sizeof($main_modules)>0){
+			if(sizeof($main_modules)>0){
 			foreach($main_modules as $main_module){
-				$assigned_modules[]=$main_module["role_privilege"]["module_id"];
-				$assigned_sub_modules[]=$main_module["role_privilege"]["sub_module_id"];
+			$assigned_modules[]=$main_module["role_privilege"]["module_id"];
+			$assigned_sub_modules[]=$main_module["role_privilege"]["sub_module_id"];
 			}
+			
 			$assigned_modules = array_unique($assigned_modules);
 			$assigned_sub_modules = array_unique($assigned_sub_modules);
 			
@@ -25672,19 +25673,19 @@ function menus_as_per_user_rights(){
 				$order=array("main_module.module_name" => "ASC");
 				$main_modules=$this->main_module->find('all',array('conditions'=>$conditions,'order'=>$order));
 				foreach($main_modules as $data2){
-					$module_id=$data2["main_module"]["auto_id"];
-					if (in_array($module_id, $assigned_modules)){
-						$menus_array[$module_type_id][]=array($module_id);
-					}
+				$module_id=$data2["main_module"]["auto_id"];
+				if (in_array($module_id, $assigned_modules)){
+				$menus_array[$module_type_id][]=array($module_id);
+				}
 				}
 			}
 			
-			foreach($menus_array as $module_type_id=>$modules_data){
-				if(sizeof($modules_data)>0){
-					$module_type_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_module_type_info_via_module_type_id'),array('pass'=>array($module_type_id)));
-					$module_type_name=$module_type_info[0]["module_type"]["module_type_name"];
-					$icon=$module_type_info[0]["module_type"]["icon"];
-					?>
+		foreach($menus_array as $module_type_id=>$modules_data){
+		if(sizeof($modules_data)>0){
+		$module_type_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_module_type_info_via_module_type_id'),array('pass'=>array($module_type_id)));
+		$module_type_name=$module_type_info[0]["module_type"]["module_type_name"];
+		$icon=$module_type_info[0]["module_type"]["icon"];
+		?>
 					<li class="has-sub">
 							<a href="javascript:;" class=""><i class="<?php echo $icon; ?>"></i> <?php echo $module_type_name; ?>
 							<span class="arrow"></span></a>
@@ -25781,10 +25782,76 @@ function menus_as_per_user_rights(){
 		
 		<?php
 	}
-	if($user_type=="hm")
+	if($user_type=="hm_child")
 	{
+	$default_role= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id_hm'),array('pass'=>array($s_user_id)));	
+	
+		$this->loadmodel('role_privilege_hm');
+		$conditions=array('role_id'=>(int)$default_role);
+		$main_modules=$this->role_privilege_hm->find('all',array('conditions'=>$conditions));
+		if(sizeof($main_modules)>0){
+		foreach($main_modules as $main_module){
+		$assigned_modules[]=$main_module["role_privilege_hm"]["module_id"];
+		$assigned_sub_modules[]=$main_module["role_privilege_hm"]["sub_module_id"];
+		}
 		
+			
 		
+		$assigned_modules = array_unique($assigned_modules);
+		$assigned_sub_modules = array_unique($assigned_sub_modules);
+
+
+		$this->loadmodel('module_type');
+		$order=array("module_type.order" => "ASC");
+		$module_types=$this->module_type->find('all',array('order'=>$order));
+		foreach($module_types as $data){
+		$module_type_id=$data["module_type"]["module_type_id"];
+		$menus_array[$module_type_id]=array();
+				
+				$this->loadmodel('main_module');
+				$conditions=array("mt_id" => $module_type_id);
+				$order=array("main_module.module_name" => "ASC");
+				$main_modules=$this->main_module->find('all',array('conditions'=>$conditions,'order'=>$order));
+				foreach($main_modules as $data2){
+				$module_id=$data2["main_module"]["auto_id"];
+				if (in_array($module_id, $assigned_modules)){
+				$menus_array[$module_type_id][]=array($module_id);
+				}
+				}
+			}
+			
+		foreach($menus_array as $module_type_id=>$modules_data){
+		if(sizeof($modules_data)>0){
+		$module_type_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_module_type_info_via_module_type_id'),array('pass'=>array($module_type_id)));
+		$module_type_name=$module_type_info[0]["module_type"]["module_type_name"];
+		$icon=$module_type_info[0]["module_type"]["icon"];
+		?>
+					<li class="has-sub">
+							<a href="javascript:;" class=""><i class="<?php echo $icon; ?>"></i> <?php echo $module_type_name; ?>
+							<span class="arrow"></span></a>
+							<ul class="sub">
+					<?php
+					foreach($modules_data as $data4){
+						$module_id=$data4[0]; 
+						$module_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_module_info_via_module_id'),array('pass'=>array($module_id)));
+						$module_name=$module_info[0]["main_module"]["module_name"];
+						$icon=$module_info[0]["main_module"]["icon"];
+						
+						$page_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_page_info_via_module_id'),array('pass'=>array($module_id)));
+						$controller=$page_info[0]["page"]["controller"];
+						$page_name=$page_info[0]["page"]["page_name"];
+						?>
+								<li><a class="" rel='tab' role="button" href="<?php echo $webroot_path.$controller.'/'.$page_name; ?>"><i class="<?php echo $icon; ?>"></i> <?php echo $module_name; ?></a></li>
+					<?php }	?>
+							</ul>
+					</li>
+							<?php
+				}
+			}
+		
+		}
+		
+	
 	}
 }
 
@@ -25894,7 +25961,7 @@ $password = $this->request->data['password'];
 
 $this->loadmodel('user');
 $i=$this->autoincrement('user','user_id');
-$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email' => $email, 'mobile' => $mobile,'society_id' =>null,'signup_random'=>"",'active'=>'yes',"user_type"=>"hm_child"));
+$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email' => $email, 'mobile' => $mobile,'society_id' =>null,'signup_random'=>"",'active'=>'yes',"user_type"=>"hm_child","password"=>$password));
 
 $this->loadmodel('user_flat');
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');

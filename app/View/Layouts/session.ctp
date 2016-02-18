@@ -40,7 +40,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
    <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/bootstrap-daterangepicker/daterangepicker.css" />
    <link href="<?php echo $webroot_path; ?>assets/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
 	<link href="<?php echo $webroot_path; ?>assets/jqvmap/jqvmap/jqvmap.css" media="screen" rel="stylesheet" type="text/css" />
-	<link rel="shortcut icon" href="favicon.ico" />
+	<link rel="shortcut icon" href="<?php echo $webroot_path; ?>app/favicon.ico" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="<?php echo $webroot_path; ?>as/bootstrap.min.css" rel="stylesheet">
 <link href="<?php echo $webroot_path; ?>as/animate.css" rel="stylesheet" />

@@ -10575,97 +10575,30 @@ $this->set('result_role',$this->role->find('all',array('conditions'=>$conditions
 
 
 
-function asisgn_module_to_role()
-{
-if($this->RequestHandler->isAjax()){
+function asisgn_module_to_role(){
+	if($this->RequestHandler->isAjax()){
 		$this->layout='blank';
 	}else{
 		$this->layout='session';
 	}
-$this->ath();
-$this->check_user_privilages();
-$s_society_id=$this->Session->read('hm_society_id');
+	$this->ath();
+	$this->check_user_privilages();
+	$s_society_id=$this->Session->read('hm_society_id');
 
-//$role_id=$this->request->query('con');
 
-if (isset($this->request->data['add_role'])) 
-{
- $role_id=(int)$this->request->data['r_name'];
-
-$this->loadmodel('hm_modules_assign');
-$conditions=array("society_id" => $s_society_id);
-$result_hm_modules_assign=$this->hm_modules_assign->find('all',array('conditions'=>$conditions));
-foreach($result_hm_modules_assign as $data)
-{
- $module_id=$data['hm_modules_assign']['module_id'];
-
-$this->loadmodel('sub_modules');
-$conditions=array("module_id" => $module_id);
-$result_sub_modules=$this->sub_modules->find('all',array('conditions'=>$conditions));
-foreach($result_sub_modules as $data)
-{
-$sub_module_id=(int)$data["sub_modules"]["auto_id"];
-$sub_module_name=$data["sub_modules"]["sub_module_name"];
-
-$check_box=@$this->request->data['ch'.$sub_module_id];
-
-if($check_box>0)
-{
-	
-$this->loadmodel('role_privilege');
-$conditions=array("society_id" => $s_society_id ,"role_id" => $role_id,"sub_module_id" => $sub_module_id,"module_id" => $module_id,"sub_module_id" => $sub_module_id);
-$n=$this->role_privilege->find('count',array('conditions'=>$conditions));
-
-if($n==0)
-{
-
-$this->loadmodel('role_privilege');
-$data_row = Array( Array("society_id" => $s_society_id, "role_id" => $role_id , "module_id" => $module_id,"sub_module_id" => $sub_module_id));
-$this->role_privilege->saveAll($data_row); 
-
+	$this->loadmodel('role');
+	$conditions=array("society_id" => $s_society_id);
+	$result_r=$this->role->find('all',array('conditions'=>$conditions));
+	$this->set('result_role',$result_r);
 }
 
-}
-else
-{
-$this->loadmodel('role_privilege');
-$conditions=array("society_id" => $s_society_id ,"role_id" => $role_id,"sub_module_id" => $sub_module_id);
-$n=$this->role_privilege->deleteall($conditions);
-}
-
-
-
-}
-
-
-}
-$this->redirect('asisgn_module_to_role');
-}
-
-
-$this->loadmodel('role');
-$conditions=array("society_id" => $s_society_id);
-$result_r=$this->role->find('all',array('conditions'=>$conditions));
-
-$this->set('result_role',$result_r);
-
-
-}
-
-function assign_modules_to_role_ajax()
+function assign_modules_to_role_ajax($role_id=null)
 {
 $this->layout='blank';
 $this->ath();
+$s_society_id=$this->Session->read('hm_society_id');
 
-$s_society_id=$this->Session->read('society_id');
-$s_role_id=$this->Session->read('role_id');
 
-/*
-$this->loadmodel('hm_modules_assign');
-$conditions=array("society_id" => $s_society_id);
-$this->set('result_hm_modules_assign',$this->hm_modules_assign->find('all',array('conditions'=>$conditions)));
-
-*/
 $this->loadmodel('module_type');
 $order=array('module_type.module_type_name'=>'ASC');		
 $this->set('result_module_type',$this->module_type->find('all',array('order'=>$order)));

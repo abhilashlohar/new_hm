@@ -287,6 +287,22 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</div>
+	<script>
+	function change_page_automatically(){
+		$("#loading").show();
+		pageurl = $(this).attr('href');
+		$.ajax({
+		url: pageurl,
+		}).done(function(response) {
+			$(".page-content").html(response);
+			$("#loading").hide();
+			$("html, body").animate({
+				scrollTop:0
+			},"slow");
+			$('#submit_success').hide();
+		});
+	}
+	</script>
 </body>
 <!-- END BODY -->
 </html>

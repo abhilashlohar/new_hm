@@ -968,7 +968,7 @@ $this->redirect(array('action' => 'index'));
 
 function beforeFilter()
 {
-Configure::write('debug', 0);
+//Configure::write('debug', 0);
 }
 
 
@@ -10602,6 +10602,26 @@ $order=array('module_type.module_type_name'=>'ASC');
 $result_module_type=$this->module_type->find('all',array('order'=>$order));
 $this->set(compact("result_module_type"));
 
+}
+
+function module_list_via_type_id($module_type_id=null){
+$this->layout="blank";	
+
+$this->loadmodel('main_module');
+$conditions=array("mt_id" => (int)$module_type_id);
+$order=array('main_module.module_name'=>'ASC');		
+$main_modules=$this->main_module->find('all',array('conditions'=>$conditions,'order'=>$order));
+$this->set(compact("main_modules"));
+}
+
+function sub_module_list_via_module_id($module_id=null){
+$this->layout="blank";	
+
+$this->loadmodel('sub_module');
+$conditions=array("module_id" => (int)$module_id);
+$order=array('sub_module.sub_module_name'=>'ASC');		
+$sub_modules=$this->sub_module->find('all',array('conditions'=>$conditions,'order'=>$order));
+$this->set(compact("sub_modules"));
 }
 
 

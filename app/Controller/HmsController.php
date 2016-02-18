@@ -25794,12 +25794,9 @@ function menus_as_per_user_rights(){
 		$assigned_modules[]=$main_module["role_privilege_hm"]["module_id"];
 		$assigned_sub_modules[]=$main_module["role_privilege_hm"]["sub_module_id"];
 		}
-		
 			
-		
 		$assigned_modules = array_unique($assigned_modules);
 		$assigned_sub_modules = array_unique($assigned_sub_modules);
-
 
 		$this->loadmodel('module_type');
 		$order=array("module_type.order" => "ASC");
@@ -25818,7 +25815,7 @@ function menus_as_per_user_rights(){
 				$menus_array[$module_type_id][]=array($module_id);
 				}
 				}
-			}
+		}
 			
 		foreach($menus_array as $module_type_id=>$modules_data){
 		if(sizeof($modules_data)>0){
@@ -25826,32 +25823,31 @@ function menus_as_per_user_rights(){
 		$module_type_name=$module_type_info[0]["module_type"]["module_type_name"];
 		$icon=$module_type_info[0]["module_type"]["icon"];
 		?>
-					<li class="has-sub">
-							<a href="javascript:;" class=""><i class="<?php echo $icon; ?>"></i> <?php echo $module_type_name; ?>
-							<span class="arrow"></span></a>
-							<ul class="sub">
-					<?php
-					foreach($modules_data as $data4){
-						$module_id=$data4[0]; 
-						$module_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_module_info_via_module_id'),array('pass'=>array($module_id)));
-						$module_name=$module_info[0]["main_module"]["module_name"];
-						$icon=$module_info[0]["main_module"]["icon"];
+			<li class="has-sub">
+			<a href="javascript:;" class=""><i class="<?php echo $icon; ?>"></i> <?php echo $module_type_name; ?>
+			<span class="arrow"></span></a>
+			<ul class="sub">
+		<?php
+		foreach($modules_data as $data4){
+		$module_id=$data4[0]; 
+		$module_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_module_info_via_module_id'),array('pass'=>array($module_id)));
+		$module_name=$module_info[0]["main_module"]["module_name"];
+		$icon=$module_info[0]["main_module"]["icon"];
 						
-						$page_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_page_info_via_module_id'),array('pass'=>array($module_id)));
-						$controller=$page_info[0]["page"]["controller"];
-						$page_name=$page_info[0]["page"]["page_name"];
-						?>
-								<li><a class="" rel='tab' role="button" href="<?php echo $webroot_path.$controller.'/'.$page_name; ?>"><i class="<?php echo $icon; ?>"></i> <?php echo $module_name; ?></a></li>
-					<?php }	?>
-							</ul>
-					</li>
-							<?php
-				}
+	$page_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_page_info_via_module_id'),array('pass'=>array($module_id)));
+	$controller=$page_info[0]["page"]["controller"];
+	$page_name=$page_info[0]["page"]["page_name"];
+		
+		?>
+		<li><a class="" rel='tab' role="button" href="<?php echo $webroot_path.$controller.'/'.$page_name; ?>"><i class="<?php echo $icon; ?>"></i> <?php echo $module_name; ?></a></li>
+		
+		<?php }	?>
+			</ul>
+			</li>
+	<?php
+		    }
 			}
-		
 		}
-		
-	
 	}
 }
 
@@ -25945,11 +25941,9 @@ $this->layout='blank';
 }else{
 $this->layout='session';
 }
-	$this->ath();
-	$s_society_id = $this->Session->read('hm_society_id');
-	$s_user_id=$this->Session->read('user_id');	
-
-
+$this->ath();
+$s_society_id = $this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('user_id');	
 
 if(isset($this->request->data['sub']))
 {
@@ -25966,7 +25960,6 @@ $this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email' => $ema
 $this->loadmodel('user_flat');
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>null,'exited'=>'no'));
-
 }
 	
 }
@@ -25974,14 +25967,14 @@ $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'soc
 /////////////////// Start hm_create_role ///////////////////////////////////
 function hm_create_role()
 {
-if($this->RequestHandler->isAjax()){
-$this->layout='blank';
-}else{
-$this->layout='session';
-}
-	$this->ath();
-	$s_society_id = (int)$this->Session->read('hm_society_id');
-	$s_user_id=(int)$this->Session->read('user_id');		
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+		$this->ath();
+		$s_society_id = (int)$this->Session->read('hm_society_id');
+		$s_user_id=(int)$this->Session->read('user_id');		
 	
 
 if(isset($this->request->data['sub']))
@@ -26011,7 +26004,6 @@ $this->layout='session';
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=(int)$this->Session->read('user_id');
 
-	
 	
 if(isset($this->request->data['add_role'])) 
 {
@@ -26057,11 +26049,9 @@ $n=$this->role_privilege_hm->deleteall($conditions);
 }	
 }	
 	
-	
 $this->loadmodel('hms_role');
 $result_hms_role=$this->hms_role->find('all');
 $this->set('result_hms_role',$result_hms_role);
-	
 }
 //////////////////// End assign_module_to_role_hm //////////////////////////
 ////////////////////// Start assign_modules_to_role_ajax_hm ////////////////////

@@ -26066,33 +26066,14 @@ $this->set('result_society',$result_society);
 $this->loadmodel('hms_role');
 $result_hm_role=$this->hms_role->find('all');
 $this->set('result_hm_role',$result_hm_role);
-	
+
+
+$this->loadmodel('user');
+$conditions=array("user_type" => "hm_child");
+$result_user=$this->user->find('all',array('conditions'=>$conditions));
+$this->set('result_user',$result_user);
+
 }
 //////////////////// End asign_role_to_user //////////////////////////////////
-//////////////////// Start show_user_hm /////////////////////////////////////
-function show_user_hm($society_id=null)
-{
-$this->layout='blank';	
-$this->ath();
-$s_society_id = (int)$this->Session->read('hm_society_id');
-$s_user_id=(int)$this->Session->read('user_id');	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-}
-/////////////////// End show_user_hm ////////////////////////////////////////
-
 }
 ?>

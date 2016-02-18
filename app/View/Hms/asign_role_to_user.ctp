@@ -4,6 +4,7 @@
 <h4 class="block"><i class="icon-reorder"></i>Validation States</h4>
 </div>
 <div class="portlet-body form">
+
 <label style="font-size:14px;">Select Society</label>
 <div class="controls">
 <select class="m-wrap span6" data-placeholder="Choose A Role" onchange="show_user_drop_down(this.value)" name="role_name">
@@ -22,8 +23,25 @@ $society_name = $data['society']['society_name'];
 </div>
 <br>
 
-<div id="show_user_drop_down">
+
+
+<label style="font-size:14px;">Select User</label>
+<div class="controls">
+<select class="m-wrap span6" data-placeholder="Choose A Role" onchange="show_user_drop_down(this.value)" name="role_name">
+<option value="">Select User</option>
+<?php 
+foreach($result_user as $data)
+{
+$user_id = (int)$data['user']['user_id'];		
+$user_name = $data['user']['user_name'];	
+?>
+<option value="<?php echo $user_id; ?>"><?php echo $user_name; ?></option>
+<?php
+}
+?>
+</select>
 </div>
+<br>
 
 
 <label style="font-size:14px;">Select Role</label>
@@ -51,13 +69,3 @@ $role_name = $data['hms_role']['role_name'];
 </div>
 </div>
 </form>
-
-
-
-<script>
-function show_user_drop_down(vv)
-{
-$("#show_user_drop_down").load("<?php echo $webroot_path; ?>Hms/show_user_hm/"+vv);
-	
-}
-</script>

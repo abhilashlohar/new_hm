@@ -25753,7 +25753,11 @@ function menus_as_per_user_rights(){
 		
 		<?php
 	}
-	
+	if($user_type=="hm")
+	{
+		
+		
+	}
 }
 
 function assign_default_modules_to_society($society_id=null){
@@ -26006,18 +26010,7 @@ $data_row=Array(Array("auto_id"=>$auto_id,"user_id"=>$user_id,"society_id"=>$soc
 $this->hms_rights->saveAll($data_row); 
 
 }	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 $this->loadmodel('society');
 $result_society=$this->society->find('all');
 $this->set('result_society',$result_society);

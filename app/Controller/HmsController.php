@@ -10617,7 +10617,9 @@ $result_module_type=$this->module_type->find('all',array('order'=>$order));
 			</div>
 			<div style="height: 0px;" id="collapse_<?php echo $module_type_id; ?>" class="accordion-body collapse">
 				<div class="accordion-inner">
-					<?php pr($data); ?>
+					<div style="min-height:300px;">
+						hello
+					</div>
 				</div>
 			</div>
 		</div>

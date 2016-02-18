@@ -26005,10 +26005,22 @@ $role_id = (int)$this->request->data['role'];
 
 
 $this->loadmodel('hms_rights');
+$conditions=array("user_id"=>$user_id);
+$n=$this->hms_rights->find('count',array('conditions'=>$conditions));
+
+if($n>0){
+$this->loadmodel('hms_rights');
 $auto_id=$this->autoincrement('hms_rights','auto_id');
 $data_row=Array(Array("auto_id"=>$auto_id,"user_id"=>$user_id,"society_id"=>$society_id,'role_id'=>$role_id));
-$this->hms_rights->saveAll($data_row); 
-
+$this->hms_rights->saveAll($data_row);	
+}
+else
+{
+$this->loadmodel('hms_rights');
+$auto_id=$this->autoincrement('hms_rights','auto_id');
+$data_row=Array(Array("auto_id"=>$auto_id,"user_id"=>$user_id,"society_id"=>$society_id,'role_id'=>$role_id,"default"=>"yes"));
+$this->hms_rights->saveAll($data_row);	
+}
 }	
 
 $this->loadmodel('society');

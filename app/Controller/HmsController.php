@@ -25974,15 +25974,47 @@ $this->layout='session';
 	
 if(isset($this->request->data['add_role'])) 
 {
-echo  $role_id=(int)$this->request->data['role_name'];	
-exit;	
+$role_id=(int)$this->request->data['role_name'];	
+
+
+$this->loadmodel('main_module');
+$result_main_modules=$this->main_module->find('all');
+foreach($result_main_modules as $dataa)
+{
+$module_id = (int)$dataa['main_module']['auto_id'];
 	
-	
-	
-	
+$this->loadmodel('sub_modules');
+$conditions=array("module_id" => $module_id);
+$result_sub_modules=$this->sub_modules->find('all',array('conditions'=>$conditions));
+foreach($result_sub_modules as $data)
+{
+$sub_module_id=(int)$data["sub_modules"]["auto_id"];
+$sub_module_name=$data["sub_modules"]["sub_module_name"];
+
+$check_box=@$this->request->data['ch'.$sub_module_id];
+
+if($check_box>0)
+{
+$this->loadmodel('role_privilege_hm');
+$conditions=array("role_id"=>$role_id,"sub_module_id"=>$sub_module_id,"module_id" => $module_id);
+$n=$this->role_privilege_hm->find('count',array('conditions'=>$conditions));
+
+if($n==0)
+{
+$this->loadmodel('role_privilege_hm');
+$data_row = Array( Array("role_id" =>$role_id,"module_id" =>$module_id,"sub_module_id" => $sub_module_id));
+$this->role_privilege_hm->saveAll($data_row); 
+}
+}
+else
+{
+$this->loadmodel('role_privilege_hm');
+$conditions=array("role_id" => $role_id,"sub_module_id"=>$sub_module_id);
+$n=$this->role_privilege_hm->deleteall($conditions);
+}
 }	
-	
-	
+}	
+}	
 	
 	
 $this->loadmodel('hms_role');

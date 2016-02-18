@@ -87,7 +87,7 @@ $module_id = (int)$collection['main_module']['auto_id'];
 				?>
 				<div style="padding:5px; font-size:14px;border-bottom:solid 1px #ccc;">
 				<label >
-				<input type="checkbox" <?php if($n>0) { ?>checked="checked" <?php } ?> name="ch<?php echo $sub_module_id; ?>" value="1" style="height: 18px;width: 18px;"/ class="all_chk<?php echo $module_id ;?>" >
+				<input type="checkbox" <?php if($n>0) { ?>checked="checked" <?php } ?> name="ch<?php echo $sub_module_id; ?>" value="1" style="height: 18px;width: 18px;"/ class="all_chk<?php echo $module_id ;?>">
 				<span class="tooltips"  data-placement="right" data-original-title="<?php echo $des; ?>"><?php echo $sub_module_name; ?></span>
 				
 				

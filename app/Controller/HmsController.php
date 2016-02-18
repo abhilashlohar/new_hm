@@ -25809,6 +25809,15 @@ function menus_as_per_user_rights(){
 			<i class="icon-home"></i>Assign Module to Role
 			</a>					
 		</li>
+		
+		
+		<li>
+			<a href="asign_role_to_user">
+			<i class="icon-home"></i>Assign Role to Users
+			</a>					
+		</li>
+
+		
 		<?php
 	}
 	
@@ -26038,5 +26047,24 @@ $this->set('result_module_type',$this->module_type->find('all',array('order'=>$o
 	
 }
 //////////////////// End assign_modules_to_role_ajax_hm ////////////////////////
+//////////////////// Start asign_role_to_user //////////////////////////////////
+function asign_role_to_user()
+{
+if($this->RequestHandler->isAjax()){
+$this->layout='blank';
+}else{
+$this->layout='session';
+}
+	$this->ath();
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=(int)$this->Session->read('user_id');	
+	
+$this->loadmodel('society');
+$result_society=$this->society->find('all');
+$this->set('result_society',$result_society);
+
+	
+}
+//////////////////// End asign_role_to_user //////////////////////////////////
 }
 ?>

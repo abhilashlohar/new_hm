@@ -20,10 +20,10 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 </form>
 
 <script>
-function role_fetch_privilages(c)
+function role_fetch_privilages(role_id)
 {
 	$(document).ready(function() {
-		$("#ajax_contant").html('<div align="center"><img src="<?php echo $this->webroot ; ?>/as/windows.gif"/></div>').load('assign_modules_to_role_ajax/'+c);				
+		$("#ajax_contant").html('<div align="center"><img src="<?php echo $this->webroot ; ?>/as/windows.gif"/></div>').load('assign_modules_to_role_ajax/'+role_id);				
 	});
 }
 </script>

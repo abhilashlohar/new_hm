@@ -4655,8 +4655,8 @@ if ($this->request->is('post'))
 		array("mobile" => $username, "password" => $password),
 	));
 	$result_user=$this->user->find('all',array('conditions'=>$conditions));
-	$user_id=$result_user[0]["user"]["user_id"];
-	$society_id=$result_user[0]["user"]["society_id"];
+	$user_id=(int)$result_user[0]["user"]["user_id"];
+	$society_id=(int)@$result_user[0]["user"]["society_id"];
 	
 	$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));
 	$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
@@ -10653,6 +10653,8 @@ $this->layout='blank';
 $this->ath();
 $s_society_id=$this->Session->read('hm_society_id');
 
+$this->set(compact("role_id"));
+
 $this->loadmodel('module_type');
 $order=array('module_type.module_type_name'=>'ASC');		
 $result_module_type=$this->module_type->find('all',array('order'=>$order));
@@ -10670,9 +10672,30 @@ $main_modules=$this->main_module->find('all',array('conditions'=>$conditions,'or
 $this->set(compact("main_modules"));
 }
 
-function sub_module_list_via_module_id($module_id=null){
-$this->layout="blank";	
+function save_role_privilage($module_id=null,$sub_module_id=null,$action=null,$role_id=null){
+	$s_society_id=$this->Session->read('hm_society_id');
+	
+	if($action=="true"){
+		$this->loadmodel('role_privilege');
+		
+		$conditions=array("society_id" => $s_society_id,'role_id'=>(int)$role_id,"module_id" => (int)$module_id,"sub_module_id" => (int)$sub_module_id);
+		$this->role_privilege->deleteAll($conditions);
+		
+		$auto_id=$this->autoincrement('role','auto_id');
+		$this->role_privilege->saveAll(array("auto_id" => $auto_id, "society_id" => $s_society_id,'role_id'=>(int)$role_id, "module_id" => (int)$module_id, "sub_module_id" => (int)$sub_module_id));
+		echo "ok";
+	}else{
+		$this->loadmodel('role_privilege');
+		$conditions=array("society_id" => $s_society_id,'role_id'=>(int)$role_id,"module_id" => (int)$module_id,"sub_module_id" => (int)$sub_module_id);
+		$this->role_privilege->deleteAll($conditions);
+		echo "ok";
+	}
+}
 
+function sub_module_list_via_module_id($module_id=null,$role_id=null){
+$this->layout="blank";	
+$this->ath();
+$this->set(compact("role_id"));
 $this->loadmodel('sub_module');
 $conditions=array("module_id" => (int)$module_id);
 $order=array('sub_module.sub_module_name'=>'ASC');		

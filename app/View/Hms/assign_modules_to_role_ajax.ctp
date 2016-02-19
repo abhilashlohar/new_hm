@@ -4,7 +4,7 @@ padding: 5px;
 margin-bottom: 2px;
 list-style: none;
 font-size: 12px;
-color: rgb(111, 111, 111);
+color: #565454;
 cursor: pointer;
 background-color: #F8F6F6;
 }
@@ -16,7 +16,7 @@ padding: 5px;
 margin-bottom: 2px;
 list-style: none;
 font-size: 12px;
-color: rgb(111, 111, 111);
+color: #565454;
 cursor: pointer;
 background-color: #F8F6F6;
 }
@@ -24,23 +24,20 @@ background-color: #F8F6F6;
 background-color:#E9E7E7;
 }
 .pqr{
-padding: 5px;
 margin-bottom: 2px;
 list-style: none;
 font-size: 12px;
 color: rgb(111, 111, 111);
 cursor: pointer;
 }
-.pqr:hover{
-background-color:#E9E7E7;
-}
+
 .on{
 background-color: rgb(221, 221, 221);
-font-weight: bold;
+font-weight: bold !important;
 color: rgb(111, 111, 111);
 }
 </style>
-<div><h4>Control modules access of role "<b><?php echo $role_name; ?><b/>"</h4></div>
+<div><h4>Control modules access of role "<b><?php echo $role_name; ?></b>"</h4></div>
 <div align="center" id="success_msg" style="min-height:20px;"></div>
 <div class="row-fluid ">
 	<div class="span3">
@@ -60,8 +57,9 @@ $(document).ready(function() {
 		var module_type_id=$(this).attr("module_type_id");
 		$('.qwe').each(function(i, obj) {
 			$(this).removeClass("on");
+			$(this).find("i.icon-caret-right").remove();
 		});
-		$(this).addClass("on");
+		$(this).addClass("on").append('<i class="icon-caret-right pull-right"></i>');
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Hms/module_list_via_type_id/"+module_type_id,
 		}).done(function(response) {
@@ -73,8 +71,9 @@ $(document).ready(function() {
 		var module_id=$(this).attr("module_id");
 		$('.asd').each(function(i, obj) {
 			$(this).removeClass("on");
+			$(this).find("i.icon-caret-right").remove();
 		});
-		$(this).addClass("on");
+		$(this).addClass("on").append('<i class="icon-caret-right pull-right"></i>');
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Hms/sub_module_list_via_module_id/"+module_id+"/<?php echo $role_id; ?>",
 		}).done(function(response) {

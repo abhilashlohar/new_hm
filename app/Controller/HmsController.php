@@ -2827,6 +2827,20 @@ $auto2=$last;
 return ++$auto2;
 }
 
+
+function unit_configuration()
+{
+	if($this->RequestHandler->isAjax()){
+$this->layout='blank';
+}else{
+$this->layout='session';
+}
+$this->ath();
+$this->check_user_privilages();
+
+	$s_society_id=$this->Session->read('society_id');
+}
+
 ///////////////////////////// Setting ///////////////////////////////
 
 function society_settings()
@@ -2837,7 +2851,9 @@ $this->layout='blank';
 }else{
 $this->layout='session';
 }
-	$this->ath();
+$this->ath();
+$this->check_user_privilages();
+
 	$s_society_id=$this->Session->read('society_id');
 	
 	$this->set('s_user_id',$this->Session->read('user_id'));
@@ -16094,6 +16110,7 @@ $this->layout='blank';
 $this->layout='session';
 }
 $this->ath();
+$this->check_user_privilages();
 
 //$webroot_path=$this->requestAction(array('controller' => 'Hms', 'action' => 'webroot_path'));
 //$this->set('webroot_path',$webroot_path);
@@ -19624,9 +19641,9 @@ echo "false";
 echo "true";
 }
 }
- /////////////////////////////////////////// Start Master Sm wing ////////////////////////////////////////////////// 
+ /////////////////// Start Master Sm wing////////////////////////////////////// 
 
- function master_sm_wing()
+function master_sm_wing()
 {
 if($this->RequestHandler->isAjax()){
 $this->layout='blank';
@@ -22195,7 +22212,10 @@ $this->layout='blank';
 }else{
 $this->layout='session';
 }
+
 $this->ath();
+$this->check_user_privilages();
+
 $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');	
 

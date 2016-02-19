@@ -2830,17 +2830,33 @@ return ++$auto2;
 
 function unit_configuration()
 {
-	if($this->RequestHandler->isAjax()){
+if($this->RequestHandler->isAjax()){
 $this->layout='blank';
 }else{
 $this->layout='session';
 }
 $this->ath();
 $this->check_user_privilages();
+$s_society_id=(int)$this->Session->read('hm_society_id');
+$s_user_id=(int)$this->Session->read('hm_user_id');
 
-	$s_society_id=$this->Session->read('society_id');
+
+$this->loadmodel('flat');
+$conditions=array("society_id" => $s_society_id);
+$cursor1 = $this->flat->find('all',array('conditions'=>$conditions));
+$this->set('cursor1',$cursor1);
+
+$this->loadmodel('wing');
+$order=array('wing.wing_name'=> 'ASC');
+$conditions=array("society_id" => $s_society_id);
+$cursor2 = $this->wing->find('all',array('conditions'=>$conditions,'order'=>$order));
+$this->set('cursor2',$cursor2);	
+
+$this->loadmodel('flat_type_name');
+$cursor3 = $this->flat_type_name->find('all');
+$this->set('cursor3',$cursor3);	
+
 }
-
 ///////////////////////////// Setting ///////////////////////////////
 
 function society_settings()

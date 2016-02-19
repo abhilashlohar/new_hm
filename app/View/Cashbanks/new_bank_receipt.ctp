@@ -2,7 +2,7 @@
 $ddd_date = date('d-m-Y');
 ?>
 <?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
+echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
 <script>
 $(document).ready(function() {

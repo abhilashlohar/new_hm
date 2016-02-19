@@ -186,7 +186,7 @@ The request has been approved and the User has been notified.
 <span style="color:red;"><i class="icon-warning-sign"></i></span> &nbsp;<b style="font-size:16px; font-family:'Times New Roman', Times, serif;">Are you sure to Delete</b>
 </div>
 <div class="modal-footer">
-<a href="resident_approve_reject?con=<?php echo $email; ?> &con1=<?php echo $user_id ;?>" role="button"  class="btn blue" >Yes</a>
+<a href="resident_approve_reject?con=<?php echo $email; ?> &con1=<?php echo $user_id ;?>"   class="btn blue" >Yes</a>
 <button class="btn " data-dismiss="modal" aria-hidden="true">No</button>
 </div>
 </div>

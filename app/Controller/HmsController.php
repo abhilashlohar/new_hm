@@ -9258,7 +9258,8 @@ $user_id=(int)htmlentities($this->request->query('con4'));
 $from_name="HousingMatters";
 $from="Support@housingmatters.in";
 $reply="Support@housingmatters.in";
-$ip=$this->hms_email_ip();
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
+
 
 /* $message_web="<div>
 <img src='$ip".$this->webroot."/as/hm/hm-logo.png'/><span  style='float:right; margin:2.2%;'>

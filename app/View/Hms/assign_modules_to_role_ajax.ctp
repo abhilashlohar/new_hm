@@ -40,7 +40,8 @@ font-weight: bold;
 color: rgb(111, 111, 111);
 }
 </style>
-<div align="center" id="success_msg" style="min-height:20px;">hello</div>
+<div><h4>Control modules access of role "<b><?php echo $role_name; ?><b/>"</h4></div>
+<div align="center" id="success_msg" style="min-height:20px;"></div>
 <div class="row-fluid ">
 	<div class="span3">
 	<span style="font-weight: bold; color: rgb(92, 92, 92);">Module Categories</span><br/>

@@ -9,10 +9,10 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 	<?php
 	foreach ($result_role as $collection) 
 	{
-	$role_name12 = $collection['role']['role_name'];
-	$role_id1=$collection['role']['role_id'];
+	$role_name = $collection['role']['role_name'];
+	$role_id=$collection['role']['role_id'];
 	?>
-	<option value="<?php echo $role_id1; ?>"><?php echo $role_name12; ?></option>
+	<option value="<?php echo $role_id; ?>"><?php echo $role_name; ?></option>
 	<?php } ?>
 </select>
 </center>

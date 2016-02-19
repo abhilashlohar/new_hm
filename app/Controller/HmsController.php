@@ -10671,6 +10671,9 @@ $s_society_id=$this->Session->read('hm_society_id');
 
 $this->set(compact("role_id"));
 
+$role_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'role_name_via_role_id'), array('pass' => array($role_id)));
+$this->set(compact("role_name"));
+
 $this->loadmodel('module_type');
 $order=array('module_type.module_type_name'=>'ASC');		
 $result_module_type=$this->module_type->find('all',array('order'=>$order));
@@ -10712,11 +10715,25 @@ function sub_module_list_via_module_id($module_id=null,$role_id=null){
 $this->layout="blank";	
 $this->ath();
 $this->set(compact("role_id"));
+$s_society_id=$this->Session->read('hm_society_id');
 $this->loadmodel('sub_module');
 $conditions=array("module_id" => (int)$module_id);
 $order=array('sub_module.sub_module_name'=>'ASC');		
 $sub_modules=$this->sub_module->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set(compact("sub_modules"));
+?>
+<span style="font-weight: bold; color: rgb(92, 92, 92);">Sub-Modules</span><br/>
+<?php foreach($sub_modules as $data){
+	$sub_module_id=(int)$data["sub_module"]["auto_id"];
+	$sub_module_name=$data["sub_module"]["sub_module_name"];
+	$module_id=$data["sub_module"]["module_id"];
+	$this->loadmodel('role_privilege');
+	$conditions=array("module_id" =>(int)$module_id,"sub_module_id" =>$sub_module_id,"role_id" =>(int)$role_id,"society_id" =>$s_society_id);
+	$count=$this->role_privilege->find('count',array('conditions'=>$conditions));
+	if($count==1){$check="checked";}else{$check="";}?>
+	<li class="pqr" >
+	<label><input type="checkbox" <?php echo $check; ?> module_id="<?php echo $module_id; ?>" sub_module_id="<?php echo $sub_module_id; ?>" /><?php echo $sub_module_name; ?></label></li>
+<?php }
 }
 
 

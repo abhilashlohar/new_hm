@@ -968,7 +968,7 @@ $this->redirect(array('action' => 'index'));
 
 function beforeFilter()
 {
-//Configure::write('debug', 0);
+Configure::write('debug', 0);
 }
 
 
@@ -19609,6 +19609,9 @@ function master_sm_wing_ajax()
 {
 $this->layout='blank';
 
+
+
+
 $s_society_id=(int)$this->Session->read('hm_society_id');
 $wing=$this->request->query['wing_name'];
 $this->loadmodel('wing');
@@ -19630,9 +19633,10 @@ $this->layout='blank';
 }else{
 $this->layout='session';
 }
+
+	
 $this->ath();
-	
-	
+$this->check_user_privilages();	
 	
 $s_society_id=$this->Session->read('hm_society_id'); 
 if(isset($this->request->data['sub'])) 

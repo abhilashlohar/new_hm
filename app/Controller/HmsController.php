@@ -10210,12 +10210,12 @@ function verify_mobile_ajax()
 	//$dd=explode(' ',$user);
 	//$user_name=$dd[0];
 	$user_name=ucfirst($user_name);
-	
-$r_sms=$this->hms_sms_ip();
-$working_key=$r_sms->working_key;
-$sms_sender=$r_sms->sms_sender; 
-$random_otp=(string)mt_rand(1000,9999);
-$sms_allow=(int)$r_sms->sms_allow;
+	$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
+
+ $working_key=$r_sms->working_key;
+ $sms_sender=$r_sms->sms_sender; 
+ $random_otp=(string)mt_rand(1000,9999);
+ $sms_allow=(int)$r_sms->sms_allow; 
 if($sms_allow==1){
 
 $sms='Hi ! '.$user_name.', Use '.$random_otp.' as one time passcode and continue your Housing Matters registration process. ';
@@ -10416,7 +10416,7 @@ $this->role->saveAll(array("auto_id" => $k, "role_name" => $d, 'role_id'=>$p, "s
 //////////////// Role to assign end   //////////////////////////
 
 
-$this->redirect(array('action' => 'assign_default_modules_to_society'));
+$this->redirect(array('action' => 'assign_default_modules_to_society/'.$society_id.''));
 }
 }
 

@@ -288,9 +288,9 @@ $(document).ready(function() {
 		</div>
 	</div>
 	<script>
-	function change_page_automatically(){
+	function change_page_automatically(url_page){
 		$("#loading").show();
-		pageurl = $(this).attr('href');
+		pageurl = url_page;
 		$.ajax({
 		url: pageurl,
 		}).done(function(response) {

@@ -2,6 +2,7 @@
 	$( document ).ready(function() {
    $('.try_again').click(function(){ 
    var r=$(this).attr('element_id');
+   
   $("#try_a").html('loading.... <image src="<?php echo $this->webroot ; ?>/as/hm/ajax-loader-4.gif" >').load('verify_mobile_ajax?con=' + r);
   })
 });

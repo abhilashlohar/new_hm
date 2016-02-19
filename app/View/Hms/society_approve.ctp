@@ -132,7 +132,6 @@ $(document).ready(function() {
 		var c2=$(this).attr('id2');
 		var c3=$(this).attr('id3');
 		$("#apz"+c2).load("society_approve_mail?con1="+c1, function() {
-			//window.location.href = 'hm_assign_module?q='+c3;
 			
 			change_page_automatically("assign_default_modules_to_society/"+c3);
 		});

@@ -17,113 +17,110 @@ public $components = array(
 var $name = 'Hms';
 
 function check_charecter_name($name){
-	
-	$dd=explode(' ',$name);
-
-	for($i=0;$i<sizeof($dd);$i++){
-		$r=strtr($dd[$i], array('.' => '', ',' => ''));
-		if(strlen($r)>2){
-			return $dd[$i];
-		}
-		
+$dd=explode(' ',$name);
+     for($i=0;$i<sizeof($dd);$i++){
+    $r=strtr($dd[$i], array('.' => '', ',' => ''));
+    if(strlen($r)>2){
+	return $dd[$i];
+    }
 	}
-	
-	
-	
-	
 }
 
 
 function email_mobile_update(){
 	
-if($this->RequestHandler->isAjax()){
-		$this->layout='blank';
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
 	}else{
-		$this->layout='session';
+	$this->layout='session';
 	}
-$s_society_id=$this->Session->read('society_id');	
-$this->ath();
-	$this->loadmodel('user_info_import_record');
-	$conditions=array("society_id" => $s_society_id);
-	$result_import_record = $this->user_info_import_record->find('all',array('conditions'=>$conditions));
-	$this->set('result_import_record',$result_import_record);
-	foreach($result_import_record as $data_import){
-		$step1=(int)@$data_import["user_info_import_record"]["step1"];
-		$step2=(int)@$data_import["user_info_import_record"]["step2"];
-		$step3=(int)@$data_import["user_info_import_record"]["step3"];
-		$step4=(int)@$data_import["user_info_import_record"]["step4"];
-		$date=@$data_import["user_info_import_record"]["date"];
-		$this->set("date",$date);
-	}
-	$process_status= @$step1+@$step2+@$step3+@$step4;
-	$this->set("process_status",$process_status);
-
+	
+   $s_society_id=$this->Session->read('society_id');	
+   $this->ath();
+   
+		$this->loadmodel('user_info_import_record');
+		$conditions=array("society_id" => $s_society_id);
+		$result_import_record = $this->user_info_import_record->find('all',array('conditions'=>$conditions));
+		$this->set('result_import_record',$result_import_record);
+			foreach($result_import_record as $data_import){
+			$step1=(int)@$data_import["user_info_import_record"]["step1"];
+			$step2=(int)@$data_import["user_info_import_record"]["step2"];
+			$step3=(int)@$data_import["user_info_import_record"]["step3"];
+			$step4=(int)@$data_import["user_info_import_record"]["step4"];
+			$date=@$data_import["user_info_import_record"]["date"];
+			$this->set("date",$date);
+			}
+	  $process_status= @$step1+@$step2+@$step3+@$step4;
+	  $this->set("process_status",$process_status);
 }
 
 function Upload_user_info_csv_file(){
+	
 	$s_society_id = $this->Session->read('society_id');
 	$s_user_id=$this->Session->read('user_id');
 	$this->ath();
-	if(isset($_FILES['file'])){
+	
+		if(isset($_FILES['file'])){
 		$file_name=$s_society_id.".csv";
 		$file_tmp_name =$_FILES['file']['tmp_name'];
 		$target = "user_email_mobile_csv/";
 		$target=@$target.basename($file_name);
 		move_uploaded_file($file_tmp_name,@$target);
 		
-		
 		$today = date("d-M-Y");
 		
-		$this->loadmodel('user_info_import_record');
-		$auto_id=$this->autoincrement('user_info_import_record','auto_id');
-		$this->user_info_import_record->saveAll(Array( Array("auto_id" => $auto_id, "file_name" => $file_name,"society_id" => $s_society_id, "user_id" => $s_user_id, "step1" => 1,"date"=>$today))); 
+$this->loadmodel('user_info_import_record');
+$auto_id=$this->autoincrement('user_info_import_record','auto_id');
+$this->user_info_import_record->saveAll(Array( Array("auto_id" => $auto_id, "file_name" => $file_name,"society_id" => $s_society_id, "user_id" => $s_user_id, "step1" => 1,"date"=>$today))); 
 		
-		die(json_encode("UPLOADED"));
+    die(json_encode("UPLOADED"));
 	}
 }
 
 function read_user_info_csv_file(){
+	
 	$this->layout=null;
 	$s_society_id = $this->Session->read('society_id');
 	
-	$f = fopen('user_email_mobile_csv/'.$s_society_id.'.csv', 'r') or die("ERROR OPENING DATA");
-	$batchcount=0;
-	$records=0;
-	while (($line = fgetcsv($f, 4096, ';')) !== false) {
-	$numcols = count($line);
-	$test[]=$line;
-	++$records;
-	}
+		$f = fopen('user_email_mobile_csv/'.$s_society_id.'.csv', 'r') or die("ERROR OPENING DATA");
+		$batchcount=0;
+		$records=0;
+		while (($line = fgetcsv($f, 4096, ';')) !== false) {
+		$numcols = count($line);
+		$test[]=$line;
+		++$records;
+		}
+	
 	$i=0;
 	foreach($test as $child){ $i++;
-		if($i>1){
-			$child_ar=explode(',',$child[0]);
-			$name=$child_ar[0];
-			$wing_name=$child_ar[1];
-			$flat_name=$child_ar[2];
-			$owner_tenant=$child_ar[3];
-			$email=$child_ar[4];
-			$mobile=$child_ar[5];
-			
-			
-			$this->loadmodel('user_info_csv');
-			$auto_id=$this->autoincrement('user_info_csv','auto_id');
-			$this->user_info_csv->saveAll(Array(Array("auto_id" => $auto_id, "name" => $name,"wing_name" => $wing_name, "flat_name" => $flat_name, "owner_tenant" => $owner_tenant, "email" => $email, "mobile" => $mobile,"society_id"=>$s_society_id,"is_converted"=>"NO")));
-		}
+			if($i>1){
+				$child_ar=explode(',',$child[0]);
+				$name=$child_ar[0];
+				$wing_name=$child_ar[1];
+				$flat_name=$child_ar[2];
+				$owner_tenant=$child_ar[3];
+				$email=$child_ar[4];
+				$mobile=$child_ar[5];
+							
+				$this->loadmodel('user_info_csv');
+				$auto_id=$this->autoincrement('user_info_csv','auto_id');
+				$this->user_info_csv->saveAll(Array(Array("auto_id" => $auto_id, "name" => $name,"wing_name" => $wing_name, "flat_name" => $flat_name, "owner_tenant" => $owner_tenant, "email" => $email, "mobile" => $mobile,"society_id"=>$s_society_id,"is_converted"=>"NO")));
+			}
 	}
-	$this->loadmodel('user_info_import_record');
-	$this->user_info_import_record->updateAll(array("step2" => 1),array("society_id" => $s_society_id));
-	die(json_encode("READ"));
+		$this->loadmodel('user_info_import_record');
+		$this->user_info_import_record->updateAll(array("step2" => 1),array("society_id" => $s_society_id));
+		die(json_encode("READ"));
 }
 
 function convert_user_info_data(){
+	
 	$this->layout=null;
 	$s_society_id = $this->Session->read('society_id');
 	
 	$this->loadmodel('user_info_csv');
 	$conditions=array("society_id" => $s_society_id,"is_converted" => "NO");
 	$result_import_record = $this->user_info_csv->find('all',array('conditions'=>$conditions,'limit'=>10));
-	foreach($result_import_record as $import_record){
+		foreach($result_import_record as $import_record){
 		$user_info_csv_id=$import_record["user_info_csv"]["auto_id"];
 		$name=trim($import_record["user_info_csv"]["name"]);
 		$wing_name=trim($import_record["user_info_csv"]["wing_name"]);
@@ -132,56 +129,56 @@ function convert_user_info_data(){
 		$email=trim($import_record["user_info_csv"]["email"]);
 		$mobile=trim($import_record["user_info_csv"]["mobile"]);
 		
-		$this->loadmodel('wing'); 
-		$conditions=array("wing_name"=> new MongoRegex('/^' . $wing_name . '$/i'),"society_id"=>$s_society_id);
-		$result_ac=$this->wing->find('all',array('conditions'=>$conditions));
-		if(sizeof($result_ac)>0){
-			foreach($result_ac as $collection){
+				$this->loadmodel('wing'); 
+				$conditions=array("wing_name"=> new MongoRegex('/^' . $wing_name . '$/i'),"society_id"=>$s_society_id);
+				$result_ac=$this->wing->find('all',array('conditions'=>$conditions));
+				if(sizeof($result_ac)>0){
+				foreach($result_ac as $collection){
 				$wing_id = (int)$collection['wing']['wing_id'];
-			}
-		}else{
-			$wing_id=0;
-		}
+				}
+				}else{
+				$wing_id=0;
+				}
 		
 		$this->loadmodel('flat'); 
 		$conditions=array("flat_name"=> new MongoRegex('/^' . $flat_name . '$/i'),"society_id"=>$s_society_id);
 		$result_ac=$this->flat->find('all',array('conditions'=>$conditions));
-		if(sizeof($result_ac)>0){
+			if(sizeof($result_ac)>0){
 			foreach($result_ac as $collection){
-				$flat_id = (int)$collection['flat']['flat_id'];
+			$flat_id = (int)$collection['flat']['flat_id'];
 			}
-		}else{
+			}else{
 			$flat_id=0;
-		}
+			}
 		
 		if($owner_tenant=="owner"){ $tenant=1; }else{ $tenant=2; }
 		
-		$this->loadmodel('user'); 
-		$conditions=array("wing"=>$wing_id,"flat"=>$flat_id,"tenant"=>$tenant);
-		$result_user=$this->user->find('all',array('conditions'=>$conditions));
-		$user_id =0;
-		foreach($result_user as $collection){
-				$user_id = (int)$collection['user']['user_id'];
+			$this->loadmodel('user'); 
+			$conditions=array("wing"=>$wing_id,"flat"=>$flat_id,"tenant"=>$tenant);
+			$result_user=$this->user->find('all',array('conditions'=>$conditions));
+			$user_id =0;
+			foreach($result_user as $collection){
+			$user_id = (int)$collection['user']['user_id'];
 			}
-		
-		 $emailErr = 1;
-		 if(!empty($email)){
-			 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			   $emailErr = 0;
-			 }else{
-				$this->loadmodel('user'); 
-				$conditions=array("email"=>$email);
-				$result_user_count=$this->user->find('count',array('conditions'=>$conditions));
-				
-				$this->loadmodel('user_info_csv_converted'); 
-				$conditions=array("email"=>$email);
-				$result_user_info_csv_converted_count=$this->user_info_csv_converted->find('count',array('conditions'=>$conditions));
-				
-				if($result_user_count>1 or $result_user_info_csv_converted_count>1){
-					 $emailErr = 0;
-				}
-			 }
-		 }
+
+	$emailErr = 1;
+	if(!empty($email)){
+	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+	$emailErr = 0;
+	}else{
+	$this->loadmodel('user'); 
+	$conditions=array("email"=>$email);
+	$result_user_count=$this->user->find('count',array('conditions'=>$conditions));
+
+	$this->loadmodel('user_info_csv_converted'); 
+	$conditions=array("email"=>$email);
+	$result_user_info_csv_converted_count=$this->user_info_csv_converted->find('count',array('conditions'=>$conditions));
+
+	if($result_user_count>1 or $result_user_info_csv_converted_count>1){
+	$emailErr = 0;
+	}
+	}
+}
 		 
 		 
 		 $mobileErr = 1;

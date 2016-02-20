@@ -171,7 +171,7 @@ foreach ($result_wing as $db)
 <span style="font-size:16px;"> Yes</span>
 </label>
 <label class="radio">
-<div class="radio" id="uniform-undefined"><span class="checked"><input type="radio" onClick="commite()" name="tenant" id="tno" value="no" checked  style="opacity: 0; font-size:14px;""   ></span></div>
+<div class="radio" id="uniform-undefined"><span class="checked"><input type="radio" onClick="commite()" name="owner" id="tno" value="no" checked  style="opacity: 0; font-size:14px;""   ></span></div>
 <span style="font-size:16px;"> No </span>
 </label>  
 

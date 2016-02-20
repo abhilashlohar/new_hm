@@ -9387,7 +9387,7 @@ if($owner == "yes"){ $type = "yes";	}else { $type = "no";  }
 ///// flat already exit checked code start ////////////////
 
 $this->loadmodel('user_flat');
-$conditions=array('flat_id'=>$flat,'society_id'=>$society_id);
+$conditions=array('flat'=>$flat,'society_id'=>$society_id);
 $result_user=$this->user_flat->find('all',array('conditions'=>$conditions));
 $n5=sizeof($result_user);
 if($n5==1){
@@ -17243,7 +17243,7 @@ $this->set('result_society',$result);
 if($this->request->is('post')) 
 {
 
-$ip=$this->hms_email_ip();	
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 date_default_timezone_set('Asia/kolkata');
 $date=date("d-m-Y");
 $time=date('h:i:a',time());
@@ -17267,18 +17267,18 @@ $email=$this->request->data['email'];
 $mobile=$this->request->data['mobile'];
 $wing=(int)$this->request->data['wing'];
 $flat=(int)$this->request->data['flat'];
-//$residing=(int)$this->request->data['residing'];
-$owner=(int)$this->request->data['owner'];
+
+$owner=$this->request->data['owner'];
 
 
 $this->loadmodel('user_flat');
-$conditions2=array('flat_id'=>$flat,'society_id'=>$society_id);
+$conditions2=array('flat'=>$flat,'society_id'=>$society_id);
 $result_user=$this->user_flat->find('all',array('conditions'=>$conditions2));
-$n5=sizeof($result_user);
+ $n5=sizeof($result_user); 
 if($n5==1){
-	$tenant_database=$result_user[0]['user_flat']['status'];
-	if($tenant_database==1){
-		if($tenant_database==$tenant){
+	 $tenant_database=$result_user[0]['user_flat']['owner'];
+	if($tenant_database=='yes'){
+		if($tenant_database==$owner){
 			
 			$this->set('tenant_allow','Flat is Already Exist owner.');
 			goto a;
@@ -17288,7 +17288,7 @@ if($n5==1){
 		
 	}else{
 		
-		if($tenant_database==$tenant){
+		if($tenant_database==$owner){
 			
 			$this->set('tenant_allow','Flat is Already Exist tenant.');
 			goto a;
@@ -17306,20 +17306,13 @@ if($n5==2){
 	
 }
 
-if($tenant==1)
-{
-$committee=(int)$this->request->data['committe'];
-}
-else
-{
-$committee=2;
-}
-$role_id[]=2;
-$default_role_id=2;
-if($committee==1)
-{
-$role_id[]=1;
-}
+if($owner=="yes"){
+	$committee=$this->request->data['committe'];
+	}else{
+		$committee="no";
+	}
+
+
 $this->loadmodel('user');
 $i=$this->autoincrement('user','user_id');
 $random1=mt_rand(1000000000,9999999999);
@@ -17327,76 +17320,55 @@ $random2=mt_rand(1000000000,9999999999);
 $random=$random1.$random2 ;	
 $de_user_id=$this->encode($i,'housingmatters');
 $random=$de_user_id.'/'.$random;
-$log_i=$this->autoincrement('login','login_id');
 
-if(!empty($mobile))
-{
-if(empty($email))
-{
-$login_user=$mobile;
-$random=(string)mt_rand(1000,9999);
 
-$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip'));
-$working_key=$r_sms->working_key;
-$sms_sender=$r_sms->sms_sender; 	
-$sms_allow=(int)$r_sms->sms_allow;
-if($sms_allow==1){
+if(!empty($mobile)){ if(empty($email)) {
+
+	$random=(string)mt_rand(1000,9999);
+
+	$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip'));
+	$working_key=$r_sms->working_key;
+	$sms_sender=$r_sms->sms_sender; 	
+	$sms_allow=(int)$r_sms->sms_allow;
+	if($sms_allow==1){
 	
-$user_name_short=$this->check_charecter_name($name);
+		$user_name_short=$this->check_charecter_name($name);
 
-$sms="".$user_name_short.", Your housing society  ".$s_n." has enrolled  you in HousingMatters portal. Pls log into www.housingmatters.co.in One Time Password ".$random."";
- $sms1=str_replace(" ", '+', $sms);
-$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');
+		$sms="".$user_name_short.", Your housing society  ".$s_n." has enrolled  you in HousingMatters portal. Pls log into www.housingmatters.in One Time Password ".$random."";
+		 $sms1=str_replace(" ", '+', $sms);
+		$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');
+   }
+ }
 }
-}
-}
 
-$this->user->save(array('user_id' => $i, 'user_name' => $name,'email' => $email, 'password' => @$random, 'mobile' => $mobile,  'society_id' => $society_id, 'owner' => $tenant, 'wing' => $wing, 'flat' => $flat, 'date' => $date, 'time' => $time,"profile_pic"=>'blank.jpg','sex'=>'','role_id'=>$role_id,'default_role_id'=>$default_role_id,'signup_random'=>$random,'deactive'=>0,'login_id'=>$log_i,'s_default'=>1,'profile_status'=>1,'private'=>array('mobile','email')));
-
-
+$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email' => $email, 'mobile' => $mobile,  'society_id' => $society_id, 'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes',"user_type"=>"member"));
  
+$this->loadmodel('user_role');
+$auto_id=$this->autoincrement('user_role','auto_id');
+$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => 2,'default'=>'yes'));
+if($committee=="yes"){
+$auto_id=$this->autoincrement('user_role','auto_id');
+$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => 3));
+}
+
+
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
-$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'flat_id'=>$flat,'status'=>$tenant,'active'=>0,'exit_date'=>'','time'=>''));
-
-
-		  //$this->loadmodel('flat');
-          //$this->flat->updateAll(array("noc_ch_tp" =>$residing),array("flat_id" =>$flat));
-///////////////  Insert code ledger Sub Accounts //////////////////////
-if($tenant==1){
+$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no','owner'=>$owner));
+ 
+if($owner=="yes"){
 $this->loadmodel('ledger_sub_account');
 $j=$this->autoincrement('ledger_sub_account','auto_id');
-$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$name,'society_id' => $society_id,'user_id'=>$i,'deactive'=>0,"flat_id"=>$flat));
-
+$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$name,'society_id' => $society_id,'user_flat_id'=>$user_flat_id,'exited'=>"no"));
 }
+		 
+///////////////  Insert code ledger Sub Accounts //////////////////////
 
 /////////////  End code ledger sub accounts //////////////////////////
 $special="'";	
 
 	
-if(!empty($email) && !empty($mobile))
-{
+if(!empty($email) && !empty($mobile)){
 $login_user=$email;
-  /* $message_web="<div>
-<img src='$ip".$this->webroot."/as/hm/hm-logo.png'/><span  style='float:right; margin:2.2%;'>
-<span class='test' style='margin-left:5px;'><a href='https://www.facebook.com/HousingMatters.co.in' target='_blank' ><img src='$ip".$this->webroot."/as/hm/fb.png'/></a></span>
-<a href='#' target='_blank'><img src='$ip".$this->webroot."/as/hm/tw.png'/></a><a href'#'><img src='$ip".$this->webroot."/as/hm/ln.png'/ class='test' style='margin-left:5px;'></a></span>
-</br><p>Dear $name,</p>
-<p>'We at $society_name use HousingMatters - a dynamic web portal to interact with all owners/residents/staff for transparent & smart management of housing society affairs.</p>
-<p>As you are an owner/resident/staff of $society_name, we have added your email address in HousingMatters portal.</p>
-<p>Here are some of the important features related to our portal on HousingMatters:</p>
-<p>You can log & track complaints, start new discussions, check your dues, post classifieds and many more in the portal.</p>
-<p>You can receive important SMS & emails from your committee.</p>
-<br/>				
-<p><b>
-<a href='$ip".$this->webroot."/hms/send_sms_for_verify_mobile?q=$random'>Click here</a> for one time verification of your mobile number and Login into HousingMatters  for making life simpler for all your housing matters!</b></p>
-<br/>
-<p>Pls add www.housingmatters.co.in in your favorite bookmarks for future use.</p>
-<p>Regards,</p>	
-<p>Administrator of $society_name</p><br/>
-www.housingmatters.co.in
-</div >
-</div>"; */
-
 
  $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
           <tbody>
@@ -17516,29 +17488,7 @@ www.housingmatters.co.in
 
 }
 		
-if(!empty($email) && empty($mobile))
-{
-$login_user=$email;	
- /* $message_web="<div>
-<img src='$ip".$this->webroot."/as/hm/hm-logo.png'/><span  style='float:right; margin:2.2%;'>
-<span class='test' style='margin-left:5px;'><a href='https://www.facebook.com/HousingMatters.co.in' target='_blank' ><img src='$ip".$this->webroot."/as/hm/fb.png'/></a></span>
-<a href='#' target='_blank'><img src='$ip".$this->webroot."/as/hm/tw.png'/></a><a href'#'><img src='$ip".$this->webroot."/as/hm/ln.png'/ class='test' style='margin-left:5px;'></a></span>
-</br><p>Dear $name,</p>
-<p>'We at $society_name use HousingMatters - a dynamic web portal to interact with all owners/residents/staff for transparent & smart management of housing society affairs.</p>
-<p>As you are an owner/resident/staff of $society_name, we have added your email address in HousingMatters portal.</p>
-<p>Here are some of the important features related to our portal on HousingMatters:</p>
-<p>You can log & track complaints, start new discussions, check your dues, post classifieds and many more in the portal.</p>
-<p>You can receive important SMS & emails from your committee.</p>
-<br/>				
-<p><b><a href='$ip".$this->webroot."/hms/set_new_password?q=$random'>Click here</a> for one time verification of your email and Login into HousingMatters  for making life simpler for all your housing matters!</b></p>
-<br/>
-<p>Pls add www.housingmatters.co.in in your favorite bookmarks for future use.</p>
-<p>Regards,</p>	
-<p>Administrator of $society_name</p><br/>
-www.housingmatters.co.in
-</div >
-</div>"; */
-
+if(!empty($email) && empty($mobile)){
 
 
 $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -17687,8 +17637,6 @@ $this->notification_email->saveAll(array("notification_id" => $lo, "module_id" =
 //////////////// End all checked code   //////////////////////////
 
 
-$this->loadmodel('login');
-$this->login->save(array('login_id'=>$log_i,'user_name'=>@$login_user,'password'=>$random,'signup_random'=>$random,'mobile'=>$mobile));
 
 ?>
 <!----alert-------------->

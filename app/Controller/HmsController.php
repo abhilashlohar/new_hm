@@ -26023,8 +26023,30 @@ $this->loadmodel('user');
 $conditions=array("user_type" => "hm_child");
 $result_user=$this->user->find('all',array('conditions'=>$conditions));
 $this->set('result_user',$result_user);
-
 }
 //////////////////// End asign_role_to_user //////////////////////////////////
+//////////////////// Start auto_save_unit_config ///////////////////////////////
+function auto_save_unit_config($record_id=null,$field=null,$value=null)
+{
+$this->layout=null;
+
+$this->ath();
+$s_society_id = $this->Session->read('society_id');
+$record_id=(int)$record_id;	
+	
+if($field=="flat_type"){
+	
+$this->loadmodel('flat');
+$this->flat->updateAll(array("flat_type_id"=>(int)$value),array("flat_id" => $record_id));
+
+}
+		
+if($field=="flat_area"){
+$this->loadmodel('flat');
+$this->flat->updateAll(array("flat_area"=>$value),array("flat_id" => $record_id));
+}	
+	
+}
+////////////////////// End auto_save_unit_config ///////////////////////////////
 }
 ?>

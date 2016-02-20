@@ -1,3 +1,8 @@
+<style>
+input,select{
+	    margin-bottom: 0 !important;
+}
+</style>
 <div style="background-color:#EFEFEF; border-top:1px solid #e6e6e6; border-bottom:1px solid #e6e6e6; padding:10px; box-shadow:5px; font-size:16px; color:#006;">
 Society Setup
 </div>
@@ -13,13 +18,13 @@ Society Setup
 <div class="tab-content" style="min-height:300px;">
 <div class="tab-pane active" id="tab_1_1">
 <br>
-<table class="table table-striped table-bordered">
-<tr>
-<th>Wing Name</th>
-<th>Flat Name</th>
-<th>Flat Type</th>
-<th>Flat Area</th>
-</tr>
+<table class="table table-bordered table-condensed">
+	<tr>
+		<th>Wing </th>
+		<th>Unit </th>
+		<th>Flat Type</th>
+		<th>Flat Area</th>
+	</tr>
 <?php
 foreach($cursor2 as $collection)
 {
@@ -30,30 +35,91 @@ $wing_name = $collection['wing']['wing_name'];
 $result_prb = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_all_flat_via_wing_id'),array('pass'=>array($wing_id)));
 foreach ($result_prb as $data) 
 {
-$flat_name = $data['flat']['flat_name'];	
+$flat_name = $data['flat']['flat_name'];
+$flat_id = $data['flat']['flat_id'];
+@$flat_area = (int)$data['flat']['flat_area'];
+@$flat_type_id = (int)$data['flat']['flat_type_id'];	
 ?>
 <tr>
 <td><?php echo $wing_name; ?></td>
 <td><?php echo $flat_name; ?></td>
 <td>
-<select class="m-wrap span12">
+<select class="m-wrap span6"  record_id="<?php echo $flat_id; ?>" field="flat_type">
 <option value="">Select Flat Type</option>
 <?php
 foreach($cursor3 as $dataa)
 {
-$auto_id = $dataa['flat_type_name']['auto_id'];	
+$auto_id = (int)$dataa['flat_type_name']['auto_id'];	
 $flat_name = $dataa['flat_type_name']['flat_name'];
 ?>
-<option value="<?php echo $auto_id; ?>"><?php echo $flat_name; ?></option>
+<option value="<?php echo $auto_id; ?>" <?php if($auto_id == $flat_type_id){ ?> selected="selected" <?php } ?>><?php echo $flat_name; ?></option>
 <?php	
 }
 ?>
 </select>
 </td>
-<td><input type="text" class="m-wrap span12"></td>
+<td><input type="text" class="m-wrap span6" record_id="<?php echo $flat_id; ?>" field="flat_area" value="<?php echo $flat_area; ?>"></td>
 </tr>
-<?php }}?>
+<?php }} ?>
 </table>
 </div>
 </div>
 </div>
+
+<script>
+$( document ).ready(function() {
+	$( 'input[type="text"]').blur(function() {
+		var record_id=$(this).attr("record_id");
+		var field=$(this).attr("field");
+		var value=$(this).val();
+		$.ajax({
+			url: "<?php echo $webroot_path; ?>Hms/auto_save_unit_config/"+record_id+"/"+field+"/"+value,
+		}).done(function(response){
+			if(response=="F"){
+				$("table#report_tb tr#"+record_id+" td").each(function(){
+					$(this).find('input[field="'+field+'"]').parent("div").css("border", "solid 1px red");
+				});
+			}else{
+				$("table#report_tb tr#"+record_id+" td").each(function(){
+					$(this).find('input[field="'+field+'"]').parent("div").css("border", "");
+				});
+			}
+		});
+	});
+	
+	$( 'select' ).change(function() {
+		var record_id=$(this).attr("record_id");
+		var field=$(this).attr("field");
+		var value=$("option:selected",this).val();
+		
+		$.ajax({
+			url: "<?php echo $webroot_path; ?>Hms/auto_save_unit_config/"+record_id+"/"+field+"/"+value,
+		}).done(function(response){
+			if(response=="F"){
+				$("table#report_tb tr#"+record_id+" td").each(function(){
+					$(this).find('select[field="'+field+'"]').parent("div").css("border", "solid 1px red");
+				});
+			}else{
+				$("table#report_tb tr#"+record_id+" td").each(function(){
+					$(this).find('select[field="'+field+'"]').parent("div").css("border", "");
+				});
+			}
+		});
+	});
+});
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

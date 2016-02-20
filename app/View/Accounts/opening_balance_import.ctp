@@ -96,6 +96,7 @@ function convert_csv_data_ajax(){
 			url: "convert_imported_data_ob",
 			dataType: 'json'
 		}).done(function(response){
+			//alert(response);
 			if(response.again_call_ajax=="YES"){
 				$("#progress").css("width",response.converted_per+"%");
 				convert_csv_data_ajax();
@@ -153,7 +154,7 @@ $( document ).ready(function() {
 function final_import_opening_balance(){
 	$( document ).ready(function() {
 		$.ajax({
-			url: "final_import_opening_balance",
+			url: "<?php echo $webroot_path; ?>Accounts/final_import_opening_balance",
 			dataType: 'json'
 		}).done(function(response){
 			//alert(response);
@@ -171,21 +172,6 @@ function final_import_opening_balance(){
 </script>
 <?php } ?>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <script>

@@ -7,30 +7,30 @@ $("#fix<?php echo $id_current_page; ?>").removeClass("blue");
 $("#fix<?php echo $id_current_page; ?>").addClass("red");
 });
 </script>
-<div id="done" style="overflow:auto;">
-<form  id="form1" method="post" >	
-<div class="show_record" style="width:100%; overflow:auto;">
-<div class="portlet box green">
-<div class="portlet-title">
-<h4><i class="icon-cogs"></i> Csv Import</h4>
-</div>
-<div class="portlet-body">
 
-<div class="control-group">
-<label class="control-label">Attach csv file
-  <i class=" icon-info-sign tooltips" data-placement="right" data-original-title="Please choose csv file"> </i>
-</label> 
 
-<div class="controls">
-<input type="file" name="file" id="image-file">
- 
-<button type="submit" class="btn blue import_btn">Import</button>
-<label id="vali"></label>
-</div>
-</div>
-
-<strong><a href="open_excel" download="" target="_blank">Download sample format</a></strong>
-<br>
+<?php foreach($result_import_record as $data_import){
+	$step1=(int)@$data_import["import_ob_record"]["step1"];
+	$step2=(int)@$data_import["import_ob_record"]["step2"];
+	$step3=(int)@$data_import["import_ob_record"]["step3"];
+	$step4=(int)@$data_import["import_ob_record"]["step4"];
+	$step5=(int)@$data_import["import_ob_record"]["step5"];
+	$date=@$data_import["import_ob_record"]["date"];
+	$file_name=@$data_import["import_ob_record"]["file_name"];
+}
+$process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
+<div id="first_div">
+<?php if(sizeof($result_import_record)==0){ ?>
+<div class="portlet box green" style="width: 50%; margin: auto;">
+	<div class="portlet-title">
+		<h4><i class="icon-cogs"></i> Import Opening Balance</h4>
+	</div>
+	<div class="portlet-body" align="">
+		<form method="post" id="form1" style="margin: 0px;">
+			<h5>Upload CSV file in given format to import Receipts.</h5>
+			<input name="file" class="default" id="image-file" type="file">
+			<a href="open_excel" download="" target="_blank">Download sample format</a><br/><br/>
+			<br>
 <h4>Instruction set to import users</h4>
 <ol>
 <li>All the field are compulsory.</li>
@@ -38,191 +38,198 @@ $("#fix<?php echo $id_current_page; ?>").addClass("red");
 <li>Amount Type should be 'Debit' or 'Credit'</li>
 <li>Total Debit should be same to total Credit</li>
 </ol>
-</div>
-</div>
-
-</form>	
-</div>
-</div>
-
-
-<?php //////////////////////////////////////////////////////////////////////////////////// ?>
-
-<script>
-$(document).ready(function(){
-
-$(".delete").live('click',function(){
-var id = $(this).attr("del");
-$('#tr'+id).remove();
-});
-
-$('form#form1').submit( function(ev){
-		ev.preventDefault();
-		
-		 im_name=$("#image-file").val();
-		var insert = 1;
-		if(im_name==""){
-		$("#vali").html("<span style='color:red;'>Please Select a Csv File</span>");	
-		return false;
-		}
-		
-		var ext = $('#image-file').val().split('.').pop().toLowerCase();
-		if($.inArray(ext, ['csv']) == -1) {
-			$("#vali").html("<span style='color:red;'>Please Select a Csv File</span>");
-			return false;
-		}
-		
-		
-		
-		$(".import_btn").text("Importing...");
-		
-		var m_data = new FormData();
-		m_data.append( 'file', $('input[name=file]')[0].files[0]);
-		$.ajax({
-		url: "opening_balance_import_ajax",
-		data: m_data,
-		processData: false,
-		contentType: false,
-		type: 'POST',
-		}).done(function(response) {
 			
-		$(".show_record").html(response);
-var insert = 1;
-var count = $("#open_bal tr").length;
-count--;
-var ar = [];
+			<h5 id="submit_element" >
+			<button type="submit" class="btn blue">IMPORT RECEIPTS</button>
+			</h5>
+			
+		</form>
+	</div>
+</div>
+<?php } ?>
 
-$("#open_bal2 tr:nth-child(1) span.report").remove();
-var date = $("#date").val();
-
-for(var i=2;i<=count;i++)
-{
-$("#open_bal tr:nth-child("+i+") span.report").remove();
-$("#open_bal tr:nth-child("+i+") span.report").css("background-color", "white");
-var group = $("#open_bal tr:nth-child("+i+") td:nth-child(1) select").val();
-var ac=$("#open_bal tr:nth-child("+i+") td:nth-child(2) input").val();
-var type=$("#open_bal tr:nth-child("+i+") td:nth-child(3) input").val();
-var amt=$("#open_bal tr:nth-child("+i+") td:nth-child(4) input").val();
-var pen =$("#open_bal tr:nth-child("+i+") td:nth-child(1) input").val();
-ar.push([group,ac,type,amt,insert,date]);
-}
-
-var myJsonString = JSON.stringify(ar);
-myJsonString=encodeURIComponent(myJsonString);
-
-$.ajax({
-url: "save_open_bal?q="+myJsonString,
-type: 'POST',
-dataType:'json',
-}).done(function(response) {
-	
-if(response.report_type=='error'){
-jQuery.each(response.report, function(i, val) {
-	
-$("#open_bal tr:nth-child("+val.tr+") td:nth-child("+val.td+")").append('<span class="report" style="color:red;">'+val.text+'</span>');
-
-$("#open_bal tr:nth-child("+val.tr+") td:nth-child("+val.td+")").css("background-color", "#f2dede");
-
-$("#open_bal tr:nth-child("+val.tr+") td:nth-child("+val.td+")").css("background-color", "#f2dede");
-
-$("#open_bal tr:nth-child("+val.tr+") td:nth-child("+val.td+")").css("background-color", "#f2dede");
-});
-}
-});
-
-$(".import_op").bind('click',function(){
-
-var insert = 2;
-	
-var count = $("#open_bal tr").length;
-count--;
-var ar = [];
-
-var date = $("#date").val();
-
-for(var i=2;i<=count;i++)
-{
-$("#open_bal tr:nth-child("+i+") span.report").remove();
-$("#open_bal tr:nth-child("+i+") span.report").css("background-color", "white");
-var group = $("#open_bal tr:nth-child("+i+") td:nth-child(1) select").val();
-var ac=$("#open_bal tr:nth-child("+i+") td:nth-child(2) input").val();
-var type=$("#open_bal tr:nth-child("+i+") td:nth-child(3) input").val();
-var amt=$("#open_bal tr:nth-child("+i+") td:nth-child(4) input").val();
-var pen_amt=$("#open_bal tr:nth-child("+i+") td:nth-child(5) input").val();
-var flat=$("#open_bal tr:nth-child("+i+") td:nth-child(1) input").val();
-ar.push([group,ac,type,amt,insert,date,pen_amt,flat]);
-}
-var myJsonString = JSON.stringify(ar);
-myJsonString=encodeURIComponent(myJsonString);	
+<?php if(@$process_status==1){ ?>
+<div style="width: 40%; margin: auto; background-color: rgb(210, 243, 196); border: 2px solid rgb(113, 177, 85); padding: 10px;">
+	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
+	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">File Uploaded Succesfully.</span>
+	<br/><span style="padding-left: 35px; color: rgb(114, 113, 113);"><b>Uploaded on:</b> </span><span style="color: rgb(114, 113, 113);"> <?php echo $date; ?></span>
+	<br/><br/>
+	<img src="<?php echo $webroot_path; ?>as/loding.gif" /> 
+	<span style="padding-left: 10px; font-weight: bold; color: red;">Do Not Close Window, Reading CSV file...</span>
+</div>
+<script>
+$( document ).ready(function() {
+    $.ajax({
+		url: "read_csv_file_ob",
+		dataType: 'json'
+	}).done(function(response){
 		
-$.ajax({
-url: "save_open_bal?q="+myJsonString,
-type: 'POST',
-dataType:'json',
-}).done(function(response) {
-if(response.report_type=='error'){	
-jQuery.each(response.report, function(i, val) {
-$("#open_bal tr:nth-child("+val.tr+") td:nth-child("+val.td+")").append('<span class="report" style="color:red;">'+val.text+'</span>');
-
-$("#open_bal tr:nth-child("+val.tr+") td:nth-child("+val.td+")").css("background-color", "#f2dede");
-
-$("#open_bal tr:nth-child("+val.tr+") td:nth-child("+val.td+")").css("background-color", "#f2dede");
-
-$("#open_bal tr:nth-child("+val.tr+") td:nth-child("+val.td+")").css("background-color", "#f2dede");
-});
-}
-if(response.report_type=='fina')
-{
-$("#vali").html('<b style="color:red;">'+response.text+'</b>');
-$("#deb").html(response.deb);
-$("#cre").html(response.cre);
-	
-}
-if(response.report_type=='done')
-{
-$("#hide_div").show();
-}
-
-});	
-});
-});
-});
+		if(response=="READ"){
+			change_page_automatically("<?php echo $webroot_path; ?>Accounts/opening_balance_import");
+		}
+	});
 });
 </script>
-<div id="hide_div" class="hide">
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body">
-<h4><b>Thank You!</b></h4>
-The Opening Balances Imported Successfully
+<?php } ?>
+<?php if(@$process_status==2){ ?>
+<div style="width: 40%; margin: auto; background-color: rgb(210, 243, 196); border: 2px solid rgb(113, 177, 85); padding: 10px;">
+	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
+	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">File Uploaded Succesfully.</span>
+	<br/><span style="padding-left: 35px; color: rgb(114, 113, 113);"><b>Uploaded on:</b> </span><span style="color: rgb(114, 113, 113);"> <?php echo $date; ?></span>
+	<br/><br/>
+	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
+	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">To Read Uploaded File Succesfully Done.</span>
+	<br/><br/>
+	<img src="<?php echo $webroot_path; ?>as/loding.gif" /> 
+	<span style="padding-left: 10px; font-weight: bold; color: red;">Preparing Data For More Modifications.</span>
+	<div class="progress progress-striped progress-danger active">
+		<div id="progress" style="width: <?php echo $converted_per; ?>%;" class="bar"></div>
+	</div>
 </div>
-<div class="modal-footer">
-<a class="btn red" href="<?php echo $webroot_path; ?>Accounts/opening_balance_import" rel="tab">OK</a>
+<script>
+$( document ).ready(function() {
+	convert_csv_data_ajax();
+});
+function convert_csv_data_ajax(){
+	$( document ).ready(function() {
+		$.ajax({
+			url: "convert_imported_data_ob",
+			dataType: 'json'
+		}).done(function(response){
+			if(response.again_call_ajax=="YES"){
+				$("#progress").css("width",response.converted_per+"%");
+				convert_csv_data_ajax();
+			}
+			if(response.again_call_ajax=="NO"){
+				change_page_automatically("<?php echo $webroot_path; ?>Accounts/opening_balance_import");
+			}
+		});
+	});
+}
+</script>
+<?php } ?>
+
+<?php if(@$process_status==3){ ?>
+<div style="width: 40%; margin: auto; background-color: rgb(210, 243, 196); border: 2px solid rgb(113, 177, 85); padding: 10px;">
+<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
+<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">File Uploaded Succesfully.</span>
+<br/><span style="padding-left: 35px; color: rgb(114, 113, 113);"><b>Uploaded on:</b> </span><span style="color: rgb(114, 113, 113);"> <?php echo $date; ?></span>
+<br/><br/>
+<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
+<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">To Read Uploaded File Succesfully Done.</span>
+<br/><br/>
+<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
+<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Uploaded Data Is Ready To More Modification.</span>
+<br/><br/>
+<a href="<?php echo $webroot_path; ?>Accounts/modify_opening_balance" class="btn red"  id="pulsate-regular">MODIFY DATA</a>
 </div>
+<?php } ?>
+<?php if(@$process_status==4){ ?>
+<div style="width: 40%; margin: auto; background-color: rgb(210, 243, 196); border: 2px solid rgb(113, 177, 85); padding: 10px;">
+	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
+	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">File Uploaded Succesfully.</span>
+	<br/><span style="padding-left: 35px; color: rgb(114, 113, 113);"><b>Uploaded on:</b> </span><span style="color: rgb(114, 113, 113);"> <?php echo $date; ?></span>
+	<br/><br/>
+	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
+	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">To Read Uploaded File Succesfully Done.</span>
+	<br/><br/>
+	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
+	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Uploaded Data Is Ready To More Modification.</span>
+	<br/><br/>
+	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
+	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Data Validation Process Completed.</span>
+	<br/><br/>
+	<img src="<?php echo $webroot_path; ?>as/loding.gif" /> 
+	<span style="padding-left: 10px; font-weight: bold; color: red;">Importing Receipt Into The System.</span>
+	<div class="progress progress-striped progress-danger active">
+		<div id="progress_im" style="width: <?php echo $converted_per_im; ?>%;" class="bar"></div>
+	</div>
+	<span style="padding-left: 35px; color: rgb(114, 113, 113);"><b id="text_per_im"></b> Receipts Imported.</span>
 </div>
+<script>
+$( document ).ready(function() {
+	final_import_opening_balance();
+});
+function final_import_opening_balance(){
+	$( document ).ready(function() {
+		$.ajax({
+			url: "final_import_opening_balance",
+			dataType: 'json'
+		}).done(function(response){
+			//alert(response);
+			if(response.again_call_ajax=="YES"){
+				$("#progress_im").css("width",response.converted_per_im+"%");
+				$("#text_per_im").html(response.converted_per_im.toFixed(2)+"%");
+				final_import_opening_balance();
+			}
+			if(response.again_call_ajax=="NO"){
+				$("#first_div").html('<div class="alert alert-block alert-success fade in"><h4 class="alert-heading">Success!</h4><p>Receipts Imported successfully.</p><p><a class="btn green" href="<?php echo $webroot_path; ?>Accounts/opening_balance_import">OK</a> </p></div>');
+			}
+		});
+	});
+}
+</script>
+<?php } ?>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 <script>
-$(document).ready(function() {
-<?php	
-$status5=(int)$this->Session->read('opnn_bll');
-if($status5==1)
-{
-?>
-$.gritter.add({
-title: 'Opening Balance Import',
-text: '<p>Thank you.</p><p>The Opening Balance Imported Successfully.</p>',
-sticky: false,
-time: '10000',
+$('form#form1').submit( function(ev){
+	
+	ev.preventDefault();
+	$("#submit_element").html("<img src='<?php echo $webroot_path; ?>as/loding.gif' /> Please Wait, Csv file is Uploading...");
+	var m_data = new FormData();
+	m_data.append( 'file', $('input[name=file]')[0].files[0]);
+	$.ajax({
+	url: "<?php echo $webroot_path; ?>Accounts/upload_opening_balance_csv_file",
+	data: m_data,
+	processData: false,
+	contentType: false,
+	type: 'POST',
+	dataType: 'json'
+	}).done(function(response){
+			if(response=="UPLOADED"){
+			change_page_automatically("<?php echo $webroot_path; ?>Accounts/opening_balance_import");
+		}
+	});
 });
-<?php
-$this->requestAction(array('controller' => 'hms', 'action' => 'griter_notification'), array('pass' => array(5513)));
-} ?>
-});
+
 </script>
+
+<script>
+function change_page_automatically(pageurl){
+	$.ajax({
+		url: pageurl,
+		}).done(function(response) {
+		
+		//$("#loading_ajax").html('');
+		
+		$(".page-content").html(response);
+		$("html, body").animate({
+			scrollTop:0
+		},"slow");
+		 $('#submit_success').hide();
+		});
+	
+	window.history.pushState({path:pageurl},'',pageurl);
+}
+</script>
+
 
 
 

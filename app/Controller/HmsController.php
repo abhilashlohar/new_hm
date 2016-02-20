@@ -179,27 +179,26 @@ function convert_user_info_data(){
 	}
 	}
 }
-		 
-		 
-		 $mobileErr = 1;
-		 if(!empty($mobile)){
-			 $mob="/([0-9]{10})/"; 
-			 if(!preg_match($mob, $mobile) && strlen($mobile)!=10 ) {
-				 $mobileErr = 0;
-			}else{
-				$this->loadmodel('user'); 
-				$conditions=array("mobile"=>$mobile);
-				$result_user_count=$this->user->find('count',array('conditions'=>$conditions));
+
+	$mobileErr = 1;
+	if(!empty($mobile)){
+	$mob="/([0-9]{10})/"; 
+	if(!preg_match($mob, $mobile) && strlen($mobile)!=10 ) {
+	$mobileErr = 0;
+	}else{
+		
+	$this->loadmodel('user'); 
+	$conditions=array("mobile"=>$mobile);
+	$result_user_count=$this->user->find('count',array('conditions'=>$conditions));
 				
-				$this->loadmodel('user_info_csv_converted'); 
-				$conditions=array("mobile"=>$mobile);
-				$result_user_info_csv_converted_count=$this->user_info_csv_converted->find('count',array('conditions'=>$conditions));
-				
-				if($result_user_count>1 or $result_user_info_csv_converted_count>1){
-					 $mobileErr = 0;
-				}
-			}
-		 }
+		$this->loadmodel('user_info_csv_converted'); 
+		$conditions=array("mobile"=>$mobile);
+		$result_user_info_csv_converted_count=$this->user_info_csv_converted->find('count',array('conditions'=>$conditions));
+		if($result_user_count>1 or $result_user_info_csv_converted_count>1){
+		$mobileErr = 0;
+		}
+		}
+}
 		 
 			
 		$this->loadmodel('user_info_csv_converted');

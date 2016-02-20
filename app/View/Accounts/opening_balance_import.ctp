@@ -33,7 +33,6 @@ $process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
 			<br>
 <h4>Instruction set to import users</h4>
 <ol>
-<li>All the field are compulsory.</li>
 <li>Opening Balance Amount should be Numeric</li>
 <li>Amount Type should be 'Debit' or 'Credit'</li>
 <li>Total Debit should be same to total Credit</li>

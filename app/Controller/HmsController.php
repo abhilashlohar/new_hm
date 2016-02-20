@@ -2734,7 +2734,7 @@ return ++$auto;
 
 function autoincrement_with_society($table,$field) 
 {
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $this->loadmodel($table);
 $conditions=array("society_id" => $s_society_id);
 $order=array($table.'.'.$field=>'DESC');
@@ -2757,7 +2757,7 @@ return ++$auto2;
 
 function autoincrement_with_society_ticket($table,$field) 
 {
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $this->loadmodel($table);
 $conditions=array("society_id" => $s_society_id);
 $order=array($table.'.'.$field=>'DESC');
@@ -10618,7 +10618,6 @@ if($this->RequestHandler->isAjax()){
 		$this->layout='session';
 	}
 $this->ath();
-//$this->check_user_privilages();
 $s_society_id=$this->Session->read('hm_society_id');
 
 if (isset($this->request->data['add_role'])) 
@@ -11101,7 +11100,7 @@ return $n=sizeof($result);
 
 function user_assign_role()
 {
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 if($this->RequestHandler->isAjax()){
 		$this->layout='blank';
 	}else{
@@ -11110,7 +11109,7 @@ if($this->RequestHandler->isAjax()){
 $this->ath();
 $this->check_user_privilages();
 $this->loadmodel('user');
-$conditions1=array('society_id'=>$s_society_id,'deactive'=>0);
+$conditions1=array('society_id'=>$s_society_id,'active'=>"yes");
 $result=$this->user->find('all',array('conditions'=>$conditions1));
 $this->set('result_user',$result);
 if ($this->request->is('post')) 
@@ -11143,7 +11142,7 @@ function user_assign_role_ajax()
 {
 $this->layout='blank';
 $user_id=(int)$this->request->query('con');
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $this->loadmodel('role');
 $conditions=array('society_id'=>$s_society_id);	
 $result=$this->role->find('all',array('conditions'=>$conditions));

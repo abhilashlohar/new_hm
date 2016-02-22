@@ -123,7 +123,7 @@ function read_csv_file_ob()
 			$this->opening_balance_csv->saveAll(Array(Array("auto_id" => $auto_id, "group" => $group,"subledger_ac"=>$subledger_ac,"wing_name"=>$wing_name, "flat_name" => $flat_name, "type" => $type,"amount"=>$amount,"penalty"=>$penalty,"society_id"=>$s_society_id,"is_converted"=>"NO")));
 		} 
 		}
-	   }
+	    }
 	$this->loadmodel('import_ob_record');
 	$this->import_ob_record->updateAll(array("step2" => 1),array("society_id" => $s_society_id, "module_name" => "OB"));
 	die(json_encode("READ"));	

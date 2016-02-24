@@ -25988,7 +25988,7 @@ if($field=="flat_area"){
 $this->loadmodel('flat');
 $this->flat->updateAll(array("flat_area"=>$value),array("flat_id" => $record_id));
 }	
-	
+echo "F";	
 }
 ////////////////////// End auto_save_unit_config ///////////////////////////////
 }

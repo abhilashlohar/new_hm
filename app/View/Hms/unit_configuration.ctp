@@ -17,7 +17,9 @@ Society Setup
 </ul>
 <div class="tab-content" style="min-height:300px;">
 <div class="tab-pane active" id="tab_1_1">
-<br>
+Every change you make is automatically saved.<br>
+<p id="msg"></p>
+
 <table class="table table-bordered table-condensed">
 	<tr>
 		<th>Wing </th>
@@ -72,17 +74,14 @@ $( document ).ready(function() {
 		var record_id=$(this).attr("record_id");
 		var field=$(this).attr("field");
 		var value=$(this).val();
+		$("#msg").html("Saving Changes....");
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Hms/auto_save_unit_config/"+record_id+"/"+field+"/"+value,
 		}).done(function(response){
-			if(response=="F"){
-				$("table#report_tb tr#"+record_id+" td").each(function(){
-					$(this).find('input[field="'+field+'"]').parent("div").css("border", "solid 1px red");
-				});
+				if(response=="F"){
+			$("#msg").html("");
 			}else{
-				$("table#report_tb tr#"+record_id+" td").each(function(){
-					$(this).find('input[field="'+field+'"]').parent("div").css("border", "");
-				});
+				
 			}
 		});
 	});
@@ -91,18 +90,14 @@ $( document ).ready(function() {
 		var record_id=$(this).attr("record_id");
 		var field=$(this).attr("field");
 		var value=$("option:selected",this).val();
-		
+		$("#msg").html("Saving Changes....");
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Hms/auto_save_unit_config/"+record_id+"/"+field+"/"+value,
 		}).done(function(response){
 			if(response=="F"){
-				$("table#report_tb tr#"+record_id+" td").each(function(){
-					$(this).find('select[field="'+field+'"]').parent("div").css("border", "solid 1px red");
-				});
+				$("#msg").html("");
 			}else{
-				$("table#report_tb tr#"+record_id+" td").each(function(){
-					$(this).find('select[field="'+field+'"]').parent("div").css("border", "");
-				});
+				
 			}
 		});
 	});

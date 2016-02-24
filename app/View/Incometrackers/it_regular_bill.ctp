@@ -557,7 +557,7 @@ if($society_detail == 'NOT')
 <center>
 <div  class="alert alert-info" style="width:70%;">
 <h4><b>
-Dear Sir, For Regular Bill genereation you have to full fill the Society Registartion Number and Society Address at Society Setup. Without these detail you can not generate Regular Bill, So Please fill these details.
+Dear Sir, For Regular Bill genereation you have to full fill the Society Registration Number and Society Address at Society Setup. Without these detail you can not generate Regular Bill, So Please fill these details.
 </b></h4>
 </div>
 </center>

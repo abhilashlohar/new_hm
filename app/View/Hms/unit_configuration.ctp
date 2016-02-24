@@ -101,19 +101,6 @@ $( document ).ready(function() {
 		});
 	});
 });
-
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
 
 

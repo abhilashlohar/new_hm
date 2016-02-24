@@ -21071,7 +21071,7 @@ function master_ledger_account_hm()
 }
 //////////////////////// End Master Ledger Account Hm (Accounts)/////////////////////
 
-//////////////////////////// Start Accounts Category Fetch (Accounts) /////////////////////////////////////
+//////////////////////////// Start Accounts Category Fetch (Accounts) //////////////////////
 function accounts_category($accounts_id) 
 {
 $this->loadmodel('accounts_category');
@@ -21079,11 +21079,40 @@ $conditions=array("auto_id" => $accounts_id);
 return $this->accounts_category->find('all',array('conditions'=>$conditions));
 
 }
-//////////////////////////////End Accounts Category Fetch (Accounts) //////////////////////////////////
+//////////////////////////End Accounts Category Fetch (Accounts) ////////////////////
+
+//////////////////////////// Start Accounts Category Fetch (Accounts) //////////////////////
+function accounts_group_via_accounts_id($accounts_id) 
+{
+$this->loadmodel('accounts_group');
+$order = array('accounts_group.group_name'=>'ASC');
+$conditions=array("accounts_id" => $accounts_id,'delete_id'=>0);
+return $this->accounts_group->find('all',array('conditions'=>$conditions,'order'=>$order));
+
+}
+//////////////////////////End Accounts Category Fetch (Accounts) ////////////////////
+
+
+//////////////////////////// Start Accounts Category Fetch (Accounts) //////////////////////
+function ledger_account_via_group_id($accounts_id) 
+{
+$s_society_id = (int)$this->Session->read('society_id');
+$this->loadmodel('ledger_account');
+$order = array('ledger_account.ledger_name'=>'ASC');
+$conditions = array('$or' => array(array('society_id' =>$s_society_id),array('society_id' =>0)),'group_id'=>$accounts_id);
+return $this->ledger_account->find('all',array('conditions'=>$conditions,'order'=>$order));
+}
+//////////////////////////End Accounts Category Fetch (Accounts) ////////////////////
 
 
 
-/////////////////////////////////////////Start Master Ledger Sub Account Ajax  (Accounts)////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+//////////////////////Start Master Ledger Sub Account Ajax  (Accounts)/////////////////////
 function master_ledger_sub_account_ajax()
 {
 $this->layout='blank';

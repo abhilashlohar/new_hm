@@ -4274,6 +4274,23 @@ function master_ledger_accounts_view()
 	$this->ath();
 	$this->check_user_privilages();
 
+	
+$this->loadmodel('accounts_category');
+$order=array('accounts_category.category_name'=>'ASC');
+$conditions=array("delete_id" => 0);
+$result_accounts_category=$this->accounts_category->find('all',array('conditions'=>$conditions,'order'=>$order));
+$this->set('result_accounts_category',$result_accounts_category);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	$this->loadmodel('ledger_account');
 	$conditions = array( '$or' => array(array('society_id' =>$s_society_id),array('society_id' =>0)));
 	$cursor2=$this->ledger_account->find('all',array('conditions'=>$conditions));

@@ -35,15 +35,7 @@
 		  }
 
 		 
-	function test12()
-	{
-	
-		var test = $("input[type=checkbox]:not(.toggle), input[type=radio]:not(.toggle)");
-		if (test) {
-		test.uniform();
-		}
-
-	}	  
+		  
 </script>
 
 <?php

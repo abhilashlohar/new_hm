@@ -11,14 +11,13 @@ Society Setup
 <li><a href="<?php echo @$webroot_path; ?>Hms/master_sm_wing" rel='tab'> Wing</a></li>
 <li><a href="<?php echo $webroot_path; ?>Hms/flat_type" rel='tab'>Unit Number</a></li>
 <li class="active"><a href="<?php echo $webroot_path; ?>Hms/unit_configuration" rel='tab'>Unit Configuration</a></li>
-<!--<li ><a href="<?php echo $webroot_path; ?>Hms/flat_nu_import" rel='tab'>Flat Number Import</a></li>-->
 <li><a href="<?php echo $webroot_path; ?>Hms/society_details" rel='tab'>Society Details</a></li>
 <li><a href="<?php echo $webroot_path; ?>Hms/society_settings" rel='tab'>Society Settings</a></li>
 </ul>
 <div class="tab-content" style="min-height:300px;">
 <div class="tab-pane active" id="tab_1_1">
 Every change you make is automatically saved.<br>
-<p id="msg"></p>
+<p id="msg" style="height:20px;"></p>
 
 <table class="table table-bordered table-condensed">
 	<tr>

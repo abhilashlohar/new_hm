@@ -52,10 +52,7 @@ $name = $collection['accounts_groups']['group_name'];
 </div>
 <br>
 
-
 <div id="result">
-
-
 </div>
 
 
@@ -141,8 +138,9 @@ $(document).ready(function(){
 $(document).ready(function(){			   
   $("#vali").bind('click',function(){	
 
- var ledger_name2 = $("#cat").val();	
- string2 = ledger_name2.toLowerCase();
+var ledger_name2 = $("#cat").val();	
+var ledger_name2 = $.trim(ledger_name2);
+string2 = ledger_name2.toLowerCase();
 
  var ledger = $("#ledger").val();
  var y = $("#yy").val();
@@ -195,24 +193,5 @@ $this->requestAction(array('controller' => 'hms', 'action' => 'griter_notificati
 } ?>
 });
 </script> 	   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
+
 			   

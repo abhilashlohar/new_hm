@@ -919,8 +919,8 @@ function master_ledger_account_coa()
 	if(isset($this->request->data['sub']))
 	{
 		$main_id = (int)$this->request->data['main_id'];
-		$name = $this->request->data['cat_name'];
-
+		$name=htmlentities($this->request->data['cat_name']);
+       	
 		if($main_id == 4)
 		{
 			$rate = (int)$this->request->data['rate'];

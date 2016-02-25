@@ -29,6 +29,9 @@ foreach($income_head_arr2 as $data)
 {
 $income_arrr[] = $data;
 }
+
+
+
 ?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
 <table  align="center" border="1" bordercolor="#FFFFFF" cellpadding="0">

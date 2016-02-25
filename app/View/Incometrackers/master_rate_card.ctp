@@ -109,8 +109,6 @@ break;
 }
 }
 
-
-
 $result = $this->requestAction(array('controller' => 'hms', 'action' => 'flat_type_name_fetch'),array('pass'=>array($flat_type_id)));	
 foreach($result as $collection)
 {

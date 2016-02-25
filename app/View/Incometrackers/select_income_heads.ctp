@@ -56,7 +56,7 @@ $income_arrr[] = $data;
 </table> 
 <?php /////////////////////////////////////////////////////////////////////////////////// ?>
 
-                
+<form method="post">                
 <div class="portlet box blue">
 <div class="portlet-title">
 <h4 class="block">Select Income Heads for Bill Charges</h4>
@@ -130,7 +130,7 @@ $income_head_name = $collection['ledger_account']['ledger_name'];
 </div>
 </div>
 </div>
-                 
+</form>                
                
 
 

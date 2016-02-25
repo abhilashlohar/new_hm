@@ -11,26 +11,64 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 <a href="<?php echo $webroot_path; ?>Incometrackers/other_charges" class="btn" rel='tab'>Other Charges</a>
 </div>
 
-<div style="background-color: rgb(255, 255, 255);padding: 5px;">
+<div style="background-color: rgb(255, 255, 255);padding: 5px;overflow-x: auto;">
 <table class="table table-condensed table-bordered">
 	<thead>
 		<tr>
 			<th>Flat type</th>
-			<?php foreach($income_heads as $income_head):?>
-			<th><?php echo $income_head; ?></th>
+			<?php foreach($income_heads as $income_head):
+				$income_head_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'income_head_name_via_income_head_id'), array('pass' => array($income_head)));?>
+			<th><?php echo $income_head_name; ?></th>
 			<?php endforeach; ?>
 		</tr>
 	</thead>
 	<tbody>
-	<?php foreach($flat_type_ids as $flat_type_id):?>
+	<?php foreach($flat_type_ids as $flat_type_id):
+		$flat_type_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'flat_type_name_via_flat_type_id'), array('pass' => array($flat_type_id)));?>
 		<tr>
-			<td><?php echo $flat_type_id; ?></td>
-			<td>Mark</td>
-			<td>Otto</td>
-			<td class="hidden-phone">makr124</td>
-			<td><span class="label label-success">Approved</span></td>
+			<th><?php echo $flat_type_name; ?></th>
+			<?php foreach($income_heads as $income_head):?>
+			<td>
+				<select class="m-wrap small" flat_type_id="<?php echo $flat_type_id; ?>" income_head_id="<?php echo $income_head; ?>">
+					<option value="" style="display:none;">Select</option>
+					<option value="1">Lump Sum</option>
+					<option value="2" >Per Square Feet</option>
+					<option value="3">Flat Type</option>
+				</select>
+				<input class="m-wrap small" style="text-align:right;" maxlength="10" type="text" flat_type_id="<?php echo $flat_type_id; ?>" income_head_id="<?php echo $income_head; ?>">
+			</td>
+			<?php endforeach; ?>
 		</tr>
 	<?php endforeach; ?>
 	</tbody>
 </table>
 </div>
+<script>
+$(document).ready(function(){
+	$("input").on("blur",function(){
+		var flat_type_id=$(this).attr("flat_type_id");
+		var income_head_id=$(this).attr("income_head_id");
+		var rate_type=$(this).closest("td").find("select").val();
+		var rate=parseFloat($(this).closest("td").find("input").val());
+		if(isNaN(rate)===true){rate=0;}
+		$.ajax({
+			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_rate_card/"+flat_type_id+"/"+income_head_id+"/"+rate_type+"/"+rate,
+		}).done(function(response){
+			//alert(response);
+		});
+	})
+	
+	$("select").on("change",function(){
+		var flat_type_id=$(this).attr("flat_type_id");
+		var income_head_id=$(this).attr("income_head_id");
+		var rate_type=$(this).closest("td").find("select").val();
+		var rate=parseFloat($(this).closest("td").find("input").val());
+		if(isNaN(NaN)===true){rate=0;}
+		$.ajax({
+			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_rate_card/"+flat_type_id+"/"+income_head_id+"/"+rate_type+"/"+rate,
+		}).done(function(response){
+			//alert(response);
+		});
+	})
+});
+</script>

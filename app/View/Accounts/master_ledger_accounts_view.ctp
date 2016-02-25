@@ -7,73 +7,141 @@ $("#fix<?php echo $id_current_page; ?>").removeClass("blue");
 $("#fix<?php echo $id_current_page; ?>").addClass("red");
 });
 </script>
-
-
-<table class="table table-bordered">
+<?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////?>
+<center>
+<a href="<?php echo $webroot_path; ?>Accounts/master_ledger_account_coa" class="btn" rel='tab'>Ledger Accounts Add</a>
+<a href="<?php echo $webroot_path; ?>Accounts/master_ledger_sub_accounts_coa" class="btn" rel='tab'>Ledger Sub Accounts Add</a>
+<a href="<?php echo $webroot_path; ?>Accounts/master_ledger_accounts_view" class="btn yellow" rel='tab'>Master Ledger  Account View</a>
+<a href="<?php echo $webroot_path; ?>Accounts/master_ledger_sub_account_view" class="btn" rel='tab'>Master Ledger Sub Account View</a>
+</center>
+<?php ///////////////////////////////////////////////////////////////////////////////////////////////////// ?>
+<br />
+<center>
+<div class="portlet box grey" style="width:100%;">
+<div style="background-color:#B2B2B2; border-top:1px solid #e6e6e6; border-bottom:1px solid #e6e6e6; padding:10px; box-shadow:5px; font-size:16px; color:#006;">
+<b style="color:white;">  Ledger Accounts View </b>
+</div>
+<div class="portlet-body">
+<div style="width:100%;">
+<table style="width:100%; background-color:white;" class="table table-bordered" id="sample_2">
+<thead>			
 <tr>
-<th>Accounts Category</th>
+<th>Sr.No.</th>
+<th>Account Category</th>
 <th>Accounts Group</th>
-<th>Ledger Account</th>
-</tr>
-<?php 
-
-foreach($result_accounts_category as $data)
+<th>Ledger</th>
+<th>Edit</th>
+</tr>        
+</thead>
+<tbody>
+<?php
+$n = 1;
+foreach ($cursor2 as $collection) 
 {
-$bbb=0;	
-$accounts_id = (int)$data['accounts_category']['auto_id'];	
-$accounts_name = $data['accounts_category']['category_name'];
-$aaa=0;
-$eee=0;
-$bbb++;
-$result_group = $this->requestAction(array('controller' => 'hms', 'action' => 'accounts_group_via_accounts_id'),array('pass'=>array($accounts_id)));
-foreach ($result_group as $dataa) 
+$sub_id = (int)$collection['ledger_account']['group_id'];
+$name = $collection['ledger_account']['ledger_name'];
+$auto_id5 = (int)$collection['ledger_account']['auto_id'];
+@$edit_id = (int)@$collection['ledger_account']['edit_user_id'];
+$result_ag = $this->requestAction(array('controller' => 'hms', 'action' => 'accounts_group'),array('pass'=>array($sub_id)));
+foreach ($result_ag as $collection) 
 {
-$aaa++;
+$accounts_id = (int)$collection['accounts_group']['accounts_id'];	
+$group_name = $collection['accounts_group']['group_name'];	
 }
 
-$result_group = $this->requestAction(array('controller' => 'hms', 'action' => 'accounts_group_via_accounts_id'),array('pass'=>array($accounts_id)));
-foreach ($result_group as $dataa) 
+$result_ac = $this->requestAction(array('controller' => 'hms', 'action' => 'accounts_category'),array('pass'=>array($accounts_id)));		   
+foreach ($result_ac as $collection) 
 {
-$bbb++;
-$group_id = (int)$dataa['accounts_group']['auto_id'];	
-$group_name = $dataa['accounts_group']['group_name'];	
-
-$ccc=0;
-$result_ledger = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_via_group_id'),array('pass'=>array($group_id)));
-foreach ($result_ledger as $dataaa) 
-{
-$ccc++;
-$eee++;
+$main_name = $collection['accounts_category']['category_name'];	
 }
-
-$ddd=0;
-$result_ledger = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_via_group_id'),array('pass'=>array($group_id)));
-foreach ($result_ledger as $dataaa) 
-{
-$ddd++;
-$bbb++;
-$accounts_id = (int)$dataaa['ledger_account']['auto_id'];	
-$ledger_name = $dataaa['ledger_account']['ledger_name'];
-
-	
-?>
+?>        
+			
 <tr>
-<?php //if($bbb == 1){ ?>
-<td rowspan="<?php //echo $eee; ?>"><?php echo $accounts_name; ?></td><?php //} ?>
-<?php if($ddd == 1){ ?>
-<td rowspan="<?php echo $ccc; ?>"><?php echo $group_name; ?></td><?php } ?>
-<td><?php echo $ledger_name; ?></td>
+<td><?php echo $n; ?></td>
+<td><?php echo $main_name; ?></td>
+<td id="kk<?php echo $auto_id5; ?>"><?php echo $group_name; ?></td>
+<td id="tt<?php echo $auto_id5; ?>"><?php echo $name; ?></td>
+<td> 
+<?php if($edit_id == $s_user_id)
+{
+?>
+<a href="#" role='button' edit_id="<?php echo $auto_id5; ?>" class="btn mini blue edit_ledger"><i class="icon-pencil"></i> Edit</a>
+<?php  } ?>
+</td>
 </tr>
-<?php }}} ?>
-
+<?php $n++; } ?> 
+</tbody>  
 </table>
+</div>  
+</div> 
+</div>      
+</center>
 
-<?php echo $eee; ?>
+<?php ///////////////////////////////////////////////////////////////////////////////////////////////////// ?>
+<script>
+$(document).ready(function() {
+
+$("#close_edit").live('click',function(){
+$(".edit_div").hide();
+});	 
+
+
+
+$(".edit_ledger").live('click',function(){
+    
+	 $(".edit_div").show();
+     var t_id=$(this).attr("edit_id");
+
+  $("#tems_edit_content").html('<div align="center" style="padding:20px;"><img src="<?php echo $this->webroot ; ?>/as/indicator_blue_small.gif" /><br/><h5>Please Wait</h5></div>').load('<?php echo $this->webroot; ?>Accounts/ledger_edit?t_id='+t_id+'&edit=0');
+});	 
+
+
+$(".save_edited_terms").live('click',function(){
+	
+		var t_id=$(this).attr("tems_id");
+		 
+		var ledger1=$("#ledger").val();
+		//var group1 = $("#group").val();
+		var ledger2=encodeURIComponent(ledger1);
+		//var group_name = $("#group").find(":selected").text();
+		
+		//$("table#abc tr:nth-child("+t_id+") td:nth-child(3)").text(group1);
+		//var des=encodeURIComponent(des1);
+		//var close_date1=$("#close_date").val();
+		//var close_date=encodeURIComponent(close_date1);
+		//$("#kk"+t_id).html(group_name);
+		$("#tt"+t_id).html(ledger1);
+		//$("#close_date"+p_id).html(close_date1);
+			
+		$("#tems_edit_content").load('<?php echo $this->webroot; ?>Accounts/ledger_edit?t_id='+t_id+'&led='+ledger2+'&edit=1', function() {
+			
+		});
+			
+		
+		
+	 });
 
 
 
 
 
+
+
+
+
+
+
+
+});
+</script>
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
+
+<div class="edit_div"  style="display:none;">
+<div class="modal-backdrop fade in"></div>
+<div class="modal"  id="tems_edit_content">
+	
+</div>
+</div>
 
 
 

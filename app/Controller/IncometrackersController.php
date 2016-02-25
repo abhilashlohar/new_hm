@@ -4037,9 +4037,9 @@ $this->layout='session';
 $this->ath();
 $this->check_user_privilages();
 
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');	
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');	
 
 if(isset($this->request->data['sub']))
 {
@@ -6309,8 +6309,8 @@ $this->layout=null;
 
 $post_data=$this->request->data;
 $this->ath();
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $date=date('d-m-Y');
 $time = date(' h:i a', time());
 

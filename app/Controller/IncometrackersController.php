@@ -4337,125 +4337,33 @@ $this->set('cursor2',$cursor2);
 ///////////////////////////////// End It Setup (Accounts) /////////////////////////////////////////////////
 
 /////////////////////////Start Master rate Card(Accounts)//////////////////////////////
-function master_rate_card()
-{
-if($this->RequestHandler->isAjax()){
-$this->layout='blank';
-}else{
-$this->layout='session';
-}
+function master_rate_card(){
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
 
-$this->ath();
-$this->check_user_privilages();
+	$this->ath();
+	$this->check_user_privilages();
 
-$s_role_id=$this->Session->read('hm_role_id');
-$s_society_id = (int)$this->Session->read('hm_society_id');
-$s_user_id=$this->Session->read('hm_user_id');	
-$nnn = 5;
-$this->set('nnn',$nnn);
-
-$this->loadmodel('society');
-$conditions=array("society_id" => $s_society_id);
-$cursor222 = $this->society->find('all',array('conditions'=>$conditions));
-foreach($cursor222 as $collection)
-{
-$area_typppp = (int)@$collection['society']['area_scale'];
-}
-$this->set('area_typppp',$area_typppp);
-
-
-if(isset($this->request->data['sub']))
-{
-$this->loadmodel('society');
-$conditions=array("society_id" => $s_society_id);
-$cursor2 = $this->society->find('all',array('conditions'=>$conditions));
-foreach($cursor2 as $collection)
-{
-$income_head_arr = $collection['society']['income_head'];
-}
-
-
-$this->loadmodel('flat_type');
-$conditions=array("society_id" => $s_society_id);
-$cursor1 = $this->flat_type->find('all',array('conditions'=>$conditions));
-foreach($cursor1 as $collection)
-{
-$auto_id1 = (int)$collection['flat_type']['auto_id'];
-$rate_arr = array();
-$rate_arri = array();
-for($l=0; $l<sizeof($income_head_arr); $l++)
-{
-$auto_id2 = (int)$income_head_arr[$l];
-
-
-$charge_type_id = (int)$this->request->data['charge_type'.$auto_id1.$auto_id2];
-$charge = (int)$this->request->data['charge'.$auto_id1.$auto_id2];
-$arr = array($auto_id1,$auto_id2,$charge_type_id,$charge);
-$arri = implode('-',$arr);
-$rate_arri[] = $arri;
-$rate_arr[] = $arr;
-}
-$main_arri = implode("/",$rate_arri);
-$show_arr[] = $main_arri;
-
-//$this->loadmodel('flat_type');
-//$this->flat_type->updateAll(array('charge' => $rate_arr),array('auto_id' => $auto_id));
-}
-$show_arri = implode(',',$show_arr);
-
-$this->response->header('Location','rate_card_view2?arr='.$show_arri.' ');
-}
-
-$this->loadmodel('flat_type');
-$conditions=array("society_id" => $s_society_id);
-$cursor = $this->flat_type->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
-$auto_id = (int)$collection['flat_type']['auto_id'];
-@$charge = $collection['flat_type']['charge'];
-
-
-
-if(isset($this->request->data['sub'.$auto_id]))
-{
-$count = $this->request->data['count'.$auto_id];
-$n=0;
-for($k=0; $k<sizeof($charge); $k++)
-{
-$n++;
-$charge2 = $charge[$k];
-$ih_id = (int)$charge2[0];
-$tp_id = (int)$this->request->data['tp'.$n];
-$amt = $this->request->data['amt'.$n];
-$arr = array($ih_id,$tp_id,$amt);
-$rat_arr2[] = $arr;
-}
-
-$this->loadmodel('flat_type');
-$this->flat_type->updateAll(array('charge' => $rat_arr2),array('auto_id' => $auto_id));
-
-
-}
-}
-
-
-$this->loadmodel('flat_type');
-$conditions=array("society_id" => $s_society_id);
-$cursor1 = $this->flat_type->find('all',array('conditions'=>$conditions));
-$this->set('cursor1',$cursor1);
-
-$this->loadmodel('income_head');
-$order=array('income_head.auto_id'=>'ASC');
-$conditions=array("society_id" => $s_society_id,"delete_id"=>0);
-$cursor2 = $this->income_head->find('all',array('conditions'=>$conditions,'order' => $order));
-$this->set('cursor2',$cursor2);
-
-
-$this->loadmodel('society');
-$conditions=array("society_id" => $s_society_id);
-$cursor3 = $this->society->find('all',array('conditions'=>$conditions));
-$this->set('cursor3',$cursor3);
-
+	$s_society_id=$this->Session->read('hm_society_id');
+	
+	$this->loadmodel('flat');
+	$conditions=array('society_id'=>$s_society_id);
+	$flats=$this->flat->find('all',array('conditions'=>$conditions)); 
+	foreach($flats as $flat){
+		$flat_type_ids[]=$flat["flat"]["flat_type_id"];
+	}
+	$flat_type_ids=array_unique($flat_type_ids);
+	asort($flat_type_ids);
+	$this->set(compact("flat_type_ids"));
+	
+	$this->loadmodel('society');
+	$conditions=array('society_id'=>$s_society_id);
+	$society_info=$this->society->find('all',array('conditions'=>$conditions));
+	$income_heads=$society_info[0]["society"]["income_head"];
+	$this->set(compact("income_heads"));
 }
 //////////////////////// End Master rate Card(Accounts)//////////////////////////////
 

@@ -16,45 +16,21 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 	<thead>
 		<tr>
 			<th>Flat type</th>
-			<th>First Name</th>
+			<?php foreach($income_heads as $income_head):?>
+			<th><?php echo $income_head; ?></th>
+			<?php endforeach; ?>
 		</tr>
 	</thead>
 	<tbody>
+	<?php foreach($flat_type_ids as $flat_type_id):?>
 		<tr>
-			<td>1</td>
+			<td><?php echo $flat_type_id; ?></td>
 			<td>Mark</td>
 			<td>Otto</td>
 			<td class="hidden-phone">makr124</td>
 			<td><span class="label label-success">Approved</span></td>
 		</tr>
-		<tr>
-			<td>2</td>
-			<td>Jacob</td>
-			<td>Nilson</td>
-			<td class="hidden-phone">jac123</td>
-			<td><span class="label label-info">Pending</span></td>
-		</tr>
-		<tr>
-			<td>3</td>
-			<td>Larry</td>
-			<td>Cooper</td>
-			<td class="hidden-phone">lar</td>
-			<td><span class="label label-warning">Suspended</span></td>
-		</tr>
-		<tr>
-			<td>3</td>
-			<td>Sandy</td>
-			<td>Lim</td>
-			<td class="hidden-phone">sanlim</td>
-			<td><span class="label label-danger">Blocked</span></td>
-		</tr>
-		<tr>
-			<td>4</td>
-			<td>Sandy</td>
-			<td>Lim</td>
-			<td class="hidden-phone">sanlim</td>
-			<td><span class="label label-danger">Blocked</span></td>
-		</tr>
+	<?php endforeach; ?>
 	</tbody>
 </table>
 </div>

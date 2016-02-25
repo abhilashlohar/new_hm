@@ -1,98 +1,7 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
-<script>
-$(document).ready(function() {
-$("#fix<?php echo $id_current_page; ?>").removeClass("blue");
-$("#fix<?php echo $id_current_page; ?>").addClass("red");
-});
-</script>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
-<table  align="center" border="1" bordercolor="#FFFFFF" cellpadding="0">
-<tr>
-<td><a href="<?php echo $webroot_path; ?>Incometrackers/select_income_heads" class="btn yellow" rel='tab'>Selection of Income Heads</a>
-</td>
-<td>
-<a href="<?php echo $webroot_path; ?>Incometrackers/master_rate_card" class="btn" style="font-size:16px;" rel='tab'>Rate Card</a>
-</td>
-<td>
-<a href="<?php echo $webroot_path; ?>Incometrackers/master_noc" class="btn" style="font-size:16px;" rel='tab'>Non Occupancy Charges</a>
-</td>
-<td>
-<a href="<?php echo $webroot_path; ?>Incometrackers/it_penalty" class="btn" style="font-size:16px;" rel='tab'>Penalty Option</a>
-</td>
-<td>
-<a href="<?php echo $webroot_path; ?>Incometrackers/neft_add" class="btn" style="font-size:16px;" rel='tab'>Add NEFT</a>
-</td>
-<td>
-<a href="<?php echo $webroot_path; ?>Incometrackers/it_setup" class="btn" style="font-size:16px;" rel='tab'>Remarks</a>
-</td>
-<td><a href="<?php echo $webroot_path; ?>Incometrackers/other_charges" class="btn" rel='tab'>Other Charges</a>
-</td>
-</tr>
-</table> 
-<?php /////////////////////////////////////////////////////////////////////////////////// ?>
-<div class="span12">
-                  <!-- BEGIN VALIDATION STATES-->
-                  <div class="portlet box blue">
-                     <div class="portlet-title">
-                        <h4 class="block"><i class="icon-reorder"></i>Validation States</h4>
-                        <div class="tools">
-                           <a href="javascript:;" class="collapse"></a>
-                           <a href="#portlet-config" data-toggle="modal" class="config"></a>
-                           <a href="javascript:;" class="reload"></a>
-                           <a href="javascript:;" class="remove"></a>
-                        </div>
-                     </div>
-                     <div class="portlet-body form">
-                        <!-- BEGIN FORM-->
-                        <h3 class="block">Validation states with icon and tooltip on hover</h3>
-                        <form action="#" class="form-horizontal">
-                           <div class="control-group warning">
-                              <label class="control-label">Input with warning</label>
-                              <div class="controls input-icon">
-                                 <input type="text" class="span6 m-wrap">
-                                 <span class="input-warning tooltips" data-original-title="please write a valid email">
-                                 <i class="icon-warning-sign"></i>
-                                 </span>
-                              </div>
-                           </div>
-                           <div class="control-group error">
-                              <label class="control-label">Input with error</label>
-                              <div class="controls input-icon">
-                                 <input type="text" class="span6 m-wrap">
-                                 <span class="input-error tooltips" data-original-title="please write a valid email">
-                                 <i class="icon-exclamation-sign"></i>
-                                 </span>
-                              </div>
-                           </div>
-                           <div class="control-group success">
-                              <label class="control-label">Input with success</label>
-                              <div class="controls input-icon">
-                                 <input type="text" class="span6 m-wrap">
-                                 <span class="input-success tooltips" data-original-title="Success input!">
-                                 <i class="icon-ok"></i>
-                                 </span>
-                              </div>
-                           </div>
-                           <div class="form-actions">
-                              <button type="submit" class="btn blue">Save</button>
-                              <button type="button" class="btn">Cancel</button>
-                           </div>
-                        </form>
-                        <!-- END FORM-->
-                     </div>
-                  </div>
-                  <!-- END VALIDATION STATES-->
-               </div>
-
-
-
-
-
-
-<?php //////////////////////////////////////////////////////////////////////////////////// ?>
 <?php
 $result1 = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch'),array('pass'=>array(7)));			
 foreach($result1 as $collection)
@@ -122,42 +31,68 @@ $income_arrr[] = $data;
 }
 ?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
-    <div style=" border:solid 1px #CCC;  background:#FFF; width:100%; height:650px; overflow:hidden;">
-            <h4 style="color: #03C;font-weight: 500;border-bottom: solid 1px #DAD9D9;padding-bottom: 10px;">&nbsp;&nbsp;&nbsp;<i class="icon-money"></i>  Select Income Heads for Bill Charges</h4>
-           
-           
-          <div style="width:40%;  float:left; overflow:visible;">        
-            <form method="post" id="contact-form">
-            <br />
-            <label style="font-size:14px;"> &nbsp;&nbsp;&nbsp; Select Income Heads<span style="color:red;">*</span></label>
-            <div class="controls">
-            	&nbsp;&nbsp;&nbsp;	<select data-placeholder="Select Account Heads"  name="i_head[]" id="i_head" class="m-wrap span10 chosen" multiple="multiple" tabindex="6">	
-           			 <option value="" style="display:none;">Select</option>
-            		<?php
-            		for($r=0; $r<sizeof($income_arrr); $r++)
-           			 { 
-            		$income_id = (int)$income_arrr[$r];
-            
-					$ledgerac = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch2'),array('pass'=>array($income_id)));			
-					foreach($ledgerac as $collection2)
-					{
-					$ac_name = $collection2['ledger_account']['ledger_name'];
-					$ac_id = (int)$collection2['ledger_account']['auto_id'];		
-					}
-					?>
-					<option value="<?php echo $income_id; ?>"><?php echo $ac_name; ?></option>
-					<?php } ?>
-					</select>
-					<label report="head" class="remove_report"></label>
+<table  align="center" border="1" bordercolor="#FFFFFF" cellpadding="0">
+<tr>
+<td><a href="<?php echo $webroot_path; ?>Incometrackers/select_income_heads" class="btn yellow" rel='tab'>Selection of Income Heads</a>
+</td>
+<td>
+<a href="<?php echo $webroot_path; ?>Incometrackers/master_rate_card" class="btn" style="font-size:16px;" rel='tab'>Rate Card</a>
+</td>
+<td>
+<a href="<?php echo $webroot_path; ?>Incometrackers/master_noc" class="btn" style="font-size:16px;" rel='tab'>Non Occupancy Charges</a>
+</td>
+<td>
+<a href="<?php echo $webroot_path; ?>Incometrackers/it_penalty" class="btn" style="font-size:16px;" rel='tab'>Penalty Option</a>
+</td>
+<td>
+<a href="<?php echo $webroot_path; ?>Incometrackers/neft_add" class="btn" style="font-size:16px;" rel='tab'>Add NEFT</a>
+</td>
+<td>
+<a href="<?php echo $webroot_path; ?>Incometrackers/it_setup" class="btn" style="font-size:16px;" rel='tab'>Remarks</a>
+</td>
+<td><a href="<?php echo $webroot_path; ?>Incometrackers/other_charges" class="btn" rel='tab'>Other Charges</a>
+</td>
+</tr>
+</table> 
+<?php /////////////////////////////////////////////////////////////////////////////////// ?>
+
+                
+<div class="portlet box blue">
+<div class="portlet-title">
+<h4 class="block">Select Income Heads for Bill Charges</h4>
+</div>
+<div class="portlet-body form">
+<div class="row-fluid">
+
+<div class="span6">
+<label style="font-size:14px;"> &nbsp;&nbsp;&nbsp; Select Income Heads<span style="color:red;">*</span></label>
+<div class="controls">
+&nbsp;&nbsp;&nbsp;	<select data-placeholder="Select Account Heads"  name="i_head[]" id="i_head" class="m-wrap span10 chosen" multiple="multiple" tabindex="6">	
+<option value="" style="display:none;">Select</option>
+<?php
+for($r=0; $r<sizeof($income_arrr); $r++)
+{ 
+$income_id = (int)$income_arrr[$r];
+
+$ledgerac = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch2'),array('pass'=>array($income_id)));			
+foreach($ledgerac as $collection2)
+{
+$ac_name = $collection2['ledger_account']['ledger_name'];
+$ac_id = (int)$collection2['ledger_account']['auto_id'];		
+}
+?>
+<option value="<?php echo $income_id; ?>"><?php echo $ac_name; ?></option>
+<?php } ?>
+</select>
+<label report="head" class="remove_report"></label>
 </div>
 <br />        
  &nbsp;&nbsp;&nbsp; <a href="<?php echo $webroot_path; ?>Incometrackers/select_income_heads" class="btn" rel='tab'>Cancel</a>
 <button type="submit" class="btn green form_post" name="sub" submit_type="sub">Submit</button>
 <br />
-</form>
 </div>
+<div class="span6">
 
-<div style="width:55%; float:right; overflow:hidden;">
 <table class="table table-bordered table-stripped" style="width:100%; overflow:Y-scroll;">
 <tr>
 <th>Sr #</th>
@@ -192,15 +127,22 @@ $income_head_name = $collection['ledger_account']['ledger_name'];
 <?php } ?>
 </table>
 </div>
-
-
 </div>
-<br />
-<br />
-<!--jfdhjskf-->
+</div>
+</div>
+                 
+               
 
 
-  <script>
+
+
+
+
+<?php //////////////////////////////////////////////////////////////////////////////////// ?>
+
+<?php //////////////////////////////////////////////////////////////////////////// ?>
+
+<script>
 $(document).ready(function() { 
 		$(".form_post").bind('click', function(e){
 		$(".form_post").removeClass("clicked");

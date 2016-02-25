@@ -4626,9 +4626,41 @@ $this->set('cursor3',$cursor3);
 }
 
 function master_noc_status_update_ajax($update=null,$flat_id=null){
+				
+				$s_society_id = (int)$this->Session->read('hm_society_id');
 				$this->loadmodel('flat');
 				$this->flat->updateAll(array('noc_ch_tp'=>$update),array('flat_id'=>(int)$flat_id));
+				
+				$this->loadmodel('flat');
+				$conditions=array("society_id"=>$s_society_id,'noc_ch_tp'=>'1');
+				$result_count_flat_self = $this->flat->find('count',array('conditions'=>$conditions));
+				
+				$this->loadmodel('flat');
+				$conditions1=array("society_id"=>$s_society_id,'noc_ch_tp'=>'2');
+				$result_count_flat_les = $this->flat->find('count',array('conditions'=>$conditions1));
+				
+					echo '<span class="label label-info"> Number of Self Occupied flats <span style="font-size:15px;">'.$result_count_flat_self.'</span> </span> 
+					<span class="label label-info"> Number of Leased flats <span style="font-size:15px;">'.$result_count_flat_les.'</span></span>';
+				
 }
+
+function master_noc_status_update_ajax_all($update=null){
+				$s_society_id = (int)$this->Session->read('hm_society_id');
+				$this->loadmodel('flat');
+				$this->flat->updateAll(array('noc_ch_tp'=>$update),array('society_id'=>(int)$s_society_id));
+				
+				$this->loadmodel('flat');
+				$conditions=array("society_id"=>$s_society_id,'noc_ch_tp'=>'1');
+				$result_count_flat_self = $this->flat->find('count',array('conditions'=>$conditions));
+				
+				$this->loadmodel('flat');
+				$conditions1=array("society_id"=>$s_society_id,'noc_ch_tp'=>'2');
+				$result_count_flat_les = $this->flat->find('count',array('conditions'=>$conditions1));
+				
+				echo '<span class="label label-info"> Number of Self Occupied flats <span style="font-size:15px;">'.$result_count_flat_self.'</span> </span> 
+				<span class="label label-info"> Number of Leased flats <span style="font-size:15px;">'.$result_count_flat_les.'</span></span>';
+}
+
 function master_noc_status()
 {
 	if($this->RequestHandler->isAjax()){
@@ -4643,6 +4675,16 @@ $s_role_id=$this->Session->read('role_id');
  $s_society_id = (int)$this->Session->read('hm_society_id');
  $s_user_id=$this->Session->read('user_id');	
 	
+$this->loadmodel('flat');
+$conditions=array("society_id"=>$s_society_id,'noc_ch_tp'=>'1');
+ $result_count_flat_self = $this->flat->find('count',array('conditions'=>$conditions));
+$this->set('result_count_flat_self',$result_count_flat_self);
+
+
+$this->loadmodel('flat');
+$conditions1=array("society_id"=>$s_society_id,'noc_ch_tp'=>'2');
+$result_count_flat_les = $this->flat->find('count',array('conditions'=>$conditions1));
+$this->set('result_count_flat_les',$result_count_flat_les);
 	
 	/*$this->loadmodel('ledger_sub_account');
 		$condition=array('society_id'=>$s_society_id,'ledger_id'=>34,'deactive'=>0);

@@ -1,3 +1,12 @@
+<?php
+foreach($cursor11 as $dataaaa)
+{
+$vallll = (int)@$dataaaa['society']['area_scale'];
+}
+?>
+
+
+
 <style>
 input,select{
 	    margin-bottom: 0 !important;
@@ -24,7 +33,7 @@ Every change you make is automatically saved.<br>
 		<th>Wing </th>
 		<th>Unit </th>
 		<th>Flat Type</th>
-		<th>Flat Area</th>
+		<th>Flat Area  <a onclick="area_type()" class="btn mini blue">Area Type</a></th>
 	</tr>
 <?php $c=0;
 foreach($cursor2 as $collection)
@@ -102,5 +111,46 @@ $( document ).ready(function() {
 	});
 });
 </script>
+
+<script>
+function area_type()
+{
+$("#pppupp").show();
+}
+
+function area_type2()
+{
+$("#pppupp").hide();
+}
+</script>
+
+<div id="pppupp" class="hide">
+<div class="modal-backdrop fade in"></div>
+<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+<form method="post">
+<div class="modal-body">
+<center>
+<select name="arra_typpp" class="m-wrap medium">
+<option value="0" <?php if($vallll == 0) { ?> selected="selected" <?php } ?>>Per Square Feet</option>
+<option value="1" <?php if($vallll == 1) { ?> selected="selected" <?php } ?> >Per Square Meter</option>
+</select>
+</center>
+</div>
+<div class="modal-footer">
+<a class="btn" onclick="area_type2()">Cancel</a>
+<button type="submit" class="btn green" name="sssbbb">Submit</button>
+</form>
+</div>
+</div>
+</div> 
+
+
+
+
+
+
+
+
+
 
 

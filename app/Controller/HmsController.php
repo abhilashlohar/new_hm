@@ -2837,6 +2837,17 @@ $this->check_user_privilages();
 $s_society_id=(int)$this->Session->read('hm_society_id');
 $s_user_id=(int)$this->Session->read('hm_user_id');
 
+if(isset($this->request->data['sssbbb']))
+{
+$valll = $this->request->data['arra_typpp'];
+$this->loadmodel('society');
+$this->society->updateAll(array("area_scale" => $valll),array('society_id'=> $s_society_id));	
+}
+
+$this->loadmodel('society');
+$condition=array('society_id'=>$s_society_id);
+$cursor11 = $this->society->find('all',array('conditions'=>$condition)); 
+$this->set('cursor11',$cursor11);
 
 $this->loadmodel('flat');
 $conditions=array("society_id" => $s_society_id);

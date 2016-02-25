@@ -424,7 +424,6 @@ function area_type2()
 {
 $("#pppupp").hide();
 }
-
 </script>
 
 <div id="pppupp" class="hide">

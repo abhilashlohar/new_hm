@@ -145,7 +145,7 @@ $income_head_name = $collection['ledger_account']['ledger_name'];
 
 <?php //////////////////////////////////////////////////////////////////////////// ?>
 
-<script>
+<script>/*
 $(document).ready(function() { 
 		$(".form_post").bind('click', function(e){
 		$(".form_post").removeClass("clicked");
@@ -207,7 +207,7 @@ $(document).ready(function() {
 	 
 	});
 });
-
+*/
 </script>		
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
 

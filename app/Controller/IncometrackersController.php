@@ -4049,8 +4049,20 @@ $cur_date = new MongoDate(strtotime($cur_date));
 $ih_arr = $this->request->data['i_head'];
 
 $this->loadmodel('society');
-$this->society->updateAll(array('income_head'=> $ih_arr),array('society_id'=>$s_society_id));
+$conditions=array("society_id" => $s_society_id);
+$cursor=$this->society->find('all',array('conditions'=>$conditions));
+foreach($cursor as $collection)
+{
+$arrr1 = $collection['society']['income_head'];
+}
+for($j=0; $j<sizeof($ih_arr); $j++)
+{
+$head_id = (int)$ih_arr[$j];
+$arrr1[] = $head_id;
+}
 
+$this->loadmodel('society');
+$this->society->updateAll(array('income_head'=> $arrr1),array('society_id'=>$s_society_id));
 
 ?>
 <div class="modal-backdrop fade in"></div>
@@ -4060,7 +4072,7 @@ $this->society->updateAll(array('income_head'=> $ih_arr),array('society_id'=>$s_
 The Income Heads Added Successfully
 </div>
 <div class="modal-footer">
-<a class="btn red" href="<?php echo $webroot_path; ?>Incometrackers/select_income_heads" rel="tab">OK</a>
+<a class="btn red" href="select_income_heads">OK</a>
 </div>
 </div>
 <?php
@@ -6256,7 +6268,6 @@ $conditions=array("society_id" => $s_society_id);
 $cursor=$this->society->find('all',array('conditions'=>$conditions));
 foreach($cursor as $collection)
 {
-
 $arrr1 = $collection['society']['income_head'];
 }
 for($j=0; $j<sizeof($ar); $j++)

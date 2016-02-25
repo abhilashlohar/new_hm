@@ -10400,12 +10400,16 @@ $this->notification_email->saveAll(array("notification_id" => $lo, "module_id" =
 //////////////////// end code login table ///////////////////////////////
 
 //////////////// Role to assign code for Society  //////////////////////////
-for($p=1;$p<=4;$p++)
+for($p=1;$p<=8;$p++)
 {
 if($p==1) { $d="Admin"; }
-if($p==2) { $d="Resident"; }
-if($p==3) { $d="Committee member"; }
-if($p==4) { $d="Family member"; }
+if($p==2) { $d="Committee member"; }
+if($p==3) { $d="Owner"; }
+if($p==4) { $d="Tenant"; }
+if($p==5) { $d="Owner family member"; }
+if($p==6) { $d="Tenant Family Member"; }
+if($p==7) { $d="Primary Residents"; }
+if($p==8) { $d="Residents and family members"; }
 $this->loadmodel('role');
 $k=$this->autoincrement('role','auto_id');
 $this->role->saveAll(array("auto_id" => $k, "role_name" => $d, 'role_id'=>$p, "society_id" => $society_id));
@@ -10582,12 +10586,16 @@ $this->user_temp->deleteAll($conditions);
 
 
 //////////////// Role to assign code for Society  //////////////////////////
-for($p=1;$p<=4;$p++)
+for($p=1;$p<=8;$p++)
 {
 if($p==1) { $d="Admin"; }
-if($p==2) { $d="Resident"; }
-if($p==3) { $d="Committee member"; }
-if($p==4) { $d="Family member"; }
+if($p==2) { $d="Committee member"; }
+if($p==3) { $d="Owner"; }
+if($p==4) { $d="Tenant"; }
+if($p==5) { $d="Owner family member"; }
+if($p==6) { $d="Tenant Family Member"; }
+if($p==7) { $d="Primary Residents"; }
+if($p==8) { $d="Residents and family members"; }
 $this->loadmodel('role');
 $k=$this->autoincrement('role','auto_id');
 $this->role->saveAll(array("auto_id" => $k, "role_name" => $d, 'role_id'=>$p, "society_id" => $society_id));

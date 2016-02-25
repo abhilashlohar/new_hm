@@ -36,15 +36,15 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 $z=0;$j=0;
 
 ?>
-
-<span class="label label-info"> Number of Self Occupied flats <span style="font-size:15px;"><?php echo $z; ?> </span> </span> 
-<span class="label label-info"> Number of Leased flats <span style="font-size:15px;"><?php echo $j; ?> </span></span>
+<div id="new_update">
+<span class="label label-info"> Number of Self Occupied flats <span style="font-size:15px;"><?php echo $result_count_flat_self; ?> </span> </span> 
+<span class="label label-info"> Number of Leased flats <span style="font-size:15px;"><?php echo $result_count_flat_les; ?> </span></span> </div>
 </div>
 <form method="post">
 
 <div style="background-color: #fff;">
 <br/>
-<span>Every change you make is automatically saved.</span>
+ <span>Every change you make is automatically saved.</span>
 <table class="table table-striped table-bordered dataTable" id="" aria-describedby="sample_1_info" >
 <thead>
 <tr>
@@ -96,10 +96,7 @@ foreach($result_wing as $data){
 </tbody>
 </table>
 </div>
-	<div class="">
-	<button type="submit" class="btn blue"><i class="icon-ok"></i> Update</button>
-
-	</div>
+	
 </form>
 
 <script>
@@ -110,7 +107,7 @@ $(document).ready(function(){
 		$.ajax({
 				url: "<?php echo $webroot_path; ?>Incometrackers/master_noc_status_update_ajax/"+value+"/"+flat_id,
 			}).done(function(response){
-				
+			$('#new_update').html(response);	
 		});	
 
 });
@@ -126,6 +123,12 @@ $(".self_occ").parent('span').addClass('checked');
 $(".leas").parent('span').removeClass('checked');
 $(".leas").removeAttr('checked','checked');
 
+		$.ajax({
+			url: "<?php echo $webroot_path; ?>Incometrackers/master_noc_status_update_ajax_all/"+r,
+		     }).done(function(response){
+			$('#new_update').html(response);
+		});	
+
 }
 else
 {
@@ -134,7 +137,11 @@ $(".leas").parent('span').addClass('checked');
 
 $(".self_occ").parent('span').removeClass('checked');
 $(".self_occ").removeAttr('checked','checked');
-
+		$.ajax({
+				url: "<?php echo $webroot_path; ?>Incometrackers/master_noc_status_update_ajax_all/"+r,
+			}).done(function(response){
+			$('#new_update').html(response);	
+		});	
 }
 });
 

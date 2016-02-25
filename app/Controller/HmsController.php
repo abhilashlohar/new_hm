@@ -26020,11 +26020,19 @@ if($field=="flat_type"){
 $this->loadmodel('flat');
 $this->flat->updateAll(array("flat_type_id"=>(int)$value),array("flat_id" => $record_id));
 
+
+
+
 }
 		
 if($field=="flat_area"){
 $this->loadmodel('flat');
 $this->flat->updateAll(array("flat_area"=>$value),array("flat_id" => $record_id));
+
+
+
+
+
 }	
 echo "F";	
 }

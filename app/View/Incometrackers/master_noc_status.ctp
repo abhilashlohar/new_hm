@@ -25,6 +25,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 </td>
 </tr>
 </table> 
+
 <div align="center">
 <a href="master_noc" class='btn blue' role="button" rel='tab'>Non Occupancy Charges</a>
 <a href="master_noc_status" class='btn red' role="button"  rel='tab'>Non Occupancy Status</a>
@@ -35,6 +36,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 $z=0;$j=0;
 
 ?>
+
 <span class="label label-info"> Number of Self Occupied flats <span style="font-size:15px;"><?php echo $z; ?> </span> </span> 
 <span class="label label-info"> Number of Leased flats <span style="font-size:15px;"><?php echo $j; ?> </span></span>
 </div>
@@ -42,6 +44,7 @@ $z=0;$j=0;
 
 <div style="background-color: #fff;">
 <br/>
+<span>Every change you make is automatically saved.</span>
 <table class="table table-striped table-bordered dataTable" id="" aria-describedby="sample_1_info" >
 <thead>
 <tr>
@@ -69,6 +72,7 @@ foreach($result_wing as $data){
 		$i++;
 		$flat_name = $data2['flat']['flat_name'];
 		$flat_id = (int)$data2['flat']['flat_id'];
+		$noc_ch_tp = (int)$data2['flat']['noc_ch_tp'];
 		$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'),array('pass'=>array($wing_id,$flat_id)));
 	?>
 	<tr>
@@ -78,8 +82,8 @@ foreach($result_wing as $data){
 	
 	<td>
 	<div class="controls" id="residing_div1">
-	<label class="radio"><input type="radio" class="self_occ noc_updat" name="" update="<?php echo $flat_id;?>" value="1">Self Occupied</label>
-	<label class="radio"><input type="radio" class="leas noc_updat"  name="" update="<?php echo $flat_id;?>"  value="2">Leased</label>
+	<label class="radio"><input type="radio" class="self_occ noc_updat" name="<?php echo $flat_id;?>" update="<?php echo $flat_id;?>" value="1" <?php if($noc_ch_tp==1){?>checked <?php } ?>>Self Occupied</label>
+	<label class="radio"><input type="radio" class="leas noc_updat"  name="<?php echo $flat_id;?>" update="<?php echo $flat_id;?>"  value="2" <?php if($noc_ch_tp==2){?>checked <?php } ?>>Leased</label>
 	</div>
 	</td>
 	</tr>
@@ -106,10 +110,11 @@ $(document).ready(function(){
 		$.ajax({
 				url: "<?php echo $webroot_path; ?>Incometrackers/master_noc_status_update_ajax/"+value+"/"+flat_id,
 			}).done(function(response){
-				alert(response);
+				
 		});	
 
 });
+
 $(".all_chk").bind("click",function(){
 var r=$(this).val();
 

@@ -4617,9 +4617,8 @@ $this->set('cursor3',$cursor3);
 }
 
 function master_noc_status_update_ajax($update=null,$flat_id=null){
-	echo $update;
-	echo $flat_id;
-	exit;
+				$this->loadmodel('flat');
+				$this->flat->updateAll(array('noc_ch_tp'=>$update),array('flat_id'=>(int)$flat_id));
 }
 function master_noc_status()
 {

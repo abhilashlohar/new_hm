@@ -128,5 +128,11 @@ function income_head_name_via_income_head_id($income_head_id){
 	return $result[0]["ledger_account"]["ledger_name"];
 }
 
+function get_rates_via_flat_type_id_and_income_head_id($flat_type_id,$income_head_id){
+	$this->loadmodel('rate_card');
+	$conditions=array("flat_type_id" => $flat_type_id,"income_head_id" => $income_head_id);
+	return $this->rate_card->find('all',array('conditions'=>$conditions));
+}
+
 }
 ?>

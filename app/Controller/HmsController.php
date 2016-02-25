@@ -17665,8 +17665,7 @@ a:
 }
 
 
-function new_user_enrollment()
-{
+function new_user_enrollment(){
 if($this->RequestHandler->isAjax()){
 		$this->layout='blank';
 	}else{
@@ -17674,12 +17673,12 @@ if($this->RequestHandler->isAjax()){
 	}
 $this->ath();
 $this->check_user_privilages();
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 
 $this->loadmodel('wing');
 $conditions=array("society_id" => $s_society_id);
-$result_wing = $this->wing->find('all',array('conditions'=>$conditions));
-$this->set('result_wing',$result_wing);
+$wings = $this->wing->find('all',array('conditions'=>$conditions));
+$this->set(compact("wings"));
 }
 
 function new_user_enrollment2()

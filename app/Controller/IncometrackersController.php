@@ -6674,7 +6674,7 @@ $this->layout='blank';
 $this->ath();
 
 
-$s_society_id = (int)$this->Session->read('society_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
 
 $delete = (int)$this->request->query('delete');
 $t_id = (int)$this->request->query('t_id');
@@ -6694,6 +6694,8 @@ $terms_arr = @$collection['society']['terms_conditions'];
 }
 $k=0;
 $terms_arr2 = array();
+
+
 for($h=0; $h<sizeof($terms_arr); $h++)
 {
 $k++;
@@ -6715,7 +6717,7 @@ function edit_terms()
 $this->layout='blank';
 $this->ath();
 
-$s_society_id = (int)$this->Session->read('society_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
 $t_id = (int)$this->request->query('t_id');
 $edit = (int)$this->request->query('edit');
 $this->set('edit',$edit);

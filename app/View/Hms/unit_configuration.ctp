@@ -26,7 +26,7 @@ Every change you make is automatically saved.<br>
 		<th>Flat Type</th>
 		<th>Flat Area</th>
 	</tr>
-<?php
+<?php $c=0;
 foreach($cursor2 as $collection)
 {
 $c++;

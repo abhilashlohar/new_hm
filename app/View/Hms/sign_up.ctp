@@ -38,14 +38,7 @@
              </div>
 		</div>
 	  </div>
-	  
-	 <!-- <div class="control-group">
-	  	<div class="controls">
-        	<div class="input-icon left"><i class="icon-lock"></i>
-			<input type="password"   class="m-wrap" placeholder="Password*" style="font-size:16px;"   name="password" >
-             </div>
-		</div>
-	  </div> -->
+
       
 				
 			

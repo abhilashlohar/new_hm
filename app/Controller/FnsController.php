@@ -107,5 +107,12 @@ function role_name_via_role_id($role_id){
 	return $result[0]["role"]["role_name"];
 }
 
+function all_flats_of_wing_id($wing_id){
+	$this->loadmodel('flat');
+	$conditions=array("wing_id" => $wing_id);
+	$order=array('flat.flat_name'=>'ASC');	
+	return $this->flat->find('all',array('conditions'=>$conditions,'order'=>$order));
+}
+
 }
 ?>

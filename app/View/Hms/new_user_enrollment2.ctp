@@ -1,12 +1,7 @@
 <?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
+echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
-<script>
-$(document).ready(function() {
-$("#fix<?php echo $id_current_page; ?>").removeClass("blue");
-$("#fix<?php echo $id_current_page; ?>").addClass("red");
-});
-</script>
+
 
 <div id="report_success_pop">
 <a href="#" class="btn purple" role="button" id="import">Import</a>
@@ -94,11 +89,6 @@ $("#fix<?php echo $id_current_page; ?>").addClass("red");
 		<div id="no1" style="display:none;">No</div>
 		</td>
 		<td width="10%">
-		<!--<div class="controls" id="residing_div1">
-		<label class="radio"><input type="radio" name="residing1"  value="1">Self Occupied</label>
-		<label class="radio"><input type="radio" name="residing1"  value="2">Leased</label>
-		</div>
-		<div id="not1" style="display:none;">No</div>-->
 		<div class="pull-right"><a href="#" role="button" class="btn mini black delete" id="1"><i class="icon-trash"></i> Delete</a></div>
 		</td>
 	</tr>
@@ -195,7 +185,6 @@ $(document).ready(function(){
 			type: 'POST',
 			dataType:'json',
 		}).done(function(response) {
-			//alert(response);
 			if(response.report_type=='error'){
 				jQuery.each(response.report, function(i, val) {
 					$("#url_main table tr:nth-child("+val.tr+") td:nth-child("+val.td+")").append('<span class="report" style="color:red;">'+val.text+'</span>');

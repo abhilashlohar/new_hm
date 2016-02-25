@@ -17677,7 +17677,8 @@ $s_society_id=$this->Session->read('hm_society_id');
 
 $this->loadmodel('wing');
 $conditions=array("society_id" => $s_society_id);
-$wings = $this->wing->find('all',array('conditions'=>$conditions));
+$order=array('wing.wing_name'=>'ASC');	
+$wings = $this->wing->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set(compact("wings"));
 }
 

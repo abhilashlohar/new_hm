@@ -19,16 +19,18 @@ $("#fix<?php echo $id_current_page; ?>").addClass("red");
 
 foreach($result_accounts_category as $data)
 {
+$bbb=0;	
 $accounts_id = (int)$data['accounts_category']['auto_id'];	
 $accounts_name = $data['accounts_category']['category_name'];
 $aaa=0;
 $eee=0;
+$bbb++;
 $result_group = $this->requestAction(array('controller' => 'hms', 'action' => 'accounts_group_via_accounts_id'),array('pass'=>array($accounts_id)));
 foreach ($result_group as $dataa) 
 {
 $aaa++;
 }
-$bbb=0;
+
 $result_group = $this->requestAction(array('controller' => 'hms', 'action' => 'accounts_group_via_accounts_id'),array('pass'=>array($accounts_id)));
 foreach ($result_group as $dataa) 
 {

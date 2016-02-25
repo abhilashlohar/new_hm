@@ -10,7 +10,8 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 <a href="<?php echo $webroot_path; ?>Incometrackers/it_setup" class="btn" style="font-size:16px;" rel='tab'>Remarks</a>
 <a href="<?php echo $webroot_path; ?>Incometrackers/other_charges" class="btn" rel='tab'>Other Charges</a>
 </div>
-
+<br/>
+<div id="output">Every change you make is automatically saved.</div>
 <div style="background-color: rgb(255, 255, 255);padding: 5px;overflow-x: auto;">
 <table class="table table-condensed table-bordered">
 	<thead>
@@ -49,32 +50,36 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 <script>
 $(document).ready(function(){
 	$("input").bind("blur",function(){
+		
 		var flat_type_id=$(this).attr("flat_type_id");
 		var income_head_id=$(this).attr("income_head_id");
 		var rate_type=$(this).closest("td").find("select").val();
 		var rate=parseFloat($(this).closest("td").find("input").val());
 		if(rate_type!=""){
+			$("#output").html("Saving changes...");
 			if(isNaN(rate)===true){rate=0;}
 			$.ajax({
 				url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_rate_card/"+flat_type_id+"/"+income_head_id+"/"+rate_type+"/"+rate,
 			}).done(function(response){
-				//alert(response);
+				$("#output").html("Every change you make is automatically saved.");
 			});
 		}
 		
 	})
 	
 	$("select").bind("change",function(){
+		
 		var flat_type_id=$(this).attr("flat_type_id");
 		var income_head_id=$(this).attr("income_head_id");
 		var rate_type=$(this).closest("td").find("select").val();
 		if(rate_type!=""){
+			$("#output").html("Saving changes...");
 			var rate=parseFloat($(this).closest("td").find("input").val());
 			if(isNaN(NaN)===true){rate=0;}
 			$.ajax({
 				url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_rate_card/"+flat_type_id+"/"+income_head_id+"/"+rate_type+"/"+rate,
 			}).done(function(response){
-				//alert(response);
+				$("#output").html("Every change you make is automatically saved.");
 			});
 		}
 		

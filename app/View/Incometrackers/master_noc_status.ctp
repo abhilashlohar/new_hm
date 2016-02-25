@@ -1,12 +1,6 @@
 <?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
-?>				   
-<script>
-$(document).ready(function() {
-$("#fix<?php echo $id_current_page; ?>").removeClass("blue");
-$("#fix<?php echo $id_current_page; ?>").addClass("red");
-});
-</script>
+echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
+?>
            
 <table  align="center" border="1" bordercolor="#FFFFFF" cellpadding="0">
 <tr>
@@ -40,19 +34,6 @@ $("#fix<?php echo $id_current_page; ?>").addClass("red");
 <?php 
 $z=0;$j=0;
 
-foreach($flats_for_bill as $flat_data_id){
-$noc_flat1= $this->requestAction(array('controller' => 'hms', 'action' => 'flat_fetch'),array('pass'=>array($flat_data_id)));
-	foreach($noc_flat1 as $dafa){
-		@$noc_type1=@$dafa['flat']['noc_ch_tp'];
-	}
-	if(@$noc_type1==1){
-
-	$z++;
-	}
-	if(@$noc_type1==2){
-	$j++;
-	}
-} 
 ?>
 <span class="label label-info"> Number of Self Occupied flats <span style="font-size:15px;"><?php echo $z; ?> </span> </span> 
 <span class="label label-info"> Number of Leased flats <span style="font-size:15px;"><?php echo $j; ?> </span></span>
@@ -65,7 +46,7 @@ $noc_flat1= $this->requestAction(array('controller' => 'hms', 'action' => 'flat_
 <thead>
 <tr>
 <th>Sr.n.</th>
-<th>User Name</th>
+
 <th >Unit</th>
 <th>NOC Type
  &nbsp; 
@@ -79,47 +60,33 @@ $noc_flat1= $this->requestAction(array('controller' => 'hms', 'action' => 'flat_
 
 $i=0;
 
-foreach($flats_for_bill as $flat_data_id){
-$i++;
-$result_flat_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_data_id)));
+foreach($result_wing as $data){
 
-foreach($result_flat_info as $flat_info){
-	$wing_id=$flat_info["flat"]["wing_id"];
-
-	$result_user_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_user_info_via_flat_id'),array('pass'=>array($wing_id,$flat_data_id)));
-	$wing_flat= $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'),array('pass'=>array($wing_id,$flat_data_id)));
-	
-
-	foreach($result_user_info as $user_info){
-		$user_id=(int)$user_info["user"]["user_id"];
-		$user_name=$user_info["user"]["user_name"];
-
-	$noc_flat= $this->requestAction(array('controller' => 'hms', 'action' => 'flat_fetch'),array('pass'=>array($flat_data_id)));
-
-	foreach($noc_flat as $dafa){
-	@$noc_type=@$dafa['flat']['noc_ch_tp'];
-	}
-		
+	$wing_id = (int)$data['wing']['wing_id'];	
+	$wing_name = $data['wing']['wing_name'];	
+	$result_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_all_flat_via_wing_id'),array('pass'=>array($wing_id)));
+	foreach($result_flat as $data2){
+		$i++;
+		$flat_name = $data2['flat']['flat_name'];
+		$flat_id = (int)$data2['flat']['flat_id'];
+		$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'),array('pass'=>array($wing_id,$flat_id)));
 	?>
 	<tr>
 	<td><?php echo $i ; ?></td>
-	<td><?php echo $user_name ; ?></td>
+	
 	<td><?php echo $wing_flat ; ?></td>
 	
 	<td>
 	<div class="controls" id="residing_div1">
-	<label class="radio"><input type="radio" class="self_occ" name="<?php echo $flat_data_id; ?>" <?php if(@$noc_type==1) { ?> checked <?php } ?>   value="1">Self Occupied</label>
-	<label class="radio"><input type="radio" class="leas"  name="<?php echo $flat_data_id; ?>" <?php if(@$noc_type==2) { ?> checked <?php } ?>  value="2">Leased</label>
+	<label class="radio"><input type="radio" class="self_occ noc_updat" name="" update="<?php echo $flat_id;?>" value="1">Self Occupied</label>
+	<label class="radio"><input type="radio" class="leas noc_updat"  name="" update="<?php echo $flat_id;?>"  value="2">Leased</label>
 	</div>
 	</td>
 	</tr>
 	<?php
-} 	
+	} 	
+}	
 	
-	
-}
-
-}
 
 ?>
 </tbody>
@@ -133,6 +100,16 @@ foreach($result_flat_info as $flat_info){
 
 <script>
 $(document).ready(function(){
+	$('input[type="radio"].noc_updat').click(function() {
+		var value=$(this).val();
+		var flat_id=$(this).attr('update');	
+		$.ajax({
+				url: "<?php echo $webroot_path; ?>Incometrackers/master_noc_status_update_ajax/"+value+"/"+flat_id,
+			}).done(function(response){
+				alert(response);
+		});	
+
+});
 $(".all_chk").bind("click",function(){
 var r=$(this).val();
 
@@ -157,5 +134,5 @@ $(".self_occ").removeAttr('checked','checked');
 });
 
 
-})
+});
 </script>

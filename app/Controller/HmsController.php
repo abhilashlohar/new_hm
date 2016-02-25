@@ -964,7 +964,7 @@ $this->redirect(array('action' => 'index'));
 
 function beforeFilter()
 {
-Configure::write('debug', 0);
+//Configure::write('debug', 0);
 }
 
 
@@ -1139,8 +1139,9 @@ return @$data['user']['role_id'];
 }
 
 function fetch_all_flat_via_wing_id($wing){
+	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('flat');
-	$conditions=array("wing_id" => $wing);
+	$conditions=array("wing_id" => $wing,'society_id'=>$s_society_id);
 	$order=array('flat.flat_name'=> 'ASC');
 	return $this->flat->find('all',array('conditions'=>$conditions,'order' =>$order));
 } 

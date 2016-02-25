@@ -4696,7 +4696,11 @@ $cursor3 = $this->society->find('all',array('conditions'=>$conditions));
 $this->set('cursor3',$cursor3);
 }
 
-
+function master_noc_status_update_ajax($update=null,$flat_id=null){
+	echo $update;
+	echo $flat_id;
+	exit;
+}
 function master_noc_status()
 {
 	if($this->RequestHandler->isAjax()){
@@ -4708,11 +4712,11 @@ $this->layout='session';
 $this->ath();
 $this->check_user_privilages();
 $s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');	
+ $s_society_id = (int)$this->Session->read('hm_society_id');
+ $s_user_id=$this->Session->read('user_id');	
 	
 	
-	$this->loadmodel('ledger_sub_account');
+	/*$this->loadmodel('ledger_sub_account');
 		$condition=array('society_id'=>$s_society_id,'ledger_id'=>34,'deactive'=>0);
 		$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
 		$this->set('result_ledger_sub_account',$result_ledger_sub_account);
@@ -4738,8 +4742,13 @@ $s_user_id=$this->Session->read('user_id');
 					$new_flats_for_bill[]=$flat_id;
 				}
 			}
-		}
-		$this->set('flats_for_bill',$new_flats_for_bill);
+		}*/
+		
+		$this->loadmodel('wing');
+		$condition=array('society_id'=>$s_society_id);
+		$order=array('wing.wing_name'=>'ASC');
+		$result_wing=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+		$this->set('result_wing',$result_wing);
 	
 	
 	if($this->request->is('post')){

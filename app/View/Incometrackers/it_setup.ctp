@@ -8,7 +8,8 @@ $("#fix<?php echo $id_current_page; ?>").addClass("red");
 });
 </script>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>     
+<?php ////////////////////////////////////////////////////////////////////////////////// ?>
+     
 <table  align="center" border="1" bordercolor="#FFFFFF" cellpadding="0">
 <tr>
 <td><a href="<?php echo $webroot_path; ?>Incometrackers/select_income_heads" class="btn" rel='tab'>Selection of Income Heads</a>

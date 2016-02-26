@@ -6965,8 +6965,8 @@ $this->layout='session';
 $this->ath();
 $this->check_user_privilages();
 
-$s_society_id=(int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=(int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 		
 		
 $this->loadmodel('society');
@@ -7250,8 +7250,8 @@ function neft_show_ajax()
 $this->layout='blank';
 $this->ath();
 
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id = (int)$this->Session->read('user_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id = (int)$this->Session->read('hm_user_id');
 
 $wing_id =(int)$this->request->query('val');
 $this->set('wing_id',$wing_id);

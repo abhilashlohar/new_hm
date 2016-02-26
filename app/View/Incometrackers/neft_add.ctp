@@ -59,18 +59,16 @@ $ifsc_code = "";
 </td>
 </tr>
 </table> 
-<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
-
-<div style="background-color:#fff;padding:5px;width:96%;margin:auto; overflow:auto;" class="form_div">
-<h4 style="color: #09F;font-weight: 500;border-bottom: solid 1px #DAD9D9;padding-bottom: 10px;"><i class="icon-money"></i> Post NEFT Detail</h4>
+<?php /////////////////////////////////////////////////////////////////////// ?>
 <form method="post" id="contact-form">
-<div class="row-fluid">
-<div class="span6">
-
-
-
-
-
+<div class="portlet box blue">
+<div class="portlet-title">
+<h4 class="block">Post NEFT Detail</h4>
+</div>
+<div class="portlet-body form">
+<div class="row-fluid">                     
+<div class="span6">                      
+ 
 <label  style="font-size:14px;">NEFT Detail For<span style="color:red;">*</span> </label>
 <div class="controls">
 <label class="radio">
@@ -83,7 +81,8 @@ Wing Wise
 </label>
 </div>
 <br />
-
+ 
+ 
 <div id="show1">
 <label style="font-size:14px;">Account Name<span style="color:red;">*</span></label>
 <div class="controls">
@@ -99,9 +98,22 @@ Wing Wise
 </div>
 <br />
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 </div>
 <div class="span6">
-
 
 <div id="show_wing" class="hide">
 <label  style="font-size:14px;">Select Wing<span style="color:red;">*</span> </label>
@@ -123,6 +135,7 @@ $wing_id = (int)$data['wing']['wing_id'];
 </div>
 <br />
 </div>
+
 
 
 <div id="show2">
@@ -149,18 +162,24 @@ $wing_id = (int)$data['wing']['wing_id'];
 </div>
 <br />
 </div>
-</div>
-
-</div>
 
 
+</div>                         
+</div>  
 <div id="show_wwww" style="overflow:auto;">
 
-</div>
+</div>                       
+<div class="form-actions">
 <button type="submit" class="btn green" name="sub" value="xyz">Submit</button>
 <a href="<?php echo $webroot_path; ?>Incometrackers/neft_add" class="btn" rel='tab'>Reset</a>
+</div>
 </form>
 </div>
+</div>
+</form>
+
+
+<?php /////////////////////////////////////////////////////////////////////// ?>
 
 <script>
 $(document).ready(function(){

@@ -4138,9 +4138,9 @@ function other_charges(){
 	
 	$this->ath();
 	$this->check_user_privilages();
-	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');	
+	$s_role_id=$this->Session->read('hm_role_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');	
 	
 	$this->loadmodel('ledger_account');
 	$conditions=array("group_id"=>7);
@@ -4162,7 +4162,7 @@ function other_charges(){
 			$ledger_sub_account_flat_id=$ledger_sub_account["ledger_sub_account"]["flat_id"];
 				$flats_for_bill[]=$ledger_sub_account_flat_id;
 		}
-		$this->set('flats_for_bill',$flats_for_bill);	
+		$this->set('flats_for_bill',@$flats_for_bill);	
 		
 		
 	$this->loadmodel('flat');	

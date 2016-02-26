@@ -111,7 +111,7 @@ $income_arrr[] = $data;
 						  <div class="controls">
 							<select name="flats[]" data-placeholder="Your Favorite Football Teams" id="flats" class="chosen m-wrap large" multiple="multiple" tabindex="6">
 								<option value="">
-								<?php foreach($flats_for_bill as $flat_id){ 
+								<?php if(!empty($flats_for_bill)) { foreach($flats_for_bill as $flat_id){ 
 								
 								//wing_id via flat_id//
 								$result_flat_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
@@ -130,7 +130,7 @@ $income_arrr[] = $data;
 								$wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat_id))); 
 								?>
 								<option  value="<?php echo $flat_id; ?>"><?php echo $user_name.' '.$wing_flat; ?>
-								<?php } ?>
+								<?php }} ?>
 							</select>
 							 <label id="flats"></label>
 						  </div>
@@ -209,7 +209,7 @@ $income_arrr[] = $data;
 			
 			<table class="table table-striped table-bordered table-advance">
 				<tbody>
-				<?php  $sr_no=0; foreach($flats_for_bill as $flat){ $sr_no++;
+				<?php  if(!empty($flats_for_bill)) { $sr_no=0; foreach($flats_for_bill as $flat){ $sr_no++;
 				
 				
 								//wing_id via flat_id//
@@ -268,7 +268,7 @@ $income_arrr[] = $data;
 								
 							</td>
 						</tr>
-				<?php } } }?>
+				<?php } } } }?>
 				</tbody>
 			</table>
 		

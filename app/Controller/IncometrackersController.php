@@ -4222,7 +4222,7 @@ function auto_save_rate_card($flat_type_id=null,$income_head_id=null,$rate_type=
 //////////////////////// End Master rate Card(Accounts)//////////////////////////////
 
 /////////////////////// Start auto_save_noc_rate ///////////////////////////////////
-function auto_save_noc_rate()
+function auto_save_noc_rate($flat_type_id=null,$type=null,$amt=null,$head=null)
 {
 if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
@@ -4235,7 +4235,11 @@ if($this->RequestHandler->isAjax()){
 
 	$s_society_id=$this->Session->read('hm_society_id');	
 	
-	
+	$this->loadmodel('noc_rate');
+	$conditions=array("flat_type_id"=>(int)$flat_type_id);
+	$this->noc_rate->deleteAll($conditions);
+
+	$this->noc_rate->saveAll(array("flat_type_id"=>(int)$flat_type_id,"income_heads" =>$head,"rate_type"=>(int)$type,"rate"=>$amt,"society_id"=>$s_society_id));
 	
 	
 }

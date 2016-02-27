@@ -72,21 +72,32 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			
 				
 			<?php foreach($flat_type_ids as $flat_type_id){
-		$flat_type_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'flat_type_name_via_flat_type_id'), array('pass' => array($flat_type_id)));?>
-		    <tr>
+		$flat_type_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'flat_type_name_via_flat_type_id'), array('pass' => array($flat_type_id)));
+		    
+			
+$rate_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'get_rates_via_flat_type_id_in_noc_rate'), array('pass' => array($flat_type_id)));
+$rate_type=@$rate_info[0]["noc_rate"]["rate_type"];
+$rate=@$rate_info[0]["noc_rate"]["rate"];
+$heads=@$rate_info[0]["noc_rate"]["income_heads"]; 
+ ?>
+			
+			
+			
+			
+			<tr>
 			<th><?php echo $flat_type_name; ?></th>	
 			<th>
 <select name="" class="m-wrap medium go" onchange="save_noc_charges(<?php echo $flat_type_id; ?>)" id="type<?php echo $flat_type_id; ?>">
 <option value="" style="display:none;">Select</option>
-<option value="1">Lump Sum</option>
-<option value="2"><?php if($area_typppp == 0) { ?>Per Square Feet<?php } else { ?>Per Square Meter<?php } ?></option>
-<option value="3">Flat Type</option>
-<option value="4">10% of Maintanance Charge</option>
-<option value="5">Not Applicable</option>
+<option value="1" <?php if($rate_type == 1){ ?> selected="selected"  <?php } ?>>Lump Sum</option>
+<option value="2" <?php if($rate_type == 2){ ?> selected="selected"  <?php } ?>><?php if($area_typppp == 0) { ?>Per Square Feet<?php } else { ?>Per Square Meter<?php } ?></option>
+<option value="3" <?php if($rate_type == 3){ ?> selected="selected"  <?php } ?>>Flat Type</option>
+<option value="4" <?php if($rate_type == 4){ ?> selected="selected"  <?php } ?>>10% of Maintanance Charge</option>
+<option value="5" <?php if($rate_type == 5){ ?> selected="selected"  <?php } ?>>Not Applicable</option>
 </select>
 </th>	
 <th>
-<input type="text" name="" class="m-wrap small" value="" style="text-align:right; background-color:white !important;" maxlength="10" onblur="save_noc_charges(<?php echo $flat_type_id; ?>)" id="amt<?php echo $flat_type_id; ?>">
+<input type="text" name="" class="m-wrap small" value="<?php echo $rate; ?>" style="text-align:right; background-color:white !important;" maxlength="10" onblur="save_noc_charges(<?php echo $flat_type_id; ?>)" id="amt<?php echo $flat_type_id; ?>">
 </th>
 <th>
 <select data-placeholder="Select Account Heads" class="m-wrap large chosen" multiple="multiple" tabindex="6" onchange="save_noc_charges(<?php echo $flat_type_id; ?>)" id="head<?php echo $flat_type_id; ?>">	
@@ -100,9 +111,13 @@ foreach($ledgerac as $collection2)
 $ac_name = $collection2['ledger_account']['ledger_name'];
 $income_id = (int)$collection2['ledger_account']['auto_id'];		
 }
+$heads2 = explode(',',$heads);
+foreach($heads2 as $data)
+{
+$head_id = (int)$data;	
 ?>	
-<option value="<?php echo $income_id; ?>"><?php echo $ac_name; ?></option>
-<?php } ?>
+<option value="<?php echo $income_id; ?>" <?php if($head_id == $income_id){ ?> selected="selected" <?php } ?>><?php echo $ac_name; ?></option>
+<?php }} ?>
 </select>
 </th>
 <th></th>
@@ -124,16 +139,13 @@ var amt = $("#amt" + vvv).val();
 var head = $("#head"+vvv).val();
 
 $("#output").html("Saving changes...");
-if(isNaN(rate)===true){rate=0;}
+
 $.ajax({
-url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_noc_rate/"+flat_type_id+"/"+income_head_id+"/"+rate_type+"/"+rate,
+url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_noc_rate/"+vvv+"/"+type+"/"+amt+"/"+head,
 }).done(function(response){
 $("#output").html("Every change you make is automatically saved.");
 });
 
-	
-	
-	
 }
 </script>
 

@@ -134,5 +134,17 @@ function get_rates_via_flat_type_id_and_income_head_id($flat_type_id,$income_hea
 	return $this->rate_card->find('all',array('conditions'=>$conditions));
 }
 
+function get_rates_via_flat_type_id_in_noc_rate($flat_type_id){
+	$this->loadmodel('noc_rate');
+	$conditions=array("flat_type_id"=>$flat_type_id);
+	return $this->noc_rate->find('all',array('conditions'=>$conditions));
+}
+
+
+
+
+
+
+
 }
 ?>

@@ -17290,11 +17290,28 @@ $flat=(int)$this->request->data['flat'];
 
 $owner=$this->request->data['owner'];
 
+	$this->loadmodel('flat');
+	$conditions=array("flat_id" =>$flat);
+	$result_flat = $this->flat->find('all',array('conditions'=>$conditions));
+	foreach($result_flat as $data_flat){
+	  $flat_type = (int)$data_flat['flat']['noc_ch_tp'];	
+	}
+	if($flat_type == 1)
+		{
+			if($owner == 'no')
+			{
+			 	
+			   $this->set('tenant_allow','Flat is self Occupied');
+				goto a;
+			}
+			
+		}
+		
 
 $this->loadmodel('user_flat');
 $conditions2=array('flat'=>$flat,'society_id'=>$society_id);
-$result_user=$this->user_flat->find('all',array('conditions'=>$conditions2));
- $n5=sizeof($result_user); 
+ $result_user=$this->user_flat->find('all',array('conditions'=>$conditions2));
+  $n5=sizeof($result_user); 
 if($n5==1){
 	 $tenant_database=$result_user[0]['user_flat']['owner'];
 	if($tenant_database=='yes'){
@@ -17328,8 +17345,10 @@ if($n5==2){
 
 if($owner=="yes"){
 	$committee=$this->request->data['committe'];
+	$role_new_id=3;
 	}else{
 		$committee="no";
+		$role_new_id=4;
 	}
 
 
@@ -17365,12 +17384,22 @@ $this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email' => $ema
  
 $this->loadmodel('user_role');
 $auto_id=$this->autoincrement('user_role','auto_id');
-$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => 2,'default'=>'yes'));
+$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' =>$role_new_id,'default'=>'yes'));
+
 if($committee=="yes"){
 $auto_id=$this->autoincrement('user_role','auto_id');
-$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => 3));
+$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => 2));
 }
 
+if(($flat_type==1) and 	($owner=='yes')){
+
+				$auto_id=$this->autoincrement('user_role','auto_id');
+				$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>7));
+		}elseif(($flat_type==2) and ($owner=='no')){
+				$auto_id=$this->autoincrement('user_role','auto_id');
+				$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>7));
+		}
+	
 
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no','owner'=>$owner));

@@ -4230,6 +4230,22 @@ if($this->RequestHandler->isAjax()){
 	$this->layout='session';
 	}
 
+	
+	
+	if($type == 4)
+	{
+	$amt = "";
+    }
+	else if($type == 5)
+	{
+   	$amt = "";	
+	$head = "";
+	}
+	else if($type == 1 || $type == 2 || $type == 3)
+	{
+	$head = "";	
+	}
+	
 	$this->ath();
 	$this->check_user_privilages();
 

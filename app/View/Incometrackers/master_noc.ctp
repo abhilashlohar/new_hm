@@ -87,7 +87,7 @@ $heads=@$rate_info[0]["noc_rate"]["income_heads"];
 			<tr>
 			<th><?php echo $flat_type_name; ?></th>	
 			<th>
-<select name="" class="m-wrap medium go" onchange="save_noc_charges(<?php echo $flat_type_id; ?>)" id="type<?php echo $flat_type_id; ?>">
+<select name="" class="m-wrap medium go" onchange="save_noc_charges(<?php echo $flat_type_id; ?>)" id="type<?php echo $flat_type_id; ?>" onchange="show_text(<?php echo $flat_type_id; ?>)">
 <option value="" style="display:none;">Select</option>
 <option value="1" <?php if($rate_type == 1){ ?> selected="selected"  <?php } ?>>Lump Sum</option>
 <option value="2" <?php if($rate_type == 2){ ?> selected="selected"  <?php } ?>><?php if($area_typppp == 0) { ?>Per Square Feet<?php } else { ?>Per Square Meter<?php } ?></option>
@@ -149,13 +149,13 @@ $("#output").html("Every change you make is automatically saved.");
 }
 </script>
 
-
-
-
-
-
-
-
+<script>
+function show_text(v)
+{
+alert();
+	
+}
+</script>
 
 
 

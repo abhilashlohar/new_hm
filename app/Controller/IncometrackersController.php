@@ -4573,51 +4573,20 @@ $this->set('area_typppp',@$area_typppp);
 if(isset($this->request->data['sub']))
 {
 
-$this->loadmodel('flat_type');
-$order=array('flat_type.auto_id'=>'ASC');
-$condition=array('society_id'=>$s_society_id);
-$cursor1 = $this->flat_type->find('all',array('conditions'=>$condition,'order' => $order)); 
-foreach($cursor1 as $collection)
-{
-$auto_id1 = (int)$collection['flat_type']['auto_id'];
-$fl_tp_id = (int)$collection['flat_type']['flat_type_id'];
-$arr2 = array();
 
-$tp = (int)$this->request->data['ctp'.$auto_id1];
-if($tp == 4)
-{
- $percent = (int)$this->request->data['amt'.$auto_id1];	
- $income_head = (int)$this->request->data['in_head'.$auto_id1];	
-
-$arr1 = array($tp,$fl_tp_id,);
-$arr2 = implode(",",$arr1);
-}
-else
-{
-$amt = $this->request->data['amt'.$auto_id1];
-$arr1 = array($tp,$fl_tp_id,$amt);
-$arr2 = implode(",",$arr1);
-}
-$show_arr[] = $arr2;
 
 }
-$show_arr2 = implode("/",$show_arr);
-//$this->loadmodel('flat_type');
-//$this->flat_type->updateAll(array('noc_charge' => $arr1),array('auto_id' => $auto_id1));
-$this->response->header('Location','noc_view2?arr='.$show_arr2.' ');
+
+
+$this->loadmodel('flat');
+$conditions=array('society_id'=>$s_society_id);
+$flats=$this->flat->find('all',array('conditions'=>$conditions)); 
+foreach($flats as $flat){
+	$flat_type_ids[]=$flat["flat"]["flat_type_id"];
 }
-
-$this->loadmodel('flat_type');
-$order=array('flat_type.auto_id'=>'ASC');
-$condition=array('society_id'=>$s_society_id);
-$cursor1 = $this->flat_type->find('all',array('conditions'=>$condition,'order' => $order)); 
-$this->set('cursor1',$cursor1);
-
-$this->loadmodel('noc_charge');
-$order=array('noc_charge.auto_id'=>'ASC');
-$condition=array('society_id'=>$s_society_id);
-$cursor2 = $this->noc_charge->find('all',array('conditions'=>$condition,'order' => $order)); 
-$this->set('cursor2',$cursor2);
+$flat_type_ids=array_unique($flat_type_ids);
+asort($flat_type_ids);
+$this->set(compact("flat_type_ids"));
 
 $this->loadmodel('society');
 $conditions=array("society_id"=>$s_society_id);

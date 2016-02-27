@@ -66,7 +66,23 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<th style="width:30%;">Income Head</th>
 		<th style="width:30%;"></th>
 		</tr>
-			<?php
+			
+				
+			<?php foreach($flat_type_ids as $flat_type_id){
+		$flat_type_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'flat_type_name_via_flat_type_id'), array('pass' => array($flat_type_id)));?>
+		    <tr>
+			<th><?php echo $flat_type_name; ?></th>	
+			<th></th>	
+			<th></th>
+			<th></th>
+			<th></th>
+			</tr>
+			<?php } ?>
+				</table>
+				
+				
+		<?php	/*	
+				
 				$n = 0;
 				foreach($cursor1 as $collection)
 				{
@@ -231,7 +247,7 @@ if($inhead_idd == $income_id) { ?> selected="selected" <?php } } ?>><?php echo $
 </div>
 
   </form>
-            
+            */ ?>
 
 <!------------------------------- End Non Occupancy Charges Form ------------------------------->
 

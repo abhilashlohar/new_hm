@@ -72,8 +72,19 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		$flat_type_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'flat_type_name_via_flat_type_id'), array('pass' => array($flat_type_id)));?>
 		    <tr>
 			<th><?php echo $flat_type_name; ?></th>	
-			<th></th>	
-			<th></th>
+			<th>
+<select name="" class="m-wrap medium go" id="" onchange="area_validdd(this.value,<?php echo $validattt_value; ?>,<?php echo $n; ?>)">
+<option value="" style="display:none;">Select</option>
+<option value="1">Lump Sum</option>
+<option value="2"><?php if($area_typppp == 0) { ?>Per Square Feet<?php } else { ?>Per Square Meter<?php } ?></option>
+<option value="3">Flat Type</option>
+<option value="4">10% of Maintanance Charge</option>
+<option value="5">Not Applicable</option>
+</select>
+</th>	
+<th>
+<input type="text" name="" class="m-wrap small" id="" value="" style="text-align:right; background-color:white !important;" maxlength="10" onkeyup="amt_validattt(this.value,<?php echo @$n; ?>)"/>
+</th>
 			<th></th>
 			<th></th>
 			</tr>

@@ -4221,7 +4221,27 @@ function auto_save_rate_card($flat_type_id=null,$income_head_id=null,$rate_type=
 }
 //////////////////////// End Master rate Card(Accounts)//////////////////////////////
 
-/////////////////////////// Start master rate card view (Accounts)/////////////////////////////////
+/////////////////////// Start auto_save_noc_rate ///////////////////////////////////
+function auto_save_noc_rate()
+{
+if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+
+	$this->ath();
+	$this->check_user_privilages();
+
+	$s_society_id=$this->Session->read('hm_society_id');	
+	
+	
+	
+	
+}
+/////////////////////// End auto_save_noc_rate ///////////////////////////////////
+
+/////////////////////////// Start master rate card view (Accounts)/////////////////
 function master_rate_card_view()
 {
 if($this->RequestHandler->isAjax()){
@@ -4462,6 +4482,9 @@ function master_noc_status_update_ajax_all($update=null){
 				echo '<span class="label label-info"> Number of Self Occupied flats <span style="font-size:15px;">'.$result_count_flat_self.'</span> </span> 
 				<span class="label label-info"> Number of Leased flats <span style="font-size:15px;">'.$result_count_flat_les.'</span></span>';
 }
+
+
+
 
 function master_noc_status()
 {

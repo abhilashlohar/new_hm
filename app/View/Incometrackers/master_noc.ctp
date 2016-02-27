@@ -115,12 +115,11 @@ $ac_name = $collection2['ledger_account']['ledger_name'];
 $income_id = (int)$collection2['ledger_account']['auto_id'];		
 }
 $heads2 = explode(',',$heads);
-foreach($heads2 as $data)
-{
-$head_id = (int)$data;	
+
 ?>	
-<option value="<?php echo $income_id; ?>" <?php if($head_id == $income_id){ ?> selected="selected" <?php } ?>><?php echo $ac_name; ?></option>
-<?php }} ?>
+<option value="<?php echo $income_id; ?>" <?php foreach($heads2 as $data) { $head_id = (int)$data;
+if($head_id == $income_id){ ?> selected="selected" <?php }} ?>><?php echo $ac_name; ?></option>
+<?php } ?>
 </select>
 </div>
 </th>

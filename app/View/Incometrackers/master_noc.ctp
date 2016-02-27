@@ -97,9 +97,12 @@ $heads=@$rate_info[0]["noc_rate"]["income_heads"];
 </select>
 </th>	
 <th>
+<div id="amt_div<?php echo $flat_type_id; ?>" <?php if($rate_type == 4 || $rate_type == 5) { ?> class="hide" <?php } ?>>
 <input type="text" name="" class="m-wrap small" value="<?php echo $rate; ?>" style="text-align:right; background-color:white !important;" maxlength="10" onblur="save_noc_charges(<?php echo $flat_type_id; ?>)" id="amt<?php echo $flat_type_id; ?>">
+</div>
 </th>
 <th>
+<div id="income_head<?php echo $flat_type_id; ?>" <?php if($rate_type == 5) { ?> class="hide" <?php } ?>>
 <select data-placeholder="Select Account Heads" class="m-wrap large chosen" multiple="multiple" tabindex="6" onchange="save_noc_charges(<?php echo $flat_type_id; ?>)" id="head<?php echo $flat_type_id; ?>">	
 <option value="" style="display:none;">Select</option>
 <?php
@@ -119,6 +122,7 @@ $head_id = (int)$data;
 <option value="<?php echo $income_id; ?>" <?php if($head_id == $income_id){ ?> selected="selected" <?php } ?>><?php echo $ac_name; ?></option>
 <?php }} ?>
 </select>
+</div>
 </th>
 <th></th>
 </tr>
@@ -137,6 +141,24 @@ function save_noc_charges(vvv)
 var type = $("#type" + vvv).val();
 var amt = $("#amt" + vvv).val();
 var head = $("#head"+vvv).val();
+if(type == 4)
+{
+$("#amt_div"+vvv).hide();	
+$("#income_head"+vvv).show();
+
+}
+else if(type == 5)
+{
+$("#amt_div"+vvv).hide();	
+$("#income_head"+vvv).hide();	
+}
+else
+{
+$("#amt_div"+vvv).show();	
+$("#income_head"+vvv).show();	
+}
+
+
 
 $("#output").html("Saving changes...");
 

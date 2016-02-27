@@ -73,7 +73,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		    <tr>
 			<th><?php echo $flat_type_name; ?></th>	
 			<th>
-<select name="" class="m-wrap medium go" id="" onchange="area_validdd(this.value,<?php echo $validattt_value; ?>,<?php echo $n; ?>)" flat_type_id="<?php echo $flat_type_id; ?>">
+<select name="" class="m-wrap medium go" id="" onchange="save_noc_charges(<?php echo $flat_type_id; ?>)">
 <option value="" style="display:none;">Select</option>
 <option value="1">Lump Sum</option>
 <option value="2"><?php if($area_typppp == 0) { ?>Per Square Feet<?php } else { ?>Per Square Meter<?php } ?></option>
@@ -83,10 +83,10 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </select>
 </th>	
 <th>
-<input type="text" name="" class="m-wrap small" id="" value="" style="text-align:right; background-color:white !important;" maxlength="10" onkeyup="amt_validattt(this.value,<?php echo @$n; ?>)" flat_type_id="<?php echo $flat_type_id; ?>">
+<input type="text" name="" class="m-wrap small" id="" value="" style="text-align:right; background-color:white !important;" maxlength="10" onblur="save_noc_charges(<?php echo $flat_type_id; ?>)">
 </th>
 <th>
-<select data-placeholder="Select Account Heads" id="" class="m-wrap large chosen" multiple="multiple" tabindex="6" flat_type_id="<?php echo $flat_type_id; ?>">	
+<select data-placeholder="Select Account Heads" id="" class="m-wrap large chosen" multiple="multiple" tabindex="6" onchange="save_noc_charges(<?php echo $flat_type_id; ?>)">	
 <option value="" style="display:none;">Select</option>
 <?php
 foreach($income_head_array as $income_head)
@@ -112,56 +112,13 @@ $income_id = (int)$collection2['ledger_account']['auto_id'];
 
 <!------------------------------- End Non Occupancy Charges Form ------------------------------->
 <script>
-$(document).ready(function(){
-	$("input").bind("blur",function(){
-		
-		var flat_type_id=$(this).attr("flat_type_id");
-		var rate_type=$(this).closest("td").find("select").val();
-		var rate=parseFloat($(this).closest("td").find("input").val());
-		alert(flat_type_id);
-		alert(rate_type);
-		alert(rate);
-		
-		
-		if(rate_type!=""){
-			$("#output").html("Saving changes...");
-			if(isNaN(rate)===true){rate=0;}
-			$.ajax({
-				url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_rate_card/"+flat_type_id+"/"+income_head_id+"/"+rate_type+"/"+rate,
-			}).done(function(response){
-				$("#output").html("Every change you make is automatically saved.");
-			});
-		}
-		
-	})
+function save_noc_charges(vvv)
+{
 	
-	$("select").bind("change",function(){
-		
-		var flat_type_id=$(this).attr("flat_type_id");
-		var income_head_id=$(this).attr("income_head_id");
-		var rate_type=$(this).closest("td").find("select").val();
-		if(rate_type!=""){
-			$("#output").html("Saving changes...");
-			var rate=parseFloat($(this).closest("td").find("input").val());
-			if(isNaN(NaN)===true){rate=0;}
-			$.ajax({
-				url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_rate_card/"+flat_type_id+"/"+income_head_id+"/"+rate_type+"/"+rate,
-			}).done(function(response){
-				$("#output").html("Every change you make is automatically saved.");
-			});
-		}
-		
-	})
-});
+alert(vvv);	
+	
+}
 </script>
-
-
-
-
-
-
-
-
 
 
 

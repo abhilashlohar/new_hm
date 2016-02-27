@@ -6179,9 +6179,9 @@ function new_bank_receipt()
 		$this->check_user_privilages();
 
 			App::import('', 'sendsms.php');
-			$s_role_id=$this->Session->read('role_id');
-			$s_society_id = (int)$this->Session->read('society_id');
-			$s_user_id = (int)$this->Session->read('user_id');
+			$s_role_id=$this->Session->read('hm_role_id');
+			$s_society_id = (int)$this->Session->read('hm_society_id');
+			$s_user_id = (int)$this->Session->read('hm_user_id');
 
 		$this->set('s_user_id',$s_user_id);
 		$this->set('s_role_id',$s_role_id);
@@ -6193,7 +6193,7 @@ function new_bank_receipt()
 			$cursor=$this->user->find('all',array('conditions'=>$conditions));
 			foreach ($cursor as $collection) 
 			{
-			$tenant_c = (int)$collection['user']['tenant'];
+			$tenant_c = (int)@$collection['user']['tenant'];
 			}
 			
 		$this->set('tenant_c',$tenant_c);

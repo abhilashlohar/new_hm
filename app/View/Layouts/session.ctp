@@ -243,7 +243,7 @@ $(document).ready(function() {
          <!-- BEGIN SIDEBAR MENU -->
          <ul id="menus_area" >
             <li class="">
-               <a href="index.html">
+               <a href="<?php echo $webroot_path; ?>Hms/Dashboard">
                <i class="icon-home"></i> Dashboard               
                </a>              
             </li>

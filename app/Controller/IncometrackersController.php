@@ -4415,7 +4415,7 @@ $this->loadmodel('flat');
 $conditions=array('society_id'=>$s_society_id);
 $flats=$this->flat->find('all',array('conditions'=>$conditions)); 
 foreach($flats as $flat){
-	$flat_type_ids[]=$flat["flat"]["flat_type_id"];
+$flat_type_ids[]=$flat["flat"]["flat_type_id"];
 }
 $flat_type_ids=array_unique($flat_type_ids);
 asort($flat_type_ids);

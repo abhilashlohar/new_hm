@@ -85,7 +85,24 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <th>
 <input type="text" name="" class="m-wrap small" id="" value="" style="text-align:right; background-color:white !important;" maxlength="10" onkeyup="amt_validattt(this.value,<?php echo @$n; ?>)"/>
 </th>
-			<th></th>
+<th>
+<select data-placeholder="Select Account Heads" id="" class="m-wrap large chosen" multiple="multiple" tabindex="6">	
+<option value="" style="display:none;">Select</option>
+<?php
+foreach($income_head_array as $income_head)
+{
+$ledgerac = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch2'),array('pass'=>array($income_head)));			
+foreach($ledgerac as $collection2)
+{
+$ac_name = $collection2['ledger_account']['ledger_name'];
+$income_id = (int)$collection2['ledger_account']['auto_id'];		
+}
+?>	
+<option value="<?php echo $income_id; ?>"><?php echo $ac_name; ?></option>
+<?php } ?>
+</select>
+			
+			</th>
 			<th></th>
 			</tr>
 			<?php } ?>

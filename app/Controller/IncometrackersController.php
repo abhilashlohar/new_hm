@@ -34,186 +34,19 @@ function add_new_party_account_head($party_name=null){
 	}
 }
 /////////////////////////Start It Regular Bill (Accounts) //////////////////////////////////////
-function it_regular_bill()
-{
+function it_regular_bill(){
 	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
 	}else{
 	$this->layout='session';
 	}
 
-		$this->ath();
-		$this->check_user_privilages();
+	$this->ath();
+	$this->check_user_privilages();
 
-			$s_role_id=$this->Session->read('role_id');
-			$s_society_id = (int)$this->Session->read('society_id');
-			$s_user_id=$this->Session->read('user_id');	
-
-				$this->loadmodel('society');
-				$conditions=array("society_id" => $s_society_id);
-				$socct1=$this->society->find('all',array('conditions'=>$conditions));
-				$this->set('socct1',$socct1);
-
-	$this->loadmodel('flat_type');
-	$conditions=array("society_id" => $s_society_id);
-	$flat_tpp=$this->flat_type->find('all',array('conditions'=>$conditions));
-	$this->set('flat_tpp',$flat_tpp);
-
-		$this->loadmodel('regular_bill');
-		$conditions=array("society_id" => $s_society_id,"status"=>0,"bill_for_user"=>$s_user_id);
-		$cursor=$this->regular_bill->find('all',array('conditions'=>$conditions));
-		foreach($cursor as $collection)
-		{
-		$ele_id=(int)@$collection['regular_bill']['receipt_id'];
-		}
-
-		$this->loadmodel('financial_year');
-		$conditions=array("society_id" => $s_society_id, "status"=>1);
-		$cursor=$this->financial_year->find('all',array('conditions'=>$conditions));
-		foreach($cursor as $collection)
-		{
-		$date_from = @$collection['financial_year']['from'];
-		$date_to = @$collection['financial_year']['to'];
-
-			$date_from1 = date('Y-m-d',$date_from->sec);
-			$date_to1 = date('Y-m-d',$date_to->sec);
-
-		$datef[] = $date_from1;
-		$datet[] = $date_to1;
-		}
-		
-			if(!empty($datef))
-			{
-			$datef1 = implode(',',$datef);
-			$datet1 = implode(',',$datet);
-			}
-			
-				$count = sizeof(@$datef);
-				$this->set('datef1',@$datef1);
-				$this->set('datet1',@$datet1);
-				$this->set('count',$count);
-
-		$this->loadmodel('new_regular_bill');
-		$order=array('new_regular_bill.auto_id'=> 'ASC');
-		$conditions=array("society_id" => $s_society_id);
-		$cursor=$this->new_regular_bill->find('all',array('conditions'=>$conditions,'order' =>$order));
-		foreach ($cursor as $collection) 
-		{
-		$d_from = $collection['new_regular_bill']['bill_start_date'];
-		$d_to = $collection['new_regular_bill']['bill_end_date'];
-		}
-
-			if(!empty($d_from))
-			{
-			$datefb = date('Y-m-d',($d_from));
-			$datetb = date('Y-m-d',$d_to);
-
-			$this->set('datefb',$datefb);
-			$this->set('datetb',$datetb);
-			}
-
-				if(isset($this->request->data['sub1']))
-				{
-					$from = $this->request->data['from'];//billing start date
-					@$penalty = $this->request->data['pen'];//panalty yes/no
-					$due_date = $this->request->data['due_date'];
-					$description = $this->request->data['description'];
-					$period_id = (int)$this->request->data['bill_p']; 
-					$fromm = date("Y-m-d", strtotime($from));
-					$fromm = new MongoDate(strtotime($fromm));
-					$bill_for = (int)$this->request->data['bill_for'];
-	
-						if($bill_for == 1){
-						$this->loadmodel('wing');
-						$conditions=array("society_id" => $s_society_id);
-						$cursor = $this->wing->find('all',array('conditions'=>$conditions));
-						foreach($cursor as $collection)
-						{
-						$wing_id = (int)$collection['wing']['wing_id'];
-						$wing_for_bill = @$this->request->data['wing'.$wing_id];
-						$wing_arr[] = $wing_for_bill;
-						}
-				}
-			@$wing_imp = implode(",",@$wing_arr);
-	
-				if($period_id == 1)
-				{
-				$to = date('Y-m-d', strtotime("+1 months", strtotime($from)));
-				$to = date('Y-m-d', strtotime("-1 days", strtotime($to)));
-				}
-				else if($period_id == 3)
-				{
-				$to = date('Y-m-d', strtotime("+3 months", strtotime($from)));
-				$to = date('Y-m-d', strtotime("-1 days", strtotime($to)));
-				}
-				else if($period_id == 4)
-				{
-				$to = date('Y-m-d', strtotime("+6 months", strtotime($from)));
-				$to = date('Y-m-d', strtotime("-1 days", strtotime($to)));
-				}
-				else if($period_id == 2)
-				{
-				$to = date('Y-m-d', strtotime("+2 months", strtotime($from)));
-				$to = date('Y-m-d', strtotime("-1 days", strtotime($to)));
-				}
-				else if($period_id == 5)
-				{
-				$to = date('Y-m-d', strtotime("+12 months", strtotime($from)));
-				$to = date('Y-m-d', strtotime("-1 days", strtotime($to)));
-				}
-
-		$tom = date("Y-m-d", strtotime($to));
-		$tom = new MongoDate(strtotime($tom));
-
-			$due_date55 = date("Y-m-d", strtotime($due_date));
-			$due_date55 = new MongoDate(strtotime($due_date55));
-
-				$f1=$this->encode($from,'housingmatters');
-				$t1=$this->encode($to,'housingmatters');
-				$due1=$this->encode($due_date,'housingmatters');
-				$desc1=$this->encode($description,'housingmatters');
-				$p_id = $this->encode($period_id,'housingmatters');
-				$pen = $this->encode($penalty,'housingmatters');
-				$wing_imp_en = $this->encode($wing_imp,'housingmatters');
-				$bill_for_en = $this->encode($bill_for,'housingmatters');
-
-	$this->response->header('Location','regular_bill_preview_screen_new?f='.$f1.'&t='.$t1.'&due='.$due1.'&d='.$desc1.'&p='.$p_id.'&pen='.$pen.'&wi='.$wing_imp_en.'&bi='.$bill_for_en.' ');
-	
-}
-
-	$this->loadmodel('income_head');
-	$conditions=array("society_id" => $s_society_id,"delete_id"=>0);
-	$cursor1=$this->income_head->find('all',array('conditions'=>$conditions));
-	$this->set('cursor1',$cursor1);		
-		
-		$this->loadmodel('ledger_sub_account');
-		$conditions=array("society_id"=>$s_society_id, "ledger_id" => 35);
-		$cursor2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-		$this->set('cursor2',$cursor2);			
-		
-			$this->loadmodel('terms_condition');
-			$conditions=array("society_id"=>$s_society_id,"status" => 1);
-			$cursor3=$this->terms_condition->find('all',array('conditions'=>$conditions));
-			$this->set('cursor3',$cursor3);				
-
-				$this->loadmodel('bill_period');
-				$conditions=array("society_id" => $s_society_id,"status"=>1);
-				$cursor4 = $this->bill_period->find('all',array('conditions'=>$conditions));
-				$this->set('cursor4',$cursor4);
-
-		$this->loadmodel('wing');
-		$conditions=array("society_id" => $s_society_id);
-		$cursor5 = $this->wing->find('all',array('conditions'=>$conditions));
-		$this->set('cursor5',$cursor5);
-
-			$this->loadmodel('reference');
-			$conditions=array("auto_id"=>2);
-			$cursor = $this->reference->find('all',array('conditions'=>$conditions));
-			foreach($cursor as $collection)
-			{
-			$bill_period_arr = $collection['reference']['reference'];
-			}
-	$this->set('bill_period_arr',$bill_period_arr);
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$s_user_flat_id=$this->Session->read('hm_user_flat_id');	
 }
 /////////////////////// End It Regular Bill (Accounts) ////////////////////////////////////////////////////////////
 

@@ -4553,9 +4553,9 @@ $this->layout='blank';
 }else{
 $this->layout='session';
 }
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');	
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');	
 
 
 $this->ath();
@@ -4568,7 +4568,7 @@ foreach($cursor222 as $collection)
 {
 $area_typppp = (int)@$collection['society']['area_scale'];
 }
-$this->set('area_typppp',$area_typppp);
+$this->set('area_typppp',@$area_typppp);
 
 if(isset($this->request->data['sub']))
 {

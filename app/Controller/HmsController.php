@@ -2878,7 +2878,7 @@ $this->layout='session';
 $this->ath();
 $this->check_user_privilages();
 
-	$s_society_id=$this->Session->read('society_id');
+	$s_society_id=$this->Session->read('hm_society_id');
 	
 	$this->set('s_user_id',$this->Session->read('user_id'));
 	$this->set('role_id',$this->Session->read('role_id'));
@@ -17810,7 +17810,7 @@ function import_user_ajax()
 	$this->layout="blank";
 	$this->ath();
 	 
-	$s_society_id=$this->Session->read('society_id');
+	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('wing');
 	$conditions=array("society_id" => $s_society_id);
 	$result_wing = $this->wing->find('all',array('conditions'=>$conditions));
@@ -17870,7 +17870,7 @@ function import_user_ajax()
 				$wing_id=$result_wing[0]['wing']['wing_id'];
 				
 				$this->loadmodel('flat'); 
-				$conditions=array("wing_id"=>$wing_id,"flat_name"=> new MongoRegex('/^' .  $flat_name . '$/i'));
+				$conditions=array("wing_id"=>$wing_id,"flat_name"=>(int)$flat_name);
 				$result_flat=$this->flat->find('all',array('conditions'=>$conditions));
 				$result_flat_count=sizeof($result_flat);
 
@@ -23682,8 +23682,9 @@ $res_society=$this->society_name($s_society_id);
 foreach($res_society as $data)
 {
  $society_name=$data['society']['society_name'];
+ $access_tenant=(int)@$data['society']['access_tenant'];
 
-}
+} 
 $s_n='';
 $sco_na=$society_name;
 $dd=explode(' ',$sco_na);
@@ -23884,7 +23885,7 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 
 /*------code here insert start -------*/
 
-//echo $ip=$this->hms_email_ip(); exit;
+
 
 foreach($myArray as $child)
 {
@@ -23896,26 +23897,31 @@ foreach($myArray as $child)
 	$residing=(int)$child[7];
 	$tenant=(int)$child[5];
 
-	if($tenant==1)
-	{
-		$type = "yes";
+	if($tenant==1){
+	 $type = "yes";
+	 $type_owner="Owner";
 	 $committee=(int)$child[6];
+	 $role_new_id=3;
+	 $email_content="owner/resident/staff";
 	}
-	else
-	{
+	else{
 		$type = "no";
-	 $committee=2;
+		$type_owner="Tenant";
+		$committee=2;
+	    $role_new_id=4;
+		$email_content="Tenant/resident/staff";
 	}
 
-	$role_id[]=2;
-	$default_role_id=2;
-	if($committee==1)
-	{
-	$role_id[]=1;
-	}
-
-
-
+		$this->loadmodel('flat');
+		$conditions=array("flat_id" =>$flat);
+		$result_flat = $this->flat->find('all',array('conditions'=>$conditions));
+		foreach($result_flat as $data_flat){
+		 $flat_type = (int)$data_flat['flat']['noc_ch_tp'];	
+		}
+		
+	
+	
+	
 	$this->loadmodel('user');
 	$i=$this->autoincrement('user','user_id');
 	$log_i=$this->autoincrement('login','login_id');
@@ -23926,7 +23932,7 @@ foreach($myArray as $child)
 	$de_user_id=$this->encode($i,'housingmatters');
 	$random=$de_user_id.'/'.$random;
 	
-
+if(($access_tenant==1 && $type_owner=="Tenant") || $type_owner=="Owner"){
 		if(!empty($mobile) && empty($email))
 		{
 			$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
@@ -23945,7 +23951,7 @@ foreach($myArray as $child)
 			$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');
 			}
 		}
-
+}
 		
 		
 $this->user->saveAll(array('user_id' => $i,'user_name' => $name,'email' => $email, 'password' => @$random, 'mobile' => $mobile,'society_id' => $s_society_id,'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes','user_type'=>'member'));
@@ -23955,8 +23961,24 @@ $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$s_society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no','owner'=>$type));
 
 $auto_id=$this->autoincrement('user_role','auto_id');
-$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>2,'default'=>'yes'));	 
-     
+$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>$role_new_id,'default'=>'yes'));	 
+ 
+ if($committee==1){
+			$auto_id=$this->autoincrement('user_role','auto_id');
+			$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>2));
+	}
+
+		if(($flat_type==1) and 	($tenant==1)){
+
+				$auto_id=$this->autoincrement('user_role','auto_id');
+				$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>7));
+		}elseif(($flat_type==2) and ($tenant==2)){
+				$auto_id=$this->autoincrement('user_role','auto_id');
+				$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>7));
+		}
+	
+	
+ 
 if($tenant==1){
 $this->loadmodel('ledger_sub_account');
 $j=$this->autoincrement('ledger_sub_account','auto_id');
@@ -24022,7 +24044,7 @@ $this->ledger_sub_account->saveAll(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$
 								
 								<tr>
 										<td style="padding:5px;" width="100%" align="left">
-										As you are an owner/resident/staff of '.$society_name.', we have added your email address in HousingMatters portal.
+										As you are an '.$email_content.' of '.$society_name.', we have added your email address in HousingMatters portal.
 										</td>
 																
 								</tr>
@@ -24146,7 +24168,7 @@ $this->ledger_sub_account->saveAll(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$
 								
 								<tr>
 										<td style="padding:5px;" width="100%" align="left">
-										As you are an owner/resident/staff of '.$society_name.', we have added your email address in HousingMatters portal.
+										As you are an '.$email_content.' of '.$society_name.', we have added your email address in HousingMatters portal.
 										</td>
 																
 								</tr>
@@ -24219,9 +24241,11 @@ $this->ledger_sub_account->saveAll(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$
 			 $from=$collection['email']['from'];
 			}
 			 $subject="Welcome to ".$society_name." portal ";
-			if(!empty($email))
-			{
-			$this->send_email($to,$from,$from_name,$subject,@$message_web,$reply);
+			if(($access_tenant==1 && $type_owner=="Tenant") || $type_owner=="Owner"){
+				if(!empty($email)){	
+				
+						$this->send_email($to,$from,$from_name,$subject,@$message_web,$reply);
+					}
 			}
 			
 
@@ -24242,7 +24266,7 @@ $this->ledger_sub_account->saveAll(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$
 			
 			
 		
-unset($role_id);
+
 }
 $output = json_encode(array('report_type'=>'success', 'text' => 'New members registered into your society successfully.'));
 die($output);

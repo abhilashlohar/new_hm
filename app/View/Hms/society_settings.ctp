@@ -57,8 +57,7 @@ foreach($result_society as $data)
 
 
 }
-if($role_id==3)
-{
+
 
 ?>
 
@@ -223,17 +222,7 @@ margin-left: 13%;' >
 
 </form>
 
-<?php }
-else
-{
-?><div style="min-height: 85%;margin-top: 60px; " align="center">
-<h2>Sorry<br/>You are not allowed to access this page.</h2>
-<img src="<?php echo $this->webroot ; ?>/as/hm/hm-logo.png" alt="logo" >
-<br/><h4>Back to <a href="dashboard">Dashboard</a></h4>
-</div>
-<?php
 
-} ?>
 
 
 </div>

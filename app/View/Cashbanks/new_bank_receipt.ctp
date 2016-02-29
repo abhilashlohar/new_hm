@@ -69,7 +69,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<option value="NEFT">NEFT</option>
 	<option value="PG">PG</option>
 	</select><br>
-
+<div class="hide" id="receipt_mode_first1">
 <input type="text" placeholder="Cheque No." class="m-wrap span6" 
 id="chhno1" style="background-color:#FFF !important; margin-top:3px;">
 
@@ -324,11 +324,12 @@ function receipt_mode(value,idd)
 		if(value == "Cheque")	
 		{
 		$("#receipt_mode" + idd).show();
-		//$("#branchh" + idd).removeAttr("readonly","readonly");		
+		$("#receipt_mode_first" + idd).show();		
 		}
 		else
 		{
 		$("#receipt_mode" + idd).hide();
+		$("#receipt_mode_first" + idd).show();	
 		}	
 }
 </script>

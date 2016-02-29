@@ -1,7 +1,7 @@
 <form method="post" id="contact-form">
 <div class="portlet box blue">
 <div class="portlet-title">
-<h4 class="block"><i class="icon-reorder"></i>Validation States</h4>
+<h4 class="block"><i class="icon-reorder"></i>Assign role to user</h4>
 </div>
 <div class="portlet-body form">
 

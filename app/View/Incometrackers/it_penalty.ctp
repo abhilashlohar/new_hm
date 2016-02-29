@@ -32,7 +32,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <center>
 <div style="width:60%; border:solid 1px #F00; background-color:white;">
 <h4 style="color:red;"><b>Penalty Option</b></h4>
-<h5 style="color:red"><b>Enter Yearly Penalty Percentage</b></h5>
+<h5 style="color:red"><b>Enter Penalty in Percentage</b></h5>
 <table border="0">
 <tr>
 <td colspan="2"><!--

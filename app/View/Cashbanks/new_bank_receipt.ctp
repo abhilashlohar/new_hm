@@ -21,8 +21,116 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <!--
 <div id="url_main">
 </div> -->
+<!-------- Start New Code for Bank Receipt in New_Hm --------------------->
 
-<!----------------------------------------- NEW DESIGN FOR BANK RECEIPT ------------------------------->
+<table class="table table-bordered" style="background-color:white; width:100%; overflow:inherit;">
+
+<tr>
+<th>Transaction Date</th>
+<th>Deposited In</th>
+<th>Receipt Mode</th>
+<th>Receipt Type</th>
+<th>Amount</th>
+<th>Narration</th>
+</tr>
+
+
+
+
+
+<tr>
+
+	<td> 
+	<input type="text" class="date-picker m-wrap small" 
+	data-date-format="dd-mm-yyyy" style="background-color:white !important; margin-top:3px;" 
+	value="<?php echo $ddd_date; ?>" id="date1">
+	</td>
+					  
+					  
+	<td>
+	<select class="small m-wrap chosen" id="wbnk1">
+	<option value="" style="display:none;">Select Bank</option>    
+	<?php
+	foreach ($cursor3 as $db) 
+	{
+	$bank_id = (int)$db['ledger_sub_account']["auto_id"];
+	$bank_ac = $db['ledger_sub_account']["name"];
+	$bank_account_number = $db['ledger_sub_account']["bank_account"];
+	?>
+	<option value="<?php echo $bank_id; ?>"><?php echo $bank_ac; ?> &nbsp;(<?php echo $bank_account_number; ?>)</option>
+	<?php } ?>
+	</select>
+	</td>
+
+<td>
+	<select class="medium m-wrap chosen" onchange="receipt_mode(this.value,1)" id="modd1">
+	<option value="" style="display:none;">receipt mode</option>    
+	<option value="Cheque">Cheque</option>
+	<option value="NEFT">NEFT</option>
+	<option value="PG">PG</option>
+	</select><br>
+
+<input type="text" placeholder="Cheque No." class="m-wrap span6" 
+id="chhno1" style="background-color:#FFF !important; margin-top:3px;">
+
+<input type="text" class="date-picker m-wrap span6" data-date-format="dd-mm-yyyy" 
+placeholder="Date" id="dtt1" style="background-color:#FFF !important; margin-top:3px;"/><br>
+	
+<div class="hide" id="receipt_mode1">
+<input type="text" class="m-wrap span6" placeholder="Drawn on which bank?" id="bnkkk1" 
+style="background-color:#FFF !important; margin-top:3px;" data-provide="typeahead" 
+data-source="[<?php if(!empty($kendo_implode)) { echo $kendo_implode; } ?>]">
+
+<input type="text" class="m-wrap span6" placeholder="Branch of Bank" 
+id="branchh1" style="background-color:#FFF !important; margin-top:3px;" data-provide="typeahead" 
+data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]">
+</div>
+</td>
+
+<td>
+<select class="medium m-wrap chosen" valign="top" onchange="rcpttypp(this.value,1)" id="rec_typp1">
+<option value="" style="display:none;">received from</option>    
+<option value="1">Residential</option>
+<option value="2">Non-Residential</option>
+</select>
+	<div id="pppp_nnn1">
+	<?php
+	$this->requestAction(array('controller' => 'Hms', 'action' => 'resident_drop_down')); ?>
+	</div>
+		
+		<div id="bill_refe_type1">
+		<select class="m-wrap chosen medium" id="ttppp1" onchange="amtshw2(this.value,1)">
+		<option value="" style="display:none;">Select Receipt Type</option>
+		<option value="1">Maintanace Receipt</option>
+		<option value="2">Other Receipt</option>
+		</select><br>
+		</div>
+</td>
+<td>
+<input type="text" class="m-wrap small" 
+style="text-align:right; background-color:#FFF !important; margin-top:3px;"
+maxlength="10" onkeyup="numeric_vali(this.value,1)" id="amttt1" placeholder="Amount" />
+</td>
+<td>
+ <input type="text" class="m-wrap small" style="background-color:#FFF !important; margin-top:3px;" id="desc1" Placeholder="Narration" />
+</td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+</table>
+
+<!-------------------- End New Code For new_HM ------------------------------>
+
+<!----------------------------------------- NEW DESIGN FOR BANK RECEIPT --------->
+<?php /*
 <form method="post">
 <div id="url_main">
 <div class="portlet box blue">
@@ -48,12 +156,12 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					  <td>
 					  <input type="text" class="date-picker m-wrap span12" 
 					  data-date-format="dd-mm-yyyy" style="background-color:white !important; margin-top:3px;" 
-					  value="<?php echo $ddd_date; ?>" id="date1">
+					  value="<?php echo $ddd_date; ?>" >
 					  </td>
 							  
 							  
 						<td>
-						<select class="span12 m-wrap chosen" id="wbnk1">
+						<select class="span12 m-wrap chosen">
 						<option value="" style="display:none;">Select Bank</option>    
 						<?php
 						foreach ($cursor3 as $db) 
@@ -69,7 +177,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 						
 						
 						<td>
-						<select class="span12 m-wrap chosen" onchange="receipt_mode(this.value,1)" id="modd1">
+						<select class="span12 m-wrap chosen" onchange="receipt_mode(this.value,1)">
 						<option value="" style="display:none;">receipt mode</option>    
 						<option value="Cheque">Cheque</option>
 						<option value="NEFT">NEFT</option>
@@ -80,18 +188,18 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 						  
 		<td>
 		<input type="text" placeholder="Cheque No." class="m-wrap span12" 
-		id="chhno1" style="background-color:#FFF !important; margin-top:3px;">
+		style="background-color:#FFF !important; margin-top:3px;">
 		</td>
 						
 						
 					<td>
 					<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy" 
-					placeholder="Date" id="dtt1" style="background-color:#FFF !important; margin-top:3px;"/>
+					placeholder="Date" style="background-color:#FFF !important; margin-top:3px;"/>
 					</td>
 							  
 							  
 					<td>
-					<input type="text" class="m-wrap span12" placeholder="Drawn on which bank?" id="bnkkk1" 
+					<input type="text" class="m-wrap span12" placeholder="Drawn on which bank?" 
 					style="background-color:#FFF !important; margin-top:3px;" data-provide="typeahead" 
 			   data-source="[<?php if(!empty($kendo_implode)) { echo $kendo_implode; } ?>]">
 					</td>
@@ -111,12 +219,12 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					
 <td>
 <input type="text" class="m-wrap span12" placeholder="Branch of Bank" 
-id="branchh1" style="background-color:#FFF !important; margin-top:3px;" data-provide="typeahead" 
+ style="background-color:#FFF !important; margin-top:3px;" data-provide="typeahead" 
 			   data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]">
 </td>
 					
 					<td>
-					<select class="span12 m-wrap chosen" valign="top" onchange="rcpttypp(this.value,1)" id="rec_typp1">
+					<select class="span12 m-wrap chosen" valign="top" onchange="rcpttypp(this.value,1)">
 					<option value="" style="display:none;">received from</option>    
 					<option value="1">Residential</option>
 					<option value="2">Non-Residential</option>
@@ -132,7 +240,7 @@ id="branchh1" style="background-color:#FFF !important; margin-top:3px;" data-pro
 				</td>
 								 
 				<td id="bill_refe_type1">
-				<select class="m-wrap chosen span12" id="ttppp1" onchange="amtshw2(this.value,1)">
+				<select class="m-wrap chosen span12"  onchange="amtshw2(this.value,1)">
 				<option value="" style="display:none;">Select Receipt Type</option>
 				<option value="1">Maintanace Receipt</option>
 				<option value="2">Other Receipt</option>
@@ -142,11 +250,11 @@ id="branchh1" style="background-color:#FFF !important; margin-top:3px;" data-pro
 				 <td id="amtview1">
 				 <input type="text" class="m-wrap span12" 
 				 style="text-align:right; background-color:#FFF !important; margin-top:3px;"
-				 maxlength="10" onkeyup="numeric_vali(this.value,1)" id="amttt1"/>
+				 maxlength="10" onkeyup="numeric_vali(this.value,1)" />
 				 </td>
 								 
 				 <td>
-				 <input type="text" class="m-wrap span12" style="background-color:#FFF !important; margin-top:3px;" id="desc1"/>
+				 <input type="text" class="m-wrap span12" style="background-color:#FFF !important; margin-top:3px;" />
 				 </td>
 				 
 				 </tr>
@@ -169,7 +277,9 @@ id="branchh1" style="background-color:#FFF !important; margin-top:3px;" data-pro
 </div>
 </div>
 </form>
-<!-----------------------------------END NEW DESIGN FOR BANK RECEIPT -------------------------------------->
+*/ ?>
+
+<!--------------------------END NEW DESIGN FOR BANK RECEIPT ---------------------->
 
 
 <!---- Start Import Code -->
@@ -213,13 +323,12 @@ function receipt_mode(value,idd)
 	
 		if(value == "Cheque")	
 		{
-		$("#bnkkk" + idd).removeAttr("readonly","readonly");
-		$("#branchh" + idd).removeAttr("readonly","readonly");		
+		$("#receipt_mode" + idd).show();
+		//$("#branchh" + idd).removeAttr("readonly","readonly");		
 		}
 		else
 		{
-		$("#bnkkk" + idd).attr("readonly","readonly");
-		$("#branchh" + idd).attr("readonly","readonly");	
+		$("#receipt_mode" + idd).hide();
 		}	
 }
 </script>

@@ -24352,47 +24352,48 @@ return $this->expense_tracker->find('all',array('conditions'=>$conditions));
 ////////////////////////////// Start Flat type Validation //////////////////////////////////////////////////////////
 function flat_type_validation()
 {
-$this->layout='blank';
-$q=$this->request->query('q');
-$q = html_entity_decode($q);
-$wing = $this->request->query('b');
-$wing = html_entity_decode($wing);
+	$this->layout='blank';
+	$q=$this->request->query('q');
+	$q = html_entity_decode($q);
+	$wing = $this->request->query('b');
+	$wing = html_entity_decode($wing);
 
-$s_society_id = (int)$this->Session->read('hm_society_id');
-$s_user_id  = (int)$this->Session->read('user_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id  = (int)$this->Session->read('user_id');
 
-$wing = json_decode($wing, true);
-$myArray = json_decode($q, true);
+	$wing = json_decode($wing, true);
+	$myArray = json_decode($q, true);
 
-if(empty($wing))
-{
-$output = json_encode(array('type'=>'error', 'text' => 'Select Wing'));
-die($output);
-}
+	if(empty($wing))
+	{
+	$output = json_encode(array('type'=>'error', 'text' => 'Select Wing'));
+	die($output);
+	}
 $c=0;
 $array1 = array();
 foreach($myArray as $data)
 {
 $c++;
-if(empty($data[0]))
-{
-$output = json_encode(array('type'=>'error', 'text' => 'Insert Flat Number in textbox'.$c.''));
-die($output);
-}
-$unit_name = $data[0];
-$result = preg_match('/\s/',$unit_name);
-if($result != 0)
-{
-$output = json_encode(array('type'=>'error', 'text' => 'There Should be no Space in Unit Name in textbox '.$c.''));
-die($output);
-}
+	if(empty($data[0]))
+	{
+	$output = json_encode(array('type'=>'error', 'text' => 'Insert Flat Number in textbox'.$c.''));
+	die($output);
+	}
+	
+		$unit_name = $data[0];
+		$result = preg_match('/\s/',$unit_name);
+		if($result != 0)
+		{
+		$output = json_encode(array('type'=>'error', 'text' => 'There Should be no Space in Unit Name in textbox '.$c.''));
+		die($output);
+		}
 
-$result2 = preg_match('/[^a-z0-9 _]+/i', $unit_name);
-if($result2 != 0)
-{
-$output = json_encode(array('type'=>'error', 'text' => 'There Should be no Special Character in Unit Name in textbox '.$c.''));
-die($output);
-}
+	$result2 = preg_match('/[^a-z0-9 _]+/i', $unit_name);
+	if($result2 != 0)
+	{
+	$output = json_encode(array('type'=>'error', 'text' => 'There Should be no Special Character in Unit Name in textbox '.$c.''));
+	die($output);
+	}
 
 
 $nnn = 555;

@@ -46,7 +46,26 @@ function it_regular_bill(){
 
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');
-	$s_user_flat_id=$this->Session->read('hm_user_flat_id');	
+	$s_user_flat_id=$this->Session->read('hm_user_flat_id');
+	
+	$this->loadmodel('wing');
+	$condition=array('society_id'=>$s_society_id);
+	$order=array('wing.wing_name'=>'ASC');
+	$result_wing=$this->wing->find('all',array('conditions'=>$condition));
+	$this->set(compact("result_wing"));
+		
+		
+	if(isset($this->request->data['preview'])){
+		$billing_cycle=$this->data["billing_cycle"];
+		$start_date=$this->data["start_date"];
+		$due_date=$this->data["due_date"];
+		$panalty=$this->data["panalty"];
+		$bill_for=$this->data["bill_for"];
+		if($bill_for=="wing_wise"){ $wings=$this->data["wings"]; }
+		$description=$this->data["description"];
+		exit;
+	
+	}
 }
 /////////////////////// End It Regular Bill (Accounts) ////////////////////////////////////////////////////////////
 

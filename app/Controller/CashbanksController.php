@@ -2000,9 +2000,9 @@ $conditions=array("society_id" => $s_society_id,"user_id" => $s_user_id);
 $cursor=$this->user->find('all',array('conditions'=>$conditions));
 foreach ($cursor as $collection) 
 {
-$tenant_c = (int)$collection['user']['tenant'];
+$tenant_c = (int)@$collection['user']['tenant'];
 }
-$this->set('tenant_c',$tenant_c);
+$this->set('tenant_c',@$tenant_c);
 
 
 $this->loadmodel('financial_year');

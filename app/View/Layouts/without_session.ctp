@@ -56,7 +56,7 @@ label.error {
   <?php echo $this->fetch('content'); ?>  
   <!-- BEGIN COPYRIGHT -->
   <div class="copyright">
-    2013 &copy; Metronic. Admin Dashboard Template.
+    HousingMatters
   </div>
   <!-- END COPYRIGHT -->
  

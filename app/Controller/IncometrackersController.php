@@ -63,6 +63,47 @@ function it_regular_bill(){
 		$bill_for=$this->data["bill_for"];
 		if($bill_for=="wing_wise"){ $wings=$this->data["wings"]; }
 		$description=$this->data["description"];
+		
+		$this->loadmodel('ledger_sub_account');
+		$condition=array('society_id'=>$s_society_id);
+		$members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
+		foreach($members as $data3){
+			$ledger_sub_account_ids[]=$data3["ledger_sub_account"]["auto_id"];
+		}
+		
+		$this->loadmodel('wing');
+		$condition=array('society_id'=>$s_society_id);
+		$order=array('wing.wing_name'=>'ASC');
+		$wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+		foreach($wings as $data){
+			$wing_id=$data["wing"]["wing_id"];
+			$this->loadmodel('flat');
+			$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+			$order=array('flat.flat_name'=>'ASC');
+			$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+			foreach($flats as $data2){
+				$flat_id=$data2["flat"]["flat_id"];
+				$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+				if(!empty($ledger_sub_account_id)){
+					if (in_array($ledger_sub_account_id, $ledger_sub_account_ids)){
+						$members_for_billing[]=$ledger_sub_account_id;
+					}
+				}
+				
+			}
+		}
+		
+		foreach($members_for_billing as $ledger_sub_account_id){
+			
+			
+			$this->loadmodel('regular_bill');
+			$auto_id=$this->autoincrement('new_regular_bill','auto_id');
+			$this->new_regular_bill->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => $ledger_sub_account_id));
+		}
+		
+		
+		
+		
 		exit;
 	
 	}

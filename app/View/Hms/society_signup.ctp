@@ -66,11 +66,7 @@
    
   </div>
   <!-- END LOGIN -->
-  <!-- BEGIN COPYRIGHT -->
-  <div class="copyright">
-    HousingMatters.
-  </div>
-  <!-- END COPYRIGHT -->
+
   
   
   <script>

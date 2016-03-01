@@ -93,10 +93,24 @@ function it_regular_bill(){
 			}
 		}
 		
+		$this->loadmodel('society');
+		$condition=array('society_id'=>$s_society_id);
+		$society_result=$this->society->find('all',array('conditions'=>$condition));
+		$income_heads=$society_result[0]["society"]["income_head"];
+		
+		//Start billing calculation//
 		foreach($members_for_billing as $ledger_sub_account_id){
+			$income_head_array=array();
+			foreach($income_heads as $income_head_id){
+				$ih_amount = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_income_head_amount'),array('pass'=>array($ledger_sub_account_id,$income_head_id)));
+				$income_head_array[$income_head_id]=$ih_amount;
+			}
+			
+			pr($income_head_array);
 			$this->loadmodel('regular_bill');
 			$auto_id=$this->autoincrement('new_regular_bill','auto_id');
-			$this->new_regular_bill->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => $ledger_sub_account_id));
+			$this->new_regular_bill->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array));
+			
 		}
 		
 		

@@ -115,8 +115,11 @@ echo '<div align="center" style="background-color: rgb(0, 141, 210);padding: 5px
 		<table width="100%" cellpadding="5px">
 			<tr>
 				<td><span style="font-size:16px;"> <b>Rs '.$amount.'</b></span><br/>';
-				if($receipt_mode=="Cheque"){
-					echo 'Subject to realization of Cheque(s)';
+				if($receipt_mode=="cheque"){
+					echo 'Via '.$receipt_mode.'-'.$cheque_number.' drawn on '.$which_bank.' dated '.$cheque_date;
+				}
+				else{
+					echo 'Via '.$receipt_mode.'-'.$reference_number.' dated '.$cheque_date;
 				}
 				echo '</td>
 			</tr>

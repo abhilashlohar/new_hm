@@ -24,7 +24,8 @@ Society Setup
 <div id="don"></div>
 <?php ///////////////////////////////////////////////////////////////////////////////////////////////// ?>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////// ?>   
+<?php ////////////////////////////////////////////////////////////////////////////////////////////// ?> 
+  
 <div style="background-color:#fff;padding:5px;width:96%;margin:auto; overflow:auto;" class="form_div">    
 <div class="row-fluid">
 <div class="span5">    
@@ -177,7 +178,7 @@ $(document).ready(function() {
 			url: "flat_type_validation?q="+myJsonString+"&b="+wi,
 			dataType:'json',
 			}).done(function(response) {
-			
+			//alert(response);
 				if(response.type == 'error'){  
 					output = '<div class="alert alert-error">'+response.text+'</div>';
 					$("#submit").removeClass("disabled").text("submit");
@@ -310,8 +311,9 @@ $("#myModal3").show();
 		$.ajax({
 			url: "save_import_flat?q="+myJsonString,
 			type: 'POST',
-			dataType:'json',
+			//dataType:'json',
 		}).done(function(response) {
+			alert(response);
 			if(response.report_type=='error'){
 				jQuery.each(response.report, function(i, val) {
 					$("#flats_main tr:nth-child("+val.tr+") td:nth-child("+val.td+")").append('<br><span class="report" style="color:red;">'+val.text+'</span>');

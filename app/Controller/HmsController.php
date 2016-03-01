@@ -22315,6 +22315,11 @@ function save_import_flat(){
 		$report[]=array('tr'=>$c,'td'=>2, 'text' => 'Required');
 		}
 		
+		
+		
+		
+		
+		
 if(sizeof($report) == 0)
 {		
 $wing = (int)$child[0];
@@ -22359,10 +22364,6 @@ $output=json_encode(array('report_type'=>'error','report'=>$report));
 die($output);
 	
 }
-	
-	
-	
-	
 	
 if($child[2]=="yes")
 {
@@ -24378,6 +24379,24 @@ if(empty($data[0]))
 $output = json_encode(array('type'=>'error', 'text' => 'Insert Flat Number in textbox'.$c.''));
 die($output);
 }
+        $unit_name = $data[0];
+		
+$result = preg_match('/\s/',$unit_name);
+if($result != 0)
+{
+$output = json_encode(array('type'=>'error', 'text' => 'There Should be no Space in Unit Name'.$c.''));
+die($output);
+}
+
+
+
+
+
+
+
+
+
+
 
 
 $nnn = 555;

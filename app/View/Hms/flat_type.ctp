@@ -24,6 +24,11 @@ Society Setup
 <div id="don"></div>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////// ?> 
+<?php
+ //echo $aaa= date('Y-m-d',1456597800);  // 1057
+ //echo $bbb= date('Y-m-d',1456684200);  //1056
+ //echo $ccc= date('Y-m-d',1456684200); //1055 
+?>
 
 <div style="background-color:#fff;padding:5px;width:96%;margin:auto; overflow:auto;" class="form_div">    
 

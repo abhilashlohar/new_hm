@@ -5675,7 +5675,7 @@ echo "true";
 function profile_mobile_check()
 {
 $this->layout='blank_signup';
-$s_user_id=$this->Session->read('user_id');	
+$s_user_id=$this->Session->read('hm_user_id');	
 $mobile=$this->request->query['mobile1'];
 
 $this->loadmodel('user');
@@ -5714,7 +5714,7 @@ echo "true";
 function profile_email_check()
 {
 $this->layout='blank_signup';
-$s_user_id=$this->Session->read('user_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $email=$this->request->query['email'];
 $this->loadmodel('user');
 $conditions=array("email" => $email,'user_id'=>$s_user_id);
@@ -15743,33 +15743,31 @@ $result_hobbies_cat=$this->hobbies_category->find('all',array('conditions'=>$con
 function profile() 
 {
 
-$this->ath();
+
 if($this->RequestHandler->isAjax()){
 		$this->layout='blank';
 	}else{
 		$this->layout='session';
 	}
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+	$this->ath();
+ $s_society_id=$this->Session->read('hm_society_id');
+ $s_user_id=$this->Session->read('hm_user_id');
+
 $r=$this->request->query('try');
 
 $this->seen_alert(101,$s_user_id);
-@$ip=$this->hms_email_ip();
- 
-if(!empty($r))
-{
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
+
+if(!empty($r)){
 $this->loadmodel('user');
 $this->user->updateAll(array('profile_status'=>2),array('user_id'=>$s_user_id));
 $this->redirect(array('action' => 'profile'));
 }
 
-$this->loadmodel('user');
-$conditions2=array('user_id'=>$s_user_id);
-$result_user=$this->user->find('all',array('conditions'=>$conditions2));
-foreach($result_user as $data)
-{
-	  $profile=$data['user']['profile_pic'];
-}
+$result_user_profile = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_profile_info_via_user_id'),array('pass'=>array($s_user_id)));
+$profile=@$result_user_profile[0]['user_profile']['profile_pic'];
+
+
 $result_society=$this->society_name($s_society_id);
 foreach($result_society as $data)
 {
@@ -15905,10 +15903,18 @@ if(empty($photo_name))
 	$target=@$target.basename( @$this->request->form['profile_photo']['name']);
 	$ok=1;
 	move_uploaded_file(@$this->request->form['profile_photo']['tmp_name'],@$target); 
-	$this->loadmodel('user');
-	$this->user->updateAll(array("user_name" => $name,"email" => $email,'mobile'=>$mobile,'sex'=>$sex,'dob'=>$age,'per_address'=>$per_address,'comm_address'=>$com_address,'hobbies'=>$hob,'profile_pic'=>$photo_name,'blood_group'=>$blood_group,'medical_pro'=>$medical,'contact_emergency'=>$contact_emergency),array("user_id" => $s_user_id));
-	$this->loadmodel('ledger_sub_accounts');
-	$this->ledger_sub_accounts->updateAll(array("name" => $name),array("user_id" => $s_user_id));
+	$this->loadmodel('user_profile');
+	$conditions=array('user_id'=>$s_user_id);
+	$result_user_profile=$this->user_profile->find('count',array('conditions'=>$conditions));
+	if($result_user_profile>0){
+		
+	$this->user_profile->updateAll(array('gender'=>$sex,'dob'=>$age,'per_address'=>$per_address,'comm_address'=>$com_address,'hobbies'=>$hob,'profile_pic'=>$photo_name,'blood_group'=>$blood_group,'medical_pro'=>$medical,'contact_emergency'=>$contact_emergency),array("user_id" => $s_user_id));
+		
+	}else{
+		$user_profile_id=$this->autoincrement('user_profile','user_profile_id');
+		$this->user_profile->saveAll(array('gender'=>$sex,'dob'=>$age,'per_address'=>$per_address,'comm_address'=>$com_address,'hobbies'=>$hob,'profile_pic'=>$photo_name,'blood_group'=>$blood_group,'medical_pro'=>$medical,'contact_emergency'=>$contact_emergency,'user_profile_id'=>$user_profile_id,'user_id'=>$s_user_id,'society_id'=>$s_society_id));
+		
+	}
 	
 $to=$email;
 $from_name="HousingMatters";
@@ -15922,29 +15928,7 @@ $from=$collection['email']['from'];
 }
 $reply=$from;
 
-  /* @$message_web="<div>
-<img src='$ip".$this->webroot."/as/hm/hm-logo.png'/><span  style='float:right; margin:2.2%;'>
-<span class='test' style='margin-left:5px;'><a href='https://www.facebook.com/HousingMatters.co.in' target='_blank' ><img src='$ip".$this->webroot."/as/hm/fb.png'/></a></span>
-<a href='#' target='_blank'><img src='$ip".$this->webroot."/as/hm/tw.png'/></a><a href'#'><img src='$ip".$this->webroot."/as/hm/ln.png'/ class='test' style='margin-left:5px;'></a></span>
-<p> Your profile is successfully update. </p>
-<p> Name : $name </p>
-<p> Mobile : $mobile </p>
-<p> Email : $email </p>
-<p> Age group : $age_group </p>
-<p> Contact number emergency : $contact_emergency </p>
-<p> Permanent address : $per_address </p>
-<p> Communication address : $com_address </p>
-<p> Hobbies : $hob </p>
-<p> Blood group : $b_group </p>
-<p> Medical professional : $med_pro </p>
-<br/>
-Thank you.<br/>
-HousingMatters (Support Team)<br/>
-www.housingmatters.co.in
-</div >
-</div>";
-
-*/
+  
 
   @$message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
           <tbody>
@@ -16076,8 +16060,6 @@ www.housingmatters.co.in
         </tbody>
 </table>';
 
-
-
 $this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
 $this->Session->write('profile_status', 1);
 $this->response->header('Location', $this->webroot.'Hms/dashboard');
@@ -16089,7 +16071,7 @@ $this->response->header('Location', $this->webroot.'Hms/dashboard');
 $this->loadmodel('user');
 $conditions=array("user_id" => $s_user_id);
 $this->set('result_user',$this->user->find('all',array('conditions'=>$conditions)));            
-$this->loadmodel('wing'); 
+$this->loadmodel('wing');
 $this->set('result1',$this->wing->find('all'));   
 }
 
@@ -16104,54 +16086,46 @@ $this->set('result3',$result);
 }
 
 
-function profile_check_private()
+function profile_check_private($update=null,$field=null)
 {
-$this->layout='blank';
-$s_user_id=$this->Session->read('user_id');
-$pub=$this->request->query('con');
-$t= explode(',',$pub);
-
-$field=$t[0];
-$private_pubice=$t[1];
-if($private_pubice==1)
-{
-$this->loadmodel('user');
-$conditions=array('user_id'=>$s_user_id);
-$res= $this->user->find('all',array('conditions'=>$conditions));
-foreach($res as $data)
-{
-$row =@$data['user']['private'];
-}
-
-if(@!in_array($field,$row))
-{
-$row[]=$field;
-$this->loadmodel('user');
-$this->user->updateAll(array('private'=>$row),array('user_id'=>$s_user_id));
-}
-
-}
-elseif($private_pubice==0)
-{
-$this->loadmodel('user');
-$conditions=array('user_id'=>$s_user_id);
-$res= $this->user->find('all',array('conditions'=>$conditions));
-foreach($res as $data)
-{
-$row =$data['user']['private'];
-}
-
-
-if(($key=array_search($field,$row))!== false)
-{
-unset($row[$key]);
-
-$this->loadmodel('user');
-$this->user->updateAll(array('private'=>$row),array('user_id'=>$s_user_id));
-
-}
-
-}
+$this->layout=null;
+$s_user_id=$this->Session->read('hm_user_id');
+	if($field=='mobile'){
+	$this->loadmodel('user');	
+	$this->user->updateAll(array('mobile_privacy'=>$update,),array("user_id" => $s_user_id));	
+	}
+	if($field=='email'){
+	$this->loadmodel('user');	
+	$this->user->updateAll(array('email_privacy'=>$update,),array("user_id" => $s_user_id));	
+	}
+	if($field=='gender'){
+	$this->loadmodel('user_profile');	
+	$this->user_profile->updateAll(array('gender_privacy'=>$update,),array("user_id" => $s_user_id));	
+	}
+	if($field=='age'){
+	$this->loadmodel('user_profile');	
+	$this->user_profile->updateAll(array('age_privacy'=>$update,),array("user_id" => $s_user_id));	
+	}
+	if($field=='contact_num_emergency'){
+	$this->loadmodel('user_profile');	
+	$this->user_profile->updateAll(array('contact_num_emergency_privacy'=>$update,),array("user_id" => $s_user_id));	
+	}
+	if($field=='per_address'){
+	$this->loadmodel('user_profile');	
+	$this->user_profile->updateAll(array('per_address_privacy'=>$update,),array("user_id" => $s_user_id));	
+	}
+	if($field=='communication_address'){
+	$this->loadmodel('user_profile');	
+	$this->user_profile->updateAll(array('communication_address_privacy'=>$update,),array("user_id" => $s_user_id));	
+	}
+	if($field=='hob'){
+	$this->loadmodel('user_profile');	
+	$this->user_profile->updateAll(array('hob_privacy'=>$update,),array("user_id" => $s_user_id));	
+	}
+	if($field=='blood_group'){
+	$this->loadmodel('user_profile');	
+	$this->user_profile->updateAll(array('blood_group_privacy'=>$update,),array("user_id" => $s_user_id));	
+	}
 
 
 }

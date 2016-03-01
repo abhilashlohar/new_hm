@@ -1,7 +1,4 @@
-  
-
-
-  <script type="text/javascript">
+<script type="text/javascript">
  var xobj;
    //modern browers
    if(window.XMLHttpRequest)
@@ -37,24 +34,6 @@
 			 xobj.send(null);
 		  }
 		  
-		   function check_public(c1)
-		  {
-		    if(xobj)
-			 {			
-			
-			 var query="?con=" + c1;
-			 xobj.open("GET","profile_check_private" +query,true);
-			 xobj.onreadystatechange=function()
-			  {
-			  if(xobj.readyState==4 && xobj.status==200)
-			   {	   
-			   document.getElementById("show_public").innerHTML=xobj.responseText;
-			   }
-			  }
-			  
-			 }
-			 xobj.send(null);
-		  }
 		 
 		  </script>
 
@@ -70,29 +49,55 @@
 				</div>
 				<!-- END PAGE HEADER-->
 				<!-- BEGIN PAGE CONTENT-->
-				
+				<!DOCTYPE html>
+
+
+
+
                 <?php
-               				
+               		
           		foreach ($result_user as $collection)   
               	 {
+					$da_user_id = (int)$collection['user']['user_id'];
+					$c_name = $collection['user']['user_name'];
 					$c_email = $collection['user']['email'];
 					$c_mobile = $collection['user']['mobile'];
-					$medical_pro = @$collection['user']['medical_pro'];
-					$c_name = $collection['user']['user_name'];
-					@$profile_pic = $collection['user']['profile_pic'];
-					@$f_profile_pic = $collection['user']['f_profile_pic'];
-					@$g_profile_pic = $collection['user']['g_profile_pic'];
-					$c_sex = (int)@$collection['user']['sex'];
-					$c_wing_id = (int)$collection['user']['wing'];
-					 $c_flat_id = (int)$collection['user']['flat'];
-					$da_dob=@$collection['user']['dob'];
-					$per_address=@$collection['user']['per_address'];
-					$com_address=@$collection['user']['comm_address'];
-					$hobbies=@$collection['user']['hobbies'];
-					@$blood_group=@$collection['user']['blood_group'];
-					$private_field=@$collection['user']['private'];
-					$multi_flat=@$collection['user']['multiple_flat'];
-					$contact_emergency3=@$collection['user']['contact_emergency'];
+					
+					$email_privacy = @$collection['user']['email_privacy'];
+					$mobile_privacy = @$collection['user']['mobile_privacy'];
+					
+					$result_user_flat = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($da_user_id)));
+					 $c_wing_id = (int)@$result_user_flat[0]['user_flat']['wing'];
+					 $c_flat_id = (int)@$result_user_flat[0]['user_flat']['flat']; 
+					$result_user_profile = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_profile_info_via_user_id'),array('pass'=>array($da_user_id)));
+					
+					$medical_pro = @$result_user_profile[0]['user_profile']['medical_pro'];
+					
+					@$profile_pic = $result_user_profile[0]['user_profile']['profile_pic'];
+					@$f_profile_pic = $result_user_profile[0]['user_profile']['f_profile_pic'];
+					@$g_profile_pic = $result_user_profile[0]['user_profile']['g_profile_pic'];
+					$c_sex = (int)$result_user_profile[0]['user_profile']['gender'];
+					$gender_privacy = $result_user_profile[0]['user_profile']['gender_privacy'];
+					
+					$da_dob=@$result_user_profile[0]['user_profile']['dob'];
+					$age_privacy = $result_user_profile[0]['user_profile']['age_privacy'];
+					
+					$per_address=@$result_user_profile[0]['user_profile']['per_address'];
+					$per_address_privacy=@$result_user_profile[0]['user_profile']['per_address_privacy'];
+					
+					$com_address=@$result_user_profile[0]['user_profile']['comm_address'];
+					$communication_address_privacy=@$result_user_profile[0]['user_profile']['communication_address_privacy'];
+					
+					$hobbies=@$result_user_profile[0]['user_profile']['hobbies'];
+					$hob_privacy=@$result_user_profile[0]['user_profile']['hob_privacy'];
+					
+					@$blood_group=@$result_user_profile[0]['user_profile']['blood_group'];
+					@$blood_group_privacy=@$result_user_profile[0]['user_profile']['blood_group_privacy'];
+					
+					
+					//$multi_flat=@$collection['user']['multiple_flat'];
+					$contact_emergency3=@$result_user_profile[0]['user_profile']['contact_emergency'];
+					$contact_num_emergency_privacy=@$result_user_profile[0]['user_profile']['contact_num_emergency_privacy'];
 					
 				 }
 				  
@@ -224,7 +229,7 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
                                             <tr>
                                             <td width="40%" style="font-size:14px; ">Name</td>
                                             <td width="60%">
-											<input type="text" class="m-wrap" id="name" value="<?php echo $c_name;  ?>" name="name">
+											<input type="text" class="m-wrap" readonly id="name" value="<?php echo $c_name;  ?>" name="name">
 											<label id="name"></label>
 											</td>
                                             </tr>
@@ -267,15 +272,15 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 										<div class="" style="background-color:#FFFFFF; padding-left:10px;">
 											<table width="100%" >
                                         <tr>
-                                        <td width="40%" style="font-size:14px; ">Mobile Number</td>
-                                        <td width="40%"><input type="text" class="m-wrap" value="<?php echo $c_mobile; ?>" name="mobile1" maxlength="10"></td>
+                                        <td width="37%" style="font-size:14px; ">Mobile Number</td>
+                                        <td width="43%"><span style="color:red">+91</span> <input type="text" class="m-wrap" value="<?php echo $c_mobile; ?>" name="mobile1" readonly maxlength="10"></td>
 											<td width="15%">
 										<div id="show_public"> </div>
-                                 <select class="span12 m-wrap" data-placeholder="Choose a Category" tabindex="1" name="sel_private" onchange="check_public(this.value)" id="check_id">
-                                   <option value="mobile,0" >Public</option>
-								    <option value="mobile,1"<?php if(@in_array('mobile',$private_field)) { ?> selected <?php } ?> >Private</option>
+                                 <select class="span12 m-wrap check_privacy" data-placeholder="Choose a Category" tabindex="1" name="sel_private" change_field="mobile" >
+                                    <option value="Public" <?php if($mobile_privacy=='Public'){ ?> selected <?php } ?> >Public</option>
+								    <option value="Private" <?php if($mobile_privacy=='Private'){ ?> selected <?php } ?>>Private</option>
                                    
-                                 </option></select>
+                                </select>
                             
 											
 											<td>
@@ -289,15 +294,14 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 											<table width="100%" >
                                         <tr>
                                         <td width="40%" style="font-size:14px;"> Email-Id </td>
-                                        <td width="40%"><input type="text" value="<?php echo $c_email;  ?>" class=" m-wrap" name="email">
+                                        <td width="40%"><input type="text" value="<?php echo $c_email;  ?>"  readonly class=" m-wrap" name="email">
 											</td>
 											<td width="15%">
 										<div id="show_public"> </div>
-                                 <select class="span12 m-wrap" data-placeholder="Choose a Category" tabindex="1" name="sel_private" onchange="check_public(this.value)" id="check_id">
-                                   <option value="email,0">Public</option>
-								    <option value="email,1" <?php if(@in_array('email',$private_field)) { ?> selected <?php } ?>>Private</option>
-
-                                 </option></select>
+                                 <select class="span12 m-wrap check_privacy" data-placeholder="Choose a Category" tabindex="1" name="sel_private" change_field="email">
+                                   <option value="Public" <?php if($email_privacy=='Public'){ ?> selected <?php } ?>>Public</option>
+								    <option value="Private" <?php if($email_privacy=='Private'){ ?> selected <?php } ?>>Private</option>
+									</select>
                             
 											
 											<td>
@@ -340,11 +344,11 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 											</td>
 											<td width="12%">
 										<div id="show_public"> </div>
-                                 <select class="span12 m-wrap" data-placeholder="Choose a Category" tabindex="1" name="sel_private" onchange="check_public(this.value)" id="check_id">
-                                   <option value="sex,0">Public</option>
-								    <option value="sex,1" <?php if(@in_array('sex',$private_field)) { ?> selected <?php } ?> >Private</option>
+                                 <select class="span12 m-wrap check_privacy" data-placeholder="Choose a Category" tabindex="1" name="sel_private" change_field="gender">
+                                    <option value="Public"<?php if($gender_privacy=='Public'){ ?> selected <?php } ?> >Public</option>
+								    <option value="Private" <?php if($gender_privacy=='Private'){ ?> selected <?php } ?>>Private</option>
                                    
-                                 </option></select>
+                                </select>
                             
 											
 											<td>
@@ -381,11 +385,10 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 											
 											<td width="12%">
 										<div id="show_public"> </div>
-                                 <select class="span12 m-wrap" data-placeholder="Choose a Category" tabindex="1" name="sel_private" onchange="check_public(this.value)" id="check_id">
-                                   <option value="date,0">Public</option>
-								    <option value="date,1" <?php if(@in_array('date',$private_field)) { ?> selected <?php } ?>>Private</option>
-                                   
-                                 </option></select>
+                                 <select class="span12 m-wrap check_privacy" data-placeholder="Choose a Category" tabindex="1" name="sel_private" change_field="age">
+                                    <option value="Public" <?php if($age_privacy=='Public'){ ?> selected <?php } ?>>Public</option>
+								    <option value="Private" <?php if($age_privacy=='Private'){ ?> selected <?php } ?>>Private</option>
+									</select>
                             
 											
 											<td>
@@ -417,9 +420,9 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 											
 										<td width="12%">
 										<div id="show_public"> </div>
-										<select class="span12 m-wrap" data-placeholder="Choose a Category" tabindex="1" name="sel_private" onchange="check_public(this.value)" id="check_id">
-										<option value="contact_emergency,0">Public</option>
-										<option value="contact_emergency,1" <?php if(@in_array('contact_emergency',$private_field)) { ?> selected <?php } ?>>Private</option>
+										<select class="span12 m-wrap check_privacy" data-placeholder="Choose a Category" tabindex="1" name="sel_private" change_field="contact_num_emergency" >
+										 <option value="Public" <?php if($contact_num_emergency_privacy=='Public'){ ?> selected <?php } ?>>Public</option>
+								         <option value="Private" <?php if($contact_num_emergency_privacy=='Private'){ ?> selected <?php } ?>>Private</option>
 
 										</option></select>
 
@@ -449,11 +452,11 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 											</td>
 											<td width="12%">
 										<div id="show_public"> </div>
-                                 <select class="span12 m-wrap" data-placeholder="Choose a Category" tabindex="1" name="sel_private" onchange="check_public(this.value)" id="check_id">
-                                   <option value="per_address,0">Public</option>
-								    <option value="per_address,1" <?php if(@in_array('per_address',$private_field)) { ?> selected <?php } ?>>Private</option>
+                                 <select class="span12 m-wrap check_privacy" data-placeholder="Choose a Category" tabindex="1" name="sel_private" change_field="per_address">
+                                    <option value="Public" <?php if($per_address_privacy=='Public'){ ?> selected <?php } ?>>Public</option>
+								    <option value="Private" <?php if($per_address_privacy=='Private'){ ?> selected <?php } ?>>Private</option>
                                    
-                                 </option></select>
+                                </select>
                             
 											
 											<td>
@@ -477,14 +480,14 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
                                        
                                         <td width="29%">
 										 <textarea rows="5" cols="" name="com_address" class="m-wrap m-ctrl-medium" style="resize:none;" ><?php echo $com_address; ?></textarea>
-											</td>
-											<td width="12%">
+										</td>
+										<td width="12%">
 										<div id="show_public"> </div>
-                                 <select class="span12 m-wrap" data-placeholder="Choose a Category" tabindex="1" name="sel_private" onchange="check_public(this.value)" id="check_id">
-                                   <option value="com_address,0">Public</option>
-								    <option value="com_address,1" <?php if(@in_array('com_address',$private_field)) { ?> selected <?php } ?>>Private</option>
+                                 <select class="span12 m-wrap check_privacy" data-placeholder="Choose a Category" tabindex="1" name="sel_private" change_field="communication_address">
+                                    <option value="Public" <?php if($communication_address_privacy=='Public'){ ?> selected <?php } ?>>Public</option>
+								    <option value="Private" <?php if($communication_address_privacy=='Private'){ ?> selected <?php } ?>>Private</option>
                                    
-                                 </option></select>
+                                </select>
                             
 											
 											<td>
@@ -519,11 +522,11 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 									</td>
 											<td width="12%">
 										<div id="show_public"> </div>
-                                 <select class="span12 m-wrap" data-placeholder="Choose a Category" tabindex="1" name="sel_private" onchange="check_public(this.value)" id="check_id">
-                                   <option value="hobi,0">Public</option>
-								    <option value="hobi,1" <?php if(@in_array('hobi',$private_field)) { ?> selected <?php } ?>>Private</option>
+                                 <select class="span12 m-wrap check_privacy" data-placeholder="Choose a Category" tabindex="1" name="sel_private" change_field="hob" >
+                                    <option value="Public" <?php if($hob_privacy=='Public'){ ?> selected <?php } ?>>Public</option>
+								    <option value="Private" <?php if($hob_privacy=='Private'){ ?> selected <?php } ?>>Private</option>
                                    
-                                 </option></select>
+                                </select>
                             
 											
 											<td>
@@ -563,11 +566,10 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 											</td>
 											<td width="12%">
 										<div id="show_public"> </div>
-                                 <select class="span12 m-wrap" data-placeholder="Choose a Category" tabindex="1" name="sel_private" onchange="check_public(this.value)" id="check_id">
-                                   <option value="bl_g,0">Public</option>
-								    <option value="bl_g,1" <?php if(@in_array('bl_g',$private_field)) { ?> selected <?php } ?>>Private</option>
-                                   
-                                 </option></select>
+                                 <select class="span12 m-wrap check_privacy" data-placeholder="Choose a Category" tabindex="1" name="sel_private" change_field="blood_group">
+                                    <option value="Public" <?php if($blood_group_privacy=='Public'){ ?> selected <?php } ?>>Public</option>
+								    <option value="Private" <?php if($blood_group_privacy=='Private'){ ?> selected <?php } ?>>Private</option>
+                                   </select>
                             
 											
 											<td>
@@ -658,7 +660,20 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 <script>
 
 $(document).ready(function(){
-		$('#contact-form1').validate({
+
+		$( "select.check_privacy" ).change(function() {
+			var update=$(this).val();
+			var field=$(this).attr('change_field');
+			$.ajax({
+			url: "<?php echo $webroot_path; ?>/Hms/profile_check_private/"+update+"/"+field,
+			}).done(function(response) {
+				
+		});		
+		});	
+		
+		
+		
+$('#contact-form1').validate({
 	    rules: {
 	name: {
 			required: true,

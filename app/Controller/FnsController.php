@@ -15,6 +15,11 @@ function user_flat_info_via_user_id($user_id){
 	$conditions=array("user_id" =>$user_id);
 	return $this->user_flat->find('all',array('conditions'=>$conditions));
 }
+function user_profile_info_via_user_id($user_id){
+	$this->loadmodel('user_profile');
+	$conditions=array("user_id" =>$user_id);
+	return $this->user_profile->find('all',array('conditions'=>$conditions));	
+}
 
 function user_info_via_user_id($user_id){
 	$this->loadmodel('user');

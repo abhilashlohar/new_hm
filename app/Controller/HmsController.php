@@ -24394,8 +24394,11 @@ $c++;
 	$output = json_encode(array('type'=>'error', 'text' => 'There Should be no Special Character in Unit Name in textbox '.$c.''));
 	die($output);
 	}
-
-
+   
+   
+	
+	
+	
 $nnn = 555;
 $this->loadmodel('flat');
 $conditions=array("society_id"=>$s_society_id);
@@ -24432,6 +24435,10 @@ foreach($myArray as $data)
 $flat_number = $data[0];
 $flat_number = trim($flat_number);
 
+//$len = strlen($flat_number);	
+//$val = 10-$len;	
+$flat_number2 = str_pad($flat_number,10,"0",STR_PAD_LEFT);	
+
 $wing = (int)$wing;
 $this->loadmodel('flat');
 $order=array('flat.flat_id'=> 'DESC');
@@ -24450,7 +24457,7 @@ $k=$last;
 }
 $k++;
 $this->loadmodel('flat');
-$multipleRowData = Array( Array("flat_id"=>$k, "wing_id"=>$wing, "flat_name"=>$flat_number, "society_id"=>$s_society_id,'noc_ch_tp'=>1));
+$multipleRowData = Array( Array("flat_id"=>$k, "wing_id"=>$wing, "flat_name"=>$flat_number2, "society_id"=>$s_society_id,'noc_ch_tp'=>1));
 $this->flat->saveAll($multipleRowData);
 
 }

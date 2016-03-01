@@ -24379,24 +24379,20 @@ if(empty($data[0]))
 $output = json_encode(array('type'=>'error', 'text' => 'Insert Flat Number in textbox'.$c.''));
 die($output);
 }
-        $unit_name = $data[0];
-		
+$unit_name = $data[0];
 $result = preg_match('/\s/',$unit_name);
 if($result != 0)
 {
-$output = json_encode(array('type'=>'error', 'text' => 'There Should be no Space in Unit Name'.$c.''));
+$output = json_encode(array('type'=>'error', 'text' => 'There Should be no Space in Unit Name in textbox '.$c.''));
 die($output);
 }
 
-
-
-
-
-
-
-
-
-
+$result2 = preg_match('/[^a-z0-9 _]+/i', $unit_name);
+if($result2 != 0)
+{
+$output = json_encode(array('type'=>'error', 'text' => 'There Should be no Special Character in Unit Name in textbox '.$c.''));
+die($output);
+}
 
 
 $nnn = 555;
@@ -24409,7 +24405,8 @@ $wing_id2 = (int)$collection['flat']['wing_id'];
 $flat_nu2 = $collection['flat']['flat_name'];	
 if($wing_id2 == $wing && $flat_nu2 == $data[0])
 {
-$nnn = 55;	
+$nnn = 55;
+break;	
 }	
 }	
 if($nnn == 55)
@@ -24432,6 +24429,8 @@ $array1[] = $data[0];
 foreach($myArray as $data)
 {
 $flat_number = $data[0];
+$flat_number = trim($flat_number);
+
 $wing = (int)$wing;
 $this->loadmodel('flat');
 $order=array('flat.flat_id'=> 'DESC');

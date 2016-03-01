@@ -22,9 +22,12 @@ Society Setup
 <a href="#"role="button" class="btn blue" id="import_btn">Import csv</a>
 <div id="error_msg"></div>
 <div id="don"></div>
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////// ?>
+<?php
 
 
+
+
+?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////// ?> 
   
 <div style="background-color:#fff;padding:5px;width:96%;margin:auto; overflow:auto;" class="form_div">    

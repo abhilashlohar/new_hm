@@ -48,7 +48,9 @@ foreach ($result_prb as $data)
 $flat_name = $data['flat']['flat_name'];
 $flat_id = $data['flat']['flat_id'];
 @$flat_area = (int)$data['flat']['flat_area'];
-@$flat_type_id = (int)$data['flat']['flat_type_id'];	
+@$flat_type_id = (int)$data['flat']['flat_type_id'];
+
+$flat_name = ltrim($flat_name,0);	
 ?>
 <tr>
 <td><?php echo $wing_name; ?></td>
@@ -61,6 +63,7 @@ foreach($cursor3 as $dataa)
 {
 $auto_id = (int)$dataa['flat_type_name']['auto_id'];	
 $flat_name = $dataa['flat_type_name']['flat_name'];
+
 ?>
 <option value="<?php echo $auto_id; ?>" <?php if($auto_id == $flat_type_id){ ?> selected="selected" <?php } ?>><?php echo $flat_name; ?></option>
 <?php	

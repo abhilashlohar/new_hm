@@ -53,8 +53,8 @@ function it_regular_bill(){
 	$order=array('wing.wing_name'=>'ASC');
 	$result_wing=$this->wing->find('all',array('conditions'=>$condition));
 	$this->set(compact("result_wing"));
-		
-		
+	
+	
 	if(isset($this->request->data['preview'])){
 		$billing_cycle=$this->data["billing_cycle"];
 		$start_date=$this->data["start_date"];
@@ -94,14 +94,10 @@ function it_regular_bill(){
 		}
 		
 		foreach($members_for_billing as $ledger_sub_account_id){
-			
-			
 			$this->loadmodel('regular_bill');
 			$auto_id=$this->autoincrement('new_regular_bill','auto_id');
 			$this->new_regular_bill->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => $ledger_sub_account_id));
 		}
-		
-		
 		
 		
 		exit;

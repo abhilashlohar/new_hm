@@ -79,7 +79,7 @@ foreach($cursor1 as $collection)
 $c++;
 $wing_id = (int)$collection['flat']['wing_id'];	
 $flat_number = $collection['flat']['flat_name'];	
-
+$flat_num = ltrim($flat_number,0);
 $result_prb = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_fetch'),array('pass'=>array($wing_id)));
 foreach ($result_prb as $collection) 
 {
@@ -90,7 +90,7 @@ $wing_name = $collection['wing']['wing_name'];
 <tr>
 <td style="text-align:center;"><?php echo $c; ?></td>
 <td style="text-align:center;"><?php echo $wing_name; ?></td>
-<td style="text-align:center;"><?php echo $flat_number; ?></td>
+<td style="text-align:center;"><?php echo $flat_num; ?></td>
 </tr>
 <?php } ?>
 </table>

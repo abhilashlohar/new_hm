@@ -154,6 +154,61 @@ function preview_regular_bill(){
 	$this->set(compact("regular_bills"));
 	
 }
+
+function auto_save_income_head_values($ledger_sub_account_id=null,$income_head_id=null,$amount=null){
+	$this->loadmodel('regular_bill_temp');
+	$condition=array('ledger_sub_account_id'=>(int)$ledger_sub_account_id);
+	$regular_bills = $this->regular_bill_temp->find('all',array('conditions'=>$condition));
+	$income_head_array=$regular_bills[0]["regular_bill_temp"]["income_head_array"];
+	$total=$regular_bills[0]["regular_bill_temp"]["total"];
+	$due_for_payment=$regular_bills[0]["regular_bill_temp"]["due_for_payment"];
+	$old_amount=$income_head_array[$income_head_id];
+	$income_head_array[$income_head_id]=$amount;
+	$total=$total-$old_amount;
+	$total=$total+$amount;
+	$due_for_payment=$due_for_payment-$old_amount;
+	$due_for_payment=$due_for_payment+$amount;
+	
+	$this->regular_bill_temp->updateAll(array("total" => $total,"due_for_payment"=>$due_for_payment,"income_head_array"=>$income_head_array),array("ledger_sub_account_id" => (int)$ledger_sub_account_id));
+}
+
+function auto_save_noc_values($ledger_sub_account_id=null,$amount=null){
+	$this->loadmodel('regular_bill_temp');
+	$condition=array('ledger_sub_account_id'=>(int)$ledger_sub_account_id);
+	$regular_bills = $this->regular_bill_temp->find('all',array('conditions'=>$condition));
+	$noc_charge=$regular_bills[0]["regular_bill_temp"]["noc_charge"];
+	$total=$regular_bills[0]["regular_bill_temp"]["total"];
+	$due_for_payment=$regular_bills[0]["regular_bill_temp"]["due_for_payment"];
+	$old_amount=$noc_charge;
+	$total=$total-$old_amount;
+	$total=$total+$amount;
+	$due_for_payment=$due_for_payment-$old_amount;
+	$due_for_payment=$due_for_payment+$amount;
+	
+	$this->regular_bill_temp->updateAll(array("total" => $total,"due_for_payment"=>$due_for_payment,"noc_charge"=>$amount),array("ledger_sub_account_id" => (int)$ledger_sub_account_id));
+}
+
+function auto_save_other_charge($ledger_sub_account_id=null,$income_head_id=null,$amount=null){
+	$this->loadmodel('regular_bill_temp');
+	$condition=array('ledger_sub_account_id'=>(int)$ledger_sub_account_id);
+	$regular_bills = $this->regular_bill_temp->find('all',array('conditions'=>$condition));
+	$other_charge=$regular_bills[0]["regular_bill_temp"]["other_charge"];
+	$total=$regular_bills[0]["regular_bill_temp"]["total"];
+	$due_for_payment=$regular_bills[0]["regular_bill_temp"]["due_for_payment"];
+	$old_amount=@$other_charge[$income_head_id];
+	$other_charge[$income_head_id]=round($amount);
+	
+	
+	
+	
+	$total=$total-$old_amount;
+	$total=$total+$amount;
+	$due_for_payment=$due_for_payment-$old_amount;
+	$due_for_payment=$due_for_payment+$amount;
+	
+	$this->regular_bill_temp->updateAll(array("total" => $total,"due_for_payment"=>$due_for_payment,"other_charge"=>$other_charge),array("ledger_sub_account_id" => (int)$ledger_sub_account_id));
+	
+}
 /////////////////////// End It Regular Bill (Accounts) ////////////////////////////////////////////////////////////
 
 ////////////////////////// Start fetch_last_bill_info_via_flat_id ///////////////////////////////////////////////

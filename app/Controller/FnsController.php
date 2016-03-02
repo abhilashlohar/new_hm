@@ -276,6 +276,13 @@ function calculate_other_charges($ledger_sub_account_id,$billing_cycle){
 	return $other_charge;
 }
 
+function income_head_name_via_id($income_head_id){
+	$this->loadmodel('ledger_account');
+	$conditions=array("auto_id" => $income_head_id);
+	$result=$this->ledger_account->find('all',array('conditions'=>$conditions));
+	return $result[0]["ledger_account"]["ledger_name"];
+}
+
 
 }
 ?>

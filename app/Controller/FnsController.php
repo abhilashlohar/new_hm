@@ -159,7 +159,7 @@ function ledger_sub_account_id_via_wing_id_and_flat_id($wing_id,$flat_id){
 }
 
 
-function calculate_income_head_amount($ledger_sub_account_id,$income_head_id){
+function calculate_income_head_amount($ledger_sub_account_id,$income_head_id,$billing_cycle){
 	$s_society_id=$this->Session->read('hm_society_id');
 	
 	$this->loadmodel('ledger_sub_account');
@@ -184,14 +184,14 @@ function calculate_income_head_amount($ledger_sub_account_id,$income_head_id){
 	$rate_type=(int)@$result5[0]["rate_card"]["rate_type"];
 	$rate=$result5[0]["rate_card"]["rate"];
 	if($rate_type==1 or $rate_type==3){
-		return $rate;
+		return $rate*$billing_cycle;
 	}
 	if($rate_type==2){
-		return $rate*$flat_area;
+		return $rate*$flat_area*$billing_cycle;
 	}
 }
 
-function calculate_noc_charge($ledger_sub_account_id){
+function calculate_noc_charge($ledger_sub_account_id,$billing_cycle){
 	$s_society_id=$this->Session->read('hm_society_id');
 	
 	$this->loadmodel('ledger_sub_account');
@@ -216,10 +216,10 @@ function calculate_noc_charge($ledger_sub_account_id){
 	$rate_type=(int)@$result5[0]["noc_rate"]["rate_type"];
 	$rate=$result5[0]["noc_rate"]["rate"];
 	if($rate_type==1 or $rate_type==3){
-		return $rate;
+		return $rate*$billing_cycle;
 	}
 	if($rate_type==2){
-		return $rate*$flat_area;
+		return $rate*$flat_area*$billing_cycle;
 	}
 	if($rate_type==5){
 		return 0;
@@ -255,6 +255,25 @@ function member_info_via_ledger_sub_account_id($ledger_sub_account_id){
 	$flat_name=$result5[0]["flat"]["flat_name"];
 	
 	return array("user_name"=>$user_name,"wing_name"=>$wing_name,"flat_name"=>$flat_name);
+}
+
+function calculate_other_charges($ledger_sub_account_id,$billing_cycle){
+	$this->loadmodel('other_charge');
+	$conditions=array("ledger_sub_account_id" => $ledger_sub_account_id);
+	$result=$this->other_charge->find('all',array('conditions'=>$conditions));
+	$other_charge=array();
+	foreach($result as $data){
+		$income_head_id=$data["other_charge"]["income_head_id"];
+		$amount=$data["other_charge"]["amount"];
+		$charge_type=$data["other_charge"]["charge_type"];
+		if($charge_type==1){
+			$other_charge[$income_head_id]=$amount;
+		}else{
+			$other_charge[$income_head_id]=$amount*$billing_cycle;
+		}
+		
+	}
+	return $other_charge;
 }
 
 

@@ -191,6 +191,71 @@ function calculate_income_head_amount($ledger_sub_account_id,$income_head_id){
 	}
 }
 
+function calculate_noc_charge($ledger_sub_account_id){
+	$s_society_id=$this->Session->read('hm_society_id');
+	
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("auto_id" => $ledger_sub_account_id);
+	$result2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$user_flat_id=(int)@$result2[0]["ledger_sub_account"]["user_flat_id"];
+	
+	$this->loadmodel('user_flat');
+	$conditions=array("user_flat_id" => $user_flat_id,"owner"=>"yes");
+	$result3=$this->user_flat->find('all',array('conditions'=>$conditions));
+	$flat_id=(int)@$result3[0]["user_flat"]["flat"];
+	
+	$this->loadmodel('flat');
+	$conditions=array("flat_id" => $flat_id);
+	$result4=$this->flat->find('all',array('conditions'=>$conditions));
+	$flat_type_id=(int)@$result4[0]["flat"]["flat_type_id"];
+	$flat_area=(int)@$result4[0]["flat"]["flat_area"];
+	
+	$this->loadmodel('noc_rate');
+	$conditions=array("flat_type_id" => $flat_type_id,"society_id" => $s_society_id);
+	$result5=$this->noc_rate->find('all',array('conditions'=>$conditions));
+	$rate_type=(int)@$result5[0]["noc_rate"]["rate_type"];
+	$rate=$result5[0]["noc_rate"]["rate"];
+	if($rate_type==1 or $rate_type==3){
+		return $rate;
+	}
+	if($rate_type==2){
+		return $rate*$flat_area;
+	}
+	if($rate_type==5){
+		return 0;
+	}
+}
+
+function member_info_via_ledger_sub_account_id($ledger_sub_account_id){
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("auto_id" => $ledger_sub_account_id);
+	$result=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$user_flat_id=(int)@$result[0]["ledger_sub_account"]["user_flat_id"];
+	
+	$this->loadmodel('user_flat');
+	$conditions=array("user_flat_id" => $user_flat_id);
+	$result2=$this->user_flat->find('all',array('conditions'=>$conditions));
+	$user_id=$result2[0]["user_flat"]["user_id"];
+	$wing=$result2[0]["user_flat"]["wing"];
+	$flat=$result2[0]["user_flat"]["flat"];
+	
+	$this->loadmodel('user');
+	$conditions=array("user_id" => $user_id);
+	$result3=$this->user->find('all',array('conditions'=>$conditions));
+	$user_name=$result3[0]["user"]["user_name"];
+	
+	$this->loadmodel('wing');
+	$conditions=array("wing_id" => $wing);
+	$result4=$this->wing->find('all',array('conditions'=>$conditions));
+	$wing_name=$result4[0]["wing"]["wing_name"];
+	
+	$this->loadmodel('flat');
+	$conditions=array("flat_id" => $flat);
+	$result5=$this->flat->find('all',array('conditions'=>$conditions));
+	$flat_name=$result5[0]["flat"]["flat_name"];
+	
+	return array("user_name"=>$user_name,"wing_name"=>$wing_name,"flat_name"=>$flat_name);
+}
 
 
 }

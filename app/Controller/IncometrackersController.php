@@ -71,6 +71,9 @@ function it_regular_bill(){
 			$ledger_sub_account_ids[]=$data3["ledger_sub_account"]["auto_id"];
 		}
 		
+		
+		
+		
 		$this->loadmodel('wing');
 		$condition=array('society_id'=>$s_society_id);
 		$order=array('wing.wing_name'=>'ASC');
@@ -100,16 +103,24 @@ function it_regular_bill(){
 		
 		//Start billing calculation//
 		foreach($members_for_billing as $ledger_sub_account_id){
+			
+			//Income head amount calculation//
 			$income_head_array=array();
 			foreach($income_heads as $income_head_id){
-				$ih_amount = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_income_head_amount'),array('pass'=>array($ledger_sub_account_id,$income_head_id)));
-				$income_head_array[$income_head_id]=$ih_amount;
+				$ih_amount = round($this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_income_head_amount'),array('pass'=>array($ledger_sub_account_id,$income_head_id))));
+				$income_head_array[$income_head_id]=(int)$ih_amount;
 			}
 			
-			pr($income_head_array);
-			$this->loadmodel('regular_bill');
-			$auto_id=$this->autoincrement('new_regular_bill','auto_id');
-			$this->new_regular_bill->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array));
+			//noc charge calculation//
+			$income_head_array=array();
+			
+				$noc_charge = round($this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_noc_charge'),array('pass'=>array($ledger_sub_account_id))));
+				$income_head_array[$income_head_id]=(int)$ih_amount;
+			
+			
+			$this->loadmodel('regular_bill_temp');
+			$auto_id=$this->autoincrement('regular_bill_temp','auto_id');
+			$this->regular_bill_temp->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge));
 			
 		}
 		
@@ -4055,46 +4066,49 @@ function other_charges(){
 	$cursor3=$this->society->find('all',array('conditions'=>$conditions));
 	$this->set('cursor3',$cursor3);
 		
+	$this->loadmodel('ledger_sub_account');
+	$condition=array('society_id'=>$s_society_id);
+	$members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
+	foreach($members as $data3){
+		$ledger_sub_account_ids[]=$data3["ledger_sub_account"]["auto_id"];
+	}
 		
-		$this->loadmodel('ledger_sub_account');
-		$condition=array('society_id'=>$s_society_id,'ledger_id'=>34,"deactive"=>0);
-		$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
-		$this->set('result_ledger_sub_account',$result_ledger_sub_account);
-		foreach($result_ledger_sub_account as $ledger_sub_account){
-			$ledger_sub_account_user_id=$ledger_sub_account["ledger_sub_account"]["user_id"];
-			$ledger_sub_account_flat_id=$ledger_sub_account["ledger_sub_account"]["flat_id"];
-				$flats_for_bill[]=$ledger_sub_account_flat_id;
+	$this->loadmodel('wing');
+	$condition=array('society_id'=>$s_society_id);
+	$order=array('wing.wing_name'=>'ASC');
+	$wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+	foreach($wings as $data){
+		$wing_id=$data["wing"]["wing_id"];
+		$this->loadmodel('flat');
+		$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+		$order=array('flat.flat_name'=>'ASC');
+		$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+		foreach($flats as $data2){
+			$flat_id=$data2["flat"]["flat_id"];
+			$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+			if(!empty($ledger_sub_account_id)){
+				if (in_array($ledger_sub_account_id, $ledger_sub_account_ids)){
+					$members_for_billing[]=$ledger_sub_account_id;
+				}
+			}
+			
 		}
-		$this->set('flats_for_bill',@$flats_for_bill);	
-		
-		
-	$this->loadmodel('flat');	
-	$conditions=array('society_id'=>$s_society_id);
-	$flat_detail=$this->flat->find('all',array('conditions'=>$conditions));
-	$this->set('flat_detail',$flat_detail);	
+	}	
+	$this->set(compact("members_for_billing"));	
+	
 		
 	
 	if(isset($this->request->data['add_charges'])){ 
-		$income_head_id=$this->request->data['income_head'];
-		$amount=$this->request->data['amount'];
-		$flats=$this->request->data['flats'];
+		$income_head_id=(int)$this->request->data['income_head'];
+		$amount=(float)$this->request->data['amount'];
+		$members=$this->request->data['members'];
 		$charge_type = (int)$this->request->data['charge_type'];
 		
-		foreach($flats as $flat_id){
+		foreach($members as $ledger_sub_account_id){
+			$this->loadmodel('other_charge');
+			$this->other_charge->deleteAll(array('ledger_sub_account_id'=> (int)$ledger_sub_account_id,'income_head_id'=> $income_head_id));
 			
-			$this->loadmodel('flat');
-			$conditions=array("flat_id"=>(int)$flat_id);
-			$result_flat=$this->flat->find('all',array('conditions'=>$conditions));
-			$other_charges_database=@$result_flat[0]["flat"]["other_charges"];
-			if(sizeof($other_charges_database)>0){
-				$other_charges_database[$income_head_id]=array($amount,$charge_type);
-				$this->loadmodel('flat');
-				$this->flat->updateAll(array('other_charges'=> $other_charges_database),array('flat_id'=>(int)$flat_id));
-			}else{
-				$other_charges[$income_head_id]=array($amount,$charge_type);
-				$this->loadmodel('flat');
-				$this->flat->updateAll(array('other_charges'=> $other_charges),array('flat_id'=>(int)$flat_id));
-			}
+			$this->other_charge->saveAll(array("ledger_sub_account_id" => (int)$ledger_sub_account_id,"income_head_id" => $income_head_id,"amount" => $amount,"charge_type"=>$charge_type));
 		}
 	?>
 

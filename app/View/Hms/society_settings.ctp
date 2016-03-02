@@ -1,19 +1,3 @@
-<div class="hide_at_print">	
-<?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
-?>
-		   
-<script>
-$(document).ready(function() {
-$("#fix<?php echo $id_current_page; ?>").removeClass("blue");
-$("#fix<?php echo $id_current_page; ?>").addClass("red");
-});
-</script>
-</div>	
-
-
-
-
 <div style="background-color:#EFEFEF; border-top:1px solid #e6e6e6; border-bottom:1px solid #e6e6e6; padding:10px; box-shadow:5px; font-size:16px; color:#006;">
 Society Settings
 </div>
@@ -21,7 +5,7 @@ Society Settings
 <ul class="nav nav-tabs">
 <li  ><a href="<?php echo $webroot_path; ?>Hms/master_sm_wing" rel='tab'> Wing</a></li>
 <li><a href="<?php echo $webroot_path; ?>Hms/flat_type" rel='tab' >Unit Number</a></li>
-<li ><a href="<?php echo $webroot_path; ?>Hms/unit_configuration" rel='tab' >Unit Configuration</a></li>
+<li ><a href="<?php echo $webroot_path; ?>Hms/master_sm_flat" rel='tab' >Unit Configuration</a></li>
 <!--<li><a href="<?php echo $webroot_path; ?>Hms/flat_nu_import" rel='tab' >Flat Number Import</a></li>-->
 <li><a href="<?php echo $webroot_path; ?>Hms/society_details" rel='tab' >Society Details</a></li>
 <li class="active" ><a href="<?php echo $webroot_path; ?>Hms/society_settings" rel='tab' >Society Settings</a></li>
@@ -36,7 +20,8 @@ foreach($result_society as $data)
 
 			@$signup_auto=$data['society']['signup'];
 			@$help_desk=$data['society']['help_desk'];
-			@$family_member=$data['society']['family_member'];
+			@$family_member_owner=$data['society']['family_member'];
+			@$family_member_tenant=(int)$data['society']['family_member_tenant'];
 			@$notice=$data['society']['notice'];
 			@$document=$data['society']['document'];
 			@$discussion_forum=$data['society']['discussion_forum'];
@@ -57,7 +42,8 @@ foreach($result_society as $data)
 
 
 }
-
+if($role_id==3)
+{
 
 ?>
 
@@ -124,14 +110,21 @@ margin-left: 13%;' >
 </tr>
 <tr>
 <td>
-<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>8. Whether family members should allow to login into the portal ? </span><br>
-<span style='font-size:12px;'> &nbsp &nbsp <p> <input type='checkbox' name='family_member' value='1' <?php if($family_member==1){?> checked <?php } ?>> Check this if you want to allow family members to login the portal.
+<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>8. Whether Owner family members be allowed login access to the portal ?  </span><br>
+<span style='font-size:12px;'> &nbsp &nbsp <p> <input type='checkbox' name='family_member' value='1' <?php if($family_member_owner==1){?> checked <?php } ?>> Check this if you want to allow owner family members to login the portal.
  </p></span>
 </td>
 </tr>
 <tr>
 <td>
-<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>9. Should send email notifications for invoices & receipts ? </span><br>
+<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>9. Whether Tenant family members be allowed login access to the portal ?  </span><br>
+<span style='font-size:12px;'> &nbsp &nbsp <p> <input type='checkbox' name='family_member_tenant' value='1' <?php if($family_member_tenant==1){?> checked <?php } ?>> Check this if you want to allow tenant family members to login the portal.
+ </p></span>
+</td>
+</tr>
+<tr>
+<td>
+<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>10. Should send email notifications for invoices & receipts ? </span><br>
 <span style='font-size:12px;'> &nbsp &nbsp <p> <input type='checkbox' name='account1' value='1' <?php if($account_email==1){?> checked <?php } ?>> Check this if you want email notifications to be sent to members when a new invoice is posted and a new receipt is generated.
  </p></span>
 </td>
@@ -139,7 +132,7 @@ margin-left: 13%;' >
 
 <tr>
 <td>
-<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>10. Should send SMS notifications for invoices & receipts ? </span><br>
+<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>11. Should send SMS notifications for invoices & receipts ? </span><br>
 <span style='font-size:12px;'> &nbsp &nbsp <p> <input type='checkbox' name='account2' value='1' <?php if($account_sms==1){?> checked <?php } ?>> Check this if you want sms notifications to be sent to members when a new invoice is posted and a new receipt is generated.
  </p></span>
 </td>
@@ -148,7 +141,7 @@ margin-left: 13%;' >
 
 <tr>
 <td>
-<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>11. Should invoice & last receipt be merge on bill ? </span><br>
+<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>12. Should invoice & last receipt be merge on bill ? </span><br>
 <span style='font-size:12px;'> &nbsp &nbsp <p> <input type='checkbox' name='merge_receipt' value='1' <?php if($merge_receipt==1){?> checked <?php } ?>> Check this if you want to merge invoice & last receipt on bill .
  </p></span>
 </td>
@@ -156,7 +149,7 @@ margin-left: 13%;' >
 
 <tr>
 <td>
-<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>12. Should Reminder Send ? </span><br>
+<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>13. Should Reminder Send ? </span><br>
 <span style='font-size:12px;'> &nbsp &nbsp <p> <input type='checkbox' name='remndrr' value='1' <?php //if($account_zero_ammount==1){?>  <?php //} ?>>Reminder for Income Tracker and Fixed Deposit 
  </p></span>
 </td>
@@ -164,7 +157,7 @@ margin-left: 13%;' >
 
 <tr>
 <td>
-<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>13. Should notify zero amount invoice ? </span><br>
+<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>14. Should notify zero amount invoice ? </span><br>
 <span style='font-size:12px;'> &nbsp &nbsp <p> <input type='checkbox' name='account3' value='1' <?php if($account_zero_ammount==1){?> checked <?php } ?>> Check this if you want notifications (SMS and/or Email) to be sent to members when an invoice with zero outstanding and zero charges is raised.
 
  </p></span>
@@ -174,7 +167,7 @@ margin-left: 13%;' >
 
 <tr style='background-color:#fafafa !important;'>
 <td>
-<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>14. Should Tenants be given access to society portal. ? </span><br>
+<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>15. Should Tenants be given access to society portal. ? </span><br>
 <span style='font-size:12px;'> &nbsp &nbsp <p> <input type='checkbox' name='access_tenant' value='1' <?php if($access_tenant==1){?> checked <?php } ?>> Check this if you want to give access to society portal.
  </p></span>
 
@@ -185,7 +178,7 @@ margin-left: 13%;' >
 
 <tr>
 <td>
-<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>15. Banned Words  </span><br><br>
+<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>16. Banned Words  </span><br><br>
 <span style='font-size:12px;'> &nbsp &nbsp  <textarea rows='5' cols='7' style='resize:none;' name='banned'><?php echo $banned_word ; ?></textarea>
 <p>Please specify the list of banned words seperated by commas. These words will not be allowed in input fields such as subject,descriptions of notices,forums,complaints etc. for your society.
 
@@ -222,7 +215,17 @@ margin-left: 13%;' >
 
 </form>
 
+<?php }
+else
+{
+?><div style="min-height: 85%;margin-top: 60px; " align="center">
+<h2>Sorry<br/>You are not allowed to access this page.</h2>
+<img src="<?php echo $this->webroot ; ?>/as/hm/hm-logo.png" alt="logo" >
+<br/><h4>Back to <a href="dashboard">Dashboard</a></h4>
+</div>
+<?php
 
+} ?>
 
 
 </div>

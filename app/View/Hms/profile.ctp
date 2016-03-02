@@ -73,14 +73,14 @@
 					
 					$medical_pro = @$result_user_profile[0]['user_profile']['medical_pro'];
 					
-					@$profile_pic = $result_user_profile[0]['user_profile']['profile_pic'];
-					@$f_profile_pic = $result_user_profile[0]['user_profile']['f_profile_pic'];
-					@$g_profile_pic = $result_user_profile[0]['user_profile']['g_profile_pic'];
-					$c_sex = (int)$result_user_profile[0]['user_profile']['gender'];
-					$gender_privacy = $result_user_profile[0]['user_profile']['gender_privacy'];
+					@$profile_pic = @$result_user_profile[0]['user_profile']['profile_pic'];
+					@$f_profile_pic = @$result_user_profile[0]['user_profile']['f_profile_pic'];
+					@$g_profile_pic = @$result_user_profile[0]['user_profile']['g_profile_pic'];
+					$c_sex = (int)@$result_user_profile[0]['user_profile']['gender'];
+					$gender_privacy = @$result_user_profile[0]['user_profile']['gender_privacy'];
 					
-					$da_dob=@$result_user_profile[0]['user_profile']['dob'];
-					$age_privacy = $result_user_profile[0]['user_profile']['age_privacy'];
+					$da_dob=@$result_user_profile[0]['user_profile']['age'];
+					$age_privacy = @$result_user_profile[0]['user_profile']['age_privacy'];
 					
 					$per_address=@$result_user_profile[0]['user_profile']['per_address'];
 					$per_address_privacy=@$result_user_profile[0]['user_profile']['per_address_privacy'];

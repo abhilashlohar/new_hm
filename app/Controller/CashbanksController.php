@@ -6166,6 +6166,24 @@ $this->set('bank_account',$bank_account);
 ////////////////////////// End show_deposit_slip /////////////////////////////////////
 
 /////////////////////////////// start new bank receipt ///////////////////////////////
+
+function new_cash_receipt_add(){
+	
+$this->layout="blank";
+$count=(int)$this->request->query('q');
+$this->set('count',$count);
+$s_society_id=$this->Session->read('hm_society_id');
+
+$this->loadmodel('ledger_sub_account');
+$conditions=array("ledger_id" => 33,"society_id"=>$s_society_id);
+$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+$this->set('result_ledger_sub_account',$result_ledger_sub_account);
+	
+}
+
+
+
+
 function new_bank_receipt()
 {
 		if($this->RequestHandler->isAjax())
@@ -6260,8 +6278,8 @@ function new_bank_receipt()
 		
 			$this->loadmodel('ledger_sub_account');
 			$conditions=array("ledger_id" => 33,"society_id"=>$s_society_id);
-			$cursor3=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-			$this->set('cursor3',$cursor3);
+			$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+			$this->set('result_ledger_sub_account',$result_ledger_sub_account);
 
 
 			

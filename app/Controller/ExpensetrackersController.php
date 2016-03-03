@@ -21,9 +21,9 @@ $this->check_user_privilages();
 	
 	
 	
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');	
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');	
 
 }
 ///////////////////// End Expense Tracker Pie Chart (Accounts)/////////////////////////////////
@@ -33,9 +33,9 @@ $s_user_id=$this->Session->read('user_id');
 function expense_tracker_pie_chart_ajax()
 {
 $this->layout = 'blank';
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');	
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');	
 
 $date1 = $this->request->query('date1');
 $date2 = $this->request->query('date2');
@@ -51,7 +51,7 @@ $this->set('cursor1',$cursor1);
 ///////////////End Expense Tracker Pie Chart Ajax(Accounts)//////////////////////////////////
 function add_new_party_account_head($party_name=null){
 	$this->layout=null;
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 	if(!empty($party_name)){
 		
 			$sp_date=date("d-m-y");
@@ -81,9 +81,9 @@ header ("Content-type: application/vnd.ms-excel");
 header ("Content-Disposition: attachment; filename=".$filename.".csv");
 header ("Content-Description: Generated Report" );
 
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id = (int)$this->Session->read('user_id');
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id = (int)$this->Session->read('hm_user_id');
 $date=date("d-m-Y");
 $excel = "Posting Date,Date of invoice,Due Date,Party account head,Invoice Reference,Expense Head,Amount of invoice, Description \n";
 
@@ -122,9 +122,9 @@ function expense_tracker_add(){
 	
 		$this->ath();
 		$this->check_user_privilages();	
-		$s_role_id=$this->Session->read('role_id');
-		$s_society_id = (int)$this->Session->read('society_id');
-		$s_user_id=$this->Session->read('user_id');
+		$s_role_id=$this->Session->read('hm_role_id');
+		$s_society_id = (int)$this->Session->read('hm_society_id');
+		$s_user_id=$this->Session->read('hm_user_id');
 		
 $this->loadmodel('accounts_group');
 $conditions=array("accounts_id" => 4);
@@ -143,9 +143,9 @@ function expense_tracker_add_row(){
 	
 	$this->layout='blank';
 		$this->ath();
-	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_role_id=$this->Session->read('hm_role_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$this->set('count',$this->request->query('con'));
 	$this->loadmodel('accounts_group');
 	$conditions=array("accounts_id" => 4);
@@ -163,9 +163,9 @@ function expense_tracker_add_row(){
 function expense_tracker_json(){
 	$this->layout=null;
 	$this->ath();
-	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_role_id=$this->Session->read('hm_role_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$post_data=$this->request->data;
 	
 	$q=$post_data['myJsonString'];
@@ -392,9 +392,9 @@ function expense_tracker_view(){
 		}else{
 		$this->layout='session';
 		}
-		$s_role_id=$this->Session->read('role_id');
-		$s_society_id = (int)$this->Session->read('society_id');
-		$s_user_id=$this->Session->read('user_id');
+		$s_role_id=$this->Session->read('hm_role_id');
+		$s_society_id = (int)$this->Session->read('hm_society_id');
+		$s_user_id=$this->Session->read('hm_user_id');
 		$this->ath();
 		$this->check_user_privilages();	
 		$this->loadmodel('expense_tracker');
@@ -409,7 +409,7 @@ function expense_tracker_view_ajax(){
 		$this->layout='session';
 		}
 		$this->ath();
-		$s_society_id = (int)$this->Session->read('society_id');
+		$s_society_id = (int)$this->Session->read('hm_society_id');
 		$result_society=$this->society_name($s_society_id);
 		foreach($result_society as $data){
 			$this->set('society_name',$data['society']['society_name']);
@@ -443,7 +443,7 @@ function expense_tracker_excel(){
 	$this->set('from1',$from1);
 	$from1 = date('Y-m-d',strtotime($from1));
 	$from = strtotime($from1);
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$result_society=$this->society_name($s_society_id);
 	$this->set('society_name',$result_society[0]['society']['society_name']);
 	$this->loadmodel('expense_tracker');
@@ -461,7 +461,7 @@ function import_expense_tracker_ajax(){
 		$this->layout='session';
 		}
 	$this->ath();
-	$s_society_id=$this->Session->read('society_id');
+	$s_society_id=$this->Session->read('hm_society_id');
 	
 	$this->loadmodel('accounts_group');
 	$conditions=array("accounts_id" => 4);
@@ -554,7 +554,7 @@ function expense_tracker_pdf(){
 	$from1=$this->request->query('from');
 	$from1 = date('Y-m-d',strtotime($from1));
 	$from = strtotime($from1);
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$this->loadmodel('expense_tracker');
 	$conditions=array('society_id'=>$s_society_id,'expense_tracker.posting_date'=>array('$gte'=>$from,'$lte'=>$to));
 	$result_expense_tracker=$this->expense_tracker->find('all',array('conditions'=>$conditions));
@@ -571,8 +571,8 @@ function expense_tracker_update($auto_id=null)
 		}	
 
 $this->ath();
-$s_society_id=(int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');	
+$s_society_id=(int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');	
 	
 $auto_idddddd = (int)$auto_id;
 $this->set('auto_iddddd',$auto_idddddd);	
@@ -599,9 +599,9 @@ function expense_tracker_update_json()
 {
 $this->layout='blank';
 	$this->ath();
-	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_role_id=$this->Session->read('hm_role_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$post_data=$this->request->data;
 	
 	$q=$post_data['myJsonString'];
@@ -810,9 +810,9 @@ function expense_upload()
 {
 $this->layout=null;
 	$this->ath();
-	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_role_id=$this->Session->read('hm_role_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$post_data=$this->request->data;
 	
 $file_name=@$_FILES["file"]["name"];
@@ -836,7 +836,7 @@ $this->layout='session';
 }
 $this->ath();
 $this->check_user_privilages();
-$s_society_id=(int)$this->Session->read('society_id');	
+$s_society_id=(int)$this->Session->read('hm_society_id');	
 
 $value="";
 $value = $this->request->query('fff');
@@ -871,8 +871,8 @@ $this->loadmodel('import_expense_tracker_record');
 ////////////////// Start upload_expense_tracker_csv_file //////////////////////
 function upload_expense_tracker_csv_file()
 {
-$s_society_id = $this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$this->ath();
 	if(isset($_FILES['file'])){
 		$file_name=$s_society_id.".csv";
@@ -896,7 +896,7 @@ $s_society_id = $this->Session->read('society_id');
 function read_csv_file_expense()
 {
 $this->layout=null;
-	$s_society_id = $this->Session->read('society_id');
+	$s_society_id = $this->Session->read('hm_society_id');
 	
 	$f = fopen('expense_tracker_csv_file/'.$s_society_id.'.csv', 'r') or die("ERROR OPENING DATA");
 	$batchcount=0;
@@ -936,7 +936,7 @@ $this->layout=null;
 function convert_imported_data_et()
 {
 $this->layout=null;
-	$s_society_id = $this->Session->read('society_id');
+	$s_society_id = $this->Session->read('hm_society_id');
 	
 	$this->loadmodel('expense_tracker_csv');
 	$conditions=array("society_id" => $s_society_id,"is_converted" => "NO");
@@ -1009,7 +1009,7 @@ if($this->RequestHandler->isAjax()){
 	$this->ath();
 	
 	
-	$s_society_id = $this->Session->read('society_id');
+	$s_society_id = $this->Session->read('hm_society_id');
 	$page=(int)$page;
 	$this->set('page',$page);		
 	
@@ -1055,7 +1055,7 @@ function auto_save_expense_tracker($record_id=null,$field=null,$value=null)
 $this->layout=null;
 	
 	$this->ath();
-	$s_society_id = $this->Session->read('society_id');
+	$s_society_id = $this->Session->read('hm_society_id');
 	$record_id=(int)$record_id; 	
 		
 	if($field=="posting")
@@ -1122,7 +1122,7 @@ function allow_import_expense_tracker()
 $this->layout=null;
 	
 $this->ath();
-$s_society_id = (int)$this->Session->read('society_id');	
+$s_society_id = (int)$this->Session->read('hm_society_id');	
 
 
 $this->loadmodel('expense_tracker_csv_converted'); 
@@ -1216,8 +1216,8 @@ $this->import_expense_tracker_record->updateAll(array("step4" => 1),array("socie
 function final_import_expense_tracker()
 {
 $this->layout=null;
-$s_society_id = $this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');	
+$s_society_id = $this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');	
 
 $this->loadmodel('import_expense_tracker_record');
 $conditions=array("society_id" => $s_society_id,"module_name" => "ET");

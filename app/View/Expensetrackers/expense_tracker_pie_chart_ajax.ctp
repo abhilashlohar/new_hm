@@ -1,5 +1,5 @@
 <?php
-$m_from = date("Y-m-d", strtotime($date1));
+ $m_from = date("Y-m-d", strtotime($date1));
 //$m_from = new MongoDate(strtotime($m_from));
 
 $m_to = date("Y-m-d", strtotime($date2));
@@ -12,10 +12,13 @@ $tax_utilities = 0;
 foreach($cursor1 as $collection)
 {
 $posting_date = $collection['expense_tracker']['posting_date'];
-$amount = $collection['expense_tracker']['amount'];
+$posting_date=date('d-m-Y',$posting_date);
+$posting_date = date("Y-m-d", strtotime($posting_date));
+$amount = $collection['expense_tracker']['ammount_of_invoice'];
 $ac_id = (int)$collection['expense_tracker']['expense_head'];
-if($posting_date >= $m_from && $posting_date <= $m_to)
-{
+if(strtotime($posting_date)>=strtotime($m_from) && strtotime($posting_date)<=strtotime($m_to)){
+
+	
 $result = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch2'),array('pass'=>array($ac_id)));
 $nnn = 555;
 foreach($result as $collection)

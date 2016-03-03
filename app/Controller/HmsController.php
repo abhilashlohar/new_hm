@@ -20368,7 +20368,7 @@ function fix_asset_excel()
 ////////////////////////// Start Ledger Sub Account Fetch (Accounts)//////////////////////////////////////////////////
 function ledger_sub_account_fetch($value) 
 {
-$s_society_id = $this->Session->read('society_id');
+$s_society_id = $this->Session->read('hm_society_id');
 
 $this->loadmodel('ledger_sub_account');
 $conditions=array("auto_id" => $value,"society_id" => $s_society_id);

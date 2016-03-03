@@ -2,8 +2,8 @@
 foreach($result_expense_tracker as $data)
 {
 $posting_date = $data['expense_tracker']['posting_date'];
-$invoice_date = $data['expense_tracker']['due_date'];
-$due_date = $data['expense_tracker']['date_of_invoice'];
+$due_date = $data['expense_tracker']['due_date'];
+$invoice_date = $data['expense_tracker']['date_of_invoice'];
 $party_account_head = (int)$data['expense_tracker']['party_ac_head'];
 $invoice_reference = $data['expense_tracker']['invoice_reference'];
 $expense_head = (int)$data['expense_tracker']['expense_head'];

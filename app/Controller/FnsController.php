@@ -283,6 +283,12 @@ function income_head_name_via_id($income_head_id){
 	return $result[0]["ledger_account"]["ledger_name"];
 }
 
+function fetch_ledger_sub_account_info_via_ledger_sub_account_id($ledger_sub_account_id){
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("auto_id" => $ledger_sub_account_id);
+	return $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+}
+
 
 }
 ?>

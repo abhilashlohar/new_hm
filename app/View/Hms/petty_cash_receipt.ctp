@@ -186,16 +186,7 @@
 									</td>
 									</tr>
 
-
-
-
-
-
-
-
-
 									</table>
-
 									<br><br>
 									<div class="form-actions" style="background-color:#CCC;">
 									<button type="submit" class="btn green" name="ptr_add" value="xyz" id="vali">Submit</button>

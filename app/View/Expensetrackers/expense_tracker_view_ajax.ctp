@@ -62,7 +62,7 @@ foreach($result_expense_tracker as $data){
 	$date_of_invoice=date('d-m-Y',$date_of_invoice);
 	$expense_head=$data['expense_tracker']['expense_head'];
 	$invoice_reference=$data['expense_tracker']['invoice_reference'];
-	$party_ac_head=$data['expense_tracker']['party_ac_head'];
+	$party_ac_head=(int)$data['expense_tracker']['party_ac_head'];
 	$ammount_of_invoice=$data['expense_tracker']['ammount_of_invoice'];
 	$description=$data['expense_tracker']['description'];
 	@$file=$data['expense_tracker']['file'];
@@ -75,7 +75,7 @@ foreach($result_expense_tracker as $data){
 	$result_ledger_sub_account = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($party_ac_head)));
 	foreach($result_ledger_sub_account as $collection)
 	{
-	$party_name = $collection['ledger_sub_account']['name'];
+	 $party_name = $collection['ledger_sub_account']['name'];
 	}
 $result_user = $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($user_id)));
 $prepaired_by_name=$result_user[0]['user']['user_name'];

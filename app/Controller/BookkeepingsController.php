@@ -387,9 +387,9 @@ $this->ath();
 $this->check_user_privilages();	
 	
 	
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = $this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = $this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 $this->set('s_role_id',$s_role_id);
 
@@ -517,9 +517,9 @@ $this->set("tds_arr",$tds_arr);
 function ledger_show_ajax($page=null,$ledger_account_id=null,$from=null,$to=null){
 	$this->layout='blank';
 	$this->ath();
-	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_role_id=$this->Session->read('hm_role_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$this->set('s_role_id',$s_role_id);
 
 	
@@ -626,9 +626,9 @@ $conditions=array("auto_id"=>3);
 $cursor = $this->reference->find('all',array('conditions'=>$conditions));
 foreach($cursor as $collection)
 {
-$tds_arr = $collection['reference']['reference'];
+@$tds_arr = $collection['reference']['reference'];
 }
-$this->set("tds_arr",$tds_arr);	
+$this->set("tds_arr",@$tds_arr);	
 }
 
 /////////////////////////////// End Ledger Show Ajax (Accounts)//////////////////////////

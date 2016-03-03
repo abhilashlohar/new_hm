@@ -31,8 +31,8 @@ $default_date_to = date('d-m-Y')
 							 <?php }}
                              foreach ($cursor2 as $collection) 
 							 {
-							$account_number = "";
-							$wing_flat = "";
+							 $account_number = "";
+							 $wing_flat = "";
 							 $auto_id2 = (int)$collection['ledger_sub_account']['auto_id'];
 							 $name2 = $collection['ledger_sub_account']['name']; 
                              $ledger_id = (int)$collection['ledger_sub_account']['ledger_id'];

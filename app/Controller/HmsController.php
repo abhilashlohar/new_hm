@@ -26113,9 +26113,9 @@ function update_default_sub_module_by_hm_ajax($sub_module_id,$role,$status){
 	if($role=="admin"){
 		$this->loadmodel('sub_module');
 		$this->sub_module->updateAll(array('admin'=>$status),array('sub_module.auto_id'=>(int)$sub_module_id));
-	}else{
+	}elseif($role=="owner"){
 		$this->loadmodel('sub_module');
-		$this->sub_module->updateAll(array('resident'=>$status),array('sub_module.auto_id'=>(int)$sub_module_id));
+		$this->sub_module->updateAll(array('owner'=>$status),array('sub_module.auto_id'=>(int)$sub_module_id));
 	}
 	
 }

@@ -20,9 +20,9 @@
 		$sub_module_id=$sub_module_data["sub_module"]["auto_id"];
 		$sub_module_name=$sub_module_data["sub_module"]["sub_module_name"];
 		$admin=@$sub_module_data["sub_module"]["admin"]; 
-		$resident=@$sub_module_data["sub_module"]["resident"]; 
+		$owner=@$sub_module_data["sub_module"]["owner"]; 
 		if($admin=="yes"){$admin="checked";}else{$admin="";} 
-		if($resident=="yes"){$resident="checked";}else{$resident="";} ?>
+		if($owner=="yes"){$owner="checked";}else{$owner="";} ?>
 		<?php if($i==1){ ?>
 		<tr>
 			<td rowspan="<?php echo $rowspan; ?>" style="border-top: 2px solid #CCC;"><?php echo $module_name; ?></td>
@@ -34,7 +34,7 @@
 			<input type="checkbox" class="dis<?php echo $module_id; ?> sub_enable" value="1" module_id="<?php echo $module_id; ?>" sub_module_id="<?php echo $sub_module_id; ?>" <?php echo $admin; ?> <?php echo $disabled; ?> role="admin" />
 			</td>
 			<td style="border-top: 2px solid #CCC;<?php echo $bcolor; ?>">
-			<input type="checkbox" class="dis<?php echo $module_id; ?> sub_enable" value="1" module_id="<?php echo $module_id; ?>" sub_module_id="<?php echo $sub_module_id; ?>" <?php echo $resident; ?> <?php echo $bcolor; ?> <?php echo $disabled; ?> role="resident" />
+			<input type="checkbox" class="dis<?php echo $module_id; ?> sub_enable" value="1" module_id="<?php echo $module_id; ?>" sub_module_id="<?php echo $sub_module_id; ?>" <?php echo $owner; ?> <?php echo $bcolor; ?> <?php echo $disabled; ?> role="owner" />
 			</td>
 		</tr>
 		<?php }else{ ?>
@@ -44,7 +44,7 @@
 			<input type="checkbox" class="dis<?php echo $module_id; ?> sub_enable" value="1" module_id="<?php echo $module_id; ?>" sub_module_id="<?php echo $sub_module_id; ?>" <?php echo $disabled; ?> <?php echo $admin; ?> role="admin" />
 			</td>
 			<td style="<?php echo $bcolor; ?>">
-			<input type="checkbox" class="dis<?php echo $module_id; ?> sub_enable" value="1" module_id="<?php echo $module_id; ?>" sub_module_id="<?php echo $sub_module_id; ?>" <?php echo $disabled; ?> <?php echo $resident; ?> role="resident" />
+			<input type="checkbox" class="dis<?php echo $module_id; ?> sub_enable" value="1" module_id="<?php echo $module_id; ?>" sub_module_id="<?php echo $sub_module_id; ?>" <?php echo $disabled; ?> <?php echo $owner; ?> role="owner" />
 			</td>
 		</tr>
 		<?php } ?>

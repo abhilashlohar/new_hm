@@ -20073,9 +20073,9 @@ $this->layout='session';
 $this->ath();
 $this->check_user_privilages();	
 
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = $this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = $this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 $result_society=$this->society_name($s_society_id);
 $society_name = $result_society[0]['society']['society_name'];
@@ -20100,9 +20100,9 @@ $this->layout='blank';
 }else{
 $this->layout='session';
 }
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = $this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = $this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 $this->ath();
 $this->check_user_privilages();	
@@ -20177,8 +20177,8 @@ $s_user_id=$this->Session->read('user_id');
 function fix_asset_json(){
 $this->layout='blank';
 	
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id = (int)$this->Session->read('user_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id = (int)$this->Session->read('hm_user_id');
 	$post_data=$this->request->data;
 
      $this->ath();
@@ -22168,9 +22168,9 @@ return $this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>
 ////////////////// Start user Fetch(Accounts)////////////////////////////////////////////
 function user_fetch($user_id)
 {
-$s_role_id = (int)$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id = (int)$this->Session->read('user_id');
+$s_role_id = (int)$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id = (int)$this->Session->read('hm_user_id');
 
 $this->loadmodel('user');
 $conditions=array("user_id" => $user_id,"society_id"=>$s_society_id);

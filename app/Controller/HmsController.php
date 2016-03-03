@@ -21667,7 +21667,7 @@ echo $string;
 
 function flat_fetch($flat_id) 
 {
-$s_society_id = (int)$this->Session->read('society_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
 
 $this->loadmodel('flat');
 $conditions=array("flat_id" => $flat_id,"society_id"=>$s_society_id);
@@ -25764,7 +25764,7 @@ $this->set('result_ledger_sub_account',$result_ledger_sub_account);
 ////////////////////////// Start Resident drop down ////////////////////////////////////
 function resident_drop_down()
 {
-$s_society_id=(int)$this->Session->read('society_id');
+$s_society_id=(int)$this->Session->read('hm_society_id');
 
 $current_date = date('Y-m-d');
 $current_date2 = strtotime($current_date);

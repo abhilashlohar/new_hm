@@ -67,13 +67,11 @@ function it_regular_bill(){
 		$description=htmlentities($this->data["description"]);
 		
 		$this->loadmodel('ledger_sub_account');
-		$condition=array('society_id'=>$s_society_id);
+		$condition=array('society_id'=>$s_society_id,'ledger_id'=>34);
 		$members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
 		foreach($members as $data3){
 			$ledger_sub_account_ids[]=$data3["ledger_sub_account"]["auto_id"];
 		}
-		
-		
 		
 		
 		$this->loadmodel('wing');

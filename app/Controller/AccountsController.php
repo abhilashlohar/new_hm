@@ -4852,17 +4852,26 @@ foreach($cursor as $collection)
 	}
 	
 	$this->loadmodel('ledger_sub_account');
-	$conditions=array("society_id" => $s_society_id);
-	$result1 = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-	foreach($result1 as $datadd)
+	$condition=array('society_id'=>$s_society_id);
+	$members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
+	foreach($members as $data3){
+	$ledger_id = $data3["ledger_sub_account"]["ledger_id"];
+	$name = $data3['ledger_sub_account']['name'];
+
+	if($ledger_id != 34)
 	{
-	$ledger_id = (int)@$datadd['ledger_sub_account']['ledger_id'];
-	$name = @$datadd['ledger_sub_account']['name'];
+	$result_la = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account'),array('pass'=>array($ledger_id)));
+foreach ($result_la as $collection) 
+{
+$ledger_name = $collection['ledger_account']['ledger_name'];	
+}
 
-	 $excel.="$ledger_id\n";
-
+	
+	
+	$excel.="$ledger_name,$name\n";
+	
 	}
-
+	}
 
 echo $excel;
 }

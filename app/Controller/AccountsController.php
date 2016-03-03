@@ -4847,9 +4847,22 @@ foreach($cursor as $collection)
 	$ledger_name = $collection['ledger_account']['ledger_name'];	
 	}
 	
-	$excel.= "$ledger_name,$sub_ledger_name,$wing_name,$flat_name \n";
+	$excel.= "$ledger_name,$sub_ledger_name,$wing_name,$flat_name\n";
 	}
 	}
+	
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("society_id" => $s_society_id);
+	$result1 = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	foreach($result1 as $datadd)
+	{
+	$ledger_id = (int)@$datadd['ledger_sub_account']['ledger_id'];
+	$name = @$datadd['ledger_sub_account']['name'];
+
+	 $excel.="$ledger_id\n";
+
+	}
+
 
 echo $excel;
 }

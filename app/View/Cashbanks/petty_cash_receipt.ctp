@@ -73,9 +73,9 @@ $default_date = date('d-m-Y');
 </div>
 </div>
 </div>
-<!------------------------------- End Petty Cash Receipt Form ----------------------------------->
+<!------------------------------- End Petty Cash Receipt Form ----------------->
 
-<!------------------------------- Start Java Script Code ----------------------------------------->
+<!--------------------------- Start Java Script Code ------------------------>
 <script>
 
    function add_rowww(){
@@ -126,6 +126,7 @@ $(document).ready(function() {
 		var transaction_date = $("#tbb tr:nth-child("+i+") td:nth-child(1) input").val();
 		var ac_group = $("#tbb tr:nth-child("+i+") td:nth-child(2) select").val();
 		var party_ac = $("#tbb tr:nth-child("+i+") td:nth-child(3) select").val();
+		alert(party_ac);
 		var ac_head = $("#tbb tr:nth-child("+i+") td:nth-child(4) select").val();
 		var amount = $("#tbb tr:nth-child("+i+") td:nth-child(5) input").val();
 		var narration = $("#tbb tr:nth-child("+i+") td:nth-child(6) input").val();

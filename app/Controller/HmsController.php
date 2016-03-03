@@ -21667,7 +21667,7 @@ echo $string;
 
 function flat_fetch($flat_id) 
 {
-$s_society_id = (int)$this->Session->read('society_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
 
 $this->loadmodel('flat');
 $conditions=array("flat_id" => $flat_id,"society_id"=>$s_society_id);

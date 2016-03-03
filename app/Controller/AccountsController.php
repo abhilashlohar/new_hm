@@ -203,17 +203,26 @@ $flat_data=$this->flat->find('all',array('conditions'=>$conditions));
 foreach($flat_data as $flltdddt)
 {
 $flat_id = (int)$flltdddt['flat']['flat_id'];
-}	
-	    		
+}
+/*	
+$ledger_sub_account_data = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array(@$wing_id,@$flat_id)));	
+foreach($ledger_sub_account_data as $dataa)
+{
+$auto_id = (int)$sub_lddrr_dddttt['ledger_sub_account']['auto_id'];
+$ledger_type = 1;
+$validdddnnn=555;
+$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_with_brackets'),array('pass'=>array(@$wing_id,@$flat_id)	
+}
+*/	    		
 $this->loadmodel('ledger_sub_account'); 
-$conditions=array("flat_id"=>$flat_id,"ledger_id"=>$group_id);
+$conditions=array("flat_id"=>@$flat_id,"ledger_id"=>$group_id);
 $subledger_data=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 foreach($subledger_data as $sub_lddrr_dddttt)
 {
 $auto_id = (int)$sub_lddrr_dddttt['ledger_sub_account']['auto_id'];
 $ledger_type = 1;
 $validdddnnn=555;
-$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_with_brackets'),array('pass'=>array($wing_id,$flat_id)));	
+$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_with_brackets'),array('pass'=>array(@$wing_id,@$flat_id)));	
 }
 }
 else
@@ -242,7 +251,7 @@ $type_id = 2;
 
 		$this->loadmodel('opening_balance_csv_converted');
 		$auto_iddd=$this->autoincrement('opening_balance_csv_converted','auto_id');
-		$this->opening_balance_csv_converted->saveAll(Array(Array("auto_id" => $auto_iddd, "group_id"=>$group_id,"ledger_id" => $auto_id,"ledger_type" => $ledger_type, "wing_id" => $wing_id, "flat_id" => $flat_id,"type"=>$type_id,"amount"=>$amount,"penalty"=>$penalty,"society_id"=>$s_society_id,"is_imported"=>"NO")));
+		$this->opening_balance_csv_converted->saveAll(Array(Array("auto_id" => $auto_iddd, "group_id"=>$group_id,"ledger_id" => $auto_id,"ledger_type" => $ledger_type, "wing_id" => @$wing_id, "flat_id" => @$flat_id,"type"=>$type_id,"amount"=>$amount,"penalty"=>$penalty,"society_id"=>$s_society_id,"is_imported"=>"NO")));
 		
 		$this->loadmodel('opening_balance_csv');
 		$this->opening_balance_csv->updateAll(array("is_converted" => "YES"),array("auto_id" => $ob_id));

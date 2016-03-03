@@ -1,9 +1,11 @@
 <div class="hide_at_print">	
 <center>
 <?php
+
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
 </center>
+
 </div>
 <?php ///////////////////////////////////////////////////////////////////////////////////////////////////// ?>  
 <center>

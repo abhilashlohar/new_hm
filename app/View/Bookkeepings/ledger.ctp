@@ -1,13 +1,8 @@
 <div class="hide_at_print">	
 <?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
+echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
-<script>
-$(document).ready(function() {
-$("#fix<?php echo $id_current_page; ?>").removeClass("blue");
-$("#fix<?php echo $id_current_page; ?>").addClass("red");
-});
-</script>
+
 </div>
 		
 <!-------------------------------Start Ledger Form --------------------------->
@@ -36,8 +31,8 @@ $default_date_to = date('d-m-Y')
 							 <?php }}
                              foreach ($cursor2 as $collection) 
 							 {
-							$account_number = "";
-							$wing_flat = "";
+							 $account_number = "";
+							 $wing_flat = "";
 							 $auto_id2 = (int)$collection['ledger_sub_account']['auto_id'];
 							 $name2 = $collection['ledger_sub_account']['name']; 
                              $ledger_id = (int)$collection['ledger_sub_account']['ledger_id'];

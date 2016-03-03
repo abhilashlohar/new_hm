@@ -1,9 +1,9 @@
 <center>
 <?php
+
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
 </center>
-
 
 <style>
 #main_table th{

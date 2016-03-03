@@ -70,8 +70,8 @@ $user_id = (int)@$result_income_head2[0]['ledger_sub_account']['user_id'];
 				foreach ($result_user as $collection) 
 				{
 				$user_name = $collection['user']['user_name'];  
-				$wing_id = $collection['user']['wing'];
-				$flat_id = $collection['user']['flat'];
+				$wing_id = @$collection['user']['wing'];
+				$flat_id = @$collection['user']['flat'];
 				}
 
 

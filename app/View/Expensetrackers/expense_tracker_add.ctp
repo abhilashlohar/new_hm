@@ -33,11 +33,11 @@ $("#fix<?php echo $id_current_page; ?>").addClass("red");
 
 
 
-
+<div id="party_acc_head_body">
 
 <!----- import functioality start --------->
 
-<a href="#" class="btn purple" role="button" id="import">Import</a>
+<a href="<?php echo $webroot_path; ?>Expensetrackers/expense_tracker_import" class="btn purple" role="button" rel="tab">Import</a>
 <div id="myModal3" class="modal hide fade in" style="display: none;">
 <div class="modal-backdrop fade in"></div>
 	<form id="form1" method="post">
@@ -70,159 +70,7 @@ $("#fix<?php echo $id_current_page; ?>").addClass("red");
 </div>
 
 
-
-
-
-
-<!----- end  import functionality ---------->
-<!--
-
-<div style="border:solid 2px #4cae4c; width:100%; margin:auto;" class="portal">
-<div style="border-bottom:solid 2px #4cae4c; color:white; background-color: #5cb85c; padding:4px; font-size:20px;"><i class="icon-money"></i> Record Expense Transaction</div>
-
-
-
-<div style="padding:10px;background-color:#FFF;">
-<form method="post" id="contact-form" name="myform" enctype="multipart/form-data">
-<div id="output"></div>
--->
-
-<!----------Add row functionality ---------------->
-<!--
-<table class="" style="" id="tbb">
-<thead>
-<tr>
-<th >Posting date</th>
-<th >Date of Invoice</th>
-<th >Due Date</th>
-<th >Party Account Head <a href="#" role="button" class="btn mini blue tooltips" data-original-title="Add new Party Account Head" data-placement="top" id="new_party_acc"><i class="icon-plus"></i></a></th>
-<th >Invoice Reference</th>
-<th >Expense Head</th>
-<th >Amount of Invoice</th>
-<th >Description</th>
-<th >Attachment</th>
-<th >Delete</th>
-</tr>
-</thead>
-<tbody id="count_row">
-<tr>
-<td width="8%"><input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy" name="posting_date" id="pd" value="<?php echo date("d-m-Y"); ?>">
-</td>
-<td width="8%"> <input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy" name="p_due_date" id="due"></td>
-<td width="8%"> <input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy" name="date_of_invoice" id="due">
-</td>
-<td style="">
-<select name="party_head" class="m-wrap span12 chosen" id="">
-<option value="">Select</option>
-<?php 
-foreach($result_ledger_sub_account as $data){
-	
-	$auto_id=$data['ledger_sub_account']['auto_id'];
-	$name=$data['ledger_sub_account']['name'];
-	
-?>
-<option value="<?php echo $auto_id; ?>"><?php echo $name; ?></option>
-
-<?php }	?>
-</select>
-</td>
-
-<td style="text-align:center;">
-<input type="text" class="m-wrap span12" name="invoice_reference" id="ref" style="text-align:right;">
-</td>
-
-
-<td width="15%">
-<select name="ex_head" class="m-wrap span12 chosen" id="">
-<option value="">Select</option>
-<?php
-foreach($result_account_group as $data){
-	$accounts_id=$data['accounts_group']['accounts_id'];
-	$auto_id=$data['accounts_group']['auto_id'];
-	$result_ledger_account= $this->requestAction(array('controller' => 'hms', 'action' => 'expense_tracker_fetch2'),array('pass'=>array($auto_id)));
-	foreach($result_ledger_account as $data){
-		$led_auto_id=$data['ledger_account']['auto_id'];
-		$ledger_name = $data['ledger_account']['ledger_name'];
-	
-?>
-	
-<option value="<?php echo $led_auto_id; ?>"><?php echo $ledger_name; ?> </option>	
-	
-<?php } } ?>
-
-</select>
-</td>
-
-
-<td style="text-align:center;">
-<input type="text" class="m-wrap span12 amt1" style="text-align:right;"  name="invoice_amount" id="ammmttt1" onkeyup="amt_val(this.value,1)" maxlength="7">
-</td>
-<td style="text-align:center;" width="25%"><input type="text" class="m-wrap span12" name="description" maxlength="100" id=""></td>
-<td style="text-align:center;">
-
-<div class="control-group">
-                              
-                    <div class="controls">
-                       <div class="fileupload fileupload-new" data-provides="fileupload"><input type="hidden" value="" name="">
-                                    <span class="btn btn-file">
-                                    <span class="fileupload-new"> file</span>
-                                    <span class="fileupload-exists">Change</span>
-                                    <input type="file" class="default" name="file1">
-                                    </span>
-                                    <span class="fileupload-preview"></span>
-                                    <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none"></a>
-                                 </div>
-                      </div>
-       </div>
-</td>
-</tr>
-</tbody>
-</table>
-
-<!---------- End add row functioality ---------------->
-
-<!--
-<br/>
-<button type="submit" name="send" class="btn blue " value="1"> Submit</button>
-<button type="button" name="draft" class="btn " value="2" id="add"> Add Row</button>
-</form>
-
-</div>
-</div>
-
-<div class="alert alert-block alert-success fade in" style="display:none;">
-	<h4 class="alert-heading">Success!</h4>
-</div>
-
-
-
-
-<div id="party_acc_popup" class="modal fade in" style="display:none;">
-<div class="modal-backdrop fade in"></div>
-	<form  class="form-horizontal">
-		<div class="modal" id="party_acc_head_body">
-			<div class="modal-header">
-				<h4 id="myModalLabel1">Add New Party Account Head</h4>
-			</div>
-			<div class="modal-body" >
-				<div class="control-group">
-				   <label class="control-label">Party Account Head</label>
-				   <div class="controls">
-					  <input placeholder="Party Account Head" id="party_acc_head" class="m-wrap " type="text">
-				   </div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn" id="close_div">Close</button>
-				<button type="button" class="btn blue submit_btn">Add</button>
-			</div>
-		</div>
-	</form>
-</div>
-
--->
-
-<!-------------------------------- Start New Expense Tracker Form ------------------------------------->
+<!-------------------------------- Start New Expense Tracker Form------------------------->
 <form method="post" id="form2">
 <div id="main_url">
 <div class="portlet box blue">
@@ -242,7 +90,11 @@ foreach($result_account_group as $data){
                             <th style="width:20%;">Posting date</th>
                             <th style="width:20%;">Date of Invoice</th>
                             <th style="width:20%;">Due Date</th>
-                            <th style="width:20%;">Party Account Head</th>
+                            <th style="width:20%;">Party Account Head
+							<a id="new_party_acc" class="btn blue mini" style="float:right;">
+							<i class="icon-plus"></i>
+							</a>
+							</th>
                             <th style="width:20%;">Invoice Reference</th>
 		    </tr>
                     
@@ -326,11 +178,11 @@ foreach($result_account_group as $data){
                                
                                 
                                 
-                                <div class="fileupload fileupload-new" data-provides="fileupload"><input type="hidden" value="" name="">
+                                <div class="fileupload fileupload-new" data-provides="fileupload"><input type="hidden" value="">
                                 <span class="btn btn-file">
                                 <span class="fileupload-new"> file</span>
                                 <span class="fileupload-exists">Change</span>
-                                <input type="file" class="default" name="file1">
+                                <input type="file" class="default">
                                 </span>
                                 <span class="fileupload-preview"></span>
                                 <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none"></a>
@@ -357,14 +209,35 @@ foreach($result_account_group as $data){
        
                           
 <div class="form-actions">
-<button type="submit" class="btn blue">Save</button>
+<button type="submit" class="btn blue">Submit</button>
 <button type="button" class="btn">Cancel</button>
 </div>
 </div>
 </div>
 </div>
 </form>
-<!------------------------------ End New Expense Tracker Form ----------------------------------------->
+<!------------------------------ End New Expense Tracker Form ------------------------->
+<div id="party_acc_popup" class="hide">
+<div class="modal-backdrop fade in"></div>
+<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+<div class="modal-body">
+<label style="font-size:14px;">Party Name</label>
+<div class="controls">
+<input type="text" class="m-wrap span10" id="party_acc_head">
+</div>
+</div>
+<div class="modal-footer">
+<a class="btn" id="close_div">Cancel</a>
+<a class="submit_btn btn red">Add</a>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
 
 <script>
 function amt_val(vv,dd)
@@ -409,8 +282,8 @@ $('.content_'+ttt).remove();
 $(document).ready(function(){
 	
 	
-$("#new_party_acc").live('click',function(){	
-	$('#party_acc_popup').show();
+$("#new_party_acc").live('click',function(){
+  $('#party_acc_popup').show();
 });	
 
 $("#close_div").live('click',function(){	
@@ -496,7 +369,8 @@ var invoice_ref=$("#main_table tr:nth-child("+i+") td:nth-child(1) #sub_table2 t
 var party_ac=$("#main_table tr:nth-child("+i+") td:nth-child(1) #sub_table2 tr:nth-child(4) td:nth-child(1) select").val();
 var amt_inv=$("#main_table tr:nth-child("+i+") td:nth-child(1) #sub_table2 tr:nth-child(4) td:nth-child(2) input").val();
 var description=$("#main_table tr:nth-child("+i+") td:nth-child(1) #sub_table2 tr:nth-child(4) td:nth-child(4) input").val();
-//m_data.append( 'file'+i, $('input[name=file'+i+']')[0].files[0]);
+ m_data.append('file'+i,$('#main_table tr:nth-child('+i+') td:nth-child(1) #sub_table2 tr:nth-child(4) td:nth-child(3) input[type=file]')[0].files[0]);
+
 ar.push([posting_date,date_of_invoice,due_date,ex_head,invoice_ref,party_ac,amt_inv,description]);
 			}
 	var myJsonString = JSON.stringify(ar);
@@ -509,7 +383,7 @@ ar.push([posting_date,date_of_invoice,due_date,ex_head,invoice_ref,party_ac,amt_
 			type: 'POST',
 			dataType:'json',
 			}).done(function(response) {
-				
+				//alert(response);
 				$("#output").html(response);
 			if(response.report_type=='error'){
 			
@@ -547,3 +421,13 @@ ar.push([posting_date,date_of_invoice,due_date,ex_head,invoice_ref,party_ac,amt_
 </div>
 </div>
 </div> 
+
+
+
+
+
+
+
+
+
+

@@ -11,7 +11,7 @@ $party_ac_id = (int)$data['expense_tracker_csv_converted']['party_ac_id'];
 $invoice_ref = $data['expense_tracker_csv_converted']['invoice_ref'];	
 $expense_head_id = (int)$data['expense_tracker_csv_converted']['expense_head_id'];	
 $amount = $data['expense_tracker_csv_converted']['amount'];	
-$description = $data['expense_tracker_csv_converted']['description']; 	
+$description = @$data['expense_tracker_csv_converted']['description']; 	
 ?>
 <tr>
 <td style="border:solid 1px blue;">

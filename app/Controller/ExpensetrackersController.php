@@ -907,6 +907,7 @@ $this->layout=null;
 	++$records;
 	}
 	$i=0;
+	
 	foreach($test as $child){ $i++;
 		if($i>1){
 			$child_ar=explode(',',$child[0]);
@@ -917,7 +918,7 @@ $this->layout=null;
 			$invoice_ref=@$child_ar[4];
 			$expense_head=@$child_ar[5];
 			$amount=@$child_ar[6];
-			$description = $child[7];
+			$description = @$child[7];
 			
 			$this->loadmodel('expense_tracker_csv');
 			$auto_id=$this->autoincrement('expense_tracker_csv','auto_id');
@@ -1198,6 +1199,7 @@ if(is_numeric($amount)){ $amount_vv = 0;  }else{ $amount_vv = 1; }
 
 $v_result[]=array($posting_v,$financial_v,$invoice_date_v,$due_v,$date_v,$party_v,$invoice_v,$expense_v,$amount_v,$amount_vv);
 }
+
 
 foreach($v_result as $data){
 if(array_sum($data)==0) { $tt ="T"; }else{ $tt="F"; break;  }

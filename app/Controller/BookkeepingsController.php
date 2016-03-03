@@ -76,9 +76,9 @@ $this->layout='session';
 }
 $this->ath();
 $this->check_user_privilages();
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $this->set('s_role_id',$s_role_id);
 $this->loadmodel('financial_year');
 $conditions=array("society_id" => $s_society_id, "status"=>1);
@@ -143,9 +143,9 @@ function journal_excel(){
 
 $this->layout=null;
 
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');	
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');	
 
 		   $result_society=$this->society_name($s_society_id);
 			foreach($result_society as $data){
@@ -194,9 +194,9 @@ $this->layout='session';
 
 $this->ath();
 $this->check_user_privilages();
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 		$this->loadmodel('journal');
 		$conditions=array("society_id" => $s_society_id);
@@ -225,7 +225,7 @@ if($this->RequestHandler->isAjax()){
 		$this->layout='session';
 		}
 		$this->ath();
-		$s_society_id = (int)$this->Session->read('society_id');
+		$s_society_id = (int)$this->Session->read('hm_society_id');
 		$page=(int)$page;
 	    $this->set('page',$page);
 		
@@ -280,7 +280,7 @@ function journal_view_ajax_show_vocher(){
 		$this->layout='session';
 		}
 		$this->ath();
-		$s_society_id = (int)$this->Session->read('society_id');
+		$s_society_id = (int)$this->Session->read('hm_society_id');
 		$search_voucher=$this->request->query('search');
 		if(!empty($search_voucher)){
 			$conditions=array("society_id" => $s_society_id,'voucher_id'=>(int)$search_voucher);
@@ -302,9 +302,9 @@ function journal_view_ajax_show_vocher(){
 function journal_pdf()
 {
 $this->layout = 'pdf';
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');		
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');		
 
 $auto_id = (int)$this->request->query('c');	
 $this->set('auto_id',$auto_id);	
@@ -330,9 +330,9 @@ $this->set('cursor2',$cursor2);
 function journal_add_row()
 {
 $this->layout='blank';
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');	
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');	
 
 $t = $this->request->query('con');
 $this->set('t',$t);
@@ -668,8 +668,8 @@ function journal_validation(){
 	$tra_date = json_decode($tra_date, true);
 	$tra_date = date('Y-m-d',strtotime($tra_date));
 	$transaction_date = strtotime($tra_date); 
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id  = (int)$this->Session->read('user_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id  = (int)$this->Session->read('hm_user_id');
 	$date=date("d-m-Y");
 	$time=date('h:i:a',time());
 				if(empty($tra_date)){
@@ -679,7 +679,7 @@ function journal_validation(){
 			
 			
 			
-	   $TransactionDate = $tra_date;
+	   $TransactionDate = $tra_date; 
 		$this->loadmodel('financial_year');
 		$conditions=array("society_id" => $s_society_id,"status"=>1);
 		$cursor = $this->financial_year->find('all',array('conditions'=>$conditions));
@@ -743,6 +743,7 @@ foreach($myArray as $child){
 		}
 		
 	$voucher_id=$this->autoincrement_with_society_ticket('journal','voucher_id');
+	
 	foreach($myArray as $child){
 	
 			$ledger = $child[0];
@@ -760,8 +761,8 @@ foreach($ledger_sub_data as $sub_ledgerr)
 $ledger = (int)$sub_ledgerr['ledger_sub_account']['ledger_id'];	
 if($ledger == 34)
 {
-$flat_id = (int)$sub_ledgerr['ledger_sub_account']['flat_id'];
-$ledger_sub_account = (int)$flat_id;
+//$flat_id = (int)$sub_ledgerr['ledger_sub_account']['flat_id'];
+$ledger_sub_account = (int)$ledger_sub_account;
 
 }
 }
@@ -793,7 +794,7 @@ $ledger_sub_account2=null;
 		$journal_id=$this->autoincrement('journal','journal_id');
 		$this->loadmodel('journal');
 		$multipleRowData = Array( Array("journal_id" => $journal_id, 
-		"ledger_account_id" => $ledger,"ledger_sub_account_id"=>(int)$ledger_sub_account,"user_id" => $s_user_id, "transaction_date" => $transaction_date,"current_date" => $date, "credit" => $credit,'debit'=>$debit, "remark" => $desc ,"society_id" => $s_society_id,'voucher_id'=>$voucher_id));
+		"ledger_account_id" => $ledger,"ledger_sub_account_id"=>(int)@$ledger_sub_account,"user_id" => $s_user_id, "transaction_date" => $transaction_date,"current_date" => $date, "credit" => $credit,'debit'=>$debit, "remark" => $desc ,"society_id" => $s_society_id,'voucher_id'=>$voucher_id));
 		$this->journal->saveAll($multipleRowData);
 		
 		$this->loadmodel('ledger');
@@ -810,6 +811,7 @@ $this->Session->write('journll',1);
 
 $output = json_encode(array('type'=>'succ', 'text' => 'Journal voucher '.$voucher_id.' is generated successfully.'));
     die($output);
+	
 }
 
 ///////////////////////////////// Start journal validation///////////////////////////////////////////////////////////

@@ -21,18 +21,16 @@
 							 $name2 = $collection['ledger_sub_account']['name']; 
                              $ledger_id = (int)$collection['ledger_sub_account']['ledger_id'];
 						
-						if($ledger_id == 34)
-						{							
-$flat_id = @$collection['ledger_sub_account']['flat_id'];
-$wing_detailll = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
-foreach($wing_detailll as $wing_dataaa)
-{
-$wing_idddd = (int)$wing_dataaa['flat']['wing_id'];	
-}
-$wing_flat= $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array($wing_idddd,$flat_id)));
+						if($ledger_id == 34){
+							$result_member = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($auto_id2)));
+							$name2=$result_member['user_name'];
+							$wing_name=$result_member['wing_name'];
+							$flat_name=$result_member['flat_name'];
+							$wing_flat=$wing_name.'-'.$flat_name;							
+
 						}
 						if($ledger_id == 33){
-$account_number = $collection['ledger_sub_account']['bank_account'];  	
+							$account_number = $collection['ledger_sub_account']['bank_account'];  	
 							
 						}
 							 ?>
@@ -40,7 +38,7 @@ $account_number = $collection['ledger_sub_account']['bank_account'];
 					<option value="<?php echo $auto_id2; ?>,1"><?php echo $name2; ?> &nbsp;&nbsp; <?php echo @$wing_flat; ?><?php echo @$account_number; ?></option>
 						  
 						  <?php } ?>
-						</select>
+					</select>
 
 </td>
 

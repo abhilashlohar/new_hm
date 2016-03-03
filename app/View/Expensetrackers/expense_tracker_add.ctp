@@ -3,7 +3,7 @@
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
 </center>
-</script>
+
 
 <style>
 #tbb th{

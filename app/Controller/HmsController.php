@@ -26096,27 +26096,56 @@ function update_default_package(){
 	 
 }
 
+function sub_module_list_table($module_id=null){
+	$this->ath();
+	$this->set(compact("module_id"));
+	
+	$this->loadmodel('main_module');
+	$conditions=array('auto_id'=>(int)$module_id);
+	$main_modules=$this->main_module->find('all', array('conditions' => $conditions));
+	$society=@$main_modules[0]["main_module"]["society"];
+	$this->set(compact("society"));
+}
+
 function update_default_module_by_hm_ajax($module_id,$status){
 	$this->layout=null;
 	$this->loadmodel('main_module');
-	$this->main_module->updateAll(array('default_assign'=>$status),array('main_module.auto_id'=>(int)$module_id));
+	$this->main_module->updateAll(array('society'=>$status),array('main_module.auto_id'=>(int)$module_id));
 	
 	if($status=="no"){
 		$this->loadmodel('sub_module');
 		$conditions=array('module_id'=>(int)$module_id);
-		$this->sub_module->updateAll(array('admin'=>"no",'resident'=>"no"),array('sub_module.module_id'=>(int)$module_id));
+		$this->sub_module->updateAll(array('admin'=>"no",'owner'=>"no",'tenant'=>"no",'owner_family'=>"no",'tenant_family'=>"no"),array('sub_module.module_id'=>(int)$module_id));
 	}
 }
 
 function update_default_sub_module_by_hm_ajax($sub_module_id,$role,$status){
 	$this->layout=null;
-	if($role=="admin"){
-		$this->loadmodel('sub_module');
-		$this->sub_module->updateAll(array('admin'=>$status),array('sub_module.auto_id'=>(int)$sub_module_id));
-	}elseif($role=="owner"){
-		$this->loadmodel('sub_module');
-		$this->sub_module->updateAll(array('owner'=>$status),array('sub_module.auto_id'=>(int)$sub_module_id));
+	
+	$sub_module_ids = explode(",", $sub_module_id);
+	
+	foreach($sub_module_ids as $sub_module_id){
+		if($role=="admin"){
+			$this->loadmodel('sub_module');
+			$this->sub_module->updateAll(array('admin'=>$status),array('sub_module.auto_id'=>(int)$sub_module_id));
+		}elseif($role=="owner"){
+			$this->loadmodel('sub_module');
+			$this->sub_module->updateAll(array('owner'=>$status),array('sub_module.auto_id'=>(int)$sub_module_id));
+		}
+		elseif($role=="tenant"){
+			$this->loadmodel('sub_module');
+			$this->sub_module->updateAll(array('tenant'=>$status),array('sub_module.auto_id'=>(int)$sub_module_id));
+		}
+		elseif($role=="owner_family"){
+			$this->loadmodel('sub_module');
+			$this->sub_module->updateAll(array('owner_family'=>$status),array('sub_module.auto_id'=>(int)$sub_module_id));
+		}
+		elseif($role=="tenant_family"){
+			$this->loadmodel('sub_module');
+			$this->sub_module->updateAll(array('tenant_family'=>$status),array('sub_module.auto_id'=>(int)$sub_module_id));
+		}
 	}
+	
 	
 }
 /////////////////////// Start create_login ////////////////////////////////////////

@@ -926,6 +926,7 @@ $this->layout=null;
 		
 	}
 	}
+	
 	$this->loadmodel('import_expense_tracker_record');
 	$this->import_expense_tracker_record->updateAll(array("step2" => 1),array("society_id" => $s_society_id, "module_name" => "ET"));
 	die(json_encode("READ"));	

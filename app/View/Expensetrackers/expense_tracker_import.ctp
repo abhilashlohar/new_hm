@@ -64,7 +64,7 @@ $( document ).ready(function() {
 	<img src="<?php echo $webroot_path; ?>as/loding.gif" /> 
 	<span style="padding-left: 10px; font-weight: bold; color: red;">Preparing Data For More Modifications.</span>
 	<div class="progress progress-striped progress-danger active">
-		<div id="progress" style="width: <?php echo $converted_per; ?>%;" class="bar"></div>
+		<div id="progress" style="width: <?php echo @$converted_per; ?>%;" class="bar"></div>
 	</div>
 </div>
 <script>
@@ -77,6 +77,7 @@ function convert_csv_data_ajax(){
 			url: "convert_imported_data_et",
 			dataType: 'json'
 		}).done(function(response){
+			
 			if(response.again_call_ajax=="YES"){
 				$("#progress").css("width",response.converted_per+"%");
 				convert_csv_data_ajax();
@@ -123,7 +124,7 @@ function convert_csv_data_ajax(){
 	<img src="<?php echo $webroot_path; ?>as/loding.gif" /> 
 	<span style="padding-left: 10px; font-weight: bold; color: red;">Importing Receipt Into The System.</span>
 	<div class="progress progress-striped progress-danger active">
-		<div id="progress_im" style="width: <?php echo $converted_per_im; ?>%;" class="bar"></div>
+		<div id="progress_im" style="width: <?php echo @$converted_per_im; ?>%;" class="bar"></div>
 	</div>
 	<span style="padding-left: 35px; color: rgb(114, 113, 113);"><b id="text_per_im"></b> Receipts Imported.</span>
 </div>

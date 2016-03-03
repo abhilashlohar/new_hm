@@ -203,8 +203,17 @@ $flat_data=$this->flat->find('all',array('conditions'=>$conditions));
 foreach($flat_data as $flltdddt)
 {
 $flat_id = (int)$flltdddt['flat']['flat_id'];
-}	
-	    		
+}
+/*	
+$ledger_sub_account_data = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array(@$wing_id,@$flat_id)));	
+foreach($ledger_sub_account_data as $dataa)
+{
+$auto_id = (int)$sub_lddrr_dddttt['ledger_sub_account']['auto_id'];
+$ledger_type = 1;
+$validdddnnn=555;
+$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_with_brackets'),array('pass'=>array(@$wing_id,@$flat_id)	
+}
+*/	    		
 $this->loadmodel('ledger_sub_account'); 
 $conditions=array("flat_id"=>@$flat_id,"ledger_id"=>$group_id);
 $subledger_data=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));

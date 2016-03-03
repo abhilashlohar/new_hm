@@ -209,6 +209,40 @@ function auto_save_other_charge($ledger_sub_account_id=null,$income_head_id=null
 	$this->regular_bill_temp->updateAll(array("total" => $total,"due_for_payment"=>$due_for_payment,"other_charge"=>$other_charge),array("ledger_sub_account_id" => (int)$ledger_sub_account_id));
 	
 }
+
+function auto_save_intrest($ledger_sub_account_id=null,$amount=null){
+	$this->loadmodel('regular_bill_temp');
+	$condition=array('ledger_sub_account_id'=>(int)$ledger_sub_account_id);
+	$regular_bills = $this->regular_bill_temp->find('all',array('conditions'=>$condition));
+	$old_amount=$regular_bills[0]["regular_bill_temp"]["intrest_on_arrears"];
+	$due_for_payment=$regular_bills[0]["regular_bill_temp"]["due_for_payment"];
+	
+	$amount=round($amount);
+	
+	
+	$due_for_payment=$due_for_payment-$old_amount;
+	$due_for_payment=$due_for_payment+$amount;
+	
+	$this->regular_bill_temp->updateAll(array("due_for_payment"=>$due_for_payment,"intrest_on_arrears"=>$amount),array("ledger_sub_account_id" => (int)$ledger_sub_account_id));
+	
+}
+
+function auto_save_credit($ledger_sub_account_id=null,$amount=null){
+	$this->loadmodel('regular_bill_temp');
+	$condition=array('ledger_sub_account_id'=>(int)$ledger_sub_account_id);
+	$regular_bills = $this->regular_bill_temp->find('all',array('conditions'=>$condition));
+	$old_amount=$regular_bills[0]["regular_bill_temp"]["credit_stock"];
+	$due_for_payment=$regular_bills[0]["regular_bill_temp"]["due_for_payment"];
+	
+	$amount=round($amount);
+	
+	
+	$due_for_payment=$due_for_payment-$old_amount;
+	$due_for_payment=$due_for_payment+$amount;
+	
+	$this->regular_bill_temp->updateAll(array("due_for_payment"=>$due_for_payment,"credit_stock"=>$amount),array("ledger_sub_account_id" => (int)$ledger_sub_account_id));
+	
+}
 /////////////////////// End It Regular Bill (Accounts) ////////////////////////////////////////////////////////////
 
 ////////////////////////// Start fetch_last_bill_info_via_flat_id ///////////////////////////////////////////////

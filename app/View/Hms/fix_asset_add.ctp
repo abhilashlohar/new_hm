@@ -193,7 +193,7 @@ $(document).ready(function() {
 		var to_war = $("#main_table tr:nth-child("+i+") td:nth-child(1) #subb_table tr:nth-child(4) td:nth-child(2) input").val();
 		var desc = $("#main_table tr:nth-child("+i+") td:nth-child(1) #subb_table tr:nth-child(4) td:nth-child(3) input").val();
 		var shedule = $("#main_table tr:nth-child("+i+") td:nth-child(1) #subb_table tr:nth-child(4) td:nth-child(4) input").val();
-		//m_data.append( 'file'+i, $('input[name=file'+i+']')[0].files[0]);
+		m_data.append( 'file'+i, $('input[name=file'+i+']')[0].files[0]);
 		ar.push([asset_cat,purchase_date,supplier,cost,asset_name,from_war,to_war,desc,shedule]);
 		
 		}

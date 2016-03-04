@@ -10435,7 +10435,7 @@ $this->notification_email->saveAll(array("notification_id" => $lo, "module_id" =
 //////////////////// end code login table ///////////////////////////////
 
 //////////////// Role to assign code for Society  //////////////////////////
-for($p=1;$p<=8;$p++)
+for($p=1;$p<=6;$p++)
 {
 if($p==1) { $d="Admin"; }
 if($p==2) { $d="Committee member"; }
@@ -10443,8 +10443,7 @@ if($p==3) { $d="Owner"; }
 if($p==4) { $d="Tenant"; }
 if($p==5) { $d="Owner family member"; }
 if($p==6) { $d="Tenant Family Member"; }
-if($p==7) { $d="Primary Residents"; }
-if($p==8) { $d="Residents and family members"; }
+
 $this->loadmodel('role');
 $k=$this->autoincrement('role','auto_id');
 $this->role->saveAll(array("auto_id" => $k, "role_name" => $d, 'role_id'=>$p, "society_id" => $society_id));
@@ -10621,7 +10620,7 @@ $this->user_temp->deleteAll($conditions);
 
 
 //////////////// Role to assign code for Society  //////////////////////////
-for($p=1;$p<=8;$p++)
+for($p=1;$p<=6;$p++)
 {
 if($p==1) { $d="Admin"; }
 if($p==2) { $d="Committee member"; }
@@ -10629,8 +10628,7 @@ if($p==3) { $d="Owner"; }
 if($p==4) { $d="Tenant"; }
 if($p==5) { $d="Owner family member"; }
 if($p==6) { $d="Tenant Family Member"; }
-if($p==7) { $d="Primary Residents"; }
-if($p==8) { $d="Residents and family members"; }
+
 $this->loadmodel('role');
 $k=$this->autoincrement('role','auto_id');
 $this->role->saveAll(array("auto_id" => $k, "role_name" => $d, 'role_id'=>$p, "society_id" => $society_id));
@@ -17392,15 +17390,7 @@ $auto_id=$this->autoincrement('user_role','auto_id');
 $this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => 2));
 }
 
-if(($flat_type==1) and 	($owner=='yes')){
 
-				$auto_id=$this->autoincrement('user_role','auto_id');
-				$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>7));
-		}elseif(($flat_type==2) and ($owner=='no')){
-				$auto_id=$this->autoincrement('user_role','auto_id');
-				$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>7));
-		}
-	
 
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no','owner'=>$owner));
@@ -24211,16 +24201,7 @@ $this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>$ro
 			$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>2));
 	}
 
-		if(($flat_type==1) and 	($tenant==1)){
 
-				$auto_id=$this->autoincrement('user_role','auto_id');
-				$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>7));
-		}elseif(($flat_type==2) and ($tenant==2)){
-				$auto_id=$this->autoincrement('user_role','auto_id');
-				$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>7));
-		}
-	
-	
  
 if($tenant==1){
 $this->loadmodel('ledger_sub_account');

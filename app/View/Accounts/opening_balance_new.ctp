@@ -1,6 +1,7 @@
 <?php
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
+<form method="post">
 <input type="text" class="m-wrap medium date-picker" Placeholder="Opening Balance Date" style="background-color:white !important;">
 
 <table class="table table-bordered" style="background-color:white;">
@@ -18,7 +19,9 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 				?>
 				<tr>
 					<td><?php echo $ledger_acc_data[0]["group_name"]; ?></td>
-					<td><?php echo $ledger_accounts["ledger_account"]["ledger_name"]; ?></td>
+					<td><?php echo $ledger_accounts["ledger_account"]["ledger_name"]; ?>
+					<input type="hidden" value="<?php echo $ledger_accounts["ledger_account"]["auto_id"]; ?>">
+					</td>
 					<td><input type="text" class="m-wrap small debit"></td>
 					<td><input type="text" class="m-wrap small credit"></td>
 					<td></td>
@@ -33,8 +36,9 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 
 	      $ledger_sub_account_data = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account)));
 	      foreach ($ledger_sub_account_data as $ledger_sub_account_data){
-	      $ledger_sub_account_name = $ledger_sub_account_data['ledger_sub_account']['name'];
-	      $ledger_id = (int)$ledger_sub_account_data['ledger_sub_account']['ledger_id'];
+$ledger_sub_account_name = $ledger_sub_account_data['ledger_sub_account']['name'];
+$ledger_id = (int)$ledger_sub_account_data['ledger_sub_account']['ledger_id'];
+$ledger_sub_account_id = (int)$ledger_sub_account_data['ledger_sub_account']['auto_id'];
 		  }
 		  $ledger_data = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_account_info_via_ledger_id'),array('pass'=>array($ledger_id)));
 	      foreach ($ledger_data as $ledger_data){
@@ -42,7 +46,9 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 		  }	?>
 	<tr>
 		<td><?php echo $ledger_name; ?></td> 
-		<td><?php echo $ledger_sub_account_name; ?></td>
+		<td><?php echo $ledger_sub_account_name; ?>
+<input type="hidden" value="<?php echo $ledger_sub_account_id; ?>,<?php echo $ledger_id; ?>">
+		</td>
 		<td><input type="text" class="m-wrap small debit"></td> 
 		<td><input type="text" class="m-wrap small credit"></td>
 		<td><input type="text" class="m-wrap small penalty"></td> 
@@ -53,20 +59,22 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
         $ledger_sub_account_id = $ledger_sub_account_dataa['ledger_sub_account']['auto_id'];
 		$ledger_sub_account_name = $ledger_sub_account_dataa['ledger_sub_account']['name'];
         $ledger_id = (int)$ledger_sub_account_dataa['ledger_sub_account']['ledger_id'];
+	
+		
 		if($ledger_id != 34)
 		{		
 		$ledger_data = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_account_info_via_ledger_id'),array('pass'=>array($ledger_id)));
 		foreach ($ledger_data as $ledger_data){
 		$ledger_name = $ledger_data['ledger_account']['ledger_name'];
 		}
-		
-		
-		
 		?>
 		
 		<tr>
 		<td><?php echo $ledger_name; ?></td>
-		<td><?php echo $ledger_sub_account_name; ?></td>
+		<td><?php echo $ledger_sub_account_name; ?>
+<input type="hidden" value="<?php echo $ledger_sub_account_id; ?>,<?php echo $ledger_id; ?>">
+		
+		</td>
 		<td><input type="text" class="m-wrap small debit"></td>
 		<td><input type="text" class="m-wrap small credit"></td>
 		<td></td>
@@ -78,11 +86,9 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 <th><input type="text" class="m-wrap small total_credit"></th>
 <th><input type="text" class="m-wrap small total_penalty"></th>	
 </tr>	
-	
-
-	
 </table>
-
+<button type="submit" name="opening_balance_submit" class="btn green">Submit</button>
+</form>
 
 <script>
 

@@ -5810,8 +5810,8 @@ $this->set('bank_detail',$bank_detail);
 
 }
 
-/////////////////End my_flat_receipt_update_form ////////////////////////////////////////////////
-////////////////////Start my_flat_receipt_update_json ////////////////////////////////////////////
+/////////////////End my_flat_receipt_update_form ///////////////////////////////////////
+////////////////////Start my_flat_receipt_update_json ///////////////////////////////////
 function my_flat_receipt_update_json()
 {
 $this->layout=null;
@@ -6155,10 +6155,12 @@ $conditions = (array('society_id'=>$s_society_id));
 $ledger_sub_account_dataa= $this->ledger_sub_account->find('all',array('order'=>$order,'conditions'=>$conditions));
 $this->set('ledger_sub_account_dataa',$ledger_sub_account_dataa);
 	
-	//pr($ledger_sub_account_data);
+if(isset($this->request->data['opening_balance_submit']))	
+{
+echo "asfsafsaf";	
+exit;	
 	
-	//exit;
-	
+}	
 	
 	
 	

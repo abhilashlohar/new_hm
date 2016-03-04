@@ -127,7 +127,7 @@ function it_regular_bill(){
 			$current_date = date('Y-m-d');
 			$this->loadmodel('regular_bill_temp');
 			$auto_id=$this->autoincrement('regular_bill_temp','auto_id');
-			$this->regular_bill_temp->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_maintenance"=> 0, "arrear_intrest" => 0, "intrest_on_arrears" => 0,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>strtotime($start_date),"due_date"=>strtotime($due_date),"credit_stock"=>0,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$s_user_flat_id,"current_date"=>strtotime($current_date)));
+			$this->regular_bill_temp->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_maintenance"=> 0, "arrear_intrest" => 0, "intrest_on_arrears" => 0,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>strtotime($start_date),"due_date"=>strtotime($due_date),"credit_stock"=>0,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$s_user_flat_id,"current_date"=>strtotime($current_date),"sent_for_approval"=>"no"));
 			
 		}
 		
@@ -146,11 +146,18 @@ function preview_regular_bill(){
 	$s_user_flat_id=$this->Session->read('hm_user_flat_id');
 	
 	$this->loadmodel('regular_bill_temp');
-	$condition=array('society_id'=>$s_society_id);
+	$condition=array('society_id'=>$s_society_id,'sent_for_approval'=>"no");
 	$order=array('regular_bill_temp.auto_id'=>'ASC');
 	$regular_bills = $this->regular_bill_temp->find('all',array('conditions'=>$condition,'order'=>$order)); 
 	$this->set(compact("regular_bills"));
 	
+}
+
+function send_bills_for_approval(){
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$this->loadmodel('regular_bill_temp');
+	$this->regular_bill_temp->updateAll(array("sent_for_approval" => "yes"),array("society_id" => $s_society_id));
+	echo "ok";
 }
 
 function auto_save_income_head_values($ledger_sub_account_id=null,$income_head_id=null,$amount=null){

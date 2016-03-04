@@ -39,37 +39,37 @@ input:read-only {
 </style>
 <script>
 	$(function () {
-			$('#fixed_hdr1').fxdHdrCol({
-				fixedCols: 2,
-				width:     '100%',
-				height:    600,
-				colModal: [
-				<?php for($i=1; $i<=100; $i++)
-				{
-					if($i==1){
-						?>
-						{ width: 100, align: 'left' },
-						<?php
-					}elseif($i==2){
-						?>
-						{ width: 200, align: 'left' },
-						<?php
-					}else{
-						?>
-						{ width: 150, align: 'center' },
-						<?php
-					}
-					
+		$('#fixed_hdr1').fxdHdrCol({
+			fixedCols: 2,
+			width:     '100%',
+			height:    600,
+			colModal: [
+			<?php for($i=1; $i<=100; $i++)
+			{
+				if($i==1){
+					?>
+					{ width: 100, align: 'left' },
+					<?php
+				}elseif($i==2){
+					?>
+					{ width: 200, align: 'left' },
+					<?php
+				}else{
+					?>
+					{ width: 150, align: 'center' },
+					<?php
 				}
-					
-				?>
-				]					
-			});
+				
+			}
+				
+			?>
+			]					
+		});
 	});
 </script>
 <?php 
-$income_head_array_th=$regular_bills[0]["regular_bill_temp"]["income_head_array"];
-$income_head_array_th=$regular_bills[0]["regular_bill_temp"]["income_head_array"];
+$income_head_array_th=@$regular_bills[0]["regular_bill_temp"]["income_head_array"];
+$income_head_array_th=@$regular_bills[0]["regular_bill_temp"]["income_head_array"];
 $other_charge_ih_ids=array();
 foreach($regular_bills as $regular_bill){
 	$other_charge=$regular_bill["regular_bill_temp"]["other_charge"];
@@ -83,6 +83,8 @@ if(sizeof($other_charge_ih_ids)>0){
 
 
 ?>
+<a href="#" style="float: left;" id="send_for_approval">SEND FOR APPROVAL</a>
+
 <div align="right" id="save_result" style="height:20px;"></div>
 <table id="fixed_hdr1">
 	<thead>
@@ -198,7 +200,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_income_head_values/"+ledger_sub_account_id+"/"+income_head_id+"/"+amount,
 		}).done(function(response){
-			$("#save_result").html('<a href="#">Send for approval</a>');
+			$("#save_result").html('Every change you make is automatically saved.');
 		});
 		var total=0;
 		$('input[income_head_id='+income_head_id+']').each(function(i, obj) {
@@ -217,7 +219,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_noc_values/"+ledger_sub_account_id+"/"+amount,
 		}).done(function(response){
-			$("#save_result").html('<a href="#">Send for approval</a>');
+			$("#save_result").html('Every change you make is automatically saved.');
 		});
 		var total=0;
 		$('input.auto_save_noc').each(function(i, obj) {
@@ -236,7 +238,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_other_charge/"+ledger_sub_account_id+"/"+income_head_id+"/"+amount,
 		}).done(function(response){
-			$("#save_result").html('<a href="#">Send for approval</a>');
+			$("#save_result").html('Every change you make is automatically saved.');
 		});
 		var total=0;
 		$('input[income_head_id='+income_head_id+']').each(function(i, obj) {
@@ -254,7 +256,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_intrest/"+ledger_sub_account_id+"/"+amount,
 		}).done(function(response){
-			$("#save_result").html('<a href="#">Send for approval</a>');
+			$("#save_result").html('Every change you make is automatically saved.');
 		});
 		var total=0;
 		$('.auto_save_intrest').each(function(i, obj) {
@@ -272,7 +274,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_credit/"+ledger_sub_account_id+"/"+amount,
 		}).done(function(response){
-			$("#save_result").html('<a href="#">Send for approval</a>');
+			$("#save_result").html('Every change you make is automatically saved.');
 		});
 		var total=0;
 		$('.auto_save_credit').each(function(i, obj) {
@@ -321,6 +323,18 @@ $(document).ready(function(){
 		});
 		$("#total_due_for_payment").val(due_for_payment_column);
 	}
-	
+	$("#send_for_approval").on("click",function(e){
+		e.preventDefault();
+		var answer = confirm ("Confirm, Send bills for approval.")
+		if(answer){
+			$.ajax({
+			url: "<?php echo $webroot_path; ?>Incometrackers/send_bills_for_approval",
+			}).done(function(response){
+				if(response=="ok"){
+					window.location.href="<?php echo $webroot_path; ?>Incometrackers/it_regular_bill";
+				}
+			});
+		}
+	})
 });
 </script>

@@ -6184,136 +6184,78 @@ $this->set('result_ledger_sub_account',$result_ledger_sub_account);
 
 
 
-function new_bank_receipt()
-{
-		if($this->RequestHandler->isAjax())
-		{
-		$this->layout='blank';
-		}else{
-		$this->layout='session';
-		}
+function new_bank_receipt(){
+	
+	if($this->RequestHandler->isAjax())
+	{
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
 
-		$this->ath();
-		$this->check_user_privilages();
+	$this->ath();
+	$this->check_user_privilages();
 
-			App::import('', 'sendsms.php');
-			$s_role_id=$this->Session->read('hm_role_id');
-			$s_society_id = (int)$this->Session->read('hm_society_id');
-			$s_user_id = (int)$this->Session->read('hm_user_id');
-
-		$this->set('s_user_id',$s_user_id);
-		$this->set('s_role_id',$s_role_id);
-		$first_day_this_month = date('01-m-Y'); 
-		$this->set('default_date',$first_day_this_month);
-		
-			$this->loadmodel('user');
-			$conditions=array("society_id" => $s_society_id,"user_id" => $s_user_id);
-			$cursor=$this->user->find('all',array('conditions'=>$conditions));
-			foreach ($cursor as $collection) 
-			{
-			$tenant_c = (int)@$collection['user']['tenant'];
-			}
-			
-		$this->set('tenant_c',$tenant_c);
-
-			$this->loadmodel('financial_year');
-			$conditions=array("society_id" => $s_society_id, "status"=>1);
-			$cursor=$this->financial_year->find('all',array('conditions'=>$conditions));
-			foreach($cursor as $collection)
-			{
-			$date_from = @$collection['financial_year']['from'];
-			$date_to = @$collection['financial_year']['to'];
-
-				$date_from1 = date('Y-m-d',$date_from->sec);
-				$date_to1 = date('Y-m-d',$date_to->sec);
-
-			$datef[] = $date_from1;
-			$datet[] = $date_to1;
-			}
-			
-				if(!empty($datef))
-				{
-				$datef1 = implode(',',$datef);
-				$datet1 = implode(',',$datet);
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id = (int)$this->Session->read('hm_user_id');
+	
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("society_id" => $s_society_id,"ledger_id"=>33);
+	$bank_data = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$this->set(compact("bank_data"));
+	
+	$this->loadmodel('ledger_sub_account');
+        $condition=array('society_id'=>$s_society_id,'ledger_id'=>34);
+        $members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
+        foreach($members as $data3){
+            $ledger_sub_account_ids[]=$data3["ledger_sub_account"]["auto_id"];
+        }
+       
+       
+        $this->loadmodel('wing');
+        $condition=array('society_id'=>$s_society_id);
+        $order=array('wing.wing_name'=>'ASC');
+        $wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+        foreach($wings as $data){
+			$wing_id=$data["wing"]["wing_id"];
+			$this->loadmodel('flat');
+			$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+			$order=array('flat.flat_name'=>'ASC');
+			$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+			foreach($flats as $data2){
+				$flat_id=$data2["flat"]["flat_id"];
+				$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+				if(!empty($ledger_sub_account_id)){
+					if (in_array($ledger_sub_account_id, $ledger_sub_account_ids)){
+						$members_for_billing[]=$ledger_sub_account_id;
+					}
 				}
-				
-			$count = sizeof(@$datef);
-			$this->set('datef1',@$datef1);
-			$this->set('datet1',@$datet1);
-			$this->set('count',$count);
-
-
-		$this->loadmodel('cash_bank');
-		$conditions=array("society_id" => $s_society_id,"module_id"=>1);
-		$order=array('cash_bank.receipt_id'=> 'DESC');
-		$cursor=$this->cash_bank->find('all',array('conditions'=>$conditions,'order' =>$order,'limit'=>1));
-		foreach ($cursor as $collection) 
-		{
-		$last=$collection['cash_bank']['receipt_id'];
+			   
+			}
 		}
-		if(empty($last))
-		{
-		$zz=0;
-		}	
-		else
-		{	
-		$zz=$last;
-		}
-		$this->set('zz',$zz);
-
-
-
-		$this->loadmodel('ledger_sub_account');
-		$conditions=array("society_id" => $s_society_id, "ledger_id" => 34,"deactive"=>0);
-		$cursor1=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-		$this->set('cursor1',$cursor1);
-		foreach($cursor1 as $collection)
-		{
-		$user_id = (int)@$collection['ledger_sub_account']['user_id'];
-		$this->loadmodel('user');
-		$conditions=array("user_id" => $user_id);
-		$cursor2=$this->user->find('all',array('conditions'=>$conditions));
-		$this->set('cursor',$cursor2);
-		}
+		$this->set(compact("members_for_billing"));
 		
-			$this->loadmodel('ledger_sub_account');
-			$conditions=array("ledger_id" => 33,"society_id"=>$s_society_id);
-			$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-			$this->set('result_ledger_sub_account',$result_ledger_sub_account);
-
-
+		if(isset($this->request->data['submit'])){
+			$trasenction_dates = $this->request->data['trasenction_date'];
+			$deposited_ins = $this->request->data['deposited_in'];
+			$receipt_modes = $this->request->data['receipt_mode'];
+			$cheque_numbers = $this->request->data['cheque_number'];
+			$dates = $this->request->data['date'];
+			$drown_in_which_banks = $this->request->data['drown_in_which_bank'];
+			$branch_of_banks = $this->request->data['branch_of_bank'];
+			$received_froms = $this->request->data['received_from'];
+			$ledger_sub_accounts = $this->request->data['ledger_sub_account'];
+			$receipt_types = $this->request->data['receipt_type'];
+			$amounts = $this->request->data['amount'];
+			$narrations = $this->request->data['narration'];
 			
-$this->loadmodel('ledger_sub_account');
-$conditions=array("ledger_id" => 112,"society_id"=>$s_society_id);
-$cursor4=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-$this->set('cursor4',$cursor4);
+			foreach($trasenction_dates as $trasenction_date){
+				
+			}
+			exit;
 			
-$this->loadmodel('reference');
-$conditions=array("auto_id"=>6);
-$rfff=$this->reference->find('all',array('conditions'=>$conditions));
-foreach($rfff as $dddtttt)
-{
-$kendo_array = @$dddtttt['reference']['reference'];			
-}
-if(!empty($kendo_array))
-{
-@$kendo_implode = implode(",",$kendo_array);
-}
-$this->set('kendo_implode',@$kendo_implode);
-
-
-$this->loadmodel('reference');
-$conditions=array("auto_id"=>7);
-$rfff2=$this->reference->find('all',array('conditions'=>$conditions));
-foreach($rfff2 as $dddtttt2)
-{
-$kendo_array2 = @$dddtttt2['reference']['reference'];			
-}
-if(!empty($kendo_array2))
-{
-@$kendo_implode2 = implode(",",$kendo_array2);
-}
-$this->set('kendo_implode2',@$kendo_implode2);
+		}
+	
 }
 /////////////////////////////// End new bank receipt //////////////////////////////////////////////////
 

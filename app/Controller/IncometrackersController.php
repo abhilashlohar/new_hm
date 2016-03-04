@@ -4734,34 +4734,7 @@ $conditions1=array("society_id"=>$s_society_id,'noc_ch_tp'=>'2');
 $result_count_flat_les = $this->flat->find('count',array('conditions'=>$conditions1));
 $this->set('result_count_flat_les',$result_count_flat_les);
 	
-	/*$this->loadmodel('ledger_sub_account');
-		$condition=array('society_id'=>$s_society_id,'ledger_id'=>34,'deactive'=>0);
-		$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
-		$this->set('result_ledger_sub_account',$result_ledger_sub_account);
-		foreach($result_ledger_sub_account as $ledger_sub_account){
-			$ledger_sub_account_user_id=$ledger_sub_account["ledger_sub_account"]["user_id"];
-			$ledger_sub_account_flat_id=$ledger_sub_account["ledger_sub_account"]["flat_id"];
-				$flats_for_bill[]=$ledger_sub_account_flat_id;
-		}
-		///order asc wing and flat/////
-		$this->loadmodel('wing');
-		$condition=array('society_id'=>$s_society_id);
-		$order=array('wing.wing_name'=>'ASC');
-		$result_wing=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
-		foreach($result_wing as $wing_info){
-			$wing_id=$wing_info["wing"]["wing_id"];
-			$this->loadmodel('flat');
-			$condition=array('wing_id'=>(int)$wing_id);
-			$order=array('flat.flat_name'=>'ASC');
-			$result_flat=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
-			foreach($result_flat as $flat_info){
-				$flat_id=$flat_info["flat"]["flat_id"];
-				if (in_array($flat_id, $flats_for_bill)) {
-					$new_flats_for_bill[]=$flat_id;
-				}
-			}
-		}*/
-		
+	
 		$this->loadmodel('wing');
 		$condition=array('society_id'=>$s_society_id);
 		$order=array('wing.wing_name'=>'ASC');

@@ -1,8 +1,9 @@
 <div class="hide_at_print">	
+<center>
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
-
+</center>
 </div>
 		
 <!-------------------------------Start Ledger Form --------------------------->
@@ -39,13 +40,13 @@ $default_date_to = date('d-m-Y')
 						
 						if($ledger_id == 34)
 						{							
-$flat_id = @$collection['ledger_sub_account']['flat_id'];
-$wing_detailll = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
-foreach($wing_detailll as $wing_dataaa)
-{
-$wing_idddd = (int)$wing_dataaa['flat']['wing_id'];	
-}
-$wing_flat= $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array($wing_idddd,$flat_id)));
+
+
+							$result_member = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($auto_id2)));
+							$name2=$result_member['user_name'];
+							$wing_name=$result_member['wing_name'];
+							$flat_name=$result_member['flat_name'];
+							$wing_flat=$wing_name.'-'.$flat_name;
 						}
 						if($ledger_id == 33){
 $account_number = $collection['ledger_sub_account']['bank_account'];  	

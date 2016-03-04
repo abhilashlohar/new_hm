@@ -6099,8 +6099,47 @@ $s_user_id=$this->Session->read('hm_user_id');
 
 $this->loadmodel('accounts_group');
 $order=(array('accounts_group.group_name'=>'ASC'));
-$accounts_group_dataa = $this->accounts_group->find('all',array('order'=>$order));
-$this->set('accounts_group_dataa',$accounts_group_dataa);
+$accounts_groups= $this->accounts_group->find('all',array('order'=>$order));
+foreach($accounts_groups as $accounts_group_data){
+	$accounts_group_id=(int)$accounts_group_data["accounts_group"]["auto_id"];
+	$group_name=$accounts_group_data["accounts_group"]["group_name"];
+	
+	$this->loadmodel('ledger_account');
+	$conditions=array("group_id" => $accounts_group_id);
+	$order=(array('ledger_account.ledger_name'=>'ASC'));
+	$ledger_accounts= $this->ledger_account->find('all',array('conditions'=>$conditions,'order'=>$order));
+	$arranged_groups[$accounts_group_id][]=array("group_name"=>$group_name);
+	foreach($ledger_accounts as $ledger_account_data){
+		$ledger_account_id=$ledger_account_data["ledger_account"]["auto_id"];
+		if($ledger_account_id!=33&&$ledger_account_id!=34&&$ledger_account_id!=35&&$ledger_account_id!=15){
+			$arranged_groups[$accounts_group_id][]=$ledger_account_data;
+		}
+	}
+}
+
+ $this->set('arranged_groups',$arranged_groups);
+
+  $this->loadmodel('wing');
+        $condition=array('society_id'=>$s_society_id);
+        $order=array('wing.wing_name'=>'ASC');
+        $wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+        foreach($wings as $data){
+            $wing_id=$data["wing"]["wing_id"];
+            $this->loadmodel('flat');
+            $condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+            $order=array('flat.flat_name'=>'ASC');
+            $flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+            foreach($flats as $data2){
+                $flat_id=$data2["flat"]["flat_id"];
+                $ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+                if(!empty($ledger_sub_account_id)){
+                    if (in_array($ledger_sub_account_id, $ledger_sub_account_ids)){
+                        $members_for_billing[]=$ledger_sub_account_id;
+                    }
+                }
+               
+            }
+        }
 
 
 

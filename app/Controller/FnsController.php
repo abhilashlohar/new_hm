@@ -123,7 +123,7 @@ function flat_type_name_via_flat_type_id($flat_type_id){
 	$this->loadmodel('flat_type_name');
 	$conditions=array("auto_id" => $flat_type_id);
 	$result=$this->flat_type_name->find('all',array('conditions'=>$conditions));
-	return $result[0]["flat_type_name"]["flat_name"];
+	return @$result[0]["flat_type_name"]["flat_name"];
 }
 
 function income_head_name_via_income_head_id($income_head_id){

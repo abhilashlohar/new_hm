@@ -1053,9 +1053,9 @@ function master_ledger_sub_accounts_coa()
 		$this->ath();
 		$this->check_user_privilages();
 
-		$s_role_id=$this->Session->read('role_id');
-		$s_society_id = (int)$this->Session->read('society_id');
-		$s_user_id=$this->Session->read('user_id');	
+		
+		$s_society_id = (int)$this->Session->read('hm_society_id');
+		$s_user_id=$this->Session->read('hm_user_id');	
 
 		$this->loadmodel('ledger_account');
 		$cursor1=$this->ledger_account->find('all');
@@ -4252,8 +4252,8 @@ function fetch_sub_accounts_from_ledger_account_id($ledger_account_id){
 		$this->check_user_privilages();
 
 			$s_role_id=$this->Session->read('role_id');
-			$s_society_id = (int)$this->Session->read('society_id');
-			$s_user_id=$this->Session->read('user_id');	
+			$s_society_id = (int)$this->Session->read('hm_society_id');
+			$s_user_id=$this->Session->read('hm_user_id');	
 
 				$this->loadmodel('ledger_account');
 				$cursor1=$this->ledger_account->find('all');
@@ -4275,9 +4275,9 @@ function master_ledger_accounts_view()
 	$this->layout='session';
 	}
 
-		$s_role_id=$this->Session->read('role_id');
-		$s_society_id = (int)$this->Session->read('society_id');
-		$s_user_id=$this->Session->read('user_id');	
+		//$s_role_id=$this->Session->read('role_id');
+		$s_society_id = (int)$this->Session->read('hm_society_id');
+		$s_user_id=$this->Session->read('hm_user_id');	
 		$this->set('s_user_id',$s_user_id);
 
 	$this->ath();
@@ -4290,15 +4290,7 @@ $conditions=array("delete_id" => 0);
 $result_accounts_category=$this->accounts_category->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('result_accounts_category',$result_accounts_category);
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	$this->loadmodel('ledger_account');
 	$conditions = array( '$or' => array(array('society_id' =>$s_society_id),array('society_id' =>0)));

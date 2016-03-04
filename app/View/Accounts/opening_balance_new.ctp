@@ -19,8 +19,8 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 				<tr>
 					<td><?php echo $ledger_acc_data[0]["group_name"]; ?></td>
 					<td><?php echo $ledger_accounts["ledger_account"]["ledger_name"]; ?></td>
-					<td><input type="text" class="m-wrap small"></td>
-					<td><input type="text" class="m-wrap small"></td>
+					<td><input type="text" class="m-wrap small" onblur="total_debit()"></td>
+					<td><input type="text" class="m-wrap small" onblur="total_credit()"></td>
 					<td></td>
 				</tr>
 			<?php } ?>
@@ -43,9 +43,9 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 	<tr>
 		<td><?php echo $ledger_name; ?></td> 
 		<td><?php echo $ledger_sub_account_name; ?></td>
-		<td><input type="text" class="m-wrap small"></td> 
-		<td><input type="text" class="m-wrap small"></td>
-		<td><input type="text" class="m-wrap small"></td> 
+		<td><input type="text" class="m-wrap small debit" onblur="total_debit()"></td> 
+		<td><input type="text" class="m-wrap small credit" onblur="total_credit()"></td>
+		<td><input type="text" class="m-wrap small penalty" onblur="total_penalty()"></td> 
 	</tr>
 <?php }	?>
 <?php 
@@ -67,18 +67,47 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 		<tr>
 		<td><?php echo $ledger_name; ?></td>
 		<td><?php echo $ledger_sub_account_name; ?></td>
-		<td><input type="text" class="m-wrap small"></td>
-		<td><input type="text" class="m-wrap small"></td>
+		<td><input type="text" class="m-wrap small debit" onblur="total_debit()"></td>
+		<td><input type="text" class="m-wrap small credit" onblur="total_credit()"></td>
 		<td></td>
 		</tr>
 	<?php }} ?>
 <tr>	
 <th colspan="2" style="text-align:right;">Total</th>
-<th><input type="text" class="m-wrap small"></th>
-<th><input type="text" class="m-wrap small"></th>
-<th><input type="text" class="m-wrap small"></th>	
+<th><input type="text" class="m-wrap small total_debit"></th>
+<th><input type="text" class="m-wrap small total_credit"></th>
+<th><input type="text" class="m-wrap small total_penalty"></th>	
 </tr>	
 	
 
 	
 </table>
+
+
+<script>
+
+$(document).on("change", ".debit", function() {
+	 var sum = 0;
+    $(".debit").each(function(){
+        sum+= +$(this).val();
+    });
+    $(".total_debit").val(sum);
+});
+
+$(document).on("change", ".credit", function() {
+	 var sum = 0;
+    $(".credit").each(function(){
+        sum+= +$(this).val();
+    });
+    $(".total_credit").val(sum);
+});
+
+
+$(document).on("change", ".penalty", function() {
+	 var sum = 0;
+    $(".penalty").each(function(){
+        sum+= +$(this).val();
+    });
+    $(".total_penalty").val(sum);
+});
+</script>

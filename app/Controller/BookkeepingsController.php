@@ -827,9 +827,9 @@ $this->ath();
 $voucher_id=(int)$id;
 $this->set('voc_id',$voucher_id);
 //$this->check_user_privilages();
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');	
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');	
 
 $result_society=$this->society_name($s_society_id);
 $this->set('society_name',$result_society[0]['society']['society_name']);

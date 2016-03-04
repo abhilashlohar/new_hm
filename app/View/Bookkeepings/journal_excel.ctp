@@ -68,20 +68,11 @@ $prepaired_by = $dataaaa['user']['user_name'];
 	
 	
 	if($ledger_account_id == 34 ){
-	$result_ledger_sub_account=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_subLedger_detail_via_flat_id'),array('pass'=>array($ledger_sub_account_id)));
-	$flat_id=$result_ledger_sub_account[0]['ledger_sub_account']['flat_id'];	
-	$ledger_ac_name=$result_ledger_sub_account[0]['ledger_sub_account']['name'];
-		//wing_id via flat_id//
-				$result_flat_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
-				foreach($result_flat_info as $flat_info){
-					$wing_id=$flat_info["flat"]["wing_id"];
-				}
-				
-		$user_detail = $this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'fetch_user_info_via_flat_id'), array('pass' => array($wing_id,$flat_id)));		
-		foreach($user_detail as $data){
-		$ledger_ac_name = $data['user']['user_name'];
-		}
-		$wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'), array('pass' => array($wing_id,$flat_id))); 
+	$result_member = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+			$ledger_ac_name=$result_member['user_name'];
+			$wing_name=$result_member['wing_name'];
+			$flat_name=$result_member['flat_name'];
+			$wing_flat=$wing_name.'-'.$flat_name;
 		
  }else{
 	$user_name =null;

@@ -6087,7 +6087,7 @@ $this->layout='session';
 $this->ath();
 $s_society_id = $this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');
-
+$this->check_user_privilages();
 
 $this->loadmodel('accounts_group');
 $order=(array('accounts_group.group_name'=>'ASC'));

@@ -1,9 +1,7 @@
-<style>
-td{ 
-margin-bottom:0px !important;
-}
-</style>
-
+<?php
+echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
+?>
+<input type="text" class="m-wrap medium date-picker" Placeholder="Opening Balance Date" style="background-color:white !important;">
 
 <table class="table table-bordered" style="background-color:white;">
 	<tr>
@@ -11,7 +9,7 @@ margin-bottom:0px !important;
 		<th>ledger Name</th>
 		<th>Debit</th>
 		<th>Credit</th>
-		<th>Penalty</th>
+		<th>Penalty (debit)</th>
 	</tr>
 	<?php 
 	foreach($arranged_groups as $group_id=>$ledger_acc_data){
@@ -23,7 +21,7 @@ margin-bottom:0px !important;
 					<td><?php echo $ledger_accounts["ledger_account"]["ledger_name"]; ?></td>
 					<td><input type="text" class="m-wrap small"></td>
 					<td><input type="text" class="m-wrap small"></td>
-					<td><input type="text" class="m-wrap small"></td>
+					<td></td>
 				</tr>
 			<?php } ?>
 		<?php } ?>
@@ -71,11 +69,16 @@ margin-bottom:0px !important;
 		<td><?php echo $ledger_sub_account_name; ?></td>
 		<td><input type="text" class="m-wrap small"></td>
 		<td><input type="text" class="m-wrap small"></td>
-		<td><input type="text" class="m-wrap small"></td>
+		<td></td>
 		</tr>
-		
-		
-		
 	<?php }} ?>
+<tr>	
+<th colspan="2" style="text-align:right;">Total</th>
+<th><input type="text" class="m-wrap small"></th>
+<th><input type="text" class="m-wrap small"></th>
+<th><input type="text" class="m-wrap small"></th>	
+</tr>	
+	
+
 	
 </table>

@@ -19,8 +19,8 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 				<tr>
 					<td><?php echo $ledger_acc_data[0]["group_name"]; ?></td>
 					<td><?php echo $ledger_accounts["ledger_account"]["ledger_name"]; ?></td>
-					<td><input type="text" class="m-wrap small" onblur="total_debit()"></td>
-					<td><input type="text" class="m-wrap small" onblur="total_credit()"></td>
+					<td><input type="text" class="m-wrap small debit"></td>
+					<td><input type="text" class="m-wrap small credit"></td>
 					<td></td>
 				</tr>
 			<?php } ?>
@@ -43,9 +43,9 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 	<tr>
 		<td><?php echo $ledger_name; ?></td> 
 		<td><?php echo $ledger_sub_account_name; ?></td>
-		<td><input type="text" class="m-wrap small debit" onblur="total_debit()"></td> 
-		<td><input type="text" class="m-wrap small credit" onblur="total_credit()"></td>
-		<td><input type="text" class="m-wrap small penalty" onblur="total_penalty()"></td> 
+		<td><input type="text" class="m-wrap small debit"></td> 
+		<td><input type="text" class="m-wrap small credit"></td>
+		<td><input type="text" class="m-wrap small penalty"></td> 
 	</tr>
 <?php }	?>
 <?php 
@@ -67,8 +67,8 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 		<tr>
 		<td><?php echo $ledger_name; ?></td>
 		<td><?php echo $ledger_sub_account_name; ?></td>
-		<td><input type="text" class="m-wrap small debit" onblur="total_debit()"></td>
-		<td><input type="text" class="m-wrap small credit" onblur="total_credit()"></td>
+		<td><input type="text" class="m-wrap small debit"></td>
+		<td><input type="text" class="m-wrap small credit"></td>
 		<td></td>
 		</tr>
 	<?php }} ?>

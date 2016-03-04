@@ -6082,6 +6082,30 @@ $this->send_notification('<span class="label label-warning" ><i class="icon-mone
 $output = json_encode(array('type'=>'success', 'text' => 'Please Fill Numeric Amount '));
 		die($output);	
 }
-////////////////////End my_flat_receipt_update_json /////////////////////////////////////////////
+////////////////////End my_flat_receipt_update_json //////////////////////////////////////
+////////////////// Start opening_balance_new ///////////////////////////////////////////
+function opening_balance_new()
+{
+if($this->RequestHandler->isAjax()){
+$this->layout='blank';
+}else{
+$this->layout='session';
+}	
+
+$this->ath();
+$s_society_id = $this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
+
+
+$this->loadmodel('accounts_group');
+$order=(array('accounts_group.group_name'=>'ASC'));
+$accounts_group_dataa = $this->accounts_group->find('all',array('order'=>$order));
+$this->set('accounts_group_dataa',$accounts_group_dataa);
+
+
+
+	
+}
+/////////////////////// End opening_balance_new //////////////////////////////////////
 }
 ?>

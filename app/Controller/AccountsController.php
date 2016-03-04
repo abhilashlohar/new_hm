@@ -6167,10 +6167,57 @@ foreach($ledger_id as $data)
 $debit_new = @$debit[$i];	
 $credit_new = @$credit[$i];
 $penalty_new = @$penalty[$i];
+}
+echo $data;
+exit;
+
+if($rr == 5)
+{
+$this->loadmodel('ledger_sub_account'); 
+$conditions=array("ledger_id"=>34,"name"=> new MongoRegex('/^' .  $excel_account_name . '$/i'),"flat_id"=>$flll_id,"society_id"=>$s_society_id);
+$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+$ledger_sub_account_id=$result_ledger_sub_account[0]["ledger_sub_account"]["auto_id"];
+
+$this->loadmodel('ledger');
+$ledger_auto_id=$this->autoincrement('ledger','auto_id');
+$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id,"debit"=>$debit,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));
+
+		
+if($intrest_arrear>0){
+$this->loadmodel('ledger');
+$ledger_auto_id=$this->autoincrement('ledger','auto_id');
+$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id,"debit"=>$intrest_arrear,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date),"arrear_int_type"=>"YES"));
+}
+}
+else if($excel_ledger_id==33 || $excel_ledger_id==35 || $excel_ledger_id==15 || $excel_ledger_id==112){
+		
+$this->loadmodel('ledger_sub_account'); 
+$conditions=array("ledger_id"=>$excel_ledger_id,"name"=> new MongoRegex('/^' .  $excel_account_name . '$/i'),"society_id"=>$s_society_id);
+$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+$ledger_sub_account_id= (int)$result_ledger_sub_account[0]["ledger_sub_account"]["auto_id"];
+			
+$this->loadmodel('ledger');
+$ledger_auto_id=$this->autoincrement('ledger','auto_id');
+$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$excel_ledger_id,
+"ledger_sub_account_id" => $ledger_sub_account_id,"debit"=>$debit,"credit"=>$credit,
+"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,
+"transaction_date"=>strtotime($transaction_date)));	
+}
+else
+{
+$this->loadmodel('ledger_account'); 
+$conditions = array( '$or' => array(array("group_id"=>$excel_ledger_id,"ledger_name"=> new MongoRegex('/^' .  $excel_account_name . '$/i'),'society_id' =>$s_society_id),
+array("group_id"=>$excel_ledger_id,"ledger_name"=> new MongoRegex('/^' .  $excel_account_name . '$/i'),'society_id' =>0)));
+$result_ledger_account=$this->ledger_account->find('all',array('conditions'=>$conditions));
+$ledger_account_id=$result_ledger_account[0]["ledger_account"]["auto_id"];
+
+$this->loadmodel('ledger');
+$ledger_auto_id=$this->autoincrement('ledger','auto_id');
+$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" => $ledger_account_id,"ledger_sub_account_id" => null,"debit"=>$debit,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));
 
 }
-
-}	
+}
+//}	
 	
 	
 	

@@ -6199,6 +6199,7 @@ function new_bank_receipt(){
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id = (int)$this->Session->read('hm_user_id');
 	
+	
 	$this->loadmodel('ledger_sub_account');
 	$conditions=array("society_id" => $s_society_id,"ledger_id"=>33);
 	$bank_data = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
@@ -6249,10 +6250,26 @@ function new_bank_receipt(){
 			$amounts = $this->request->data['amount'];
 			$narrations = $this->request->data['narration'];
 			
+			$i=0;
 			foreach($trasenction_dates as $trasenction_date){
+				$deposited_in=(int)$deposited_ins[$i];
+				$receipt_mode=$receipt_modes[$i];
+				$cheque_number=$cheque_numbers[$i];
+				$date=$dates[$i];
+				$drown_in_which_bank=$drown_in_which_banks[$i];
+				$branch_of_bank=$branch_of_banks[$i];
+				$received_from=$received_froms[$i];
+				$ledger_sub_account_id=$ledger_sub_accounts[$i];
+				$receipt_type=$receipt_types[$i];
+				$amount=$amounts[$i];
+				$narration=$narrations[$i];
 				
-			}
-			exit;
+				$this->loadmodel('cash_bank');
+				$auto_id=$this->autoincrement('cash_bank','auto_id');
+				$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id, "trasenction_date" => $trasenction_date,"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$received_from,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt"))); 
+				
+			$i++; }
+			
 			
 		}
 	

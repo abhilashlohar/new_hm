@@ -20,7 +20,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					<th>Transaction Date</th>
 					<th>Deposited In</th>
 					<th>Receipt Mode</th>
-					<th>Received From</th>
+					<th width="200px">Received From</th>
 					<th>Amount Applied</th>
 					<th>Narration</th>
 				</tr>
@@ -70,20 +70,20 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			
 		</td>
 		<td>
-			<select name="received_from[]" class="m-wrap span12">
+			<select name="received_from[]" class="m-wrap span12" style="width:200px;">
 				<option value="" style="display:none;">--select--</option>
 				<option value="residential">Residential</option>
 				<option value="non_residential">Non-Residential</option>
 			</select>
 			<div id="residential" style="display:none;">
-				<select name="ledger_sub_account[]" class="m-wrap ">
-					<option value="">--member--</option>
+				<select name="ledger_sub_account[]" class="m-wrap" style="width:200px;">
+					<option value="" style="display:none;">--member--</option>
 					<?php foreach($members_for_billing as $ledger_sub_account_id){
 						$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 						echo '<option value='.$ledger_sub_account_id.'>'.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
 					} ?>
 				</select>
-				<select name="receipt_type[]" class="m-wrap span12">
+				<select name="receipt_type[]" class="m-wrap span12" style="width:200px;">
 					<option value="maintanace">Maintanace Receipt</option>
 					<option value="other">Other Receipt</option>
 				</select>

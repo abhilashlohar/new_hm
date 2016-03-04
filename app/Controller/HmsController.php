@@ -9472,14 +9472,7 @@ if($committee=="yes"){
 	$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => 2));
 }
 
-if(($flat_type==1) and 	($owner=='yes')){
 
-				$auto_id=$this->autoincrement('user_role','auto_id');
-				$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>7));
-		}elseif(($flat_type==2) and ($owner=='no')){
-				$auto_id=$this->autoincrement('user_role','auto_id');
-				$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>7));
-		}
 
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no','owner'=>$type));

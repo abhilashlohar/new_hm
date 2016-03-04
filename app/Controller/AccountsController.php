@@ -6157,9 +6157,19 @@ $this->set('ledger_sub_account_dataa',$ledger_sub_account_dataa);
 	
 if(isset($this->request->data['opening_balance_submit']))	
 {
-echo "asfsafsaf";	
-exit;	
-	
+$ledger_id = $this->request->data['ledger_id'];
+$debit = $this->request->data['debit'];
+$credit = $this->request->data['credit'];	
+$penalty = $this->request->data['penalty'];
+$i=0;	
+foreach($ledger_id as $data)
+{
+$debit_new = @$debit[$i];	
+$credit_new = @$credit[$i];
+$penalty_new = @$penalty[$i];
+
+}
+
 }	
 	
 	

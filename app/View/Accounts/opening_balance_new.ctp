@@ -20,10 +20,10 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 				<tr>
 					<td><?php echo $ledger_acc_data[0]["group_name"]; ?></td>
 					<td><?php echo $ledger_accounts["ledger_account"]["ledger_name"]; ?>
-					<input type="hidden" value="<?php echo $ledger_accounts["ledger_account"]["auto_id"]; ?>">
+					<input type="hidden" value="<?php echo $ledger_accounts["ledger_account"]["auto_id"]; ?>" name="ledger_id[]">
 					</td>
-					<td><input type="text" class="m-wrap small debit"></td>
-					<td><input type="text" class="m-wrap small credit"></td>
+					<td><input type="text" class="m-wrap small debit" name="debit[]"></td>
+					<td><input type="text" class="m-wrap small credit" name="credit[]"></td>
 					<td></td>
 				</tr>
 			<?php } ?>
@@ -47,11 +47,12 @@ $ledger_sub_account_id = (int)$ledger_sub_account_data['ledger_sub_account']['au
 	<tr>
 		<td><?php echo $ledger_name; ?></td> 
 		<td><?php echo $ledger_sub_account_name; ?>
-<input type="hidden" value="<?php echo $ledger_sub_account_id; ?>,<?php echo $ledger_id; ?>">
+<input type="hidden" value="<?php echo $ledger_id; ?>,<?php echo $ledger_sub_account_id; ?>"
+name="ledger_id[]">
 		</td>
-		<td><input type="text" class="m-wrap small debit"></td> 
-		<td><input type="text" class="m-wrap small credit"></td>
-		<td><input type="text" class="m-wrap small penalty"></td> 
+		<td><input type="text" class="m-wrap small debit" name="debit[]"></td> 
+		<td><input type="text" class="m-wrap small credit" name="credit[]"></td>
+		<td><input type="text" class="m-wrap small penalty" name="penalty[]"></td> 
 	</tr>
 <?php }	?>
 <?php 
@@ -72,11 +73,11 @@ $ledger_sub_account_id = (int)$ledger_sub_account_data['ledger_sub_account']['au
 		<tr>
 		<td><?php echo $ledger_name; ?></td>
 		<td><?php echo $ledger_sub_account_name; ?>
-<input type="hidden" value="<?php echo $ledger_sub_account_id; ?>,<?php echo $ledger_id; ?>">
+<input type="hidden" value="<?php echo $ledger_id; ?>,<?php echo $ledger_sub_account_id; ?>" name="ledger_id[]">
 		
 		</td>
-		<td><input type="text" class="m-wrap small debit"></td>
-		<td><input type="text" class="m-wrap small credit"></td>
+		<td><input type="text" class="m-wrap small debit" name="debit[]"></td>
+		<td><input type="text" class="m-wrap small credit" name="credit[]"></td>
 		<td></td>
 		</tr>
 	<?php }} ?>

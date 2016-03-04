@@ -6119,6 +6119,18 @@ foreach($accounts_groups as $accounts_group_data){
 
  $this->set('arranged_groups',$arranged_groups);
 
+ 
+ 
+ 	$ledger_sub_account_ids=array();
+        $this->loadmodel('ledger_sub_account');
+        $condition=array('society_id'=>$s_society_id,'ledger_id'=>34);
+        $members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
+        foreach($members as $data3){
+            $ledger_sub_account_ids[]=$data3["ledger_sub_account"]["auto_id"];
+        }
+ 
+ 
+ 
   $this->loadmodel('wing');
         $condition=array('society_id'=>$s_society_id);
         $order=array('wing.wing_name'=>'ASC');
@@ -6141,8 +6153,23 @@ foreach($accounts_groups as $accounts_group_data){
             }
         }
 
+$this->set('members_for_billing',$members_for_billing);
 
-
+	
+	
+$this->loadmodel('ledger_sub_account');
+$order=(array('ledger_sub_account.name'=>'ASC'));
+$conditions = (array('society_id'=>$s_society_id));
+$ledger_sub_account_dataa= $this->ledger_sub_account->find('all',array('order'=>$order,'conditions'=>$conditions));
+$this->set('ledger_sub_account_dataa',$ledger_sub_account_dataa);
+	
+	//pr($ledger_sub_account_data);
+	
+	//exit;
+	
+	
+	
+	
 	
 }
 /////////////////////// End opening_balance_new //////////////////////////////////////

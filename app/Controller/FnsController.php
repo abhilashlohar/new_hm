@@ -289,6 +289,11 @@ function fetch_ledger_sub_account_info_via_ledger_sub_account_id($ledger_sub_acc
 	return $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 }
 
+function fetch_ledger_account_info_via_ledger_id($ledger_id){
+	$this->loadmodel('ledger_account');
+	$conditions=array("auto_id" => $ledger_id);
+	return $this->ledger_account->find('all',array('conditions'=>$conditions));
+}
 
 }
 ?>

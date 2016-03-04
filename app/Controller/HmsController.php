@@ -25834,11 +25834,13 @@ function menus_as_per_user_rights(){
 	$user_type= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'),array('pass'=>array($s_user_id)));
 	
 	if($user_type=="third_party" or $user_type=="member"){
+		
 	$default_role= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id'),array('pass'=>array($s_user_id)));
 		
 		$this->loadmodel('role_privilege');
 		$conditions=array('society_id'=>$s_society_id,'role_id'=>$default_role);
 		$main_modules=$this->role_privilege->find('all',array('conditions'=>$conditions));
+		
 			if(sizeof($main_modules)>0){
 			foreach($main_modules as $main_module){
 			$assigned_modules[]=$main_module["role_privilege"]["module_id"];
@@ -25904,64 +25906,64 @@ function menus_as_per_user_rights(){
 	if($user_type=="hm"){
 		?>
 		<li>
-			<a href="hm_assign_module">
+			<a href="<?php echo $webroot_path; ?>Hms/hm_assign_module">
 			<i class="icon-home"></i> Assign Modules
 			</a>					
 		</li>
 
 		<li>
-			<a href="new_society_enrollment">
+			<a href="<?php echo $webroot_path; ?>Hms/new_society_enrollment">
 			<i class="icon-home"></i> New Enrollment
 			</a>					
 		</li>
 		<li>
-			<a href="society_approve">
+			<a href="<?php echo $webroot_path; ?>Hms/society_approve">
 			<i class="icon-home"></i> Approve Society
 			</a>					
 		</li>
 
 		<li>
-			<a href="feedback_view">
+			<a href="<?php echo $webroot_path; ?>Hms/feedback_view">
 			<i class="icon-home"></i> Feedback
 			</a>					
 		</li>	
 
 		<li>
-			<a href="hm_society_member_view">
+			<a href="<?php echo $webroot_path; ?>Hms/hm_society_member_view">
 			<i class="icon-home"></i> Society View
 			</a>					
 		</li>	
 		<li>
-			<a href="master_accounts_category_hm">
+			<a href="<?php echo $webroot_path; ?>Hms/master_accounts_category_hm">
 			<i class="icon-home"></i>Master Charts Of Account HM
 			</a>					
 		</li>
 		<li>
-			<a href="update_default_package">
+			<a href="<?php echo $webroot_path; ?>Hms/update_default_package">
 			<i class="icon-home"></i>Update default package of modules
 			</a>					
 		</li>
 		<li>
-			<a href="create_login">
+			<a href="<?php echo $webroot_path; ?>Hms/create_login">
 			<i class="icon-home"></i>Create Login
 			</a>					
 		</li>
 		
 		<li>
-			<a href="hm_create_role">
+			<a href="<?php echo $webroot_path; ?>Hms/hm_create_role">
 			<i class="icon-home"></i>Create Role
 			</a>					
 		</li>
 		
 		<li>
-			<a href="assign_module_to_role_hm">
+			<a href="<?php echo $webroot_path; ?>Hms/assign_module_to_role_hm">
 			<i class="icon-home"></i>Assign Module to Role
 			</a>					
 		</li>
 		
 		
 		<li>
-			<a href="asign_role_to_user">
+			<a href="<?php echo $webroot_path; ?>Hms/asign_role_to_user">
 			<i class="icon-home"></i>Assign Role to Users
 			</a>					
 		</li>
@@ -26052,7 +26054,7 @@ function assign_default_modules_to_society($society_id=null){
 	$this->hm_modules_assign->deleteAll($conditions);
 		
 	$this->loadmodel('main_module');
-	$conditions=array('default_assign'=>"yes");
+	$conditions=array('society'=>"yes");
 	$main_modules=$this->main_module->find('all',array('conditions'=>$conditions));
 	foreach($main_modules as $module_data){
 		$module_id=$module_data["main_module"]["auto_id"];
@@ -26068,16 +26070,34 @@ function assign_default_modules_to_society($society_id=null){
 		$module_id=$sub_module_data["sub_module"]["module_id"];
 		$sub_module_id=$sub_module_data["sub_module"]["auto_id"];
 		$admin=@$sub_module_data["sub_module"]["admin"];
-		$resident=@$sub_module_data["sub_module"]["resident"];
+		$owner=@$sub_module_data["sub_module"]["owner"];
+		$tenant=@$sub_module_data["sub_module"]["tenant"];
+		$owner_family=@$sub_module_data["sub_module"]["owner_family"];
+		$tenant_family=@$sub_module_data["sub_module"]["tenant_family"];
 		if($admin=="yes"){
 			$this->loadmodel('role_privileges');
 			$auto_id=$this->autoincrement('role_privileges','auto_id');
 			$this->role_privileges->saveAll(array("auto_id" => $auto_id, "society_id" => $society_id , "role_id" => 1,"module_id" => $module_id,"sub_module_id" => $sub_module_id));
 		}
-		if($resident=="yes"){
+		if($owner=="yes"){
 			$this->loadmodel('role_privileges');
 			$auto_id=$this->autoincrement('role_privileges','auto_id');
-			$this->role_privileges->saveAll(array("auto_id" => $auto_id, "society_id" => $society_id , "role_id" => 2,"module_id" => $module_id,"sub_module_id" => $sub_module_id));
+			$this->role_privileges->saveAll(array("auto_id" => $auto_id, "society_id" => $society_id , "role_id" => 3,"module_id" => $module_id,"sub_module_id" => $sub_module_id));
+		}
+		if($tenant=="yes"){
+			$this->loadmodel('role_privileges');
+			$auto_id=$this->autoincrement('role_privileges','auto_id');
+			$this->role_privileges->saveAll(array("auto_id" => $auto_id, "society_id" => $society_id , "role_id" => 4,"module_id" => $module_id,"sub_module_id" => $sub_module_id));
+		}
+		if($owner_family=="yes"){
+			$this->loadmodel('role_privileges');
+			$auto_id=$this->autoincrement('role_privileges','auto_id');
+			$this->role_privileges->saveAll(array("auto_id" => $auto_id, "society_id" => $society_id , "role_id" => 5,"module_id" => $module_id,"sub_module_id" => $sub_module_id));
+		}
+		if($tenant_family=="yes"){
+			$this->loadmodel('role_privileges');
+			$auto_id=$this->autoincrement('role_privileges','auto_id');
+			$this->role_privileges->saveAll(array("auto_id" => $auto_id, "society_id" => $society_id , "role_id" => 6,"module_id" => $module_id,"sub_module_id" => $sub_module_id));
 		}
 	}
 }

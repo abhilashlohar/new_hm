@@ -18,7 +18,7 @@ $default_date = date('d-m-Y');
 				<tr>
 					<th>Billing Date</th>
 					<th>Payment Due Date</th>
-					<th>Bill Type</th>
+					<th style="width:200px !important;">Bill Type</th>
 					<th>Income Head</th>
 					<th>Amount</th>
 					<th>Narration</th>
@@ -45,7 +45,7 @@ $default_date = date('d-m-Y');
 			<input type="text" class="m-wrap small date-picker" Placeholder="Payment Due Date">
 		</td>
 		<td>
-			<select class="m-wrap span12" name="bill_type[]" style="width:200px;">
+			<select class="m-wrap medium" name="bill_type[]" style="width:200px;">
 				<option value="" style="display:none;">Select</option>
 				<option value="2">Residential</option>
 				<option value="1">Non Residential</option>

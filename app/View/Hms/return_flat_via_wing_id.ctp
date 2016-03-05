@@ -6,8 +6,9 @@
 										
 										foreach ($result3 as $db) 
 										{
- 										 echo $flat_id=$db['flat']["flat_id"];
-										 echo $flat_name=$db['flat']["flat_name"];
+ 										  $flat_id=$db['flat']["flat_id"];
+										  $flat_name=$db['flat']["flat_name"];
+										  $flat_name=ltrim($flat_name,'0');
 										$aa = 0;
 $user_fetch = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_user_info_via_flat_id'),array('pass'=>array($flat_id)));			
 foreach($user_fetch as $data)										

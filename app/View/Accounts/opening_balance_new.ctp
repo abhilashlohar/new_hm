@@ -2,6 +2,13 @@
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
 <form method="post">
+
+<div class="portlet box blue">
+<div class="portlet-title">
+<h4 class="block"><i class="icon-reorder"></i>Opening Balance Import</h4>
+</div>
+<div class="portlet-body form">
+
 <input type="text" class="m-wrap medium date-picker" Placeholder="Opening Balance Date" style="background-color:white !important;">
 
 <table class="table table-bordered" style="background-color:white;">
@@ -88,7 +95,13 @@ name="ledger_id[]">
 <th><input type="text" class="m-wrap small total_penalty"></th>	
 </tr>	
 </table>
+<div class="form-actions">
 <button type="submit" name="opening_balance_submit" class="btn green">Submit</button>
+<button type="button" class="btn">Cancel</button>
+</div>
+</div>
+</div>
+
 </form>
 
 <script>

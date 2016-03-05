@@ -6815,18 +6815,25 @@ $this->society->updateAll(array('terms_conditions'=>$terms_arr),array("society_i
 
 ///////////////////////////////// Start Approve Bill //////////////////////////////////////
 function aprrove_bill(){
-if($this->RequestHandler->isAjax()){
-$this->layout='blank';
-}else{
-$this->layout='session';
-}
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	$this->ath();
 
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 
-$s_society_id=$this->Session->read('hm_society_id');
-$s_user_id=$this->Session->read('hm_user_id');
-
-
-
+	$this->loadmodel('regular_bill_temp');
+	$conditions=array("society_id"=>$s_society_id,"sent_for_approval"=>"yes");
+	$regular_bill_temps=$this->regular_bill_temp->find('all',array('conditions'=>$conditions));
+	foreach($regular_bill_temps as $regular_bill_temp){
+		$start_date=$regular_bill_temp["regular_bill_temp"]["start_date"];
+		$arranged_bills[$start_date][]=$regular_bill_temp;
+	}
+	$this->set(compact("arranged_bills"));
+	
 }
 //////////////////////////////////// End Approve Bill /////////////////////////////////////////////////////////////////
 ////////////////////////////////////////// Start NEFT Add //////////////////////////////////////////////////////////////

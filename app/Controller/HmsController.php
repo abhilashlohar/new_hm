@@ -25772,6 +25772,7 @@ $financial_year_to = $to3;
 	$cursor = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
     foreach($cursor as $data)
 	{
+	$ledger_sub_account_id = $data['ledger_sub_account']['auto_id'];
 	$flat_id = $data['ledger_sub_account']['flat_id'];
 	$name = $data['ledger_sub_account']['name'];
     $exit_date = $data['ledger_sub_account']['exit_date']; 
@@ -25786,7 +25787,7 @@ $wing_flat= $this->requestAction(array('controller' => 'hms', 'action' => 'wing_
    if(($financial_year_from <= $exit_date && $financial_year_to >= $exit_date && $deactive == 1) || ($deactive == 0))
    {
    ?>		
-    <option value="<?php echo $flat_id; ?>"><?php echo $name; ?> <?php echo $wing_flat; ?></option>
+    <option value="<?php echo $ledger_sub_account_id; ?>"><?php echo $name; ?> <?php echo $wing_flat; ?></option>
 	<?php 
 	} }
 	?>

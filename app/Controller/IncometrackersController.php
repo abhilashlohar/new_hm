@@ -3205,23 +3205,40 @@ function it_supplimentry_bill()
 				$this->set('datet1',@$datet1);
 				$this->set('count',$count);
 
-if(isset($this->request->data['sub1']))
+if(isset($this->request->data['submit']))
 {
-					
-					
-						
-					
-			  
-						
-							
-								
+	$transaction_date = $this->request->data['transaction_date'];
+	$payment_due_date = $this->request->data['payment_due_date'];
+	$supplimentry_bill_type = $this->request->data['bill_type'];
+
+	if($supplimentry_bill_type == 2)
+	{
+	//$ledger_sub_account_id = $this->request->data['bill_type'];	
+	}
+	else
+	{
+	$ledger_sub_account_id = $this->request->data['non_resident'];
+	$company_name = $this->request->data['company_name'];	
+	}
+	$income_head_id = $this->request->data['income_head'];					
+	$amount = $this->request->data['amount'];
+	$narration = $this->request->data['narration'];		
+	
+	$i=0;	
+	foreach($transaction_date as $transaction_date)
+	{
+		
+	}
+		
 			
 				
-	
 
 
-		
-		
+
+
+
+
+
 }
 
 if(isset($this->request->data['add_non_member']))

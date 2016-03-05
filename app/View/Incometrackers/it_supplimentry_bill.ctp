@@ -40,10 +40,10 @@ $default_date = date('d-m-Y');
 		<td>
 			<input type="text" class="m-wrap small date-picker" 
 			data-date-format="dd-mm-yyyy" placeholder="Bill Date" value="<?php echo $default_date; ?>" 
-			style="background-color:white !important;"/>
+			style="background-color:white !important;" name="transaction_date[]"/>
 		</td>
 		<td>
-			<input type="text" class="m-wrap small date-picker" Placeholder="Payment Due Date">
+			<input type="text" class="m-wrap small date-picker" Placeholder="Payment Due Date"name="payment_due_date[]">
 		</td>
 		<td>
 			<select class="m-wrap medium" name="bill_type[]" style="width:200px;">
@@ -53,7 +53,7 @@ $default_date = date('d-m-Y');
 			</select>
 			
 		    <div class="hide" id="non_resident_drop_down">
-				<select class="chosen m-wrap medium">
+				<select class="chosen m-wrap medium" name="non_resident[]">
 					<option value="" style="display:none;">Select</option>
 					<?php
 					foreach ($cursor11 as $collection) 
@@ -72,7 +72,7 @@ $default_date = date('d-m-Y');
 			?>
 			</div>
 			<div id="company_name_div" class="hide">
-			<input type="text" class="m-wrap span12" style="background-color:white !important;" Placeholder="Company Name" style="width:150px;">
+			<input type="text" class="m-wrap span12" style="background-color:white !important;" Placeholder="Company Name" style="width:150px;" name="company_name[]">
 			</div>
 		</td>
 		<td>
@@ -91,10 +91,10 @@ $default_date = date('d-m-Y');
 			</select>	
 		</td>
 		<td>
-			<input type="text" class="m-wrap small">
+			<input type="text" class="m-wrap small" name="amount[]">
 		</td>
 		<td>
-		<input type="text" class="m-wrap span12" style="width:150px;">
+		<input type="text" class="m-wrap span12" style="width:150px;" name="narration[]">
 		</td>
 	</tr>
 </table>
@@ -122,13 +122,13 @@ $(document).ready(function(){
 $('select[name="bill_type[]"]').die().live("change",function(){
 		var received_from=$(this).val();
 		if(received_from==1){
-			$(this).closest("td").find("#resident_dropdown_div").show();
-			$(this).closest("td").find("#non_resident_drop_down").hide();
+			$(this).closest("td").find("#resident_dropdown_div").hide();
+			$(this).closest("td").find("#non_resident_drop_down").show();
 			$(this).closest("td").find("#company_name_div").show();
 			 //$("#company_name_div").show();
 		}else{
-			$(this).closest("td").find("#resident_dropdown_div").hide();
-			$(this).closest("td").find("#non_resident_drop_down").show();
+			$(this).closest("td").find("#resident_dropdown_div").show();
+			$(this).closest("td").find("#non_resident_drop_down").hide();
 			$(this).closest("td").find("#company_name_div").hide();
 		    //$("#company_name_div").show();
 		}

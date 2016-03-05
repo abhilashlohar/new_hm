@@ -25764,7 +25764,7 @@ $financial_year_to = $to3;
 
 
 ?>
-<select class="m-wrap medium chosen resident_drop_down">
+<select class="m-wrap medium chosen resident_drop_down" name="resident[]">
 <option value="" style="display:none;">Select Sub Ledger A/c</option>
 	<?php
 	$this->loadmodel('ledger_sub_account');
@@ -25784,8 +25784,8 @@ $financial_year_to = $to3;
 	}
 
 $wing_flat= $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array($wing_idddd,$flat_id)));
-   if(($financial_year_from <= $exit_date && $financial_year_to >= $exit_date && $deactive == 1) || ($deactive == 0))
-   {
+if(($financial_year_from <= $exit_date && $financial_year_to >= $exit_date && $deactive == 1) || ($deactive == 0))
+{
    ?>		
     <option value="<?php echo $ledger_sub_account_id; ?>"><?php echo $name; ?> <?php echo $wing_flat; ?></option>
 	<?php 

@@ -3207,30 +3207,35 @@ function it_supplimentry_bill()
 
 if(isset($this->request->data['submit']))
 {
-	$transaction_date = $this->request->data['transaction_date'];
-	$payment_due_date = $this->request->data['payment_due_date'];
-	$supplimentry_bill_type = $this->request->data['bill_type'];
-
-	if($supplimentry_bill_type == 2)
-	{
-	//$ledger_sub_account_id = $this->request->data['bill_type'];	
-	}
-	else
-	{
-	$ledger_sub_account_id = $this->request->data['non_resident'];
-	$company_name = $this->request->data['company_name'];	
-	}
-	$income_head_id = $this->request->data['income_head'];					
-	$amount = $this->request->data['amount'];
-	$narration = $this->request->data['narration'];		
+	$transaction_dates = $this->request->data['transaction_date'];
+	$payment_due_dates = $this->request->data['payment_due_date'];
+	$supplimentry_bill_types = $this->request->data['bill_type'];
+	$ledger_sub_account_id_for_residents = $this->request->data['resident'];	
+	$ledger_sub_account_ids_for_non_residents = $this->request->data['non_resident'];
+	$company_names = $this->request->data['company_name'];	
+	$income_head_ids = $this->request->data['income_head'];					
+	$amounts = $this->request->data['amount'];
+	$narrations = $this->request->data['narration'];		
 	
 	$i=0;	
-	foreach($transaction_date as $transaction_date)
+	foreach($transaction_dates as $transaction_date)
 	{
-		
+    $payment_due_date=$payment_due_dates[$i];
+    $supplimentry_bill_type=$supplimentry_bill_types[$i];
+	if($supplimentry_bill_type == 2)
+	{	
+	$ledger_sub_account_id_for_resident = $ledger_sub_account_id_for_residents[$i];
 	}
-		
-			
+    else
+	{
+	$ledger_sub_account_ids_for_non_resident = $ledger_sub_account_ids_for_non_residents[$i];
+	$company_name =$company_names[$i];	
+	}
+	$income_head_id = $income_head_ids[$i]; 	
+	echo $amount = $amounts[$i];
+	echo $narration = $narrations[$i];
+	$i++;
+}
 				
 
 
@@ -7181,8 +7186,8 @@ $conditions=array("society_id"=>$s_society_id);
 $cursor1 = $this->society->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
 }
-/////////////////////////////////////// End NEFT Show Ajax ///////////////////////////////////////////////////
-////////////////////////////////////Start Supplimentry Bill Json /////////////////////////////////////////////
+// End NEFT Show Ajax //
+//Start Supplimentry Bill Json //
 function supplimentry_bill_json()
 {
         $this->layout='blank';

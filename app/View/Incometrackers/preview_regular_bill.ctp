@@ -111,6 +111,7 @@ if(sizeof($other_charge_ih_ids)>0){
 	<tbody>
 	<?php $row_id=0; $income_head_tatal=array(); $noc_tatal=0; $other_charge_tatal=array(); $total_arrear_maintenance=0; $total_arrear_intrest=0; $total_intrest_on_arrears=0;  $total_credit_stock=0; $total_due_for_payment=0;
 	foreach($regular_bills as $regular_bill){ $row_id++;
+	$auto_id=$regular_bill["regular_bill_temp"]["auto_id"];
 	$ledger_sub_account_id=$regular_bill["regular_bill_temp"]["ledger_sub_account_id"];
 	$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 	$income_head_array=$regular_bill["regular_bill_temp"]["income_head_array"];
@@ -132,19 +133,19 @@ if(sizeof($other_charge_ih_ids)>0){
 			<?php
 			foreach($income_head_array as $income_head=>$amount){ 
 			$income_head_tatal[$income_head]=@$income_head_tatal[$income_head]+$amount; ?>
-			<td><input type="text" value="<?php echo $amount; ?>" class="auto_save" ledger_sub_account_id="<?php echo $ledger_sub_account_id; ?>" income_head_id="<?php echo $income_head; ?>" row_id="<?php echo $row_id; ?>" /></td>
+			<td><input type="text" value="<?php echo $amount; ?>" class="auto_save" ledger_sub_account_id="<?php echo $ledger_sub_account_id; ?>" income_head_id="<?php echo $income_head; ?>" row_id="<?php echo $row_id; ?>" auto_id="<?php echo $auto_id; ?>" /></td>
 			<?php } ?>
-			<td><input type="text" value="<?php echo $noc_charge; ?>" class="auto_save_noc" ledger_sub_account_id="<?php echo $ledger_sub_account_id; ?>" row_id="<?php echo $row_id; ?>" />
+			<td><input type="text" value="<?php echo $noc_charge; ?>" class="auto_save_noc" ledger_sub_account_id="<?php echo $ledger_sub_account_id; ?>" row_id="<?php echo $row_id; ?>" auto_id="<?php echo $auto_id; ?>" />
 			<?php $noc_tatal+=$noc_charge; ?>
 			</td>
 			<?php foreach($other_charge_ih_ids as $other_charge_ih_id){
 			if (in_array($other_charge_ih_id, $other_charge_key)){
 				$other_charge_tatal[$other_charge_ih_id]=@$other_charge_tatal[$other_charge_ih_id]+$other_charge[$other_charge_ih_id];?>
 			<td>
-			<input type="text" value="<?php echo $other_charge[$other_charge_ih_id]; ?>" class="auto_save_other" ledger_sub_account_id="<?php echo $ledger_sub_account_id; ?>" income_head_id="<?php echo $other_charge_ih_id; ?>" row_id="<?php echo $row_id; ?>" /></td>
+			<input type="text" value="<?php echo $other_charge[$other_charge_ih_id]; ?>" class="auto_save_other" ledger_sub_account_id="<?php echo $ledger_sub_account_id; ?>" income_head_id="<?php echo $other_charge_ih_id; ?>" row_id="<?php echo $row_id; ?>" auto_id="<?php echo $auto_id; ?>" /></td>
 			<?php }else{ ?>
 			<td>
-			<input type="text" value="0" class="auto_save_other" ledger_sub_account_id="<?php echo $ledger_sub_account_id; ?>" income_head_id="<?php echo $other_charge_ih_id; ?>" row_id="<?php echo $row_id; ?>" /></td>
+			<input type="text" value="0" class="auto_save_other" ledger_sub_account_id="<?php echo $ledger_sub_account_id; ?>" income_head_id="<?php echo $other_charge_ih_id; ?>" row_id="<?php echo $row_id; ?>" auto_id="<?php echo $auto_id; ?>" /></td>
 			<?php }} ?>
 			<td><input type="text" value="<?php echo $total; ?>" readonly class="total_<?php echo $row_id; ?> total_column" row_id="<?php echo $row_id; ?>"/></td>
 			<td><input type="text" value="<?php echo $arrear_maintenance; ?>" class="arrear_maintenance" readonly row_id="<?php echo $row_id; ?>" />
@@ -153,10 +154,10 @@ if(sizeof($other_charge_ih_ids)>0){
 			<td><input type="text" value="<?php echo $arrear_intrest; ?>" class="arrear_intrest" readonly row_id="<?php echo $row_id; ?>" />
 			<?php $total_arrear_intrest+=$arrear_intrest; ?>
 			</td>
-			<td><input type="text" value="<?php echo $intrest_on_arrears; ?>" class="auto_save_intrest"  ledger_sub_account_id="<?php echo $ledger_sub_account_id; ?>" row_id="<?php echo $row_id; ?>" />
+			<td><input type="text" value="<?php echo $intrest_on_arrears; ?>" class="auto_save_intrest"  ledger_sub_account_id="<?php echo $ledger_sub_account_id; ?>" row_id="<?php echo $row_id; ?>" auto_id="<?php echo $auto_id; ?>" />
 			<?php $total_intrest_on_arrears+=$intrest_on_arrears; ?>
 			</td>
-			<td><input type="text" value="<?php echo $credit_stock; ?>" class="auto_save_credit"  ledger_sub_account_id="<?php echo $ledger_sub_account_id; ?>" row_id="<?php echo $row_id; ?>" />
+			<td><input type="text" value="<?php echo $credit_stock; ?>" class="auto_save_credit"  ledger_sub_account_id="<?php echo $ledger_sub_account_id; ?>" row_id="<?php echo $row_id; ?>" auto_id="<?php echo $auto_id; ?>" />
 			<?php $total_credit_stock+=$credit_stock; ?>
 			</td>
 			<td>
@@ -194,11 +195,12 @@ $(document).ready(function(){
 	$(".auto_save").on("blur",function(){
 		$("#save_result").html("<span>Saving...</span>");
 		var ledger_sub_account_id=$(this).attr("ledger_sub_account_id");
+		var auto_id=$(this).attr("auto_id");
 		var income_head_id=$(this).attr("income_head_id");
 		var amount=$(this).val();
 		var row_id=$(this).attr("row_id");
 		$.ajax({
-			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_income_head_values/"+ledger_sub_account_id+"/"+income_head_id+"/"+amount,
+			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_income_head_values/"+auto_id+"/"+income_head_id+"/"+amount,
 		}).done(function(response){
 			$("#save_result").html('Every change you make is automatically saved.');
 		});
@@ -214,10 +216,11 @@ $(document).ready(function(){
 	$(".auto_save_noc").on("blur",function(){
 		$("#save_result").html("<span>Saving...</span>");
 		var ledger_sub_account_id=$(this).attr("ledger_sub_account_id");
+		var auto_id=$(this).attr("auto_id");
 		var amount=$(this).val();
 		var row_id=$(this).attr("row_id");
 		$.ajax({
-			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_noc_values/"+ledger_sub_account_id+"/"+amount,
+			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_noc_values/"+auto_id+"/"+amount,
 		}).done(function(response){
 			$("#save_result").html('Every change you make is automatically saved.');
 		});
@@ -232,11 +235,12 @@ $(document).ready(function(){
 	$(".auto_save_other").on("blur",function(){
 		$("#save_result").html("<span>Saving...</span>");
 		var ledger_sub_account_id=$(this).attr("ledger_sub_account_id");
+		var auto_id=$(this).attr("auto_id");
 		var income_head_id=$(this).attr("income_head_id");
 		var amount=$(this).val();
 		var row_id=$(this).attr("row_id");
 		$.ajax({
-			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_other_charge/"+ledger_sub_account_id+"/"+income_head_id+"/"+amount,
+			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_other_charge/"+auto_id+"/"+income_head_id+"/"+amount,
 		}).done(function(response){
 			$("#save_result").html('Every change you make is automatically saved.');
 		});
@@ -251,10 +255,11 @@ $(document).ready(function(){
 	$(".auto_save_intrest").on("blur",function(){
 		$("#save_result").html("<span>Saving...</span>");
 		var ledger_sub_account_id=$(this).attr("ledger_sub_account_id");
+		var auto_id=$(this).attr("auto_id");
 		var amount=$(this).val();
 		var row_id=$(this).attr("row_id");
 		$.ajax({
-			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_intrest/"+ledger_sub_account_id+"/"+amount,
+			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_intrest/"+auto_id+"/"+amount,
 		}).done(function(response){
 			$("#save_result").html('Every change you make is automatically saved.');
 		});
@@ -268,11 +273,12 @@ $(document).ready(function(){
 	})
 	$(".auto_save_credit").on("blur",function(){
 		$("#save_result").html("<span>Saving...</span>");
+		var auto_id=$(this).attr("auto_id");
 		var ledger_sub_account_id=$(this).attr("ledger_sub_account_id");
 		var amount=$(this).val();
 		var row_id=$(this).attr("row_id");
 		$.ajax({
-			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_credit/"+ledger_sub_account_id+"/"+amount,
+			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_credit/"+auto_id+"/"+amount,
 		}).done(function(response){
 			$("#save_result").html('Every change you make is automatically saved.');
 		});

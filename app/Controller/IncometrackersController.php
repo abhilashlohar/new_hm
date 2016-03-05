@@ -59,6 +59,11 @@ function it_regular_bill(){
 		$billing_cycle=$this->data["billing_cycle"];
 		$start_date=$this->data["start_date"];
 		$start_date=date("Y-m-d",strtotime($start_date)); 
+		
+		$end_date = date('Y-m-d', strtotime("+".$billing_cycle." months", strtotime($start_date)));
+		$end_date = date('Y-m-d', strtotime('-1 day', strtotime($end_date)));
+		
+		
 		$due_date=$this->data["due_date"];
 		$due_date=date("Y-m-d",strtotime($due_date)); 
 		$panalty=$this->data["panalty"];
@@ -127,7 +132,7 @@ function it_regular_bill(){
 			$current_date = date('Y-m-d');
 			$this->loadmodel('regular_bill_temp');
 			$auto_id=$this->autoincrement('regular_bill_temp','auto_id');
-			$this->regular_bill_temp->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_maintenance"=> 0, "arrear_intrest" => 0, "intrest_on_arrears" => 0,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>strtotime($start_date),"due_date"=>strtotime($due_date),"credit_stock"=>0,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$s_user_flat_id,"current_date"=>strtotime($current_date),"sent_for_approval"=>"no"));
+			$this->regular_bill_temp->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_maintenance"=> 0, "arrear_intrest" => 0, "intrest_on_arrears" => 0,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>strtotime($start_date),"due_date"=>strtotime($due_date),"credit_stock"=>0,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$s_user_flat_id,"current_date"=>strtotime($current_date),"sent_for_approval"=>"no","approved"=>"no","end_date"=>strtotime($end_date)));
 			
 		}
 		
@@ -160,9 +165,9 @@ function send_bills_for_approval(){
 	echo "ok";
 }
 
-function auto_save_income_head_values($ledger_sub_account_id=null,$income_head_id=null,$amount=null){
+function auto_save_income_head_values($auto_id=null,$income_head_id=null,$amount=null){
 	$this->loadmodel('regular_bill_temp');
-	$condition=array('ledger_sub_account_id'=>(int)$ledger_sub_account_id);
+	$condition=array('auto_id'=>(int)$auto_id);
 	$regular_bills = $this->regular_bill_temp->find('all',array('conditions'=>$condition));
 	$income_head_array=$regular_bills[0]["regular_bill_temp"]["income_head_array"];
 	$total=$regular_bills[0]["regular_bill_temp"]["total"];
@@ -174,12 +179,12 @@ function auto_save_income_head_values($ledger_sub_account_id=null,$income_head_i
 	$due_for_payment=$due_for_payment-$old_amount;
 	$due_for_payment=$due_for_payment+$amount;
 	
-	$this->regular_bill_temp->updateAll(array("total" => $total,"due_for_payment"=>$due_for_payment,"income_head_array"=>$income_head_array),array("ledger_sub_account_id" => (int)$ledger_sub_account_id));
+	$this->regular_bill_temp->updateAll(array("total" => $total,"due_for_payment"=>$due_for_payment,"income_head_array"=>$income_head_array),array("auto_id" => (int)$auto_id));
 }
 
-function auto_save_noc_values($ledger_sub_account_id=null,$amount=null){
+function auto_save_noc_values($auto_id=null,$amount=null){
 	$this->loadmodel('regular_bill_temp');
-	$condition=array('ledger_sub_account_id'=>(int)$ledger_sub_account_id);
+	$condition=array('auto_id'=>(int)$auto_id);
 	$regular_bills = $this->regular_bill_temp->find('all',array('conditions'=>$condition));
 	$noc_charge=$regular_bills[0]["regular_bill_temp"]["noc_charge"];
 	$total=$regular_bills[0]["regular_bill_temp"]["total"];
@@ -190,12 +195,12 @@ function auto_save_noc_values($ledger_sub_account_id=null,$amount=null){
 	$due_for_payment=$due_for_payment-$old_amount;
 	$due_for_payment=$due_for_payment+$amount;
 	
-	$this->regular_bill_temp->updateAll(array("total" => $total,"due_for_payment"=>$due_for_payment,"noc_charge"=>$amount),array("ledger_sub_account_id" => (int)$ledger_sub_account_id));
+	$this->regular_bill_temp->updateAll(array("total" => $total,"due_for_payment"=>$due_for_payment,"noc_charge"=>$amount),array("auto_id" => (int)$auto_id));
 }
 
-function auto_save_other_charge($ledger_sub_account_id=null,$income_head_id=null,$amount=null){
+function auto_save_other_charge($auto_id=null,$income_head_id=null,$amount=null){
 	$this->loadmodel('regular_bill_temp');
-	$condition=array('ledger_sub_account_id'=>(int)$ledger_sub_account_id);
+	$condition=array('auto_id'=>(int)$auto_id);
 	$regular_bills = $this->regular_bill_temp->find('all',array('conditions'=>$condition));
 	$other_charge=$regular_bills[0]["regular_bill_temp"]["other_charge"];
 	$total=$regular_bills[0]["regular_bill_temp"]["total"];
@@ -211,13 +216,13 @@ function auto_save_other_charge($ledger_sub_account_id=null,$income_head_id=null
 	$due_for_payment=$due_for_payment-$old_amount;
 	$due_for_payment=$due_for_payment+$amount;
 	
-	$this->regular_bill_temp->updateAll(array("total" => $total,"due_for_payment"=>$due_for_payment,"other_charge"=>$other_charge),array("ledger_sub_account_id" => (int)$ledger_sub_account_id));
+	$this->regular_bill_temp->updateAll(array("total" => $total,"due_for_payment"=>$due_for_payment,"other_charge"=>$other_charge),array("auto_id" => (int)$auto_id));
 	
 }
 
-function auto_save_intrest($ledger_sub_account_id=null,$amount=null){
+function auto_save_intrest($auto_id=null,$amount=null){
 	$this->loadmodel('regular_bill_temp');
-	$condition=array('ledger_sub_account_id'=>(int)$ledger_sub_account_id);
+	$condition=array('auto_id'=>(int)$auto_id);
 	$regular_bills = $this->regular_bill_temp->find('all',array('conditions'=>$condition));
 	$old_amount=$regular_bills[0]["regular_bill_temp"]["intrest_on_arrears"];
 	$due_for_payment=$regular_bills[0]["regular_bill_temp"]["due_for_payment"];
@@ -228,13 +233,13 @@ function auto_save_intrest($ledger_sub_account_id=null,$amount=null){
 	$due_for_payment=$due_for_payment-$old_amount;
 	$due_for_payment=$due_for_payment+$amount;
 	
-	$this->regular_bill_temp->updateAll(array("due_for_payment"=>$due_for_payment,"intrest_on_arrears"=>$amount),array("ledger_sub_account_id" => (int)$ledger_sub_account_id));
+	$this->regular_bill_temp->updateAll(array("due_for_payment"=>$due_for_payment,"intrest_on_arrears"=>$amount),array("auto_id" => (int)$auto_id));
 	
 }
 
-function auto_save_credit($ledger_sub_account_id=null,$amount=null){
+function auto_save_credit($auto_id=null,$amount=null){
 	$this->loadmodel('regular_bill_temp');
-	$condition=array('ledger_sub_account_id'=>(int)$ledger_sub_account_id);
+	$condition=array('auto_id'=>(int)$auto_id);
 	$regular_bills = $this->regular_bill_temp->find('all',array('conditions'=>$condition));
 	$old_amount=$regular_bills[0]["regular_bill_temp"]["credit_stock"];
 	$due_for_payment=$regular_bills[0]["regular_bill_temp"]["due_for_payment"];
@@ -245,7 +250,7 @@ function auto_save_credit($ledger_sub_account_id=null,$amount=null){
 	$due_for_payment=$due_for_payment-$old_amount;
 	$due_for_payment=$due_for_payment+$amount;
 	
-	$this->regular_bill_temp->updateAll(array("due_for_payment"=>$due_for_payment,"credit_stock"=>$amount),array("ledger_sub_account_id" => (int)$ledger_sub_account_id));
+	$this->regular_bill_temp->updateAll(array("due_for_payment"=>$due_for_payment,"credit_stock"=>$amount),array("auto_id" => (int)$auto_id));
 	
 }
 /////////////////////// End It Regular Bill (Accounts) ////////////////////////////////////////////////////////////
@@ -3608,25 +3613,7 @@ $bill_number = $this->request->query('user');
 $this->set('bill_number',$bill_number);
 }
 $this->set('wise',$wise);
-/*
-$this->loadmodel('new_regular_bill');
-$order=array('new_regular_bill.bill_start_date'=> 'ASC');
-$conditions=array('society_id'=>$s_society_id,"approval_status"=>1,'new_regular_bill.edit_status'=>array('$ne'=>"YES"));
-$cursor1=$this->new_regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order));
-$this->set('cursor1',$cursor1);	
 
-
-if(!empty($bill_number))
-{
-
-$this->loadmodel('new_regular_bill');
-$order=array('new_regular_bill.bill_start_date'=> 'ASC');
-//$conditions=array('society_id'=>$s_society_id,"approval_status"=>1,"bill_no"=>$bill_number,'new_regular_bill.edit_status'=>array('$ne'=>"YES"));
-$conditions=array('society_id'=>$s_society_id,"approval_status"=>1,"bill_no"=>$bill_number,"edit_status"=>"NO");
-$cursor2=$this->new_regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order));
-$this->set('cursor2',$cursor2);	
-}
-*/
 
 $this->loadmodel('new_regular_bill');
 $conditions=array("society_id" => $s_society_id,"approval_status" => 1,'new_regular_bill.edit_status'=>array('$ne'=>"YES"));
@@ -6825,8 +6812,16 @@ function aprrove_bill(){
 	$s_society_id=$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');
 
+	if(isset($this->request->data['submit'])){
+		$auto_ids = $this->request->data['auto_id'];
+		foreach($auto_ids as $auto_id){
+			$this->loadmodel('regular_bill_temp');
+			$this->regular_bill_temp->updateAll(array('approved'=>"yes"),array("auto_id" => (int)$auto_id));
+		}
+	}
+	
 	$this->loadmodel('regular_bill_temp');
-	$conditions=array("society_id"=>$s_society_id,"sent_for_approval"=>"yes");
+	$conditions=array("society_id"=>$s_society_id,"sent_for_approval"=>"yes","approved"=>"no");
 	$regular_bill_temps=$this->regular_bill_temp->find('all',array('conditions'=>$conditions));
 	foreach($regular_bill_temps as $regular_bill_temp){
 		$start_date=$regular_bill_temp["regular_bill_temp"]["start_date"];
@@ -6834,6 +6829,10 @@ function aprrove_bill(){
 	}
 	$this->set(compact("arranged_bills"));
 	
+	$this->loadmodel('regular_bill_temp');
+	$conditions=array("society_id"=>$s_society_id,"sent_for_approval"=>"yes","approved"=>"yes");
+	$approved_bills=$this->regular_bill_temp->find('count',array('conditions'=>$conditions));
+	$this->set(compact("approved_bills"));
 }
 //////////////////////////////////// End Approve Bill /////////////////////////////////////////////////////////////////
 ////////////////////////////////////////// Start NEFT Add //////////////////////////////////////////////////////////////

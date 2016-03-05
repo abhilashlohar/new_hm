@@ -90,13 +90,14 @@ name="ledger_id[]">
 	<?php }} ?>
 <tr>	
 <th colspan="2" style="text-align:right;">Total</th>
-<th><input type="text" class="m-wrap small total_debit"></th>
-<th><input type="text" class="m-wrap small total_credit"></th>
-<th><input type="text" class="m-wrap small total_penalty"></th>	
+<th><input type="text" class="m-wrap small total_debit" id="total_debit"></th>
+<th><input type="text" class="m-wrap small total_credit" id="total_credit"></th>
+<th><input type="text" class="m-wrap small total_penalty" id="total_penalty"></th>	
 </tr>	
 </table>
+<div id="validation"></div>
 <div class="form-actions">
-<button type="submit" name="opening_balance_submit" class="btn green">Submit</button>
+<button type="submit" name="opening_balance_submit" class="btn green" id="submit_opening_balance">Submit</button>
 <button type="button" class="btn">Cancel</button>
 </div>
 </div>
@@ -105,6 +106,38 @@ name="ledger_id[]">
 </form>
 
 <script>
+
+$(document).on("click", "#submit_opening_balance", function() {
+    
+	
+	
+	var total_debit = 0;
+    $("#total_debit").each(function(){
+        total_debit += +$(this).val();
+    });	
+	
+    $("#total_penalty").each(function(){
+        total_debit += +$(this).val();
+    });	
+	
+	var total_credit = 0;
+    $("#total_credit").each(function(){
+        total_credit += +$(this).val();
+    });
+	
+	
+	if(total_credit != total_debit)
+	{
+	$("#validation").html('Total Debit Shold be Equal to Total Debit');	
+	return false;	
+	}
+	
+	
+	
+	
+	
+});
+
 
 $(document).on("change", ".debit", function() {
 	 var sum = 0;

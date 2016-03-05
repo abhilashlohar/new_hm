@@ -3163,8 +3163,8 @@ $html_mail.='</table>
 <?php
 }
 }
-////////////////////////// End Regular Bill View2 /////////////////////////////////////////////////////////////
-///////////////// Start It Supplimentry Bill (Accounts)///////////////////////////////////////////////////////
+// End Regular Bill View2 //
+//Start It Supplimentry Bill (Accounts)//
 
 function it_supplimentry_bill()
 {
@@ -3207,114 +3207,21 @@ function it_supplimentry_bill()
 
 if(isset($this->request->data['sub1']))
 {
-					$this->loadmodel('society');
-					$conditions=array("society_id" => $s_society_id);
-					$cursor=$this->society->find('all',array('conditions'=>$conditions));
-					foreach($cursor as $collection)
-					{
-					$society_name2 = $collection['society']['society_name'];
-					}
-						 $from2 = $this->request->data['from'];
-						 $bill_type_id = $this->request->data['type'];
-						 $due_date = $this->request->data['due_date'];
 					
-			   if($bill_type_id == 1)
-			   {
-			            //$com_name = $this->request->data['c_name'];
-				        $resi_id = (int)$this->request->data['s_name'];
-						$this->loadmodel('ledger_account');
-						$conditions =array( '$or' => array( 
-						array("society_id" => 0,"group_id"=>8),
-						array("society_id" => $s_society_id,"group_id"=>8)
-						));
-						$cursor = $this->ledger_account->find('all',array('conditions'=>$conditions));
-						foreach($cursor as $collection)	
-						{
-						$ih_id = (int)$collection['ledger_account']['auto_id'];
-						$ih_idp = (int)@$this->request->data['ih'.$ih_id];
-							if($ih_idp != 0)
-							{
-							$amt = $this->request->data['amt'.$ih_id];
-							$ih_id2 = array($ih_idp,$amt);
-							$ih_id3 = implode(",",$ih_id2);
-							$ih_id4[] = $ih_id3;
-							}
-						}
-								$ih_idn = (int)@$this->request->data['ih43'];
-								if($ih_idn != 0)
-								{
-								$amt = $this->request->data['amt43'];
-								$ih_id2 = array(43,$amt);
-								$ih_id3 = implode(",",$ih_id2);
-								$ih_id4[] = $ih_id3;
-								}	  
-                }
+					
+						
+					
+			  
+						
+							
+								
 			
-				else if($bill_type_id == 2)
-                {
-					$resi_id = (int)$this->request->data['r_name'];
-					$this->loadmodel('ledger_account');
-					$conditions =array( '$or' => array( 
-					array("society_id" => 0,"group_id"=>8),
-					array("society_id" => $s_society_id,"group_id"=>8)
-					));
-					$cursor = $this->ledger_account->find('all',array('conditions'=>$conditions));
-						foreach($cursor as $collection)	
-						{
-						$ih_id = (int)$collection['ledger_account']['auto_id'];
-						$ih_idp = (int)@$this->request->data['ih'.$ih_id];
-								if($ih_idp != 0)
-								{
-								$amt = $this->request->data['amt'.$ih_id];
-								$ih_id2 = array($ih_idp,$amt);
-								$ih_id3 = implode(",",$ih_id2);
-								$ih_id4[] = $ih_id3;
-								}
-						}
-						$ih_idn = (int)@$this->request->data['ih43'];
-							if($ih_idn != 0)
-							{
-							$amt = $this->request->data['amt43'];
-							$ih_id2 = array(43,$amt);
-							$ih_id3 = implode(",",$ih_id2);
-							$ih_id4[] = $ih_id3;
-							}
-
-				}
+				
 	
-$descp2 = $this->request->data['description'];
 
 
-$fromm = date("Y-m-d", strtotime($from2));
-$fromm = new MongoDate(strtotime($fromm));
-
-$due_date55 = date("Y-m-d", strtotime($due_date));
-$due_date55 = new MongoDate(strtotime($due_date55));
-
-$ih2 = implode('/',$ih_id4);
-
-		if($bill_type_id == 1)
-		{
-		$f2=$this->encode($from2,'housingmatters');
-		$due3=$this->encode($due_date,'housingmatters');
-		$ih3=$this->encode($ih2,'housingmatters');
-		$desc3=$this->encode($descp2,'housingmatters');
-		$bill_tp3=$this->encode($bill_type_id,'housingmatters');
-		$resi3=$this->encode($resi_id,'housingmatters');
-
-		$this->response->header('Location','supplimentry_bill_view2?f='.$f2.'&due='.$due3.'&ih='.$ih3.'&d='.$desc3.'&tp='.$bill_tp3.'&res='.$resi3.'');
-		}
-		else
-		{
-		$f2=$this->encode($from2,'housingmatters');
-		$due3=$this->encode($due_date,'housingmatters');
-		$ih3=$this->encode($ih2,'housingmatters');
-		$desc3=$this->encode($descp2,'housingmatters');
-		$bill_tp3=$this->encode($bill_type_id,'housingmatters');
-		$resi3=$this->encode($resi_id,'housingmatters');
-
-		$this->response->header('Location','supplimentry_bill_view2?f='.$f2.'&due='.$due3.'&ih='.$ih3.'&d='.$desc3.'&tp='.$bill_tp3.'&res='.$resi3.'');
-		}
+		
+		
 }
 
 if(isset($this->request->data['add_non_member']))

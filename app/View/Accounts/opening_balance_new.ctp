@@ -95,7 +95,7 @@ name="ledger_id[]">
 <th><input type="text" class="m-wrap small total_penalty" id="total_penalty"></th>	
 </tr>	
 </table>
-<div id="validation"></div>
+<div id="validation" style="color:red;"></div>
 <div class="form-actions">
 <button type="submit" name="opening_balance_submit" class="btn green" id="submit_opening_balance">Submit</button>
 <button type="button" class="btn">Cancel</button>

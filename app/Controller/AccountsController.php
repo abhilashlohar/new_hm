@@ -1246,8 +1246,8 @@ function over_due_report()
 			$this->ath();
 			$this->check_user_privilages();
 				$s_role_id=$this->Session->read('role_id');
-				$s_society_id = (int)$this->Session->read('society_id');
-				$s_user_id=$this->Session->read('user_id');		
+				$s_society_id = (int)$this->Session->read('hm_society_id');
+				$s_user_id=$this->Session->read('hm_user_id');		
 
 					$this->loadmodel('user');
 					$conditions=array("society_id" => $s_society_id, "tenant"=>1,"deactive"=>0);
@@ -1271,8 +1271,8 @@ function over_due_report_show_ajax()
 {
 		$this->layout = 'blank';
 		$s_role_id=$this->Session->read('role_id');
-		$s_society_id = (int)$this->Session->read('society_id');
-		$s_user_id=$this->Session->read('user_id');
+		$s_society_id = (int)$this->Session->read('hm_society_id');
+		$s_user_id=$this->Session->read('hm_user_id');
 
 			$this->loadmodel('society');
 			$conditions=array("society_id" => $s_society_id);
@@ -1326,8 +1326,8 @@ function overdue_excel()
 $this->layout = 'blank';	
 	
 	            $s_role_id=$this->Session->read('role_id');
-				$s_society_id = (int)$this->Session->read('society_id');
-				$s_user_id=$this->Session->read('user_id');	
+				$s_society_id = (int)$this->Session->read('hm_society_id');
+				$s_user_id=$this->Session->read('hm_user_id');	
 	
 		
 		$this->loadmodel('society');
@@ -3470,9 +3470,9 @@ function balance_sheet_ajax($from=null){
 	$this->ath();
 	
 	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$this->set('s_society_id',$s_society_id);
-	$s_user_id=$this->Session->read('user_id');	
+	$s_user_id=$this->Session->read('hm_user_id');	
 	
 	if(empty($from)){
 		echo "<center style='color:red;'>Fill above fields.</center>"; exit;
@@ -3502,9 +3502,9 @@ function income_expenditure_ajax($from=null,$to=null){
 	$this->ath();
 	
 	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$this->set('s_society_id',$s_society_id);
-	$s_user_id=$this->Session->read('user_id');	
+	$s_user_id=$this->Session->read('hm_user_id');	
 	
 	if(empty($from) or empty($to)){
 		echo "<center style='color:red;'>Fill above fields.</center>"; exit;
@@ -3528,7 +3528,7 @@ function income_expenditure_ajax($from=null,$to=null){
 function balance_sheet_excel(){
 		$this->layout='blank';
 		$this->ath();
-		$s_society_id = (int)$this->Session->read('society_id');	
+		$s_society_id = (int)$this->Session->read('hm_society_id');	
 		$result_society=$this->society_name($s_society_id);
 		$this->set('society_name',$result_society[0]['society']['society_name']);
 		$from=$this->request->query('from');	
@@ -3551,7 +3551,7 @@ function balance_sheet_excel(){
 function income_expenditure_excel(){
 		$this->layout='blank';
 		$this->ath();
-		$s_society_id = (int)$this->Session->read('society_id');	
+		$s_society_id = (int)$this->Session->read('hm_society_id');	
 		$from=$this->request->query('from');
 		$to=$this->request->query('to');
 		$result_society=$this->society_name($s_society_id);
@@ -3574,7 +3574,7 @@ function income_expenditure_excel(){
 function balance_sheet_income_expenditure($from){
 	$this->layout='blank';
 	$this->ath();
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 		$total_balace=0; 
 		$this->loadmodel('accounts_group');
 		$conditions4=array("accounts_id" => 3);
@@ -3621,7 +3621,7 @@ function balance_sheet_income_expenditure($from){
 function calculate_balance_sheet_credit($from,$ledger_account_id,$to){
 	
 	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$to=date('Y-m-d',strtotime($to));
 	$from=date('Y-m-d',strtotime($from));
 	$this->loadmodel('ledger');
@@ -3641,7 +3641,7 @@ function calculate_balance_sheet_credit($from,$ledger_account_id,$to){
 function calculate_balance_sheet_credit_new($from,$ledger_account_id){
 	
 	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 	
 	$from=date('Y-m-d',strtotime($from));
 	$this->loadmodel('ledger');
@@ -3660,7 +3660,7 @@ function calculate_balance_sheet_credit_new($from,$ledger_account_id){
 function calculate_balance_sheet_debit($from,$ledger_account_id,$to){
 	
 	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 
 	$from=date('Y-m-d',strtotime($from));
 	$to=date('Y-m-d',strtotime($to));
@@ -3679,7 +3679,7 @@ function calculate_balance_sheet_debit($from,$ledger_account_id,$to){
 function calculate_balance_sheet_debit_new($from,$ledger_account_id){
 	
 	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 
 	$from=date('Y-m-d',strtotime($from));
 	
@@ -3978,10 +3978,10 @@ header ("Content-type: application/vnd.ms-excel");
 header ("Content-Disposition: attachment; filename=".$filename.".xls");
 header ("Content-Description: Generated Report" );
 	
-	$s_role_id=$this->Session->read('role_id');
+	//$s_role_id=$this->Session->read('role_id');
 	
 	$this->set('s_society_id',$s_society_id);
-	$s_user_id=$this->Session->read('user_id');	
+	$s_user_id=$this->Session->read('hm_user_id');	
 	
 	
 	if(empty($from) || empty($to) || empty($wise)){
@@ -4013,8 +4013,31 @@ header ("Content-Description: Generated Report" );
 	$this->set('ledger_account_id',112);	
 	}
 	
+	   
+        
+        $this->loadmodel('wing');
+        $condition=array('society_id'=>$s_society_id);
+        $order=array('wing.wing_name'=>'ASC');
+        $wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+        foreach($wings as $data){
+            $wing_id=$data["wing"]["wing_id"];
+            $this->loadmodel('flat');
+            $condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+            $order=array('flat.flat_name'=>'ASC');
+            $flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+            foreach($flats as $data2){
+                $flat_id=$data2["flat"]["flat_id"];
+                $ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+                if(!empty($ledger_sub_account_id)){
+                        $members_for_billing[]=$ledger_sub_account_id;
+                }
+                
+            }
+        }
+		
+	$this->set(compact('members_for_billing'));
 	
-	$new_flats_for_bill = array();
+	/*$new_flats_for_bill = array();
 	$this->loadmodel('wing');
 	$condition=array('society_id'=>$s_society_id);
 	$order=array('wing.wing_name'=>'ASC');
@@ -4035,7 +4058,7 @@ header ("Content-Description: Generated Report" );
 }
 
 $this->set('new_flats_for_bill',$new_flats_for_bill);
-	
+*/	
 	
 	
 	
@@ -5676,11 +5699,11 @@ $this->layout='blank';
 	$this->ath();
 	
 	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');		
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');		
 
 	
-$s_society_id = (int)$this->Session->read('society_id');
+//$s_society_id = (int)$this->Session->read('society_id');
 	$this->set('s_society_id',$s_society_id);
 	$society_result=$this->requestAction(array('controller' => 'Hms', 'action' => 'society_name'),array('pass'=>array($s_society_id)));
 	$society_name=$society_result[0]["society"]["society_name"];

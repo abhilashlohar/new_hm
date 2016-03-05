@@ -47,8 +47,8 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 	<?php  
 	$total_ob_debit=0; $total_ob_credit=0; $total_debit=0; $total_credit=0; $total_cb_debit=0; $total_cb_credit=0;
 	foreach($result_ledger_account as $ledger_account){ 
-		 echo $ledger_account_id= $ledger_account["ledger_account"]["auto_id"];
-		echo'<br/>';
+		  $ledger_account_id= $ledger_account["ledger_account"]["auto_id"];
+		
 		$ledger_account_name=$ledger_account["ledger_account"]["ledger_name"];
 			
 			

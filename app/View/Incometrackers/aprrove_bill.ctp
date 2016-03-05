@@ -5,6 +5,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<form method="post" >
 	<div class="portlet-body" style="overflow-x: scroll;">
 	<?php 
+	if(sizeof(@$arranged_bills)==0){$arranged_bills=array(); echo 'No bills for approval.'; exit;} 
 	foreach($arranged_bills as $start_date=>$arranged_bill){
 	
 		foreach($arranged_bill as $data){
@@ -86,7 +87,33 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<button type="submit" href="#" class="btn blue" name="submit">APPROVE</button>
 	</form>
 </div>
-<?php echo $approved_bills; ?>
+<?php if($approved_bills>0){ ?>
+	<div class="modal-backdrop fade in" ></div>
+	<div style="display: block;" id="myModal1" class="modal hide fade in session_destroy_container" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="false">
+		<div class="modal-body">
+			<p><b>Please wait, Bills are under Process.</b></p><br>
+			<div class="progress progress-striped active">
+				<div style="width: 0%;" class="bar"></div>
+			</div>
+		</div>
+	</div>
+	<script>
+	$(document).ready(function(){
+		generate_bills();
+		function generate_bills(){
+			$.ajax({
+				url: "<?php echo $webroot_path; ?>Incometrackers/generate_bills",
+			}).done(function(response){
+				if(response=="yes"){
+					generate_bills();
+				}else{
+					window.location.href = '<?php echo $webroot_path; ?>Incometrackers/aprrove_bill';
+				}
+			});
+		}
+	});
+	</script>
+<?php } ?>
 <style>
 th,td{
 	font-size: 12px !important;

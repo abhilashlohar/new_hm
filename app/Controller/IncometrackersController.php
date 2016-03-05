@@ -253,6 +253,120 @@ function auto_save_credit($auto_id=null,$amount=null){
 	$this->regular_bill_temp->updateAll(array("due_for_payment"=>$due_for_payment,"credit_stock"=>$amount),array("auto_id" => (int)$auto_id));
 	
 }
+
+function generate_bills(){
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$ip = $this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
+	$webroot_path = $this->requestAction(array('controller' => 'Fns', 'action' => 'webroot_path'));
+	
+	$this->loadmodel('society');
+	$condition=array('society_id'=>$s_society_id);
+	$result_society = $this->society->find('all',array('conditions'=>$condition));
+	$society_name=$result_society[0]["society"]["society_name"];
+	
+	
+	$this->loadmodel('regular_bill_temp');
+	$condition=array('society_id'=>$s_society_id,"approved"=>"yes");
+	$regular_bills = $this->regular_bill_temp->find('all',array('conditions'=>$condition,'limit'=>2));
+	foreach($regular_bills as $regular_bill){
+		$temp_auto_id=$regular_bill["regular_bill_temp"]["auto_id"];
+		$income_head_array=$regular_bill["regular_bill_temp"]["income_head_array"];
+		$noc_charge=$regular_bill["regular_bill_temp"]["noc_charge"];
+		$other_charge=$regular_bill["regular_bill_temp"]["other_charge"];
+		$total=$regular_bill["regular_bill_temp"]["total"];
+		$arrear_maintenance=$regular_bill["regular_bill_temp"]["arrear_maintenance"];
+		$arrear_intrest=$regular_bill["regular_bill_temp"]["arrear_intrest"];
+		$intrest_on_arrears=$regular_bill["regular_bill_temp"]["intrest_on_arrears"];
+		$credit_stock=$regular_bill["regular_bill_temp"]["credit_stock"];
+		$due_for_payment=$regular_bill["regular_bill_temp"]["due_for_payment"];
+		$ledger_sub_account_id=$regular_bill["regular_bill_temp"]["ledger_sub_account_id"];
+		$start_date=$regular_bill["regular_bill_temp"]["start_date"];
+		$end_date=$regular_bill["regular_bill_temp"]["end_date"];
+		$due_date=$regular_bill["regular_bill_temp"]["due_date"];
+		$description=$regular_bill["regular_bill_temp"]["description"];
+		$created_by=$regular_bill["regular_bill_temp"]["created_by"];
+		$billing_cycle=$regular_bill["regular_bill_temp"]["billing_cycle"];
+		
+		$current_date=date("Y-m-d");
+		$this->loadmodel('regular_bill');
+		$regular_bill_id=$this->autoincrement('regular_bill','auto_id');
+		$this->regular_bill->saveAll(array("auto_id" => $regular_bill_id, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_maintenance"=> $arrear_maintenance, "arrear_intrest" => $arrear_intrest, "intrest_on_arrears" => $intrest_on_arrears,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"credit_stock"=>$credit_stock,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by,"current_date"=>$current_date,"edited"=>"no","end_date"=>$end_date));
+		
+		//LEDGER CODE START//
+		foreach($income_head_array as $income_head_id=>$income_head_amount){
+			if(!empty($income_head_amount)){
+				$this->loadmodel('ledger');
+				$auto_id=$this->autoincrement('ledger','auto_id');
+				$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => $income_head_id,"ledger_sub_account_id" => null,"debit"=>null,"credit"=>$income_head_amount,"table_name"=>"regular_bill","element_id"=>$regular_bill_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+			}
+		}
+		
+		if(!empty($noc_charge)){
+			$this->loadmodel('ledger');
+			$auto_id=$this->autoincrement('ledger','auto_id');
+			$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 43,"ledger_sub_account_id" => null,"debit"=>null,"credit"=>$noc_charge,"table_name"=>"regular_bill","element_id"=>$regular_bill_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+		}
+		
+		
+		foreach($other_charge as $key=>$vlaue){
+			if(!empty($value)){
+				$this->loadmodel('ledger');
+				$auto_id=$this->autoincrement('ledger','auto_id');
+				$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => $key,"ledger_sub_account_id" => null,"debit"=>null,"credit"=>$vlaue,"table_name"=>"regular_bill","element_id"=>$regular_bill_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+			}
+		}
+		
+		if(!empty($total)){
+			$this->loadmodel('ledger');
+			$auto_id=$this->autoincrement('ledger','auto_id');
+			$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id,"debit"=>$total,"credit"=>null,"table_name"=>"regular_bill","element_id"=>$regular_bill_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+		}
+		
+		if(!empty($intrest_on_arrears)){
+			$this->loadmodel('ledger');
+			$auto_id=$this->autoincrement('ledger','auto_id');
+			$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 41,"ledger_sub_account_id" => null,"debit"=>null,"credit"=>$intrest_on_arrears,"table_name"=>"regular_bill","element_id"=>$regular_bill_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+			
+			$this->loadmodel('ledger');
+			$auto_id=$this->autoincrement('ledger','auto_id');
+			$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id,"debit"=>$intrest_on_arrears,"credit"=>null,"table_name"=>"regular_bill","element_id"=>$regular_bill_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date,"intrest_on_arrears"=>"YES"));
+		}
+		
+		if(!empty($credit_stock)){
+			if($credit_stock>0){
+				$this->loadmodel('ledger');
+				$auto_id=$this->autoincrement('ledger','auto_id');
+				$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 88,"ledger_sub_account_id" => null,"debit"=>null,"credit"=>abs($credit_stock),"table_name"=>"regular_bill","element_id"=>$regular_bill_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+				
+				$this->loadmodel('ledger');
+				$auto_id=$this->autoincrement('ledger','auto_id');
+				$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id,"debit"=>abs($credit_stock),"credit"=>null,"table_name"=>"regular_bill","element_id"=>$regular_bill_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+			}
+			if($credit_stock<0){
+				$this->loadmodel('ledger');
+				$auto_id=$this->autoincrement('ledger','auto_id');
+				$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 88,"ledger_sub_account_id" => null,"debit"=>abs($credit_stock),"credit"=>null,"table_name"=>"regular_bill","element_id"=>$regular_bill_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+				
+				$this->loadmodel('ledger');
+				$auto_id=$this->autoincrement('ledger','auto_id');
+				$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id,"debit"=>null,"credit"=>abs($credit_stock),"table_name"=>"regular_bill","element_id"=>$regular_bill_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+			}
+		}
+		$this->loadmodel('regular_bill_temp');
+		$this->regular_bill_temp->deleteAll(array('regular_bill_temp.auto_id'=>$temp_auto_id));
+	}
+	
+	
+
+	$this->loadmodel('regular_bill_temp');
+	$conditions=array("society_id"=>$s_society_id,"sent_for_approval"=>"yes","approved"=>"yes");
+	$approved_bills=$this->regular_bill_temp->find('count',array('conditions'=>$conditions));
+	if($approved_bills>0){
+		echo "yes";
+	}else{
+		echo "no";
+	}
+}
 /////////////////////// End It Regular Bill (Accounts) ////////////////////////////////////////////////////////////
 
 ////////////////////////// Start fetch_last_bill_info_via_flat_id ///////////////////////////////////////////////

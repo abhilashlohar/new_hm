@@ -70,6 +70,9 @@ $default_date = date('d-m-Y');
 			$this->requestAction(array('controller' => 'Hms', 'action' => 'resident_drop_down'));
 			?>
 			</div>
+			<div id="company_name_div" class="hide">
+			<input type="text" class="m-wrap span12" style="background-color:white !important;" Placeholder="Company Name" style="width:150px;">
+			</div>
 		</td>
 		<td>
 			<select class="m-wrap" style="width:200px;" name="income_head[]">
@@ -91,9 +94,6 @@ $default_date = date('d-m-Y');
 		</td>
 		<td>
 		<input type="text" class="m-wrap span12" style="width:150px;">
-		<div id="company_name_div" class="hide">
-		<input type="text" class="m-wrap span12" style="background-color:white !important;" Placeholder="Company Name" style="width:150px;">
-		</div>
 		</td>
 	</tr>
 </table>
@@ -123,12 +123,13 @@ $('select[name="bill_type[]"]').die().live("change",function(){
 		if(received_from==1){
 			$(this).closest("td").find("#resident_dropdown_div").show();
 			$(this).closest("td").find("#non_resident_drop_down").hide();
-			 $("#company_name_div").show();
+			$(this).closest("td").find("#company_name_div").show();
+			 //$("#company_name_div").show();
 		}else{
 			$(this).closest("td").find("#resident_dropdown_div").hide();
 			$(this).closest("td").find("#non_resident_drop_down").show();
-		    $("#company_name_div").show();
-		
+			$(this).closest("td").find("#company_name_div").hide();
+		    //$("#company_name_div").show();
 		}
 	})
 

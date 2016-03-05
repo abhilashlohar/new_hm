@@ -6157,41 +6157,46 @@ if(isset($this->request->data['opening_balance_submit']))
 {
 	$transaction_date = $this->request->data['date'];	
 	$transaction_date = date('Y-m-d',strtotime($transaction_date));
-		$ledger_id = $this->request->data['ledger_id'];
-		$debit = $this->request->data['debit'];
-		$credit = $this->request->data['credit'];	
-		$penalty = $this->request->data['penalty'];
-	$i=0;	
-		foreach($ledger_id as $data)
-		{
-			$debit_new = @$debit[$i];	
-			$credit_new = @$credit[$i];
-			$penalty_new = @$penalty[$i];
-			$data2 = explode(',',$data);
-
-		if(sizeof($data2)== 1)
-		{
-		$ledger_id=(int)$data2[0];	
-	
-		$this->loadmodel('ledger');
-		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_id ,"ledger_sub_account_id"=>null,"debit"=>$debit_new,"credit"=>$credit_new,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));	
+		$ledger_ids = $this->request->data['ledger_id'];
+		$debits = $this->request->data['debit'];
+		
+		$credits = $this->request->data['credit'];	
+		$penaltys = $this->request->data['penalty'];
+		
+	    $i=0;	
+		foreach($ledger_ids as $ledger_id){
+			$debit = $debits[$i];	
+			$credit = $credits[$i]; 
+			$penalty = $penaltys[$i];
+			$ledger_id = explode(',',$ledger_id);
+		$i++; 
+		
+		
+		if(sizeof($ledger_id)== 1){
+			$ledger_id=(int)$ledger_id[0];	
+			if(!empty($debit) || !empty($credit)){
+				$this->loadmodel('ledger');
+				$ledger_auto_id=$this->autoincrement('ledger','auto_id');
+				$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_id ,"ledger_sub_account_id"=>null,"debit"=>$debit,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));	
+			}
 		}
 		else
 		{
-		$ledger_id = $data2[0];
-		$ledger_sub_account_id = $data[1];
-
-		$this->loadmodel('ledger');
-		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_id ,"ledger_sub_account_id"=>$ledger_sub_account_id,"debit"=>$debit_new,"credit"=>$credit_new,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));	
-			if($ledger_id == 34)
-			{
-			if(!empty($penalty_new))
+		$ledger_account_id = (int)$ledger_id[0];
+		$ledger_sub_account_id = (int)$ledger_id[1];
+			if(!empty($debit) || !empty($credit))
 			{
 			$this->loadmodel('ledger');
 			$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-			$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_id ,"ledger_sub_account_id"=>$ledger_sub_account_id,"debit"=>$penalty_new,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));	
+			$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_account_id ,"ledger_sub_account_id"=>$ledger_sub_account_id,"debit"=>$debit,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));
+			}		
+			if($ledger_account_id == 34)
+			{
+			if(!empty($penalty))
+			{
+			$this->loadmodel('ledger');
+			$ledger_auto_id=$this->autoincrement('ledger','auto_id');
+			$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_account_id,"ledger_sub_account_id"=>$ledger_sub_account_id,"debit"=>$penalty,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));	
 			}
 			}
 		}

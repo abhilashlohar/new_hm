@@ -31,7 +31,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 					</td>
 					<td><input type="text" class="m-wrap small debit" name="debit[]"></td>
 					<td><input type="text" class="m-wrap small credit" name="credit[]"></td>
-					<td></td>
+					<td><input type="hidden" value="" name="penalty[]"></td>
 				</tr>
 			<?php } ?>
 		<?php } ?>
@@ -85,7 +85,7 @@ name="ledger_id[]">
 		</td>
 		<td><input type="text" class="m-wrap small debit" name="debit[]"></td>
 		<td><input type="text" class="m-wrap small credit" name="credit[]"></td>
-		<td></td>
+		<td><input type="hidden" value="" name="penalty[]"></td>
 		</tr>
 	<?php }} ?>
 <tr>	

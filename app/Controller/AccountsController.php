@@ -12,8 +12,8 @@ function master_ledger_sub_account_ajax()
 {
 		$this->layout='blank';
 		$s_role_id=$this->Session->read('role_id');
-		$s_society_id = (int)$this->Session->read('society_id');
-		$s_user_id=$this->Session->read('user_id');	
+		$s_society_id = (int)$this->Session->read('hm_society_id');
+		$s_user_id=$this->Session->read('hm_user_id');	
 
 			$value = (int)$this->request->query('value');
 			$this->set('value',$value);
@@ -3713,9 +3713,9 @@ function trial_balance()
 	$this->ath();
 	$this->check_user_privilages();
 
-	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');	
+
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');	
 	
 	
 	
@@ -3733,10 +3733,10 @@ function trial_balance_ajax_show($from=null,$to=null,$wise=null)
 
 
 
-	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
+	
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$this->set('s_society_id',$s_society_id);
-	$s_user_id=$this->Session->read('user_id');	
+	$s_user_id=$this->Session->read('hm_user_id');	
 	
 	
 	if(empty($from) || empty($to) || empty($wise)){
@@ -3790,7 +3790,7 @@ function trial_balance_ajax_show_excel($from=null,$to=null,$wise=null)
 	$this->layout='blank';
 	$this->ath();
 	
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$this->set('s_society_id',$s_society_id);
 	$society_result=$this->requestAction(array('controller' => 'Hms', 'action' => 'society_name'),array('pass'=>array($s_society_id)));
 	$society_name=$society_result[0]["society"]["society_name"];
@@ -3860,10 +3860,10 @@ function trial_balance_ajax_show_sub_ledger($from=null,$to=null,$wise=null)
 	$this->layout='blank';
 	$this->ath();
 	
-	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
+	
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$this->set('s_society_id',$s_society_id);
-	$s_user_id=$this->Session->read('user_id');	
+	$s_user_id=$this->Session->read('hm_user_id');	
 	
 	
 	if(empty($from) || empty($to) || empty($wise)){
@@ -3894,7 +3894,41 @@ function trial_balance_ajax_show_sub_ledger($from=null,$to=null,$wise=null)
 	}
 
 	
-	$new_flats_for_bill = array();
+	///acending order 
+	
+	
+	
+	$this->loadmodel('ledger_sub_account');
+        $condition=array('society_id'=>$s_society_id,'ledger_id'=>34);
+        $members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
+        foreach($members as $data3){
+            $ledger_sub_account_ids[]=$data3["ledger_sub_account"]["auto_id"];
+        }
+        
+        
+        $this->loadmodel('wing');
+        $condition=array('society_id'=>$s_society_id);
+        $order=array('wing.wing_name'=>'ASC');
+        $wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+        foreach($wings as $data){
+            $wing_id=$data["wing"]["wing_id"];
+            $this->loadmodel('flat');
+            $condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+            $order=array('flat.flat_name'=>'ASC');
+            $flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+            foreach($flats as $data2){
+                $flat_id=$data2["flat"]["flat_id"];
+                $ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+                if(!empty($ledger_sub_account_id)){
+                        $members_for_billing[]=$ledger_sub_account_id;
+                }
+                
+            }
+        }
+	$this->set(compact('members_for_billing'));
+	/////end acending order
+	
+	/*$new_flats_for_bill = array();
 	$this->loadmodel('wing');
 	$condition=array('society_id'=>$s_society_id);
 	$order=array('wing.wing_name'=>'ASC');
@@ -3915,7 +3949,7 @@ function trial_balance_ajax_show_sub_ledger($from=null,$to=null,$wise=null)
 }
 
 $this->set('new_flats_for_bill',$new_flats_for_bill);	
-
+*/
 	
 	$this->loadmodel('ledger_sub_account');
 	$order=array('ledger_sub_account.name'=> 'ASC');
@@ -3929,7 +3963,7 @@ function trial_balance_ajax_show_sub_ledger_excel($from=null,$to=null,$wise=null
 	
 	$this->layout='blank';
 	$this->ath();
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$society_result=$this->requestAction(array('controller' => 'Hms', 'action' => 'society_name'),array('pass'=>array($s_society_id)));
 	$society_name=$society_result[0]["society"]["society_name"];
 	
@@ -4020,8 +4054,8 @@ $this->layout='blank';
 	$this->ath();
 	
 	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');		
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');		
 
 $this->set('s_society_id',$s_society_id);
 
@@ -4080,8 +4114,8 @@ if(empty($from) || empty($to) || empty($wise)){
 function calculate_opening_balance_for_trail_balance($from=null,$to=null,$ledger_account_id=null){
 	$this->ath();
 	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');	
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');	
 	$from=date('Y-m-d',strtotime($from));
 	
 	$this->loadmodel('ledger');
@@ -4145,8 +4179,8 @@ function calculate_opening_balance_for_trail_balance($from=null,$to=null,$ledger
 function calculate_opening_balance_for_trail_balance_for_sub_account($from=null,$to=null,$ledger_account_id=null,$ledger_sub_account_id=null){
 	$this->ath();
 	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');	
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');	
 	$from=date('Y-m-d',strtotime($from));
 	
 	$this->loadmodel('ledger');
@@ -4211,7 +4245,7 @@ function calculate_opening_balance_for_trail_balance_for_sub_account($from=null,
 
 
 function fetch_sub_accounts_from_ledger_account_id($ledger_account_id){
-	$s_society_id=$this->Session->read('society_id');
+	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('ledger_sub_account');
 	$conditions=array("ledger_id" => (int)$ledger_account_id);
 	return $this->ledger_sub_account->find('all',array('conditions'=>$conditions));

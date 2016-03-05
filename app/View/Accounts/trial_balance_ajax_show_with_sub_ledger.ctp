@@ -47,8 +47,8 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 	<?php  
 	$total_ob_debit=0; $total_ob_credit=0; $total_debit=0; $total_credit=0; $total_cb_debit=0; $total_cb_credit=0;
 	foreach($result_ledger_account as $ledger_account){ 
-		 $ledger_account_id= $ledger_account["ledger_account"]["auto_id"];
-		
+		 echo $ledger_account_id= $ledger_account["ledger_account"]["auto_id"];
+		echo'<br/>';
 		$ledger_account_name=$ledger_account["ledger_account"]["ledger_name"];
 			
 			
@@ -57,20 +57,15 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 		if($ledger_account_id == 34 || $ledger_account_id == 15 || $ledger_account_id == 33 || $ledger_account_id == 35 || $ledger_account_id == 112)	
 		{
 		foreach($result_ledger_sub_account as $ledger_sub_account){ 
-		$ledger_sub_account_id=$ledger_sub_account["ledger_sub_account"]["auto_id"];
+		$ledger_sub_account_id=(int)$ledger_sub_account["ledger_sub_account"]["auto_id"];
 		$ledger_sub_account_name=$ledger_sub_account["ledger_sub_account"]["name"];
 		if($ledger_account_id==34){
-			@$flat=$ledger_sub_account["ledger_sub_account"]["flat_id"];
-			
-			//wing_id via flat_id//
-			$result_flat_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat)));
-			foreach($result_flat_info as $flat_info){
-				$wing=$flat_info["flat"]["wing_id"];
-			} 
-			
-			@$wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
-			
-			$ledger_extra_info=$wing_flat;
+				$result_member = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+						$ledger_sub_account_name=$result_member['user_name'];
+						$wing_name=$result_member['wing_name'];
+						$flat_name=$result_member['flat_name'];
+						$wing_flat=$wing_name.'-'.$flat_name;
+						$ledger_extra_info=$wing_flat;
 		}
 		if($ledger_account_id==33){
 			@$bank_account=@$ledger_sub_account["ledger_sub_account"]["bank_account"];

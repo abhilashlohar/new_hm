@@ -12,7 +12,7 @@ $default_date = date('d-m-Y');
 <!-----------------------------Start New Supplimentry Bill Form --------------------->
 <div class="portlet box">
 	<div class="portlet-body">
-	<form method="post" >
+	<form method="post">
 		<table class="table table-condensed table-bordered" id="main" width="100%">
 			<thead>
 				<tr>
@@ -29,7 +29,8 @@ $default_date = date('d-m-Y');
 				
 			</tbody>
 		</table>
-
+<button type="submit" class="btn blue pull-right" name="submit">Create Receipt</button>
+</form>
 <a href="#" role="button" id="add_row">Add Row</a>
 </div>
 </div>

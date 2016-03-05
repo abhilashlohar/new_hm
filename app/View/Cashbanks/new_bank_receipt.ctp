@@ -13,7 +13,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <?php $current_date= date('d-m-Y'); ?>
 <div class="portlet box">
 	<div class="portlet-body">
-	<form method="post" >
+	<form method="post">
 		<table class="table table-condensed table-bordered" id="main">
 			<thead>
 				<tr>

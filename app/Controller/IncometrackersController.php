@@ -3907,9 +3907,9 @@ $this->ath();
 $this->check_user_privilages();
 
 
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');	
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');	
 
 $this->loadmodel('adhoc_bill');
 $conditions=array("society_id"=> $s_society_id);
@@ -5199,9 +5199,7 @@ $this->set('income_head_array',$income_head_array);
 function supplimentry_reports_show_ajax()
 {
 $this->layout='blank';
-
 $this->ath();
-
 $s_role_id=$this->Session->read('hm_role_id');
 $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');	
@@ -5214,20 +5212,19 @@ $s_user_id=$this->Session->read('hm_user_id');
 	}
 	$this->set('society_name',$society_name);
 
-$from =  $this->request->query('date1');
-$to = $this->request->query('date2');
-$tp = $this->request->query('tp');
-
+$from=$this->request->query('date1');
+$to=$this->request->query('date2');
+$supplimentry_bill_type_for_view=$this->request->query('tp');
+ 
 $this->set('from',$from);
 $this->set('to',$to);
-$this->set('tp',$tp);
+$this->set('supplimentry_bill_type_for_view',$supplimentry_bill_type_for_view);
 
 $this->loadmodel('supplimentry_bill');
 $order=array('supplimentry_bill.transaction_date'=> 'ASC');
 $conditions=array("society_id"=> $s_society_id);
 $cursor1=$this->supplimentry_bill->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor1',$cursor1);
-
 }
 ////////////////////// Start Supplimentry reports show ajax//////////////////////////
 

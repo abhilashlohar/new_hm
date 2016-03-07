@@ -1,3 +1,9 @@
+
+<?php 
+echo "sdgdsgdsgs";
+exit;
+?>
+
 <style>
  #bg_color th{
 	font-size: 10px !important;background-color:#C8EFCE;padding:2px;border:solid 1px #55965F;
@@ -21,22 +27,14 @@
 }
 </style>
 <?php
-
-
- 
-echo "afasfsf";
-exit;
-
 $m_from=date("Y-m-d",strtotime($from));
 $m_to=date("Y-m-d",strtotime($to));
-
 $date_renge_from=strtotime($m_from);
 $date_renge_to=strtotime($m_to);
 ?>
 <?php 
 $nnn = 55;
 if($tp == 1){
-	
 foreach ($cursor1 as $collection){
 $adhoc_bill=(int)$collection['supplimentry_bill']["supplimentry_bill_id"];
 $current_date=$collection['supplimentry_bill']["date"];

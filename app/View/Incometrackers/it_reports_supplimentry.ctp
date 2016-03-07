@@ -1,11 +1,8 @@
 <div class="hide_at_print"><?php echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'),array('pass' => array())); ?>				   
 </div>
-		
 <div style="text-align:center;" class="hide_at_print">
 <a href="<?php echo $webroot_path; ?>Incometrackers/in_head_report" class="btn" rel='tab'>Regular Bill Report</a>
-<!--<a href="<?php echo $webroot_path; ?>Incometrackers/it_reports_regular" class="btn" rel='tab'>Regular Report</a>-->
 <a href="<?php echo $webroot_path; ?>Incometrackers/it_reports_supplimentry" class="btn yellow" rel='tab'>Supplementary Bill Report</a>
-<!--<a href="<?php //echo $webroot_path; ?>Incometrackers/income_heads_report" class="btn" rel='tab'>Income head report</a>-->
 <a href="<?php echo $webroot_path; ?>Incometrackers/account_statement" class="btn" rel='tab'>Account Statement</a>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
@@ -36,12 +33,12 @@ $b_date = date('1-m-Y');
 </form>
 </div>
 </center>
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>    
+  
 <center>
-<div id="result" style="width:100%;">
+<div id="supplimentry_report_view" style="width:100%;">
 </div>
 </center>
-<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
+
 
 
 <script>
@@ -50,20 +47,11 @@ $("#go").bind('click',function(){
 var date1=document.getElementById('date1').value;
 var date2=document.getElementById('date2').value;
 var tp=document.getElementById('tp').value; 
-
-if(tp === "") {
-$('#validate_result').html('<div style="background-color:white; color:red; padding:5px;">Please Select an Option</div>'); return false; }
-else
-{
-$('#validate_result').html('<div> </div>'); 	
+if(tp === ""){
+$('#validate_result').html('<div style="background-color:white; color:red; padding:5px;">Please Select an Option</div>'); return false; }else{
+$('#validate_result').html(''); 	
 }
-
-
-
-
-
-$("#result").html('<div align="center" style="padding:10px;"><img src="as/loding.gif" />Loading....</div>').load("supplimentry_reports_show_ajax?date1=" +date1+ "&date2=" +date2+ "&tp=" +tp+ "");
-
+$("#supplimentry_report_view").html('<div align="center" style="padding:10px;"><img src="as/loding.gif" />Loading....</div>').load("<?php echo $webroot_path; ?>Incometrackers/supplimentry_reports_show_ajax?date1="+date1+ "&date2="+date2+"&tp="+tp+"");
 });
 });
 </script>	

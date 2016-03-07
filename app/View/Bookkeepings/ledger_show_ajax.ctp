@@ -634,17 +634,17 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			
 
 		}
-		if($table_name=="adhoc_bill"){
+		if($table_name=="supplimentry_bill"){
 		
           $source="Supplimentry Bill";
 		  
-		 $result_fix_asset=$this->requestAction(array('controller' => 'Hms', 'action'=>'fetch_adhoc_bill_table'), array('pass' => array($element_id)));
-			foreach($result_fix_asset as $data){
-				$description=$data['adhoc_bill']['description'];
-				$supplimentry_receipt=$data['adhoc_bill']['receipt_id'];
-				$adhoc_id= (int)$data['adhoc_bill']['adhoc_bill_id'];
-			    $date=$data['adhoc_bill']["date"];
-			    $creater_id = (int)$data['adhoc_bill']['created_by'];
+	$result_supplimentry_bill=$this->requestAction(array('controller' => 'Hms', 'action'=>'supplimentry_bill_detail_via_supplimentry_bill_id'), array('pass' => array($element_id)));
+		foreach($result_supplimentry_bill as $result_supplimentry_bill_data){
+		$description=$result_supplimentry_bill_data['supplimentry_bill']['description'];
+		$supplimentry_receipt=$result_supplimentry_bill_data['supplimentry_bill']['receipt_id'];
+		$adhoc_id= (int)$result_supplimentry_bill_data['supplimentry_bill']['supplimentry_bill_id'];
+		$date=$result_supplimentry_bill_data['supplimentry_bill']["date"];
+		$creater_id = (int)$result_supplimentry_bill_data['supplimentry_bill']['created_by'];
 			
 	$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($creater_id)));
 	foreach ($user_dataaaa as $user_detailll) 
@@ -680,7 +680,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 		}
 	
 		
-		if(($table_name=="new_regular_bill"  &&  $bill_approved=="yes") || $table_name=="new_cash_bank" || $table_name=="opening_balance" || $table_name=="expense_tracker" || $table_name=="journal" || $table_name=="fix_asset" || $table_name=="adhoc_bill"){
+		if(($table_name=="new_regular_bill"  &&  $bill_approved=="yes") || $table_name=="new_cash_bank" || $table_name=="opening_balance" || $table_name=="expense_tracker" || $table_name=="journal" || $table_name=="fix_asset" || $table_name=="supplimentry_bill"){
 		
 		if($tds_ledger_id == 15)
 		{

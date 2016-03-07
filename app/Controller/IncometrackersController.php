@@ -3177,9 +3177,9 @@ function it_supplimentry_bill()
 			$this->ath();
 			$this->check_user_privilages();
 
-		$s_role_id=$this->Session->read('role_id');
-		$s_society_id = (int)$this->Session->read('society_id');
-		$s_user_id=$this->Session->read('user_id');	
+		$s_role_id=$this->Session->read('hm_role_id');
+		$s_society_id = (int)$this->Session->read('hm_society_id');
+		$s_user_id=$this->Session->read('hm_user_id');	
 
 					$this->loadmodel('financial_year');
 					$conditions=array("society_id" => $s_society_id, "status"=>1);
@@ -3220,32 +3220,93 @@ if(isset($this->request->data['submit']))
 	$i=0;	
 	foreach($transaction_dates as $transaction_date)
 	{
+	$transaction_date_email = date('Y-m-d',strtotime($transaction_date));
+	$transaction_date = date('Y-m-d',strtotime($transaction_date));
     $payment_due_date=$payment_due_dates[$i];
+	$payment_due_date = date('Y-m-d',strtotime($payment_due_date));
+	
     $supplimentry_bill_type=$supplimentry_bill_types[$i];
-	if($supplimentry_bill_type == 2)
+	if($supplimentry_bill_type == 'resident')
 	{	
-	$ledger_sub_account_id_for_resident = $ledger_sub_account_id_for_residents[$i];
+	$ledger_sub_account_id = $ledger_sub_account_id_for_residents[$i];
+	$ledger_account_id = 34;
 	}
     else
 	{
-	$ledger_sub_account_ids_for_non_resident = $ledger_sub_account_ids_for_non_residents[$i];
+	$ledger_sub_account_id = $ledger_sub_account_ids_for_non_residents[$i];
 	$company_name =$company_names[$i];	
+	$ledger_account_id = 112;
 	}
 	$income_head_id = $income_head_ids[$i]; 	
-	echo $amount = $amounts[$i];
-	echo $narration = $narrations[$i];
+	$amount = $amounts[$i];
+	$narration = $narrations[$i];
 	$i++;
+	
+
+
+$this->loadmodel('supplimentry_bill');
+$order=array('supplimentry_bill.supplimentry_bill_id'=> 'DESC');
+$cursor=$this->supplimentry_bill->find('all',array('order' =>$order,'limit'=>1));
+foreach ($cursor as $collection) 
+{
+$last22=$collection['supplimentry_bill']["supplimentry_bill_id"];
+$last33=$collection['supplimentry_bill']['receipt_id'];
 }
-				
-
-
-
-
-
-
-
+if(empty($last22))
+{
+$supplimentry_bill_id=0;
+$receipt_id=1000;
+}	
+else
+{	
+$supplimentry_bill_id=$last22;
+$receipt_id=$last33;
 }
+$supplimentry_bill_id++;
+$receipt_id++;
+////////////////////////
+$receipt_id2 = 1000+$supplimentry_bill_id;
+$receipt_id3 = "S-".$receipt_id2;
+$current_date = date('Y-m-d');
 
+
+$this->loadmodel('supplimentry_bill');
+$multipleRowData = Array( Array("supplimentry_bill_id" => $supplimentry_bill_id,"receipt_id"=>$receipt_id3,"company_name"=>$company_name,"ledger_sub_account_id"=>$ledger_sub_account_id,"description"=>$narration,"date"=>$current_date,"society_id"=>$s_society_id,"total_amount"=> $amount,"income_head"=>$income_head_id,"created_by"=>$s_user_id,"due_date"=>strtotime($payment_due_date),"supplimentry_bill_type"=>$supplimentry_bill_type,"transaction_date"=>strtotime($transaction_date),"created_by"=>$s_user_id));
+$this->supplimentry_bill->saveAll($multipleRowData);
+
+
+$k=(int)$this->autoincrement('ledger','auto_id');
+$this->loadmodel('ledger');
+$multipleRowData = Array( Array("auto_id"=>$k,"transaction_date"=> strtotime($transaction_date),"debit"=>null,"credit"=>$amount,"ledger_account_id"=>(int)$income_head_id,"table_name"=>"supplimentry_bill","element_id"=>$supplimentry_bill_id,"society_id"=>$s_society_id));
+$this->ledger->saveAll($multipleRowData);
+
+
+$k=(int)$this->autoincrement('ledger','auto_id');
+$this->loadmodel('ledger');
+$multipleRowData = Array( Array("auto_id"=>$k,"transaction_date"=> strtotime($transaction_date),"debit"=>$amount,"credit" =>null,"ledger_account_id"=>$ledger_account_id,"ledger_sub_account_id"=>(int)$ledger_sub_account_id,"table_name"=>"supplimentry_bill","element_id"=>$supplimentry_bill_id,"society_id"=>$s_society_id));
+$this->ledger->saveAll($multipleRowData);
+
+
+$this->loadmodel('society');
+$condition=array('society_id'=>$s_society_id);
+$result_society=$this->society->find('all',array('conditions'=>$condition)); 
+$this->set('result_society',$result_society);
+		foreach($result_society as $data_society){
+		$society_name=$data_society["society"]["society_name"];
+		$email_is_on_off=(int)@$data_society["society"]["account_email"];
+		$sms_is_on_off=(int)@$data_society["society"]["account_sms"];
+		}
+/*
+if($email_is_on_off==1){
+$r_sms=$this->hms_sms_ip();
+$working_key=$r_sms->working_key;
+$sms_sender=$r_sms->sms_sender; 
+$sms_allow=(int)$r_sms->sms_allow;
+$subject="[".$society_name."]- e-Supplimentry Bill of Rs ".$amount." on ".$transaction_date_email." against Unit ".@$wing_flat."";
+$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$html_bill,'donotreply@housingmatters.in');
+}*/
+}
+}
 if(isset($this->request->data['add_non_member']))
 {
 $non_member_name = $this->request->data['mem_name'];	
@@ -7347,9 +7408,9 @@ $output = json_encode(array('type'=>'success', 'text' => 'supplimentry_bill_view
 	/*	$this->response->header('Location','supplimentry_bill_view2?from='.$from.'&due='.$due.'&ih='.$in_head.'
 &amt='.$amountt.'&des='.$descc.'&typ='.$bill_typp.'&user='.$user_idd.'');*/
 		
-	$output = json_encode(array('type'=>'success', 'text' => 'supplimentry_bill_view2?from='.$from.'&due='.$due.'&ih='.$in_head.'
+$output = json_encode(array('type'=>'success', 'text' => 'supplimentry_bill_view2?from='.$from.'&due='.$due.'&ih='.$in_head.'
 &amt='.$amountt.'&des='.$descc.'&typ='.$bill_typp.'&user='.$user_idd.''));
-		die($output);	
+die($output);	
 		
 		
 		

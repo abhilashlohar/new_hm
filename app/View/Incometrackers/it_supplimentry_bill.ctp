@@ -48,8 +48,8 @@ $default_date = date('d-m-Y');
 		<td>
 			<select class="m-wrap medium" name="bill_type[]" style="width:200px;">
 				<option value="" style="display:none;">Select</option>
-				<option value="2">Residential</option>
-				<option value="1">Non Residential</option>
+				<option value="resident">Residential</option>
+				<option value="non_resident">Non Residential</option>
 			</select>
 			
 		    <div class="hide" id="non_resident_drop_down">
@@ -121,7 +121,7 @@ $(document).ready(function(){
 <script>
 $('select[name="bill_type[]"]').die().live("change",function(){
 		var received_from=$(this).val();
-		if(received_from==1){
+		if(received_from=='non_resident'){
 			$(this).closest("td").find("#resident_dropdown_div").hide();
 			$(this).closest("td").find("#non_resident_drop_down").show();
 			$(this).closest("td").find("#company_name_div").show();

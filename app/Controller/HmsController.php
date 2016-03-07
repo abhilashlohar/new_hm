@@ -964,7 +964,7 @@ $this->redirect(array('action' => 'index'));
 
 function beforeFilter()
 {
-//Configure::write('debug', 0);
+Configure::write('debug', 0);
 }
 
 
@@ -19942,11 +19942,11 @@ return $this->fix_asset->find('all',array('conditions'=>$conditions));
 }
 
 
-function fetch_adhoc_bill_table($id){
+function supplimentry_bill_detail_via_supplimentry_bill_id($supplimentry_bill_id){
 
-$this->loadmodel('adhoc_bill');	
-$conditions=array('adhoc_bill_id'=>$id);	
-return $this->adhoc_bill->find('all',array('conditions'=>$conditions));	
+$this->loadmodel('supplimentry_bill');	
+$conditions=array('supplimentry_bill_id'=>$supplimentry_bill_id);	
+return $this->supplimentry_bill->find('all',array('conditions'=>$conditions));	
 	
 }
 

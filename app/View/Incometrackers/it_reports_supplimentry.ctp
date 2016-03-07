@@ -1,7 +1,4 @@
-<div class="hide_at_print">	
-<?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
-?>				   
+<div class="hide_at_print"><?php echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'),array('pass' => array())); ?>				   
 </div>
 		
 <div style="text-align:center;" class="hide_at_print">

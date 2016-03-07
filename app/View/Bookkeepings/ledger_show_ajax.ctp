@@ -738,7 +738,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			<?php if($table_name=="journal"){
 				echo '<a href="'.$this->webroot.'Bookkeepings/journal_voucher_view/'.$journal_voucher_id.'" target="_blank">'.$journal_voucher_id.'</a>';
 			}?>
-				<?php if($table_name=="adhoc_bill"){
+				<?php if($table_name=="supplimentry_bill"){
 				echo '<a href="'.$this->webroot.'Incometrackers/supplimentry_view/'.$adhoc_id.'" target="_blank">'.$supplimentry_receipt.'</a>';
 			}?> 
 			

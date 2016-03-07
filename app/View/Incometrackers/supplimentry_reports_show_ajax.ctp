@@ -1,29 +1,23 @@
-
-<?php 
-echo "sdgdsgdsgs";
-exit;
-?>
-
 <style>
- #bg_color th{
-	font-size: 10px !important;background-color:#C8EFCE;padding:2px;border:solid 1px #55965F;
+#bg_color th{
+font-size: 10px !important;background-color:#C8EFCE;padding:2px;border:solid 1px #55965F;
 }
 #report_tb td{
-	padding:2px;
-	font-size: 12px;border:solid 1px #55965F;background-color:#FFF;
+padding:2px;
+font-size: 12px;border:solid 1px #55965F;background-color:#FFF;
 }
 .text_bx{
-	width: 50px;
-	height: 15px !important;
-	margin-bottom: 0px !important;
-	font-size: 12px;
+width: 50px;
+height: 15px !important;
+margin-bottom: 0px !important;
+font-size: 12px;
 }
 .text_rdoff{
-	width: 50px;
-	height: 15px !important;
-	border: none !important;
-	margin-bottom: 0px !important;
-	font-size: 12px;
+width: 50px;
+height: 15px !important;
+border: none !important;
+margin-bottom: 0px !important;
+font-size: 12px;
 }
 </style>
 <?php
@@ -34,53 +28,40 @@ $date_renge_to=strtotime($m_to);
 ?>
 <?php 
 $nnn = 55;
-if($tp == 1){
+if($supplimentry_bill_type_for_view==1){
 foreach ($cursor1 as $collection){
-$adhoc_bill=(int)$collection['supplimentry_bill']["supplimentry_bill_id"];
-$current_date=$collection['supplimentry_bill']["date"];
-$supplimentry_bill_type=$collection['supplimentry_bill']["supplimentry_bill_type"];
-$g_total=$collection['supplimentry_bill']["total_amount"];
 $transaction_date=$collection['supplimentry_bill']['transaction_date'];
-$transaction_date_for_view=date('d-m-Y',($transaction_date));
 if($date_renge_from<=$transaction_date && $date_renge_to>=$transaction_date){
 $nnn = 555;
-}}}
-if($tp == 2){
-foreach ($cursor1 as $collection){
-$adhoc_bill= (int)$collection['supplimentry_bill']["supplimentry_bill_id"];
-$date=$collection['supplimentry_bill']["date"];
+}}} 
+if($supplimentry_bill_type_for_view==2){
+foreach($cursor1 as $collection){
 $supplimentry_bill_type=$collection['supplimentry_bill']["supplimentry_bill_type"];
-$total_amount=$collection['supplimentry_bill']["total_amount"];
 $transaction_date = $collection['supplimentry_bill']['transaction_date'];
 if($supplimentry_bill_type=="resident"){
 if($date_renge_from<=$transaction_date && $date_renge_to>=$transaction_date){
 $nnn = 555;
 }}}}
-if($tp == 3){
-foreach ($cursor1 as $collection){
-$adhoc_bill= (int)$collection['supplimentry_bill']["supplimentry_bill_id"];
-$date=$collection['supplimentry_bill']["date"];
+if($supplimentry_bill_type_for_view == 3){
+foreach($cursor1 as $collection){
 $supplimentry_bill_type=$collection['supplimentry_bill']["supplimentry_bill_type"];
-$total_amount=$collection['supplimentry_bill']["total_amount"];
 $transaction_date = $collection['supplimentry_bill']['transaction_date'];
 if($supplimentry_bill_type=="non_resident"){
 if($date_renge_from<=$transaction_date && $date_renge_to>=$transaction_date){	
-$nnn = 555;	
-}}}}
-?>
+$nnn=555;	
+}}}}?>
+
 <!-------------- Start Supplimentry Bill View Code ------------------>
-<?php if($nnn == 555){ ?>
-
-
-<div style="width:100%;" class="hide_at_print">
+<?php if($nnn==555){ ?>
+<div style="width:100%;"class="hide_at_print">
 <span style="margin-left:80%;">
-<a href="supplimentry_bill_excel?f=<?php echo $from; ?>&t=<?php echo $to; ?>&tp=<?php echo $tp; ?>" class="btn blue mini"><i class="icon-download"></i></a>
+<a href="supplimentry_bill_excel?f=<?php echo $from; ?>&t=<?php echo $to; ?>&tp=<?php echo $supplimentry_bill_type_for_view; ?>" class="btn blue mini"><i class="icon-download"></i></a>
 <a type="button" class=" printt btn green mini" onclick="window.print()"><i class="icon-print"></i></a></span>
 </div>
 <div style="width:100%; overflow:auto; margin-top:10px;" class="hide_at_print">
 <label class="m-wrap pull-right"><input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;" placeholder="Search"></label>	
 </div>
-<?phpif($tp == 1){?>
+<?php if($supplimentry_bill_type_for_view == 1){ ?>
 <table style="background-color:white; width:100%;" id="report_tb">
 <tr>
 <th colspan="9" style="text-align:center;">
@@ -98,9 +79,9 @@ $nnn = 555;
 <th>Narration</th>
 <th class="hide_at_print">View</th>
 </tr>
-<tbody id="table">
-<?php $grand_total = 0; $i=0;
-foreach ($cursor1 as $collection){
+
+<?php $grand_total=0; $i=0;
+foreach($cursor1 as $collection){
 $creater_name="";
 $supplimentry_bill_id=(int)$collection['supplimentry_bill']["supplimentry_bill_id"];
 $receipt_id=$collection['supplimentry_bill']['receipt_id'];
@@ -109,13 +90,13 @@ $supplimentry_bill_type=$collection['supplimentry_bill']["supplimentry_bill_type
 $total_amount=$collection['supplimentry_bill']["total_amount"];
 $transaction_date=$collection['supplimentry_bill']['transaction_date'];
 $description=$collection['supplimentry_bill']['description'];
-$creater_id=(int)$collection['supplimentry_bill']['created_by'];
+$creater_id=(int)$collection['supplimentry_bill']['created_by']; 
 $user_detail = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($creater_id)));
-foreach ($user_dataaaa as $user_detailll){
+foreach($user_dataaaa as $user_detailll){
 $creater_name=$user_detailll['user']['user_name'];
-}	
 $current_date=date('d-m-Y',strtotime($date));	
 $transaction_date_for_view = date('d-m-Y',($transaction_date));
+}
 if($supplimentry_bill_type=="resident"){
 $ledger_sub_account_id=(int)$collection['supplimentry_bill']['ledger_sub_account_id'];	
 $supplimentry_bill_type_for_view="Residential";
@@ -127,28 +108,31 @@ $supplimentry_bill_type_for_view="Non-Residential";
 if($date_renge_from<=$transaction_date && $date_renge_to>=$transaction_date)
 {
 $i++;
-$date=date('d-m-Y',strtotime($date));
-$grand_total=$grand_total+$g_total;?>									
+$grand_total=$grand_total+$g_total;
+?>
 <tr>
-	<td><?php echo $i;?></td>
-	<td><?php echo $receipt_id;?></td>
-	<td><?php echo $date;?></td>
-	<td><?php echo $bill_type;?></td>
-	<td><?php echo $user_name;?>&nbsp;&nbsp;<?php echo $wing_flat;?> </td>
-	<td><?php echo $bill_date_from2;?></td>
-	<td style="text-align:right;"><?php $g_total=number_format($g_total);echo $g_total;?></td>
-	<td><?php echo $description;?></td>
-	<td class="hide_at_print" style="text-align:left;">
-	<div class="btn-group">
-		<a class="btn blue mini" href="#" data-toggle="dropdown">
-		<i class="icon-chevron-down"></i></a>
-		<ul class="dropdown-menu" style="min-width:75px !important;">
-		<li><a href="supplimentry_view/<?php echo $adhoc_bill; ?>" target="_blank"><i class="icon-search"></i> View</a></li>
-		</ul>
-    </div>
-	<?phpif(!empty($creater_name)){?>
-	<i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: <?php echo $creater_name;?> on: <?php echo $datett;?>"></i><?php } ?>
-	</td>
+<td><?php echo $i;?></td>
+<td><?php echo $receipt_id;?></td>
+<td><?php echo $current_date;?></td>
+<td><?php echo $supplimentry_bill_type_for_view;?></td>
+<td><?php echo $user_name;?>&nbsp;&nbsp;<?php echo $wing_flat;?> </td>
+<td><?php echo $transaction_date_for_view;?></td>
+<td><?php $g_total=number_format($g_total); echo $g_total;?></td>
+<td><?php echo $description;?></td>
+<td class="hide_at_print" style="text-align:left;">
+<div class="btn-group">
+<a class="btn blue mini" href="#" data-toggle="dropdown">
+<i class="icon-chevron-down"></i></a>
+<ul class="dropdown-menu" style="min-width:75px !important;">
+<li>
+<a href="supplimentry_view/<?php echo $adhoc_bill; ?>" target="_blank"><i class="icon-search"></i> View</a>
+<?php if(!empty($creater_name)){ ?>
+<i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: <?php  echo $creater_name;?> on: <?php echo $datett;?>"></i>
+<?php } ?>
+</li>
+</ul>
+</div>
+</td>
 </tr>
 <?php }} ?>
 <tr>
@@ -159,10 +143,18 @@ $grand_total=$grand_total+$g_total;?>
 </tr>
 </tbody>
 </table>
+<?php }} ?>
+
+
+
+
+
+
+<?php /*  
+
 <?php
 }
 ?>
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
 <?php
 if($tp == 2)
 {
@@ -189,9 +181,9 @@ if($tp == 2)
 <?php
 $grand_total = 0;
 $i=0;
-foreach ($cursor1 as $collection) 
+foreach($cursor1 as $collection) 
 {
-	$creater_name = "";
+$creater_name = "";
 $adhoc_bill= (int)$collection['adhoc_bill']["adhoc_bill_id"];
 $receipt_id = $collection['adhoc_bill']['receipt_id'];
 $pay_status=$collection['adhoc_bill']["pay_status"];
@@ -306,7 +298,7 @@ if($tp == 3)
 <?php
 $grand_total = 0;
 $i=0;
-foreach ($cursor1 as $collection) 
+foreach($cursor1 as $collection) 
 {
 $creater_name = "";
 $adhoc_bill= (int)$collection['adhoc_bill']["adhoc_bill_id"];
@@ -322,7 +314,7 @@ $bill_date_from2 = date('d-m-Y',($bill_date_from));
 $creater_id = (int)$collection['adhoc_bill']['created_by'];
 
 $user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($creater_id)));
-foreach ($user_dataaaa as $user_detailll) 
+foreach($user_dataaaa as $user_detailll) 
 {
 $creater_name = $user_detailll['user']['user_name'];
 }	
@@ -413,3 +405,20 @@ return !~text.indexOf(val);
 }).hide();
 });
 </script>	
+
+
+*/ ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

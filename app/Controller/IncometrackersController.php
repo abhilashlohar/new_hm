@@ -5204,6 +5204,9 @@ $s_role_id=$this->Session->read('hm_role_id');
 $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');	
 
+
+
+
 	$this->loadmodel('society');
 	$conditions=array("society_id"=>$s_society_id);
 	$cursor=$this->society->find('all',array('conditions'=>$conditions));
@@ -5225,6 +5228,8 @@ $order=array('supplimentry_bill.transaction_date'=> 'ASC');
 $conditions=array("society_id"=> $s_society_id);
 $cursor1=$this->supplimentry_bill->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor1',$cursor1);
+
+
 }
 ////////////////////// Start Supplimentry reports show ajax//////////////////////////
 

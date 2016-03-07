@@ -210,6 +210,7 @@ $(document).ready(function() {
 					<?php
 					$s_user_id=$this->Session->read('hm_user_id');
 					$user_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_info_via_user_id'), array('pass' => array($s_user_id)));
+					$role_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'default_role_name_via_user_id'), array('pass' => array($s_user_id)));
 					$name=$user_info[0]["user"]["user_name"];
 					?>
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">

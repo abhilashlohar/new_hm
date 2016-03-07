@@ -295,5 +295,19 @@ function fetch_ledger_account_info_via_ledger_id($ledger_id){
 	return $this->ledger_account->find('all',array('conditions'=>$conditions));
 }
 
+function default_role_name_via_user_id($user_id){
+	$s_society_id=$this->Session->read('hm_society_id');
+	
+	$this->loadmodel('user_role');
+	$conditions=array("user_id" => $user_id,"default"=>"yes");
+	$result=$this->user_role->find('all',array('conditions'=>$conditions));
+	$role_id=$result[0]["user_role"]["role_id"];
+	
+	$this->loadmodel('role');
+	$conditions=array("society_id" => $s_society_id,"role_id"=>$role_id);
+	$result=$this->role->find('all',array('conditions'=>$conditions));
+	return $result[0]["role"]["role_name"];
+}
+
 }
 ?>

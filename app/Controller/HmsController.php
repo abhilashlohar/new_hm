@@ -10169,52 +10169,8 @@ else
 {
 $this->set('error', '<label style="color:red;">you have entered incorrect code</label>');
 }
-
-
 }
 
-
-/*$this->loadmodel('user');
-$conditions=array('user_id'=> $user_id,'signup_random'=>$q);
-$result_check=$this->user->find('all',array('conditions'=>$conditions));
-foreach($result_check as $data9)
-{
-	$user_name=$data9['user']['user_name'];
-	$deactive=$data9['user']['deactive'];
-	$one_time_sms=(int)@$data9['user']["one_time_sms"];
-}
-$n= sizeof($result_check);
-if($n>0)
-{ 
-$random_otp=(string)mt_rand(1000,9999);
-
-if($one_time_sms==0)
-{
-
-$dd=explode(' ',$user_name);
-  $user_name=$dd[0];
-  $user_name=ucfirst($user_name);
-$r_sms=$this->hms_sms_ip();
-  $working_key=$r_sms->working_key;
- $sms_sender=$r_sms->sms_sender; 	
-	
-//$sms='Dear '.$user_name.' Please enter your code '.$random_otp.' on the signup screen to continue your HousingMatters registration process. Thank you';
-// $sms=''.$random_otp.' is your One Time Passcode, please enter on the signup screen to continue your HousingMatters registration process.';
-  $sms='Hi ! '.$user_name.', Use '.$random_otp.' as one time passcode and continue your Housing Matters registration process. ';
-
-$sms1=str_replace(' ', '+', $sms);
-
-@// //sms-closed// $payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');
-//$this->user->updateAll(array('password'=>$random_otp,'one_time_sms'=>1),array('user.user_id'=>$user_id));
-
-}
-
-}
-else
-{
-echo "Sorry, you have used this link.This link is one time login link.";	
-exit;
-}*/
 
 }
 

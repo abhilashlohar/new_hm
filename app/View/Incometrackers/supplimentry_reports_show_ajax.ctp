@@ -24,8 +24,8 @@
 $m_from = date("Y-m-d", strtotime($from));
 $m_to = date("Y-m-d", strtotime($to));
 
-$frommm = strtotime($m_from);
-$tooo = strtotime($m_to);
+$date_renge_from = strtotime($m_from);
+$date_renge_to = strtotime($m_to);
 ?>
 <?php ///////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
 <?php 
@@ -34,16 +34,14 @@ if($tp == 1)
 {
 foreach ($cursor1 as $collection) 
 {
-$adhoc_bill= (int)$collection['adhoc_bill']["adhoc_bill_id"];
-$pay_status=$collection['adhoc_bill']["pay_status"];
-$date=$collection['adhoc_bill']["date"];
-$residential=$collection['adhoc_bill']["residential"];
-$g_total=$collection['adhoc_bill']["g_total"];
-$html_bill = $collection['adhoc_bill']['html_bill'];
-$bill_date_from = $collection['adhoc_bill']['bill_daterange_from'];
-$bill_date_from2 = date('d-m-Y',strtotime($bill_date_from));
+$adhoc_bill= (int)$collection['supplimentry_bill']["supplimentry_bill_id"];
+$current_date=$collection['supplimentry_bill']["date"];
+$supplimentry_bill_type=$collection['supplimentry_bill']["supplimentry_bill_type"];
+$g_total=$collection['supplimentry_bill']["total_amount"];
+$transaction_date = $collection['supplimentry_bill']['transaction_date'];
+$transaction_date_for_view = date('d-m-Y',($transaction_date));
 
-if($frommm <= $bill_date_from && $tooo >= $bill_date_from)
+if($frommm <= $transaction_date && $tooo >= $transaction_date)
 {
 $nnn = 555;
 }

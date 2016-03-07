@@ -94,6 +94,7 @@ $default_date = date('d-m-Y');
 			<input type="text" class="m-wrap small" name="amount[]">
 		</td>
 		<td>
+		<a style="margin-top: -4px; margin-right: -5px;" role="button" class="btn mini pull-right remove_row" href="#"><i class="icon-trash"></i></a>
 		<input type="text" class="m-wrap span12" style="width:150px;" name="narration[]">
 		</td>
 	</tr>

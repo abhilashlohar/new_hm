@@ -309,8 +309,48 @@ function default_role_name_via_user_id($user_id){
 	return $result[0]["role"]["role_name"];
 }
 
-function calculate_arrear_maintenance($ledger_sub_account_id){
+function calculate_arrears($ledger_sub_account_id){
+	$s_society_id=$this->Session->read('hm_society_id');
 	
+	$this->loadmodel('ledger');
+	$conditions =array( '$or' => array( 
+	array('society_id' =>$s_society_id,'ledger_account_id' =>34,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'table_name' =>"opening_balance"),
+	array('society_id' =>$s_society_id,'ledger_account_id' =>34,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'table_name' =>"regular_bill"),
+	array('society_id' =>$s_society_id,'ledger_account_id' =>34,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'table_name' =>"bank_receipt")
+	));
+	$result=$this->ledger->find('all',array('conditions'=>$conditions));
+	$total_arrear_principle=0;
+	$total_arrear_intrest=0;
+	$toatl_maintenance_receipt=0;
+	foreach($result as $data){
+		//Positive=debit & nagetive=credit
+		$intrest_on_arrears=@$data["ledger"]["intrest_on_arrears"];
+		$table_name=$data["ledger"]["table_name"];
+		$debit=$data["ledger"]["debit"];
+		$credit=$data["ledger"]["credit"];
+		if($intrest_on_arrears=="YES"){
+			$total_arrear_intrest+=$debit-$credit;
+		}elseif($table_name=="bank_receipt"){
+			$receipt_type=$data["ledger"]["receipt_type"];
+			if($receipt_type=="maintenance"){
+				$toatl_maintenance_receipt+=$debit-$credit;
+			}
+		}elseif($table_name=="opening_balance" or $table_name=="regular_bill"){
+			if($intrest_on_arrears!="YES"){
+				$total_arrear_principle+=$debit-$credit;
+			}
+		}
+	}
+	$toatl_maintenance_receipt=abs($toatl_maintenance_receipt);
+	if($total_arrear_intrest-$toatl_maintenance_receipt>=0){
+		$arrear_principle=$total_arrear_principle;
+		$arrear_interest=$total_arrear_intrest-$toatl_maintenance_receipt;
+	}else{
+		$remider=abs($total_arrear_intrest-$toatl_maintenance_receipt);
+		$arrear_interest=0;
+		$arrear_principle=$total_arrear_principle-$remider;
+	}
+	return array("arrear_principle"=>$arrear_principle,"arrear_interest"=>$arrear_interest);
 }
 
 }

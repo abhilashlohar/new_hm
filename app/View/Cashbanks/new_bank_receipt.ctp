@@ -40,7 +40,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <tbody>
 	<tr>
 		<td>
-			<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy"  value="<?php echo $current_date; ?>" name="trasenction_date[]">
+			<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy"  value="<?php echo $current_date; ?>" name="transaction_date[]">
 		</td>
 		<td>
 			<select name="deposited_in[]">
@@ -61,10 +61,10 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				<option value="neft">Neft</option>
 				<option value="pg">PG</option>
 			</select>
-			<input type="text" placeholder="Cheque No/Utr No." class="m-wrap span6" name="cheque_number[]">
+			<input type="text" placeholder="Cheque/Utr No." class="m-wrap span6" name="cheque_number[]">
 			<input type="text" class="date-picker m-wrap span6" data-date-format="dd-mm-yyyy" placeholder="Date" name="date[]">
 			<div id="non_cheque">
-			<input type="text" class="m-wrap span6" placeholder="Drawn on which bank" name="drown_in_which_bank[]">
+			<input type="text" class="m-wrap span6" placeholder="Drawn in which bank" name="drown_in_which_bank[]">
 			<input type="text" class="m-wrap span6" placeholder="Branch of Bank" name="branch_of_bank[]">
 			</div>
 			
@@ -84,7 +84,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					} ?>
 				</select>
 				<select name="receipt_type[]" class="m-wrap span12" style="width:200px;">
-					<option value="maintanace">Maintanace Receipt</option>
+					<option value="maintenance">Maintenance Receipt</option>
 					<option value="other">Other Receipt</option>
 				</select>
 			</div>

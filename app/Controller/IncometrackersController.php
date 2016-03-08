@@ -128,15 +128,19 @@ function it_regular_bill(){
 			}
 			
 			//Arrears-Principal//
-			$arrear_maintenance = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrear_maintenance'),array('pass'=>array($ledger_sub_account_id)));
-			
+			$result = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrears'),array('pass'=>array($ledger_sub_account_id)));
+			$arrear_principle=$result["arrear_principle"];
+			$arrear_interest=$result["arrear_interest"];
+			$due_for_payment+=$arrear_principle;
+			$due_for_payment+=$arrear_interest;
 			$due_for_payment+=$total;
 			$current_date = date('Y-m-d');
+			
 			$this->loadmodel('regular_bill_temp');
 			$auto_id=$this->autoincrement('regular_bill_temp','auto_id');
-			$this->regular_bill_temp->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_maintenance"=> 0, "arrear_intrest" => 0, "intrest_on_arrears" => 0,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>strtotime($start_date),"due_date"=>strtotime($due_date),"credit_stock"=>0,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$s_user_flat_id,"current_date"=>strtotime($current_date),"sent_for_approval"=>"no","approved"=>"no","end_date"=>strtotime($end_date)));
+			$this->regular_bill_temp->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_maintenance"=> $arrear_principle, "arrear_intrest" => $arrear_interest, "intrest_on_arrears" => 0,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>strtotime($start_date),"due_date"=>strtotime($due_date),"credit_stock"=>0,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$s_user_flat_id,"current_date"=>strtotime($current_date),"sent_for_approval"=>"no","approved"=>"no","end_date"=>strtotime($end_date)));
 			
-		}
+		} 
 		
 		$this->redirect(array('controller' => 'Incometrackers','action' => 'preview_regular_bill'));
 	

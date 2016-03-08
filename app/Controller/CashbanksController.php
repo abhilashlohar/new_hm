@@ -6237,7 +6237,7 @@ function new_bank_receipt(){
 		$this->set(compact("members_for_billing"));
 		
 		if(isset($this->request->data['submit'])){
-			$trasenction_dates = $this->request->data['trasenction_date'];
+			$transaction_dates = $this->request->data['transaction_date'];
 			$deposited_ins = $this->request->data['deposited_in'];
 			$receipt_modes = $this->request->data['receipt_mode'];
 			$cheque_numbers = $this->request->data['cheque_number'];
@@ -6251,7 +6251,7 @@ function new_bank_receipt(){
 			$narrations = $this->request->data['narration'];
 			
 			$i=0;
-			foreach($trasenction_dates as $trasenction_date){
+			foreach($transaction_dates as $transaction_date){
 				$deposited_in=(int)$deposited_ins[$i];
 				$receipt_mode=$receipt_modes[$i];
 				$cheque_number=$cheque_numbers[$i];
@@ -6259,14 +6259,26 @@ function new_bank_receipt(){
 				$drown_in_which_bank=$drown_in_which_banks[$i];
 				$branch_of_bank=$branch_of_banks[$i];
 				$received_from=$received_froms[$i];
-				$ledger_sub_account_id=$ledger_sub_accounts[$i];
+				$ledger_sub_account_id=(int)$ledger_sub_accounts[$i];
 				$receipt_type=$receipt_types[$i];
 				$amount=$amounts[$i];
 				$narration=$narrations[$i];
 				
-				$this->loadmodel('cash_bank');
-				$auto_id=$this->autoincrement('cash_bank','auto_id');
-				$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id, "trasenction_date" => $trasenction_date,"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$received_from,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt"))); 
+				if($receipt_type=="maintenance"){
+					$this->loadmodel('cash_bank');
+					$auto_id=$this->autoincrement('cash_bank','auto_id');
+					$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id, "transaction_date" => $transaction_date,"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$received_from,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt"))); 
+					
+					
+					$this->loadmodel('ledger');
+					$ledger_id=$this->autoincrement('ledger','auto_id');
+					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" => $amount, "credit" =>null, "ledger_account_id" => 33, "ledger_sub_account_id" => $deposited_in,"table_name" => "bank_receipt","element_id" => $auto_id, "society_id" => $s_society_id))); 
+
+					$ledger_id=$this->autoincrement('ledger','auto_id');
+					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name" => "bank_receipt","element_id" => $auto_id, "society_id" => $s_society_id,"receipt_type" =>$receipt_type)));
+				}
+				
+				
 				
 			$i++; }
 			

@@ -309,5 +309,9 @@ function default_role_name_via_user_id($user_id){
 	return $result[0]["role"]["role_name"];
 }
 
+function calculate_arrear_maintenance($ledger_sub_account_id){
+	
+}
+
 }
 ?>

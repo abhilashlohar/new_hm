@@ -107,7 +107,6 @@ function it_regular_bill(){
 		$income_heads=$society_result[0]["society"]["income_head"];
 		
 		//Start billing calculation//
-		
 		foreach($members_for_billing as $ledger_sub_account_id){
 			$total=0; $due_for_payment=0;
 			//Income head amount calculation//
@@ -127,6 +126,9 @@ function it_regular_bill(){
 			foreach($other_charge as $other_charge_amount){
 				$total+=$other_charge_amount;
 			}
+			
+			//Arrears-Principal//
+			$arrear_maintenance = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrear_maintenance'),array('pass'=>array($ledger_sub_account_id)));
 			
 			$due_for_payment+=$total;
 			$current_date = date('Y-m-d');
@@ -6927,7 +6929,8 @@ function aprrove_bill(){
 	
 	$this->loadmodel('regular_bill_temp');
 	$conditions=array("society_id"=>$s_society_id,"sent_for_approval"=>"yes","approved"=>"no");
-	$regular_bill_temps=$this->regular_bill_temp->find('all',array('conditions'=>$conditions));
+	$order=array('regular_bill_temp.auto_id'=>'ASC');
+	$regular_bill_temps=$this->regular_bill_temp->find('all',array('conditions'=>$conditions,'order'=>$order));
 	foreach($regular_bill_temps as $regular_bill_temp){
 		$start_date=$regular_bill_temp["regular_bill_temp"]["start_date"];
 		$arranged_bills[$start_date][]=$regular_bill_temp;

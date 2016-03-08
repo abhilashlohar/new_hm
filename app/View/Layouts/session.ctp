@@ -210,9 +210,11 @@ $(document).ready(function() {
 					<?php
 					$s_user_id=$this->Session->read('hm_user_id');
 					$user_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_info_via_user_id'), array('pass' => array($s_user_id)));
-					$role_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'default_role_name_via_user_id'), array('pass' => array($s_user_id)));
+					$user_type=$user_info[0]["user"]["user_type"];
 					$name=$user_info[0]["user"]["user_name"];
-					?>
+					if($user_type!="hm"){
+					$role_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'default_role_name_via_user_id'), array('pass' => array($s_user_id)));
+					} ?>
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <img alt="" src="<?php echo $webroot_path; ?>assets/img/avatar1_small.jpg" />
                   <span class="username"><?php echo $name; ?></span>

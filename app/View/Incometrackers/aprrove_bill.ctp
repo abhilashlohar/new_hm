@@ -5,7 +5,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<form method="post" >
 	<div class="portlet-body" style="overflow-x: scroll;">
 	<?php 
-	if(sizeof(@$arranged_bills)==0){$arranged_bills=array(); echo 'No bills for approval.'; exit;} 
+	if(sizeof(@$arranged_bills)==0){$arranged_bills=array(); echo 'No bills for approval.'; } 
 	foreach($arranged_bills as $start_date=>$arranged_bill){
 	
 		foreach($arranged_bill as $data){

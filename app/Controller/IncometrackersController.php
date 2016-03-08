@@ -127,18 +127,59 @@ function it_regular_bill(){
 				$total+=$other_charge_amount;
 			}
 			
-			//Arrears-Principal//
+			//Arrears//
 			$result = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrears'),array('pass'=>array($ledger_sub_account_id)));
-			$arrear_principle=$result["arrear_principle"];
+			$arrear_maintenance=$result["arrear_principle"];
 			$arrear_interest=$result["arrear_interest"];
-			$due_for_payment+=$arrear_principle;
+			$due_for_payment+=$arrear_maintenance;
 			$due_for_payment+=$arrear_interest;
+			
+			
+			$result = $this->requestAction(array('controller' => 'Fns', 'action' => 'last_receipt_info'),array('pass'=>array($ledger_sub_account_id)));
+			
+			//INTRST COMPUTATION START//
+			$intrest_on_arrears=0;
+			//case-1
+			if((($arrear_maintenance<=0) && (@$receipt_date < @$last_due_date)) || (sizeof($result_new_regular_bill)==0)){
+				$intrest_on_arrears+=0;
+			  }else{
+				//case-2
+				if($arrear_maintenance>$last_total){
+					$difference=strtotime($bill_start_date)-$last_due_date;
+					$days_difference=floor($difference/(60*60*24)); 
+					$x=($last_total*$penalty)*($days_difference/365);
+					$difference2=strtotime($bill_start_date)-$last_bill_start_date;
+					$days_difference2=floor($difference2/(60*60*24)); 
+					$y=(($arrear_maintenance-$last_total)*$penalty)*($days_difference2/365);
+				$intrest_on_arrears+=round($x+$y);
+				}
+				//case-3
+				if($arrear_maintenance<=$last_total){
+					$difference3=strtotime($bill_start_date)-$last_due_date;
+					$days_difference3=floor($difference3/(60*60*24));
+					$intrest_on_arrears+=round(($arrear_maintenance*$penalty)*($days_difference3/365));
+				
+				
+				}
+				//case-4
+				if(sizeof($result_new_cash_bank)==1){
+					if($receipt_date > $last_due_date){ 
+						$difference4=$receipt_date-$last_due_date;
+						$days_difference4=floor($difference4/(60*60*24));
+						$intrest_on_arrears+=round(($receipt_amount*$penalty)*($days_difference4/365));
+					}
+				}
+				
+			}
+			//INTRST COMPUTATION END//
+			
+			
 			$due_for_payment+=$total;
 			$current_date = date('Y-m-d');
 			
 			$this->loadmodel('regular_bill_temp');
 			$auto_id=$this->autoincrement('regular_bill_temp','auto_id');
-			$this->regular_bill_temp->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_maintenance"=> $arrear_principle, "arrear_intrest" => $arrear_interest, "intrest_on_arrears" => 0,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>strtotime($start_date),"due_date"=>strtotime($due_date),"credit_stock"=>0,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$s_user_flat_id,"current_date"=>strtotime($current_date),"sent_for_approval"=>"no","approved"=>"no","end_date"=>strtotime($end_date)));
+			$this->regular_bill_temp->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_maintenance"=> $arrear_maintenance, "arrear_intrest" => $arrear_interest, "intrest_on_arrears" => 0,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>strtotime($start_date),"due_date"=>strtotime($due_date),"credit_stock"=>0,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$s_user_flat_id,"current_date"=>strtotime($current_date),"sent_for_approval"=>"no","approved"=>"no","end_date"=>strtotime($end_date)));
 			
 		} 
 		

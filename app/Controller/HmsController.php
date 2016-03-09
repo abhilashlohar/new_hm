@@ -3213,11 +3213,12 @@ function submenu_as_per_role_privilage(){
 $user_detail=$this->requestAction(array('controller' => 'Fns', 'action'=> 'user_info_via_user_id'),array('pass'=>array($s_user_id)));
 foreach($user_detail as $dataa)
 {
-$user_type = $dataa['user']['user_type'];	
+ $user_type = $dataa['user']['user_type'];	
 }
 if($user_type == "hm_child")
 {
-$default_role= $this->requestAction(array('controller' => 'Fns', 'action'=> 'fetch_default_role_via_user_id'),array('pass'=>array($s_user_id)));
+	
+$default_role= $this->requestAction(array('controller' => 'Fns', 'action'=> 'fetch_default_role_via_user_id_hm'),array('pass'=>array($s_user_id)));
 $page_namr_url=pathinfo($_SERVER[ 'REQUEST_URI'],PATHINFO_FILENAME);
 $url = parse_url($page_namr_url) ;
 $page_namr_url=  $url['path'];
@@ -5235,6 +5236,12 @@ $this->loadmodel('alert');
 $this->alert->saveAll(array('alert_id' => $alert_id,'icon' => $icon,'module_id' => $module_id,'element_id' => $element_id,'text' => $text, 'url' =>$url, 'users' =>$users, 'society_id' =>$s_society_id, 'date' =>$now));
 }
 
+function set_default_hm_child_society(){
+
+$this->layout='without_session';	
+	
+	
+}
 
 function index()
 {
@@ -5341,7 +5348,10 @@ if ($this->request->is('post'))
 	$result_user=$this->user->find('all',array('conditions'=>$conditions));
 	$user_id=(int)$result_user[0]["user"]["user_id"];
 	$society_id=(int)@$result_user[0]["user"]["society_id"];
-	
+	$user_type=@$result_user[0]["user"]["user_type"];
+		if($user_type=="hm_child"){
+			 $this->redirect(array('action' => 'dashboard'));
+		}
 	$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));
 	$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
 	
@@ -6657,8 +6667,8 @@ function dashboard(){
 		$this->layout='session';
 	}
 	$this->ath();
-	$s_society_id = $this->Session->read('hm_society_id');
-	$s_user_id = $this->Session->read('hm_user_id');
+	 $s_society_id = $this->Session->read('hm_society_id');
+	 $s_user_id = $this->Session->read('hm_user_id'); 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 }
 function reject_notification($id,$change)

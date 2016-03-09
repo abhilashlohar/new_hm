@@ -3215,11 +3215,9 @@ foreach($user_detail as $dataa)
 {
 $user_type = $dataa['user']['user_type'];	
 }
-
 if($user_type == "hm_child")
 {
 $default_role= $this->requestAction(array('controller' => 'Fns', 'action'=> 'fetch_default_role_via_user_id'),array('pass'=>array($s_user_id)));
-
 $page_namr_url=pathinfo($_SERVER[ 'REQUEST_URI'],PATHINFO_FILENAME);
 $url = parse_url($page_namr_url) ;
 $page_namr_url=  $url['path'];
@@ -3267,8 +3265,6 @@ echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn blue all
 else
 {	
 $default_role= $this->requestAction(array('controller' => 'Fns', 'action'=> 'fetch_default_role_via_user_id'),array('pass'=>array($s_user_id)));
-
-	
 $page_namr_url=pathinfo($_SERVER[ 'REQUEST_URI'],PATHINFO_FILENAME);
 $url = parse_url($page_namr_url) ;
 $page_namr_url=  $url['path'];
@@ -3330,7 +3326,6 @@ $this->layout='resricted';
 </div>
 <?php
 }
-
 }
 
 

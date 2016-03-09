@@ -6291,21 +6291,24 @@ function supplimentry_view($auto_id=null)
 $this->layout='session';
 $this->ath();
 
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 $auto_id = (int)$auto_id;
 
-$this->loadmodel('adhoc_bill');
-$conditions=array("adhoc_bill_id"=>$auto_id,"society_id" => $s_society_id);
-$cursor=$this->adhoc_bill->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
-$bill_html = $collection['adhoc_bill']['html_bill'];	
-}
+$this->loadmodel('supplimentry_bill');
+$order=array('supplimentry_bill.transaction_date'=> 'ASC');
+$conditions=array("society_id"=> $s_society_id,"supplimentry_bill_id"=>$auto_id);
+$cursor1=$this->supplimentry_bill->find('all',array('conditions'=>$conditions,'order'=>$order));
+$this->set('cursor1',$cursor1);
 
-$this->set('bill_html',$bill_html);
+
+$this->loadmodel('society');
+$conditions=array("society_id"=>$s_society_id);
+$result_society=$this->society->find('all',array('conditions'=>$conditions));
+$this->set('result_society',$result_society);
+
 }
 //////////////////////////////End Supplimentry Bill show/////////////////////////////////////////
 

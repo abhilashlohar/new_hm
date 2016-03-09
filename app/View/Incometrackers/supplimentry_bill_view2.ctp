@@ -4,7 +4,6 @@
        width:70%;
     }
 }
-
 @media print {
     .bill_on_screen {
        width:90% !important;

@@ -62,13 +62,13 @@ $nnn=555;
 <label class="m-wrap pull-right"><input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;" placeholder="Search"></label>	
 </div>
 <?php if($supplimentry_bill_type_for_view == 1){ ?>
-<table style="background-color:white; width:100%;" id="report_tb">
+<table style="background-color:white; width:100%;" class="table table-bordered">
 <tr>
 <th colspan="9" style="text-align:center;">
 <?php echo $society_name; ?> Supplimentry Bill Register From : <?php echo $from; ?> &nbsp;&nbsp; To : <?php echo $to; ?>
 </th>
 </tr>
-<tr id="bg_color">
+<tr>
 <th>Sr No.</th>
 <th>Bill No</th>
 <th>Generated on</th>
@@ -125,7 +125,7 @@ $grand_total=$grand_total+$total_amount;
 <td><?php echo $supplimentry_bill_type_for_view;?></td>
 <td><?php echo @$user_name;?>&nbsp;&nbsp;<?php echo @$wing_flat;?> </td>
 <td><?php echo $transaction_date_for_view;?></td>
-<td><?php $g_total=number_format($total_amount); echo $g_total;?></td>
+<td style="text-align:right;"><?php $g_total=number_format($total_amount); echo $g_total;?></td>
 <td><?php echo $description;?></td>
 <td class="hide_at_print" style="text-align:left;">
 <div class="btn-group">
@@ -220,7 +220,7 @@ $grand_total = $grand_total + $total_amount;
 <td><?php echo $current_date;?></td>
 <td><?php echo @$user_name;?>&nbsp;&nbsp;<?php echo @$wing_flat;?> </td>
 <td><?php echo $transaction_date_for_view;?></td>
-<td><?php $g_total=number_format($total_amount); echo $g_total;?></td>
+<td style="text-align:right;"><?php $g_total=number_format($total_amount); echo $g_total;?></td>
 <td><?php echo $description;?></td>
 <td class="hide_at_print" style="text-align:left;">
 <div class="btn-group">
@@ -314,9 +314,7 @@ $grand_total = $grand_total + $g_total; ?>
 <td><?php echo $date; ?></td>
 <td><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $wing_flat; ?> </td>
 <td><?php echo $transaction_date_for_view; ?></td>
-<td style="text-align:right;"><?php 
-$g_total = number_format($g_total);
-echo $g_total; ?></td>
+<td style="text-align:right;"><?php $g_total = number_format($g_total); echo $g_total; ?></td>
 <td><?php echo $description; ?></td>
 <td class="hide_at_print" style="text-align:left;">
 <div class="btn-group">

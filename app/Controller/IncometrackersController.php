@@ -134,13 +134,18 @@ function it_regular_bill(){
 			$due_for_payment+=$arrear_maintenance;
 			$due_for_payment+=$arrear_interest;
 			
+			echo $ledger_sub_account_id;
+			$last_bill_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'last_bill_info'),array('pass'=>array($ledger_sub_account_id)));
+			pr($last_bill_info);
 			
-			$result = $this->requestAction(array('controller' => 'Fns', 'action' => 'last_receipt_info'),array('pass'=>array($ledger_sub_account_id)));
+			$last_receipt_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'last_receipt_info'),array('pass'=>array($ledger_sub_account_id)));
+			
+			pr($last_receipt_info);
 			
 			//INTRST COMPUTATION START//
 			$intrest_on_arrears=0;
 			//case-1
-			if((($arrear_maintenance<=0) && (@$receipt_date < @$last_due_date)) || (sizeof($result_new_regular_bill)==0)){
+			if((($arrear_maintenance<=0) && (@$receipt_date < @$last_due_date)) || (sizeof($last_bill_info)==0)){
 				$intrest_on_arrears+=0;
 			  }else{
 				//case-2
@@ -172,7 +177,7 @@ function it_regular_bill(){
 				
 			}
 			//INTRST COMPUTATION END//
-			
+			echo $intrest_on_arrears;
 			
 			$due_for_payment+=$total;
 			$current_date = date('Y-m-d');
@@ -181,7 +186,7 @@ function it_regular_bill(){
 			$auto_id=$this->autoincrement('regular_bill_temp','auto_id');
 			$this->regular_bill_temp->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_maintenance"=> $arrear_maintenance, "arrear_intrest" => $arrear_interest, "intrest_on_arrears" => 0,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>strtotime($start_date),"due_date"=>strtotime($due_date),"credit_stock"=>0,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$s_user_flat_id,"current_date"=>strtotime($current_date),"sent_for_approval"=>"no","approved"=>"no","end_date"=>strtotime($end_date)));
 			
-		} 
+		} exit;
 		
 		$this->redirect(array('controller' => 'Incometrackers','action' => 'preview_regular_bill'));
 	

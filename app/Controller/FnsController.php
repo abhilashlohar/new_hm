@@ -353,5 +353,22 @@ function calculate_arrears($ledger_sub_account_id){
 	return array("arrear_principle"=>$arrear_principle,"arrear_interest"=>$arrear_interest);
 }
 
+function last_receipt_info($ledger_sub_account_id){
+	$s_society_id=$this->Session->read('hm_society_id');
+	
+	$this->loadmodel('cash_bank');
+	$conditions=array("source" => "bank_receipt","receipt_type"=>"maintenance","society_id"=>$s_society_id,"ledger_sub_account_id"=>$ledger_sub_account_id);
+	return $this->cash_bank->find('all',array('conditions'=>$conditions));
+}
+
+function last_bill_info($ledger_sub_account_id){
+	$s_society_id=$this->Session->read('hm_society_id');
+	
+	$this->loadmodel('regular_bill');
+	$conditions=array("society_id"=>$s_society_id,"ledger_sub_account_id"=>$ledger_sub_account_id);
+	$order=array('regular_bill.auto_id'=> 'DESC');
+	return $this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1));
+}
+
 }
 ?>

@@ -29,8 +29,8 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 					<td><?php echo $ledger_accounts["ledger_account"]["ledger_name"]; ?>
 					<input type="hidden" value="<?php echo $ledger_accounts["ledger_account"]["auto_id"]; ?>" name="ledger_id[]">
 					</td>
-					<td><input type="text" class="m-wrap small debit" name="debit[]"></td>
-					<td><input type="text" class="m-wrap small credit" name="credit[]"></td>
+					<td><input type="text" class="m-wrap small debit" name="debit[]" Placeholder="Debit"></td>
+					<td><input type="text" class="m-wrap small credit" name="credit[]" Placeholder="Credit"></td>
 					<td><input type="hidden" value="" name="penalty[]"></td>
 				</tr>
 			<?php } ?>
@@ -66,9 +66,9 @@ $wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_f
 <input type="hidden" value="<?php echo $ledger_id; ?>,<?php echo $ledger_sub_account_id; ?>"
 name="ledger_id[]">
 		</td>
-		<td><input type="text" class="m-wrap small debit" name="debit[]"></td> 
-		<td><input type="text" class="m-wrap small credit" name="credit[]"></td>
-		<td><input type="text" class="m-wrap small penalty" name="penalty[]"></td> 
+		<td><input type="text" class="m-wrap small debit" name="debit[]" Placeholder="Debit"></td> 
+		<td><input type="text" class="m-wrap small credit" name="credit[]" Placeholder="Credit"></td>
+		<td><input type="text" class="m-wrap small penalty" name="penalty[]" Placeholder="Penalty"></td> 
 	</tr>
 <?php }	?>
 <?php 
@@ -92,9 +92,9 @@ name="ledger_id[]">
 <input type="hidden" value="<?php echo $ledger_id; ?>,<?php echo $ledger_sub_account_id; ?>" name="ledger_id[]">
 		
 		</td>
-		<td><input type="text" class="m-wrap small debit" name="debit[]"></td>
-		<td><input type="text" class="m-wrap small credit" name="credit[]"></td>
-		<td><input type="hidden" value="" name="penalty[]"></td>
+		<td><input type="text" class="m-wrap small debit" name="debit[]" Placeholder="Debit"></td>
+		<td><input type="text" class="m-wrap small credit" name="credit[]" Placeholder="Credit"></td>
+		<td><input type="hidden" value="" name="penalty[]" Placeholder="Penalty"></td>
 		</tr>
 	<?php }} ?>
 <tr>	
@@ -136,7 +136,9 @@ $(document).ready(function(){
 	$(".debit").on("blur",function(){
 		 var sum = 0;
 		$(".debit").each(function(){
-			sum+= +$(this).val();
+			sum2 = +$(this).val();
+			if($.isNumeric(sum2)==false){ sum2=0; }
+			sum+=sum2;
 			total_debit+= +$(this).val();
 		});
 		$(".total_debit").val(sum);

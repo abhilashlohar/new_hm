@@ -4263,9 +4263,9 @@ function fetch_flat_detail_via_flat_type_id($flat_type_id){
 ///////////////////// End wing flat with bracket ////////////////////////////////// 
 
 function fetch_subLedger_detail_via_flat_id($flat_id){
-	$s_society_id=$this->Session->read('society_id');
+	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('ledger_sub_account');
-	$conditions=array("flat_id" => $flat_id,"society_id"=>$s_society_id);
+	$conditions=array("user_flat_id" => $flat_id,"society_id"=>$s_society_id);
 	return $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 }
 
@@ -4320,6 +4320,7 @@ foreach($result2 as $data)
 {
 $flat_name=$data['flat']['flat_name'];
 }
+$flat_name=ltrim($flat_name,'0');
 
 if(!empty($wing_name) && !empty($flat_name))
 {
@@ -26976,4 +26977,4 @@ echo "F";
 }
 ////////////////////// End auto_save_unit_config ///////////////////////////////
 }
-?>
+?>>

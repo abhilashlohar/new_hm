@@ -30,6 +30,7 @@ $society_phone=$data['society']['society_phone'];
 $neft_type=$data['society']['neft_type'];
 $sig_title=$data['society']['sig_title']; 
 $neft_detail=$data['society']['neft_detail'];
+$area_scale=$data['society']['area_scale'];
 }
 foreach($cursor1 as $collection){
 $creater_name="";
@@ -124,10 +125,10 @@ $html.='</td>
 								</tbody>
 								</table>';
 							
-$flat_id = (int)@$user;
+
 $due_date2 = date('d-m-Y',strtotime($due_date));
 $from2 = date('d-m-Y',strtotime($from));
-if($type == 2)
+if($type == 'resident')
 {
 $result1 = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_subLedger_detail_via_flat_id'),
 array('pass'=>array($flat_id)));	
@@ -135,7 +136,7 @@ array('pass'=>array($flat_id)));
 		{	
 		$auto_id = (int)$collection['ledger_sub_account']['auto_id'];
 		//$user_id = (int)$collection['ledger_sub_account']['user_id'];
-		$flat_id = (int)$collection['ledger_sub_account']['flat_id'];
+		$flat_id = (int)$collection['ledger_sub_account']['user_flat_id'];
 		$user_name = $collection['ledger_sub_account']['name'];
 		}
 
@@ -184,7 +185,7 @@ $html.='<table style="font-size:12px" width="100%" cellspacing="0">
 <td style="padding: 0px 0 0 5px;"><b>Bill No.:</b></td>
 <td>'.$bill_no.'</td>
 <td><b>Area ('.@$area_scale_text.'):</b></td>
-<td>'.$sq_feet.'</td>
+<td>'.@$sq_feet.'</td>
 </tr>
 <tr>
 <td style="padding: 0px 0 0 5px;"><b>Bill Date:</b></td>
@@ -413,8 +414,8 @@ Your Society is empowered by HousingMatters - <b/> <i>"Making Life Simpler"</i>
 <a href="mailto:support@housingmatters.in" target="_blank" style="color:#FFF !important;"><b>support@housingmatters.in</b></a>
 </td>
 <td align="center"></td>
-<td align="right" width="50"><b>Phone :</b></td>
-<td width="84" style="color:#FFF !important;text-decoration: none;"><b>022-41235568</b></td>
+<td align="right" width="50" colspan="2" style="text-align:center;"><b><img src="'.@$ip.$this->webroot.'/as/hm/whatsup.png"  width="18px" /></b>
+<b>+91-9869157561</b></td>
 <td align="center"></td>
 <td width="100" style="padding-right: 10px;text-decoration: none;"> <a href="http://www.housingmatters.in" target="_blank" style="color:#FFF !important;"><b>www.housingmatters.in</b></a></td>
 </tr>

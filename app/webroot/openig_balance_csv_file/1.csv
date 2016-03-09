@@ -89,10 +89,8 @@ Repairs & Maintenance,Fire & Safety expenses,,,,,
 Administrative Expenses,Subscription charges,,,,,
 Investments,Deposits with Electricity Cos,,,,,
 Investments,Deposits with Water Supply Cos,,,,,
-Other Income,Interest from saving bank accounts,,,credit,1000,
-Reserve & Surplus,Sinking Fund (Reserves),,,credit,1000,
-Investments,Shares of Federation,,,credit,1000,
-Current Assets,Sundry Debtors Control A/c,,,credit,1000,
-Members Control Accounts,Nikhil,A,101A,credit,1000,500
-Members Control Accounts,Rohit,A,101A,credit,1000,500
-Sundry Creditors Control A/c,Raju,,,debit,7000,
+Other Income,Interest from saving bank accounts,,,,,
+Reserve & Surplus,Sinking Fund (Reserves),,,debit,6000,
+Investments,Shares of Federation,,,,,
+Current Assets,Sundry Debtors Control A/c,,,,,
+Members Control Accounts,Rohit Joshi,A,101A,credit,5000,1000

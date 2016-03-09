@@ -308,7 +308,7 @@ function auto_save_user_enrollment($record_id=null,$field=null,$value=null){
 			if (!preg_match ( '/^\\d{10}$/',$value) && !empty($value)) { echo "F";}
 			else{
 				$this->loadmodel('user_enrollment_csv_converted');
-				$this->user_enrollment_csv_converted->updateAll(array("email" => $value),array("auto_id" => $record_id));
+				$this->user_enrollment_csv_converted->updateAll(array("mobile" => $value),array("auto_id" => $record_id));
 				echo "T";
 			}
 		}	

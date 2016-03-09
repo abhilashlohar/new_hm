@@ -148,7 +148,9 @@ $(document).ready(function(){
 	$(".credit").on("blur",function(){
 		 var sum = 0;
 		$(".credit").each(function(){
-			sum+= +$(this).val();
+			sum2=+$(this).val();
+			if($.isNumeric(sum2)==false){ sum2=0; }
+			sum+=sum2;
 		});
 		$(".total_credit").val(sum);
 		grand_total();
@@ -157,7 +159,9 @@ $(document).ready(function(){
 	$(".penalty").on("blur",function(){
 		 var sum = 0;
 		$(".penalty").each(function(){
-			sum+= +$(this).val();
+			sum2= +$(this).val();
+			if($.isNumeric(sum2)==false){ sum2=0; }
+			sum+=sum2;
 		});
 		$(".total_penalty").val(sum);
 		grand_total();

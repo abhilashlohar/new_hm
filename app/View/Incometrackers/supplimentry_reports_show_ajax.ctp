@@ -62,13 +62,13 @@ $nnn=555;
 <label class="m-wrap pull-right"><input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;" placeholder="Search"></label>	
 </div>
 <?php if($supplimentry_bill_type_for_view == 1){ ?>
-<table style="background-color:white; width:100%;" id="report_tb">
+<table style="background-color:white; width:100%;" class="table table-bordered">
 <tr>
 <th colspan="9" style="text-align:center;">
 <?php echo $society_name; ?> Supplimentry Bill Register From : <?php echo $from; ?> &nbsp;&nbsp; To : <?php echo $to; ?>
 </th>
 </tr>
-<tr id="bg_color">
+<tr>
 <th>Sr No.</th>
 <th>Bill No</th>
 <th>Generated on</th>
@@ -91,33 +91,41 @@ $total_amount=$collection['supplimentry_bill']["total_amount"];
 $transaction_date=$collection['supplimentry_bill']['transaction_date'];
 $description=$collection['supplimentry_bill']['description'];
 $creater_id=(int)$collection['supplimentry_bill']['created_by']; 
-$user_detail = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($creater_id)));
-foreach($user_dataaaa as $user_detailll){
-$creater_name=$user_detailll['user']['user_name'];
-$current_date=date('d-m-Y',strtotime($date));	
-$transaction_date_for_view = date('d-m-Y',($transaction_date));
-}
+	$user_detail = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array((int)$creater_id)));
+	foreach($user_detail as $user_detailll){
+	$creater_name=$user_detailll['user']['user_name'];
+	$current_date=date('d-m-Y',strtotime($date));	
+	$transaction_date_for_view = date('d-m-Y',($transaction_date));
+	}
 if($supplimentry_bill_type=="resident"){
-$ledger_sub_account_id=(int)$collection['supplimentry_bill']['ledger_sub_account_id'];	
+$ledger_sub_account_id=(int)$collection['supplimentry_bill']['ledger_sub_account_id'];
+$ledger_sub_account_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+foreach ($ledger_sub_account_detail as $ledger_sub_account_date) {
+$user_name = $ledger_sub_account_date['ledger_sub_account']['name'];
+}
 $supplimentry_bill_type_for_view="Residential";
 }
 if($supplimentry_bill_type=="non_resident"){
 $ledger_sub_account_id=(int)$collection['supplimentry_bill']['ledger_sub_account_id'];
+$ledger_sub_account_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+foreach ($ledger_sub_account_detail as $ledger_sub_account_date) {
+$user_name = $ledger_sub_account_date['ledger_sub_account']['name'];
+}
 $supplimentry_bill_type_for_view="Non-Residential";
 }
 if($date_renge_from<=$transaction_date && $date_renge_to>=$transaction_date)
 {
 $i++;
-$grand_total=$grand_total+$g_total;
+$grand_total=$grand_total+$total_amount;
 ?>
 <tr>
 <td><?php echo $i;?></td>
 <td><?php echo $receipt_id;?></td>
 <td><?php echo $current_date;?></td>
 <td><?php echo $supplimentry_bill_type_for_view;?></td>
-<td><?php echo $user_name;?>&nbsp;&nbsp;<?php echo $wing_flat;?> </td>
+<td><?php echo @$user_name;?>&nbsp;&nbsp;<?php echo @$wing_flat;?> </td>
 <td><?php echo $transaction_date_for_view;?></td>
-<td><?php $g_total=number_format($g_total); echo $g_total;?></td>
+<td style="text-align:right;"><?php $g_total=number_format($total_amount); echo $g_total;?></td>
 <td><?php echo $description;?></td>
 <td class="hide_at_print" style="text-align:left;">
 <div class="btn-group">
@@ -125,13 +133,14 @@ $grand_total=$grand_total+$g_total;
 <i class="icon-chevron-down"></i></a>
 <ul class="dropdown-menu" style="min-width:75px !important;">
 <li>
-<a href="supplimentry_view/<?php echo $adhoc_bill; ?>" target="_blank"><i class="icon-search"></i> View</a>
-<?php if(!empty($creater_name)){ ?>
-<i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: <?php  echo $creater_name;?> on: <?php echo $datett;?>"></i>
-<?php } ?>
+<a href="supplimentry_view/<?php echo $supplimentry_bill_id; ?>" target="_blank"><i class="icon-search"></i> View</a>
 </li>
 </ul>
 </div>
+<?php if(!empty($creater_name)){ ?>
+<i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: <?php echo $creater_name;?> on: <?php echo $current_date;?>"></i>
+<?php } ?>
+
 </td>
 </tr>
 <?php }} ?>
@@ -143,30 +152,16 @@ $grand_total=$grand_total+$g_total;
 </tr>
 </tbody>
 </table>
-<?php }} ?>
-
-
-
-
-
-
-<?php /*  
-
-<?php
-}
-?>
-<?php
-if($tp == 2)
-{
-?>
-<table style="background-color:white; width:100%;" id="report_tb">
+<?php } ?>
+<?php if($supplimentry_bill_type_for_view == 2) { ?>
+<table style="background-color:white; width:100%;" class="table table-bordered">
 <thead>
 <tr>
 <th colspan="8" style="text-align:center;">
 <?php echo $society_name; ?> Supplimentry Bill Register From : <?php echo $from; ?> &nbsp;&nbsp; To : <?php echo $to; ?>
 </th>
 </tr>
-<tr id="bg_color">
+<tr>
 <th>Sr No.</th>
 <th>Bill No</th>
 <th>Generated on</th>
@@ -184,78 +179,66 @@ $i=0;
 foreach($cursor1 as $collection) 
 {
 $creater_name = "";
-$adhoc_bill= (int)$collection['adhoc_bill']["adhoc_bill_id"];
-$receipt_id = $collection['adhoc_bill']['receipt_id'];
-$pay_status=$collection['adhoc_bill']["pay_status"];
-$date=$collection['adhoc_bill']["date"];
-$residential=$collection['adhoc_bill']["residential"];
-$g_total=$collection['adhoc_bill']["g_total"];
-$html_bill = $collection['adhoc_bill']['html_bill'];
-$bill_date_from = $collection['adhoc_bill']['bill_daterange_from'];
-$description = $collection['adhoc_bill']['description']; 
-$bill_date_from2 = date('d-m-Y',($bill_date_from));
-$creater_id = (int)$collection['adhoc_bill']['created_by'];
-
+$supplimentry_bill_id= (int)$collection['supplimentry_bill']["supplimentry_bill_id"];
+$receipt_id = $collection['supplimentry_bill']['receipt_id'];
+$date=$collection['supplimentry_bill']["date"];
+$residential=$collection['supplimentry_bill']["supplimentry_bill_type"];
+$total_amount=$collection['supplimentry_bill']["total_amount"];
+$transaction_date = $collection['supplimentry_bill']['transaction_date'];
+$description = $collection['supplimentry_bill']['description']; 
+$transaction_date_for_view = date('d-m-Y',($transaction_date));
+$creater_id = (int)$collection['supplimentry_bill']['created_by'];
 $user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($creater_id)));
 foreach ($user_dataaaa as $user_detailll) 
 {
 $creater_name = $user_detailll['user']['user_name'];
-}	
-$datett = date('d-m-Y',strtotime($date));	
-if($residential=="y")
+}
+$current_date = date('d-m-Y',strtotime($date));	
+if($residential=="resident")
 {
-$flat_id = (int)$collection['adhoc_bill']['person_name'];	
-	
-$flat_detailll = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
-foreach ($flat_detailll as $data) 
-{
-$wing_id = (int)$data['flat']['wing_id'];  
+$ledger_sub_account_id = (int)$collection['supplimentry_bill']['ledger_sub_account_id'];	
+$ledger_sub_account_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+foreach ($ledger_sub_account_detail as $ledger_sub_account_date) {
+$user_name = $ledger_sub_account_date['ledger_sub_account']['name'];
 }
 
-$ledger_subacc_detaill = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_subLedger_detail_via_flat_id'),array('pass'=>array($flat_id)));
-foreach ($ledger_subacc_detaill as $dataaa) 
-{
-$user_name = $dataaa['ledger_sub_account']['name'];  
-}
-	
-$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array($wing_id,$flat_id)));									
+$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array(@$wing_id,@$flat_id)));									
 $bill_for = $wing_flat;
 $bill_type = "Residential";
-
-if($frommm <= $bill_date_from && $tooo >= $bill_date_from)
+	
+if($date_renge_from <= $transaction_date && $date_renge_to >= $transaction_date)
 {
 $i++;
 $date = date('d-m-Y',strtotime($date));
-$grand_total = $grand_total + $g_total;
+$grand_total = $grand_total + $total_amount;
+
+
 ?>
 <tr>
-<td><?php echo $i; ?></td>
-<td><?php echo $receipt_id; ?></td>
-<td><?php echo $date; ?></td>
-<td><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $wing_flat; ?> </td>
-<td><?php echo $bill_date_from2; ?></td>
-<td style="text-align:right;"><?php
-$g_total = number_format($g_total);
- echo $g_total; ?></td>
-<td><?php echo $description; ?></td>
+<td><?php echo $i;?></td>
+<td><?php echo $receipt_id;?></td>
+<td><?php echo $current_date;?></td>
+<td><?php echo @$user_name;?>&nbsp;&nbsp;<?php echo @$wing_flat;?> </td>
+<td><?php echo $transaction_date_for_view;?></td>
+<td style="text-align:right;"><?php $g_total=number_format($total_amount); echo $g_total;?></td>
+<td><?php echo $description;?></td>
 <td class="hide_at_print" style="text-align:left;">
 <div class="btn-group">
-		<a class="btn blue mini" href="#" data-toggle="dropdown">
-		<i class="icon-chevron-down"></i>	
-		</a>
-		
-		<ul class="dropdown-menu" style="min-width:75px !important;">
-		<li><a href="supplimentry_view/<?php echo $adhoc_bill; ?>" target="_blank"><i class="icon-search"></i> View</a></li>
-		</ul>
-		</div>
-		<?php if(!empty($creater_name))
-		{ ?>
-		<i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: 
-		<?php echo $creater_name; ?> on: <?php echo $datett; ?>"></i>
-		<?php } ?>
+<a class="btn blue mini" href="#" data-toggle="dropdown">
+<i class="icon-chevron-down"></i></a>
+<ul class="dropdown-menu" style="min-width:75px !important;">
+<li>
+<a href="supplimentry_view/<?php echo $supplimentry_bill_id; ?>" target="_blank"><i class="icon-search"></i> View</a>
+<?php if(!empty($creater_name)){ ?>
+</li>
+</ul>
+</div>
+<i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: <?php  echo $creater_name;?> on: <?php echo $current_date;?>"></i>
+<?php } ?>
+
 </td>
 </tr>
-<?php }}} ?>
+<?php }}}?>
 <tr>
 <td colspan="5" style="text-align:right;"><b>Total</b></td>
 <td style="text-align:right;"><b><?php 
@@ -266,16 +249,9 @@ echo $grand_total; ?></b></td>
 </tr>
 </tbody>
 </table>
-<?php
-}
-?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
-
-<?php
-if($tp == 3)
-{
-?>	
-<table id="report_tb" style="background-color:white; width:100%;">
+<?php } ?>
+<?php if($supplimentry_bill_type_for_view == 3){ ?>	
+<table class="table table-bordered" style="background-color:white; width:100%;">
 <thead>
 <tr>
 <th colspan="8" style="text-align:center;">
@@ -283,7 +259,7 @@ if($tp == 3)
 </th>
 </tr>
 
-<tr id="bg_color">
+<tr>
 <th>Sr No.</th>
 <th>Bill No</th>
 <th>Generated on</th>
@@ -301,54 +277,44 @@ $i=0;
 foreach($cursor1 as $collection) 
 {
 $creater_name = "";
-$adhoc_bill= (int)$collection['adhoc_bill']["adhoc_bill_id"];
-$receipt_id = $collection['adhoc_bill']['receipt_id'];
-$pay_status=$collection['adhoc_bill']["pay_status"];
-$date=$collection['adhoc_bill']["date"];
-$residential=$collection['adhoc_bill']["residential"];
-$g_total=$collection['adhoc_bill']["g_total"];
-$html_bill = $collection['adhoc_bill']['html_bill'];
-$bill_date_from = $collection['adhoc_bill']['bill_daterange_from'];
-$description = $collection['adhoc_bill']['description'];
-$bill_date_from2 = date('d-m-Y',($bill_date_from));
-$creater_id = (int)$collection['adhoc_bill']['created_by'];
+$supplimentry_bill_id= (int)$collection['supplimentry_bill']["supplimentry_bill_id"];
+$receipt_id = $collection['supplimentry_bill']['receipt_id'];
+$date=$collection['supplimentry_bill']["date"];
+$residential=$collection['supplimentry_bill']["supplimentry_bill_type"];
+$g_total=$collection['supplimentry_bill']["total_amount"];
+$transaction_date = $collection['supplimentry_bill']['transaction_date'];
+$description = $collection['supplimentry_bill']['description'];
+$transaction_date_for_view = date('d-m-Y',($transaction_date));
+$creater_id = (int)$collection['supplimentry_bill']['created_by'];
 
 $user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($creater_id)));
 foreach($user_dataaaa as $user_detailll) 
 {
 $creater_name = $user_detailll['user']['user_name'];
-}	
-$datett = date('d-m-Y',strtotime($date));	
-if($residential=="n")
-{
-$flat_id = (int)$collection['adhoc_bill']['person_name'];	
+}
 
-$ledger_subacc_detaill = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($flat_id)));
-foreach ($ledger_subacc_detaill as $dataaa) 
+$current_date = date('d-m-Y',strtotime($date));	
+if($residential=="non_resident")
 {
-$user_name = $dataaa['ledger_sub_account']['name'];  
-}	
-	
-	
-//$user_name=$collection['adhoc_bill']["person_name"];
+$ledger_sub_account_id = (int)$collection['supplimentry_bill']['ledger_sub_account_id'];	
+$ledger_sub_account_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+foreach ($ledger_sub_account_detail as $ledger_sub_account_date){
+$user_name = $ledger_sub_account_date['ledger_sub_account']['name'];
+}
 $bill_type = "Non-residential";
 $wing_flat = "";
-if($frommm <= $bill_date_from && $tooo >= $bill_date_from)
+if($date_renge_from <= $transaction_date && $date_renge_to >= $transaction_date)
 {
 $i++;
 $date = date('d-m-Y',strtotime($date));
-$grand_total = $grand_total + $g_total;
-
-?>
+$grand_total = $grand_total + $g_total; ?>
 <tr>
 <td><?php echo $i; ?></td>
 <td><?php echo $receipt_id; ?></td>
 <td><?php echo $date; ?></td>
 <td><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $wing_flat; ?> </td>
-<td><?php echo $bill_date_from2; ?></td>
-<td style="text-align:right;"><?php 
-$g_total = number_format($g_total);
-echo $g_total; ?></td>
+<td><?php echo $transaction_date_for_view; ?></td>
+<td style="text-align:right;"><?php $g_total = number_format($g_total); echo $g_total; ?></td>
 <td><?php echo $description; ?></td>
 <td class="hide_at_print" style="text-align:left;">
 <div class="btn-group">
@@ -357,19 +323,19 @@ echo $g_total; ?></td>
 		</a>
 		
 		<ul class="dropdown-menu" style="min-width:75px !important;">
-		<li><a href="supplimentry_view/<?php echo $adhoc_bill; ?>"  target="_blank"><i class="icon-search"></i> View</a></li>
+		<li><a href="supplimentry_view/<?php echo $supplimentry_bill_id; ?>"  target="_blank"><i class="icon-search"></i> View</a></li>
 		</ul>
 		</div>
 
 		<?php if(!empty($creater_name))
 		{ ?>
 		<i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: 
-		<?php echo $creater_name; ?> on: <?php echo $datett; ?>"></i>
+		<?php echo $creater_name; ?> on: <?php echo $current_date; ?>"></i>
 		<?php } ?>
 
 </td>
 </tr>
-<?php }}} ?>
+<?php }}}	 ?>
 <tr>
 <td colspan="5" style="text-align:right;"><b>Total</b></td>
 <td style="text-align:right;"><b><?php 
@@ -380,12 +346,8 @@ echo $grand_total; ?></b></td>
 </tr>
 </tbody>
 </table>
-<?php
-}
-}
-if($nnn == 55)
-{
-?>
+<?php }}
+if($nnn == 55) { ?>
 <br /><br />
 <center>
 <h3 style="color:red;"><b>No Record Found in Selected Period</b></h3>
@@ -407,7 +369,7 @@ return !~text.indexOf(val);
 </script>	
 
 
-*/ ?>
+
 
 
 

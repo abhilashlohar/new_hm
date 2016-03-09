@@ -1,17 +1,6 @@
 <div class="hide_at_print">	
-<?php
-	echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
-?>
-		   
-<script>
-$(document).ready(function() {
-$("#fix<?php echo $id_current_page; ?>").removeClass("blue");
-$("#fix<?php echo $id_current_page; ?>").addClass("red");
-});
-</script>
+<?php echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array())); ?>
 </div>	
-
-
 <div style="background-color:#EFEFEF; border-top:1px solid #e6e6e6; border-bottom:1px solid #e6e6e6; padding:10px; box-shadow:5px; font-size:16px; color:#006;">
 Society Details
 </div>

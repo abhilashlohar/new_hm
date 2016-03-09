@@ -44,7 +44,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				  <label class="control-label">Penalty</label>
 				  <div class="controls">
 					<label class="radio">
-					<input type="radio" value="yes" name="panalty">Yes
+					<input type="radio" value="yes" name="panalty" checked>Yes
 					</label>
 					<label class="radio">
 					<input type="radio" value="no" name="panalty">No
@@ -58,13 +58,13 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					<label class="radio">
 					<input type="radio" value="all" name="bill_for" checked> All Units 
 					</label>
-					<label class="radio">
+					<label class="radio" style="display: none;">
 					<input type="radio" value="wing_wise" name="bill_for"> Wing Wise
 					</label>
 				  </div>
 				</div>
 				
-				<div class="control-group">
+				<div class="control-group" style="display: none;">
 				  <div class="controls">
 				  <?php foreach($result_wing as $wings){
 					$wing_id=$wings["wing"]["wing_id"];

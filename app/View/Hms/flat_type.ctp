@@ -275,9 +275,9 @@ $("#myModal3").show();
 		$.ajax({
 			url: "save_import_flat?q="+myJsonString,
 			type: 'POST',
-			//dataType:'json',
+			dataType:'json',
 		}).done(function(response) {
-			alert(response);
+			
 			if(response.report_type=='error'){
 				jQuery.each(response.report, function(i, val) {
 					$("#flats_main tr:nth-child("+val.tr+") td:nth-child("+val.td+")").append('<br><span class="report" style="color:red;">'+val.text+'</span>');

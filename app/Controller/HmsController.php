@@ -26,6 +26,662 @@ $dd=explode(' ',$name);
 	}
 }
 
+function import_user_enrollment(){
+	
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$this->loadmodel('import_user_enrollment_record');
+	$conditions=array("society_id" => $s_society_id,"module_name" => "UE");
+	$import_user_enrollment_record = $this->import_user_enrollment_record->find('all',array('conditions'=>$conditions));
+	$this->set('result_import_record',$import_user_enrollment_record);
+	foreach($import_user_enrollment_record as $data_import){
+		$step1=(int)@$data_import["import_user_enrollment_record"]["step1"];
+		$step2=(int)@$data_import["import_user_enrollment_record"]["step2"];
+		$step3=(int)@$data_import["import_user_enrollment_record"]["step3"];
+		$step4=(int)@$data_import["import_user_enrollment_record"]["step4"];
+	}
+		$process_status= @$step1+@$step2+@$step3+@$step4;
+		
+		if(@$process_status==2){
+			$this->loadmodel('user_enrollment_info_csv');
+			$conditions=array("society_id" => $s_society_id,"is_converted" => "YES");
+			$total_converted_records = $this->user_enrollment_info_csv->find('count',array('conditions'=>$conditions));
+			
+			$this->loadmodel('user_enrollment_info_csv');
+			$conditions=array("society_id" => $s_society_id);
+			$total_records = $this->user_enrollment_info_csv->find('count',array('conditions'=>$conditions));
+			
+			$this->set("converted_per",($total_converted_records*100)/$total_records);
+		}
+		
+		if(@$process_status==4){
+			$this->loadmodel('user_enrollment_csv_converted');
+			$conditions=array("society_id" => $s_society_id,"is_imported" => "YES");
+			$total_converted_records = $this->user_enrollment_csv_converted->find('count',array('conditions'=>$conditions));
+			
+			$this->loadmodel('user_enrollment_csv_converted');
+			$conditions=array("society_id" => $s_society_id);
+			$total_records = $this->user_enrollment_csv_converted->find('count',array('conditions'=>$conditions));
+			
+			$this->set("converted_per_im",($total_converted_records*100)/$total_records);
+		}
+	
+}
+
+function Upload_user_enrollment_csv_file(){
+	
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$this->ath();
+	if(isset($_FILES['file'])){
+		
+		$file_name=$s_society_id.".csv";
+		$file_tmp_name =$_FILES['file']['tmp_name'];
+		$target = "new_user_enrollment_csv/";
+		$target=@$target.basename($file_name);
+		move_uploaded_file($file_tmp_name,@$target);
+		
+		
+		$today = date("d-M-Y");
+		
+		$this->loadmodel('import_user_enrollment_record');
+		$auto_id=$this->autoincrement('import_user_enrollment_record','auto_id');
+		$this->import_user_enrollment_record->saveAll(Array( Array("auto_id" => $auto_id, "file_name" => $file_name,"society_id" => $s_society_id, "user_id" => $s_user_id, "module_name" => "UE", "step1" => 1,"date"=>$today))); 
+		
+		die(json_encode("UPLOADED"));
+		
+	}
+	
+}
+
+function read_user_enrollment_csv(){
+	
+	$this->layout=null;
+	$s_society_id = $this->Session->read('hm_society_id');
+	$f = fopen('new_user_enrollment_csv/'.$s_society_id.'.csv', 'r') or die("ERROR OPENING DATA");
+	$batchcount=0;
+	$records=0;
+	while (($line = fgetcsv($f, 4096, ';')) !== false) {
+	$numcols = count($line);
+	$test[]=$line;
+	++$records;
+	}
+	$i=0;
+	foreach($test as $child){ $i++;
+			if($i>1){
+				$child_ar=explode(',',$child[0]);
+				$name=$child_ar[0];
+				$wing_name=$child_ar[1];
+				$flat_name=$child_ar[2];
+				$email=$child_ar[3];
+				$mobile=$child_ar[4];
+				$owner_tenant=$child_ar[5];
+				$committee=$child_ar[6];
+				$flat_name=str_pad($flat_name,10,"0",STR_PAD_LEFT);
+				$this->loadmodel('user_enrollment_info_csv');
+				$auto_id=$this->autoincrement('user_enrollment_info_csv','auto_id');
+				$this->user_enrollment_info_csv->saveAll(Array(Array("auto_id" => $auto_id, "name" => $name,"wing_name" => $wing_name, "flat_name" => $flat_name, "owner_tenant" => $owner_tenant, "email" => $email, "mobile" => $mobile,"society_id"=>$s_society_id,"committee"=>$committee,"is_converted"=>"NO")));
+			}
+	}
+		$this->loadmodel('import_user_enrollment_record');
+		$this->import_user_enrollment_record->updateAll(array("step2" => 1),array("society_id" => $s_society_id));
+		die(json_encode("READ"));
+	
+}
+
+function convert_user_enrollment_info_data(){
+	$this->layout=null;
+	$s_society_id = $this->Session->read('hm_society_id');
+	$this->loadmodel('user_enrollment_info_csv');
+	$conditions=array("society_id" => $s_society_id,"is_converted" => "NO");
+	$result_import_record = $this->user_enrollment_info_csv->find('all',array('conditions'=>$conditions,'limit'=>10));
+		foreach($result_import_record as $import_record){
+		$user_info_csv_id=$import_record["user_enrollment_info_csv"]["auto_id"];
+		$name=trim($import_record["user_enrollment_info_csv"]["name"]);
+		$wing_name=trim($import_record["user_enrollment_info_csv"]["wing_name"]);
+		$flat_name=trim($import_record["user_enrollment_info_csv"]["flat_name"]);
+		$owner_tenant=trim($import_record["user_enrollment_info_csv"]["owner_tenant"]);
+		$committee=trim($import_record["user_enrollment_info_csv"]["committee"]);
+		$email=trim($import_record["user_enrollment_info_csv"]["email"]);
+		$mobile=trim($import_record["user_enrollment_info_csv"]["mobile"]);
+				
+				$this->loadmodel('wing'); 
+				$conditions=array("wing_name"=> new MongoRegex('/^' . $wing_name . '$/i'),"society_id"=>$s_society_id);
+				$result_ac=$this->wing->find('all',array('conditions'=>$conditions));
+				if(sizeof($result_ac)>0){
+					foreach($result_ac as $collection){
+						$wing_id = (int)$collection['wing']['wing_id'];
+					}
+				}else{
+					$wing_id=0;
+				}
+	
+	
+					$this->loadmodel('flat'); 
+					$conditions=array("flat_name"=> new MongoRegex('/^' . $flat_name . '$/i'),"society_id"=>$s_society_id,"wing_id"=>$wing_id);
+					$result_ac_flat=$this->flat->find('all',array('conditions'=>$conditions));
+					if(sizeof($result_ac_flat)>0){
+						foreach($result_ac_flat as $collection){
+							$flat_id = (int)$collection['flat']['flat_id'];
+						}
+					}else{
+						$flat_id=0;
+					}
+				
+					$this->loadmodel('user_enrollment_csv_converted');
+					$auto_id=$this->autoincrement('user_enrollment_csv_converted','auto_id');
+					$this->user_enrollment_csv_converted->saveAll(Array( Array("auto_id" => $auto_id, "name" => $name,"society_id" => $s_society_id, "email" => $email, "mobile" => $mobile,"owner"=>$owner_tenant,"committee"=>$committee,"wing"=>$wing_id,"flat"=>$flat_id,"is_imported"=>"NO"))); 		
+				
+				$this->loadmodel('user_enrollment_info_csv');
+			$this->user_enrollment_info_csv->updateAll(array("is_converted" => "YES"),array("auto_id" => $user_info_csv_id));
+		}
+		
+				$this->loadmodel('user_enrollment_info_csv');
+				$conditions=array("society_id" => $s_society_id,"is_converted" => "YES");
+				$total_converted_records = $this->user_enrollment_info_csv->find('count',array('conditions'=>$conditions));
+
+				$this->loadmodel('user_enrollment_info_csv');
+				$conditions=array("society_id" => $s_society_id);
+				$total_records = $this->user_enrollment_info_csv->find('count',array('conditions'=>$conditions));
+
+				$converted_per=($total_converted_records*100)/$total_records;
+				if($converted_per==100){ $again_call_ajax="NO"; 
+					$this->loadmodel('import_user_enrollment_record');
+					$this->import_user_enrollment_record->updateAll(array("step3" => 1),array("society_id" => $s_society_id, "module_name" => "UE"));
+				}else{
+					$again_call_ajax="YES"; 
+
+				}
+				die(json_encode(array("again_call_ajax"=>$again_call_ajax,"converted_per"=>$converted_per)));
+}
+
+
+
+function modify_user_enrollment_csv($page=null){
+	
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	$this->ath();
+	
+	
+	$s_society_id = $this->Session->read('hm_society_id'); 
+	$page=(int)$page;
+	$this->set('page',$page);
+	
+	$this->loadmodel('import_user_enrollment_record');
+	$conditions=array("society_id" => $s_society_id,"module_name" => "UE");
+	$import_user_enrollment_record = $this->import_user_enrollment_record->find('all',array('conditions'=>$conditions));
+	$this->set('result_import_record',$import_user_enrollment_record);
+	foreach($import_user_enrollment_record as $data_import){
+		$step1=(int)@$data_import["import_user_enrollment_record"]["step1"];
+		$step2=(int)@$data_import["import_user_enrollment_record"]["step2"];
+		$step3=(int)@$data_import["import_user_enrollment_record"]["step3"];
+		
+	}
+	$process_status= @$step1+@$step2+@$step3;
+	
+	if($process_status==3){
+		$this->loadmodel('user_enrollment_csv_converted'); 
+		$conditions=array("society_id"=>(int)$s_society_id);
+		$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,"limit"=>50,"page"=>$page));
+		$this->set('user_enrollment_csv_converted',$user_enrollment_csv_converted);
+		
+		$this->loadmodel('user_enrollment_csv_converted'); 
+		$conditions=array("society_id"=>(int)$s_society_id);
+		$count_user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('count',array('conditions'=>$conditions));
+		$this->set('count_user_enrollment_csv_converted',$count_user_enrollment_csv_converted);
+	}
+		$this->loadmodel('wing');
+		$condition=array('society_id'=>$s_society_id);
+		$order=array('wing.wing_name'=>'ASC');
+		$result_wing=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+		foreach($result_wing as $data){
+			$wing_name=$data['wing']['wing_name'];
+			$wing_id=(int)$data['wing']['wing_id'];
+			
+			$this->loadmodel('flat');
+			$conditions=array("wing_id" => $wing_id,'society_id'=>$s_society_id);
+			$order=array('flat.flat_name'=> 'ASC');
+			$result_flat=$this->flat->find('all',array('conditions'=>$conditions,'order' =>$order));
+			foreach($result_flat as $data){
+				$flat_name=$data['flat']['flat_name'];
+				$flat_name=ltrim($flat_name,'0');
+				$flat_id=$data['flat']['flat_id'];
+				$flat_set[$wing_id.','.$flat_id]=$wing_name.'-'.$flat_name;
+			}
+		}
+		
+		$this->set('flat_set',$flat_set);
+	
+}
+
+
+function check_user_enrollment_validation($page=null){
+	
+	$this->layout=null;
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id'); 
+	$page=(int)$page;
+	
+		$this->loadmodel('user_enrollment_csv_converted'); 
+		$conditions=array("society_id"=>(int)$s_society_id);
+		$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,"limit"=>50,"page"=>$page));
+	
+}
+
+function auto_save_user_enrollment($record_id=null,$field=null,$value=null){
+	
+	$this->layout=null;
+
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	$record_id=(int)$record_id; 
+
+		if($field=="name"){
+			if(empty($value)){ echo "F";}
+			else{
+				$this->loadmodel('user_enrollment_csv_converted');
+				$this->user_enrollment_csv_converted->updateAll(array("name" => $value),array("auto_id" => $record_id));
+				echo "T";
+			}
+		}	
+		
+		if($field=="email"){
+			if(!filter_var($value, FILTER_VALIDATE_EMAIL) && !empty($value)) { echo "F";}
+			else{
+				$this->loadmodel('user_enrollment_csv_converted');
+				$this->user_enrollment_csv_converted->updateAll(array("email" => $value),array("auto_id" => $record_id));
+				echo "T";
+			}
+		}	
+		
+		if($field=="mobile"){
+			if (!preg_match ( '/^\\d{10}$/',$value) && !empty($value)) { echo "F";}
+			else{
+				$this->loadmodel('user_enrollment_csv_converted');
+				$this->user_enrollment_csv_converted->updateAll(array("email" => $value),array("auto_id" => $record_id));
+				echo "T";
+			}
+		}	
+	
+		if($field=="flat"){
+			
+			$wing_flat=explode(',',$value);
+			$wing_id=(int)$wing_flat[0];
+			$flat_id=(int)$wing_flat[1];
+			$this->loadmodel('user_enrollment_csv_converted');
+			$this->user_enrollment_csv_converted->updateAll(array("wing" => $wing_id,"flat"=>$flat_id),array("auto_id" => $record_id));
+			$conditions=array('wing'=>$wing_id,"flat"=>$flat_id,"society_id"=>$s_society_id);
+			$count=$this->user_enrollment_csv_converted->find('count',array('conditions'=>$conditions));
+			if($count==2){
+				echo "F";
+			}else{
+				echo "T";
+			}
+		}
+		
+		if($field=="owner"){
+			
+			$this->loadmodel('user_enrollment_csv_converted');
+			$this->user_enrollment_csv_converted->updateAll(array("owner" => $value),array("auto_id" => $record_id));
+			echo "T";
+			
+		}
+		
+		if($field=="committee"){
+			
+			$this->loadmodel('user_enrollment_csv_converted');
+			$this->user_enrollment_csv_converted->updateAll(array("committee" => $value),array("auto_id" => $record_id));
+			echo "T";
+			
+		}
+	
+}
+
+function allow_user_enrollment(){
+	$this->layout=null;
+	
+	$this->ath();
+	 $s_society_id = $this->Session->read('hm_society_id'); 
+	$this->loadmodel('user_enrollment_csv_converted');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions));
+	foreach($user_enrollment_csv_converted as $user_enrollment_converted){ 
+		$auto_id=$user_enrollment_converted["user_enrollment_csv_converted"]["auto_id"];
+		$name=$user_enrollment_converted["user_enrollment_csv_converted"]["name"];
+		$wing=(int)$user_enrollment_converted["user_enrollment_csv_converted"]["wing"];
+		$email=$user_enrollment_converted["user_enrollment_csv_converted"]["email"];
+		$mobile=$user_enrollment_converted["user_enrollment_csv_converted"]["mobile"];
+		 $owner=$user_enrollment_converted["user_enrollment_csv_converted"]["owner"];
+		 $committee=$user_enrollment_converted["user_enrollment_csv_converted"]["committee"];
+		$flat=(int)$user_enrollment_converted["user_enrollment_csv_converted"]["flat"];
+		if(empty($name)){ $name_v=1;   }else{  $name_v=0; }
+	
+	}
+			
+			$this->loadmodel('import_user_enrollment_record');
+			$this->import_user_enrollment_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "UE"));
+			echo "T"; die;
+}
+
+
+function final_import_user_enrollment(){
+	
+	$this->layout=null;
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$this->loadmodel('import_user_enrollment_record');
+	$conditions=array("society_id" => $s_society_id,"module_name" => "UE");
+	$import_user_enrollment_record = $this->import_user_enrollment_record->find('all',array('conditions'=>$conditions));
+	
+	foreach($import_user_enrollment_record as $data_import){
+		$step1=(int)@$data_import["import_user_enrollment_record"]["step1"];
+		$step2=(int)@$data_import["import_user_enrollment_record"]["step2"];
+		$step3=(int)@$data_import["import_user_enrollment_record"]["step3"];
+		$step4=(int)@$data_import["import_user_enrollment_record"]["step4"];
+	}
+		$process_status= @$step1+@$step2+@$step3+@$step4;
+		if($process_status==4){
+		
+			$res_society=$this->society_name($s_society_id);
+			foreach($res_society as $data){
+			$society_name=$data['society']['society_name'];
+			$access_tenant=(int)@$data['society']['access_tenant'];
+
+			} 
+			$s_n='';
+			$sco_na=$society_name;
+			$dd=explode(' ',$sco_na);
+			$first=$dd[0];
+			@$two=$dd[1];
+			@$three=$dd[2];
+			$s_n.=" $first $two $three ";
+
+			date_default_timezone_set('Asia/kolkata');
+			$date=date("d-m-Y");
+			$time=date('h:i:a',time());
+			$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
+		
+		
+		$this->loadmodel('user_enrollment_csv_converted');
+		$conditions=array("society_id"=>(int)$s_society_id,"is_imported" => "NO");
+		$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,'limit'=>10));
+		foreach($user_enrollment_csv_converted as $user_enrollment_converted){ 
+			$auto_id=$user_enrollment_converted["user_enrollment_csv_converted"]["auto_id"];
+			$name=$user_enrollment_converted["user_enrollment_csv_converted"]["name"];
+			$wing=(int)$user_enrollment_converted["user_enrollment_csv_converted"]["wing"];
+			$email=$user_enrollment_converted["user_enrollment_csv_converted"]["email"];
+			$mobile=$user_enrollment_converted["user_enrollment_csv_converted"]["mobile"];
+			$owner=$user_enrollment_converted["user_enrollment_csv_converted"]["owner"];
+			$committee_n=$user_enrollment_converted["user_enrollment_csv_converted"]["committee"];
+			$flat=(int)$user_enrollment_converted["user_enrollment_csv_converted"]["flat"];
+			
+				if($owner=="yes"){
+					$type = "yes";
+					$type_owner="Owner";
+					$committee=$committee_n;
+					$role_new_id=3;
+					$email_content="owner/resident/staff";
+				}
+				else{
+					$type = "no";
+					$type_owner="Tenant";
+					$committee="no";
+					$role_new_id=4;
+					$email_content="Tenant/resident/staff";
+				}
+
+				$this->loadmodel('user');
+				$i=$this->autoincrement('user','user_id');
+				
+				$random1=mt_rand(1000000000,9999999999);
+				$random2=mt_rand(1000000000,9999999999);
+				$random=$random1.$random2 ;	
+				$de_user_id=$this->encode($i,'housingmatters');
+				$random=$de_user_id.'/'.$random;
+			
+	if(($access_tenant==1 && $type_owner=="Tenant") || $type_owner=="Owner"){
+		if(!empty($mobile) && empty($email)){
+			$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
+			
+			$working_key=$r_sms->working_key;
+			$sms_sender=$r_sms->sms_sender;
+			$sms_allow=(int)$r_sms->sms_allow;
+			$random=(string)mt_rand(1000,9999);
+			if($sms_allow==1){
+				
+				$user_name_short=$this->check_charecter_name($name);
+				$sms="".$user_name_short.", Your housing society ".$s_n." has enrolled you in HousingMatters portal. Pls log into www.housingmatters.in One Time Password ".$random."";
+				$sms1=str_replace(" ", '+', $sms);
+				$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');
+			}
+		}
+	}
+	
+			$this->user->saveAll(array('user_id' => $i,'user_name' => $name,'email' => $email, 'password' => @$random, 'mobile' => $mobile,'society_id' => $s_society_id,'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes','user_type'=>'member'));	
+			
+			$user_flat_id=$this->autoincrement('user_flat','user_flat_id');
+			$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$s_society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no','owner'=>$type));
+			
+			$auto_role_id=$this->autoincrement('user_role','auto_id');
+			$this->user_role->saveAll(array('auto_id'=>$auto_role_id,'user_id'=>$i,'role_id'=>$role_new_id,'default'=>'yes'));
+			
+			if($committee=="yes"){
+				$auto_role_id=$this->autoincrement('user_role','auto_id');
+				$this->user_role->saveAll(array('auto_id'=>$auto_role_id,'user_id'=>$i,'role_id'=>2));
+			}
+			if($owner=="yes"){
+				$this->loadmodel('ledger_sub_account');
+				$j=$this->autoincrement('ledger_sub_account','auto_id');
+				$this->ledger_sub_account->saveAll(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$name,'society_id' => $s_society_id,'user_id'=>$i,'user_flat_id'=>$user_flat_id));
+			}
+			
+			$this->loadmodel('user_enrollment_csv_converted');
+			$this->user_enrollment_csv_converted->updateAll(array("is_imported" => "YES"),array("auto_id" => $auto_id));
+			
+			if(!empty($email) && !empty($mobile)){
+				$page_name="send_sms_for_verify_mobile";
+			}elseif(!empty($email) && empty($mobile)){
+				$page_name="set_new_password";
+			}
+			
+			
+	$message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tbody>
+			<tr>
+                <td>
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                        <tbody>
+						
+								<tr>
+									<td colspan="2">
+										<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+										<tbody>
+										<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+										<tr>
+										<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
+										<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+										<td width="100%"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px"><span style="color:#00a0e3">Housing</span><span style="color:#777776">Matters</span></a></td>
+										<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
+											
+										</td>
+										</tr>
+										<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+										</tbody>
+										</table>
+									</td>
+								</tr>
+								
+									
+								
+						</tbody>
+					</table>
+					
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                        <tbody>
+						
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										<span style="color:rgb(100,100,99)" align="justify"> Dear '.$name.', </span> 
+										</td>
+																
+								</tr>
+								
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										 We at '.$society_name.' use HousingMatters - a dynamic web portal to interact with all owners/residents/staff for transparent & smart management of housing society affairs.
+										
+										
+										
+										
+										</td>
+																
+								</tr>
+								
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										As you are an '.$email_content.' of '.$society_name.', we have added your email address in HousingMatters portal.
+										</td>
+																
+								</tr>
+								
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+												Here are some of the important features related to our portal on HousingMatters:
+										</td>
+																
+								</tr>
+								
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+												You can log & track complaints, start new discussions, check your dues, post classifieds and many more in the portal.
+										</td>
+																
+								</tr>
+
+									<tr>
+									<td style="padding:5px;" width="100%" align="left">
+									You can receive important SMS & emails from your committee.
+									</td>
+
+									</tr>
+								<tr>
+										<td style="padding:5px;" width="100%" align="left"><br/>
+											<span  align="justify"> <b>
+											<a href="'.$ip.$this->webroot.'hms/'.@$page_name.'?q='.$random.'"> Click here </a> for one time verification of your email and Login into HousingMatters for making life simpler for all your housing matters!</b>
+											</span> 
+										</td>
+																
+								</tr>
+								
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										<span align="justify"> Pls add www.housingmatters.in in your favorite bookmarks for future use. </span> 
+										</td>
+																
+								</tr>
+								
+								<tr>
+									<td style="padding:5px;" width="100%" align="left">
+											<span > 
+												Regards,<br/>
+												Administrator of '.$society_name.'<br/>
+												www.housingmatters.in
+											</span>
+									</td>
+																
+								</tr>
+					
+					</table>
+					
+				</td>
+			</tr>
+
+        </tbody>
+</table>';
+
+
+			$from_name="HousingMatters";
+			$reply="support@housingmatters.in";
+			$to=$email;
+			$this->loadmodel('email');
+			$conditions=array("auto_id" => 4);
+			$result_email = $this->email->find('all',array('conditions'=>$conditions));
+			foreach ($result_email as $collection) 
+			{
+			 $from=$collection['email']['from'];
+			}
+			 $subject="Welcome to ".$society_name." portal ";
+			if(($access_tenant==1 && $type_owner=="Tenant") || $type_owner=="Owner"){
+				if(!empty($email)){	
+				
+						$this->send_email($to,$from,$from_name,$subject,@$message_web,$reply);
+					}
+			}
+		
+				$this->loadmodel('email');	
+				$conditions=array('notification_id'=>1);
+				$result_email=$this->email->find('all',array('conditions'=>$conditions));
+				foreach($result_email as $data){
+					
+					$auto_id_n = (int)$data['email']['auto_id'];
+					$this->loadmodel('notification_email');
+					$lo=$this->autoincrement('notification_email','notification_id');
+					$this->notification_email->saveAll(array("notification_id" => $lo, "module_id" => $auto_id_n , "user_id" => $i,'chk_status'=>0));
+				}
+	}
+
+		$this->loadmodel('user_enrollment_csv_converted');
+		$conditions=array("society_id" => $s_society_id,"is_imported" => "YES");
+		$total_converted_records = $this->user_enrollment_csv_converted->find('count',array('conditions'=>$conditions));
+		
+		$this->loadmodel('user_enrollment_csv_converted');
+		$conditions=array("society_id" => $s_society_id);
+		$total_records = $this->user_enrollment_csv_converted->find('count',array('conditions'=>$conditions));
+		$converted_per=($total_converted_records*100)/$total_records;
+		if($converted_per==100){ $again_call_ajax="NO"; 
+			
+			$this->loadmodel('user_enrollment_csv_converted');
+			$conditions4=array('society_id'=>$s_society_id);
+			$this->user_enrollment_csv_converted->deleteAll($conditions4);
+			
+			$this->loadmodel('user_enrollment_info_csv');
+			$conditions4=array('society_id'=>$s_society_id);
+			$this->user_enrollment_info_csv->deleteAll($conditions4);
+			
+			$this->loadmodel('import_user_enrollment_record');
+			$conditions4=array("society_id" => $s_society_id, "module_name" => "UE");
+			$this->import_user_enrollment_record->deleteAll($conditions4);
+		}else{
+				$again_call_ajax="YES"; 
+			}
+			
+		die(json_encode(array("again_call_ajax"=>$again_call_ajax,"converted_per_im"=>$converted_per)));
+
+} 
+}
+
+
+function delete_user_enrollment_row($record_id=null){
+	$this->layout=null;
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$this->loadmodel('user_enrollment_csv_converted');
+	$conditions4=array("auto_id" => (int)$record_id);
+	$this->user_enrollment_csv_converted->deleteAll($conditions4);
+	//echo "1";
+	
+	
+}
 
 function email_mobile_update(){
 	
@@ -2559,11 +3215,9 @@ foreach($user_detail as $dataa)
 {
 $user_type = $dataa['user']['user_type'];	
 }
-
 if($user_type == "hm_child")
 {
 $default_role= $this->requestAction(array('controller' => 'Fns', 'action'=> 'fetch_default_role_via_user_id'),array('pass'=>array($s_user_id)));
-
 $page_namr_url=pathinfo($_SERVER[ 'REQUEST_URI'],PATHINFO_FILENAME);
 $url = parse_url($page_namr_url) ;
 $page_namr_url=  $url['path'];
@@ -2611,8 +3265,6 @@ echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn blue all
 else
 {	
 $default_role= $this->requestAction(array('controller' => 'Fns', 'action'=> 'fetch_default_role_via_user_id'),array('pass'=>array($s_user_id)));
-
-	
 $page_namr_url=pathinfo($_SERVER[ 'REQUEST_URI'],PATHINFO_FILENAME);
 $url = parse_url($page_namr_url) ;
 $page_namr_url=  $url['path'];
@@ -2674,7 +3326,6 @@ $this->layout='resricted';
 </div>
 <?php
 }
-
 }
 
 
@@ -3562,6 +4213,7 @@ $result2=$this->flat->find('all',array('conditions'=>$conditions));
 foreach($result2 as $data)
 {
 $flat_name=$data['flat']['flat_name'];
+$flat_name=ltrim($flat_name,'0');
 }
 if(!empty($wing_name) && !empty($flat_name))
 {
@@ -3606,9 +4258,9 @@ function fetch_flat_detail_via_flat_type_id($flat_type_id){
 ///////////////////// End wing flat with bracket ////////////////////////////////// 
 
 function fetch_subLedger_detail_via_flat_id($flat_id){
-	$s_society_id=$this->Session->read('society_id');
+	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('ledger_sub_account');
-	$conditions=array("flat_id" => $flat_id,"society_id"=>$s_society_id);
+	$conditions=array("user_flat_id" => $flat_id,"society_id"=>$s_society_id);
 	return $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 }
 
@@ -3663,6 +4315,7 @@ foreach($result2 as $data)
 {
 $flat_name=$data['flat']['flat_name'];
 }
+$flat_name=ltrim($flat_name,'0');
 
 if(!empty($wing_name) && !empty($flat_name))
 {
@@ -16093,7 +16746,7 @@ $this->check_user_privilages();
 //$this->set('webroot_path',$webroot_path);
 
 
-	$s_society_id=$this->Session->read('society_id'); 
+	$s_society_id=$this->Session->read('hm_society_id'); 
 	$sco_n=$this->society_name($s_society_id);
 	foreach($sco_n as $data)
 	{
@@ -22211,7 +22864,7 @@ $this->set('cursor2',$cursor2);
 
 /////////////////////////// Start Flat Import ////////////////////////////////////////////// 
 function save_import_flat(){
-	$this->layout='blank';
+	$this->layout=null ;
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	
 	$q=$this->request->query('q'); 
@@ -22302,8 +22955,9 @@ else
 $k=$last;
 }
 $k++;
+$flat_name = str_pad($flat_name,10,"0",STR_PAD_LEFT);	
 $this->loadmodel('flat');
-$multipleRowData = Array( Array("flat_id"=>$k, "wing_id"=>$wing, "flat_name"=>(int)$flat_name, "society_id"=>$s_society_id));
+$multipleRowData = Array( Array("flat_id"=>$k, "wing_id"=>$wing, "flat_name"=>$flat_name, "society_id"=>$s_society_id));
 $this->flat->saveAll($multipleRowData);	
 
 }
@@ -22318,7 +22972,7 @@ die($output);
 /////////////////////////// End Flat Import ////////////////////////////////////////////// 
 function import_flat_ajax(){
 	
-	$this->layout="blank";
+	$this->layout=null ;
 	$this->ath();
 	 
 	$s_society_id=$this->Session->read('hm_society_id');

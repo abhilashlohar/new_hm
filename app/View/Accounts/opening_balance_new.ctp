@@ -98,10 +98,15 @@ name="ledger_id[]">
 		</tr>
 	<?php }} ?>
 <tr>	
-<th colspan="2" style="text-align:right;">Total</th>
-<th><input type="text" class="m-wrap small total_debit" id="total_debit"></th>
-<th><input type="text" class="m-wrap small total_credit" id="total_credit"></th>
-<th><input type="text" class="m-wrap small total_penalty" id="total_penalty"></th>	
+	<th colspan="2" style="text-align:right;">Total</th>
+	<th><input type="text" class="m-wrap small total_debit" id="total_debit"></th>
+	<th><input type="text" class="m-wrap small total_credit" id="total_credit"></th>
+	<th><input type="text" class="m-wrap small total_penalty" id="total_penalty"></th>	
+</tr>
+<tr>
+	<td colspan="2"></td>
+	<td><input type="text" class="m-wrap small" id="grand_total_debit"><br><b>Total Debit</b></td>
+	<td colspan="2"><input type="text" class="m-wrap small" id="grand_total_credit"><br><b>Total Credit</b></td>
 </tr>	
 </table>
 <div id="validation" style="color:red;"></div>
@@ -115,11 +120,49 @@ name="ledger_id[]">
 </form>
 
 <script>
-
+$(document).ready(function(){
+    function grand_total(){
+		var total_debit=parseFloat($("#total_debit").val());
+		if(IsNumeric(total_debit)==false){ total_debit=0; }
+		var total_credit=parseFloat($("#total_credit").val());
+		if(IsNumeric(total_credit)==false){ total_debit=0; }
+		var total_penalty=parseFloat($("#total_penalty").val());
+		if(IsNumeric(total_penalty)==false){ total_debit=0; }
+		var grand_total_debit=total_debit+total_penalty;
+	    var grand_total_credit=total_credit;
+	alert(grand_total_debit);
+	alert(grand_total_credit);
+	}   
+	
+	$(".debit").on("blur",function(){
+		 var sum = 0;
+		$(".debit").each(function(){
+			sum+= +$(this).val();
+			total_debit+= +$(this).val();
+		});
+		$(".total_debit").val(sum);
+		grand_total();
+	});
+	
+	$(".credit").on("blur",function(){
+		 var sum = 0;
+		$(".credit").each(function(){
+			sum+= +$(this).val();
+		});
+		$(".total_credit").val(sum);
+		grand_total();
+	});
+	
+	$(".penalty").on("blur",function(){
+		 var sum = 0;
+		$(".penalty").each(function(){
+			sum+= +$(this).val();
+		});
+		$(".total_penalty").val(sum);
+		grand_total();
+	});
+});
 $(document).on("click", "#submit_opening_balance", function() {
-    
-	
-	
 	var total_debit = 0;
     $("#total_debit").each(function(){
         total_debit += +$(this).val();
@@ -140,36 +183,5 @@ $(document).on("click", "#submit_opening_balance", function() {
 	$("#validation").html('Total Debit Shold be Equal to Total Debit');	
 	return false;	
 	}
-	
-	
-	
-	
-	
-});
-
-
-$(document).on("change", ".debit", function() {
-	 var sum = 0;
-    $(".debit").each(function(){
-        sum+= +$(this).val();
-    });
-    $(".total_debit").val(sum);
-});
-
-$(document).on("change", ".credit", function() {
-	 var sum = 0;
-    $(".credit").each(function(){
-        sum+= +$(this).val();
-    });
-    $(".total_credit").val(sum);
-});
-
-
-$(document).on("change", ".penalty", function() {
-	 var sum = 0;
-    $(".penalty").each(function(){
-        sum+= +$(this).val();
-    });
-    $(".total_penalty").val(sum);
 });
 </script>

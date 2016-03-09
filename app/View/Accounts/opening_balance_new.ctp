@@ -124,6 +124,7 @@ $(document).ready(function(){
 	  function grand_total(){
 		var grand_total_debit=parseFloat($("#total_debit").val()) + parseFloat($("#total_penalty").val());
 		var grand_total_credit=parseFloat($("#total_credit").val());
+		
 		$("#grand_total_debit").val(grand_total_debit);	
 		$("#grand_total_credit").val(grand_total_credit);
 	}   

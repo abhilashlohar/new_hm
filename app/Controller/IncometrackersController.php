@@ -3489,6 +3489,7 @@ else
 	$auto_id = (int)$collection['ledger_sub_account']['auto_id'];
 	//$flat_id = (int)$collection['ledger_sub_account']['flat_id'];
 	$user_name = $collection['ledger_sub_account']['name'];
+	$user_id = (int)$collection['ledger_sub_account']['user_id'];
 	}
 	
 $wing_flat = "";	
@@ -3758,7 +3759,11 @@ Your Society is empowered by HousingMatters - <b/> <i>"Making Life Simpler"</i>
 		</table>
              
             </div>';		
-		
+if($type=="resident"){
+$user_data=$this->requestAction(array('controller' => 'Fns', 'action' =>'user_info_via_user_id'),array('pass'=>array($user_id)));	
+foreach($user_data as $user_dataa){	
+$email=(int)$user_dataa['user']['email'];
+}
 $this->loadmodel('society');
 $condition=array('society_id'=>$s_society_id);
 $result_society=$this->society->find('all',array('conditions'=>$condition)); 
@@ -3778,6 +3783,8 @@ $this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,
 }
 }
 }
+}
+
 if(isset($this->request->data['add_non_member']))
 {
 $non_member_name = $this->request->data['mem_name'];	

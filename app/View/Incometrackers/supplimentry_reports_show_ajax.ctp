@@ -156,7 +156,6 @@ $grand_total=$grand_total+$total_amount;
 <th>Sr No.</th>
 <th>Bill No</th>
 <th>Generated on</th>
-<th>Bill Type</th>
 <th>Member Name</th>
 <th>Bill Date</th>
 <th>Bill Amount</th>
@@ -217,7 +216,6 @@ $grand_total = $grand_total + $total_amount;
 <td><?php echo $i;?></td>
 <td><?php echo $receipt_id;?></td>
 <td><?php echo $current_date;?></td>
-<td><?php echo $supplimentry_bill_type_for_view;?></td>
 <td><?php echo @$user_name;?>&nbsp;&nbsp;<?php echo @$wing_flat;?> </td>
 <td><?php echo $transaction_date_for_view;?></td>
 <td><?php $g_total=number_format($total_amount); echo $g_total;?></td>
@@ -237,7 +235,7 @@ $grand_total = $grand_total + $total_amount;
 </div>
 </td>
 </tr>
-<?php }}}}}/* ?>
+<?php }}}?>
 <tr>
 <td colspan="5" style="text-align:right;"><b>Total</b></td>
 <td style="text-align:right;"><b><?php 
@@ -248,15 +246,8 @@ echo $grand_total; ?></b></td>
 </tr>
 </tbody>
 </table>
-<?php
-}
-?>
-
-
-<?php /*
-if($tp == 3)
-{
-?>	
+<?php } ?>
+<?php if($supplimentry_bill_type_for_view == 3){ ?>	
 <table id="report_tb" style="background-color:white; width:100%;">
 <thead>
 <tr>
@@ -283,51 +274,44 @@ $i=0;
 foreach($cursor1 as $collection) 
 {
 $creater_name = "";
-$adhoc_bill= (int)$collection['adhoc_bill']["adhoc_bill_id"];
-$receipt_id = $collection['adhoc_bill']['receipt_id'];
-$pay_status=$collection['adhoc_bill']["pay_status"];
-$date=$collection['adhoc_bill']["date"];
-$residential=$collection['adhoc_bill']["residential"];
-$g_total=$collection['adhoc_bill']["g_total"];
-$html_bill = $collection['adhoc_bill']['html_bill'];
-$bill_date_from = $collection['adhoc_bill']['bill_daterange_from'];
-$description = $collection['adhoc_bill']['description'];
-$bill_date_from2 = date('d-m-Y',($bill_date_from));
-$creater_id = (int)$collection['adhoc_bill']['created_by'];
+$adhoc_bill= (int)$collection['supplimentry_bill']["supplimentry_bill_id"];
+$receipt_id = $collection['supplimentry_bill']['receipt_id'];
+$date=$collection['supplimentry_bill']["date"];
+$residential=$collection['supplimentry_bill']["supplimentry_bill_type"];
+$g_total=$collection['supplimentry_bill']["total_amount"];
+$transaction_date = $collection['supplimentry_bill']['transaction_date'];
+$description = $collection['supplimentry_bill']['description'];
+$transaction_date_for_view = date('d-m-Y',($transaction_date));
+$creater_id = (int)$collection['supplimentry_bill']['created_by'];
 
 $user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($creater_id)));
 foreach($user_dataaaa as $user_detailll) 
 {
 $creater_name = $user_detailll['user']['user_name'];
-}	
-$datett = date('d-m-Y',strtotime($date));	
-if($residential=="n")
-{
-$flat_id = (int)$collection['adhoc_bill']['person_name'];	
+}
 
+$datett = date('d-m-Y',strtotime($date));	
+if($residential=="non_resident")
+{
+$flat_id = (int)$collection['supplimentry_bill']['ledger_sub_account_id'];	
 $ledger_subacc_detaill = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($flat_id)));
 foreach ($ledger_subacc_detaill as $dataaa) 
 {
 $user_name = $dataaa['ledger_sub_account']['name'];  
 }	
-	
-	
-//$user_name=$collection['adhoc_bill']["person_name"];
 $bill_type = "Non-residential";
 $wing_flat = "";
-if($frommm <= $bill_date_from && $tooo >= $bill_date_from)
+if($date_renge_from <= $transaction_date && $date_renge_to >= $transaction_date)
 {
 $i++;
 $date = date('d-m-Y',strtotime($date));
-$grand_total = $grand_total + $g_total;
-
-?>
+$grand_total = $grand_total + $g_total; ?>
 <tr>
 <td><?php echo $i; ?></td>
 <td><?php echo $receipt_id; ?></td>
 <td><?php echo $date; ?></td>
 <td><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $wing_flat; ?> </td>
-<td><?php echo $bill_date_from2; ?></td>
+<td><?php echo $transaction_date_for_view; ?></td>
 <td style="text-align:right;"><?php 
 $g_total = number_format($g_total);
 echo $g_total; ?></td>
@@ -351,7 +335,7 @@ echo $g_total; ?></td>
 
 </td>
 </tr>
-<?php }}} ?>
+<?php }}}	 ?>
 <tr>
 <td colspan="5" style="text-align:right;"><b>Total</b></td>
 <td style="text-align:right;"><b><?php 
@@ -362,12 +346,8 @@ echo $grand_total; ?></b></td>
 </tr>
 </tbody>
 </table>
-<?php
-}
-}
-if($nnn == 55)
-{
-?>
+<?php }}
+if($nnn == 55) { ?>
 <br /><br />
 <center>
 <h3 style="color:red;"><b>No Record Found in Selected Period</b></h3>
@@ -389,7 +369,7 @@ return !~text.indexOf(val);
 </script>	
 
 
-*/ ?>
+
 
 
 

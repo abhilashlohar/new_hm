@@ -91,12 +91,12 @@ $total_amount=$collection['supplimentry_bill']["total_amount"];
 $transaction_date=$collection['supplimentry_bill']['transaction_date'];
 $description=$collection['supplimentry_bill']['description'];
 $creater_id=(int)$collection['supplimentry_bill']['created_by']; 
-$user_detail = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($creater_id)));
-foreach($user_dataaaa as $user_detailll){
-$creater_name=$user_detailll['user']['user_name'];
-$current_date=date('d-m-Y',strtotime($date));	
-$transaction_date_for_view = date('d-m-Y',($transaction_date));
-}
+	$user_detail = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array((int)$creater_id)));
+	foreach($user_detail as $user_detailll){
+	$creater_name=$user_detailll['user']['user_name'];
+	$current_date=date('d-m-Y',strtotime($date));	
+	$transaction_date_for_view = date('d-m-Y',($transaction_date));
+	}
 if($supplimentry_bill_type=="resident"){
 $ledger_sub_account_id=(int)$collection['supplimentry_bill']['ledger_sub_account_id'];	
 $supplimentry_bill_type_for_view="Residential";
@@ -108,16 +108,16 @@ $supplimentry_bill_type_for_view="Non-Residential";
 if($date_renge_from<=$transaction_date && $date_renge_to>=$transaction_date)
 {
 $i++;
-$grand_total=$grand_total+$g_total;
+$grand_total=$grand_total+$total_amount;
 ?>
 <tr>
 <td><?php echo $i;?></td>
 <td><?php echo $receipt_id;?></td>
 <td><?php echo $current_date;?></td>
 <td><?php echo $supplimentry_bill_type_for_view;?></td>
-<td><?php echo $user_name;?>&nbsp;&nbsp;<?php echo $wing_flat;?> </td>
+<td><?php echo @$user_name;?>&nbsp;&nbsp;<?php echo @$wing_flat;?> </td>
 <td><?php echo $transaction_date_for_view;?></td>
-<td><?php $g_total=number_format($g_total); echo $g_total;?></td>
+<td><?php $g_total=number_format($total_amount); echo $g_total;?></td>
 <td><?php echo $description;?></td>
 <td class="hide_at_print" style="text-align:left;">
 <div class="btn-group">
@@ -143,22 +143,8 @@ $grand_total=$grand_total+$g_total;
 </tr>
 </tbody>
 </table>
-<?php }} ?>
-
-
-
-
-
-
-<?php /*  
-
-<?php
-}
-?>
-<?php
-if($tp == 2)
-{
-?>
+<?php } ?>
+<?php if($supplimentry_bill_type_for_view == 2) { ?>
 <table style="background-color:white; width:100%;" id="report_tb">
 <thead>
 <tr>
@@ -170,6 +156,7 @@ if($tp == 2)
 <th>Sr No.</th>
 <th>Bill No</th>
 <th>Generated on</th>
+<th>Bill Type</th>
 <th>Member Name</th>
 <th>Bill Date</th>
 <th>Bill Amount</th>
@@ -184,28 +171,24 @@ $i=0;
 foreach($cursor1 as $collection) 
 {
 $creater_name = "";
-$adhoc_bill= (int)$collection['adhoc_bill']["adhoc_bill_id"];
-$receipt_id = $collection['adhoc_bill']['receipt_id'];
-$pay_status=$collection['adhoc_bill']["pay_status"];
-$date=$collection['adhoc_bill']["date"];
-$residential=$collection['adhoc_bill']["residential"];
-$g_total=$collection['adhoc_bill']["g_total"];
-$html_bill = $collection['adhoc_bill']['html_bill'];
-$bill_date_from = $collection['adhoc_bill']['bill_daterange_from'];
-$description = $collection['adhoc_bill']['description']; 
-$bill_date_from2 = date('d-m-Y',($bill_date_from));
-$creater_id = (int)$collection['adhoc_bill']['created_by'];
-
+$adhoc_bill= (int)$collection['supplimentry_bill']["supplimentry_bill_id"];
+$receipt_id = $collection['supplimentry_bill']['receipt_id'];
+$date=$collection['supplimentry_bill']["date"];
+$residential=$collection['supplimentry_bill']["supplimentry_bill_type"];
+$total_amount=$collection['supplimentry_bill']["total_amount"];
+$transaction_date = $collection['supplimentry_bill']['transaction_date'];
+$description = $collection['supplimentry_bill']['description']; 
+$transaction_date_for_view = date('d-m-Y',($transaction_date));
+$creater_id = (int)$collection['supplimentry_bill']['created_by'];
 $user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($creater_id)));
 foreach ($user_dataaaa as $user_detailll) 
 {
 $creater_name = $user_detailll['user']['user_name'];
-}	
-$datett = date('d-m-Y',strtotime($date));	
-if($residential=="y")
+}
+$current_date = date('d-m-Y',strtotime($date));	
+if($residential=="resident")
 {
-$flat_id = (int)$collection['adhoc_bill']['person_name'];	
-	
+$flat_id = (int)$collection['supplimentry_bill']['ledger_sub_account_id'];	
 $flat_detailll = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
 foreach ($flat_detailll as $data) 
 {
@@ -217,45 +200,44 @@ foreach ($ledger_subacc_detaill as $dataaa)
 {
 $user_name = $dataaa['ledger_sub_account']['name'];  
 }
-	
-$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array($wing_id,$flat_id)));									
+
+$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array(@$wing_id,@$flat_id)));									
 $bill_for = $wing_flat;
 $bill_type = "Residential";
-
-if($frommm <= $bill_date_from && $tooo >= $bill_date_from)
+	
+if($date_renge_from <= $transaction_date && $date_renge_to >= $transaction_date)
 {
 $i++;
 $date = date('d-m-Y',strtotime($date));
-$grand_total = $grand_total + $g_total;
+$grand_total = $grand_total + $total_amount;
+
+
 ?>
 <tr>
-<td><?php echo $i; ?></td>
-<td><?php echo $receipt_id; ?></td>
-<td><?php echo $date; ?></td>
-<td><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $wing_flat; ?> </td>
-<td><?php echo $bill_date_from2; ?></td>
-<td style="text-align:right;"><?php
-$g_total = number_format($g_total);
- echo $g_total; ?></td>
-<td><?php echo $description; ?></td>
+<td><?php echo $i;?></td>
+<td><?php echo $receipt_id;?></td>
+<td><?php echo $current_date;?></td>
+<td><?php echo $supplimentry_bill_type_for_view;?></td>
+<td><?php echo @$user_name;?>&nbsp;&nbsp;<?php echo @$wing_flat;?> </td>
+<td><?php echo $transaction_date_for_view;?></td>
+<td><?php $g_total=number_format($total_amount); echo $g_total;?></td>
+<td><?php echo $description;?></td>
 <td class="hide_at_print" style="text-align:left;">
 <div class="btn-group">
-		<a class="btn blue mini" href="#" data-toggle="dropdown">
-		<i class="icon-chevron-down"></i>	
-		</a>
-		
-		<ul class="dropdown-menu" style="min-width:75px !important;">
-		<li><a href="supplimentry_view/<?php echo $adhoc_bill; ?>" target="_blank"><i class="icon-search"></i> View</a></li>
-		</ul>
-		</div>
-		<?php if(!empty($creater_name))
-		{ ?>
-		<i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: 
-		<?php echo $creater_name; ?> on: <?php echo $datett; ?>"></i>
-		<?php } ?>
+<a class="btn blue mini" href="#" data-toggle="dropdown">
+<i class="icon-chevron-down"></i></a>
+<ul class="dropdown-menu" style="min-width:75px !important;">
+<li>
+<a href="supplimentry_view/<?php echo $adhoc_bill; ?>" target="_blank"><i class="icon-search"></i> View</a>
+<?php if(!empty($creater_name)){ ?>
+<i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: <?php  echo $creater_name;?> on: <?php echo $datett;?>"></i>
+<?php } ?>
+</li>
+</ul>
+</div>
 </td>
 </tr>
-<?php }}} ?>
+<?php }}}}}/* ?>
 <tr>
 <td colspan="5" style="text-align:right;"><b>Total</b></td>
 <td style="text-align:right;"><b><?php 
@@ -269,9 +251,9 @@ echo $grand_total; ?></b></td>
 <?php
 }
 ?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
 
-<?php
+
+<?php /*
 if($tp == 3)
 {
 ?>	

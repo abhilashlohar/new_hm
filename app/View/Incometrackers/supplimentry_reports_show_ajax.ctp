@@ -154,14 +154,14 @@ $grand_total=$grand_total+$total_amount;
 </table>
 <?php } ?>
 <?php if($supplimentry_bill_type_for_view == 2) { ?>
-<table style="background-color:white; width:100%;" id="report_tb">
+<table style="background-color:white; width:100%;" class="table table-bordered">
 <thead>
 <tr>
 <th colspan="8" style="text-align:center;">
 <?php echo $society_name; ?> Supplimentry Bill Register From : <?php echo $from; ?> &nbsp;&nbsp; To : <?php echo $to; ?>
 </th>
 </tr>
-<tr id="bg_color">
+<tr>
 <th>Sr No.</th>
 <th>Bill No</th>
 <th>Generated on</th>
@@ -251,7 +251,7 @@ echo $grand_total; ?></b></td>
 </table>
 <?php } ?>
 <?php if($supplimentry_bill_type_for_view == 3){ ?>	
-<table id="report_tb" style="background-color:white; width:100%;">
+<table class="table table-bordered" style="background-color:white; width:100%;">
 <thead>
 <tr>
 <th colspan="8" style="text-align:center;">
@@ -259,7 +259,7 @@ echo $grand_total; ?></b></td>
 </th>
 </tr>
 
-<tr id="bg_color">
+<tr>
 <th>Sr No.</th>
 <th>Bill No</th>
 <th>Generated on</th>

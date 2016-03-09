@@ -11,7 +11,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 
 <input type="text" class="m-wrap medium date-picker" Placeholder="Opening Balance Date" style="background-color:white !important;" name="date">
 
-<table class="table table-bordered" style="background-color:white;">
+<table class="table table-bordered table-condensed " style="background-color:white;">
 	<tr>
 		<th>Accounts Group</th>
 		<th>ledger Name</th>
@@ -184,3 +184,9 @@ $(document).on("click", "#submit_opening_balance", function() {
 	}
 });
 </script>
+<style>
+input{
+margin: 0 !important;
+padding: 2px !important;
+}
+</style>

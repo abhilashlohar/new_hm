@@ -4301,28 +4301,21 @@ function fetch_user_info_via_flat_id2($flat){
 function wing_flat_new($wing_id,$flat_id)
 {
 $this->loadmodel('wing');
-$conditions=array("wing_id" => $wing_id);
+$conditions=array("wing_id"=>$wing_id);
 $result=$this->wing->find('all',array('conditions'=>$conditions));
-foreach($result as $data)
-{
+foreach($result as $data){
 $wing_name=$data['wing']['wing_name'];
 }
-
 $this->loadmodel('flat');
-$conditions=array("flat_id" => $flat_id);
+$conditions=array("flat_id"=>$flat_id);
 $result2=$this->flat->find('all',array('conditions'=>$conditions));
-foreach($result2 as $data)
-{
+foreach($result2 as $data){
 $flat_name=$data['flat']['flat_name'];
 }
 $flat_name=ltrim($flat_name,'0');
-
-if(!empty($wing_name) && !empty($flat_name))
-{
+if(!empty($wing_name) && !empty($flat_name)){
 return @$wing_name.' '.@$flat_name;
 }
-
-
 }
 
 

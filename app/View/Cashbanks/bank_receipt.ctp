@@ -9,9 +9,6 @@ $("#fix<?php echo $id_current_page; ?>").addClass("red");
 </script>    
 <a style="background-color:#D9D1FA "
 <!--  Start Bank Receipt form Front End  -->
-
-
-
 <?php
 $current_date = date('Y-m-d');
 $current_date2 = strtotime($current_date);

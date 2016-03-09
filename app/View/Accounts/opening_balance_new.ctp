@@ -62,7 +62,7 @@ $wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_f
 		  }	?>
 	<tr>
 		<td><?php echo $ledger_name; ?></td> 
-		<td><?php echo $ledger_sub_account_name; ?> (<?php echo $wing_flat; ?>)
+		<td><?php echo $ledger_sub_account_name; ?>&nbsp;&nbsp; (<?php echo $wing_flat; ?>)
 <input type="hidden" value="<?php echo $ledger_id; ?>,<?php echo $ledger_sub_account_id; ?>"
 name="ledger_id[]">
 		</td>

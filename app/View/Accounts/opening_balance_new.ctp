@@ -121,17 +121,12 @@ name="ledger_id[]">
 
 <script>
 $(document).ready(function(){
-    function grand_total(){
-		var total_debit=parseFloat($("#total_debit").val());
-		if(IsNumeric(total_debit)==false){ total_debit=0; }
-		var total_credit=parseFloat($("#total_credit").val());
-		if(IsNumeric(total_credit)==false){ total_debit=0; }
+	  function grand_total(){
+		var grand_total_debit=parseFloat($("#total_debit").val()) + parseFloat($("#total_penalty").val());
+		var grand_total_credit=parseFloat($("#total_credit").val());
 		var total_penalty=parseFloat($("#total_penalty").val());
-		if(IsNumeric(total_penalty)==false){ total_debit=0; }
-		var grand_total_debit=total_debit+total_penalty;
-	    var grand_total_credit=total_credit;
-	alert(grand_total_debit);
-	alert(grand_total_credit);
+        $("#grand_total_debit").val(grand_total_debit);	
+		$("#grand_total_credit").val(grand_total_credit);
 	}   
 	
 	$(".debit").on("blur",function(){

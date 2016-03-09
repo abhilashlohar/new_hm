@@ -133,13 +133,14 @@ $grand_total=$grand_total+$total_amount;
 <i class="icon-chevron-down"></i></a>
 <ul class="dropdown-menu" style="min-width:75px !important;">
 <li>
-<a href="supplimentry_view/<?php echo $adhoc_bill; ?>" target="_blank"><i class="icon-search"></i> View</a>
-<?php if(!empty($creater_name)){ ?>
-<i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: <?php  echo $creater_name;?> on: <?php echo $datett;?>"></i>
-<?php } ?>
+<a href="supplimentry_view/<?php echo $supplimentry_bill_id; ?>" target="_blank"><i class="icon-search"></i> View</a>
 </li>
 </ul>
 </div>
+<?php if(!empty($creater_name)){ ?>
+<i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: <?php echo $creater_name;?> on: <?php echo $current_date;?>"></i>
+<?php } ?>
+
 </td>
 </tr>
 <?php }} ?>
@@ -178,7 +179,7 @@ $i=0;
 foreach($cursor1 as $collection) 
 {
 $creater_name = "";
-$adhoc_bill= (int)$collection['supplimentry_bill']["supplimentry_bill_id"];
+$supplimentry_bill_id= (int)$collection['supplimentry_bill']["supplimentry_bill_id"];
 $receipt_id = $collection['supplimentry_bill']['receipt_id'];
 $date=$collection['supplimentry_bill']["date"];
 $residential=$collection['supplimentry_bill']["supplimentry_bill_type"];
@@ -227,13 +228,14 @@ $grand_total = $grand_total + $total_amount;
 <i class="icon-chevron-down"></i></a>
 <ul class="dropdown-menu" style="min-width:75px !important;">
 <li>
-<a href="supplimentry_view/<?php echo $adhoc_bill; ?>" target="_blank"><i class="icon-search"></i> View</a>
+<a href="supplimentry_view/<?php echo $supplimentry_bill_id; ?>" target="_blank"><i class="icon-search"></i> View</a>
 <?php if(!empty($creater_name)){ ?>
-<i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: <?php  echo $creater_name;?> on: <?php echo $datett;?>"></i>
-<?php } ?>
 </li>
 </ul>
 </div>
+<i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: <?php  echo $creater_name;?> on: <?php echo $current_date;?>"></i>
+<?php } ?>
+
 </td>
 </tr>
 <?php }}}?>
@@ -275,7 +277,7 @@ $i=0;
 foreach($cursor1 as $collection) 
 {
 $creater_name = "";
-$adhoc_bill= (int)$collection['supplimentry_bill']["supplimentry_bill_id"];
+$supplimentry_bill_id= (int)$collection['supplimentry_bill']["supplimentry_bill_id"];
 $receipt_id = $collection['supplimentry_bill']['receipt_id'];
 $date=$collection['supplimentry_bill']["date"];
 $residential=$collection['supplimentry_bill']["supplimentry_bill_type"];
@@ -291,7 +293,7 @@ foreach($user_dataaaa as $user_detailll)
 $creater_name = $user_detailll['user']['user_name'];
 }
 
-$datett = date('d-m-Y',strtotime($date));	
+$current_date = date('d-m-Y',strtotime($date));	
 if($residential=="non_resident")
 {
 $ledger_sub_account_id = (int)$collection['supplimentry_bill']['ledger_sub_account_id'];	
@@ -323,14 +325,14 @@ echo $g_total; ?></td>
 		</a>
 		
 		<ul class="dropdown-menu" style="min-width:75px !important;">
-		<li><a href="supplimentry_view/<?php echo $adhoc_bill; ?>"  target="_blank"><i class="icon-search"></i> View</a></li>
+		<li><a href="supplimentry_view/<?php echo $supplimentry_bill_id; ?>"  target="_blank"><i class="icon-search"></i> View</a></li>
 		</ul>
 		</div>
 
 		<?php if(!empty($creater_name))
 		{ ?>
 		<i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: 
-		<?php echo $creater_name; ?> on: <?php echo $datett; ?>"></i>
+		<?php echo $creater_name; ?> on: <?php echo $current_date; ?>"></i>
 		<?php } ?>
 
 </td>

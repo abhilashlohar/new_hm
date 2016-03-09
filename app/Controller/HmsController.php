@@ -16093,7 +16093,7 @@ $this->check_user_privilages();
 //$this->set('webroot_path',$webroot_path);
 
 
-	$s_society_id=$this->Session->read('society_id'); 
+	$s_society_id=$this->Session->read('hm_society_id'); 
 	$sco_n=$this->society_name($s_society_id);
 	foreach($sco_n as $data)
 	{

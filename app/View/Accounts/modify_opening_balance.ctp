@@ -177,7 +177,7 @@ $( document ).ready(function() {
 }); */
 </script> 
 
-<script>/*
+<script>
 $( document ).ready(function() {
 	$( 'input[type="text"]' ).keydown(function() {
 		
@@ -200,10 +200,8 @@ $( document ).ready(function() {
 			}
 		});
 	});
-
-
 	
-}); */
+}); 
 </script>
 
 

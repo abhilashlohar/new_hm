@@ -5239,8 +5239,28 @@ $this->alert->saveAll(array('alert_id' => $alert_id,'icon' => $icon,'module_id' 
 function set_default_hm_child_society(){
 
 $this->layout='without_session';	
-	
-	
+$s_user_id=(int)$this->Session->read('hm_user_id');	
+
+	$result_hms_right=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_society_hm_child_user_id'), array('pass' => array($s_user_id)));
+		if(sizeof($result_hms_right)>1){
+			
+			$this->set(compact('result_hms_right'));
+			
+		}else{
+			
+			$society_id=(int)$result_hms_right[0]['hms_right']['society_id'];
+			$this->Session->write('hm_society_id', $society_id);
+			$this->redirect(array('action' => 'dashboard'));
+		}
+
+		
+
+		if($this->request->is('post')){
+			
+				$society_id=(int)$this->request->data["society"];
+				$this->Session->write('hm_society_id', $society_id);
+				$this->redirect(array('action' => 'dashboard'));
+		}
 }
 
 function index()
@@ -5349,14 +5369,17 @@ if ($this->request->is('post'))
 	$user_id=(int)$result_user[0]["user"]["user_id"];
 	$society_id=(int)@$result_user[0]["user"]["society_id"];
 	$user_type=@$result_user[0]["user"]["user_type"];
-		if($user_type=="hm_child"){
-			 $this->redirect(array('action' => 'dashboard'));
-		}
+	
 	$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));
 	$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
 	
 	$this->Session->write('hm_user_id', $user_id);
 	$this->Session->write('hm_user_flat_id', $user_flat_id);
+	
+		if($user_type=="hm_child"){
+			 $this->redirect(array('action' => 'set_default_hm_child_society'));
+		}
+	
 	$this->Session->write('hm_society_id', $society_id);
 	$this->redirect(array('action' => 'dashboard'));
 	
@@ -6667,8 +6690,8 @@ function dashboard(){
 		$this->layout='session';
 	}
 	$this->ath();
-	 $s_society_id = $this->Session->read('hm_society_id');
-	 $s_user_id = $this->Session->read('hm_user_id'); 
+	  $s_society_id = $this->Session->read('hm_society_id');
+	  $s_user_id = $this->Session->read('hm_user_id'); 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 }
 function reject_notification($id,$change)
@@ -20261,7 +20284,7 @@ $this->layout='session';
 $this->ath();
 $this->check_user_privilages();	
 	
-$s_society_id=$this->Session->read('hm_society_id'); 
+ $s_society_id=$this->Session->read('hm_society_id');  
 if(isset($this->request->data['sub'])) 
 {
 echo $wing_name=htmlentities($this->request->data['wing_name']);

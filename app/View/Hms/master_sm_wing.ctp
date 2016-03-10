@@ -51,6 +51,7 @@ Society Setup
 
 <?php
 $q=0;
+
 foreach ($user_wing as $collection) 
 {
 $q++;

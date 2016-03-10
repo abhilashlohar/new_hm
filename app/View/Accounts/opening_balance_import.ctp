@@ -92,7 +92,7 @@ function convert_csv_data_ajax(){
 			url: "convert_imported_data_ob",
 			dataType: 'json'
 		}).done(function(response){
-			alert(response);
+			//alert(response);
 			if(response.again_call_ajax=="YES"){
 				$("#progress").css("width",response.converted_per+"%");
 				convert_csv_data_ajax();

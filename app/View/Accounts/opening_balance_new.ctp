@@ -46,11 +46,13 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 $ledger_sub_account_name = $ledger_sub_account_data['ledger_sub_account']['name'];
 $ledger_id=(int)$ledger_sub_account_data['ledger_sub_account']['ledger_id'];
 $ledger_sub_account_id=(int)$ledger_sub_account_data['ledger_sub_account']['auto_id'];
-$flat_id=(int)$ledger_sub_account_data['ledger_sub_account']['user_flat_id'];
-		  }
-$flat_dataa=$this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));				
-foreach($flat_dataa as $flat_dataaa){
-$wing_id=(int)$flat_dataaa['flat']['wing_id'];
+$user_flat_id=(int)$ledger_sub_account_data['ledger_sub_account']['user_flat_id'];
+}
+
+$user_flat_data=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_flat_id'),array('pass'=>array($user_flat_id)));				
+foreach($user_flat_data as $user_flat_dataa){
+$wing_id=(int)$user_flat_dataa['user_flat']['wing'];
+$flat_id=(int)$user_flat_dataa['user_flat']['flat'];
 }
 $wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new')
 ,array('pass'=>array($wing_id,$flat_id)));	

@@ -375,6 +375,10 @@ function last_bill_info($ledger_sub_account_id){
 	$order=array('regular_bill.auto_id'=> 'DESC');
 	return $this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1));
 }
-
+function user_flat_info_via_user_flat_id($user_flat_id){
+	$this->loadmodel('user_flat');
+	$conditions=array("user_flat_id" =>$user_flat_id);
+	return $this->user_flat->find('all',array('conditions'=>$conditions));
+}
 }
 ?>

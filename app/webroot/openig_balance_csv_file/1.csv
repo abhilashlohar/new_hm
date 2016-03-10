@@ -1,7 +1,7 @@
 Group Name,A/c name,wing,unit,Debit,Credit,Penalty 
 Administrative Expenses,Audit fees,,,1000,,
-Administrative Expenses,Bank charges,,,,2000,
-Administrative Expenses,Cable TV expenses,,,1000,,
+Administrative Expenses,Bank charges,,,1000,,
+Administrative Expenses,Cable TV expenses,,,,2000,
 Administrative Expenses,Computer & sofware expenses,,,,,
 Administrative Expenses,Cultural / Festival expenses,,,,,
 Administrative Expenses,Depreciation,,,,,
@@ -87,7 +87,8 @@ Reserve & Surplus,Sinking Fund (Reserves),,,,,
 Taxes & Utilities,Electricity Expenses,,,,,
 Taxes & Utilities,Property Tax,,,,,
 Taxes & Utilities,Water charges,,,,,
-Members Control Accounts,Nikhil,A,101A,1000,,1000
-Sundry Creditors Control A/c,Raju,,,,2000,
+Members Control Accounts,rohit,Wing A,103,1000,,1000
+Members Control Accounts,Abhilash,Wing A,104,1000,,1000
+Sundry Creditors Control A/c,Raju,,,,4000,
 Sundry Debtors Control A/c,suresh,,,,,
 Bank Accounts,SBBJ,,,,,

@@ -4868,7 +4868,7 @@ foreach($arranged_groups as $group_id=>$ledger_acc_data){
 	$wing_id = (int)$flltdetll['flat']['wing_id'];
 	$flat_name = $flltdetll['flat']['flat_name'];
 	}
-	$flat_name = ltrim($flat_name,'0');
+	//$flat_name = ltrim($flat_name,'0');
 	$wing_data = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_fetch'),array('pass'=>array($wing_id)));
 	foreach($wing_data as $wnngdddtt){
 	$wing_name = $wnngdddtt['wing']['wing_name'];

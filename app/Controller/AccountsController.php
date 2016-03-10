@@ -111,7 +111,7 @@ foreach($test as $child){ $i++;
 	$group=@$child_ar[0];
 	$subledger_ac=@$child_ar[1];
 	$wing_name=@$child_ar[2];
-	$flat_name=(int)@$child_ar[3];
+	$flat_name=@$child_ar[3];
 	$debit=@$child_ar[4];
 	$credit=@$child_ar[5];
 	$penalty=@$child_ar[6];
@@ -143,7 +143,7 @@ $ob_id=(int)@$import_record["opening_balance_csv"]["auto_id"];
 $group_name=trim(@$import_record["opening_balance_csv"]["group"]);
 $account_name=trim(@$import_record["opening_balance_csv"]["subledger_ac"]);
 $wing_name=@$import_record["opening_balance_csv"]["wing_name"];
-$flat_name=(int)@$import_record["opening_balance_csv"]["flat_name"];
+$flat_name=@$import_record["opening_balance_csv"]["flat_name"];
 $debit=@$import_record["opening_balance_csv"]["debit"];
 $credit=@$import_record["opening_balance_csv"]["credit"];
 $penalty=@$import_record["opening_balance_csv"]["penalty"];
@@ -179,7 +179,8 @@ $auto_id = (int)$ledgr_dattt['ledger_account']['auto_id'];
 $ledger_type=2;
 $validdddnnn=555;
 }
-
+$wing_id="";
+$flat_id="";
 if($group_id == 34)
 {
 	$this->loadmodel('wing'); 
@@ -195,6 +196,8 @@ if($group_id == 34)
 	foreach($flat_data as $flltdddt){
 	$flat_id = (int)$flltdddt['flat']['flat_id'];
 	}
+	
+	
 /*	
 $ledger_sub_account_data = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array(@$wing_id,@$flat_id)));	
 foreach($ledger_sub_account_data as $dataa)
@@ -205,11 +208,8 @@ $validdddnnn=555;
 $wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_with_brackets'),array('pass'=>array(@$wing_id,@$flat_id)	
 }
 */	
-    		
-	$this->loadmodel('ledger_sub_account'); 
-	$conditions=array("flat_id"=>@$flat_id,"ledger_id"=>$group_id);
-	$subledger_data=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-	foreach($subledger_data as $sub_lddrr_dddttt){
+$ledger_sub_account_data = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array(@$wing_id,@$flat_id)));	
+	foreach(@$ledger_sub_account_data as $sub_lddrr_dddttt){
 	$auto_id = (int)$sub_lddrr_dddttt['ledger_sub_account']['auto_id'];
 	$ledger_type = 1;
 	$validdddnnn=555;

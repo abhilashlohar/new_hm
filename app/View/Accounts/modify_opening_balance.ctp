@@ -241,9 +241,7 @@ $("#check_validation_result").html('<img src="<?php echo $webroot_path; ?>as/lod
 $.ajax({
 url: "<?php echo $webroot_path; ?>Accounts/allow_import_opening_balance",
 }).done(function(response){
-	
 response = response.replace(/\s+/g,' ').trim();
-alert(response);	
 if(response=="F"){
 $("#check_validation_result").html("");
 alert("Your Data Is Not Valid.");

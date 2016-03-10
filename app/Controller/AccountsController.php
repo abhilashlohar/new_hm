@@ -204,9 +204,10 @@ $ledger_type = 1;
 $validdddnnn=555;
 $wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_with_brackets'),array('pass'=>array(@$wing_id,@$flat_id)	
 }
-*/	    		
+*/	
+    		
 	$this->loadmodel('ledger_sub_account'); 
-	$conditions=array("user_flat_id"=>@$flat_id,"ledger_id"=>$group_id);
+	$conditions=array("flat_id"=>@$flat_id,"ledger_id"=>$group_id);
 	$subledger_data=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 	foreach($subledger_data as $sub_lddrr_dddttt){
 	$auto_id = (int)$sub_lddrr_dddttt['ledger_sub_account']['auto_id'];

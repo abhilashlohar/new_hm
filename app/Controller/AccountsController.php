@@ -490,14 +490,9 @@ $penalty=@$receipt_converted["opening_balance_csv_converted"]["penalty"];
 		
 		
 if(empty($ledger)) { $ledger_v = 1; }else{ $ledger_v = 0; } 
-		
-if(empty($debit)) { $amount_v = 1;   }else{  $amount_v = 0;  }	
-$total_debit = $total_debit + $debit;
 
-if(empty($debit) && empty($penalty)) { $amount_v = 1;   }else{  $amount_v = 0;  }	
+if(empty($debit) && empty($penalty) && empty($credit)) { $amount_v = 1;   }else{  $amount_v = 0; }	
 $total_debit=$total_debit+$debit+$penalty;
-
-if(empty($credit)) { $amount_v = 1;   }else{  $amount_v = 0;   }		
 $total_credit = $total_credit + $credit;
 	
 if(!empty($penalty))
@@ -516,7 +511,8 @@ else
 $penalty_v = 0;	
 }
 
-		
+if(!empty($debit))
+{		
 if(!empty($debit))
 {	
 	if(is_numeric($debit))
@@ -527,7 +523,9 @@ if(!empty($debit))
 	{
 	$amount_vv = 1;
 	}
-}
+}}
+if(!empty($credit))
+{
 if(!empty($credit))
 {	
 	if(is_numeric($credit))
@@ -538,7 +536,7 @@ if(!empty($credit))
 	{
 	$amount_vvv = 1;
 	}
-}
+}}
 	$v_result[]=array(@$amount_v,@$amount_vv,@$ledger_v,@$penalty_v,@$amount_vvv);
 		
 	} 
@@ -546,11 +544,13 @@ if(!empty($credit))
 	if($total_credit == $total_debit) { $tt_v = 0;  }else{   $tt_v = 1;   }
 	
 	
-	
 	foreach($v_result as $data){
 	if(array_sum($data)==0) { $tt ="T"; }else{ $tt="F"; break;  }
 	}
-			if($tt == "T" && $trr_v == 0 && $trr_v == 0 && $trajection_date_v == 0 && $tt_v == 0){
+			
+			
+			
+			if($tt == "T" && $trr_v == 0 && $trajection_date_v == 0 && $tt_v == 0){
 			$this->loadmodel('import_ob_record');
 			$this->import_ob_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "OB"));	
 		    }else{ echo "F"; die; }
@@ -593,26 +593,17 @@ function final_import_opening_balance()
 			$bank_receipt_csv_id=(int)$import_converted["opening_balance_csv_converted"]["auto_id"];
 			$group_id=(int)$import_converted["opening_balance_csv_converted"]["group_id"];
 			$ledger_id=(int)$import_converted["opening_balance_csv_converted"]["ledger_id"];
-			$ledger_type=(int)$import_converted["opening_balance_csv_converted"]["ledger_type"];
-			$type=(int)$import_converted["opening_balance_csv_converted"]["type"];
-			$amount=$import_converted["opening_balance_csv_converted"]["amount"];
+			$debit=(int)$import_converted["opening_balance_csv_converted"]["debit"];
+			$credit=(int)$import_converted["opening_balance_csv_converted"]["credit"];
 			$penalty=$import_converted["opening_balance_csv_converted"]["penalty"];
 	
 		
-if($type==1)
-{
-$debit=$amount;
-$credit="";	
-}
-else
-{
-$debit="";
-$credit=$amount;		
-}
+
+
 	
 	
-	 if(empty($amount) && !empty($penalty) && $group_id==34)
-	 {
+	if(!empty($penalty) && $group_id==34)
+	{
 	$this->loadmodel('ledger');
 	$ledger_auto_id=$this->autoincrement('ledger','auto_id');
 	$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_id,"debit"=>$penalty,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date),"arrear_int_type"=>"YES"));   
@@ -621,20 +612,20 @@ $credit=$amount;
 	
 	
 	
-		if($group_id==34 && !empty($amount)){
+		if($group_id==34 && !empty($debit)){
 
 		$this->loadmodel('ledger');
 		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_id,"debit"=>$debit,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));
-
+		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_id,"debit"=>$debit,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));
+        }
 		
-		if($penalty>0 && $type == 2){
+		if($group_id==34 && !empty($credit)){
 		$this->loadmodel('ledger');
 		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_id,"debit"=>$penalty,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date),"arrear_int_type"=>"YES"));
+		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_id,"debit"=>null,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date),"arrear_int_type"=>"YES"));
+		
 		}
-		}
-		else if($group_id==33 || $group_id==35 || $group_id==15 || $group_id==112){
+		else if(($group_id==33 || $group_id==35 || $group_id==15 || $group_id==112) && !empty($debit)){
 		
 		$this->loadmodel('ledger');
 		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
@@ -643,15 +634,28 @@ $credit=$amount;
 		"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,
 		"transaction_date"=>strtotime($transaction_date)));	
 		}
-		else
+		else if(($group_id==33 || $group_id==35 || $group_id==15 || $group_id==112) && !empty($credit)){
+		$this->loadmodel('ledger');
+		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
+		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$group_id,
+		"ledger_sub_account_id" => $ledger_id,"debit"=>null,"credit"=>$credit,
+		"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,
+		"transaction_date"=>strtotime($transaction_date)));	
+		}
+		else if(!empty($debit))
 		{
 		$this->loadmodel('ledger');
 		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" => $ledger_id,"ledger_sub_account_id" => null,"debit"=>$debit,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));
+		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" => $ledger_id,"ledger_sub_account_id" => null,"debit"=>$debit,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));
 		}
-		
-$this->loadmodel('opening_balance_csv_converted');
-$this->opening_balance_csv_converted->updateAll(array("is_imported" => "YES"),array("auto_id" => $bank_receipt_csv_id));
+		else if(!empty($credit))
+		{
+		$this->loadmodel('ledger');
+		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
+		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" => $ledger_id,"ledger_sub_account_id" => null,"debit"=>null,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));	
+		}
+	$this->loadmodel('opening_balance_csv_converted');
+	$this->opening_balance_csv_converted->updateAll(array("is_imported" => "YES"),array("auto_id" => $bank_receipt_csv_id));
 		
 		
 		}

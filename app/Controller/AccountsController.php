@@ -483,34 +483,32 @@ $ledger="";
 $ob_id=(int)$receipt_converted["opening_balance_csv_converted"]["auto_id"];
 //$type=$receipt_converted["opening_balance_csv_converted"]["type"];
 $ledger = $receipt_converted["opening_balance_csv_converted"]["ledger_id"];
-$type = (int)$receipt_converted["opening_balance_csv_converted"]["type"];
-$amount = $receipt_converted["opening_balance_csv_converted"]["amount"];
+$debit = (int)@$receipt_converted["opening_balance_csv_converted"]["debit"];
+$credit = @$receipt_converted["opening_balance_csv_converted"]["credit"];
 $penalty=@$receipt_converted["opening_balance_csv_converted"]["penalty"];
 		
 		
 if(empty($ledger)) { $ledger_v = 1; }else{ $ledger_v = 0; } 
 		
+if(empty($debit)) { $amount_v = 1;   }else{  $amount_v = 0;  }	
+$total_debit = $total_debit + $debit;
 
-if($type == 1)
-{
-if(empty($amount)) { $amount_v = 1;   }else{  $amount_v = 0;  }	
-$total_debit = $total_debit + $amount;
-}
-if($type == 2)
-{
-if(empty($amount) && empty($penalty)) { $amount_v = 1;   }else{  $amount_v = 0;   }		
-$total_credit = $total_credit + $amount + $penalty;
-}		
+if(empty($debit) && empty($penalty)) { $amount_v = 1;   }else{  $amount_v = 0;  }	
+$total_debit=$total_debit+$debit+$penalty;
+
+if(empty($credit)) { $amount_v = 1;   }else{  $amount_v = 0;   }		
+$total_credit = $total_credit + $credit;
+	
 if(!empty($penalty))
 {
-if(is_numeric($penalty))
-{ 
-$penalty_v = 0;
-}
-else
-{
-$penalty_v = 1;
-}	
+	if(is_numeric($penalty))
+	{ 
+	$penalty_v = 0;
+	}
+	else
+	{
+	$penalty_v = 1;
+	}	
 }
 else
 {
@@ -518,37 +516,39 @@ $penalty_v = 0;
 }
 
 		
-if(!empty($amount))
+if(!empty($debit))
 {	
-if(is_numeric($amount))
-{ 
-$amount_vv = 0;
+	if(is_numeric($debit))
+	{ 
+	$amount_vv = 0;
+	}
+	else
+	{
+	$amount_vv = 1;
+	}
 }
-else
-{
-$amount_vv = 1;
+if(!empty($credit))
+{	
+	if(is_numeric($credit))
+	{ 
+	$amount_vvv = 0;
+	}
+	else
+	{
+	$amount_vvv = 1;
+	}
 }
-}
-
-		
-		$v_result[]=array($amount_v,$amount_vv,$ledger_v,$penalty_v);
+	$v_result[]=array(@$amount_v,@$amount_vv,@$ledger_v,@$penalty_v,@$amount_vvv);
 		
 	} 
-	
-	
-	
-	
-	
 	//&& ($tt_v == 0) && ($trajection_date_v == 0) && ($trr_v == 0))
 	if($total_credit == $total_debit) { $tt_v = 0;  }else{   $tt_v = 1;   }
 	
 	
 	
 	foreach($v_result as $data){
-		if(array_sum($data)==0) { $tt ="T"; }else{ $tt="F"; break;  }
+	if(array_sum($data)==0) { $tt ="T"; }else{ $tt="F"; break;  }
 	}
-	
-	
 			if($tt == "T" && $trr_v == 0 && $trr_v == 0 && $trajection_date_v == 0 && $tt_v == 0){
 			$this->loadmodel('import_ob_record');
 			$this->import_ob_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "OB"));	

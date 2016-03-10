@@ -14,33 +14,33 @@ style="background-color:white !important; margin-top:2.5px;" field="transaction_
 <th>Delete</th>
 </tr>
 <?php $j=0;
-$tt_debit = 0;
-$tt_credit = 0; ?>
+$total_debit = 0;
+$total_credit = 0; 
+$total_penalty = 0;
+?>
 			
-<?php foreach($result_bank_receipt_converted as $data)
-{ 
+<?php foreach($result_bank_receipt_converted as $data){ 
  $csv_id = (int)$data['opening_balance_csv_converted']['auto_id']; 
  $group_id2 = (int)$data['opening_balance_csv_converted']['group_id'];
  $ledger_id = (int)$data['opening_balance_csv_converted']['ledger_id'];
  $ledger_type = (int)$data['opening_balance_csv_converted']['ledger_type'];
  $wing_id = (int)$data['opening_balance_csv_converted']['wing_id'];
  $flat_id = (int)$data['opening_balance_csv_converted']['flat_id'];
- $type = $data['opening_balance_csv_converted']['type'];
- $amount = $data['opening_balance_csv_converted']['amount'];
+ $debit = $data['opening_balance_csv_converted']['debit'];
+ $credit = $data['opening_balance_csv_converted']['credit'];
  $penalty = $data['opening_balance_csv_converted']['penalty'];
-	
-?>
+ $total_debit=$total_debit+$debit;
+ $total_credit=$total_credit+$credit;
+ $total_penalty=$total_penalty+$penalty;
+ ?>
 <tr id="<?php echo $csv_id; ?>">
-
 <td>
 <select class="m-wrap medium" disabled="disabled">
 <option value="">Select Group Account</option>
 <?php
-foreach($cursor3 as $collection)
-{
+foreach($cursor3 as $collection){
 $group_id5 = (int)$collection['accounts_group']['auto_id'];
 $group_name1= $collection['accounts_group']['group_name'];
-
 ?>
 <option value="<?php echo $group_id5; ?>" <?php if($group_id2 == $group_id5) { ?> selected="selected" <?php } ?>><?php echo $group_name1; ?></option>
 <?php } ?>
@@ -49,8 +49,6 @@ $group_name1= $collection['accounts_group']['group_name'];
 <option value="33" <?php if($group_id2 == 33) { ?> selected="selected" <?php } ?>>Bank Accounts</option>
 <option value="35" <?php if($group_id2 == 35) { ?> selected="selected" <?php } ?>>Tax deducted at source (TDS receivable)</option>
 <option value="34" <?php if($group_id2 == 34) { ?> selected="selected" <?php } ?>>Members Control Account</option>
-
-
 </select>
 </td>
             
@@ -95,17 +93,17 @@ $name = $dataa['ledger_account']['ledger_name'];
 
 <td>
 <input type="text" class="m-wrap span10" style="background-color:white !important;"
-<?php if($type == 1){ ?> value="<?php echo $amount; ?>"  <?php } ?> field="debit" record_id="<?php echo $csv_id; ?>" readonly="readonly"/>
+value="<?php echo @$debit; ?>" field="debit" record_id="<?php echo $csv_id; ?>" readonly="readonly"/>
 </td>
 
 <td>
 <input type="text" class="m-wrap span10" style="background-color:white !important;"
-<?php if($type == 2){ ?> value="<?php echo $amount; ?>"  <?php } ?> field="credit" record_id="<?php echo $csv_id; ?>" readonly="readonly"/>
+value="<?php echo @$credit; ?>" field="credit" record_id="<?php echo $csv_id; ?>" readonly="readonly"/>
 </td>
 
 <td>
 <input type="text" class="m-wrap span10" style="background-color:white !important;"
-<?php if($type == 2 && !empty($penalty)){ ?> value="<?php echo $penalty; ?>"  <?php } ?> field="penalty" record_id="<?php echo $csv_id; ?>" readonly="readonly"/>                       
+value="<?php echo @$penalty; ?>" field="penalty" record_id="<?php echo $csv_id; ?>" readonly="readonly"/>                       
 </td>                      
 
 <td>
@@ -117,9 +115,9 @@ $name = $dataa['ledger_account']['ledger_name'];
 <?php } ?>
 <tr>
 <th colspan="2" style="text-align:right;">Total</th>
-<th></th>
-<th></th>
-<th></th>
+<th><input type="text" class="m-wrap small" value="<?php echo $total_debit; ?>" style="background-color:white !important;"></th>
+<th><input type="text" class="m-wrap small" value="<?php echo $total_credit; ?>" style="background-color:white !important;"></th>
+<th><input type="text" class="m-wrap small" value="<?php echo $total_penalty; ?>" style="background-color:white !important;"></th>
 <th></th>
 </tr>
 </table>

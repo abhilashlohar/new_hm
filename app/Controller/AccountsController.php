@@ -299,10 +299,8 @@ if($process_status==3){
 	$count_bank_receipt_converted=$this->opening_balance_csv_converted->find('count',array('conditions'=>$conditions));
 	$this->set('count_bank_receipt_converted',$count_bank_receipt_converted);
 }
-
-
 $this->loadmodel('ledger_sub_account');
-$conditions=array("society_id" => $s_society_id);
+$conditions=array("society_id"=>$s_society_id);
 $cursor1 = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
 
@@ -348,25 +346,7 @@ $this->layout=null;
 	$this->ath();
 	$s_society_id = $this->Session->read('hm_society_id');
 	$record_id=(int)$record_id; 
-	
-	
-	if($field=="group")
-	{
 		
-	
-	$this->loadmodel('opening_balance_csv_converted');
-	$this->opening_balance_csv_converted->updateAll(array("ledger_id"=>"","group_id"=>$value),array("auto_id" =>$record_id));
-	echo "T";		
-		
-	}
-	if($field=="sub")
-	{
-	
-	$this->loadmodel('opening_balance_csv_converted');
-	$this->opening_balance_csv_converted->updateAll(array("ledger_id"=>$value),array("auto_id" =>$record_id));
-	echo "T";		
-		
-	}
 	
 	if($field=="transaction_date")
 	{
@@ -378,7 +358,7 @@ $this->layout=null;
 	if($field=="debit"){
 			
 			$this->loadmodel('opening_balance_csv_converted');
-			$this->opening_balance_csv_converted->updateAll(array("type"=>1,"amount"=>$value),array("auto_id" => $record_id));
+			$this->opening_balance_csv_converted->updateAll(array("type"=>1,"debit"=>$value),array("auto_id" => $record_id));
 			echo "T";
 			
 	}
@@ -387,7 +367,7 @@ $this->layout=null;
 		
 				
 			$this->loadmodel('opening_balance_csv_converted');
-			$this->opening_balance_csv_converted->updateAll(array("type"=>2,"amount"=>$value),array("auto_id" => $record_id));
+			$this->opening_balance_csv_converted->updateAll(array("type"=>2,"credit"=>$value),array("auto_id" => $record_id));
 			echo "T";
 			
 	}

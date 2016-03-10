@@ -93,17 +93,17 @@ $name = $dataa['ledger_account']['ledger_name'];
 
 <td>
 <input type="text" class="m-wrap span10" style="background-color:white !important;"
-value="<?php echo @$debit; ?>" field="debit" record_id="<?php echo $csv_id; ?>" readonly="readonly"/>
+value="<?php echo @$debit; ?>" field="debit" record_id="<?php echo $csv_id; ?>" />
 </td>
 
 <td>
 <input type="text" class="m-wrap span10" style="background-color:white !important;"
-value="<?php echo @$credit; ?>" field="credit" record_id="<?php echo $csv_id; ?>" readonly="readonly"/>
+value="<?php echo @$credit; ?>" field="credit" record_id="<?php echo $csv_id; ?>" />
 </td>
 
 <td>
 <input type="text" class="m-wrap span10" style="background-color:white !important;"
-value="<?php echo @$penalty; ?>" field="penalty" record_id="<?php echo $csv_id; ?>" readonly="readonly"/>                       
+value="<?php echo @$penalty; ?>" field="penalty" record_id="<?php echo $csv_id; ?>" />                       
 </td>                      
 
 <td>
@@ -179,12 +179,11 @@ $( document ).ready(function() {
 
 <script>
 $( document ).ready(function() {
-	$( 'input[type="text"]' ).keydown(function() {
+	$( 'input[type="text"]' ).blur(function() {
 		
 		var record_id=$(this).attr("record_id");
 		var field=$(this).attr("field");
 		var value=$(this).val();
-		
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Accounts/auto_save_opening_balance/"+record_id+"/"+field+"/"+value,
 		}).done(function(response){

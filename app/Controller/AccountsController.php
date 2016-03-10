@@ -189,32 +189,24 @@ if($group_id == 34)
 	foreach($wing_dataaa as $wing_detaill){
 	$wing_id = (int)$wing_detaill['wing']['wing_id'];
 	}	
-	
+	$flat_name = str_pad($flat_name,10,"0",STR_PAD_LEFT);
+		
 	$this->loadmodel('flat'); 
 	$conditions=array("flat_name"=> $flat_name,"society_id"=>$s_society_id,"wing_id"=>$wing_id);
 	$flat_data=$this->flat->find('all',array('conditions'=>$conditions));
 	foreach($flat_data as $flltdddt){
 	$flat_id = (int)$flltdddt['flat']['flat_id'];
 	}
+
+$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));	
 	
-	
-/*	
-$ledger_sub_account_data = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array(@$wing_id,@$flat_id)));	
-foreach($ledger_sub_account_data as $dataa)
-{
+$ledger_sub_account_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));	
+foreach($ledger_sub_account_detail as $sub_lddrr_dddttt){
 $auto_id = (int)$sub_lddrr_dddttt['ledger_sub_account']['auto_id'];
 $ledger_type = 1;
 $validdddnnn=555;
-$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_with_brackets'),array('pass'=>array(@$wing_id,@$flat_id)	
+$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_with_brackets'),array('pass'=>array(@$wing_id,@$flat_id)));	
 }
-*/	
-$ledger_sub_account_data = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array(@$wing_id,@$flat_id)));	
-	foreach(@$ledger_sub_account_data as $sub_lddrr_dddttt){
-	$auto_id = (int)$sub_lddrr_dddttt['ledger_sub_account']['auto_id'];
-	$ledger_type = 1;
-	$validdddnnn=555;
-	$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_with_brackets'),array('pass'=>array(@$wing_id,@$flat_id)));	
-	}
 }
 else
 {
@@ -4855,20 +4847,24 @@ foreach($arranged_groups as $group_id=>$ledger_acc_data){
 		{
 			
 	$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
-	foreach($ledger_sub_account_id as $dataa)		
-	{
+	foreach($ledger_sub_account_id as $dataa){
 	$sub_ledger_name = $dataa['ledger_sub_account']['name'];
-	$flat_id = $dataa['ledger_sub_account']['user_flat_id'];
+	$user_flat_id = $dataa['ledger_sub_account']['user_flat_id'];
 	$ledger_id = $dataa['ledger_sub_account']['ledger_id'];	
 	}			
 	
-	$flat_dtttl = $this->requestAction(array('controller' => 'hms', 'action' => 'flat_fetch'),array('pass'=>array($flat_id)));
+	$user_flat_data=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_flat_id'),array('pass'=>array($user_flat_id)));				
+	foreach($user_flat_data as $user_flat_dataa){
+	$wing_id=(int)$user_flat_dataa['user_flat']['wing'];
+	$flat_id=(int)$user_flat_dataa['user_flat']['flat'];
+	}
+   
+    $flat_dtttl = $this->requestAction(array('controller' => 'hms', 'action' => 'flat_fetch'),array('pass'=>array($flat_id)));
 	foreach($flat_dtttl as $flltdetll)
 	{
-	$wing_id = (int)$flltdetll['flat']['wing_id'];
 	$flat_name = $flltdetll['flat']['flat_name'];
 	}
-	//$flat_name = ltrim($flat_name,'0');
+	$flat_name = ltrim($flat_name,'0');
 	$wing_data = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_fetch'),array('pass'=>array($wing_id)));
 	foreach($wing_data as $wnngdddtt){
 	$wing_name = $wnngdddtt['wing']['wing_name'];

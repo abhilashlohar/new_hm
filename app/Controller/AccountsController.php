@@ -4821,28 +4821,50 @@ $s_role_id=$this->Session->read('hm_role_id');
 $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id = (int)$this->Session->read('hm_user_id');
 
-$excel = "Group Name,A/c name,wing,unit,Amount Type(Debit or Credit),Amount(Opening Balance),Penalty \n";
+$excel = "Group Name,A/c name,wing,unit,Debit,Credit,Penalty \n";
 
-
-$this->loadmodel('ledger_accounts');
-$conditions = array('$or'=>array(array('society_id' =>$s_society_id),array('society_id' =>0)));
-$cursor = $this->ledger_accounts->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-	{
-	$group_id = (int)$collection['ledger_accounts']['group_id'];
-	$ledger_name = $collection['ledger_accounts']['ledger_name'];
-	$ledger_idddd = (int)$collection['ledger_accounts']['auto_id'];
-		if($ledger_idddd != 34 && $ledger_idddd != 33 && $ledger_idddd != 35 && $ledger_idddd != 15)
-		{	
-		$result_ag = $this->requestAction(array('controller' => 'hms', 'action' => 'accounts_group'),array('pass'=>array($group_id)));
-		foreach ($result_ag as $collection) 
-		{
-		$accounts_id = (int)$collection['accounts_group']['accounts_id'];	
-		$group_name = $collection['accounts_group']['group_name'];	
-		}
-		$excel.= "$group_name,$ledger_name\n";
+$this->loadmodel('accounts_group');
+$order=(array('accounts_group.group_name'=>'ASC'));
+$accounts_groups= $this->accounts_group->find('all',array('order'=>$order));
+foreach($accounts_groups as $accounts_group_data){
+	$accounts_group_id=(int)$accounts_group_data["accounts_group"]["auto_id"];
+	$group_name=$accounts_group_data["accounts_group"]["group_name"];
+	
+	$this->loadmodel('ledger_account');
+	$conditions=array("group_id" => $accounts_group_id);
+	$order=(array('ledger_account.ledger_name'=>'ASC'));
+	$ledger_accounts= $this->ledger_account->find('all',array('conditions'=>$conditions,'order'=>$order));
+	$arranged_groups[$accounts_group_id][]=array("group_name"=>$group_name);
+	foreach($ledger_accounts as $ledger_account_data){
+		$ledger_account_id=$ledger_account_data["ledger_account"]["auto_id"];
+		if($ledger_account_id!=33&&$ledger_account_id!=34&&$ledger_account_id!=35&&$ledger_account_id!=15){
+			$arranged_groups[$accounts_group_id][]=$ledger_account_data;
 		}
 	}
+}
+
+foreach($arranged_groups as $group_id=>$ledger_acc_data){
+	foreach($ledger_acc_data as $key=>$ledger_accounts){
+		if($key!=0){
+		$group_name = $ledger_acc_data[0]["group_name"];
+		$ledger_name = $ledger_accounts["ledger_account"]["ledger_name"];
+		$excel.="$group_name,$ledger_name\n";
+		}
+	}
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
 		$ledger_sub_account_ids=array();
         $this->loadmodel('ledger_sub_account');
         $condition=array('society_id'=>$s_society_id,'ledger_id'=>34);

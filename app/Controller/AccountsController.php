@@ -6204,7 +6204,8 @@ if(isset($this->request->data['opening_balance_submit']))
 		$credits = $this->request->data['credit'];	
 		$penaltys = $this->request->data['penalty'];
 		
-	    $i=0;	
+	    $i=0;
+		
 		foreach($ledger_ids as $ledger_id){
 			$debit = $debits[$i];	
 			$credit = $credits[$i]; 
@@ -6225,23 +6226,60 @@ if(isset($this->request->data['opening_balance_submit']))
 		{
 		$ledger_account_id = (int)$ledger_id[0];
 		$ledger_sub_account_id = (int)$ledger_id[1];
+		
+$result_ledger_sub_accounts = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+foreach($result_ledger_sub_accounts as $ledger_sub_accounts_data)
+{
+$ledger_account_id2=(int)$ledger_sub_accounts_data['ledger_sub_account']['ledger_id'];
+}
+			
 			if(!empty($debit) || !empty($credit))
 			{
 			$this->loadmodel('ledger');
 			$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-			$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_account_id ,"ledger_sub_account_id"=>$ledger_sub_account_id,"debit"=>$debit,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));
+			$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_account_id2,"ledger_sub_account_id"=>$ledger_sub_account_id,"debit"=>$debit,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));
 			}		
-			if($ledger_account_id == 34)
+			if($ledger_account_id2 == 34)
 			{
 			if(!empty($penalty))
 			{
 			$this->loadmodel('ledger');
 			$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-			$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_account_id,"ledger_sub_account_id"=>$ledger_sub_account_id,"debit"=>$penalty,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));	
+			$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_account_id,"ledger_sub_account_id"=>$ledger_sub_account_id,"debit"=>$penalty,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date),"intrest_on_arrears"=>"YES"));	
 			}
 			}
 		}
 	}
+	$this->loadmodel('opening_balance_csv_converted');
+	$conditions4=array('society_id'=>$s_society_id);
+	$this->opening_balance_csv_converted->deleteAll($conditions4);
+
+	$this->loadmodel('opening_balance_csv');
+	$conditions4=array('society_id'=>$s_society_id);
+	$this->opening_balance_csv->deleteAll($conditions4);
+
+	$this->loadmodel('import_ob_record');
+	$conditions4=array("society_id" => $s_society_id, "module_name" => "OB");
+	$this->import_ob_record->deleteAll($conditions4);	
+?>	
+<div class="modal-backdrop fade in"></div>
+<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+<div class="modal-body">
+<p style="font-size:15px; font-weight:600;">Opening Balance Imported Successfully
+</div>
+<div class="modal-footer">
+<a href="opening_balance_import" class="btn green">OK</a>
+</div>
+</div>	
+	
+	
+	
+	
+	
+	
+	
+	
+<?php	
 }
 	
 }

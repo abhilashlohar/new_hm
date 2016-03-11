@@ -23,6 +23,8 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 	   $total_debit=0;
 	   $total_credit=0;
 	   $total_penalty=0;
+	   $grand_total_debit=0;
+	   $grand_total_credit=0;
 		foreach($arranged_groups as $group_id=>$ledger_acc_data){
 		foreach($ledger_acc_data as $key=>$ledger_accounts){
 			if($key!=0){
@@ -45,6 +47,8 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 				{
 				$total_debit=$total_debit+$debit;
 				$total_credit=$total_credit+$credit;
+				$grand_total_debit=$grand_total_debit+$debit;
+				$grand_total_credit=$grand_total_credit+$credit;
 				$debit_for_view=$debit;
 				$credit_for_view=$credit;
 				}
@@ -112,9 +116,12 @@ $wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_f
 				{
 				$total_debit=$total_debit+$debit;
 				$total_credit=$total_credit+$credit;
+				$total_penalty=$total_penalty+$penalty;
+				$grand_total_debit=$grand_total_debit+$debit+$penalty;
+				$grand_total_credit=$grand_total_credit+$credit;
 				$debit_for_view=$debit;
 				$credit_for_view=$credit;
-				$penalty_for_view=$total_penalty+$penalty;
+				$penalty_for_view=$penalty;
 				}
 			}	
 		}	
@@ -160,6 +167,8 @@ name="ledger_id[]">
 		{
 		$total_debit=$total_debit+$debit;
 		$total_credit=$total_credit+$credit;
+		$grand_total_debit=$grand_total_debit+$debit;
+		$grand_total_credit=$grand_total_credit+$credit;
 		$debit_for_view=$debit;
 		$credit_for_view=$credit;
 		}
@@ -186,8 +195,8 @@ name="ledger_id[]">
 </tr>
 <tr>
 	<td colspan="2"></td>
-	<td><input type="text" class="m-wrap small" id="grand_total_debit"><br><b>Total Debit</b></td>
-	<td colspan="2"><input type="text" class="m-wrap small" id="grand_total_credit"><br><b>Total Credit</b></td>
+	<td><input type="text" class="m-wrap small" id="grand_total_debit" value="<?php echo $grand_total_debit; ?>"><br><b>Total Debit</b></td>
+	<td colspan="2"><input type="text" class="m-wrap small" id="grand_total_credit" value="<?php echo $grand_total_credit; ?>"><br><b>Total Credit</b></td>
 </tr>	
 </table>
 <div id="validation" style="color:red;"></div>

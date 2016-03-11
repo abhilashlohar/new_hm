@@ -225,8 +225,11 @@ function it_regular_bill(){
 							}else{
 								$last_bill_arrear_principal=0;
 								$last_bill_total=$last_bill_total-abs($reminder);
-								echo 'Total-:'.$last_bill_total;
-								echo '<br/>';
+								if($last_bill_total<0){
+									$last_bill_arrear_principal=$last_bill_total;
+									$last_bill_total=0;
+								}
+								
 							}
 						}elseif($last_bill_total!=0){
 							$reminder=$last_bill_total-$amount;

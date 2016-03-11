@@ -3680,9 +3680,9 @@ if(!empty($kendo_array2))
 $this->set('kendo_implode2',@$kendo_implode2);
 
 }
-/////////////////////////////////////End Fix Deposit Add (Accounts) //////////////////////////////////////////////////////
+/////////////////////////////////////End Fix Deposit Add (Accounts) ////////////////////
 
-///////////////////// Start Fix Deposit View (Accounts) ////////////////////////////////////////////////////////
+///////////////////// Start Fix Deposit View (Accounts) //////////////////////////////////
 function fix_deposit_view()
 {
 if($this->RequestHandler->isAjax()){
@@ -3694,9 +3694,9 @@ if($this->RequestHandler->isAjax()){
 $this->ath();
 $this->check_user_privilages();		
 
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = $this->Session->read('society_id');
-$s_user_id=(int)$this->Session->read('user_id');
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = $this->Session->read('hm_society_id');
+$s_user_id=(int)$this->Session->read('hm_user_id');
 
 
 $rrrr = (int)$this->request->query('aa');
@@ -4377,8 +4377,8 @@ die($output);
 
 
 }
-////////////////////////////////////////// End Fix Deposit Jason ////////////////////////////////////////////////
-///////////////////////// Start Matured Deposit View ////////////////////////////////////////////////
+// End Fix Deposit Jason //
+// Start Matured Deposit View //
 function matured_deposit_view()
 {
 if($this->RequestHandler->isAjax()){
@@ -4390,7 +4390,7 @@ $this->layout='session';
 $this->ath();
 $this->check_user_privilages();
 
-$s_society_id=(int)$this->Session->read('society_id');
+$s_society_id=(int)$this->Session->read('hm_society_id');
 
 
 $rrrr = (int)$this->request->query('aa');
@@ -7535,14 +7535,14 @@ $count = (int)$this->request->query('con');
 $this->set('count',$count);
 
 }
-//////////////////////////////// End petty_cash_receipt_add_row ////////////////////////////////////////////////////
-/////////////////////////////////// Start fixed_deposit_add_row ///////////////////////////////////////////////////////
+//////////////////////////////// End petty_cash_receipt_add_row ////////////////////
+////////////////////////////// Start fixed_deposit_add_row //////////////////////
 function fixed_deposit_add_row()
 {
 $this->layout = 'blank'; 
-$s_role_id = $this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id = $this->Session->read('user_id');	
+$s_role_id = $this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id = $this->Session->read('hm_user_id');	
 $this->ath();
 
 $count = (int)$this->request->query('con');
@@ -7732,8 +7732,8 @@ $type = (int)$this->request->query('typ');
 $this->set('type',$type);
 $this->set('kkk',$kkk);	
 }
-/////////////////////////// End bank_receipt_type_ajax /////////////////////////////////////////////
-///////////////////////////// Start fixed_deposit_renewal_show ///////////////////////////////////////////
+// End bank_receipt_type_ajax //
+//Start fixed_deposit_renewal_show//
 function fixed_deposit_renewal_show()
 {
 if($this->RequestHandler->isAjax()){
@@ -7741,11 +7741,10 @@ if($this->RequestHandler->isAjax()){
 	}else{
 	$this->layout='session';
 	}
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');	
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');	
 
-	
 $this->ath();		
 $this->check_user_privilages();
 

@@ -10,12 +10,7 @@ public $components = array(
 'Paginator',
 'Session','Cookie','RequestHandler'
 );
-
-
-
-
 var $name = 'Hms';
-
 function check_charecter_name($name){
 $dd=explode(' ',$name);
      for($i=0;$i<sizeof($dd);$i++){
@@ -26368,13 +26363,11 @@ $result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditio
 $this->set('result_ledger_sub_account',$result_ledger_sub_account);
 	
 }
-//////////////////////// End fix_assets_add_row ///////////////////////////////////////
-
-////////////////////////// Start Resident drop down ////////////////////////////////////
+//End fix_assets_add_row//
+//Start Resident drop down//
 function resident_drop_down()
 {
 $s_society_id=(int)$this->Session->read('hm_society_id');
-
 $current_date = date('Y-m-d');
 $current_date2 = strtotime($current_date);
 $this->loadmodel('financial_year');
@@ -26384,7 +26377,6 @@ foreach($financial_data as $financial_dataaa)
 {
 $from = $financial_dataaa['financial_year']['from'];	
 $to = $financial_dataaa['financial_year']['to'];
-
 $from2 = date('Y-m-d',$from->sec);
 $to2 = date('Y-m-d',$to->sec);	
 $from3 = strtotime($from2);
@@ -26395,10 +26387,6 @@ $financial_year_from = $from3;
 $financial_year_to = $to3;
 }
 }
-
-
-
-
 ?>
 <select class="m-wrap medium chosen resident_drop_down" name="resident[]">
 <option value="" style="display:none;">Select Sub Ledger A/c</option>
@@ -26422,18 +26410,13 @@ $financial_year_to = $to3;
 $wing_flat= $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array($wing_idddd,$flat_id)));
 if(($financial_year_from <= $exit_date && $financial_year_to >= $exit_date && $deactive == 1) || ($deactive == 0))
 {
-   ?>		
-    <option value="<?php echo $ledger_sub_account_id; ?>"><?php echo $name; ?> <?php echo $wing_flat; ?></option>
-	<?php 
-	} }
-	?>
+?>		
+<option value="<?php echo $ledger_sub_account_id; ?>"><?php echo $name; ?> <?php echo $wing_flat; ?></option>
+<?php }} ?>
 </select>
 <?php
 }
-
-
-
-////////////////////////// End Resident drop down ////////////////////////////////////	
+//End Resident drop down//	
 	
 	
 function menus_as_per_user_rights(){

@@ -2410,20 +2410,17 @@ $excel.="$total_debit</b></td>
 
 echo $excel;
 }
-/////////////////////// End Petty cash receipt excel /////////////////////////////
-
-////////////////////////////////Start Petty Cash Receipt Ajax (Accounts)///////////////////////////////////
+//End Petty cash receipt excel//
+//Start Petty Cash Receipt Ajax (Accounts)//
 function petty_cash_receipt_ajax()
 {
 $this->layout='blank';
 $s_role_id=$this->Session->read('hm_role_id');
 $s_society_id = $this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');
-
 $this->set('s_role_id',$s_role_id);
-
-$value = (int)$this->request->query('value');
-$ussidd = (int)@$this->request->query('ussidd');
+$value=(int)$this->request->query('value');
+$ussidd=(int)@$this->request->query('ussidd');
 $this->set('value',$value);
 $this->set('ussidd',$ussidd);
 
@@ -2436,12 +2433,9 @@ $this->loadmodel('ledger_account');
 $conditions=array("group_id" => 8);
 $cursor2=$this->ledger_account->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
-
 }
-
-////////////////////////////End Petty Cash Receipt Ajax (Accounts)///////////////////////////////////////////////
-
-///////////////////////////// Start Petty cash Receipt Pdf (Accounts)///////////////////////////////////////////
+//End Petty Cash Receipt Ajax (Accounts)//
+//Start Petty cash Receipt Pdf (Accounts)//
 function petty_cash_receipt_pdf()
 {
 $this->layout = 'pdf'; //this will use the pdf.ctp layout 
@@ -2692,11 +2686,9 @@ $conditions=array("society_id" => $s_society_id,"receipt_source"=>4);
 $order=array('new_cash_bank.transaction_date'=>'ASC');
 $cursor1=$this->new_cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor1',$cursor1);
-
 }
-////////////////////////End Petty Cash Payment Show Ajax (Accounts)//////////////////////
-
-//////////////////////////////////////////// Start Petty Cash Payment Pdf (Accounts)////////////////////////////////////////////////////////////////////
+//End Petty Cash Payment Show Ajax (Accounts)//
+//Start Petty Cash Payment Pdf (Accounts)//
 function petty_cash_payment_pdf()
 {
 $this->layout = 'pdf'; //this will use the pdf.ctp layout 
@@ -7494,23 +7486,20 @@ Fixed Deposit #<?php echo $receipt_idddd; ?> is renewed successfully
 <?php
 }
 }
-///////////////////////////////// End renewal_fixed_deposit /////////////////////////////////////////////////
-//////////////////////////////// Start petty_cash_receipt_add_row ////////////////////////////////////////////////////
+//End renewal_fixed_deposit//
+//Start petty_cash_receipt_add_row//
 function petty_cash_receipt_add_row()
 {
 $this->layout = 'blank'; 
-$s_role_id = $this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id = $this->Session->read('user_id');	
-
+$s_role_id = $this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id = $this->Session->read('hm_user_id');	
 $this->ath();
-
 $count = (int)$this->request->query('con');
 $this->set('count',$count);
-
 }
-//////////////////////////////// End petty_cash_receipt_add_row ////////////////////
-////////////////////////////// Start fixed_deposit_add_row //////////////////////
+//End petty_cash_receipt_add_row//
+//Start fixed_deposit_add_row//
 function fixed_deposit_add_row()
 {
 $this->layout = 'blank'; 

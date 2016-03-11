@@ -1,13 +1,10 @@
-<?php if($value == 1) { 
-
+<?php if($value == 1){ 
 $this->requestAction(array('controller' => 'Hms', 'action' => 'resident_drop_down'));    
 } else if($value == 2) { ?>	
 <select name="user_id" class="m-wrap chosen span12">
 <option value="" style="display:none;">Select</option>
 <?php
-
-foreach ($cursor2 as $collection) 
-{
+foreach ($cursor2 as $collection){
 $auto_id = (int)$collection['ledger_account']['auto_id'];
 $name = $collection['ledger_account']['ledger_name'];
 ?>

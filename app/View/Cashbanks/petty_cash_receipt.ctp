@@ -73,61 +73,52 @@ $default_date = date('d-m-Y');
 
 <!--------------------------- Start Java Script Code ------------------------>
 <script>
-
-   function add_rowww(){
-			 var count = $("#tbb tr").length;
-			 $(".adrww").hide();
-			 count++;
-			 $.ajax({
-			 url: 'petty_cash_receipt_add_row?con=' + count,
-			 }).done(function(response) {
-			 $("#tbb").append(response);
-			 $(".adrww").show();
-			 });	
-			 }
-
-   function delete_row(ttttt){
-			$('.content_'+ttttt).remove();
-			}
-
-   function numeric_vali(vv,dd){
-			if($.isNumeric(vv))
-			{
-			$("#validdn").html('');	
-			}
-            else
-			{
-			$("#validdn").html('<div class="alert alert-error" style="color:red; font-weight:600; font-size:13px;">Amount Should be Numeric Value in row '+ dd +'</div>');
-			$("#amttt"+ dd).val("");
-			return false;		
-			}
-            }
-
-   function type_ajjxx(tt,dd){
-            $("#show_user" + dd).load("petty_cash_receipt_ajax?value=" +tt+ "");
-            }
-
+function add_rowww(){
+var count = $("#tbb tr").length;
+$(".adrww").hide();
+count++;
+$.ajax({
+url: 'petty_cash_receipt_add_row?con=' + count,
+}).done(function(response) {
+$("#tbb").append(response);
+$(".adrww").show();
+});	
+}
+function delete_row(ttttt){
+$('.content_'+ttttt).remove();
+}
+function numeric_vali(vv,dd){
+if($.isNumeric(vv))
+{
+$("#validdn").html('');	
+}
+else
+{
+$("#validdn").html('<div class="alert alert-error" style="color:red; font-weight:600; font-size:13px;">Amount Should be Numeric Value in row '+ dd +'</div>');
+$("#amttt"+ dd).val("");
+return false;		
+}
+}
+function type_ajjxx(tt,dd){
+$("#show_user" + dd).load("petty_cash_receipt_ajax?value=" +tt+ "");
+}
 </script>	
 
 <script>
 $(document).ready(function() { 
 	$('form').submit( function(ev){
 	ev.preventDefault();
-		
 		var count = $("#tbb tr").length;
 		var ar = [];
-
 		for(var i=1;i<=count;i++)
 		{
 		var transaction_date = $("#tbb tr:nth-child("+i+") td:nth-child(1) input").val();
 		var ac_group = $("#tbb tr:nth-child("+i+") td:nth-child(2) select").val();
 		var party_ac = $("#tbb tr:nth-child("+i+") td:nth-child(3) select").val();
-		alert(party_ac);
 		var ac_head = $("#tbb tr:nth-child("+i+") td:nth-child(4) select").val();
 		var amount = $("#tbb tr:nth-child("+i+") td:nth-child(5) input").val();
 		var narration = $("#tbb tr:nth-child("+i+") td:nth-child(6) input").val();
 		ar.push([transaction_date,ac_group,party_ac,ac_head,amount,narration]);
-		
 		}
 		var myJsonString = JSON.stringify(ar);
 			$.ajax({

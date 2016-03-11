@@ -421,8 +421,8 @@ function final_import_user_enrollment(){
 			$wing=(int)$user_enrollment_converted["user_enrollment_csv_converted"]["wing"];
 			$email=$user_enrollment_converted["user_enrollment_csv_converted"]["email"];
 			$mobile=$user_enrollment_converted["user_enrollment_csv_converted"]["mobile"];
-			$owner=$user_enrollment_converted["user_enrollment_csv_converted"]["owner"];
-			$committee_n=$user_enrollment_converted["user_enrollment_csv_converted"]["committee"];
+			$owner=strtolower($user_enrollment_converted["user_enrollment_csv_converted"]["owner"]);
+			$committee_n=strtolower($user_enrollment_converted["user_enrollment_csv_converted"]["committee"]);
 			$flat=(int)$user_enrollment_converted["user_enrollment_csv_converted"]["flat"];
 			
 				if($owner=="yes"){
@@ -22983,7 +22983,7 @@ $k=$last;
 $k++;
 $flat_name = str_pad($flat_name,10,"0",STR_PAD_LEFT);	
 $this->loadmodel('flat');
-$multipleRowData = Array( Array("flat_id"=>$k, "wing_id"=>$wing, "flat_name"=>$flat_name, "society_id"=>$s_society_id));
+$multipleRowData = Array( Array("flat_id"=>$k, "wing_id"=>$wing, "flat_name"=>$flat_name, "society_id"=>$s_society_id,'noc_ch_tp'=>1));
 $this->flat->saveAll($multipleRowData);	
 
 }

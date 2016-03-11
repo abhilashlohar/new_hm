@@ -17,10 +17,10 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 	<thead>
 		<tr>
 			<th>Flat type</th>
-			<?php foreach($income_heads as $income_head):
+			<?php if(!empty($income_heads)){ foreach($income_heads as $income_head):
 				$income_head_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'income_head_name_via_income_head_id'), array('pass' => array($income_head)));?>
 			<th><?php echo $income_head_name; ?></th>
-			<?php endforeach; ?>
+			<?php endforeach; } ?>
 		</tr>
 	</thead>
 	<tbody>
@@ -28,7 +28,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 		$flat_type_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'flat_type_name_via_flat_type_id'), array('pass' => array($flat_type_id)));?>
 		<tr>
 			<th><?php echo $flat_type_name; ?></th>
-			<?php foreach($income_heads as $income_head){
+			<?php if(!empty($income_heads)){ foreach($income_heads as $income_head){
 				$rate_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'get_rates_via_flat_type_id_and_income_head_id'), array('pass' => array($flat_type_id,$income_head)));
 				$rate_type=@$rate_info[0]["rate_card"]["rate_type"];
 				$rate=@$rate_info[0]["rate_card"]["rate"];?>
@@ -41,7 +41,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 				</select>
 				<input class="m-wrap small" style="text-align:right;" maxlength="10" type="text" value="<?php echo $rate; ?>" flat_type_id="<?php echo $flat_type_id; ?>" income_head_id="<?php echo $income_head; ?>">
 			</td>
-			<?php } ?>
+			<?php }  } ?>
 		</tr>
 	<?php } ?>
 	</tbody>

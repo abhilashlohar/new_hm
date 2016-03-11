@@ -316,8 +316,9 @@ function generate_bills(){
 	$condition=array('society_id'=>$s_society_id);
 	$result_society = $this->society->find('all',array('conditions'=>$condition));
 	$society_name=$result_society[0]["society"]["society_name"];
-	
-	
+	$email_is_on_off=$result_society[0]["society"]["account_email"];
+	$sms_is_on_off=$result_society[0]["society"]["account_sms"];
+		
 	$this->loadmodel('regular_bill_temp');
 	$condition=array('society_id'=>$s_society_id,"approved"=>"yes");
 	$regular_bills = $this->regular_bill_temp->find('all',array('conditions'=>$condition,'limit'=>2));
@@ -405,6 +406,18 @@ function generate_bills(){
 				$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id,"debit"=>null,"credit"=>abs($credit_stock),"table_name"=>"regular_bill","element_id"=>$regular_bill_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
 			}
 		}
+		
+		/// start email and sms code//
+		
+		
+		
+		
+		
+		
+		
+		//// end code //////////
+		
+		
 		$this->loadmodel('regular_bill_temp');
 		$this->regular_bill_temp->deleteAll(array('regular_bill_temp.auto_id'=>$temp_auto_id));
 	}
@@ -4980,7 +4993,7 @@ function master_rate_card(){
 	$this->loadmodel('society');
 	$conditions=array('society_id'=>$s_society_id);
 	$society_info=$this->society->find('all',array('conditions'=>$conditions));
-	$income_heads=$society_info[0]["society"]["income_head"];
+	$income_heads=@$society_info[0]["society"]["income_head"];
 	$this->set(compact("income_heads"));
 }
 

@@ -1,4 +1,3 @@
-
 <!--
 <style>
 #tbb th{
@@ -57,7 +56,6 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <?php
 $default_date = date('d-m-Y');
 ?>
-
 <!------------------------------ Start Fixed Deposit Form ------------------------------->
 <form method="post">
 <div class="portlet box blue">
@@ -212,21 +210,10 @@ $.ajax({
          $(".adrww").show();
 });		
 }
-
 function delete_rowwww(tt)
 {
 $('.content_'+tt).remove();	
 }
-
-
-
-
-
-
-
-
-
-
 </script>
 
 
@@ -280,84 +267,18 @@ $(document).ready(function() {
 });
 
 </script>	             
-
-
-
-<!--<script>
-$(document).ready(function() { 
-	$('form').submit( function(ev){
-	ev.preventDefault();
-		
-		var m_data = new FormData();
-		m_data.append( 'bnk_name', $('#bkn').val());
-		m_data.append( 'branch', $('#brc').val());
-		m_data.append( 'ac_ref', $('#arf').val());
-		m_data.append( 'pr_amt', $('#prm').val());
-		m_data.append( 'rmd_day', $('#rmd').val());
-		m_data.append( 'remark', $('#rmk').val());
-		m_data.append( 'st_dat', $('#std').val());
-		m_data.append( 'mat_dat', $('#mtd').val());
-		m_data.append( 'int_rate', $('#ir').val());
-		//m_data.append( 'tds_amt', $('#tda').val());
-		m_data.append( 'name', $('#name').val());
-		m_data.append( 'email', $('#email').val());
-		m_data.append( 'mobile', $('#mobile').val());
-		m_data.append( 'file', $('input[name=file]')[0].files[0]);
-		$(".form_post").addClass("disabled");
-		$("#wait").show();
-			
-			$.ajax({
-			url: "fix_deposit_json",
-			data: m_data,
-			processData: false,
-			contentType: false,
-			type: 'POST',
-			dataType:'json',
-			}).done(function(response) {
-				if(response.report_type=='error'){
-					$(".remove_report").html('');
-						jQuery.each(response.report, function(i, val) {
-						$("label[report="+val.label+"]").html('<span style="color:red;">'+val.text+'</span>');
-					});
-				}
-				if(response.report_type=='publish'){
-                $("#shwd").show()
-				$(".success_report").show().html(response.report);	
-				}
-			
-			$("html, body").animate({
-			scrollTop:0
-			},"slow");
-			$(".form_post").removeClass("disabled");
-			$("#wait").hide();
-			});
-
-	 
-	});
-});
-
-</script>-->		
-
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////////////// ?>   
-		
-			
 <div id="shwd" class="hide">
 <div class="modal-backdrop fade in"></div>
 <div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
 <div class="modal-body">
 <h4><b>Thank You!</b></h4>
 <p class="swwtxx"></p>
-
 </div>
 <div class="modal-footer">
 <a href="<?php echo $webroot_path; ?>Cashbanks/fix_deposit_add" class="btn red" rel='tab'>OK</a>
 </div>
 </div>
 </div> 	
-			
-			
-			
-			
 <script>
 $(document).ready(function() {
 <?php	

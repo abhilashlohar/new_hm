@@ -4099,20 +4099,16 @@ $output = json_encode(array('type'=>'success', 'text' => 'Petty Cash Receipt '.$
 die($output);
 
 }
-////////////////////////////////////////// End Petty Cash Receipt Json/////////////////////////////////////////////
-
-////////////////////////////////////////// Start Fix Deposit Jason ////////////////////////////////////////////////
+//End Petty Cash Receipt Json//
+//Start Fix Deposit Jason//
 function fix_deposit_json()
 {
 $this->layout='blank';
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id = (int)$this->Session->read('user_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id = (int)$this->Session->read('hm_user_id');
 	$post_data=$this->request->data;
-
-     $this->ath();
-
-	  $q=$post_data['myJsonString'];
-		//$q=$this->request->query('q'); 
+    $this->ath();
+    $q=$post_data['myJsonString'];
 		$myArray = json_decode($q, true);
 		$c=0;
 foreach($myArray as $child){
@@ -7308,14 +7304,14 @@ $conditions=array('society_id'=>$s_society_id,"matured_status"=>1);
 $cursor1=$this->fix_deposit->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
 }
-/////////////////////////////// End bar_chart_pdf ///////////////////////////////////////////////////////// 
-////////////////////////////// Start active_deposit_edit //////////////////////////////////////////////////
+//End bar_chart_pdf//
+//Start active_deposit_edit//
 function active_deposit_edit()
 {
 $this->layout = 'session'; 
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');	
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');	
 
 $this->ath();
 
@@ -7401,24 +7397,20 @@ Fixed Deposit #<?php echo $receipt_iddd; ?> is updated successfully
 <?php
 }
 }
-////////////////////////////// End active_deposit_edit ////////////////////////////////////
-///////////////////////////////// Start renewal_fixed_deposit /////////////////////////////////////////////////
+//End active_deposit_edit//
+//Start renewal_fixed_deposit//
 function renewal_fixed_deposit()
 {
 $this->layout = 'session'; 
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=(int)$this->Session->read('user_id');	
-
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=(int)$this->Session->read('hm_user_id');	
 $this->ath();
-
 $receipt_id = (int)$this->request->query('nn');
-
 $this->loadmodel('fix_deposit');
 $conditions=array('society_id'=>$s_society_id,"matured_status"=>1,"transaction_id"=>$receipt_id);
 $cursor1=$this->fix_deposit->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
-
 if(isset($this->request->data['subbb']))
 {
 $amount = $this->request->data['amount'];
@@ -7427,15 +7419,11 @@ $maturity_date = $this->request->data['maturity_date'];
 $rate = $this->request->data['rate'];
 $remarks = @$this->request->data['purpose'];
 $receipt_iddddd = (int)$this->request->data['rriddd'];
-
 $file_name=@$_FILES["file2"]["name"];
-
 $target = "fix_deposit/";
 $target = $target . basename($_FILES['file2']['name']);
 move_uploaded_file($_FILES['file2']['tmp_name'], $target);
-
 $current_date = date('Y-m-d');
-
 $this->loadmodel('fix_deposit');
 $conditions=array('society_id'=>$s_society_id,"matured_status"=>1,"transaction_id"=>$receipt_iddddd);
 $cursor=$this->fix_deposit->find('all',array('conditions'=>$conditions));
@@ -7482,7 +7470,6 @@ Fixed Deposit #<?php echo $receipt_idddd; ?> is renewed successfully
 <a href="fix_deposit_view" class="btn red">OK</a>
 </div>
 </div>
-
 <?php
 }
 }

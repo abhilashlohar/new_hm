@@ -7,8 +7,6 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <a href="<?php echo $webroot_path; ?>Cashbanks/fix_deposit_add" class="btn" rel='tab'>Add</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/fix_deposit_view" class="btn" rel='tab'>Active Deposits</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/matured_deposit_view" class="btn yellow" rel='tab'>Matured Deposits</a>
-<!--<a href="<?php //echo $webroot_path; ?>Cashbanks/fixed_deposit_bar_chart" class="btn" rel='tab'>Maturity Profile</a>-->
-<!--<a href="<?php //echo $webroot_path; ?>Cashbanks/matured_deposit_add" class="btn" rel='tab'>Approve matured Deposit</a>-->
 <a href="<?php echo $webroot_path; ?>Cashbanks/fixed_deposit_renewal_show" class="btn" rel='tab'>Reneawal View</a>
 </center>
 </div>
@@ -16,9 +14,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 $c_date = date('d-m-Y');
 $b_date = date('1-m-Y');
 ?>
-       
-        
- <!--       
+<!--       
 <center>
 <div class="hide_at_print">
 <form method="post" id="contact-form">
@@ -131,8 +127,8 @@ $file_name = $data['fix_deposit']['file_name'];
 $creation_date = $data['fix_deposit']['current_date'];
 $creater_id = (int)$data['fix_deposit']['prepaired_by'];
 @$renewal = @$data['fix_deposit']['renewal'];
-$move_by_id = (int)$data['fix_deposit']['move_by'];
-$move_on_date = $data['fix_deposit']['move_on'];
+@$move_by_id = (int)$data['fix_deposit']['move_by'];
+@$move_on_date = $data['fix_deposit']['move_on'];
 
 $move_on = date('d-m-Y',strtotime($move_on_date));
 $result_gh = $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($move_by_id)));

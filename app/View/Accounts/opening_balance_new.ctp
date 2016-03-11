@@ -31,24 +31,24 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 		$credit_for_view="";
 		if(!empty($result_bank_receipt_converted))
 		{
-		foreach($result_bank_receipt_converted as $data){ 
-		$csv_id=(int)$data['opening_balance_csv_converted']['auto_id']; 
-		$group_id2=(int)$data['opening_balance_csv_converted']['group_id'];
-		$ledger_id=(int)$data['opening_balance_csv_converted']['ledger_id'];
-		$ledger_type=(int)$data['opening_balance_csv_converted']['ledger_type'];
-		$wing_id = (int)$data['opening_balance_csv_converted']['wing_id'];
-		$flat_id = (int)$data['opening_balance_csv_converted']['flat_id'];
-		$debit = $data['opening_balance_csv_converted']['debit'];
-		$credit = $data['opening_balance_csv_converted']['credit'];
-		$penalty = $data['opening_balance_csv_converted']['penalty'];
-		if($ledger_account_id == $ledger_id)
-		{
-		$total_debit=$total_debit+$debit;
-		$total_credit=$total_credit+$credit;
-		$debit_for_view=$debit;
-		$credit_for_view=$credit;
-		}
-		}	
+			foreach($result_bank_receipt_converted as $data){ 
+			$csv_id=(int)$data['opening_balance_csv_converted']['auto_id']; 
+			$group_id2=(int)$data['opening_balance_csv_converted']['group_id'];
+			$ledger_id=(int)$data['opening_balance_csv_converted']['ledger_id'];
+			$ledger_type=(int)$data['opening_balance_csv_converted']['ledger_type'];
+			$wing_id = (int)$data['opening_balance_csv_converted']['wing_id'];
+			$flat_id = (int)$data['opening_balance_csv_converted']['flat_id'];
+			$debit = $data['opening_balance_csv_converted']['debit'];
+			$credit = $data['opening_balance_csv_converted']['credit'];
+			$penalty = $data['opening_balance_csv_converted']['penalty'];
+				if($ledger_account_id == $ledger_id && $group_id2 != 34 && $group_id2 != 33 && $group_id2 != 35 && $group_id2 != 15 && $group_id2 != 112)
+				{
+				$total_debit=$total_debit+$debit;
+				$total_credit=$total_credit+$credit;
+				$debit_for_view=$debit;
+				$credit_for_view=$credit;
+				}
+			}	
 		}		
 				
 				
@@ -98,35 +98,27 @@ $wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_f
         $credit_for_view="";
         if(!empty($result_bank_receipt_converted))
 		{
-		foreach($result_bank_receipt_converted as $data){ 
-		$csv_id=(int)$data['opening_balance_csv_converted']['auto_id']; 
-		$group_id2=(int)$data['opening_balance_csv_converted']['group_id'];
-		$ledger_id=(int)$data['opening_balance_csv_converted']['ledger_id'];
-		$ledger_type=(int)$data['opening_balance_csv_converted']['ledger_type'];
-		$wing_id = (int)$data['opening_balance_csv_converted']['wing_id'];
-		$flat_id = (int)$data['opening_balance_csv_converted']['flat_id'];
-		$debit = $data['opening_balance_csv_converted']['debit'];
-		$credit = $data['opening_balance_csv_converted']['credit'];
-		$penalty = $data['opening_balance_csv_converted']['penalty'];
-		if($ledger_sub_account_id == $ledger_id)
-		{
-		$total_debit=$total_debit+$debit;
-		$total_credit=$total_credit+$credit;
-		$debit_for_view=$debit;
-		$credit_for_view=$credit;
-		$penalty_for_view=$total_penalty+$penalty;
-		}
+			foreach($result_bank_receipt_converted as $data){ 
+			$csv_id=(int)$data['opening_balance_csv_converted']['auto_id']; 
+			$group_id2=(int)$data['opening_balance_csv_converted']['group_id'];
+			$ledger_id=(int)$data['opening_balance_csv_converted']['ledger_id'];
+			$ledger_type=(int)$data['opening_balance_csv_converted']['ledger_type'];
+			$wing_id = (int)$data['opening_balance_csv_converted']['wing_id'];
+			$flat_id = (int)$data['opening_balance_csv_converted']['flat_id'];
+			$debit = $data['opening_balance_csv_converted']['debit'];
+			$credit = $data['opening_balance_csv_converted']['credit'];
+			$penalty = $data['opening_balance_csv_converted']['penalty'];
+				if($ledger_sub_account_id == $ledger_id)
+				{
+				$total_debit=$total_debit+$debit;
+				$total_credit=$total_credit+$credit;
+				$debit_for_view=$debit;
+				$credit_for_view=$credit;
+				$penalty_for_view=$total_penalty+$penalty;
+				}
+			}	
 		}	
-		}	
-
-
-
-
-
-
-
-
-		  ?>
+	  ?>
 	<tr>
 		<td><?php echo $ledger_name; ?></td> 
 		<td><?php echo $ledger_sub_account_name; ?>&nbsp;&nbsp; (<?php echo $wing_flat; ?>)

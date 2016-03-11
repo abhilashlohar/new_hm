@@ -5508,18 +5508,16 @@ function bank_pyment_update($auto_id=null)
 		$this->set('cursor3',$cursor3);
 
 }
-///////////////////////////// End Bank_Payment_Update /////////////////////////////////////////////
-
-//////////////////////////////Start Petty Cash Payment Json //////////////////////////////////////////
+//End Bank_Payment_Update//
+//Start Petty Cash Payment Json//
 function petty_cash_payment_json()
 {
 $this->layout="";
 $this->ath();
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $date=date('d-m-Y');
 $time = date(' h:i a', time());
-
 
 $q=$this->request->query('q');
 $q = html_entity_decode($q);
@@ -5528,15 +5526,14 @@ $c = 0;
 foreach($myArray as $child)
 {
 $c++;
+	if(empty($child[0])){
+	$output = json_encode(array('type'=>'error','text'=>'Transaction Date is Required in row '.$c));
+	die($output);
+	}	
 
-if(empty($child[0])){
-$output = json_encode(array('type'=>'error', 'text' => 'Transaction Date is Required in row '.$c));
-die($output);
-}	
 
-
-  $TransactionDate = $child[0];
-		$this->loadmodel('financial_year');
+        $TransactionDate = $child[0];
+ 		$this->loadmodel('financial_year');
 		$conditions=array("society_id" => $s_society_id,"status"=>1);
 		$cursor = $this->financial_year->find('all',array('conditions'=>$conditions));
 		$abc = 555;
@@ -5547,9 +5544,10 @@ die($output);
 				$to1 = date('Y-m-d',$to->sec);
 				$from2 = strtotime($from1);
 				$to2 = strtotime($to1);
+
 				$transaction1 = date('Y-m-d',strtotime($TransactionDate));
 				$transaction2 = strtotime($transaction1);
-					if($transaction2 <= $to2 && $transaction2 >= $from2){
+					if($transaction2<=$to2 && $transaction2>=$from2){
 					$abc = 5;
 					break;
 					}	

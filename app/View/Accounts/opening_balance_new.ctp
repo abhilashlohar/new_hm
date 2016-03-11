@@ -23,6 +23,27 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 	foreach($arranged_groups as $group_id=>$ledger_acc_data){
 		foreach($ledger_acc_data as $key=>$ledger_accounts){
 			if($key!=0){
+				
+			foreach($result_bank_receipt_converted as $data){ 
+			$csv_id=(int)$data['opening_balance_csv_converted']['auto_id']; 
+			$group_id2=(int)$data['opening_balance_csv_converted']['group_id'];
+			$ledger_id=(int)$data['opening_balance_csv_converted']['ledger_id'];
+			$ledger_type=(int)$data['opening_balance_csv_converted']['ledger_type'];
+			$wing_id = (int)$data['opening_balance_csv_converted']['wing_id'];
+			$flat_id = (int)$data['opening_balance_csv_converted']['flat_id'];
+			$debit = $data['opening_balance_csv_converted']['debit'];
+			$credit = $data['opening_balance_csv_converted']['credit'];
+			$penalty = $data['opening_balance_csv_converted']['penalty'];
+			$total_debit=$total_debit+$debit;
+			$total_credit=$total_credit+$credit;
+			$total_penalty=$total_penalty+$penalty;
+ 
+				}
+				
+				
+				
+				
+				
 				?>
 				<tr>
 					<td><?php echo $ledger_acc_data[0]["group_name"]; ?></td>

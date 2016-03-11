@@ -6169,7 +6169,31 @@ $order=(array('ledger_sub_account.name'=>'ASC'));
 $conditions = (array('society_id'=>$s_society_id));
 $ledger_sub_account_dataa= $this->ledger_sub_account->find('all',array('order'=>$order,'conditions'=>$conditions));
 $this->set('ledger_sub_account_dataa',$ledger_sub_account_dataa);
-	
+
+
+$this->loadmodel('import_ob_record');
+$conditions=array("society_id" => $s_society_id,"module_name" => "OB");
+$result_import_record = $this->import_ob_record->find('all',array('conditions'=>$conditions));
+$this->set('result_import_record',$result_import_record);
+foreach($result_import_record as $data_import){
+$step1=(int)@$data_import["import_ob_record"]["step1"];
+$step2=(int)@$data_import["import_ob_record"]["step2"];
+$step3=(int)@$data_import["import_ob_record"]["step3"];
+$tra_date = @$data_import["import_ob_record"]["tra_date"];
+}
+$this->set('tra_date',$tra_date);
+$process_status= @$step1+@$step2+@$step3;
+if($process_status==3){
+	$this->loadmodel('opening_balance_csv_converted'); 
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$result_bank_receipt_converted=$this->opening_balance_csv_converted->find('all',array('conditions'=>$conditions,"limit"=>20,"page"=>$page));
+	$this->set('result_bank_receipt_converted',$result_bank_receipt_converted);
+		
+	$this->loadmodel('opening_balance_csv_converted'); 
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$count_bank_receipt_converted=$this->opening_balance_csv_converted->find('count',array('conditions'=>$conditions));
+	$this->set('count_bank_receipt_converted',$count_bank_receipt_converted);
+}
 if(isset($this->request->data['opening_balance_submit']))	
 {
 	$transaction_date = $this->request->data['date'];	

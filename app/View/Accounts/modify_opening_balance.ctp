@@ -20,10 +20,10 @@ $total_penalty = 0;
 ?>
 			
 <?php foreach($result_bank_receipt_converted as $data){ 
- $csv_id = (int)$data['opening_balance_csv_converted']['auto_id']; 
- $group_id2 = (int)$data['opening_balance_csv_converted']['group_id'];
- $ledger_id = (int)$data['opening_balance_csv_converted']['ledger_id'];
- $ledger_type = (int)$data['opening_balance_csv_converted']['ledger_type'];
+ $csv_id=(int)$data['opening_balance_csv_converted']['auto_id']; 
+ $group_id2=(int)$data['opening_balance_csv_converted']['group_id'];
+ $ledger_id=(int)$data['opening_balance_csv_converted']['ledger_id'];
+ $ledger_type=(int)$data['opening_balance_csv_converted']['ledger_type'];
  $wing_id = (int)$data['opening_balance_csv_converted']['wing_id'];
  $flat_id = (int)$data['opening_balance_csv_converted']['flat_id'];
  $debit = $data['opening_balance_csv_converted']['debit'];

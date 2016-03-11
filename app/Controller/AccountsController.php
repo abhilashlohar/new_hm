@@ -6186,7 +6186,7 @@ $process_status= @$step1+@$step2+@$step3;
 if($process_status==3){
 	$this->loadmodel('opening_balance_csv_converted'); 
 	$conditions=array("society_id"=>(int)$s_society_id);
-	$result_bank_receipt_converted=$this->opening_balance_csv_converted->find('all',array('conditions'=>$conditions,"limit"=>20,"page"=>$page));
+	$result_bank_receipt_converted=$this->opening_balance_csv_converted->find('all',array('conditions'=>$conditions));
 	$this->set('result_bank_receipt_converted',$result_bank_receipt_converted);
 		
 	$this->loadmodel('opening_balance_csv_converted'); 

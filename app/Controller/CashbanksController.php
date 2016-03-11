@@ -2645,39 +2645,29 @@ $d_receipt_id = (int)$collection['new_cash_bank']['receipt_id'];
 
 <?php
 }
-///////////////////////////////////////////
-//////////////////////////////////////////
 }
-
-//////////////////////// End Petty cash Payment (Accounts) ////////////////////////////
-
-////////////////////////////////////////////////////////// Start Petty cash Payment View (Accounts)/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//End Petty cash Payment (Accounts)//
+//Start Petty cash Payment View (Accounts)//
 function petty_cash_payment_view()
 {
-if($this->RequestHandler->isAjax()){
-		$this->layout='blank';
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
 	}else{
-		$this->layout='session';
+	$this->layout='session';
 	}
 	
 $this->ath();
 $this->check_user_privilages();	
-	
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = $this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
-
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = $this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $this->set('s_role_id',$s_role_id);
-
 }
-
-/////////////////////////////////// End Petty cash Payment View (Accounts) ///////////////////////////////////
-
-///////////////////////Start Petty Cash Payment Show Ajax (Accounts)/////////////////////
+//End Petty cash Payment View (Accounts)// 
+//Start Petty Cash Payment Show Ajax (Accounts)//
 function petty_cash_payment_show_ajax()
 {
 $this->layout='blank';
-
 $this->ath();
 $s_role_id=$this->Session->read('role_id');
 $s_society_id = $this->Session->read('society_id');

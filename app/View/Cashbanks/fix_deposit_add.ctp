@@ -46,7 +46,7 @@
 }
 </style>
 <?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
+echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
 <center>
 <a href="<?php echo $webroot_path; ?>Cashbanks/fix_deposit_add" class="btn yellow" rel='tab'>Add</a>

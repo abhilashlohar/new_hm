@@ -2,18 +2,17 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
-
 </div>
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
+
 <center>
 <div class="hide_at_print">			 
 <?php
-if($s_role_id == 3)
-{
+//if($s_role_id == 3)
+//{
 ?>
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_payment" class="btn" rel='tab'>Create</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_payment_view" class="btn yellow"  rel='tab'>View</a>
-<?php } ?>
+<?php //} ?>
 </div>
 <?php /////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
 <?php

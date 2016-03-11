@@ -1,14 +1,10 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
-<input type="hidden" id="fi" value="<?php echo $datef1; ?>" />
-<input type="hidden" id="ti" value="<?php echo $datet1; ?>" />
-<input type="hidden" id="cn" value="<?php echo $count; ?>" />
 <center>                
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_receipt" class="btn yellow" rel='tab'>Create</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_receipt_view" class="btn" rel='tab'>View</a>
 </center>
-
 <!--------------------------------- Start Petty Cash Receipt Form ------------------------->
 <?php
 $default_date = date('d-m-Y');

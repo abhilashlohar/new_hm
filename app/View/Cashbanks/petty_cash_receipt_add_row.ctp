@@ -8,13 +8,13 @@ $default_date = date('d-m-Y');
 <input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy" data-date-start-date="+0d" style="background-color:white !important; margin-top:2.5px;" value="<?php echo $default_date; ?>">
 </td>
 <td valign="top">
-<select class="m-wrap chosen span12" onchange="type_ajjxx(this.value,<?php echo $count; ?>)">
+<select class="m-wrap chosen span12" onchange="petty_cash_receipt_account_group_type(this.value,<?php echo $count; ?>)">
 <option value="" style="display:none;">Select</option>
 <option value="1">Sundry Debtors Control A/c</option>
 <option value="2">Other Income</option>
 </select>
 </td>
-<td id="show_user<?php echo $count; ?>" valign="top">
+<td id="show_account_group_type<?php echo $count; ?>" valign="top">
 <select class="m-wrap chosen span12"><option value="">Select</option></select>
 </td>
 <td valign="top">

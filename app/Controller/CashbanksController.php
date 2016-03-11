@@ -2180,19 +2180,15 @@ $d_receipt_id = (int)$collection['cash_bank']['receipt_id'];
 <?php
 }
 }
-////////////////////// End Petty Cash Receipt (Accounts) //////////////////////////////
-
-///////////////// Start Petty Cash Receipt Show Ajax (Accounts)////////////////////////
-
+//End Petty Cash Receipt (Accounts)//
+//Start Petty Cash Receipt Show Ajax (Accounts)//
 function petty_cash_receipt_show_ajax()
 {
 $this->layout='blank';
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = $this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
-
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = $this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $this->ath();
-
 $this->set('s_society_id',$s_society_id);
 $this->set('s_role_id',$s_role_id);
 $this->set('s_user_id',$s_user_id);
@@ -2420,9 +2416,10 @@ $s_society_id = $this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');
 $this->set('s_role_id',$s_role_id);
 $value=(int)$this->request->query('value');
-$ussidd=(int)@$this->request->query('ussidd');
+
+//$ussidd=(int)@$this->request->query('ussidd');
 $this->set('value',$value);
-$this->set('ussidd',$ussidd);
+//$this->set('ussidd',$ussidd);
 
 $this->loadmodel('ledger_sub_account');
 $conditions=array("ledger_id" => 34, "society_id" => $s_society_id,"deactive"=>0);
@@ -2433,6 +2430,34 @@ $this->loadmodel('ledger_account');
 $conditions=array("group_id" => 8);
 $cursor2=$this->ledger_account->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
+
+	$this->loadmodel('ledger_sub_account');
+	$condition=array('society_id'=>$s_society_id,'ledger_id'=>34);
+	$members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
+	foreach($members as $data3){
+	$ledger_sub_account_ids[]=$data3["ledger_sub_account"]["auto_id"];
+	}
+ $this->loadmodel('wing');
+        $condition=array('society_id'=>$s_society_id);
+        $order=array('wing.wing_name'=>'ASC');
+        $wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+        foreach($wings as $data){
+			$wing_id=$data["wing"]["wing_id"];
+			$this->loadmodel('flat');
+			$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+			$order=array('flat.flat_name'=>'ASC');
+			$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+			foreach($flats as $data2){
+				$flat_id=$data2["flat"]["flat_id"];
+				$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+				if(!empty($ledger_sub_account_id)){
+					if (in_array($ledger_sub_account_id, $ledger_sub_account_ids)){
+						$members_for_billing[]=$ledger_sub_account_id;
+					}
+				}
+			}
+		}
+		$this->set(compact("members_for_billing"));
 }
 //End Petty Cash Receipt Ajax (Accounts)//
 //Start Petty cash Receipt Pdf (Accounts)//
@@ -2458,9 +2483,8 @@ $cursor2=$this->society->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
 
 }
-/////////////////////////// End Petty cash Receipt Pdf (Accounts)//////////////////////////////////////////////////
-
-/////////////////////// Start Petty Cash Payment (Accounts) /////////////////////////// 
+//End Petty cash Receipt Pdf (Accounts)//
+//Start Petty Cash Payment (Accounts)//
 function petty_cash_payment()
 {
 if($this->RequestHandler->isAjax()){
@@ -4061,19 +4085,11 @@ $multipleRowData = Array( Array("transaction_id" => $auto, "receipt_id" => $i,  
 "current_date" => $current_date, "account_type" => $ac_group,"transaction_date" => strtotime($transaction_date), "prepaired_by" => $s_user_id,"narration" => $narration, "account_head" => $ac_head,  "amount"=>$amount,"society_id" => $s_society_id,"receipt_source"=>3,"auto_inc"=>"YES"));
 $this->new_cash_bank->saveAll($multipleRowData);  
 
-
-$result_flat_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'ledger_SubAccount_dattta_by_flat_id'),array('pass'=>array($party_ac)));
-foreach($result_flat_info as $flat_info){
-$account_id = (int)$flat_info["ledger_sub_account"]["auto_id"];
-}
-
-
-
 if($ac_group == 1)
 {
 $l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date),"debit"=>null, "credit" =>$amount,"ledger_account_id" => 34, "ledger_sub_account_id" =>$account_id,"table_name" =>"new_cash_bank","element_id"=>$auto, "society_id" => $s_society_id));
+$multipleRowData=Array(Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date),"debit"=>null,"credit"=>$amount,"ledger_account_id" => 34,"ledger_sub_account_id"=>$party_ac,"table_name"=>"new_cash_bank","element_id"=>$auto,"society_id"=>$s_society_id));
 $this->ledger->saveAll($multipleRowData);
 }
 else
@@ -6200,7 +6216,6 @@ function new_bank_receipt(){
 						$members_for_billing[]=$ledger_sub_account_id;
 					}
 				}
-			   
 			}
 		}
 		$this->set(compact("members_for_billing"));

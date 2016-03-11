@@ -5,10 +5,80 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_receipt" class="btn yellow" rel='tab'>Create</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_receipt_view" class="btn" rel='tab'>View</a>
 </center>
-<!--------------------------------- Start Petty Cash Receipt Form ------------------------->
-<?php
-$default_date = date('d-m-Y');
-?>
+<!---------------- Start Petty Cash Receipt Form ------------------------->
+<?php $default_date = date('d-m-Y'); ?>
+<?php /*
+<div class="portlet box">
+<div class="portlet-body">
+	<form method="post">
+		<table class="table table-condensed table-bordered" id="main">
+			<thead>
+				<tr>
+					<th>Transaction Date</th>
+					<th>A/c Group</th>
+					<th>Income/Party A/c</th>
+					<th width="200px">Account Head</th>
+					<th>Amount</th>
+					<th>Narration</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				
+			</tbody>
+		</table>
+		<button type="submit" class="btn blue pull-right" name="submit">Create Receipt</button>
+	</form>
+		<a href="#" role="button" id="add_row">Add Row</a>
+</div>
+</div>
+<table id="sample" style="display:none;">
+<tbody>
+<tr>
+	<td>
+	<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy" name="date" id="date" data-date-start-date="+0d" style="background-color:white !important; margin-top:2.5px;" value="<?php echo $default_date; ?>">
+	</td>
+	<td>
+	<select class="m-wrap chosen span12" onchange="petty_cash_receipt_account_group_type(this.value,1)">
+    <option value="" style="display:none;">Select</option>
+    <option value="1">Sundry Debtors Control A/c</option>
+    <option value="2">Other Income</option>
+    </select>
+	</td>
+	<td>
+	<select class="m-wrap chosen span12">
+    <option value="">Select</option>
+    </select> 
+	</td>
+	<td>
+	<select class="m-wrap span12 chosen">
+    <option value="" style="display:none;">Select</option>
+    <option value="32" selected="selected">Cash-in-hand</option>
+    </select>
+	</td>
+	<td>
+	<input type="text" class="m-wrap span12"  id="amttt1" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="5" onkeyup="numeric_vali(this.value,1)">
+	</td>
+	<td>
+	<input type="text" class="m-wrap span12"  name="narration" id="narr" style="background-color:white !important; margin-top:2.5px;">
+	</td>
+</tr>
+</tbody>
+</table>
+
+<script>
+$(document).ready(function(){
+	add_row();
+	function add_row(){
+	var new_line=$("#sample tbody").html();
+	$("#main tbody").append(new_line);
+	$('#main tbody tr:last select[name="ledger_sub_account[]"]').chosen();
+	$('#main tbody tr:last select[name="deposited_in[]"]').chosen();
+	}
+});
+</script>
+*/ ?>
+<?php $default_date = date('d-m-Y'); ?>
 <form method="post">
 <div class="portlet box blue">
 <div class="portlet-title">
@@ -33,14 +103,15 @@ $default_date = date('d-m-Y');
     <td valign="top"><input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy" name="date" id="date" data-date-start-date="+0d" style="background-color:white !important; margin-top:2.5px;" value="<?php echo $default_date; ?>">
     </td>
            
-    <td valign="top"><select class="m-wrap chosen span12" onchange="type_ajjxx(this.value,1)">
+    <td valign="top">
+	<select class="m-wrap chosen span12" onchange="petty_cash_receipt_account_group_type(this.value,1)">
     <option value="" style="display:none;">Select</option>
     <option value="1">Sundry Debtors Control A/c</option>
     <option value="2">Other Income</option>
     </select>
     </td>
                 
-    <td id="show_user1" valign="top"><select class="m-wrap chosen span12">
+    <td id="show_account_group_type1" valign="top"><select class="m-wrap chosen span12">
     <option value="">Select</option>
     </select> 
     <label report="prt_ac" class="remove_report"></label>
@@ -68,7 +139,7 @@ $default_date = date('d-m-Y');
 <button type="submit" class="btn green">Submit</button>
 </div>
 </div>
-</div>
+</div> 
 <!------------------------------- End Petty Cash Receipt Form ----------------->
 
 <!--------------------------- Start Java Script Code ------------------------>
@@ -99,8 +170,10 @@ $("#amttt"+ dd).val("");
 return false;		
 }
 }
-function type_ajjxx(tt,dd){
-$("#show_user" + dd).load("petty_cash_receipt_ajax?value=" +tt+ "");
+
+
+function petty_cash_receipt_account_group_type(type,row_id){
+$("#show_account_group_type"+row_id).load("<?php echo $webroot_path; ?>Cashbanks/petty_cash_receipt_ajax?value=" +type+ "");
 }
 </script>	
 
@@ -125,6 +198,7 @@ $(document).ready(function() {
 			url: "petty_cash_receipt_json?q="+myJsonString,
 			dataType:'json',
 			}).done(function(response){
+				//alert(response);
 				if(response.type == 'error'){
 			
 			 $("#validdn").html('<div class="alert alert-error" style="color:red; font-weight:600; font-size:13px;">'+response.text+'</div>');

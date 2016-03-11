@@ -6181,7 +6181,7 @@ $step2=(int)@$data_import["import_ob_record"]["step2"];
 $step3=(int)@$data_import["import_ob_record"]["step3"];
 $tra_date = @$data_import["import_ob_record"]["tra_date"];
 }
-$this->set('tra_date',$tra_date);
+//$this->set('tra_date',$tra_date);
 $process_status= @$step1+@$step2+@$step3;
 if($process_status==3){
 	$this->loadmodel('opening_balance_csv_converted'); 

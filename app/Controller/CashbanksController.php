@@ -2726,15 +2726,14 @@ $cursor2=$this->society->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
 
 }
-///////////////////////////////// End Petty Cash Payment Pdf (Accounts)//////////////////////
-
-//////////////////////Start Petty Cash Payment Ajax (Accounts) ////////////////////////////////
+//End Petty Cash Payment Pdf (Accounts)//
+//Start Petty Cash Payment Ajax (Accounts)//
 function petty_cash_payment_ajax()
 {
 $this->layout='blank';
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = $this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = $this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 $this->set('s_role_id',$s_role_id);
 
@@ -2753,13 +2752,11 @@ $conditions=array("accounts_id" => 4);
 $cursor2=$this->accounts_group->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
 }
-///////////////////////////////////////End Petty Cash Payment Ajax (Accounts) ////////////////////////////////
-
-/////////////////////// Start Petty Cash Payment Excel//////////////////////////////
+//End Petty Cash Payment Ajax (Accounts)//
+//Start Petty Cash Payment Excel//
 function petty_cash_payment_excel()
 {
 $this->layout="";
-
 $this->ath();
 $s_society_id = (int)$this->Session->read('society_id');
 $s_role_id=$this->Session->read('role_id');
@@ -7044,33 +7041,26 @@ $this->layout='blank';
 $s_role_id=$this->Session->read('role_id');
 $s_society_id = $this->Session->read('society_id');
 $s_user_id=$this->Session->read('user_id');
-
 $this->ath();
-
-//$flat_id = (int)$this->request->query('value1'); 
 $flat_id = (int)$this->request->query('flat');
 $type = (int)$this->request->query('rf');
 $this->set('type',$type);
 $this->set('flat_id',$flat_id);
-//$this->set('flat_id',$flat_id);
 }
-////////////////////////// End new_bank_receipt_reference_ajax //////////////////
-////////////////////////// Start petty_cash_payment_add_row ////////////////////
+//End new_bank_receipt_reference_ajax//
+//Start petty_cash_payment_add_row//
 function petty_cash_payment_add_row()
 {
 $this->layout='blank';
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = $this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
-
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = $this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $this->ath();
-
 $count = (int)$this->request->query('con');
 $this->set('count',$count);
-
 }
-/////////////////////////////////// End petty_cash_payment_add_row ////////////////////////////////////////////
-///////////////////////////////////// Start Fixed Deposit Bar chart /////////////////////////////////////////////
+//End petty_cash_payment_add_row//
+//Start Fixed Deposit Bar chart //
 function fixed_deposit_bar_chart()
 {
 	if($this->RequestHandler->isAjax()){

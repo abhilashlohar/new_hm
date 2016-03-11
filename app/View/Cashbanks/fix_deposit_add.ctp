@@ -52,8 +52,6 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <a href="<?php echo $webroot_path; ?>Cashbanks/fix_deposit_add" class="btn yellow" rel='tab'>Add</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/fix_deposit_view" class="btn" rel='tab'>Active Deposits</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/matured_deposit_view" class="btn" rel='tab'>Matured Deposits</a>
-<!--<a href="<?php //echo $webroot_path; ?>Cashbanks/fixed_deposit_bar_chart" class="btn" rel='tab'>Maturity Profile</a>-->
-<!--<a href="<?php //echo $webroot_path; ?>Cashbanks/matured_deposit_add" class="btn" rel='tab'>Approve matured Deposit</a>-->
 <a href="<?php echo $webroot_path; ?>Cashbanks/fixed_deposit_renewal_show" class="btn" rel='tab'>Reneawal View</a>
 </center>	
 <?php

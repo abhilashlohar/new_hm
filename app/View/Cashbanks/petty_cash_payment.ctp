@@ -1,17 +1,13 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
-
 <input type="hidden" id="fi" value="<?php echo $datef1; ?>" />
 <input type="hidden" id="ti" value="<?php echo $datet1; ?>" />
 <input type="hidden" id="cn" value="<?php echo $count; ?>" />
-							
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
 <center>
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_payment" class="btn yellow" rel='tab'>Create</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_payment_view" class="btn" rel='tab'>View</a>
 </center>	   
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////// ?>	
 <?php
 $default_date = date('d-m-Y');
 ?>
@@ -23,17 +19,17 @@ $default_date = date('d-m-Y');
 <div class="portlet-body form">
 <div id="validdn" style="font-size:14px; font-weight:600; color:red;"></div>
 <table style="width:100%" id="tbb" class="table table-bordered">
-<thead>
-<tr style="background-color:#E8EAE8;">
-<th style="width:15%;">Transaction Date</th>
-<th style="width:20%;">A/c Group</th>
-<th style="width:15%;">Expense/Party A/c</th>
-<th style="width:15%;">Paid From</th>
-<th style="width:15%;">Amount</th>
-<th style="width:20%;">Narration</th>
-<th></th>
-</tr>
-</thead>
+	<thead>
+		<tr style="background-color:#E8EAE8;">
+			<th style="width:15%;">Transaction Date</th>
+			<th style="width:20%;">A/c Group</th>
+			<th style="width:15%;">Expense/Party A/c</th>
+			<th style="width:15%;">Paid From</th>
+			<th style="width:15%;">Amount</th>
+			<th style="width:20%;">Narration</th>
+			<th></th>
+		</tr>
+	</thead>
 <tbody id="tbbb">
 <tr style="background-color:#E8F3FF;">
 <td valign="top">
@@ -95,18 +91,13 @@ function add_rowww()
 var count = $("#tbbb tr").length;
 $(".adrww").hide();
 count++;
-
 		$.ajax({
 		url: 'petty_cash_payment_add_row?con=' + count,
 		}).done(function(response) {
-		
 		$("#tbbb").append(response);
 		$(".adrww").show();
 });	
-	
-	
 }
-
 
 function delete_row(tttt)
 {

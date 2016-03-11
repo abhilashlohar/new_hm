@@ -4,18 +4,17 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 ?>				   
 
 </div>
-<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
 <center>
 <?php
-if($s_role_id == 3)
-{
+//if($s_role_id == 3)
+//{
 ?>
 <div class="hide_at_print">
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_receipt" class="btn" rel='tab'>Create</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_receipt_view" class="btn yellow" rel='tab'>View</a>
 </div>
-<?php } ?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?> 
+<?php //} ?>
+ 
 	   
 <?php
 $c_date = date('d-m-Y');

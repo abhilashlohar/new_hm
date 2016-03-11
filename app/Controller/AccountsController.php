@@ -6106,6 +6106,28 @@ $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');
 $this->check_user_privilages();
 
+$this->loadmodel('financial_year');
+$conditions=array("society_id" => $s_society_id, "status"=>1);
+$cursor=$this->financial_year->find('all',array('conditions'=>$conditions));
+	foreach($cursor as $collection)
+	{
+	$date_from = @$collection['financial_year']['from'];
+	$date_to = @$collection['financial_year']['to'];
+	$date_from1 = date('Y-m-d',$date_from->sec);
+	$date_to1 = date('Y-m-d',$date_to->sec);
+	$datef[] = $date_from1;
+	$datet[] = $date_to1;
+	}
+	if(!empty($datef))
+	{
+	$datef1 = implode(',',$datef);
+	$datet1 = implode(',',$datet);
+	}
+$count = sizeof(@$datef);
+$this->set('datef1',@$datef1);
+$this->set('datet1',@$datet1);
+$this->set('count',$count);
+
 $this->loadmodel('accounts_group');
 $order=(array('accounts_group.group_name'=>'ASC'));
 $accounts_groups= $this->accounts_group->find('all',array('order'=>$order));

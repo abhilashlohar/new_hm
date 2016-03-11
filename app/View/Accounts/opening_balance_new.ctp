@@ -1,15 +1,18 @@
 <?php
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
-<form method="post">
+<input type="hidden" id="fi" value="<?php echo $datef1; ?>" />
+<input type="hidden" id="ti" value="<?php echo $datet1; ?>" />
+<input type="hidden" id="cn" value="<?php echo $count; ?>" />
 
+<form method="post">
 <div class="portlet box blue">
 <div class="portlet-title">
 <h4 class="block"><i class="icon-reorder"></i>Opening Balance Import</h4>
 </div>
 <div class="portlet-body form">
 
-<input type="text" class="m-wrap medium date-picker" data-date-format="dd-mm-yyyy" Placeholder="Opening Balance Date" style="background-color:white !important;" name="date">
+<input type="text" class="m-wrap medium date-picker" data-date-format="dd-mm-yyyy" Placeholder="Opening Balance Date" style="background-color:white !important;" name="date" id="date">
 <br><br>
 <table class="table table-bordered table-condensed " style="background-color:white;">
 	<tr>
@@ -278,6 +281,53 @@ $(document).on("click", "#submit_opening_balance", function() {
 	$("#validation").html('Total Debit Shold be Equal to Total Debit');	
 	return false;	
 	}
+	
+var fi = document.getElementById("fi").value;
+var ti = document.getElementById("ti").value;
+var cn = document.getElementById("cn").value;
+var fe = fi.split(",");
+var te = ti.split(",");
+var date1 = document.getElementById("date").value;
+var date = date1.split("-").reverse().join("-");
+				
+var nnn = 55;
+for(var i=0; i<cn; i++)
+{
+var fd = fe[i];
+var td = te[i]
+	if(date == "")
+	{
+	$("#validation").html('Please Select Date');	
+	return false;
+	}
+	else if(Date.parse(fd) <= Date.parse(date))
+	{
+		if(Date.parse(td) >= Date.parse(date))
+		{
+		nnn = 5;
+		break;
+		}
+		else
+		{
+		}
+	} 
+}
+if(nnn == 55)
+{	
+$("#validation").html('Date Should be in Open Financial Year');	
+return false;		
+}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 });
 </script>
 <style>

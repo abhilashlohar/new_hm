@@ -10,7 +10,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 <div class="portlet-body form">
 
 <input type="text" class="m-wrap medium date-picker" data-date-format="dd-mm-yyyy" Placeholder="Opening Balance Date" style="background-color:white !important;" name="date">
-
+<br><br>
 <table class="table table-bordered table-condensed " style="background-color:white;">
 	<tr>
 		<th>Accounts Group</th>

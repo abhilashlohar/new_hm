@@ -7046,8 +7046,8 @@ $this->Session->write('new_bank_rrr', 1);
 $output = json_encode(array('type'=>'success', 'text' => 'The Bank Receipt #'.$arr_rrr.' Generated Sucessfully'));
 die($output);
 }
-////////////////////////// End bank_receipt_json ////////////////////////////////////////////////////////
-////////////////////////////// Start new_bank_receipt_reference_ajax ///////////////////////////////////////
+////////////////////////// End bank_receipt_json //////////////////////////////
+////////////////////////////// Start new_bank_receipt_reference_ajax ///////////
 function new_bank_receipt_reference_ajax()
 {
 $this->layout='blank';
@@ -7064,9 +7064,8 @@ $this->set('type',$type);
 $this->set('flat_id',$flat_id);
 //$this->set('flat_id',$flat_id);
 }
-///////////////////////////// End new_bank_receipt_reference_ajax ///////////////////////////////////////
-
-/////////////////////////////////// Start petty_cash_payment_add_row ////////////////////////////////////////////
+////////////////////////// End new_bank_receipt_reference_ajax //////////////////
+////////////////////////// Start petty_cash_payment_add_row ////////////////////
 function petty_cash_payment_add_row()
 {
 $this->layout='blank';

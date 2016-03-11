@@ -6245,7 +6245,7 @@ $ledger_account_id2=(int)$ledger_sub_accounts_data['ledger_sub_account']['ledger
 			{
 			$this->loadmodel('ledger');
 			$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-			$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_account_id,"ledger_sub_account_id"=>$ledger_sub_account_id,"debit"=>$penalty,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date),"intrest_on_arrears"=>"YES"));	
+			$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_account_id2,"ledger_sub_account_id"=>$ledger_sub_account_id,"debit"=>$penalty,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date),"intrest_on_arrears"=>"YES"));	
 			}
 			}
 		}

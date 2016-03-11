@@ -2669,25 +2669,21 @@ function petty_cash_payment_show_ajax()
 {
 $this->layout='blank';
 $this->ath();
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = $this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = $this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 $this->loadmodel('society');
 $conditions=array("society_id" => $s_society_id);
 $cursor = $this->society->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
+foreach($cursor as $collection){
 $society_name = $collection['society']['society_name'];
 }
 $this->set('society_name',$society_name);
-
 $this->set('s_user_id',$s_user_id);
 $this->set('s_role_id',$s_role_id);
-
 $from = $this->request->query('date1');
 $to = $this->request->query('date2');
-
 $this->set('from',$from);
 $this->set('to',$to);
 

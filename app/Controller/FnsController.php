@@ -397,6 +397,15 @@ function last_bill_info($ledger_sub_account_id){
 	$order=array('regular_bill.auto_id'=> 'DESC');
 	return $this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1));
 }
+function last_bill_info_for_bill_regeneration($ledger_sub_account_id){
+	$s_society_id=$this->Session->read('hm_society_id');
+	
+	$this->loadmodel('regular_bill');
+	$conditions=array("society_id"=>$s_society_id,"ledger_sub_account_id"=>$ledger_sub_account_id);
+	$order=array('regular_bill.auto_id'=> 'DESC');
+	return $this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1,'offset'=>1));
+}
+
 function user_flat_info_via_user_flat_id($user_flat_id){
 	$this->loadmodel('user_flat');
 	$conditions=array("user_flat_id" =>$user_flat_id);

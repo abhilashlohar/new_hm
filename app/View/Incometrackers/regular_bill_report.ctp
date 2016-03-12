@@ -31,6 +31,7 @@
 					<th>Unit</th>
 					<th>Name</th>
 					<th>Unit area</th>
+					<th>Bill No.</th>
 					<?php foreach($income_head_ids as $income_head_id){
 						$income_head_name = $this->requestAction(array('controller' => 'Fns', 'action' => 'income_head_name_via_id'),array('pass'=>array($income_head_id)));
 						echo '<th>'.$income_head_name.'</th>';
@@ -52,6 +53,7 @@
 			<tbody>
 				<?php foreach($regular_bills as $data){
 					$auto_id=$data["regular_bill"]["auto_id"];
+					$bill_number=$data["regular_bill"]["bill_number"];
 					$ledger_sub_account_id=$data["regular_bill"]["ledger_sub_account_id"];
 					$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 					$flat_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'flat_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
@@ -69,6 +71,7 @@
 						<td><?php echo $member_info["wing_name"].'-'.$member_info["flat_name"]; ?></td>
 						<td><?php echo $member_info["user_name"]; ?></td>
 						<td><?php echo $flat_area; ?></td>
+						<td><?php echo $bill_number; ?></td>
 						<?php foreach($income_head_ids as $income_head_id){
 							echo '<td>'.@$income_head_array[$income_head_id].'</td>';
 						} ?>

@@ -167,8 +167,6 @@ function it_regular_bill(){
 					$i=0;
 					foreach($last_receipts_info as $receipts_info){ $i++;
 						$receipt_auto_id=$receipts_info["cash_bank"]["auto_id"];
-						echo 'RECEIPT-'.$receipt_auto_id;
-						echo '<br/>';
 						$receipt_date=$receipts_info["cash_bank"]["transaction_date"];
 						$amount=$receipts_info["cash_bank"]["amount"];
 						
@@ -6418,9 +6416,15 @@ function regular_bill_edit2($auto_id=null){
 	$regular_bill_info=$this->regular_bill->find('all',array('conditions'=>$conditions));
 	$this->set('regular_bill_info',$regular_bill_info);
 	
+	$this->loadmodel('society');
+	$conditions=array("society_id"=>$s_society_id);
+	$society_info=$this->society->find('all',array('conditions'=>$conditions));
+	$this->set('society_info',$society_info);
+	
 	/////submit code////
 	if(isset($this->request->data['edit_bill'])){
-		echo "hello";
+		$income_head=$this->request->data['income_head'];
+		pr($income_head);
 		exit;
 	}
 }

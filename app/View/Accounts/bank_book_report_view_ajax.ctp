@@ -59,10 +59,10 @@ $total_receipt = 0;
 foreach($cursor2 as $dataaa)
 {
 $receipt_id = $dataaa['new_cash_bank']['receipt_id'];	
-$receipt_source = (int)$dataaa['new_cash_bank']['receipt_source'];
+$receipt_source = $dataaa['new_cash_bank']['receipt_source'];
 $narration = $dataaa['new_cash_bank']['narration'];
 
-		if($receipt_source == 1)
+		if($receipt_source == "bank_receipt")
 		{
 			$transaction_date = $dataaa['new_cash_bank']['receipt_date'];	
 			$transaction_date2 = date('d-m-Y',($transaction_date));	
@@ -88,7 +88,7 @@ $wing_flat =$this->requestAction(array('controller' => 'Bookkeepings', 'action' 
 array('pass' => array($wing_id,$flat_id)));
 					
 }
-else if($receipt_source == 2)
+else if($receipt_source == "bank_payment")
 {
 $transaction_date = $dataaa['new_cash_bank']['transaction_date'];	
 $transaction_date2 = date('d-m-Y',($transaction_date));		

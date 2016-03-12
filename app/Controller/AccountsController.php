@@ -5498,17 +5498,15 @@ $s_user_id=$this->Session->read('hm_user_id');
 	
 	
 $this->loadmodel('new_cash_bank');
-//$order=array('$or' => array(array('new_cash_bank.transaction_date'=> 'ASC'),
-//array('new_cash_bank.transaction_date'=> 'ASC')));
-$conditions=array('$or' => array(array('society_id'=>$s_society_id,"receipt_source"=>1,"deposited_bank_id"=>$bank_id,
+$conditions=array('$or' => array(array('society_id'=>$s_society_id,"receipt_source"=>"bank_receipt","deposited_bank_id"=>$bank_id,
 'new_cash_bank.receipt_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime)),
-array('society_id'=>$s_society_id,"receipt_source"=>2,"account_head"=>$bank_id,
+array('society_id'=>$s_society_id,"receipt_source"=>"bank_payment","account_head"=>$bank_id,
 'new_cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime))));
 $cursor2=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
 }
-//////////////////////////// End bank_book_report_view_ajax ////////////////////////////////////////
-//////////////////////////// Start bank_book_report_view_ajax ////////////////////////////////////////
+//End bank_book_report_view_ajax//
+//Start bank_book_report_view_ajax//
 function bank_book_report_excel()
 {
 $this->layout="";

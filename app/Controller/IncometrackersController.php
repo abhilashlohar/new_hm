@@ -4440,59 +4440,38 @@ function in_head_report(){
 		$this->ath();
 		$this->check_user_privilages();
 
-	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');	
-
-	$this->loadmodel('new_regular_bill');
-	$conditions=array("society_id" => $s_society_id,"approval_status" => 1,'new_regular_bill.edit_status'=>array('$ne'=>"YES"));
-	$order=array('new_regular_bill.one_time_id'=> 'DESC');
-	$result_new_regular_bill = $this->new_regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order));
-	$this->set("result_new_regular_bill",$result_new_regular_bill);
-	foreach($result_new_regular_bill as $regular_bill){
-		$other_charges_array=@$regular_bill["new_regular_bill"]["other_charges_array"];
-		if(!empty($other_charges_array)){
-			foreach($other_charges_array as $key=>$value){
-				$other_charges_ids[]=$key;
-			}
-		}
-		
-	}
-	if(sizeof(@$other_charges_ids)>0){
-	$other_charges_ids=array_unique($other_charges_ids);
-	$this->set('other_charges_ids',$other_charges_ids);
-	}
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');	
 	
-	$this->loadmodel('society');
+	$this->loadmodel('regular_bill');
 	$condition=array('society_id'=>$s_society_id);
-	$result_society=$this->society->find('all',array('conditions'=>$condition)); 
-	$this->set('result_society',$result_society);
-	
+	$order=array('regular_bill.auto_id'=>'DESC');
+	$regular_bills=$this->regular_bill->find('all',array('conditions'=>$condition,'order'=>$order)); 
+	foreach($regular_bills as $regular_bill){
+		$start_date=$regular_bill["regular_bill"]["start_date"];
+		$end_date=$regular_bill["regular_bill"]["end_date"];
+		$periods[]=$start_date.'-'.$end_date;
+	}
+	$periods=array_unique($periods);
+	$this->set(compact('periods'));
 
-$this->loadmodel('wing');
-$conditions=array("society_id"=> $s_society_id);
-$cursor2=$this->wing->find('all',array('conditions'=>$conditions));
-$this->set('cursor2',$cursor2);	
-
-$this->loadmodel('ledger_sub_account');
-$condition=array('society_id'=>$s_society_id,'ledger_id'=>34);
-$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
-$this->set('result_ledger_sub_account',$result_ledger_sub_account);
-foreach($result_ledger_sub_account as $ledger_sub_account){
-$ledger_sub_account_user_id=$ledger_sub_account["ledger_sub_account"]["user_id"];
-$ledger_sub_account_flat_id=$ledger_sub_account["ledger_sub_account"]["flat_id"];
-$flats_for_bill[]=$ledger_sub_account_flat_id;
 }
-$this->set('flats_for_bill',$flats_for_bill);
 
-$this->loadmodel('wing');
-$condition=array('society_id'=>$s_society_id);
-$order=array('wing.wing_name'=>'ASC');
-$result_wing=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
-$this->set('result_wing',$result_wing);
-
-
-		
+function regular_bill_report($period=null){
+	$this->layout='blank';
+	$this->ath();
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	
+	$period=explode('-',$period);
+	$start_date=(int)$period[0];
+	$end_date=(int)$period[1];
+	
+	$this->loadmodel('regular_bill');
+	$conditions=array('society_id'=>$s_society_id,'start_date'=>$start_date,'end_date'=>$end_date);
+	$order=array('regular_bill.auto_id'=>'ASC');
+	$regular_bills=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order)); 
+	$this->set(compact('regular_bills'));
 }
 ///////////////////////// End In head report (Accounts)//////////////////////////
 

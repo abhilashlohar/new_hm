@@ -381,5 +381,9 @@ function user_flat_info_via_user_flat_id($user_flat_id){
 	$conditions=array("user_flat_id" =>$user_flat_id);
 	return $this->user_flat->find('all',array('conditions'=>$conditions));
 }
+
+
+
+
 }
 ?>

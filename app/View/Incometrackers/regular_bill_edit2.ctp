@@ -1,60 +1,46 @@
 <style>
-.textbx{
+input{
 	margin-bottom: 0px !important;
 	height: 15px !important;width: 100px;
+}
+input[readonly=""]{
+    border: medium none !important;
+	background-color: transparent;
 }
 </style>
 <a href="<?php echo $webroot_path; ?>Incometrackers/in_head_report" role="button" rel="tab" class="btn"><i class="icon-arrow-left"></i> Back</a>
 <?php 
-foreach($result_society as $data){
-	$income_heads=$data["society"]["income_head"];
-}
-foreach($result_new_regular_bill as $regular_bill){
-	$flat_id=$regular_bill["new_regular_bill"]["flat_id"];
-	$bill_no=$regular_bill["new_regular_bill"]["bill_no"];
-	$bill_start_date=$regular_bill["new_regular_bill"]["bill_start_date"];
-	$due_date=$regular_bill["new_regular_bill"]["due_date"];
-	$income_head_array=$regular_bill["new_regular_bill"]["income_head_array"];
-	$total=$regular_bill["new_regular_bill"]["total"];
-	$intrest_on_arrears=$regular_bill["new_regular_bill"]["intrest_on_arrears"];
-	$arrear_maintenance=$regular_bill["new_regular_bill"]["arrear_maintenance"];
-	$arrear_intrest=$regular_bill["new_regular_bill"]["arrear_intrest"];
-	$due_for_payment=$regular_bill["new_regular_bill"]["due_for_payment"];
-	$credit_stock=$regular_bill["new_regular_bill"]["credit_stock"];
-	$income_head_array=$regular_bill["new_regular_bill"]["income_head_array"];
-	$other_charges_array=$regular_bill["new_regular_bill"]["other_charges_array"];
-	$noc_charges=$regular_bill["new_regular_bill"]["noc_charges"];
-	
-	//wing_id via flat_id//
-		$result_flat_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
-		foreach($result_flat_info as $flat_info){
-			$wing_id=$flat_info["flat"]["wing_id"];
-		}
+
+foreach($regular_bill_info as $regular_bill){
+	$ledger_sub_account_id=$regular_bill["regular_bill"]["ledger_sub_account_id"];
+	$bill_start_date=$regular_bill["regular_bill"]["start_date"];
+	$due_date=$regular_bill["regular_bill"]["due_date"];
+	$income_head_array=$regular_bill["regular_bill"]["income_head_array"];
+	$total=$regular_bill["regular_bill"]["total"];
+	$intrest_on_arrears=$regular_bill["regular_bill"]["intrest_on_arrears"];
+	$arrear_maintenance=$regular_bill["regular_bill"]["arrear_maintenance"];
+	$arrear_intrest=$regular_bill["regular_bill"]["arrear_intrest"];
+	$due_for_payment=$regular_bill["regular_bill"]["due_for_payment"];
+	$credit_stock=$regular_bill["regular_bill"]["credit_stock"];
+	$income_head_array=$regular_bill["regular_bill"]["income_head_array"];
+	$other_charges_array=$regular_bill["regular_bill"]["other_charge"];
+	$noc_charges=$regular_bill["regular_bill"]["noc_charge"];
+	$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+	$user_name=$member_info["user_name"];
+	$wing_name=$member_info["wing_name"];
+	$flat_name=$member_info["flat_name"];
+	$wing_flat=$wing_name.' - '.$flat_name;
 		
-		$wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing_id,$flat_id)));
-		
-		//user info via flat_id//
-		$result_user_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_user_info_via_flat_id'),array('pass'=>array($wing_id,$flat_id)));
-		foreach($result_user_info as $user_info){
-			$user_name=$user_info["user"]["user_name"];
-		}
-		
-		$result_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'flat_fetch2'),array('pass'=>array(@$flat_id,$wing_id))); 
-		foreach($result_flat as $data2){
-			$flat_type_id = (int)$data2['flat']['flat_type_id'];
-			$noc_ch_id = (int)@$data2['flat']['noc_ch_tp'];
-			$sq_feet = (int)$data2['flat']['flat_area'];
-		}
 }; ?>
 <div class="portlet box blue">
 	<div class="portlet-title">
-		<h4><i class="icon-edit"></i> Edit Bill -<?php echo $bill_no; ?></h4>
+		<h4><i class="icon-edit"></i> Edit Bill -<?php echo @$bill_no; ?></h4>
 	</div>
 	<div class="portlet-body" style="overflow:auto;">
 		<table style="width:100%; float:left;" >
 			<tr>
 				<td width="10%">Name: </td>
-				<td><?php echo $user_name; ?></td>
+				<td><?php echo $member_info["user_name"]; ?></td>
 				<td width="10%">Flat/Shop No.: </td>
 				<td><?php echo $wing_flat; ?></td>
 			</tr>
@@ -67,7 +53,7 @@ foreach($result_new_regular_bill as $regular_bill){
 		</table>
 		<form method="post">
 		<div class="portlet-body span6">
-			<table class="table table-bordered table-hover">
+			<table class="table table-bordered">
 				<thead>
 					<tr>
 						<th>Particulars of charges</th>
@@ -112,11 +98,11 @@ foreach($result_new_regular_bill as $regular_bill){
 					</tr>
 					<tr>
 						<td style="text-align: right;">Arrears   (Maint.)</td>
-						<td><input type="text" class="m-wrap textbx call_calculation" value="<?php echo $arrear_maintenance; ?>" name="arrear_maintenance" /></td>
+						<td><input type="text" class="m-wrap textbx call_calculation" value="<?php echo $arrear_maintenance; ?>" name="arrear_maintenance" readonly /></td>
 					</tr>
 					<tr>
 						<td style="text-align: right;">Arrears   (Int.)</td>
-						<td><input type="text" class="m-wrap textbx call_calculation" value="<?php echo $arrear_intrest; ?>" name="arrear_intrest" /></td>
+						<td><input type="text" class="m-wrap textbx call_calculation" value="<?php echo $arrear_intrest; ?>" name="arrear_intrest" readonly /></td>
 					</tr>
 					<tr>
 						<td style="text-align: right;">Credit/Adjustment</td>

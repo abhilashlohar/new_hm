@@ -1,5 +1,5 @@
 <div class="portlet box">
-	<div class="portlet-body" style="overflow-x: scroll;">
+	<div class="portlet-body" >
 		<?php
 		foreach($regular_bills as $regular_bill){
 			$income_head_array=$regular_bill["regular_bill"]["income_head_array"];
@@ -16,18 +16,26 @@
 		}
 		$income_head_ids=array_unique($income_head_ids);
 		$other_charge_ids=array_unique($other_charge_ids);
-		echo '<span style="font-size: 14px;">Billing Period: '.date("d-M",$start_date).' to '.date("d-M-Y",$end_date).'</span><br/>';
+		echo '<div class="row-fluid"><div class="span6"><span style="font-size: 14px;">Billing Period: '.date("d-M",$start_date).' to '.date("d-M-Y",$end_date).'</span><br/></div>';
 		?>
+		<div class="span6" align="right">
+			<a href="#" class="btn mini green tooltips" data-original-title="Download in excel"><i class="fa fa-file-excel-o"></i></a>
+			<a href="#" class="btn mini blue tooltips" onclick="window.print();" role="button" data-original-title="Print"><i class="fa fa-print"></i></a>
+			<label class="m-wrap pull-right">Search: <input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;"></label>
+		</div>
+		</div>
+		<div style="overflow-x: scroll;">
 		<table class="table table-condensed table-bordered table-striped table-hover" id="main">
 			<thead>
 				<tr>
 					<th>Unit</th>
 					<th>Name</th>
+					<th>Unit area</th>
 					<?php foreach($income_head_ids as $income_head_id){
 						$income_head_name = $this->requestAction(array('controller' => 'Fns', 'action' => 'income_head_name_via_id'),array('pass'=>array($income_head_id)));
 						echo '<th>'.$income_head_name.'</th>';
 					} ?>
-					<th>Noc</th>
+					<th>Non Occupancy charges</th>
 					<?php foreach($other_charge_ids as $other_charge_id){
 						$income_head_name = $this->requestAction(array('controller' => 'Fns', 'action' => 'income_head_name_via_id'),array('pass'=>array($other_charge_id)));
 						echo '<th>'.$income_head_name.'</th>';
@@ -38,6 +46,7 @@
 					<th>Interest on Arrears</th>
 					<th>Credit/Adjustment</th>
 					<th>Due For Payment</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -45,6 +54,8 @@
 					$auto_id=$data["regular_bill"]["auto_id"];
 					$ledger_sub_account_id=$data["regular_bill"]["ledger_sub_account_id"];
 					$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+					$flat_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'flat_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+					$flat_area=$flat_info[0]["flat"]["flat_area"];
 					$income_head_array=$data["regular_bill"]["income_head_array"];
 					$noc_charge=$data["regular_bill"]["noc_charge"];
 					$other_charge=$data["regular_bill"]["other_charge"];
@@ -57,6 +68,7 @@
 					<tr>
 						<td><?php echo $member_info["wing_name"].'-'.$member_info["flat_name"]; ?></td>
 						<td><?php echo $member_info["user_name"]; ?></td>
+						<td><?php echo $flat_area; ?></td>
 						<?php foreach($income_head_ids as $income_head_id){
 							echo '<td>'.@$income_head_array[$income_head_id].'</td>';
 						} ?>
@@ -70,6 +82,18 @@
 						<td><?php echo $intrest_on_arrears; ?></td>
 						<td><?php echo $credit_stock; ?></td>
 						<td><?php echo $due_for_payment; ?></td>
+						<td>
+							<div class="btn-group" style="margin: 0px !important;">
+							<a class="btn blue mini" href="#" data-toggle="dropdown">
+							<i class="icon-chevron-down"></i>	
+							</a>
+							<ul class="dropdown-menu" style="min-width: 80px ! important; margin-left: -52px;">
+							<li><a href="regular_bill_view/420" target="_blank"><i class="icon-search"></i> View</a></li>
+							<li>
+							<a href="regular_bill_edit2/<?php echo $auto_id; ?>" role="button" rel="tab"><i class="icon-edit"></i> Edit</a></li>
+							</ul>
+							</div>
+						</td>
 					</tr>
 				<?php } ?>
 			</tbody>
@@ -78,12 +102,16 @@
 				</tr>
 			</tfoot>
 		</table>
+		</div>
 	</div>
 </div>
 <style>
 th,td{
 	font-size: 12px !important;
 	white-space: nowrap;
+}
+input{
+	margin: 0px !important;
 }
 </style>
 <script>
@@ -99,6 +127,17 @@ $(document).ready(function(){
 		tr++;
 	});
 	$('#main tfoot tr td:first').remove();
-	$('#main tfoot tr td:first').attr("colspan",2).html("<b>Total</b>");
+	$('#main tfoot tr td:first').remove();
+	$('#main tfoot tr td:first').attr("colspan",3).html("<b>Total</b>");
+});
+
+var $rows = $('#main tr');
+$('#search').keyup(function() {
+	var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+
+	$rows.show().filter(function() {
+		var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+		return !~text.indexOf(val);
+	}).hide();
 });
 </script>

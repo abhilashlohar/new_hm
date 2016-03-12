@@ -5215,12 +5215,14 @@ function other_charges(){
 			if(!empty($ledger_sub_account_id)){
 				if (in_array($ledger_sub_account_id, $ledger_sub_account_ids)){
 					$members_for_billing[]=$ledger_sub_account_id;
+				    $flats_for_bill[]=$flat_id;
 				}
 			}
 			
 		}
 	}	
 	$this->set(compact("members_for_billing"));	
+	$this->set(compact("flats_for_bill"));	
 	
 		
 	
@@ -5234,7 +5236,7 @@ function other_charges(){
 			$this->loadmodel('other_charge');
 			$this->other_charge->deleteAll(array('ledger_sub_account_id'=> (int)$ledger_sub_account_id,'income_head_id'=> $income_head_id));
 			
-			$this->other_charge->saveAll(array("ledger_sub_account_id" => (int)$ledger_sub_account_id,"income_head_id" => $income_head_id,"amount" => $amount,"charge_type"=>$charge_type));
+			$this->other_charge->saveAll(array("ledger_sub_account_id" => (int)$ledger_sub_account_id,"income_head_id"=>$income_head_id,"amount"=>$amount,"charge_type"=>$charge_type));
 		}
 	?>
 
@@ -5254,14 +5256,13 @@ function other_charges(){
 
 }
 
-function fetch_other_charges_via_flat_id($flat_id){
-	$this->loadmodel('flat');
-	$conditions=array("flat_id"=>(int)$flat_id);
-	$result_flat=$this->flat->find('all',array('conditions'=>$conditions));
-	return @$result_flat[0]["flat"]["other_charges"];
+function fetch_other_charges_via_ledger_sub_account_id($ledger_sub_account_id){
+	$this->loadmodel('other_charge');
+	$conditions=array("ledger_sub_account_id"=>(int)$ledger_sub_account_id);
+	return $this->other_charge->find('all',array('conditions'=>$conditions));
 }
 //END OTHER CHARGES//
-/////////////////////////////////// Start It Setup (Accounts) ///////////////////////////////////////////////
+//Start It Setup (Accounts)//
 function it_setup()
 {
 if($this->RequestHandler->isAjax()){

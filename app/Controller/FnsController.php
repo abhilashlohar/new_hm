@@ -411,8 +411,11 @@ function user_flat_info_via_user_flat_id($user_flat_id){
 	$conditions=array("user_flat_id" =>$user_flat_id);
 	return $this->user_flat->find('all',array('conditions'=>$conditions));
 }
-
-
+function user_flat_info_via_wing_flat_id($wing,$flat){
+	$this->loadmodel('user_flat');
+	$conditions=array("wing"=>$wing,"flat"=>$flat);
+	return $this->user_flat->find('all',array('conditions'=>$conditions));
+}
 
 
 }

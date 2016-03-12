@@ -4271,7 +4271,7 @@ function fetch_wing_id_via_flat_id($flat_id){
 }
 
 function fetch_user_info_via_flat_id($wing,$flat){
-	$s_society_id=$this->Session->read('society_id');
+	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('user_flat');
 	/*$conditions =array( '$or' => array( 
 	array('wing' =>$wing,'flat' =>$flat),

@@ -1,8 +1,6 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
-
-
 <table  align="center" border="1" bordercolor="#FFFFFF" cellpadding="0">
 <tr>
 <td><a href="<?php echo $webroot_path; ?>Incometrackers/select_income_heads" class="btn " rel='tab'>Selection of Income Heads</a>
@@ -162,7 +160,8 @@ $income_arrr[] = $data;
 			
 			<table class="table table-striped table-bordered table-advance">
 				<tbody>
-				<?php  if(!empty($flats_for_bill)) { $sr_no=0; foreach($flats_for_bill as $flat){ $sr_no++;
+				<?php  
+								if(!empty($flats_for_bill)) { $sr_no=0; foreach($flats_for_bill as $flat){ $sr_no++;
 				
 				
 								//wing_id via flat_id//
@@ -171,18 +170,27 @@ $income_arrr[] = $data;
 								$wing=$flat_info["flat"]["wing_id"];
 								} 
 
+								
+								
+					$ledger_sub_account_id=$this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing,$flat)));
 				
-								//user info via flat_id//
-								$result_user_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_user_info_via_flat_id'),array('pass'=>array($wing,$flat)));
+				$result_user_flat=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_wing_flat_id'),array('pass'=>array($wing,$flat)));
+				foreach($result_user_flat as $data)
+				{
+				$user_id = $data['user_flat']['user_id'];
+				}
+
+								
+								$result_user_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_info_via_user_id'),array('pass'=>array($user_id)));
 								foreach($result_user_info as $user_info){
 								$user_id=(int)$user_info["user"]["user_id"];
 								$user_name=$user_info["user"]["user_name"];
 								} 
 									
-					if(!empty($flat)){
+					    if(!empty($flat)){
 						$wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat))); 
 						
-						$result_other_charges = $this->requestAction(array('controller' => 'Incometrackers', 'action' => 'fetch_other_charges_via_flat_id'),array('pass'=>array($flat))); 
+						$result_other_charges = $this->requestAction(array('controller' => 'Incometrackers', 'action' => 'fetch_other_charges_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id))); 
 						if(sizeof($result_other_charges)>0){
 						?>
 						<tr>
@@ -197,12 +205,13 @@ $income_arrr[] = $data;
 											
 										</div>';
 										
-								foreach($result_other_charges as $income_head_id=>$amount){ 
+								foreach($result_other_charges as $other_charges){ 
 								 
-								 $amount2 = $amount[0];
-								 $type =  (int)$amount[1];
-									$result_income_head = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch2'),array('pass'=>array($income_head_id)));	
-									foreach($result_income_head as $data2){
+							 $amount2=$other_charges['other_charge']['amount'];
+							 $type=$other_charges['other_charge']['charge_type'];
+							 $income_head_id=$other_charges['other_charge']['income_head_id'];
+							$result_income_head = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch2'),array('pass'=>array($income_head_id)));	
+							foreach($result_income_head as $data2){
 										$income_head_name = $data2['ledger_account']['ledger_name'];
 									} ?>
 									<div class="row-fluid">

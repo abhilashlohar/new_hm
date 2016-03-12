@@ -6213,6 +6213,8 @@ function new_bank_receipt(){
 					$society_reg_no = $collection['society']['society_reg_num'];
 					$society_address = $collection['society']['society_address'];
 					$sig_title = $collection['society']['sig_title'];
+					$email_is_on_off=(int)@$collection["society"]["account_email"];
+					$sms_is_on_off=(int)@$collection["society"]["account_sms"];
 			}
 			
 			
@@ -6243,20 +6245,20 @@ function new_bank_receipt(){
 				$receipt_type=$receipt_types[$i];
 				$amount=$amounts[$i];
 				$narration=$narrations[$i];
-				
+				$cheque_date=$date;
 				if($receipt_type=="maintenance"){
 					$this->loadmodel('cash_bank');
 					$auto_id=$this->autoincrement('cash_bank','auto_id');
 					$receipt_number=$this->autoincrement_with_society_ticket('cash_bank','receipt_number');
-					//$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id, "transaction_date" => strtotime($transaction_date),"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$received_from,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number))); 
+					$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id, "transaction_date" => strtotime($transaction_date),"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$received_from,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number))); 
 					
 					
 					$this->loadmodel('ledger');
 					$ledger_id=$this->autoincrement('ledger','auto_id');
-					//$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" => $amount, "credit" =>null, "ledger_account_id" => 33, "ledger_sub_account_id" => $deposited_in,"table_name" => "bank_receipt","element_id" => $auto_id, "society_id" => $s_society_id))); 
+					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" => $amount, "credit" =>null, "ledger_account_id" => 33, "ledger_sub_account_id" => $deposited_in,"table_name" => "bank_receipt","element_id" => $auto_id, "society_id" => $s_society_id))); 
 
 					$ledger_id=$this->autoincrement('ledger','auto_id');
-					//$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name" => "bank_receipt","element_id" => $auto_id, "society_id" => $s_society_id,"receipt_type" =>$receipt_type)));
+					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name" => "bank_receipt","element_id" => $auto_id, "society_id" => $s_society_id,"receipt_type" =>$receipt_type)));
 				}
 				
 				// start Email & Sms code
@@ -6330,16 +6332,16 @@ function new_bank_receipt(){
 										
 									</tr>';
 									
-								if($receipt_mode=="Cheque"){
-								$receipt_mode_type='Via '.$receipt_mode.'-'.$cheque_number.' drawn on '.$which_bank.' dated '.$cheque_date;
+								if($receipt_mode=="cheque"){
+								$receipt_type='Via '.$receipt_mode.'-'.$cheque_number.' drawn on '.$drown_in_which_bank.' dated '.$cheque_date;
 								}
 								else{
-								$receipt_mode_type='Via '.$receipt_mode.'-'.$reference_number.' dated '.$cheque_date;
+								$receipt_type='Via '.$receipt_mode.'-'.$cheque_number.' dated '.$cheque_date;
 								}
 
 									
 									$html_receipt.='<tr>
-										<td style="padding:0px 0 2px 5px"  colspan="4">'.$receipt_mode_type.'</td>
+										<td style="padding:0px 0 2px 5px"  colspan="4">'.$receipt_type.'</td>
 										
 									</tr>
 									
@@ -6356,11 +6358,12 @@ function new_bank_receipt(){
 									<tbody><tr>
 										<td width="50%" style="padding:5px" valign="top">
 										<span style="font-size:16px;"> <b>Rs '.$amount.'</b></span><br>';
-										if($receipt_mode=="Cheque"){
-										$receipt_title_cheq='Subject to realization of Cheque(s)';
+										$receipt_title_cheq="";
+										if($receipt_mode=="cheque"){
+											$receipt_title_cheq='Subject to realization of Cheque(s)';
 										}
 																			
-										$html_receipt.='<span>'.@$receipt_title_cheq.'</span></td>
+										$html_receipt.='<span>'.@$receipt_title_cheq.' </span></td>
 										<td align="center" width="50%" style="padding:5px" valign="top">
 										For  <b>'.$society_name.'</b><br><br><br>
 										<div><span style="border-top:solid 1px #424141">'.$sig_title.'</span></div>
@@ -6409,14 +6412,42 @@ function new_bank_receipt(){
 			</tbody>
 		</table>';
 				
-echo $html_receipt;
-exit;		
-				
-				
+
+	
+			if($email_is_on_off==1){
+			////email code//
+					if(!empty($email)){
+					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$date." against Unit ".$wing_flat."";
+					
+
+					$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'donotreply@housingmatters.in');
+				}
+			}	
+
+			////Sms code//
+				if($sms_is_on_off==1){
+						if(!empty($mobile)){
+								$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
+
+								$working_key=$r_sms->working_key;
+								$sms_sender=$r_sms->sms_sender; 
+								$sms_allow=(int)$r_sms->sms_allow;
+								
+							if($sms_allow==1){
+									
+									$user_name_short=$this->check_charecter_name($user_name);
+									
+									$sms="Dear ".$user_name_short." ,we have received Rs ".$amount." on ".$date." towards Society Maint. dues. Cheques are subject to realization,".$society_name;
+									$sms1=str_replace(' ', '+', $sms);
+
+									$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.''); 
+							}
+						}	
+				}
 				////// End 
 				
 			$i++; }
-			
+				
 			
 		}
 	

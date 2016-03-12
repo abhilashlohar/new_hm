@@ -357,7 +357,7 @@ $creater_name = $ussrrr['user']['user_name'];
 			}
 		}
 	}
-	if($receipt_source == 3)
+	if($receipt_source == "petty_cash_receipt")
 	{
 	$source="Petty Cash Receipt";
 		$trans_id = (int)$result_cash_bank[0]["new_cash_bank"]["transaction_id"]; 
@@ -396,7 +396,7 @@ $creater_name = $ussrrr['user']['user_name'];
 		}
 
 	}
-	if($receipt_source == 4)
+	if($receipt_source == "petty_cash_payment")
 	{
 		$source="Petty Cash Payment";
 		$trans_id = (int)$result_cash_bank[0]["new_cash_bank"]["transaction_id"]; 

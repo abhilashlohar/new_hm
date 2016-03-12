@@ -197,7 +197,7 @@ $income_arrr[] = $data;
 							<td><b><?php echo $user_name.' '.$wing_flat; ?></b></td>
 							<td>
 							<span style="float:right;" class="" data-placement="left" data-original-title="delete all charge">
-							<a href="#" role="button" idd="<?php echo $flat ; ?>" class="btn black mini other_charges_delete">Delete All</a>
+							<a href="#" role="button" idd="<?php echo $ledger_sub_account_id; ?>" class="btn black mini other_charges_delete">Delete All</a>
 							</span>
 							<?php 
 							if(sizeof($result_other_charges)>0){

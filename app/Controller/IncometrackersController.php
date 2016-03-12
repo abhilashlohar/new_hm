@@ -5135,21 +5135,18 @@ $cursor3 = $this->society->find('all',array('conditions'=>$conditions));
 $this->set('cursor3',$cursor3);
 
 }
-/////////////////////End Select Income Heads (Accounts)//////////////////////////////
-
-////START OTHER CHARGES//
-
+//End Select Income Heads (Accounts)//
+//other_charges_all_remove//
 function other_charges_all_remove(){
-	$this->layout=null;
-	
-	$this->ath();
-	
-	 $status=(int)$this->request->query('con2');
-	 if($status==0){
-			$flat_id=(int)$this->request->query('con');	
-			$this->loadmodel('flat');
-			$this->flat->updateAll(array('other_charges'=>null),array('flat_id'=>$flat_id));
-	 }
+$this->layout=null;
+$this->ath();
+$status=(int)$this->request->query('con2');
+if($status==0){
+$ledger_sub_account_id=(int)$this->request->query('con');	
+$this->loadmodel('other_charge');
+$conditions=array('ledger_sub_account_id'=>$ledger_sub_account_id);
+$this->other_charge->deleteAll($conditions);
+}
 	 if($status==1){
 		
 			 $flat_id=(int)$this->request->query('con');

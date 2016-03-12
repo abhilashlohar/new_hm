@@ -25,75 +25,17 @@ margin-bottom: 0px !important;
 font-size: 12px;
 }
 </style>
-<?php
-$nnn = 55;
+<?php $nnn = 55;
 $m_from = date("Y-m-d", strtotime($from));
 $m_to = date("Y-m-d", strtotime($to));
-
 $m_from = strtotime($from);
 $m_to = strtotime($to);
-
-
 ?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
-<?php
-foreach ($cursor2 as $collection) 
-{
-$receipt_no = $collection['new_cash_bank']['receipt_id'];
-$transaction_id = (int)$collection['new_cash_bank']['transaction_id'];	
-$date = $collection['new_cash_bank']['transaction_date'];
-$prepaired_by_id = (int)$collection['new_cash_bank']['prepaired_by'];
-$user_id = (int)$collection['new_cash_bank']['user_id'];   
-$invoice_reference = $collection['new_cash_bank']['invoice_reference'];
-$description = $collection['new_cash_bank']['narration'];
-$receipt_mode = $collection['new_cash_bank']['receipt_mode'];
-$receipt_instruction = $collection['new_cash_bank']['receipt_instruction'];
-$account_id = (int)$collection['new_cash_bank']['account_head'];
-$amount = $collection['new_cash_bank']['amount'];
-$current_date = $collection['new_cash_bank']['current_date'];		
-$ac_type = $collection['new_cash_bank']['account_type'];
-										
-$creation_date = date('d-m-Y',strtotime($current_date));											
-if($ac_type == 1)
-{						
-$result_lsa = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($user_id)));  
-foreach ($result_lsa as $collection) 
-{
-$user_name = $collection['ledger_sub_account']['name'];  
-}	
-}											
-else if($ac_type == 2)
-{
-$result_lsa = $this->requestAction(array('controller' => 'hms', 'action' => 'expense_head'),array('pass'=>array($user_id)));  
-foreach ($result_lsa as $collection) 
-{
-$user_name = $collection['ledger_account']['ledger_name'];  
-}	
-}											
-$result55 = $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($prepaired_by_id)));
-foreach ($result55 as $collection) 										
-{
-$prepaired_by_name = $collection['user']['user_name'];
-}									 
-									
-$result_lsa2 = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($account_id))); 					   
-foreach ($result_lsa2 as $collection) 
-{
-$account_no = $collection['ledger_sub_account']['bank_account'];  
-}    		
-if($date >= $m_from && $date <= $m_to)
-{
-if($user_id == $s_user_id)
-{
-$nnn = 555;
-}
-else if($s_role_id == 3)
-{
+<?php foreach ($cursor2 as $collection){
+$transaction_date = $collection['new_cash_bank']['transaction_date'];
+if($transaction_date >= $m_from && $transaction_date <= $m_to){
 $nnn = 555;	
-}
-}
-}
-?>
+}} ?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
 
 <?php

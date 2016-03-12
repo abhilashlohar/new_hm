@@ -173,8 +173,10 @@ $creater_name = @$user_detailll['user']['user_name'];
 			$element_id=$element_id;
 	
 	$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array($element_id)));
-	$receipt_source = (int)$result_cash_bank[0]["new_cash_bank"]["receipt_source"];  
-	if($receipt_source == 1)
+	$receipt_source = $result_cash_bank[0]["new_cash_bank"]["receipt_source"];  
+
+	
+	if($receipt_source == "bank_receipt")
 	{
 	$source="Receipt";
 	$trans_id = (int)$result_cash_bank[0]["new_cash_bank"]["transaction_id"]; 
@@ -244,7 +246,7 @@ $creater_name = $user_detailll['user']['user_name'];
 	{
 		$tds_array_for_bank_payment = array();
 		
-		$source="Bank payment";
+		$source="Bank_payment";
 		$trans_id = (int)$result_cash_bank[0]["new_cash_bank"]["transaction_id"];  
 		$description = @$result_cash_bank[0]["new_cash_bank"]["narration"];
 		$description=substrwords($description,200,'...');
@@ -263,16 +265,11 @@ foreach ($ussr_dataa as $ussrrr)
 $creater_name = $ussrrr['user']['user_name'];  
 }		
 			
-			if($subledger_id != 0)
-			{
-				
-				
+			if($subledger_id != 0){
 				$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 
 				'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($vendor_id)));
-				foreach($subleddger_detaill as $subledger_datttaa)
-				{
-				$user_name = $subledger_datttaa['ledger_sub_account']['name'];
-				//$tds_ledger_id = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
+				foreach($subleddger_detaill as $subledger_datttaa){
+				echo $user_name = $subledger_datttaa['ledger_sub_account']['name'];
 				}
 				
 				
@@ -697,7 +694,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
             <td><?php echo @$description; ?></td>
 			<td><?php echo $source; ?></td>
           	<td><?php
-           if($receipt_source == 2) { 
+           if($receipt_source == "bank_payment") { 
 		   echo '<a href="'.$this->webroot.'Cashbanks/bank_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } ?>
            </td>
             <td style="text-align:right;"><?php echo $amttt; ?></td>
@@ -731,7 +728,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 				if($receipt_source == 1)
 				{
 				echo '<a href="'.$this->webroot.'Cashbanks/bank_receipt_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>';
-			}else if($receipt_source == 2) { echo '<a href="'.$this->webroot.'Cashbanks/bank_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } else if($receipt_source == 4) { echo '<a href="'.$this->webroot.'Cashbanks/petty_cash_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; }else if($receipt_source == 3){
+			}else if($receipt_source == "bank_payment") { echo '<a href="'.$this->webroot.'Cashbanks/bank_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } else if($receipt_source == 4) { echo '<a href="'.$this->webroot.'Cashbanks/petty_cash_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; }else if($receipt_source == 3){
 				 echo '<a href="'.$this->webroot.'Cashbanks/petty_cash_receipt_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } } ?>
 				 
 			<?php if($table_name=="journal"){
@@ -761,7 +758,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			<?php } ?>
 			</td>
 		</tr>
-	<?php } } } ?>
+	<?php }}} ?>
 		<tr>
 			<td colspan="5" align="right"><b>Total</b></td>
 			<td style="text-align:right;"><b><?php echo $total_debit; ?></b></td>

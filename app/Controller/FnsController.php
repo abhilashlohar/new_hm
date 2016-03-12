@@ -249,6 +249,8 @@ function member_info_via_ledger_sub_account_id($ledger_sub_account_id){
 	$conditions=array("user_id" => $user_id);
 	$result3=$this->user->find('all',array('conditions'=>$conditions));
 	$user_name=$result3[0]["user"]["user_name"];
+	$mobile=$result3[0]["user"]["mobile"];
+	$email=$result3[0]["user"]["email"];
 	
 	$this->loadmodel('wing');
 	$conditions=array("wing_id" => $wing);
@@ -260,8 +262,26 @@ function member_info_via_ledger_sub_account_id($ledger_sub_account_id){
 	$result5=$this->flat->find('all',array('conditions'=>$conditions));
 	$flat_name=ltrim($result5[0]["flat"]["flat_name"],'0');
 	
-	return array("user_name"=>$user_name,"wing_name"=>$wing_name,"flat_name"=>$flat_name);
+	return array("user_name"=>$user_name,"wing_name"=>$wing_name,"flat_name"=>$flat_name,"email"=>$email,"mobile"=>$mobile,"wing_id"=>$wing,"flat_id"=>$flat);
 }
+
+function flat_info_via_ledger_sub_account_id($ledger_sub_account_id){
+	
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("auto_id" => $ledger_sub_account_id);
+	$result=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$user_flat_id=(int)@$result[0]["ledger_sub_account"]["user_flat_id"];
+	
+	$this->loadmodel('user_flat');
+	$conditions=array("user_flat_id" => $user_flat_id);
+	$result2=$this->user_flat->find('all',array('conditions'=>$conditions));
+	$flat=$result2[0]["user_flat"]["flat"];
+	
+	$this->loadmodel('flat');
+	$conditions=array("flat_id" => $flat);
+	return $result5=$this->flat->find('all',array('conditions'=>$conditions));
+}
+
 
 function calculate_other_charges($ledger_sub_account_id,$billing_cycle){
 	$this->loadmodel('other_charge');

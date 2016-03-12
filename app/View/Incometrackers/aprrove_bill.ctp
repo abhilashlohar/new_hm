@@ -87,6 +87,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<button type="submit" href="#" class="btn blue" name="submit">APPROVE</button>
 	</form>
 </div>
+
 <?php if($approved_bills>0){ ?>
 	<div class="modal-backdrop fade in" ></div>
 	<div style="display: block;" id="myModal1" class="modal hide fade in session_destroy_container" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="false">
@@ -104,6 +105,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			$.ajax({
 				url: "<?php echo $webroot_path; ?>Incometrackers/generate_bills",
 			}).done(function(response){
+				
 				if(response=="yes"){
 					generate_bills();
 				}else{

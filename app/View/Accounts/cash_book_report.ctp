@@ -1,19 +1,9 @@
 <div class="hide_at_print">
 <?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
+echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
-<script>
-$(document).ready(function() {
-$("#fix<?php echo $id_current_page; ?>").removeClass("blue");
-$("#fix<?php echo $id_current_page; ?>").addClass("red");
-});
-</script>  
 </div>
-
-<?php
-$c_date = date('d-m-Y');
-$b_date = date('1-m-Y');
-?>
+<?php $c_date = date('d-m-Y'); $b_date = date('1-m-Y'); ?>
 <center>
 <div class="hide_at_print">
 <form method="post" id="contact-form">

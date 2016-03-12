@@ -36,8 +36,6 @@ $transaction_date = $collection['new_cash_bank']['transaction_date'];
 if($transaction_date >= $m_from && $transaction_date <= $m_to){
 $nnn = 555;	
 }} ?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
-
 <?php
 if($nnn == 555)
 {

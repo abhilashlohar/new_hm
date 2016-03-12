@@ -1739,18 +1739,14 @@ $s_user_id=$this->Session->read('user_id');
 
 $this->set('s_role_id',$s_role_id);
 }
-//////////////////////// End Bank Payment View (Accounts) ///////////////////////////
-
-//////////////////////Start Bank Payment Show Ajax (Accounts)////////////////////////
-function bank_payment_show_ajax()
-{
+//End Bank Payment View (Accounts)//
+//Start Bank Payment Show Ajax (Accounts)//
+function bank_payment_show_ajax(){
 $this->layout='blank';
 $s_role_id=$this->Session->read('hm_role_id');
 $s_society_id = $this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');
-
 $this->ath();
-
 $this->set('s_role_id',$s_role_id);
 $this->set('s_user_id',$s_user_id);
 
@@ -1787,12 +1783,9 @@ foreach($cursor as $collection)
 $tds_arr = $collection['reference']['reference'];
 }
 $this->set("tds_arr",$tds_arr);	
-
-
 }
-/////////////////////////////////////End Bank Payment Show Ajax (Accounts)////////////////////////////////////////
-
-////////////////////////////// Start Bank Payment Excel //////////////////////////////
+//End Bank Payment Show Ajax (Accounts)//
+//Start Bank Payment Excel//
 function bank_payment_excel()
 {
 $this->layout="";

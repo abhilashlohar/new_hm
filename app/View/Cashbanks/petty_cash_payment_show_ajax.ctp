@@ -19,43 +19,11 @@ $m_to = strtotime($m_to);
 ?>
 <?php
 $nnn = 55;
-foreach ($cursor1 as $collection) 
-{
-$receipt_no = (int)@$collection['new_cash_bank']['receipt_id'];
-$transaction_id = (int)$collection['new_cash_bank']['transaction_id'];	
-$account_type = (int)$collection['new_cash_bank']['account_type'];
-$user_id = (int)$collection['new_cash_bank']['user_id'];
-$date = $collection['new_cash_bank']['transaction_date'];
-$prepaired_by = (int)$collection['new_cash_bank']['prepaired_by'];   
-$narration = $collection['new_cash_bank']['narration'];
-$account_head = $collection['new_cash_bank']['account_head'];
-$amount = $collection['new_cash_bank']['amount'];
-$current_date = $collection['new_cash_bank']['current_date'];
-$creation_date = date('d-m-Y',strtotime($current_date));
-$result_gh = $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($prepaired_by)));
-foreach ($result_gh as $collection) 
-{
-$prepaired_by_name = $collection['user']['user_name'];
-}			
-if($account_type == 1)
-{
-	$result_lsa = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($user_id)));
-	foreach ($result_lsa as $collection){
-	$user_name = $collection['ledger_sub_account']['name'];	  
-	}
-}
-else if($account_type == 2)
-{
-	$result_la = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_amount'),array('pass'=>array($user_id)));
-	foreach ($result_la as $collection){
-	$user_name = $collection['ledger_account']['ledger_name'];	  
-	}
-}      
-	if($date >= $m_from && $date <= $m_to)
-	{
-	$nnn = 555;								
-	}
-} ?>
+foreach ($cursor1 as $collection){
+$transaction_date = $collection['new_cash_bank']['transaction_date'];
+if($transaction_date >= $m_from && $transaction_date <= $m_to){
+$nnn = 555;								
+}} ?>
 <?php if($nnn == 555) { ?>
 <div style="width:100%;" class="hide_at_print">
 <span style="float:right;"><a href="petty_cash_payment_excel?f=<?php echo $from; ?>&t=<?php echo $to; ?>" class="btn blue mini"><i class="icon-download"></i> </a></span>

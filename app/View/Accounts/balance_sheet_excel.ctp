@@ -10,7 +10,7 @@ table td{
 
 <?php 
 
-$filename=$society_name.'_balance_sheet_'.$from1.'_'.$to1;
+$filename=$society_name.'_balance_sheet_'.$from ;
 $filename = str_replace(' ', '_', $filename);
 $filename = str_replace(' ', '-', $filename);
 

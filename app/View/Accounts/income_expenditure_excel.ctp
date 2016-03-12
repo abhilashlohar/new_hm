@@ -1,6 +1,6 @@
 <?php 
 
-$filename=$society_name.'_Income_Expenditure_'.$from1.'_'.$to1;
+$filename=$society_name.'_Income_Expenditure_'.$from.'_'.$to;
 $filename = str_replace(' ', '_', $filename);
 $filename = str_replace(' ', '-', $filename);
 

@@ -3417,7 +3417,7 @@ function balance_sheet_ajax($from=null){
 	$this->ath();
 	
 	$s_role_id=$this->Session->read('role_id');
-	echo $s_society_id = (int)$this->Session->read('hm_society_id'); exit;
+	 $s_society_id = (int)$this->Session->read('hm_society_id');
 	$this->set('s_society_id',$s_society_id);
 	$s_user_id=$this->Session->read('hm_user_id');	
 	
@@ -3473,7 +3473,7 @@ function income_expenditure_ajax($from=null,$to=null){
 }
 
 function balance_sheet_excel(){
-		$this->layout='blank';
+		$this->layout=null;
 		$this->ath();
 		$s_society_id = (int)$this->Session->read('hm_society_id');	
 		$result_society=$this->society_name($s_society_id);

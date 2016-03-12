@@ -3778,9 +3778,8 @@ $society_name = $dataa['society']['society_name'];
 }
 $this->set('society_name',$society_name);
 }
-//////////////////////////////////// End Fix Deposit Show Ajax ///////////////////////////////////////////////////////
-
-///////////////////////////////////////// Start Bank Payment Json //////////////////////////////////////////////////
+//End Fix Deposit Show Ajax//
+//Start Bank Payment Json//
 function bank_payment_json()
 {
 $this->layout="";
@@ -3890,15 +3889,13 @@ $i=$this->autoincrement('new_cash_bank','transaction_id');
 $bbb=$this->autoincrement_with_receipt_source('new_cash_bank','receipt_id',2);
 $rr_arr[] = $bbb;
 $this->loadmodel('new_cash_bank');
-$multipleRowData = Array( Array("transaction_id" => $i, "receipt_id" => $bbb,  "current_date" => $current_date, 
+$multipleRowData = Array( Array("transaction_id" => $i, "receipt_id" => $bbb,"current_date" => $current_date, 
 "transaction_date" => strtotime($transaction_date), "prepaired_by" => $s_user_id, 
-"user_id" => $ledger_acc, "invoice_reference" => @$invoice,"narration" => $narration, "receipt_mode" => $mode,
+"user_id" => $ledger_acc,"invoice_reference" => @$invoice,"narration" => $narration, "receipt_mode" => $mode,
 "receipt_instruction" => $instrument, "account_head" => $bank_ac,  
-"amount" => $amount,"society_id" => $s_society_id, "tds_id" =>$tds_id,"account_type"=>$acc_type,"receipt_source"=>2,"auto_inc"=>"YES"));
+"amount" => $amount,"society_id" => $s_society_id, "tds_id" =>$tds_id,"account_type"=>$acc_type,"receipt_source"=>"bank_payment","auto_inc"=>"YES"));
 $this->new_cash_bank->saveAll($multipleRowData);  
 
-//////////////////// End Insert///////////////////////////////
-///////////// TDS CALCULATION /////////////////////
 $this->loadmodel('reference');
 $conditions=array("auto_id" => 3);
 $cursor4=$this->reference->find('all',array('conditions'=>$conditions));
@@ -3927,8 +3924,6 @@ $total_tds_amount = $amount;
 $tds_amount = 0;
 }
 
-////////////END TDS CALCULATION //////////////////// 
-////////////////START LEDGER ENTRY///////////////////////
 if($acc_type == 1)
 {
 $l=$this->autoincrement('ledger','auto_id');
@@ -3943,9 +3938,6 @@ $this->loadmodel('ledger');
 $multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => $amount,"credit" =>null,"ledger_account_id" =>$ledger_acc, "ledger_sub_account_id" =>null, "table_name" =>"new_cash_bank","element_id" =>$i, "society_id" => $s_society_id));
 $this->ledger->saveAll($multipleRowData); 
 }
-
-
-
 
 $sub_account_id_a = (int)$bank_ac;
 $l=$this->autoincrement('ledger','auto_id');
@@ -3977,9 +3969,8 @@ $output = json_encode(array('type'=>'success', 'text' => 'Bank Payment Voucher '
 die($output);
 
 }
-///////////////////////////////////////// End Bank Payment Json /////////////////////////////////////////////////////
-
-////////////////////////////////////////// Start Petty Cash Receipt Json/////////////////////////////////////////////
+//End Bank Payment Json//
+//Start Petty Cash Receipt Json//
 function petty_cash_receipt_json()
 {
 $this->layout="";

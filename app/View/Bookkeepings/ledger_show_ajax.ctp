@@ -1,4 +1,3 @@
-
 <?php
 $webroot_path=$this->requestAction(array('controller' => 'Hms', 'action' => 'webroot_path'));
 ?>
@@ -241,7 +240,7 @@ $creater_name = $user_detailll['user']['user_name'];
 		}
 		}
     }
-	if($receipt_source == 2)
+	if($receipt_source == "bank_payment")
 	{
 		$tds_array_for_bank_payment = array();
 		

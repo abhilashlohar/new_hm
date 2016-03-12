@@ -1770,7 +1770,7 @@ $cursor1=$this->bank_payment->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
 
 $this->loadmodel('new_cash_bank');
-$conditions=array("society_id" => $s_society_id,"receipt_source"=>2);
+$conditions=array("society_id" => $s_society_id,"receipt_source"=>"bank_payment");
 $order=array('new_cash_bank.transaction_date'=> 'ASC');
 $cursor2=$this->new_cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor2',$cursor2);

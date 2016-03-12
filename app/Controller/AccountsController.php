@@ -5452,9 +5452,9 @@ function bank_book_report()
 		$this->ath();
 		$this->check_user_privilages();	
 
-		$s_role_id=$this->Session->read('role_id');
-		$s_society_id = $this->Session->read('society_id');
-		$s_user_id=$this->Session->read('user_id');	
+		$s_role_id=$this->Session->read('hm_role_id');
+		$s_society_id = $this->Session->read('hm_society_id');
+		$s_user_id=$this->Session->read('hm_user_id');	
 	
 	$this->loadmodel('ledger_sub_account');
 	$conditions=array("society_id" => $s_society_id,"ledger_id"=>33);
@@ -5462,48 +5462,38 @@ function bank_book_report()
 	$this->set('cursor1',$cursor1);		
 	
 }
-///////////////////////////// End bank_book_report /////////////////////////////////////////////////
-//////////////////////////// Start bank_book_report_view_ajax ////////////////////////////////////////
+//End bank_book_report//
+//Start bank_book_report_view_ajax//
 function bank_book_report_view_ajax()
 {
-    $this->layout='blank';
-	$this->ath();
-
-	
-$bank_id = (int)$this->request->query('bank');
+$this->layout='blank';
+$this->ath();
+$bank_id=(int)$this->request->query('bank');
 $this->set('bank_id',$bank_id);	
-
-$from = $this->request->query('date1');
-$to = $this->request->query('date2');
-
+$from=$this->request->query('date1');
+$to=$this->request->query('date2');
 $this->set('from',$from);
 $this->set('to',$to);
-
-
-$from2 = date('Y-m-d',strtotime($from)); 
-$to2 = date('Y-m-d',strtotime($to)); 
-
-$from_strtotime = strtotime($from2);
-$to_strtotime = strtotime($to2);
-	  
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');	
+$from2=date('Y-m-d',strtotime($from)); 
+$to2=date('Y-m-d',strtotime($to)); 
+$from_strtotime=strtotime($from2);
+$to_strtotime=strtotime($to2);
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');	
 	
-$this->loadmodel('society');
-$conditions=array("society_id" => $s_society_id);
-$cursor=$this->society->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
-$society_name = $collection['society']['society_name'];
-}	
-$this->set('society_name',$society_name);	
+	$this->loadmodel('society');
+	$conditions=array("society_id"=>$s_society_id);
+	$cursor=$this->society->find('all',array('conditions'=>$conditions));
+	foreach($cursor as $collection){
+	$society_name=$collection['society']['society_name'];
+	}	
+	$this->set('society_name',$society_name);	
 	
-	
-$this->loadmodel('ledger_sub_account');
-$conditions=array("auto_id"=>$bank_id,"society_id"=>$s_society_id);
-$cursor1=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-$this->set('cursor1',$cursor1);
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("auto_id"=>$bank_id,"society_id"=>$s_society_id);
+	$cursor1=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$this->set('cursor1',$cursor1);
 	
 	
 	

@@ -3417,7 +3417,7 @@ function balance_sheet_ajax($from=null){
 	$this->ath();
 	
 	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('hm_society_id');
+	echo $s_society_id = (int)$this->Session->read('hm_society_id'); exit;
 	$this->set('s_society_id',$s_society_id);
 	$s_user_id=$this->Session->read('hm_user_id');	
 	

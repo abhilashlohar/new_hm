@@ -473,6 +473,7 @@ function generate_bills(){
 		
 		$current_date=date("Y-m-d");
 		$this->loadmodel('regular_bill');
+		$regular_bill_id=$this->autoincrement('regular_bill','auto_id');
 		$bill_number=$this->autoincrement_with_society_ticket('regular_bill','bill_number');
 		$this->regular_bill->saveAll(array("auto_id" => $regular_bill_id,"bill_number"=>$bill_number, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_maintenance"=> $arrear_maintenance, "arrear_intrest" => $arrear_intrest, "intrest_on_arrears" => $intrest_on_arrears,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"credit_stock"=>$credit_stock,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by,"current_date"=>$current_date,"edited"=>"no","end_date"=>$end_date));
 		

@@ -36,42 +36,37 @@ $transaction_date = $collection['new_cash_bank']['transaction_date'];
 if($transaction_date >= $m_from && $transaction_date <= $m_to){
 $nnn = 555;	
 }} ?>
-<?php
-if($nnn == 555)
-{
-?>
+<?php if($nnn == 555){ ?>
 <div style="width:100%;" class="hide_at_print">
-<span style="margin-left:80%;">
-<a href="bank_payment_excel?f=<?php echo $from; ?>&t=<?php echo $to; ?>" class="btn blue mini"><i class="icon-download"></i></a>
-<a  class=" printt btn green mini" onclick="window.print()"><i class="icon-print"></i> </a></span>
+	<span style="margin-left:80%;">
+		<a href="bank_payment_excel?f=<?php echo $from; ?>&t=<?php echo $to; ?>" class="btn blue mini"><i class="icon-download"></i></a>
+		<a  class=" printt btn green mini" onclick="window.print()"><i class="icon-print"></i> </a>
+	</span>
 </div>
-
 <div style="width:100%; overflow:auto; margin-top:10px;" class="hide_at_print">
-<label class="m-wrap pull-right"><input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;" placeholder="Search"></label>	
+	<label class="m-wrap pull-right"><input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;" placeholder="Search"></label>	
 </div>			
 <table  width="100%" style=" background-color:white;" id="report_tb">
 <thead>
-<tr>
-<th colspan="9" ><?php echo $society_name; ?> Bank Payment Register From : <?php echo $from; ?> &nbsp;&nbsp; To : <?php echo $to; ?></th>
-</tr>
-<tr id="bg_color">
-<th>Transaction Date</th>
-<th>Payment Voucher</th>
-<th>Paid To</th>
-<th>Invoice Ref</th>
-<th>Paid By</th>
-<th>Cheque/UTR</th>
-<th>Bank Account </th>
-<th>Gross Amount (Rs.)</th>
-<th class="hide_at_print">Action</th>
-</tr>
+	<tr>
+		<th colspan="9"><?php echo $society_name; ?> Bank Payment Register From : <?php echo $from; ?> &nbsp;&nbsp; To : <?php echo $to; ?>
+		</th>
+		</tr>
+		<tr id="bg_color">
+		<th>Transaction Date</th>
+		<th>Payment Voucher</th>
+		<th>Paid To</th>
+		<th>Invoice Ref</th>
+		<th>Paid By</th>
+		<th>Cheque/UTR</th>
+		<th>Bank Account </th>
+		<th>Gross Amount (Rs.)</th>
+		<th class="hide_at_print">Action</th>
+	</tr>
 </thead>
 <tbody id="table">								
-<?php
-$total_credit = 0;
-$total_debit = 0;
-foreach ($cursor2 as $collection) 
-{
+<?php $total_credit = 0; $total_debit = 0;
+foreach ($cursor2 as $collection){
 $receipt_no = $collection['new_cash_bank']['receipt_id'];
 $transaction_id = (int)$collection['new_cash_bank']['transaction_id'];	
 $date = $collection['new_cash_bank']['transaction_date'];

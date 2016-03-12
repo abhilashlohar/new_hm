@@ -7,6 +7,7 @@
 				$income_head_ids[]=$income_head_id;
 			}
 			$other_charge=$regular_bill["regular_bill"]["other_charge"];
+			if(sizeof(@$other_charge)==0){ $other_charge=array(); }
 			$other_charge_ids=array();
 			foreach($other_charge as $other_charge_id=>$value){
 				$other_charge_ids[]=$other_charge_id;

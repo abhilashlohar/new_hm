@@ -267,7 +267,6 @@ function member_info_via_ledger_sub_account_id($ledger_sub_account_id){
 }
 
 function flat_info_via_ledger_sub_account_id($ledger_sub_account_id){
-	
 	$this->loadmodel('ledger_sub_account');
 	$conditions=array("auto_id" => $ledger_sub_account_id);
 	$result=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
@@ -385,6 +384,15 @@ function last_receipts_info($ledger_sub_account_id){
 	
 	$this->loadmodel('cash_bank');
 	$conditions=array("source" => "bank_receipt","receipt_type"=>"maintenance","applied"=>"no","society_id"=>$s_society_id,"ledger_sub_account_id"=>$ledger_sub_account_id);
+	$order=array('cash_bank.transaction_date'=>'ASC');
+	return $this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
+}
+
+function last_receipts_info_for_bill_regeneration($ledger_sub_account_id,$last_bill_start,$current_bill_start_date){
+	$s_society_id=$this->Session->read('hm_society_id');
+	
+	$this->loadmodel('cash_bank');
+	$conditions=array("source" => "bank_receipt","receipt_type"=>"maintenance","society_id"=>$s_society_id,"ledger_sub_account_id"=>$ledger_sub_account_id,"transaction_date"=>array('$gte'=>$last_bill_start),"transaction_date"=>array('$lte'=>$current_bill_start_date));
 	$order=array('cash_bank.transaction_date'=>'ASC');
 	return $this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
 }

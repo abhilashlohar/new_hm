@@ -4791,7 +4791,7 @@ function regular_bill_report($period=null){
 	$end_date=(int)$period[1];
 	
 	$this->loadmodel('regular_bill');
-	$conditions=array('society_id'=>$s_society_id,'start_date'=>$start_date,'end_date'=>$end_date);
+	$conditions=array('society_id'=>$s_society_id,'start_date'=>$start_date,'end_date'=>$end_date,'edited'=>"no");
 	$order=array('regular_bill.auto_id'=>'ASC');
 	$regular_bills=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order)); 
 	$this->set(compact('regular_bills'));
@@ -6403,6 +6403,16 @@ function regular_bill_edit2($auto_id=null){
 	$regular_bill_info=$this->regular_bill->find('all',array('conditions'=>$conditions));
 	$this->set('regular_bill_info',$regular_bill_info);
 	
+	$bill_number=$regular_bill_info[0]["regular_bill"]["bill_number"];
+	$ledger_sub_account_id=$regular_bill_info[0]["regular_bill"]["ledger_sub_account_id"];
+	$start_date=$regular_bill_info[0]["regular_bill"]["start_date"];
+	$due_date=$regular_bill_info[0]["regular_bill"]["due_date"];
+	$end_date=$regular_bill_info[0]["regular_bill"]["end_date"];
+	$billing_cycle=$regular_bill_info[0]["regular_bill"]["billing_cycle"];
+	$created_by=$regular_bill_info[0]["regular_bill"]["created_by"];
+	
+	
+	
 	$this->loadmodel('society');
 	$conditions=array("society_id"=>$s_society_id);
 	$society_info=$this->society->find('all',array('conditions'=>$conditions));
@@ -6410,9 +6420,27 @@ function regular_bill_edit2($auto_id=null){
 	
 	/////submit code////
 	if(isset($this->request->data['edit_bill'])){
-		$income_head=$this->request->data['income_head'];
-		pr($income_head);
-		exit;
+		$income_head_array=$this->request->data['income_head'];
+		$non_occupancy_charges=$this->request->data['non_occupancy_charges'];
+		$other_charges_array=@$this->request->data['other_charges'];
+		$total=$this->request->data['total'];
+		$interest_on_arrears=$this->request->data['interest_on_arrears'];
+		$arrear_maintenance=$this->request->data['arrear_maintenance'];
+		$arrear_intrest=$this->request->data['arrear_intrest'];
+		$credit_stock=$this->request->data['credit_stock'];
+		$due_for_payment=$this->request->data['due_for_payment'];
+		$description=$this->request->data['description'];
+		
+		
+		
+		
+		
+		$this->loadmodel('regular_bill');
+		$this->regular_bill->updateAll(array('edited'=>"yes"),array("auto_id"=>$auto_id));
+		
+		$reg_auto_id=$this->autoincrement('regular_bill','auto_id');
+		$this->regular_bill->saveAll(array("auto_id"=>$reg_auto_id,"bill_number"=>$bill_number,"ledger_sub_account_id"=>$ledger_sub_account_id,"income_head_array"=>$income_head_array,"noc_charge"=>$non_occupancy_charges,"other_charge"=>$other_charges_array,"total"=>$total,"arrear_maintenance"=>$arrear_maintenance,"arrear_intrest"=>$arrear_intrest,"intrest_on_arrears"=>$interest_on_arrears,"credit_stock"=>$credit_stock,"due_for_payment"=>$due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"end_date"=>$end_date,"edited"=>"no","description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by));
+		
 	}
 }
 

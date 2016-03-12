@@ -10,104 +10,77 @@ table#report_tb tr:hover td {
 background-color: #E6ECE7;
 }
 </style>
-<?php
-$nnn = 55;
-foreach($cursor2 as $data)
-{
+<?php $nnn = 55;
+foreach($cursor2 as $data){
 $nnn = 5555;	
 }
 ?>
-
-
-
 <?php if($nnn == 5555) { ?>
 <div class="hide_at_print">
-<span style="margin-left:80%;">
-<a href="cash_book_report_excel?f=<?php echo $from; ?>&t=<?php echo $to; ?>" class="btn blue mini" target="_blank"><i class="icon-download"></i></a>
-<a type="button" class=" printt btn green mini" onclick="window.print()"><i class="icon-print"></i></a>
-</span>
+	<span style="margin-left:80%;">
+		<a href="cash_book_report_excel?f=<?php echo $from; ?>&t=<?php echo $to; ?>" class="btn blue mini" target="_blank"><i class="icon-download"></i></a>
+		<a type="button" class=" printt btn green mini" onclick="window.print()"><i class="icon-print"></i>
+		</a>
+	</span>
 </div>
 <br>
-
-
 <table   style="width:100%; background-color:white;" class="table table-bordered table-striped table-hover">
 <tr>
-<th style="text-align:center; background-color:white;" colspan="7"><?php echo $society_name; ?> Cash Book Report Register From: <?php echo $from; ?> To: <?php echo $to; ?></th>
+	<th style="text-align:center; background-color:white;" colspan="7"><?php echo $society_name; ?> Cash Book Report Register From: <?php echo $from; ?> To: <?php echo $to; ?></th>
 </tr>
 <tr>
-<th style="width:10%;">Date</th>
-<th>Particulars</th>
-<th style="width:15%;">Voucher/Receipt No.</th>
-<th>Narration</th>
-<th style="width:10%;">Receipts</th>
-<th style="width:10%;">Payments</th>
-<th style="width:10%;">Balance</th>
-
+	<th style="width:10%;">Date</th>
+	<th>Particulars</th>
+	<th style="width:15%;">Voucher/Receipt No.</th>
+	<th>Narration</th>
+	<th style="width:10%;">Receipts</th>
+	<th style="width:10%;">Payments</th>
+	<th style="width:10%;">Balance</th>
 <tr>
-<?php
-$total_balance = 0;
-$balance = 0;
-$total_payment = 0;
-$total_receipt = 0;
-foreach($cursor2 as $dataaa)
-{
+<?php $total_balance = 0; $balance = 0; $total_payment = 0; $total_receipt = 0;
+foreach($cursor2 as $dataaa){
 $transaction_date = $dataaa['new_cash_bank']['transaction_date'];	
 $transaction_date2 = date('d-m-Y',($transaction_date));	
 $receipt_id = $dataaa['new_cash_bank']['receipt_id'];	
 $receipt_source = (int)$dataaa['new_cash_bank']['receipt_source'];
-
-
-if($receipt_source == 3)
-{
-$narration = $dataaa['new_cash_bank']['narration'];	
-$account_id = (int)$dataaa['new_cash_bank']['user_id'];
-$account_type = (int)$dataaa['new_cash_bank']['account_type'];
-$receipt_amount = $dataaa['new_cash_bank']['amount'];
-$payment_amount = "";
-$payment_amount2 = "";
-
-
-if($account_type == 1)
-{
+if($receipt_source == 3){
+	$narration = $dataaa['new_cash_bank']['narration'];	
+	$account_id = (int)$dataaa['new_cash_bank']['user_id'];
+	$account_type = (int)$dataaa['new_cash_bank']['account_type'];
+	$receipt_amount = $dataaa['new_cash_bank']['amount'];
+	$payment_amount = "";
+	$payment_amount2 = "";
+if($account_type == 1){
 	$subleddger_detaill=$this->requestAction(array('controller' => 'Hms', 'action' => 'ledger_sub_account_fetch3'), array('pass' => array($account_id)));
-	foreach($subleddger_detaill as $subledger_datttaa)
-	{
+	foreach($subleddger_detaill as $subledger_datttaa){
 	$user_name = $subledger_datttaa['ledger_sub_account']['name'];
 	$flat_id = (int)$subledger_datttaa['ledger_sub_account']['flat_id'];
 	}	
-
-$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'fetch_wing_id_via_flat_id'), array('pass' => array($flat_id)));
-foreach($subleddger_detaill as $subledger_datttaa)
-{
-$wing_id = (int)$subledger_datttaa['flat']['wing_id'];
-}					
-					
-$wing_flat =$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'wing_flat_new'),
-array('pass' => array($wing_id,$flat_id)));	
-
-	}
-else
-{
-	
-	    $wing_flat = "";
-        $ledger_detailll=$this->requestAction(array('controller' => 'Hms', 'action' => 'ledger_account_fetch2'), 
-		array('pass' => array($account_id)));
-		foreach($ledger_detailll as $ledger_detailllll)
-		{
-		$user_name = $ledger_detailllll['ledger_account']['ledger_name'];
-		}		
+	$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'fetch_wing_id_via_flat_id'), array('pass' => array($flat_id)));
+	foreach($subleddger_detaill as $subledger_datttaa){
+	$wing_id = (int)$subledger_datttaa['flat']['wing_id'];
+	}					
+	$wing_flat =$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'wing_flat_new'),
+	array('pass' => array($wing_id,$flat_id)));	
 }
-
+else{
+	$wing_flat = "";
+	$ledger_detailll=$this->requestAction(array('controller' => 'Hms', 'action' => 'ledger_account_fetch2'), 
+	array('pass' => array($account_id)));
+	foreach($ledger_detailll as $ledger_detailllll){
+	$user_name = $ledger_detailllll['ledger_account']['ledger_name'];
+	}		
+}
 }
 else
 {
-$narration = $dataaa['new_cash_bank']['narration'];	
-$wing_flat = "";
-$payment_amount = $dataaa['new_cash_bank']['amount'];	
-$account_type = (int)$dataaa['new_cash_bank']['account_type'];
-$account_id = (int)$dataaa['new_cash_bank']['user_id'];
-$receipt_amount = "";
-$receipt_amount2 = "";
+$narration=$dataaa['new_cash_bank']['narration'];	
+$wing_flat="";
+$payment_amount=$dataaa['new_cash_bank']['amount'];	
+$account_type=(int)$dataaa['new_cash_bank']['account_type'];
+$account_id=(int)$dataaa['new_cash_bank']['user_id'];
+$receipt_amount="";
+$receipt_amount2="";
 
 if($account_type == 1){
 	

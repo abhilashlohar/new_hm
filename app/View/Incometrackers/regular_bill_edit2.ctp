@@ -62,6 +62,7 @@ foreach($regular_bill_info as $regular_bill){
 	
 	//Interest computation start//
 	$interest_on_arrears=0;
+	if(sizeof($last_bill_info)>0){
 		$tax_factor=$tax/100;
 		$last_receipts_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'last_receipts_info_for_bill_regeneration'),array('pass'=>array($ledger_sub_account_id,$last_bill_start_date,$start_date)));
 		
@@ -165,6 +166,7 @@ foreach($regular_bill_info as $regular_bill){
 			$days=abs(floor(($new_due_date-$start_date)/(60*60*24)));
 			$interest_on_arrears+=$last_bill_total*$tax_factor*($days/365);
 		}
+	}
 		$new_arrear_principal=$last_bill_total+$last_bill_arrear_principal;
 		if($interest_on_arrears<0){ $interest_on_arrears=0; }
 		$interest_on_arrears=round($interest_on_arrears);

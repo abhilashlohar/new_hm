@@ -143,6 +143,8 @@ $(document).ready(function(){
 		var new_line=$("#sample tbody").html();
 		$("#main tbody").append(new_line);
 		$('#main tbody tr:last select[name="ledger_sub_account[]"]').chosen();
+		$('#main tbody tr:last input[name="transaction_date[]"]').datepicker();
+		$('#main tbody tr:last input[name="date[]"]').datepicker();
 		$('#main tbody tr:last select[name="deposited_in[]"]').chosen();
 	}
 });

@@ -145,7 +145,9 @@ function convert_user_enrollment_info_data(){
 		$committee=trim($import_record["user_enrollment_info_csv"]["committee"]);
 		$email=trim($import_record["user_enrollment_info_csv"]["email"]);
 		$mobile=trim($import_record["user_enrollment_info_csv"]["mobile"]);
-				
+		
+				$committee=strtolower($committee);
+				$owner_tenant=strtolower($owner_tenant);
 				$this->loadmodel('wing'); 
 				$conditions=array("wing_name"=> new MongoRegex('/^' . $wing_name . '$/i'),"society_id"=>$s_society_id);
 				$result_ac=$this->wing->find('all',array('conditions'=>$conditions));

@@ -5266,11 +5266,11 @@ $sms_allow=(int)$r_sms->sms_allow;
 
 	}	
 	
-////// end code help desk reminder ///////////
+
 }
 }
-///////////////////////////////// End auto_reminder ////////////////////////////////////////////// 
-//////////////////////////////////// Start  tds_payment_report //////////////////////////////////
+//End auto_reminder//
+//Start tds_payment_report//
 function tds_payment_report()
 {
         if($this->RequestHandler->isAjax()){
@@ -5286,80 +5286,53 @@ function tds_payment_report()
 		
 		$this->ath();
 		$this->check_user_privilages();	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
-//////////////////////////////////// Start  tds_payment_report /////////////////////////////////////
-////////////////////////////////// Start tds_payment_report_view_ajax /////////////////////////////// 
+//Start  tds_payment_report//
+//Start tds_payment_report_view_ajax//
 function tds_payment_report_view_ajax()
 {
-        $this->layout='blank';
+	$this->layout='blank';
+	$this->ath();
+	$s_role_id=$this->Session->read('hm_role_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');	
 
-		$this->ath();
-		$s_role_id=$this->Session->read('role_id');
-		$s_society_id = (int)$this->Session->read('society_id');
-		$s_user_id=$this->Session->read('user_id');	
+	$this->loadmodel('society');
+	$conditions=array('society_id'=>$s_society_id);
+	$cursor = $this->society->find('all',array('conditions'=>$conditions));
+	foreach($cursor as $dataa){
+	$society_name = $dataa['society']['society_name'];	
+	}
+	$this->set('society_name',$society_name);
+	$from=$this->request->query('date1');
+	$to=$this->request->query('date2');	
+	$this->set('from',$from);
+	$this->set('to',$to);
+	$fromm=date('Y-m-d',strtotime($from));
+	$tomm=date('Y-m-d',strtotime($to));
+	$from_strtotime=strtotime($fromm);
+	$to_strtotime=strtotime($tomm);
 	
-
-$this->loadmodel('society');
-$conditions=array('society_id'=>$s_society_id);
-$cursor = $this->society->find('all',array('conditions'=>$conditions));
-foreach($cursor as $dataa)
-{
-$society_name = $dataa['society']['society_name'];	
+	$this->loadmodel('new_cash_bank');
+	$order=array('new_cash_bank.receipt_date'=> 'ASC');
+	$conditions=array('society_id'=>$s_society_id,"receipt_source"=>"bank_payment",
+	'new_cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime));
+	$cursor1=$this->new_cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
+	$this->set('cursor1',$cursor1);	
+	
+	$this->loadmodel('reference');
+	$conditions=array("auto_id"=>3);
+	$cursor = $this->reference->find('all',array('conditions'=>$conditions));
+	foreach($cursor as $collection){
+	$tds_arr = $collection['reference']['reference'];
+	}
+	$this->set("tds_arr",$tds_arr);		
 }
-$this->set('society_name',$society_name);
-
-
-	
-$from = $this->request->query('date1');
-$to = $this->request->query('date2');	
-
-$this->set('from',$from);
-$this->set('to',$to);
-
-$fromm = date('Y-m-d',strtotime($from));
-$tomm = date('Y-m-d',strtotime($to));
-
-$from_strtotime = strtotime($fromm);
-$to_strtotime = strtotime($tomm);
-
-	
-$this->loadmodel('new_cash_bank');
-$order=array('new_cash_bank.receipt_date'=> 'ASC');
-$conditions=array('society_id'=>$s_society_id,"receipt_source"=>2,
-'new_cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime));
-$cursor1=$this->new_cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
-$this->set('cursor1',$cursor1);	
-	
-	
-$this->loadmodel('reference');
-$conditions=array("auto_id"=>3);
-$cursor = $this->reference->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
-$tds_arr = $collection['reference']['reference'];
-}
-$this->set("tds_arr",$tds_arr);		
-
-}
-////////////////////////////////// Start tds_payment_report_view_ajax /////////////////////////////// 
-//////////////////////////////// Start tds_report_excel /////////////////////////////////////////////
+//Start tds_payment_report_view_ajax//
+//Start tds_report_excel//
 function tds_report_excel()
 {
 $this->layout=null;
-
 $s_role_id=$this->Session->read('role_id');
 $s_society_id = (int)$this->Session->read('society_id');
 $s_user_id=$this->Session->read('user_id');

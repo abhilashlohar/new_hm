@@ -1,30 +1,16 @@
+<style>
+table th{
+   background-color:#FFF;padding:3px 5px 3px 5px !important;
+}
+table td{
+   background-color:#FFF;padding:3px 5px 3px 5px !important;
+}
+</style>
 <script>
 $(document).ready(function(){
 jQuery('.tooltips').tooltip();
 });
 </script> 
-<style>
-#bg_color th{
-font-size: 10px !important;background-color:#C8EFCE;padding:2px;border:solid 1px #55965F;
-}
-#report_tb td{
-padding:2px;
-font-size: 12px;border:solid 1px #55965F;background-color:#FFF;
-}
-.text_bx{
-width: 50px;
-height: 15px !important;
-margin-bottom: 0px !important;
-font-size: 12px;
-}
-.text_rdoff{
-width: 50px;
-height: 15px !important;
-border: none !important;
-margin-bottom: 0px !important;
-font-size: 12px;
-}
-</style>
 <?php $nnn = 55;         
 $m_from = date("Y-m-d", strtotime($from));
 $m_to = date("Y-m-d", strtotime($to));
@@ -44,12 +30,12 @@ $nnn = 555;
 <div style="width:100%; overflow:auto;" class="hide_at_print">
 <label class="m-wrap pull-right"><input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;" placeholder="Search"></label>	
 </div>
-<table  width="100%" style=" background-color:white;" id="report_tb">
+<table  width="100%" style=" background-color:white;" class="table table-bordered table-striped">
 <thead>
 <tr>
-<th colspan="6"><?php echo $society_name; ?> Petty Cash Receipt Register From : <?php echo $from; ?> &nbsp;&nbsp; To : <?php echo $to; ?></th>
+<th colspan="6" style="text-align:center;"><?php echo $society_name; ?> Petty Cash Receipt Register From : <?php echo $from; ?> &nbsp;&nbsp; To : <?php echo $to; ?></th>
 </tr>
-<tr id="bg_color">
+<tr>
 <th>PC Receipt#</th>
 <th>Transaction Date</th>
 <th>Received From</th>

@@ -207,7 +207,7 @@ $(document).ready(function() {
 				$f_profile_pic=@$user_info[0]["user"]["f_profile_pic"];
 				
 			
-			if($user_type=="third_party" or $user_type=="member"){
+			if($user_type=="third_party" or $user_type=="member" or $user_type="family_member"){
 			$role_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'default_role_name_via_user_id'), array('pass' => array($s_user_id)));
 			
 			$s_society_id=$this->Session->read('hm_society_id');

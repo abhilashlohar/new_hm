@@ -200,8 +200,13 @@ $(document).ready(function() {
 			<?php
 			$s_user_id=$this->Session->read('hm_user_id');
 			$user_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_info_via_user_id'), array('pass' => array($s_user_id)));
-			$user_type=$user_info[0]["user"]["user_type"]; 
-			$name=$user_info[0]["user"]["user_name"];
+				$user_type=$user_info[0]["user"]["user_type"]; 
+				$name=$user_info[0]["user"]["user_name"];
+				$profile_pic=@$user_info[0]["user"]["profile_pic"];
+				$g_profile_pic=@$user_info[0]["user"]["g_profile_pic"];
+				$f_profile_pic=@$user_info[0]["user"]["f_profile_pic"];
+				
+			
 			if($user_type=="third_party" or $user_type=="member"){
 			$role_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'default_role_name_via_user_id'), array('pass' => array($s_user_id)));
 			
@@ -227,7 +232,21 @@ $(document).ready(function() {
                    <table style="" cellpadding="0" cellspacing="0">
 					<tr>
 						<td rowspan="2" style="padding: 6px 4px;">
-							<img alt="" src="http://localhost/new_hm/assets/img/avatar1_small.jpg">
+						
+						<?php if(!empty($profile_pic) && $profile_pic!="blank.jpg"){ ?>
+						<img alt="" src="<?php echo $webroot_path; ?>profile/<?php echo @$profile_pic; ?>"  style="width:28px; height:28px;" />
+						<?php }
+						elseif(!empty($f_profile_pic)){ ?>
+							<img alt="" src="<?php echo $f_profile_pic; ?>"  style="width:28px; height:28px;" />
+						<?php }
+						elseif(!empty($g_profile_pic)){ ?>
+							<img alt="" src="<?php echo $g_profile_pic; ?>"  style="width:28px; height:28px;" />
+						<?php }
+						else{ ?>
+							<img alt="" src="<?php echo $webroot_path; ?>profile/blank.jpg"  style="width:28px; height:28px;" />
+						<?php } ?>
+						
+							
 						</td>
 						<td style="padding: 1px; font-weight: 600; font-size: 12px;">
 							 <table cellpadding="0" cellspacing="0" style="line-height: 14px;">

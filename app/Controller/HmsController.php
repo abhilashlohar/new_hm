@@ -5280,7 +5280,7 @@ $this->set('webroot_path',$webroot_path);
 			$fb_user_name=$this->decode($fb_user_name,'Housingmatters_facebook');
 			
 			$this->loadmodel('user');
-			$conditions =array("email" => $fb_user_name);
+			$conditions=array("email" => $fb_user_name);
 			$result_user=$this->user->find('all',array('conditions'=>$conditions));
 			$count=sizeof($result_user);
 			if($count>0){
@@ -5319,17 +5319,15 @@ $this->set('webroot_path',$webroot_path);
 						
 					 }
 					
-			}
-			 else
-					 {
+			}else{
 						 if($source=="f"){
 							 $this->set('wrong_fb', 'It seems you have not sign up with HousingMatters or your Facebook email is not matching with our system.'); 
 						 }
-						else{
+						elseif($source=="g"){
 							 $this->set('wrong_fb', 'It seems you have not sign up with HousingMatters or your Google email is not matching with our system.'); 
 						 }
 					 }
-		}
+		
 	
 if ($this->request->is('post')) 
 {

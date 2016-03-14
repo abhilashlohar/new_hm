@@ -194,8 +194,8 @@ $(document).ready(function() {
       <div class="navbar-inner">
          <div class="container-fluid">
             <!-- BEGIN LOGO -->
-            <a class="brand" href="<?php echo $webroot_path; ?>Hms/Dashboard">
-            <img src="<?php echo $webroot_path; ?>as/hm/hm-logo.png" alt="HousingMatters" style="height: 30px;" />
+            <a class="brand" href="<?php echo $webroot_path; ?>Hms/Dashboard" style="margin-top: -3px;"> 
+            <img src="<?php echo $webroot_path; ?>as/hm/housing_matter.png" alt="HousingMatters" style="height: 30px;" />
             </a>
 			<?php
 			$s_user_id=$this->Session->read('hm_user_id');
@@ -203,7 +203,7 @@ $(document).ready(function() {
 			$user_type=$user_info[0]["user"]["user_type"]; 
 			$name=$user_info[0]["user"]["user_name"];
 			if($user_type=="third_party" or $user_type=="member"){
-			//$role_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'default_role_name_via_user_id'), array('pass' => array($s_user_id)));
+			$role_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'default_role_name_via_user_id'), array('pass' => array($s_user_id)));
 			
 			$s_society_id=$this->Session->read('hm_society_id');
 			$society_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'society_name_via_society_id'), array('pass' => array($s_society_id)));
@@ -223,11 +223,30 @@ $(document).ready(function() {
             <ul class="nav pull-right">
                <!-- BEGIN USER LOGIN DROPDOWN -->
                <li class="dropdown user">
-					
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img alt="" src="<?php echo $webroot_path; ?>assets/img/avatar1_small.jpg" />
-                  <span class="username"><?php echo $name; ?></span>
-                  <i class="icon-angle-down"></i>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding: 0px !important;">
+                   <table style="" cellpadding="0" cellspacing="0">
+					<tr>
+						<td rowspan="2" style="padding: 6px 4px;">
+							<img alt="" src="http://localhost/new_hm/assets/img/avatar1_small.jpg">
+						</td>
+						<td style="padding: 1px; font-weight: 600; font-size: 12px;">
+							 <table cellpadding="0" cellspacing="0" style="line-height: 14px;">
+							  <tr>
+								<td style="padding: 1px; font-weight: 600; font-size: 12px;">
+								<?php echo $name; ?>
+								</td>
+							  </tr>
+							  <tr>
+								<td style="font-size: 12px;">
+								<?php echo $role_name; ?>
+								</td>
+							  </tr>
+							</table>
+						</td>
+					</tr>
+				   </table>
+				  
+				 
                   </a>
                   <ul class="dropdown-menu">
                      <li><a href="<?php echo $webroot_path; ?>Hms/profile" rel='tab'><i class="icon-user"></i> My Profile</a></li>

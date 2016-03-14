@@ -167,7 +167,7 @@ foreach($regular_bill_info as $regular_bill){
 			$interest_on_arrears+=$last_bill_total*$tax_factor*($days/365);
 		}
 	}
-		$new_arrear_principal=$last_bill_total+$last_bill_arrear_principal;
+		$new_arrear_principal=@$last_bill_total+$last_bill_arrear_principal;
 		if($interest_on_arrears<0){ $interest_on_arrears=0; }
 		$interest_on_arrears=round($interest_on_arrears);
 }; ?>

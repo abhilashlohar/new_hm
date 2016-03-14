@@ -3416,7 +3416,7 @@ function balance_sheet_ajax($from=null){
 	$this->layout='blank';
 	$this->ath();
 	
-	$s_role_id=$this->Session->read('role_id');
+	//$s_role_id=$this->Session->read('role_id');
 	 $s_society_id = (int)$this->Session->read('hm_society_id');
 	$this->set('s_society_id',$s_society_id);
 	$s_user_id=$this->Session->read('hm_user_id');	
@@ -3567,7 +3567,7 @@ function balance_sheet_income_expenditure($from){
 
 function calculate_balance_sheet_credit($from,$ledger_account_id,$to){
 	
-	$s_role_id=$this->Session->read('role_id');
+	//$s_role_id=$this->Session->read('role_id');
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$to=date('Y-m-d',strtotime($to));
 	$from=date('Y-m-d',strtotime($from));
@@ -3587,7 +3587,7 @@ function calculate_balance_sheet_credit($from,$ledger_account_id,$to){
 
 function calculate_balance_sheet_credit_new($from,$ledger_account_id){
 	
-	$s_role_id=$this->Session->read('role_id');
+	//$s_role_id=$this->Session->read('role_id');
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	
 	$from=date('Y-m-d',strtotime($from));
@@ -3606,7 +3606,7 @@ function calculate_balance_sheet_credit_new($from,$ledger_account_id){
 
 function calculate_balance_sheet_debit($from,$ledger_account_id,$to){
 	
-	$s_role_id=$this->Session->read('role_id');
+	//$s_role_id=$this->Session->read('role_id');
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 
 	$from=date('Y-m-d',strtotime($from));

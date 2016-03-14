@@ -5279,36 +5279,17 @@ $this->set('webroot_path',$webroot_path);
 		if(!empty($fb_user_name)){
 			$fb_user_name=$this->decode($fb_user_name,'Housingmatters_facebook');
 			
-			$this->loadmodel('login');
-			$conditions =array( '$or' => array(array("user_name" => $fb_user_name)));
-			$result_login=$this->login->find('all',array('conditions'=>$conditions));
-			$count=sizeof($result_login);
+			$this->loadmodel('user');
+			$conditions =array("email" => $fb_user_name);
+			$result_user=$this->user->find('all',array('conditions'=>$conditions));
+			$count=sizeof($result_user);
 			if($count>0){
-				foreach($result_login as $data)
-				{
-					 $login_id=(int)$data['login']['login_id'];
-				}
-				 
-					 $this->loadmodel('user');
-					 $conditions1=array('s_default'=>1,'login_id'=>$login_id,'deactive'=>0);
-					 $result_user=$this->user->find('all',array('conditions'=>$conditions1));
-					 $n=sizeof($result_user);
-					 if($n>0)
-					 {
-						foreach($result_user as $data)
-						{
-						$user_id=$data['user']['user_id'];
-						$society_id=$data['user']['society_id'];
-						$user_name=$data['user']['user_name'];
-						$wing=$data['user']['wing'];
-						$tenant=$data['user']['tenant'];
-						$role_id=$data['user']['default_role_id'];
-						$profile=@$data['user']['profile_status'];
-						$slide_show=@$data['user']['slide_show'];
-						if($slide_show==2){
-							$this->loadmodel('user');
-							$this->user->updateAll(array('slide_show'=>0),array('user_id'=>$user_id));
-						}
+				
+					 
+						foreach($result_user as $data){
+							$user_id=(int)$data['user']['user_id'];
+							$society_id=$data['user']['society_id'];
+							
 						}
 						
 						if(!empty($uid) && $source=="f"){
@@ -5326,15 +5307,15 @@ $this->set('webroot_path',$webroot_path);
 							$this->loadmodel('log');
 							$i=$this->autoincrement('log','log_id');
 							$this->log->save(array('log_id'=>$i,'user_id'=>$user_id,'society_id'=>$society_id,'date'=>$date,'time'=>$time,'status'=>0));
-							$this->Session->write('user_id', $user_id);
-							$this->Session->write('login_id', $login_id);
-							$this->Session->write('role_id', $role_id);
-							$this->Session->write('society_id', $society_id);
-							$this->Session->write('user_name', $user_name);
-							$this->Session->write('wing', $wing);
-							$this->Session->write('tenant', $tenant);
-							$this->redirect(array('action' => 'dashboard'));
-						 
+							
+								$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));
+								$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
+
+								$this->Session->write('hm_user_id', $user_id);
+								$this->Session->write('hm_user_flat_id', $user_flat_id);
+								$this->Session->write('hm_society_id', $society_id);
+								$this->redirect(array('action' => 'dashboard'));
+							
 						
 					 }
 					

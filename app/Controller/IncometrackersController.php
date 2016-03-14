@@ -6507,6 +6507,8 @@ function regular_bill_edit2($auto_id=null){
 			}
 		}
 		
+		
+		
 		$this->redirect(array('controller' => 'Incometrackers','action' => 'in_head_report'));
 	}
 }

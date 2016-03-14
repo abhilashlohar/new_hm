@@ -27,7 +27,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<table class="table table-condensed table-bordered">
 			<thead>
 				<tr>
-					<th></th>
+					<th><input type="checkbox" class="checkall" /></th>
 					<th>Unit</th>
 					<th>Name</th>
 					<th>Unit area</th>
@@ -97,9 +97,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<div style="display: block;" id="myModal1" class="modal hide fade in session_destroy_container" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="false">
 		<div class="modal-body">
 			<p><b>Please wait, Bills are under Process.</b></p><br>
-			<div class="progress progress-striped active">
-				<div style="width: 0%;" class="bar"></div>
-			</div>
+			<div style="font-size:12px;"><span id="approval_progress">0</span> Bills approved.</div>
 		</div>
 	</div>
 	<script>
@@ -109,8 +107,10 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			$.ajax({
 				url: "<?php echo $webroot_path; ?>Incometrackers/generate_bills",
 			}).done(function(response){
-				
 				if(response=="yes"){
+					var c=parseInt($("#approval_progress").text());
+					c=c+2;
+					$("#approval_progress").text(c);
 					generate_bills();
 				}else{
 					window.location.href = '<?php echo $webroot_path; ?>Incometrackers/aprrove_bill';
@@ -120,6 +120,24 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	});
 	</script>
 <?php } ?>
+<script>
+$(document).ready(function(){
+	$(".checkall").click(function(){
+		var checked = $(this).is(':checked');
+		if(checked===true){
+			$(this).closest("table").find('input[type="checkbox"]').each(function(i, obj) {
+				$(this).attr("checked","checked");
+				$(this).closest("span").addClass("checked");
+			});
+		}else{
+			$(this).closest("table").find('input[type="checkbox"]').each(function(i, obj) {
+				$(this).removeAttr("checked");
+				$(this).closest("span").removeClass("checked");
+			});
+		}
+	});
+});
+</script>
 <style>
 th,td{
 	font-size: 12px !important;

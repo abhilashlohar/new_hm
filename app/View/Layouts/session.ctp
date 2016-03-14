@@ -195,8 +195,24 @@ $(document).ready(function() {
          <div class="container-fluid">
             <!-- BEGIN LOGO -->
             <a class="brand" href="<?php echo $webroot_path; ?>Hms/Dashboard">
-            <img src="<?php echo $webroot_path; ?>as/hm/HM-LOGO-small.jpg" alt="HousingMatters" style="height: 30px;" />
+            <img src="<?php echo $webroot_path; ?>as/hm/hm-logo.png" alt="HousingMatters" style="height: 30px;" />
             </a>
+			<?php
+			$s_user_id=$this->Session->read('hm_user_id');
+			$user_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_info_via_user_id'), array('pass' => array($s_user_id)));
+			$user_type=$user_info[0]["user"]["user_type"]; 
+			$name=$user_info[0]["user"]["user_name"];
+			if($user_type=="third_party" or $user_type=="member"){
+			//$role_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'default_role_name_via_user_id'), array('pass' => array($s_user_id)));
+			
+			$s_society_id=$this->Session->read('hm_society_id');
+			$society_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'society_name_via_society_id'), array('pass' => array($s_society_id)));
+			} 
+		
+			if(!empty($society_name)){
+			?>
+			<a class="btn" href="#" role="button" style="color: #DEDEDE;background-color: #1F1F1F;font-size: 14px;font-weight: bold;cursor: default;"><?php echo $society_name; ?></a>
+			<?php } ?>
             <!-- END LOGO -->
             <!-- BEGIN RESPONSIVE MENU TOGGLER -->
             <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
@@ -207,14 +223,7 @@ $(document).ready(function() {
             <ul class="nav pull-right">
                <!-- BEGIN USER LOGIN DROPDOWN -->
                <li class="dropdown user">
-					<?php
-					$s_user_id=$this->Session->read('hm_user_id');
-					$user_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_info_via_user_id'), array('pass' => array($s_user_id)));
-					$user_type=$user_info[0]["user"]["user_type"]; 
-					$name=$user_info[0]["user"]["user_name"];
-					if($user_type!="hm"){
-					//$role_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'default_role_name_via_user_id'), array('pass' => array($s_user_id)));
-					} ?>
+					
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <img alt="" src="<?php echo $webroot_path; ?>assets/img/avatar1_small.jpg" />
                   <span class="username"><?php echo $name; ?></span>
@@ -274,7 +283,7 @@ $(document).ready(function() {
    <!-- END CONTAINER -->
    <!-- BEGIN FOOTER -->
    <div class="footer">
-      2013 &copy; Metronic by keenthemes.
+      HousingMatters
       <div class="span pull-right">
          <span class="go-top"><i class="icon-angle-up"></i></span>
       </div>

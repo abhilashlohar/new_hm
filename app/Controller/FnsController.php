@@ -425,6 +425,13 @@ function user_flat_info_via_wing_flat_id($wing,$flat){
 	return $this->user_flat->find('all',array('conditions'=>$conditions));
 }
 
+function society_name_via_society_id($society_id){
+	$this->loadmodel('society');
+	$conditions=array("society_id"=>$society_id);
+	$result=$this->society->find('all',array('conditions'=>$conditions));
+	return $result[0]["society"]["society_name"];
+}
+
 
 }
 ?>

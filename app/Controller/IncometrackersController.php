@@ -6431,16 +6431,83 @@ function regular_bill_edit2($auto_id=null){
 		$due_for_payment=$this->request->data['due_for_payment'];
 		$description=$this->request->data['description'];
 		
-		
+		if(sizeof(@$other_charges_array)==0){$other_charges_array=array();}
 		
 		
 		
 		$this->loadmodel('regular_bill');
 		$this->regular_bill->updateAll(array('edited'=>"yes"),array("auto_id"=>$auto_id));
 		
+		$this->loadmodel('ledger');
+		$this->ledger->deleteAll(array('table_name'=>"regular_bill", "element_id"=>$auto_id));
+		
 		$reg_auto_id=$this->autoincrement('regular_bill','auto_id');
 		$this->regular_bill->saveAll(array("auto_id"=>$reg_auto_id,"bill_number"=>$bill_number,"ledger_sub_account_id"=>$ledger_sub_account_id,"income_head_array"=>$income_head_array,"noc_charge"=>$non_occupancy_charges,"other_charge"=>$other_charges_array,"total"=>$total,"arrear_maintenance"=>$arrear_maintenance,"arrear_intrest"=>$arrear_intrest,"intrest_on_arrears"=>$interest_on_arrears,"credit_stock"=>$credit_stock,"due_for_payment"=>$due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"end_date"=>$end_date,"edited"=>"no","description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by));
 		
+		
+		
+		//LEDGER CODE START//
+		foreach($income_head_array as $income_head_id=>$income_head_amount){
+			if(!empty($income_head_amount)){
+				$this->loadmodel('ledger');
+				$auto_id=$this->autoincrement('ledger','auto_id');
+				$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => $income_head_id,"ledger_sub_account_id" => null,"debit"=>null,"credit"=>$income_head_amount,"table_name"=>"regular_bill","element_id"=>$reg_auto_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+			}
+		}
+		
+		if(!empty($non_occupancy_charges)){
+			$this->loadmodel('ledger');
+			$auto_id=$this->autoincrement('ledger','auto_id');
+			$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 43,"ledger_sub_account_id" => null,"debit"=>null,"credit"=>$non_occupancy_charges,"table_name"=>"regular_bill","element_id"=>$reg_auto_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+		}
+		
+		
+		foreach($other_charges_array as $key=>$vlaue){
+			if(!empty($value)){
+				$this->loadmodel('ledger');
+				$auto_id=$this->autoincrement('ledger','auto_id');
+				$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => $key,"ledger_sub_account_id" => null,"debit"=>null,"credit"=>$vlaue,"table_name"=>"regular_bill","element_id"=>$reg_auto_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+			}
+		}
+		
+		if(!empty($total)){
+			$this->loadmodel('ledger');
+			$auto_id=$this->autoincrement('ledger','auto_id');
+			$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id,"debit"=>$total,"credit"=>null,"table_name"=>"regular_bill","element_id"=>$reg_auto_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+		}
+		
+		if(!empty($interest_on_arrears)){
+			$this->loadmodel('ledger');
+			$auto_id=$this->autoincrement('ledger','auto_id');
+			$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 41,"ledger_sub_account_id" => null,"debit"=>null,"credit"=>$interest_on_arrears,"table_name"=>"regular_bill","element_id"=>$reg_auto_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+			
+			$this->loadmodel('ledger');
+			$auto_id=$this->autoincrement('ledger','auto_id');
+			$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id,"debit"=>$interest_on_arrears,"credit"=>null,"table_name"=>"regular_bill","element_id"=>$reg_auto_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date,"intrest_on_arrears"=>"YES"));
+		}
+		
+		if(!empty($credit_stock)){
+			if($credit_stock>0){
+				$this->loadmodel('ledger');
+				$auto_id=$this->autoincrement('ledger','auto_id');
+				$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 88,"ledger_sub_account_id" => null,"debit"=>null,"credit"=>abs($credit_stock),"table_name"=>"regular_bill","element_id"=>$reg_auto_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+				
+				$this->loadmodel('ledger');
+				$auto_id=$this->autoincrement('ledger','auto_id');
+				$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id,"debit"=>abs($credit_stock),"credit"=>null,"table_name"=>"regular_bill","element_id"=>$reg_auto_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+			}
+			if($credit_stock<0){
+				$this->loadmodel('ledger');
+				$auto_id=$this->autoincrement('ledger','auto_id');
+				$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 88,"ledger_sub_account_id" => null,"debit"=>abs($credit_stock),"credit"=>null,"table_name"=>"regular_bill","element_id"=>$reg_auto_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+				
+				$this->loadmodel('ledger');
+				$auto_id=$this->autoincrement('ledger','auto_id');
+				$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id,"debit"=>null,"credit"=>abs($credit_stock),"table_name"=>"regular_bill","element_id"=>$reg_auto_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+			}
+		}
+		
+		$this->redirect(array('controller' => 'Incometrackers','action' => 'in_head_report'));
 	}
 }
 

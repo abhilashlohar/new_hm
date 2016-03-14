@@ -26408,7 +26408,7 @@ function menus_as_per_user_rights(){
 	$s_society_id=$this->Session->read('hm_society_id');
 	$user_type= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'),array('pass'=>array($s_user_id)));
 	
-	if($user_type=="third_party" or $user_type=="member"){
+	if($user_type=="third_party" or $user_type=="member" or $user_type=="family_member"){
 		
 	$default_role= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id'),array('pass'=>array($s_user_id)));
 		

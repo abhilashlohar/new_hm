@@ -21,61 +21,44 @@
 		</td>
 	</tr>
 	<tr>
-	<td colspan="2" style="text-align:center;">
-		<div id="one" class="hide">
-			<select id="wing" class="m-wrap large chosen">
-			<option value="" style="display:none;">Select Wing</option>
-			<?php
-			foreach($cursor2 as $collection){
-			$wing_id = (int)$collection['wing']['wing_id'];	
-			$wing_name = $collection['wing']['wing_name'];	
-			?>
-			<option value="<?php echo $wing_id; ?>"><?php echo $wing_name; ?></option>
-			<?php } ?>
-			</select>
-		</div>
-		<div id="two" class="hide">
-			<select name="ledger_sub_account[]" class="m-wrap large chosen" style="width:200px;">
-			<option value="" style="display:none;">--member--</option>
-			<?php foreach($members_for_billing as $ledger_sub_account_id){
-			$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
-			echo '<option value='.$ledger_sub_account_id.'>'.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
-			} ?>
-			</select> 
-		</div>
-	</td>
+		<td colspan="2" style="text-align:center;">
+			<div id="one" class="hide">
+				<select id="wing" class="m-wrap large chosen">
+				<option value="" style="display:none;">Select Wing</option>
+				<?php
+				foreach($cursor2 as $collection){
+				$wing_id = (int)$collection['wing']['wing_id'];	
+				$wing_name = $collection['wing']['wing_name'];	
+				?>
+				<option value="<?php echo $wing_id; ?>"><?php echo $wing_name; ?></option>
+				<?php } ?>
+				</select>
+			</div>
+			<div id="two" class="hide">
+				<select name="ledger_sub_account[]" class="m-wrap large chosen" style="width:200px;">
+				<option value="" style="display:none;">--member--</option>
+				<?php foreach($members_for_billing as $ledger_sub_account_id){
+				$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+				echo '<option value='.$ledger_sub_account_id.'>'.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
+				} ?>
+				</select> 
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type="text" placeholder="From Date" id="date1" style="margin-top:8px; background-color:white !important;" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="from" value="<?php echo $from; ?>">
+		</td>
+		<td>
+			<input type="text" placeholder="To Date" id="date2" style="margin-top:8px; background-color:white !important;" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="to" value="<?php echo $to; ?>">
+		</td>
+		<td>
+			<button class="btn yellow" id="go" style="margin-bottom:2px;">Go</button>
+		</td>
 	</tr>
 	</table>
 	<?php /*
-	<tr>
-		<td colspan="2" style="text-align:center;">
-		<div class="hide" id="one">
-		<select id="wing" class="m-wrap large chosen">
-		<option value="" style="display:none;">Select Wing</option>
-		<?php
-		foreach($cursor2 as $collection)
-		{
-		$wing_id = (int)$collection['wing']['wing_id'];	
-		$wing_name = $collection['wing']['wing_name'];	
-		?>
-		<option value="<?php echo $wing_id; ?>"><?php echo $wing_name; ?></option>
-		<?php } ?>
-		</select>
-		</div>
-		<div class="hide" id="two">
-		<?php $this->requestAction(array('controller' => 'Hms', 'action' => 'resident_drop_down')); ?> 
-		<script>
-		$(document).ready(function() { 
-		$("select").addClass("large");
-		});
-		</script>
-		</div>
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
+		<tr>
 		<td>
 		<input type="text" placeholder="From Date" id="date1" style="margin-top:8px; background-color:white !important;" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="from" value="<?php echo $from; ?>">
 		</td>

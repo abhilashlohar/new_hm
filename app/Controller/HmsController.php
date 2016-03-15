@@ -263,6 +263,31 @@ function modify_unit_configuration_csv($page=null){
 		$this->set(compact('result_flat_type'));
 }
 
+
+function auto_save_unit_configuration($record_id=null,$field=null,$value=null){
+		
+	$this->layout=null;
+
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	$record_id=(int)$record_id; 
+
+		if($field=="flat_area"){
+			if(empty($value)){ echo "F";}
+			else{
+				$this->loadmodel('unit_configuration_csv_converted');
+				$this->unit_configuration_csv_converted->updateAll(array("flat_area" => $value),array("auto_id" => $record_id));
+				echo "T";
+			}
+		}	
+	
+	
+	
+}
+
+
+
+
 function import_user_enrollment(){
 	
 	if($this->RequestHandler->isAjax()){
@@ -6915,12 +6940,22 @@ function dashboard(){
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	
 	
-		$working_key='A7a76ea72525fc05bbe9963267b48dd96';
-        $sms_sender='FLEXIL';
-        $mobile_no="9887779123";
-		$r=123;
-		$sms="hello+rohit+your+one+time+password+is+".$r."";
-        file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_no.'&message='.$sms.'');
+	$this->loadmodel('email_request');
+	$result_email_request=$this->email_request->find('all');
+	foreach($result_email_request as $data){
+	$to=$data['email_request']['to'];
+	$from=$data['email_request']['from'];
+	$from_name=$data['email_request']['from_name'];
+	$subject=$data['email_request']['subject'];
+	$message_web=$data['email_request']['message_web'];
+	$reply=$data['email_request']['reply'];
+	$flag=$data['email_request']['flag'];
+	$this->email_request->deleteAll(array("to"=>$to));
+	$this->loadmodel('email_request');
+	$er=$this->autoincrement('email_request','e_id');
+	$this->email_request->saveAll(array('e_id' => $er, 'to' => $to, 'from' => $from, 'from_name' => $from_name, 'subject' => $subject,'message_web' => $message_web, 'reply' => $reply, 'flag' => 0));
+	}
+	
 		
 }
 function reject_notification($id,$change)

@@ -134,22 +134,18 @@ $('#validate_result').html('<div></div>');
 	
 });
 </script>		
-
-<script>
-function wing_wise()
-{
-$("#one").show();
-$("#two").hide();	
-}
-function member()
-{
-$("#one").hide();
-$("#two").show();		
-}
-</script>
-
-
 */ ?>
+<script>
+	function wing_wise(){
+		$("#one").show();
+		$("#two").hide();	
+	}
+	function member(){
+		$("#one").hide();
+		$("#two").show();		
+	}
+</script>
+ 
 
 
 

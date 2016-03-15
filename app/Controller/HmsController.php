@@ -4061,10 +4061,6 @@ function all_wing_wise_deactive($wing_id)
 	return $result_user=$this->user->find('all',array('conditions'=>$conditions));
 }
 
-
-
-
-
 //Start multiple_flat//
 function multiple_flat()
 {
@@ -4110,22 +4106,23 @@ function multiple_flat()
 		$this->set(compact("members_for_billing"));	
 
 		if($this->request->is('post')){
-		  echo $user_sel=(int)$this->request->data['resident_id'];
-		  echo $wing=(int)$this->request->data['wing'];
-		  echo $flat=(int)$this->request->data['fflt'];
-		  exit;
-		  
-		 
-if($n==0){
+		   $user_sel=(int)$this->request->data['resident_id'];
+		   $wing=(int)$this->request->data['wing'];
+		   $flat=(int)$this->request->data['fflt'];
+	 
+$user_data = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_info_via_user_id'),array('pass'=>array($user_sel)));
+foreach($user_data as $data){
+$user_name = $data['user']['user_name'];
+}
+
 $this->loadmodel('user_flat');
-$i=$this->autoincrement('user_flat','user_flat_id');
-$this->user_flat->saveAll(array('user_flat_id'=>$i,'user_id'=>$user_sel,'society_id'=>$s_society_id,'flat_id'=>$flat,'status'=>$tenant,'active'=>0,'exit_date'=>'','time'=>''));
-					
-if($tenant==1){
+$user_flat_id=$this->autoincrement('user_flat','user_flat_id');
+$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$user_sel,'society_id'=>$s_society_id,'flat'=>$flat,'wing'=>$wing,'exited'=>'no','owner'=>'yes'));
+
 $this->loadmodel('ledger_sub_account');
 $j=$this->autoincrement('ledger_sub_account','auto_id');
-$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$user_name,'society_id' => $s_society_id,'user_id'=>$user_sel,'deactive'=>0,"flat_id"=>$flat));
-}
+$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$user_name,'society_id' => $s_society_id,'user_id'=>$user_sel,'user_flat_id'=>$user_flat_id));
+
 ?>
 <!----alert-------------->
 <div class="modal-backdrop fade in"></div>
@@ -4139,10 +4136,8 @@ Successfully add multiple flat
 </div>
 <!----alert--------------><?php
 }	
-else{
-	$this->set('wrong','<span style="color:red; font-size:14px;">Wing-Flat is already exits</span>');
-	}	
-}
+	
+
 	$this->loadmodel('wing');
 	$conditions=array("society_id"=>$s_society_id);
 	$cursor1 = $this->wing->find('all',array('conditions'=>$conditions));

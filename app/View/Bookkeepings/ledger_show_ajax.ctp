@@ -168,26 +168,26 @@ $creater_name = @$user_detailll['user']['user_name'];
 		
 		
 		
-		if($table_name=="new_cash_bank"){
+		if($table_name=="cash_bank"){
 			
 			$element_id=$element_id;
 	
 	$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array($element_id)));
-	$receipt_source = $result_cash_bank[0]["new_cash_bank"]["receipt_source"];  
+	$receipt_source = $result_cash_bank[0]["cash_bank"]["receipt_source"];  
 
 	
 	if($receipt_source == "bank_receipt")
 	{
 	$source="Receipt";
-	$trans_id = (int)$result_cash_bank[0]["new_cash_bank"]["transaction_id"]; 
-	$refrence_no=$result_cash_bank[0]["new_cash_bank"]["receipt_id"]; 
-	$flat_id = (int)$result_cash_bank[0]["new_cash_bank"]["party_name_id"];
-	$description = @$result_cash_bank[0]["new_cash_bank"]["narration"];
-	$current_date = $result_cash_bank[0]['new_cash_bank']['current_date']; 	
+	$trans_id = (int)$result_cash_bank[0]["cash_bank"]["transaction_id"]; 
+	$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_id"]; 
+	$flat_id = (int)$result_cash_bank[0]["cash_bank"]["party_name_id"];
+	$description = @$result_cash_bank[0]["cash_bank"]["narration"];
+	$current_date = $result_cash_bank[0]['cash_bank']['current_date']; 	
 	$current_datttt = date('d-m-Y',strtotime($current_date));
-    $creater_user_id =(int)@$result_cash_bank[0]['new_cash_bank']['prepaired_by'];
-	$approved_by = (int)@$result_cash_bank[0]['new_cash_bank']['approved_by'];
-	$approved_date = @$result_cash_bank[0]['new_cash_bank']['approved_date'];
+    $creater_user_id =(int)@$result_cash_bank[0]['cash_bank']['prepaired_by'];
+	$approved_by = (int)@$result_cash_bank[0]['cash_bank']['approved_by'];
+	$approved_date = @$result_cash_bank[0]['cash_bank']['approved_date'];
 	$description=substrwords($description,200,'...');
 	
 $user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($approved_by)));
@@ -247,16 +247,16 @@ $creater_name = $user_detailll['user']['user_name'];
 		$tds_array_for_bank_payment = array();
 		
 		$source="Bank_payment";
-		$trans_id = (int)$result_cash_bank[0]["new_cash_bank"]["transaction_id"];  
-		$description = @$result_cash_bank[0]["new_cash_bank"]["narration"];
+		$trans_id = (int)$result_cash_bank[0]["cash_bank"]["transaction_id"];  
+		$description = @$result_cash_bank[0]["cash_bank"]["narration"];
 		$description=substrwords($description,200,'...');
-		$refrence_no=$result_cash_bank[0]["new_cash_bank"]["receipt_id"]; 
-		$vendor_id = (int)$result_cash_bank[0]["new_cash_bank"]["user_id"];
-		$account_type = (int)$result_cash_bank[0]["new_cash_bank"]["account_type"];	
-		$amttt = $result_cash_bank[0]["new_cash_bank"]["amount"];			
-		$tds = (int)$result_cash_bank[0]["new_cash_bank"]["tds_id"];		
-		$current_date = $result_cash_bank[0]['new_cash_bank']['current_date'];
-		$prepaired_by_id = (int)$result_cash_bank[0]['new_cash_bank']['prepaired_by'];
+		$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_id"]; 
+		$vendor_id = (int)$result_cash_bank[0]["cash_bank"]["user_id"];
+		$account_type = (int)$result_cash_bank[0]["cash_bank"]["account_type"];	
+		$amttt = $result_cash_bank[0]["cash_bank"]["amount"];			
+		$tds = (int)$result_cash_bank[0]["cash_bank"]["tds_id"];		
+		$current_date = $result_cash_bank[0]['cash_bank']['current_date'];
+		$prepaired_by_id = (int)$result_cash_bank[0]['cash_bank']['prepaired_by'];
 		
 $current_datttt = date('d-m-Y',strtotime($current_date));									
 $ussr_dataa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by_id)));  
@@ -360,12 +360,12 @@ $creater_name = $ussrrr['user']['user_name'];
 	if($receipt_source == "petty_cash_receipt")
 	{
 	$source="Petty Cash Receipt";
-		$trans_id = (int)$result_cash_bank[0]["new_cash_bank"]["transaction_id"]; 
-		$description = @$result_cash_bank[0]["new_cash_bank"]["narration"];
+		$trans_id = (int)$result_cash_bank[0]["cash_bank"]["transaction_id"]; 
+		$description = @$result_cash_bank[0]["cash_bank"]["narration"];
 		$description=substrwords($description,200,'...');
-		$refrence_no=$result_cash_bank[0]["new_cash_bank"]["receipt_id"]; 
-		$prepaired_by = (int)$result_cash_bank[0]['new_cash_bank']['prepaired_by'];   
-        $current_date = $result_cash_bank[0]['new_cash_bank']['current_date'];	
+		$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_id"]; 
+		$prepaired_by = (int)$result_cash_bank[0]['cash_bank']['prepaired_by'];   
+        $current_date = $result_cash_bank[0]['cash_bank']['current_date'];	
 			
 		$current_datttt = date('d-m-Y',strtotime($current_date));
 
@@ -399,12 +399,12 @@ $creater_name = $ussrrr['user']['user_name'];
 	if($receipt_source == "petty_cash_payment")
 	{
 		$source="Petty Cash Payment";
-		$trans_id = (int)$result_cash_bank[0]["new_cash_bank"]["transaction_id"]; 
-			$description = @$result_cash_bank[0]["new_cash_bank"]["narration"];
+		$trans_id = (int)$result_cash_bank[0]["cash_bank"]["transaction_id"]; 
+			$description = @$result_cash_bank[0]["cash_bank"]["narration"];
 			$description=substrwords($description,200,'...');
-			$refrence_no=$result_cash_bank[0]["new_cash_bank"]["receipt_id"]; 
-			$prepaired_by = (int)$result_cash_bank[0]['new_cash_bank']['prepaired_by'];
-			$current_date = $result_cash_bank[0]['new_cash_bank']['current_date'];
+			$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_id"]; 
+			$prepaired_by = (int)$result_cash_bank[0]['cash_bank']['prepaired_by'];
+			$current_date = $result_cash_bank[0]['cash_bank']['current_date'];
       
 	     $current_datttt = date('d-m-Y',strtotime($current_date));
 			
@@ -676,7 +676,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 		}
 	
 		
-		if(($table_name=="new_regular_bill"  &&  $bill_approved=="yes") || $table_name=="new_cash_bank" || $table_name=="opening_balance" || $table_name=="expense_tracker" || $table_name=="journal" || $table_name=="fix_asset" || $table_name=="supplimentry_bill"){
+		if(($table_name=="new_regular_bill"  &&  $bill_approved=="yes") || $table_name=="cash_bank" || $table_name=="opening_balance" || $table_name=="expense_tracker" || $table_name=="journal" || $table_name=="fix_asset" || $table_name=="supplimentry_bill"){
 		
 		if($tds_ledger_id == 15)
 		{
@@ -724,7 +724,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			<?php if($table_name=="new_regular_bill"){
 				echo '<a href="'.$this->webroot.'Incometrackers/regular_bill_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
 			}
-			if($table_name=="new_cash_bank"){
+			if($table_name=="cash_bank"){
 				if($receipt_source == "bank_receipt")
 				{
 				echo '<a href="'.$this->webroot.'Cashbanks/bank_receipt_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>';

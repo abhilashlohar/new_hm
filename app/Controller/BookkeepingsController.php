@@ -18,9 +18,9 @@ var $name = 'Bookkeepings';
 	
 	function receipt_info_via_auto_id($auto_id){
 		$auto_id=(int)$auto_id;
-		$this->loadmodel('new_cash_bank');
+		$this->loadmodel('cash_bank');
 		$conditions=array('transaction_id'=>$auto_id);
-		return $this->new_cash_bank->find('all',array('conditions'=>$conditions)); 
+		return $this->cash_bank->find('all',array('conditions'=>$conditions)); 
 	}
 	
 function adhoc_info_via_auto_id($auto_id){

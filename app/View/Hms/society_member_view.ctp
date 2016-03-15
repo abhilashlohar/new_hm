@@ -6,6 +6,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<table class="table table-condensed table-bordered table-hover" id="sample_1">
 			<thead>
 				<tr>
+					<th>Sr.</th>
 					<th>User Name</th>
 					<th>unit</th>
 					<th>Roles</th>
@@ -17,7 +18,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				</tr>
 			</thead>
 			<tbody>
-			<?php foreach($arranged_users as $user_id=>$user_info){ 
+			<?php $sr_no=0;
+			foreach($arranged_users as $user_id=>$user_info){ $sr_no++;
 				$user_name=$user_info["user_name"];
 				$wing_flats=$user_info["wing_flat"];
 				$roles=$user_info["roles"];
@@ -28,6 +30,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				if(sizeof($wing_flats)>0){
 					foreach($wing_flats as $wing_flat){ ?>
 					<tr>
+						<td><?php echo $sr_no; ?></td>
 						<td><?php echo $user_name; ?></td>
 						<td><?php echo $wing_flat; ?></td>
 						<td><?php echo $roles; ?></td>
@@ -40,6 +43,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					<?php } 
 				}else{ ?>
 					<tr>
+						<td><?php echo $sr_no; ?></td>
 						<td><?php echo $user_name; ?></td>
 						<td></td>
 						<td><?php echo $roles; ?></td>

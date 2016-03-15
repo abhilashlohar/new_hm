@@ -22,20 +22,27 @@
 	</tr>
 	<tr>
 	<td colspan="2" style="text-align:center;">
-	<div id="one">
-		<select id="wing" class="m-wrap large chosen">
-		<option value="" style="display:none;">Select Wing</option>
-		<?php
-		foreach($cursor2 as $collection){
-		$wing_id = (int)$collection['wing']['wing_id'];	
-		$wing_name = $collection['wing']['wing_name'];	
-		?>
-		<option value="<?php echo $wing_id; ?>"><?php echo $wing_name; ?></option>
-		<?php } ?>
-	    </select>
-	</div>
-	<div id="two">
-	</div>
+		<div id="one">
+			<select id="wing" class="m-wrap large chosen">
+			<option value="" style="display:none;">Select Wing</option>
+			<?php
+			foreach($cursor2 as $collection){
+			$wing_id = (int)$collection['wing']['wing_id'];	
+			$wing_name = $collection['wing']['wing_name'];	
+			?>
+			<option value="<?php echo $wing_id; ?>"><?php echo $wing_name; ?></option>
+			<?php } ?>
+			</select>
+		</div>
+		<div id="two">
+			<select name="ledger_sub_account[]" class="m-wrap" style="width:200px;">
+			<option value="" style="display:none;">--member--</option>
+			<?php foreach($members_for_billing as $ledger_sub_account_id){
+			$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+			echo '<option value='.$ledger_sub_account_id.'>'.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
+			} ?>
+			</select> 
+		</div>
 	</td>
 	</tr>
 	</table>

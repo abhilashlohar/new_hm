@@ -4110,18 +4110,12 @@ function multiple_flat()
 		$this->set(compact("members_for_billing"));	
 
 		if($this->request->is('post')){
-		  $user_sel=(int)$this->request->data['resident_id'];
-		  $wing=(int)$this->request->data['wing'];
-		  $flat=(int)$this->request->data['fflt'];
-		  $result_user=$this->profile_picture($user_sel);
-			foreach($result_user as $data){
-				$user_name=$data['user']['user_name'];
-				$tenant=$data['user']['tenant'];
-				}
-				$this->loadmodel('user_flat');
-				$conditions=array("flat_id" => $flat,'society_id'=>$s_society_id,'active'=>0);
-				$result_count=$this->user_flat->find('all',array('conditions'=>$conditions));
-				$n= sizeof($result_count);
+		  echo $user_sel=(int)$this->request->data['resident_id'];
+		  echo $wing=(int)$this->request->data['wing'];
+		  echo $flat=(int)$this->request->data['fflt'];
+		  exit;
+		  
+		 
 if($n==0){
 $this->loadmodel('user_flat');
 $i=$this->autoincrement('user_flat','user_flat_id');
@@ -4188,25 +4182,24 @@ function multiple_flat_ajax()
 
 }	
 //End Multiple_flat_ajax//
+//Start flat_name_via_wing_id//
 function flat_name_via_wing_id($wing_id)
 {
 $s_society_id=(int)$this->Session->read('society_id');
-
 $this->loadmodel('flat');
 $conditions=array("wing_id" =>(int)$wing_id,"society_id"=>$s_society_id);
 $order=array('flat.flat_name'=>'ASC');
 return $this->flat->find('all',array('conditions'=>$conditions,'order'=>$order));
-
 }
-
-
+//End flat_name_via_wing_id//
+//Start profile_picture// 
 function profile_picture($user_id)
 {
 $this->loadmodel('user');
 $conditions=array("user_id" => $user_id);
 return $this->user->find('all',array('conditions'=>$conditions));
 }
-
+//End profile_picture// 
 function wing_flat($wing_id,$flat_id)
 {
 $this->loadmodel('wing');

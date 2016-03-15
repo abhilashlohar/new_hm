@@ -3,17 +3,22 @@
 	   			{ ?>
         <label style="font-size:14px;">Select flat<span style="color:#F00;">*</span></label>
         <div class="controls">
-        <select class="m-wrap span9" name="fflt" id="fll">
+        <select class="m-wrap span9 chosen" name="fflt" id="fll">
         <option value="">Select Flat</option>
 		<?php 
         foreach($flat_data as $data)
         {
 		$flat_id = (int)$data['flat']['flat_id'];
-		$flat_name = $data['flat']['flat_name'];		
+		$flat_name = $data['flat']['flat_name'];
+		
+		$count = $this->requestAction(array('controller' => 'Fns', 'action' => 'is_empty_for_owner'),array('pass'=>array($flat_id)));
+			
+		if($count == 0)
+		{			
         ?>
 		<option value="<?php echo $flat_id; ?>"><?php echo $flat_name; ?></option>
 		<?php
-        }
+        }}
         ?>
 		</select>
         <label id="fll"></label>

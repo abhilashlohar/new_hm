@@ -17,7 +17,7 @@ $m_to = date("Y-m-d", strtotime($to));
 $from_strto = strtotime($m_from);
 $to_strto = strtotime($m_to); ?>
 <?php foreach ($cursor1 as $collection){
-$transaction_id = (int)$collection['new_cash_bank']['transaction_date'];	
+$transaction_id = (int)$collection['cash_bank']['transaction_date'];	
 if($transaction_id >= $from_strto && $transaction_id <= $to_strto){
 $nnn = 555;
 }} ?>
@@ -47,17 +47,17 @@ $nnn = 555;
 <tbody id="table">
 <?php $n=1; $total_credit = 0; $total_debit = 0;
 foreach ($cursor1 as $collection){
-	$receipt_no = @$collection['new_cash_bank']['receipt_id'];
-	$transaction_id = (int)$collection['new_cash_bank']['transaction_id'];	
-	$account_type = (int)$collection['new_cash_bank']['account_type'];			  
-	$d_user_id = (int)$collection['new_cash_bank']['user_id'];
-	$date = $collection['new_cash_bank']['transaction_date'];
-	$prepaired_by = (int)$collection['new_cash_bank']['prepaired_by'];   
-	$narration = $collection['new_cash_bank']['narration'];
-	$account_head = $collection['new_cash_bank']['account_head'];
-	$amount = $collection['new_cash_bank']['amount'];
-	$prepaired_by = (int)$collection['new_cash_bank']['prepaired_by'];   
-	$current_date = $collection['new_cash_bank']['current_date'];
+	$receipt_no = @$collection['cash_bank']['receipt_id'];
+	$transaction_id = (int)$collection['cash_bank']['transaction_id'];	
+	$account_type = (int)$collection['cash_bank']['account_type'];			  
+	$d_user_id = (int)$collection['cash_bank']['user_id'];
+	$date = $collection['cash_bank']['transaction_date'];
+	$prepaired_by = (int)$collection['cash_bank']['prepaired_by'];   
+	$narration = $collection['cash_bank']['narration'];
+	$account_head = $collection['cash_bank']['account_head'];
+	$amount = $collection['cash_bank']['amount'];
+	$prepaired_by = (int)$collection['cash_bank']['prepaired_by'];   
+	$current_date = $collection['cash_bank']['current_date'];
 	$creation_date = date('d-m-Y',strtotime($current_date));
 	
 	$result_gh = $this->requestAction(array('controller'=>'hms','action'=>'profile_picture'),array('pass'=>array($prepaired_by)));

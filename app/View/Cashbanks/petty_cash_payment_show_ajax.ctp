@@ -20,7 +20,7 @@ $m_to = strtotime($m_to);
 <?php
 $nnn = 55;
 foreach ($cursor1 as $collection){
-$transaction_date = $collection['new_cash_bank']['transaction_date'];
+$transaction_date = $collection['cash_bank']['transaction_date'];
 if($transaction_date >= $m_from && $transaction_date <= $m_to){
 $nnn = 555;								
 }} ?>
@@ -53,16 +53,16 @@ $total_debit = 0;
 $total_credit = 0;
 foreach ($cursor1 as $collection) 
 {
-$receipt_no = (int)@$collection['new_cash_bank']['receipt_id'];
-$transaction_id = (int)$collection['new_cash_bank']['transaction_id'];	
-$account_type = (int)$collection['new_cash_bank']['account_type'];
-$user_id = (int)$collection['new_cash_bank']['user_id'];
-$date = $collection['new_cash_bank']['transaction_date'];
-$prepaired_by = (int)$collection['new_cash_bank']['prepaired_by'];   
-$narration = $collection['new_cash_bank']['narration'];
-$account_head = $collection['new_cash_bank']['account_head'];
-$amount = $collection['new_cash_bank']['amount'];
-$current_date = $collection['new_cash_bank']['current_date'];
+$receipt_no = (int)@$collection['cash_bank']['receipt_id'];
+$transaction_id = (int)$collection['cash_bank']['transaction_id'];	
+$account_type = (int)$collection['cash_bank']['account_type'];
+$user_id = (int)$collection['cash_bank']['user_id'];
+$date = $collection['cash_bank']['transaction_date'];
+$prepaired_by = (int)$collection['cash_bank']['prepaired_by'];   
+$narration = $collection['cash_bank']['narration'];
+$account_head = $collection['cash_bank']['account_head'];
+$amount = $collection['cash_bank']['amount'];
+$current_date = $collection['cash_bank']['current_date'];
 $creation_date = date('d-m-Y',strtotime($current_date));
 $result_gh = $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($prepaired_by)));
 foreach ($result_gh as $collection) 

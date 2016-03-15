@@ -2198,22 +2198,17 @@ $this->set('society_name',$society_name);
 
 $from = $this->request->query('date1');
 $to = $this->request->query('date2');
-
 $this->set('from',$from);
 $this->set('to',$to);
 
-
-
-$this->loadmodel('new_cash_bank');
-$order=array('new_cash_bank.transaction_date'=> 'ASC');
+$this->loadmodel('cash_bank');
+$order=array('cash_bank.transaction_date'=> 'ASC');
 $conditions=array("society_id" => $s_society_id,"receipt_source"=>"petty_cash_receipt");
-$cursor1=$this->new_cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
+$cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor1',$cursor1);
 }
-
-//////////////////////////////////// End Petty Cash Receipt Show Ajax (Accounts)///////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////// Start Petty Cash Receipt View (Accounts)//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//End Petty Cash Receipt Show Ajax (Accounts)//
+//Start Petty Cash Receipt View (Accounts)//
 function petty_cash_receipt_view()
 {
 if($this->RequestHandler->isAjax()){
@@ -2698,10 +2693,10 @@ $to = $this->request->query('date2');
 $this->set('from',$from);
 $this->set('to',$to);
 
-$this->loadmodel('new_cash_bank');
+$this->loadmodel('cash_bank');
 $conditions=array("society_id" => $s_society_id,"receipt_source"=>"petty_cash_payment");
-$order=array('new_cash_bank.transaction_date'=>'ASC');
-$cursor1=$this->new_cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
+$order=array('cash_bank.transaction_date'=>'ASC');
+$cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor1',$cursor1);
 }
 //End Petty Cash Payment Show Ajax (Accounts)//
@@ -4054,33 +4049,33 @@ $amount = $child[4];
 $narration = $child[5];
 $current_date = date('Y-m-d');
 
-$auto=$this->autoincrement('new_cash_bank','transaction_id');
-$i=$this->autoincrement_with_receipt_source('new_cash_bank','receipt_id',3);
+$auto=$this->autoincrement('cash_bank','transaction_id');
+$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_id',3);
 $rr_arr[] = $i;
-$this->loadmodel('new_cash_bank');
+$this->loadmodel('cash_bank');
 $multipleRowData = Array( Array("transaction_id" => $auto, "receipt_id" => $i,  "user_id" => $party_ac, 
 "current_date" => $current_date, "account_type" => $ac_group,"transaction_date" => strtotime($transaction_date), "prepaired_by" => $s_user_id,"narration" => $narration, "account_head" => $ac_head,  "amount"=>$amount,"society_id" => $s_society_id,"receipt_source"=>"petty_cash_receipt","auto_inc"=>"YES"));
-$this->new_cash_bank->saveAll($multipleRowData);  
+$this->cash_bank->saveAll($multipleRowData);  
 
 if($ac_group == 1)
 {
 $l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
-$multipleRowData=Array(Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date),"debit"=>null,"credit"=>$amount,"ledger_account_id" => 34,"ledger_sub_account_id"=>$party_ac,"table_name"=>"new_cash_bank","element_id"=>$auto,"society_id"=>$s_society_id));
+$multipleRowData=Array(Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date),"debit"=>null,"credit"=>$amount,"ledger_account_id" => 34,"ledger_sub_account_id"=>$party_ac,"table_name"=>"cash_bank","element_id"=>$auto,"society_id"=>$s_society_id));
 $this->ledger->saveAll($multipleRowData);
 }
 else
 {
 $l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => null, "credit" =>$amount,"ledger_account_id" =>$party_ac, "ledger_sub_account_id" =>null,"table_name" =>"new_cash_bank","element_id" => $auto, "society_id" => $s_society_id));
+$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => null, "credit" =>$amount,"ledger_account_id" =>$party_ac, "ledger_sub_account_id" =>null,"table_name" =>"cash_bank","element_id" => $auto, "society_id" => $s_society_id));
 $this->ledger->saveAll($multipleRowData);
 }
 
 
 $l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date),"debit" =>$amount, "credit" =>null,"ledger_account_id" =>$ac_head,"ledger_sub_account_id"=>null,"table_name" =>"new_cash_bank","element_id"=>$auto, "society_id" => $s_society_id));
+$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date),"debit" =>$amount, "credit" =>null,"ledger_account_id" =>$ac_head,"ledger_sub_account_id"=>null,"table_name" =>"cash_bank","element_id"=>$auto, "society_id" => $s_society_id));
 $this->ledger->saveAll($multipleRowData);
 }
 
@@ -4090,7 +4085,6 @@ $this->Session->write('petty_cc_rr',1);
 $rr_arr2 = implode(",",$rr_arr);
 $output = json_encode(array('type'=>'success', 'text' => 'Petty Cash Receipt '.$rr_arr2.' generated successfully '));
 die($output);
-
 }
 //End Petty Cash Receipt Json//
 //Start Fix Deposit Jason//
@@ -5577,44 +5571,41 @@ $narration = $child[5];
 
 $current_date = date('Y-m-d');
 
-$auto=$this->autoincrement('new_cash_bank','transaction_id');
-$i=$this->autoincrement_with_receipt_source('new_cash_bank','receipt_id',4);
+$auto=$this->autoincrement('cash_bank','transaction_id');
+$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_id',4);
 $rrr_arr[] = $i;
-$this->loadmodel('new_cash_bank');
+$this->loadmodel('cash_bank');
 $multipleRowData = Array( Array("transaction_id" => $auto, "receipt_id" => $i,  "user_id" => $expense_party, 
 "current_date" => $current_date, "account_type" => $ac_group,"transaction_date" => strtotime($transaction_date), "prepaired_by" => $s_user_id,"narration" => $narration, "account_head" => $paid_from,  "amount" => $amount,"society_id" => $s_society_id,"receipt_source"=>"petty_cash_payment","auto_inc"=>"YES"));
-$this->new_cash_bank->saveAll($multipleRowData);  
+$this->cash_bank->saveAll($multipleRowData);  
 
 if($ac_group == 1)
 {
 $l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => $amount, "credit" =>null,"ledger_account_id" => 15, "ledger_sub_account_id" =>$expense_party, "table_name" =>"new_cash_bank","element_id" => $auto, "society_id" => $s_society_id));
+$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => $amount, "credit" =>null,"ledger_account_id" => 15, "ledger_sub_account_id" =>$expense_party, "table_name" =>"cash_bank","element_id" => $auto, "society_id" => $s_society_id));
 $this->ledger->saveAll($multipleRowData);
 }
 else
 {
 $l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => $amount, "credit" =>null,"ledger_account_id" =>$expense_party, "ledger_sub_account_id" =>null,"table_name" =>"new_cash_bank","element_id" => $auto, "society_id" => $s_society_id));
+$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => $amount, "credit" =>null,"ledger_account_id" =>$expense_party, "ledger_sub_account_id" =>null,"table_name" =>"cash_bank","element_id" => $auto, "society_id" => $s_society_id));
 $this->ledger->saveAll($multipleRowData);
 }
 
 $l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => null, "credit" =>$amount,"ledger_account_id" =>$paid_from,"ledger_sub_account_id" =>null,"table_name" =>"new_cash_bank","element_id" => $auto, "society_id" => $s_society_id));
+$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => null, "credit" =>$amount,"ledger_account_id" =>$paid_from,"ledger_sub_account_id" =>null,"table_name" =>"cash_bank","element_id" => $auto, "society_id" => $s_society_id));
 $this->ledger->saveAll($multipleRowData);
 }
-
 $this->Session->write('petty_cc_pp',1);
-
 $rr_shww = implode(",",$rrr_arr);
 $output = json_encode(array('type'=>'success', 'text' => 'Petty Cash Payment voucher '.$rr_shww.' generated successfully'));
 die($output);
 }
-//////////////////////////////End Petty Cash Payment Json //////////////////////////////////////////
-
-////////////////////////////// Start Petty Cash receipt update Json //////////////////////////////////////////
+//End Petty Cash Payment Json//
+//Start Petty Cash receipt update Json//
 function petty_cash_receipt_update_json()
 {
 $this->layout=null;

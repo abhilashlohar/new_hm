@@ -1237,71 +1237,54 @@ function over_due_report()
 			}
 		}
 		$this->set(compact("members_for_billing"));				
-					
-					
-					
-					
-					
-					
-					
-					
 }
 //End Over Due Report (Accounts)//
 //Start over due report show ajax(Accounts)//
 function over_due_report_show_ajax()
 {
-		$this->layout = 'blank';
-		$s_role_id=$this->Session->read('role_id');
-		$s_society_id = (int)$this->Session->read('hm_society_id');
-		$s_user_id=$this->Session->read('hm_user_id');
+	$this->layout = 'blank';
+	$s_role_id=$this->Session->read('role_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 
-			$this->loadmodel('society');
-			$conditions=array("society_id" => $s_society_id);
-			$cursor = $this->society->find('all',array('conditions'=>$conditions));
-			foreach($cursor as $collection)
-			{
-			$society_name = $collection['society']['society_name'];
-			}
-			$this->set('society_name',$society_name);
+		$this->loadmodel('society');
+		$conditions=array("society_id" => $s_society_id);
+		$cursor = $this->society->find('all',array('conditions'=>$conditions));
+		foreach($cursor as $collection){
+		$society_name = $collection['society']['society_name'];
+		}
+		$this->set('society_name',$society_name);
 
 				$from = $this->request->query('date1');
 				$to = $this->request->query('date2');
 				$wise = (int)$this->request->query('w');
 				$this->set('wise',$wise);
-				if($wise == 1)
-				{
-					$wing = (int)$this->request->query('wi');
-					$this->set("wing",$wing);
-				
+	if($wise == 1)
+	{
+		$wing = (int)$this->request->query('wi');
+		$this->set("wing",$wing);
+
 		$this->loadmodel('flat');
 		$condition=array('wing_id'=>(int)$wing);
 		$order=array('flat.flat_name'=>'ASC');
 		$result_flat=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
 		$this->set('result_flat',$result_flat);	
-				
-				}
-				else if($wise == 2)
-				{
-					$user_id = (int)$this->request->query('u');
-					$this->set("user_id",$user_id);
-				}
-					$this->set('from',$from);
-					$this->set('to',$to);
-
+	}
+	else if($wise == 2)
+	{
+		$user_id = (int)$this->request->query('u');
+		$this->set("user_id",$user_id);
+	}
+	$this->set('from',$from);
+	$this->set('to',$to);
 					
-			
-					
-					
-					
-					
-				$this->loadmodel('new_regular_bill');
-				$conditions=array("society_id"=> $s_society_id,"approval_status"=>1);
-				$cursor1=$this->new_regular_bill->find('all',array('conditions'=>$conditions));
-				$this->set('cursor1',$cursor1);	
+	$this->loadmodel('new_regular_bill');
+	$conditions=array("society_id"=> $s_society_id,"approval_status"=>1);
+	$cursor1=$this->new_regular_bill->find('all',array('conditions'=>$conditions));
+	$this->set('cursor1',$cursor1);	
 }
-/////////////////////// End over due report show ajax(Accounts)/////////////////////////////
-
-//////////////////////////// Start OverDue Excel////////////////////////////////////////////
+//End over due report show ajax(Accounts)//
+//Start OverDue Excel//
 function overdue_excel()
 {
 $this->layout = 'blank';	

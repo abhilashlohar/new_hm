@@ -1,41 +1,10 @@
 <?php
-
 $from1 = date("Y-m-d", strtotime($from));
 $from1 = strtotime($from1);
 $to1 = date("Y-m-d", strtotime($to));
 $to1 = strtotime($to1);  ?>
-<style>
-
-<!--
-#bg_color th{
-font-size: 10px !important;background-color:#C8EFCE;padding:2px;border:solid 1px #55965F;
-}
-#report_tb td{
-padding:2px;
-font-size: 12px;border:solid 1px #55965F;background-color:#FFF;
-}
-.text_bx{
-width: 50px;
-height: 15px !important;
-margin-bottom: 0px !important;
-font-size: 12px;
-}
-.text_rdoff{
-width: 50px;
-height: 15px !important;
-border: none !important;
-margin-bottom: 0px !important;
-font-size: 12px;
-}-->
-</style>
-<?php
- /////////////////////////////////////////////////////////////////////////////////////////////// ?>
-<?php 
-$nnn = 55;
-?>
-<?php 
-if($wise == 2)
-{
+<?php $nnn = 55; ?>
+<?php  if($wise == 2) {
 foreach($cursor1 as $collection)
 {
 $auto_id = (int)@$collection['new_regular_bill']['auto_id'];
@@ -50,41 +19,30 @@ $new_arrear_intrest = @$collection['new_regular_bill']['new_arrear_intrest'];
 $new_arrear_maintenance = @$collection['new_regular_bill']['new_arrear_maintenance'];
 $new_intrest_on_arrears = @$collection['new_regular_bill']['new_intrest_on_arrears'];
 $new_total = @$collection['new_regular_bill']['new_total'];
-
-if(empty($new_total) && empty($new_intrest_on_arrears) && empty($new_arrear_maintenance) && empty($new_arrear_intrest))
-{
-$due_amt = $total_amt;	
-}
-else
-{
-$due_amt = (($new_arrear_intrest)+($new_arrear_maintenance)+($new_intrest_on_arrears)+($new_total));
-}
+	if(empty($new_total) && empty($new_intrest_on_arrears) && empty($new_arrear_maintenance) && empty($new_arrear_intrest)){ 
+	$due_amt = $total_amt;	
+	}
+	else{
+	$due_amt = (($new_arrear_intrest)+($new_arrear_maintenance)+($new_intrest_on_arrears)+($new_total));
+	}
 	
 	$flat_detailll = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));				
-	foreach ($flat_detailll as $collection2) 
-	{
+	foreach ($flat_detailll as $collection2) {
 	$wing_id = (int)$collection2['flat']['wing_id'];  
 	}	
 
-if($wise == 2)
-{
-if($user_id == $flat_id)
-{
-if($date_from >= $from1 && $date_from <= $to1)
-{
-	if($due_amt > 0)
-	{
+if($wise == 2){
+if($user_id == $flat_id){
+if($date_from >= $from1 && $date_from <= $to1){
+	if($due_amt > 0){
 	$nnn = 555;
-	}
+}}}}}
 }
-}
-}
-}}
 else
 {
 foreach($result_flat as $data)	
 {
-	$due_amt=0;
+$due_amt=0;
 $total_amt=0;
 $new_arrear_intrest = 0;
 $new_intrest_on_arrears = 0;
@@ -92,8 +50,7 @@ $new_total = 0;
 $new_arrear_maintenance = 0;
 $flat_id = (int)$data['flat']['flat_id'];	
 $regular_data = $this->requestAction(array('controller' => 'hms', 'action' => 'new_regular_bill_detail_via_flat_id'),array('pass'=>array($flat_id)));				
-foreach ($regular_data as $collection) 
-{
+foreach ($regular_data as $collection) {
 $auto_id = (int)@$collection['new_regular_bill']['auto_id'];
 $bill_no = @$collection['new_regular_bill']['bill_no'];	
 $date_from = @$collection['new_regular_bill']['bill_start_date'];	
@@ -107,58 +64,39 @@ $new_arrear_maintenance = @$collection['new_regular_bill']['new_arrear_maintenan
 $new_intrest_on_arrears = @$collection['new_regular_bill']['new_intrest_on_arrears'];
 $new_total = @$collection['new_regular_bill']['new_total'];
 }	
-if(empty($new_total) && empty($new_intrest_on_arrears) && empty($new_arrear_maintenance) && empty($new_arrear_intrest))
-{
+if(empty($new_total) && empty($new_intrest_on_arrears) && empty($new_arrear_maintenance) && empty($new_arrear_intrest)){
 $due_amt = $total_amt;	
 }
-else
-{
+else{
 $due_amt = (($new_arrear_intrest)+($new_arrear_maintenance)+($new_intrest_on_arrears)+($new_total));
 }
 
 $flat_detailll = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));				
-foreach ($flat_detailll as $collection2) 
-{
+foreach ($flat_detailll as $collection2){
 $wing_id = (int)$collection2['flat']['wing_id'];  
 }		
-if(@$date_from >= $from1 && @$date_from <= $to1)
-{
-if($due_amt > 0)
-{
+if(@$date_from >= $from1 && @$date_from <= $to1){
+if($due_amt > 0){
 $nnn = 555;	
-}
-}	
-}
+}}}
 }
 ?>
-<?php //////////////////////////////////////////////////////////////////////////////////////////////// ?>
 <?php  if($nnn == 555) { ?>
-
 <div style="width:100%;" class="hide_at_print">
-<?php
-if($wise == 1)
-{
-?>
+<?php if($wise == 1){ ?>
 <span style="float:right;"> <a href="overdue_excel?f=<?php echo $from; ?>&t=<?php echo $to; ?>&w=<?php echo $wise; ?>&wi=<?php echo $wing; ?>" class="btn blue mini"><i class="icon-download"></i></a></span>
 <?php
-}
-else if($wise == 2)
-{
+}else if($wise == 2){
 ?>
 <span style="float:right;"> <a href="overdue_excel?f=<?php echo $from; ?>&t=<?php echo $to; ?>&w=<?php echo $wise; ?>&u=<?php echo $user_id; ?>" class="btn blue mini"><i class="icon-download"></i></a></span>
-<?php 
-}
-?>
+<?php } ?>
 <span style="float:right; margin-right:1%;"><a type="button" class=" printt btn green mini" onclick="window.print()"><i class="icon-print"></i></a></span>
 </div>
 <br /><br />
 <div style="width:100%; overflow:auto; margin-top:10px;" class="hide_at_print">
 <label class="m-wrap pull-right"><input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;" placeholder="Search"></label>	
 </div>
-<?php
-if($wise == 2)
-{
-?>
+<?php if($wise == 2) { ?>
 <table class="table table-bordered table-striped table-hover" style="width:100%; background-color:white;">
 <thead>
 <tr>

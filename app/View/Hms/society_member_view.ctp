@@ -3,7 +3,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 ?>
 <div class="portlet box">
 	<div class="portlet-body">
-		<table class="table table-condensed table-bordered table-hover" >
+		<table class="table table-condensed table-bordered" >
 			<thead>
 				<tr>
 					<th>Sr.</th>
@@ -29,22 +29,31 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				$validation_status=$user_info["validation_status"];
 				$date=$user_info["date"];
 				if(sizeof($wing_flats)>0){
-					foreach($wing_flats as $wing_flat){ ?>
-					<tr>
-						<td><?php echo $sr_no; ?></td>
-						<td><?php echo $user_name; ?></td>
-						<td><?php echo $wing_flat; ?></td>
-						<td><?php echo $roles; ?></td>
-						<td><?php echo $email; ?></td>
-						<td><?php echo $mobile; ?></td>
-						<?php if(empty($validation_status)){
-							echo '<td><a href="#" role="button" class="resend" id="14"> Send Reminder</a></td>';
-						}else{
-							echo '<td>'.$validation_status.'</td>';
-						} ?>
-						<td><?php echo $date; ?></td>
-						<td><a href="#" role="button" class="btn red mini exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign"></i> Exit</a></td>
-					</tr>
+					$q=0;
+					foreach($wing_flats as $wing_flat){ $q++; 
+					if($q==1){?>
+						<tr>
+							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $sr_no; ?></td>
+							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $user_name; ?></td>
+							<td><?php echo $wing_flat; ?></td>
+							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $roles; ?></td>
+							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $email; ?></td>
+							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $mobile; ?></td>
+							<?php if(empty($validation_status)){
+								echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend" id="14"> Send Reminder</a></td>';
+							}else{
+								echo '<td rowspan='.sizeof($wing_flats).'>'.$validation_status.'</td>';
+							} ?>
+							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $date; ?></td>
+							<td><a href="#" role="button" class="btn red mini exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign"></i> Exit</a></td>
+						</tr>
+					<?php }else{ ?>
+						<tr>
+							<td><?php echo $wing_flat; ?></td>
+							<td><a href="#" role="button" class="btn red mini exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign"></i> Exit</a></td>
+						</tr>
+					<?php } ?>
+					
 					<?php } 
 				}else{ ?>
 					<tr>

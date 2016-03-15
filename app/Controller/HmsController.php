@@ -27247,27 +27247,65 @@ function exit_user($user_flat_id=null){
 	$user_flat_info=$this->user_flat->find('all',array('conditions'=>$conditions));
 	$user_id=$user_flat_info[0]["user_flat"]["user_id"];
 	
-	$this->user_flat->updateAll(array('exited'=>"yes"),array('user_flat.user_flat_id'=>(int)$user_flat_id));
-	
-	$this->loadmodel('ledger_sub_account');
-	$this->ledger_sub_account->updateAll(array('exited'=>"yes"),array('ledger_sub_account.user_flat_id'=>(int)$user_flat_id));
-	
-	$this->loadmodel('user_flat');
-	$conditions=array('user_id'=>$user_id,'exited'=>"no");
-	$count=$this->user_flat->find('count',array('conditions'=>$conditions));
-	if($count==0){
-		$this->loadmodel('user');
-		$this->user->updateAll(array('active'=>"no"),array('user.user_id'=>$user_id));
+	$this->loadmodel('user');
+	$conditions=array('user_id'=>(int)$user_id);
+	$user_info=$this->user->find('all',array('conditions'=>$conditions));
+	$user_type=$user_info[0]["user"]["user_type"];
+	$net_bal=0;
+	if($user_type=="member"){
+		$this->loadmodel('ledger_sub_account');
+		$conditions=array('user_flat_id'=>(int)$user_flat_id);
+		$ledger_sub_account_info=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+		$ledger_sub_account_id=$ledger_sub_account_info[0]["ledger_sub_account"]["auto_id"];
+		
+		
+		$this->loadmodel('ledger');
+		$conditions=array('ledger_sub_account_id'=>$ledger_sub_account_id);
+		$ledger_info=$this->ledger->find('all',array('conditions'=>$conditions));
+		$total_dr=0; $total_cr=0; 
+		foreach($ledger_info as $ledger){
+			$total_dr+=$ledger["ledger"]["debit"];
+			$total_cr+=$ledger["ledger"]["credit"];
+		}
+		$net_bal=$total_dr-$total_cr;
 	}
-	echo '<div class="modal-backdrop fade in"></div>
-	<div style="display: block;" class="modal hide fade in">
-		<div class="modal-body">
-			<p>User exited successfully.</p>
-		</div>
-		<div class="modal-footer">
-			<button class="btn blue" id="close">OK</button>
-		</div>
-	</div>';
+	
+	
+	if($net_bal==0){
+		$this->loadmodel('user_flat');
+		$this->user_flat->updateAll(array('exited'=>"yes"),array('user_flat.user_flat_id'=>(int)$user_flat_id));
+		
+		$this->loadmodel('ledger_sub_account');
+		$this->ledger_sub_account->updateAll(array('exited'=>"yes"),array('ledger_sub_account.user_flat_id'=>(int)$user_flat_id));
+		
+		$this->loadmodel('user_flat');
+		$conditions=array('user_id'=>$user_id,'exited'=>"no");
+		$count=$this->user_flat->find('count',array('conditions'=>$conditions));
+		if($count==0){
+			$this->loadmodel('user');
+			$this->user->updateAll(array('active'=>"no"),array('user.user_id'=>$user_id));
+		}
+		echo '<div class="modal-backdrop fade in"></div>
+		<div style="display: block;" class="modal hide fade in">
+			<div class="modal-body">
+				<p>User exited successfully.</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn blue" id="close" user_flat_id='.$user_flat_id.' exited="yes">OK</button>
+			</div>
+		</div>';
+	}else{
+		echo '<div class="modal-backdrop fade in"></div>
+		<div style="display: block;" class="modal hide fade in">
+			<div class="modal-body">
+				<p>User can not exit because of due -'.$net_bal.'</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn blue" id="close" user_flat_id='.$user_flat_id.' exited="no">OK</button>
+			</div>
+		</div>';
+	}
+	
 }
 
 }

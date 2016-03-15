@@ -93,6 +93,11 @@ $(document).ready(function(){
 	$("#close").die().live("click",function(){
 		$("#confirm").hide();
 		$("#success").hide();
+		var user_flat_id=$(this).attr("user_flat_id");
+		var exited=$(this).attr("exited");
+		if(exited=="yes"){
+			$(".exit[user_flat_id="+user_flat_id+"]").closest("td").text("Exited");
+		}
 	});
 	$("#exit_user").on("click",function(){
 		var user_flat_id=$(this).attr("user_flat_id");
@@ -102,7 +107,6 @@ $(document).ready(function(){
 			$("#confirm").hide();
 			$("#success").html(response);
 			$("#success").show();
-			$("body").find(".exit[user_flat_id="+user_flat_id+"]").closest("td").html("exited");
 		});
 	});
 });

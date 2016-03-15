@@ -1270,17 +1270,18 @@ function over_due_report_show_ajax()
 		$result_flat=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
 		$this->set('result_flat',$result_flat);	
 	}
+	
 	else if($wise == 2)
 	{
-		$user_id = (int)$this->request->query('u');
-		$this->set("user_id",$user_id);
+		$ledger_sub_account_id = (int)$this->request->query('u');
+		$this->set("ledger_sub_account_id",$ledger_sub_account_id);
 	}
 	$this->set('from',$from);
 	$this->set('to',$to);
 					
-	$this->loadmodel('new_regular_bill');
+	$this->loadmodel('regular_bill');
 	$conditions=array("society_id"=> $s_society_id,"approval_status"=>1);
-	$cursor1=$this->new_regular_bill->find('all',array('conditions'=>$conditions));
+	$cursor1=$this->regular_bill->find('all',array('conditions'=>$conditions));
 	$this->set('cursor1',$cursor1);	
 }
 //End over due report show ajax(Accounts)//

@@ -142,17 +142,17 @@ $( document ).ready(function() {
 function final_import_bank_receipt_ajax(){
 	$( document ).ready(function() {
 		$.ajax({
-			url: "final_import_user_enrollment",
-			dataType: 'json'
+			url: "final_import_unit_configuration",
+			//dataType: 'json'
 		}).done(function(response){
-			//alert(response);
+			alert(response);
 			if(response.again_call_ajax=="YES"){
 				$("#progress_im").css("width",response.converted_per_im+"%");
 				$("#text_per_im").html(response.converted_per_im.toFixed(2)+"%");
 				final_import_bank_receipt_ajax();
 			}
 			if(response.again_call_ajax=="NO"){
-				$("#first_div").html('<div class="alert alert-block alert-success fade in"><h4 class="alert-heading">Success!</h4><p>User Enrollment Imported successfully.</p><p><a class="btn green" href="<?php echo $webroot_path; ?>Hms/import_user_enrollment" >OK</a> </p></div>');
+				$("#first_div").html('<div class="alert alert-block alert-success fade in"><h4 class="alert-heading">Success!</h4><p>User Enrollment Imported successfully.</p><p><a class="btn green" href="<?php echo $webroot_path; ?>Hms/unit_configuration_import" >OK</a> </p></div>');
 			}
 		});
 	});

@@ -100,14 +100,13 @@ $(document).ready(function() {
 		$("#check_validation_result").html('<img src="<?php echo $webroot_path; ?>as/loding.gif" /><span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Importing User Enrollment.</span>');
 		
 		$.ajax({
-			url: "<?php echo $webroot_path; ?>Hms/allow_user_enrollment",
+			url: "<?php echo $webroot_path; ?>Hms/allow_unit_configuration",
 		}).done(function(response){
-			
 			if(response=="F"){
 				$("#check_validation_result").html("");
 				alert("Your Data Is Not Validate.");
 			}else{
-				change_page_automatically("<?php echo $webroot_path; ?>Hms/import_user_enrollment");
+				change_page_automatically("<?php echo $webroot_path; ?>Hms/unit_configuration_import");
 			}
 		});
 	});
@@ -166,7 +165,7 @@ $( document ).ready(function() {
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Hms/auto_save_unit_configuration/"+record_id+"/"+field+"/"+value,
 		}).done(function(response){
-			alert(response);
+			
 			if(response=="F"){
 				$("table#report_tb tr#"+record_id+" td").each(function(){
 					$(this).find('input[field="'+field+'"]').parent("div").css("border", "solid 1px red");
@@ -185,8 +184,9 @@ $( document ).ready(function() {
 		var value=$("option:selected",this).val();
 		
 		$.ajax({
-			url: "<?php echo $webroot_path; ?>Hms/auto_save_user_enrollment/"+record_id+"/"+field+"/"+value,
+			url: "<?php echo $webroot_path; ?>Hms/auto_save_unit_configuration/"+record_id+"/"+field+"/"+value,
 		}).done(function(response){
+			alert(response);
 			if(response=="F"){
 				$("table#report_tb tr#"+record_id+" td").each(function(){
 					$(this).find('select[field="'+field+'"]').parent("div").css("border", "solid 1px red");
@@ -205,9 +205,10 @@ $( document ).ready(function() {
 $( document ).ready(function() {
 	$( '.delete_row' ).click(function() {
 		var record_id=$(this).attr("record_id");
+		
 		$(this).closest("tr").remove();
 		$.ajax({
-			url: "<?php echo $webroot_path; ?>Hms/delete_user_enrollment_row/"+record_id,
+			url: "<?php echo $webroot_path; ?>Hms/delete_unit_configuration_row/"+record_id,
 		}).done(function(response){
 			
 		});

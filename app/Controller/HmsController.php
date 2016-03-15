@@ -55,6 +55,19 @@ function unit_configuration_import(){
 			
 			$this->set("converted_per",($total_converted_records*100)/$total_records);
 		}
+		
+		
+		if(@$process_status==4){
+			$this->loadmodel('unit_configuration_csv_converted');
+			$conditions=array("society_id" => $s_society_id,"is_imported" => "YES");
+			$total_converted_records = $this->unit_configuration_csv_converted->find('count',array('conditions'=>$conditions));
+			
+			$this->loadmodel('unit_configuration_csv_converted');
+			$conditions=array("society_id" => $s_society_id);
+			$total_records = $this->unit_configuration_csv_converted->find('count',array('conditions'=>$conditions));
+			
+			$this->set("converted_per_im",($total_converted_records*100)/$total_records);
+		}
 	
 }
 
@@ -281,12 +294,84 @@ function auto_save_unit_configuration($record_id=null,$field=null,$value=null){
 			}
 		}	
 	
+		if($field=="flat"){
+			
+			$wing_flat=explode(',',$value);
+			$wing_id=(int)$wing_flat[0];
+			$flat_id=(int)$wing_flat[1];
+			$this->loadmodel('unit_configuration_csv_converted');
+			$this->unit_configuration_csv_converted->updateAll(array("wing" => $wing_id,"flat"=>$flat_id),array("auto_id" => $record_id));
+			$conditions=array('wing'=>$wing_id,"flat"=>$flat_id,"society_id"=>$s_society_id);
+			$count=$this->unit_configuration_csv_converted->find('count',array('conditions'=>$conditions));
+			if($count==2){
+				echo "F";
+			}else{
+				echo "T";
+			}
+		}
+		
+		if($field=="flat_type"){
+			
+			if(empty($value)){ echo "F";}
+			else{
+				$this->loadmodel('unit_configuration_csv_converted');
+				$this->unit_configuration_csv_converted->updateAll(array("flat_type" => $value),array("auto_id" => $record_id));
+				echo "T";
+			}
+		}	
+	
+}
+
+
+function allow_unit_configuration(){
+	
+	$this->layout=null;
+	
+		$this->ath();
+		 $s_society_id = $this->Session->read('hm_society_id'); 
+		
+		$this->loadmodel('import_unit_configuration_record');
+		$this->import_unit_configuration_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "UC"));
+		echo "T"; die;
+	
+	
+	
+}
+
+function delete_unit_configuration_row($record_id=null){
+	$this->layout=null;
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$this->loadmodel('unit_configuration_csv_converted');
+	$conditions4=array("auto_id" => (int)$record_id);
+	$this->unit_configuration_csv_converted->deleteAll($conditions4);
+	
 	
 	
 }
 
 
-
+function final_import_unit_configuration(){
+	
+	$this->layout=null;
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$this->loadmodel('import_unit_configuration_record');
+	$conditions=array("society_id" => $s_society_id,"module_name" => "UC");
+	$import_unit_configuration_record = $this->import_unit_configuration_record->find('all',array('conditions'=>$conditions));
+	
+	foreach($import_unit_configuration_record as $data_import){
+		$step1=(int)@$data_import["import_unit_configuration_record"]["step1"];
+		$step2=(int)@$data_import["import_unit_configuration_record"]["step2"];
+		$step3=(int)@$data_import["import_unit_configuration_record"]["step3"];
+		$step4=(int)@$data_import["import_unit_configuration_record"]["step4"];
+	}
+		$process_status= @$step1+@$step2+@$step3+@$step4;
+		if($process_status==4){
+	
+	
+		}
+}
 
 function import_user_enrollment(){
 	

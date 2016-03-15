@@ -431,7 +431,14 @@ function society_name_via_society_id($society_id){
 	$result=$this->society->find('all',array('conditions'=>$conditions));
 	return $result[0]["society"]["society_name"];
 }
-
+function regular_bill_info_via_ledger_sub_account($ledger_sub_account_id){
+	$s_society_id=$this->Session->read('hm_society_id');
+	
+	$this->loadmodel('regular_bill');
+	$conditions=array("society_id"=>$s_society_id,"ledger_sub_account_id"=>$ledger_sub_account_id);
+	$order=array('regular_bill.auto_id'=> 'ASC');
+	return $this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order));
+}
 
 }
 ?>

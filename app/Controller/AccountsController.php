@@ -1264,11 +1264,11 @@ function over_due_report_show_ajax()
 		$wing = (int)$this->request->query('wi');
 		$this->set("wing",$wing);
 
-		$this->loadmodel('flat');
-		$condition=array('wing_id'=>(int)$wing);
-		$order=array('flat.flat_name'=>'ASC');
-		$result_flat=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
-		$this->set('result_flat',$result_flat);	
+	$this->loadmodel('ledger_sub_account');
+	$condition=array('ledger_id'=>34);
+	$order=array('ledger_sub_account.auto_id'=>'ASC');
+	$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$condition,'order'=>$order));
+	$this->set('result_ledger_sub_account',$result_ledger_sub_account);	
 	}
 	
 	else if($wise == 2)
@@ -1280,7 +1280,7 @@ function over_due_report_show_ajax()
 	$this->set('to',$to);
 					
 	$this->loadmodel('regular_bill');
-	$conditions=array("society_id"=> $s_society_id,"approval_status"=>1);
+	$conditions=array("society_id"=> $s_society_id);
 	$cursor1=$this->regular_bill->find('all',array('conditions'=>$conditions));
 	$this->set('cursor1',$cursor1);	
 }

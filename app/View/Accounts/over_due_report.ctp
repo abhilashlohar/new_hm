@@ -35,7 +35,7 @@
 				</select>
 			</div>
 			<div id="two" class="hide">
-				<select name="ledger_sub_account[]" class="m-wrap large chosen" style="width:200px;">
+				<select id="resident_drop_down" class="m-wrap large chosen" style="width:200px;">
 				<option value="" style="display:none;">--member--</option>
 				<?php foreach($members_for_billing as $ledger_sub_account_id){
 				$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
@@ -56,27 +56,11 @@
 			<button class="btn yellow" id="go" style="margin-bottom:2px;">Go</button>
 		</td>
 	</tr>
-	</table>
-	<?php /*
-		<tr>
-		<td>
-		<input type="text" placeholder="From Date" id="date1" style="margin-top:8px; background-color:white !important;" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="from" value="<?php echo $from; ?>">
-		</td>
-		<td> 
-		<input type="text" placeholder="To Date" id="date2" style="margin-top:8px; background-color:white !important;" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="to" value="<?php echo $to; ?>">
-		</td>
-		<td><button class="btn yellow" id="go" style="margin-bottom:2px;">Go</button></td>
-	</tr>
 </table>
-</div>
-</center>
-
 
 <center>
 <div id="result" style="width:100%;"></div>
 </center>
-
-
 
 <script>
 $(document).ready(function() {
@@ -98,7 +82,7 @@ if(wise === undefined) { $('#validate_result').html('<div style="background-colo
 		}
 		else if(wise == 2)
 		{
-		var user_id = $(".resident_drop_down").val();
+		var user_id = $("#resident_drop_down").val();
 		if(user_id === '') { $('#validate_result').html('<div style="background-color:white; color:red; padding:5px;">Please Select Member </div>'); return false; }
 		}
 		
@@ -117,7 +101,6 @@ $('#validate_result').html('<div></div>');
 	
 });
 </script>		
-*/ ?>
 <script>
 	function wing_wise(){
 		$("#one").show();

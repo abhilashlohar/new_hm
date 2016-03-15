@@ -4077,7 +4077,7 @@ function multiple_flat()
 	$this->set('s_society_id',$s_society_id);
 	$this->seen_alert(105,$s_user_id);
 	
-	$this->loadmodel('ledger_sub_account');
+	/*$this->loadmodel('ledger_sub_account');
 	$condition=array('society_id'=>$s_society_id,'ledger_id'=>34);
 	$members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
 	foreach($members as $data3){
@@ -4102,7 +4102,7 @@ function multiple_flat()
 					}
 				}
 			}
-		}
+		}*/
 		$this->set(compact("members_for_billing"));	
 
 		if($this->request->is('post')){
@@ -4122,7 +4122,6 @@ $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$user_s
 $this->loadmodel('ledger_sub_account');
 $j=$this->autoincrement('ledger_sub_account','auto_id');
 $this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$user_name,'society_id' => $s_society_id,'user_id'=>$user_sel,'user_flat_id'=>$user_flat_id));
-
 ?>
 <!----alert-------------->
 <div class="modal-backdrop fade in"></div>
@@ -4136,13 +4135,17 @@ Successfully add multiple flat
 </div>
 <!----alert--------------><?php
 }	
-	
-
 	$this->loadmodel('wing');
 	$conditions=array("society_id"=>$s_society_id);
 	$cursor1 = $this->wing->find('all',array('conditions'=>$conditions));
 	$this->set('wing_data',$cursor1);
+	
+	$this->loadmodel('user');
+	$conditions=array("society_id"=>$s_society_id);
+	$user_data = $this->user->find('all',array('conditions'=>$conditions));
+	$this->set('user_data',$user_data);
 }
+
 //End multiple_flat//
 //Start Multiple Flat Ajax1//
 function multiple_flat_ajax1()

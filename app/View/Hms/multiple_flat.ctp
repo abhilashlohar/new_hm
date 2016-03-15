@@ -11,12 +11,23 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<input type="hidden" value="<?php echo $s_society_id; ?>" id="sss_id" />
 	<label style="font-size:14px; margin-left:3%;">Select Resident<span style="color:#F00;">*</span></label>
 	<div class="controls" style="margin-left:3%;">
-	<select name="resident_id" class="m-wrap sel_u span9" onchange="userr_fffnctt(this.value)">
+	<select name="resident_id" class="m-wrap sel_u span9 chosen" onchange="userr_fffnctt(this.value)">
 			<option value="" style="display:none;">--member--</option>
-			<?php foreach($members_for_billing as $ledger_sub_account_id){
-			$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
-			echo '<option value='.$member_info["user_id"].'>'.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
-			} ?>
+			<?php foreach($user_data as $data){
+				$user_id=$data['user']['user_id'];
+				$user_name=$data['user']['user_name'];				
+				
+	$user_flat_data = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($user_id)));
+	foreach($user_flat_data as $data){
+	$owner = $data['user_flat']['owner'];
+    }
+	if($owner == 'yes')
+	{		
+				?>
+				
+				<option value="<?php echo $user_id; ?>"><?php echo $user_name; ?></option>
+				
+			<?php }} ?>
 			</select>   
 	</div>
 	<br />

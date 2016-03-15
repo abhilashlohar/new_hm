@@ -36,13 +36,13 @@ $tomm = strtotime($to2);
 <tbody id="table">
 <?php $total = 0; $total_tds = 0; $net_amt = 0;
 foreach($cursor1 as $dataaa){
-$transaction_date = $dataaa['new_cash_bank']['transaction_date'];	
+$transaction_date = $dataaa['cash_bank']['transaction_date'];	
 $payment_date = date('d-m-Y',($transaction_date));
-$user_id = (int)$dataaa['new_cash_bank']['user_id'];
-$account_type = (int)$dataaa['new_cash_bank']['account_type'];
-$amount = $dataaa['new_cash_bank']['amount'];
-$instrument_utr = $dataaa['new_cash_bank']['receipt_instruction'];
-$tds_id = (int)@$dataaa['new_cash_bank']['tds_id']; 
+$user_id = (int)$dataaa['cash_bank']['user_id'];
+$account_type = (int)$dataaa['cash_bank']['account_type'];
+$amount = $dataaa['cash_bank']['amount'];
+$instrument_utr = $dataaa['cash_bank']['receipt_instruction'];
+$tds_id = (int)@$dataaa['cash_bank']['tds_id']; 
 	foreach($tds_arr as $tds_ddd){
 	$tdsss_taxxx = (int)$tds_ddd[0];  
 	$tds_iddd = (int)$tds_ddd[1];  

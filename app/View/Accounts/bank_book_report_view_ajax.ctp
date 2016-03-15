@@ -35,15 +35,15 @@ $nnn = 5555;
 <tr>
 <?php $total_balance = 0; $balance = 0; $total_payment = 0; $total_receipt = 0;
 foreach($cursor2 as $dataaa){
-$receipt_id = $dataaa['new_cash_bank']['receipt_id'];	
-$receipt_source = $dataaa['new_cash_bank']['receipt_source'];
-$narration = $dataaa['new_cash_bank']['narration'];
+$receipt_id = $dataaa['cash_bank']['receipt_id'];	
+$receipt_source = $dataaa['cash_bank']['receipt_source'];
+$narration = $dataaa['cash_bank']['narration'];
 		if($receipt_source == "bank_receipt"){
-			$transaction_date = $dataaa['new_cash_bank']['receipt_date'];	
+			$transaction_date = $dataaa['cash_bank']['receipt_date'];	
 			$transaction_date2 = date('d-m-Y',($transaction_date));	
-			$bank_id = (int)$dataaa['new_cash_bank']['deposited_bank_id'];		
-			$receipt_amount = $dataaa['new_cash_bank']['amount'];
-			$flat_id = (int)$dataaa['new_cash_bank']['flat_id']; 
+			$bank_id = (int)$dataaa['cash_bank']['deposited_bank_id'];		
+			$receipt_amount = $dataaa['cash_bank']['amount'];
+			$flat_id = (int)$dataaa['cash_bank']['flat_id']; 
 			$payment_amount = "";
 			$payment_amount2 = "";	
 	$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'fetch_subLedger_detail_via_flat_id'), array('pass' => array($flat_id)));
@@ -60,13 +60,13 @@ $narration = $dataaa['new_cash_bank']['narration'];
 	array('pass' => array($wing_id,$flat_id)));
 }
 else if($receipt_source == "bank_payment"){
-$transaction_date=$dataaa['new_cash_bank']['transaction_date'];	
+$transaction_date=$dataaa['cash_bank']['transaction_date'];	
 $transaction_date2=date('d-m-Y',($transaction_date));		
-$payment_amount=$dataaa['new_cash_bank']['amount'];	
+$payment_amount=$dataaa['cash_bank']['amount'];	
 $receipt_amount="";
 $receipt_amount2="";
-$type=(int)$dataaa['new_cash_bank']['account_type'];
-$account_head_id=(int)$dataaa['new_cash_bank']['user_id'];
+$type=(int)$dataaa['cash_bank']['account_type'];
+$account_head_id=(int)$dataaa['cash_bank']['user_id'];
 	if($type == 1){
 		$subleddger_detaill=$this->requestAction(array('controller' => 'Hms', 'action' => 'ledger_sub_account_fetch'), array('pass' => array($account_head_id)));
 		foreach($subleddger_detaill as $subledger_datttaa){

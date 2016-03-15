@@ -39,15 +39,15 @@ $nnn = 5555;
 <tr>
 <?php $total_balance = 0; $balance = 0; $total_payment = 0; $total_receipt = 0;
 foreach($cursor2 as $dataaa){
-$transaction_date = $dataaa['new_cash_bank']['transaction_date'];	
+$transaction_date = $dataaa['cash_bank']['transaction_date'];	
 $transaction_date2 = date('d-m-Y',($transaction_date));	
-$receipt_id = $dataaa['new_cash_bank']['receipt_id'];	
-$receipt_source = (int)$dataaa['new_cash_bank']['receipt_source'];
+$receipt_id = $dataaa['cash_bank']['receipt_id'];	
+$receipt_source = (int)$dataaa['cash_bank']['receipt_source'];
 if($receipt_source == 3){
-	$narration = $dataaa['new_cash_bank']['narration'];	
-	$account_id = (int)$dataaa['new_cash_bank']['user_id'];
-	$account_type = (int)$dataaa['new_cash_bank']['account_type'];
-	$receipt_amount = $dataaa['new_cash_bank']['amount'];
+	$narration = $dataaa['cash_bank']['narration'];	
+	$account_id = (int)$dataaa['cash_bank']['user_id'];
+	$account_type = (int)$dataaa['cash_bank']['account_type'];
+	$receipt_amount = $dataaa['cash_bank']['amount'];
 	$payment_amount = "";
 	$payment_amount2 = "";
 if($account_type == 1){
@@ -74,11 +74,11 @@ else{
 }
 else
 {
-$narration=$dataaa['new_cash_bank']['narration'];	
+$narration=$dataaa['cash_bank']['narration'];	
 $wing_flat="";
-$payment_amount=$dataaa['new_cash_bank']['amount'];	
-$account_type=(int)$dataaa['new_cash_bank']['account_type'];
-$account_id=(int)$dataaa['new_cash_bank']['user_id'];
+$payment_amount=$dataaa['cash_bank']['amount'];	
+$account_type=(int)$dataaa['cash_bank']['account_type'];
+$account_id=(int)$dataaa['cash_bank']['user_id'];
 $receipt_amount="";
 $receipt_amount2="";
     if($account_type == 1){

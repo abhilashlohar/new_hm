@@ -57,7 +57,7 @@
 		</td>
 	</tr>
 </table>
-
+</div>
 <center>
 <div id="result" style="width:100%;"></div>
 </center>

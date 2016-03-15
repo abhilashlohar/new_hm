@@ -69,7 +69,7 @@ $nnn = 555;
 <div style="width:100%; overflow:auto; margin-top:10px;" class="hide_at_print">
 	<label class="m-wrap pull-right"><input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;" placeholder="Search"></label>	
 </div>
-<?php if($wise == 2) { ?>
+
 <table class="table table-bordered table-striped table-hover" style="width:100%; background-color:white;">
 	<thead>
 		<tr>
@@ -124,7 +124,7 @@ $due_date_for_view=date('d-M-Y',($due_date));
 	$user_name=$data['ledger_sub_account']['name']; 
 	}	
 	$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array($wing_id,$flat_id)));
-	
+if($wise == 2){ 
 if($ledger_sub_account_id == $ledger_sub_account_id_via_regular_bill){
 if($date_from >= $from_date_renge && $date_from <= $to_date_renge){
 if($due_amt > 0){	
@@ -134,8 +134,8 @@ $total_amt = number_format($total_amt);
 $due_amt2 = number_format($due_amt);	
 ?>
 <tr>
-<td style="text-align:center;"><?php echo $bill_no; ?></td>
-<td style="text-align:center;"><?php echo $user_name; ?> &nbsp;&nbsp; <?php echo $wing_flat; ?></td>
+	<td style="text-align:center;"><?php echo $bill_no; ?></td>
+	<td style="text-align:center;"><?php echo $user_name; ?> &nbsp;&nbsp; <?php echo $wing_flat; ?></td>
 	<td style="text-align:center;"><?php echo $bill_start_date_for_view; ?></td>
 	<td style="text-align:center;"><?php echo $due_date_for_view; ?></td>
 	<td style="text-align:right;"><?php echo $total_amt; ?></td>
@@ -150,10 +150,45 @@ $due_amt2 = number_format($due_amt);
 		</div>
 	</td>
 </tr>
+<?php }}}}else{ 
+if($wing == $wing_id){
+if($date_from >= $from_date_renge && $date_from <= $to_date_renge){
+if($due_amt > 0){
+$total_bill_amt = $total_bill_amt+$total_amt;
+$total_due_amt=$total_due_amt+$due_amt;
+$total_amt = number_format($total_amt);
+$due_amt2 = number_format($due_amt); ?>
+<tr>
+	<td style="text-align:center;"><?php echo $bill_no; ?></td>
+	<td style="text-align:center;"><?php echo $user_name; ?> &nbsp;&nbsp; <?php echo $wing_flat; ?></td>
+	<td style="text-align:center;"><?php echo $bill_start_date_for_view; ?></td>
+	<td style="text-align:center;"><?php echo $due_date_for_view; ?></td>
+	<td style="text-align:right;"><?php echo $total_amt; ?></td>
+	<td style="text-align:right;"><?php echo $due_amt2; ?></td>
+	<td style="text-align:left;" class="hide_at_print">
+
+	 <div class="btn-group">
+		<a class="btn blue mini" href="#" data-toggle="dropdown">
+		<i class="icon-chevron-down"></i>	
+		</a><ul class="dropdown-menu" style="min-width:80px !important;">
+		<li><a href="regular_bill_view/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i> View</a></li>
+		</ul>
+		</div>
+	</td>
+</tr>
 <?php }}}} ?>
+<?php } 
+$total_due_amt = number_format($total_due_amt);
+$total_bill_amt = number_format($total_bill_amt);
+?>
+<tr>
+<td style="text-align:right;" colspan="4"><b>Total</b></td>
+<td style="text-align:right;"><b><?php echo $total_bill_amt; ?></b></td>
+<td style="text-align:right;"><b><?php echo $total_due_amt; ?></b></td>
+<td style="text-align:right;" class="hide_at_print"></td>
+</tr>
 </tbody>
 </table>
-<?php } ?>
 <?php } ?>
 <?php if($nnn == 55){ ?>
 <br /><br />											

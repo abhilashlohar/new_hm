@@ -19,7 +19,7 @@ $m_from = strtotime($from);
 $m_to = strtotime($to);
 ?>
 <?php foreach ($cursor2 as $collection){
-$transaction_date = $collection['new_cash_bank']['transaction_date'];
+$transaction_date = $collection['cash_bank']['transaction_date'];
 if($transaction_date >= $m_from && $transaction_date <= $m_to){
 $nnn = 555;	
 }} ?>
@@ -54,20 +54,20 @@ $nnn = 555;
 <tbody id="table">								
 <?php $total_credit = 0; $total_debit = 0;
 foreach ($cursor2 as $collection){
-$receipt_no=$collection['new_cash_bank']['receipt_id'];
-$transaction_id=(int)$collection['new_cash_bank']['transaction_id'];	
-$date=$collection['new_cash_bank']['transaction_date'];
-$prepaired_by_id=(int)$collection['new_cash_bank']['prepaired_by'];
-$user_id=(int)$collection['new_cash_bank']['user_id'];   
-$invoice_reference=$collection['new_cash_bank']['invoice_reference'];
-$description=$collection['new_cash_bank']['narration'];
-$receipt_mode=$collection['new_cash_bank']['receipt_mode'];
-$receipt_instruction=$collection['new_cash_bank']['receipt_instruction'];
-$account_id=(int)$collection['new_cash_bank']['account_head'];
-$amount=$collection['new_cash_bank']['amount'];
-$current_date=$collection['new_cash_bank']['current_date'];		
-$ac_type=(int)$collection['new_cash_bank']['account_type'];
-$tds_id=(int)$collection['new_cash_bank']['tds_id']; 
+$receipt_no=$collection['cash_bank']['receipt_id'];
+$transaction_id=(int)$collection['cash_bank']['transaction_id'];	
+$date=$collection['cash_bank']['transaction_date'];
+$prepaired_by_id=(int)$collection['cash_bank']['prepaired_by'];
+$user_id=(int)$collection['cash_bank']['user_id'];   
+$invoice_reference=$collection['cash_bank']['invoice_reference'];
+$description=$collection['cash_bank']['narration'];
+$receipt_mode=$collection['cash_bank']['receipt_mode'];
+$receipt_instruction=$collection['cash_bank']['receipt_instruction'];
+$account_id=(int)$collection['cash_bank']['account_head'];
+$amount=$collection['cash_bank']['amount'];
+$current_date=$collection['cash_bank']['current_date'];		
+$ac_type=(int)$collection['cash_bank']['account_type'];
+$tds_id=(int)$collection['cash_bank']['tds_id']; 
 	foreach($tds_arr as $tds_ddd){
 	$tdsss_taxxx = (int)$tds_ddd[0];  
 	$tds_iddd = (int)$tds_ddd[1];  

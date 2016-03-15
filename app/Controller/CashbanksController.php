@@ -1769,10 +1769,10 @@ $conditions=array("society_id" => $s_society_id);
 $cursor1=$this->bank_payment->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
 
-$this->loadmodel('new_cash_bank');
+$this->loadmodel('cash_bank');
 $conditions=array("society_id" => $s_society_id,"receipt_source"=>"bank_payment");
-$order=array('new_cash_bank.transaction_date'=> 'ASC');
-$cursor2=$this->new_cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
+$order=array('cash_bank.transaction_date'=> 'ASC');
+$cursor2=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor2',$cursor2);
 
 $this->loadmodel('reference');
@@ -3788,21 +3788,17 @@ $s_society_id=$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');
 $date=date('d-m-Y');
 $time = date(' h:i a', time());
-
-
 $q=$this->request->query('q');
 $q = html_entity_decode($q);
 $myArray = json_decode($q, true);
 
-
-
 $c = 0;
 foreach($myArray as $child)
 {
-$c++;
-if(empty($child[0])){
-$output = json_encode(array('type'=>'error', 'text' => 'Transaction Date is Required in row '.$c));
-die($output);
+	$c++;
+	if(empty($child[0])){
+	$output = json_encode(array('type'=>'error', 'text' => 'Transaction Date is Required in row '.$c));
+	die($output);
 }	
 
 
@@ -3885,8 +3881,8 @@ $accctyypp = explode(',',$ledgr_acc);
 $ledger_acc = (int)$accctyypp[0];
 $acc_type = (int)$accctyypp[1];
 
-$i=$this->autoincrement('new_cash_bank','transaction_id');
-$bbb=$this->autoincrement_with_receipt_source('new_cash_bank','receipt_id',2);
+$i=$this->autoincrement('cash_bank','transaction_id');
+$bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_id',2);
 $rr_arr[] = $bbb;
 $this->loadmodel('new_cash_bank');
 $multipleRowData = Array( Array("transaction_id" => $i, "receipt_id" => $bbb,"current_date" => $current_date, 
@@ -3894,7 +3890,7 @@ $multipleRowData = Array( Array("transaction_id" => $i, "receipt_id" => $bbb,"cu
 "user_id" => $ledger_acc,"invoice_reference" => @$invoice,"narration" => $narration, "receipt_mode" => $mode,
 "receipt_instruction" => $instrument, "account_head" => $bank_ac,  
 "amount" => $amount,"society_id" => $s_society_id, "tds_id" =>$tds_id,"account_type"=>$acc_type,"receipt_source"=>"bank_payment","auto_inc"=>"YES"));
-$this->new_cash_bank->saveAll($multipleRowData);  
+$this->cash_bank->saveAll($multipleRowData);  
 
 $this->loadmodel('reference');
 $conditions=array("auto_id" => 3);
@@ -3928,14 +3924,14 @@ if($acc_type == 1)
 {
 $l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => $amount, "credit" =>null,"ledger_account_id" => 15, "ledger_sub_account_id" =>$ledger_acc, "table_name" =>"new_cash_bank","element_id" => $i, "society_id" => $s_society_id));
+$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => $amount, "credit" =>null,"ledger_account_id" => 15, "ledger_sub_account_id" =>$ledger_acc, "table_name" =>"cash_bank","element_id" => $i, "society_id" => $s_society_id));
 $this->ledger->saveAll($multipleRowData); 
 }
 else
 {
 $l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => $amount,"credit" =>null,"ledger_account_id" =>$ledger_acc, "ledger_sub_account_id" =>null, "table_name" =>"new_cash_bank","element_id" =>$i, "society_id" => $s_society_id));
+$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => $amount,"credit" =>null,"ledger_account_id" =>$ledger_acc, "ledger_sub_account_id" =>null, "table_name" =>"cash_bank","element_id" =>$i, "society_id" => $s_society_id));
 $this->ledger->saveAll($multipleRowData); 
 }
 
@@ -3944,7 +3940,7 @@ $l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
 $multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), 
 "debit" =>null,"credit" =>$total_tds_amount,"ledger_account_id" =>33, 
-"ledger_sub_account_id" =>$sub_account_id_a, "table_name" =>"new_cash_bank","element_id" =>$i, 
+"ledger_sub_account_id" =>$sub_account_id_a, "table_name" =>"cash_bank","element_id" =>$i, 
 "society_id" => $s_society_id));
 $this->ledger->saveAll($multipleRowData); 
 
@@ -3956,18 +3952,15 @@ $l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
 $multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date),
 "debit" =>null,"credit" =>$tds_amount,"ledger_account_id" =>$sub_account_id_t, 
-"ledger_sub_account_id" =>null, "table_name" =>"new_cash_bank","element_id" =>$i, 
+"ledger_sub_account_id" =>null, "table_name" =>"cash_bank","element_id" =>$i, 
 "society_id" => $s_society_id));
 $this->ledger->saveAll($multipleRowData); 
 }
 }
-
 $this->Session->write('bank_ppp',1);
-
 $rr_arr2 = implode(",",$rr_arr);
 $output = json_encode(array('type'=>'success', 'text' => 'Bank Payment Voucher '.$rr_arr2.' Generated Successfully'));
 die($output);
-
 }
 //End Bank Payment Json//
 //Start Petty Cash Receipt Json//
@@ -6037,9 +6030,6 @@ $this->loadmodel('ledger');
 $multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" =>null,"credit" =>$tds_amount,"ledger_account_id" =>$sub_account_id_t, "ledger_sub_account_id" =>null, "table_name" =>"new_cash_bank","element_id" =>$i, "society_id" => $s_society_id));
 $this->ledger->saveAll($multipleRowData); 
 }	
-
-////////////END TDS CALCULATION //////////////////// 
-
 }
 
 $this->Session->write('bank_ppp2',1);
@@ -6047,13 +6037,13 @@ $this->Session->write('bank_ppp2',1);
 $output=json_encode(array('report_type'=>'done','text'=>'Please Fill Date in row'));
 die($output);
 }
-/////////////////////////////////// End save_bank_payment_imp //////////////////////////////////////////////
-////////////////////////////// Start bank_payment_add_row //////////////////////////////////////// 
+//End save_bank_payment_imp//
+//Start bank_payment_add_row// 
 function bank_payment_add_row()
 {
 $this->layout='blank';
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id = (int)$this->Session->read('user_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id = (int)$this->Session->read('hm_user_id');
 
 $this->ath();
 

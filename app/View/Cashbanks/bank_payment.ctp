@@ -8,7 +8,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <input type="hidden" id="fi" value="<?php echo $datef1; ?>" />
 <input type="hidden" id="ti" value="<?php echo $datet1; ?>" />
 <input type="hidden" id="cn" value="<?php echo $count; ?>" />
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
+
 <center>
 <a href="<?php echo $webroot_path; ?>Cashbanks/bank_payment" class="btn yellow" rel='tab'>Create</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/bank_payment_view" class="btn" rel='tab'>View</a>
@@ -306,7 +306,6 @@ $("#tds_show" + ccc).load('bank_payment_tds_ajax?tds='+tdsss+'&amount='+vvv+'');
 }
 </script>
 	
-<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
 <script>
 $(document).ready(function() { 
 	$('form#form2').submit( function(ev){
@@ -353,7 +352,6 @@ $(document).ready(function() {
 	
 
 
-<?php //////////////////////////////////////////////////////////////////////////////////////////////////// ?>    
     
     
 <div id="shwd" class="hide">

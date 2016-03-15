@@ -22402,15 +22402,7 @@ return $this->ledger_account->find('all',array('conditions'=>$conditions));
 }
 /////////////////////End Ledger Account Fetch(Accounts)/////////////////////////////////////
 
-/////////////////////////// Start Nikhil Test (Accounts)///////////////////////////////////////
-function nikhil_test()
-{
-$this->layout = 'session';
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');		
-}
-/////////////////////////// Start Nikhil Test (Accounts)///////////////////////////////////////
+
 
 ////////////////////////// Start Profit And Loss Report////////////////////////////////////////
 function profit_loss_report()

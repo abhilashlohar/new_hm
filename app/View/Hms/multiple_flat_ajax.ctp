@@ -37,7 +37,7 @@ $flat_id = $data['user_flat']['flat'];
 	$wing_id=$flat_info["flat"]["wing_id"];
 	$flat_name=$flat_info["flat"]["flat_name"];
 	} 
-$flat_name=ltrim($flat_name,'0');
+	$flat_name=ltrim($flat_name,'0');
 	$wing_detail = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_fetch'),array('pass'=>array(@$wing_id)));
 	foreach($wing_detail as $fflldddd){
 	$wing_name = $fflldddd['wing']['wing_name'];	

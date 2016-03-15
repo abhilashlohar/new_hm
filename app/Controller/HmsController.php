@@ -21,6 +21,248 @@ $dd=explode(' ',$name);
 	}
 }
 
+
+function unit_configuration_import(){
+	
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$this->loadmodel('import_unit_configuration_record');
+	$conditions=array("society_id" => $s_society_id,"module_name" => "UC");
+	$import_unit_configuration_record = $this->import_unit_configuration_record->find('all',array('conditions'=>$conditions));
+	$this->set('result_import_record',$import_unit_configuration_record);
+	
+	foreach($import_unit_configuration_record as $data_import){
+		$step1=(int)@$data_import["import_unit_configuration_record"]["step1"];
+		$step2=(int)@$data_import["import_unit_configuration_record"]["step2"];
+		$step3=(int)@$data_import["import_unit_configuration_record"]["step3"];
+		$step4=(int)@$data_import["import_unit_configuration_record"]["step4"];
+	}
+		$process_status= @$step1+@$step2+@$step3+@$step4;
+	if(@$process_status==2){
+			$this->loadmodel('unit_configuration_info_csv');
+			$conditions=array("society_id" => $s_society_id,"is_converted" => "YES");
+			$total_converted_records = $this->unit_configuration_info_csv->find('count',array('conditions'=>$conditions));
+			
+			$this->loadmodel('unit_configuration_info_csv');
+			$conditions=array("society_id" => $s_society_id);
+			$total_records = $this->unit_configuration_info_csv->find('count',array('conditions'=>$conditions));
+			
+			$this->set("converted_per",($total_converted_records*100)/$total_records);
+		}
+	
+}
+
+function Upload_unit_configuration_csv_file(){
+	
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id'); 
+	$this->ath();
+	if(isset($_FILES['file'])){
+	
+		$file_name=$s_society_id.".csv";
+		$file_tmp_name =$_FILES['file']['tmp_name'];
+		$target = "unit_configuration/";
+		$target=@$target.basename($file_name);
+		move_uploaded_file($file_tmp_name,@$target);
+		
+		
+		$today = date("d-M-Y");
+		
+		$this->loadmodel('import_unit_configuration_record');
+		$auto_id=$this->autoincrement('import_unit_configuration_record','auto_id');
+		$this->import_unit_configuration_record->saveAll(Array( Array("auto_id" => $auto_id, "file_name" => $file_name,"society_id" => $s_society_id, "user_id" => $s_user_id, "module_name" => "UC", "step1" => 1,"date"=>$today))); 
+		
+		die(json_encode("UPLOADED"));
+		
+	}
+	
+	
+}
+
+
+function read_unit_configuration_csv(){
+	
+	$this->layout=null;
+	$s_society_id = $this->Session->read('hm_society_id');
+	$f = fopen('unit_configuration/'.$s_society_id.'.csv', 'r') or die("ERROR OPENING DATA");
+	$batchcount=0;
+	$records=0;
+	while (($line = fgetcsv($f, 4096, ';')) !== false) {
+	$numcols = count($line);
+	$test[]=$line;
+	++$records;
+	}
+	$i=0;
+
+	foreach($test as $child){ $i++;
+			if($i>1){
+				$child_ar=explode(',',$child[0]);
+				
+				$wing_name=$child_ar[0];
+				$flat_name=$child_ar[1];
+				$flat_type=$child_ar[2];
+				$flat_area=$child_ar[3];
+				$flat_name=str_pad($flat_name,10,"0",STR_PAD_LEFT);
+				$this->loadmodel('unit_configuration_info_csv');
+				$auto_id=$this->autoincrement('unit_configuration_info_csv','auto_id');
+				$this->unit_configuration_info_csv->saveAll(Array(Array("auto_id" => $auto_id, "wing_name" => $wing_name, "flat_name" => $flat_name, "flat_type" => $flat_type, "flat_area" => $flat_area,"society_id"=>$s_society_id,"is_converted"=>"NO")));
+			}
+	}
+		$this->loadmodel('import_unit_configuration_record');
+		$this->import_unit_configuration_record->updateAll(array("step2" => 1),array("society_id" => $s_society_id));
+		die(json_encode("READ"));
+	
+}
+
+function convert_unit_configuration_info_data(){
+	
+	$this->layout=null;
+	$s_society_id = $this->Session->read('hm_society_id');
+	$this->loadmodel('unit_configuration_info_csv');
+	$conditions=array("society_id" => $s_society_id,"is_converted" => "NO");
+	$result_import_record = $this->unit_configuration_info_csv->find('all',array('conditions'=>$conditions,'limit'=>10));
+		foreach($result_import_record as $import_record){
+					$user_info_csv_id=$import_record["unit_configuration_info_csv"]["auto_id"];
+					$flat_type=trim($import_record["unit_configuration_info_csv"]["flat_type"]);
+					$wing_name=trim($import_record["unit_configuration_info_csv"]["wing_name"]);
+					$flat_name=trim($import_record["unit_configuration_info_csv"]["flat_name"]);
+					$flat_area=$import_record["unit_configuration_info_csv"]["flat_area"];
+					$this->loadmodel('wing'); 
+					$conditions=array("wing_name"=> new MongoRegex('/^' . $wing_name . '$/i'),"society_id"=>$s_society_id);
+					$result_ac=$this->wing->find('all',array('conditions'=>$conditions));
+					if(sizeof($result_ac)>0){
+						foreach($result_ac as $collection){
+							$wing_id = (int)$collection['wing']['wing_id'];
+						}
+					}else{
+						$wing_id=0;
+					}
+						
+	
+					$this->loadmodel('flat'); 
+					$conditions=array("flat_name"=> new MongoRegex('/^' . $flat_name . '$/i'),"society_id"=>$s_society_id,"wing_id"=>$wing_id);
+					$result_ac_flat=$this->flat->find('all',array('conditions'=>$conditions));
+					if(sizeof($result_ac_flat)>0){
+						foreach($result_ac_flat as $collection){
+							$flat_id = (int)$collection['flat']['flat_id'];
+						}
+					}else{
+						$flat_id=0;
+					}
+					
+					$this->loadmodel('flat_type_name'); 
+					$conditions=array("flat_name"=> new MongoRegex('/^' . $flat_type . '$/i'));
+					$result_ac_flat_type=$this->flat_type_name->find('all',array('conditions'=>$conditions));
+					if(sizeof($result_ac_flat_type)>0){
+						foreach($result_ac_flat_type as $collection){
+							$flat_type_id = (int)$collection['flat_type_name']['auto_id'];
+						}
+					}else{
+						$flat_type_id=0;
+					}
+				
+
+				$this->loadmodel('unit_configuration_csv_converted');
+				$auto_id=$this->autoincrement('unit_configuration_csv_converted','auto_id');
+				$this->unit_configuration_csv_converted->saveAll(Array( Array("auto_id" => $auto_id,"society_id" => $s_society_id, "flat_area" => $flat_area,"flat_type"=>$flat_type_id,"wing"=>$wing_id,"flat"=>$flat_id,"is_imported"=>"NO"))); 		
+
+				$this->loadmodel('unit_configuration_info_csv');
+				$this->unit_configuration_info_csv->updateAll(array("is_converted" => "YES"),array("auto_id" => $user_info_csv_id));				
+					
+		}
+		
+				$this->loadmodel('unit_configuration_info_csv');
+				$conditions=array("society_id" => $s_society_id,"is_converted" => "YES");
+				$total_converted_records = $this->unit_configuration_info_csv->find('count',array('conditions'=>$conditions));
+
+				$this->loadmodel('unit_configuration_info_csv');
+				$conditions=array("society_id" => $s_society_id);
+				$total_records = $this->unit_configuration_info_csv->find('count',array('conditions'=>$conditions));
+
+				$converted_per=($total_converted_records*100)/$total_records;
+				if($converted_per==100){ $again_call_ajax="NO"; 
+					$this->loadmodel('import_unit_configuration_record');
+					$this->import_unit_configuration_record->updateAll(array("step3" => 1),array("society_id" => $s_society_id, "module_name" => "UC"));
+				}else{
+					$again_call_ajax="YES"; 
+
+				}
+				die(json_encode(array("again_call_ajax"=>$again_call_ajax,"converted_per"=>$converted_per)));
+	
+	
+}
+
+function modify_unit_configuration_csv($page=null){
+	
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	$this->ath();
+	
+	
+	$s_society_id = $this->Session->read('hm_society_id'); 
+	$page=(int)$page;
+	$this->set('page',$page);
+	
+	$this->loadmodel('import_unit_configuration_record');
+	$conditions=array("society_id" => $s_society_id,"module_name" => "UC");
+	$import_unit_configuration_record = $this->import_unit_configuration_record->find('all',array('conditions'=>$conditions));
+	$this->set('result_import_record',$import_unit_configuration_record);
+	foreach($import_unit_configuration_record as $data_import){
+		$step1=(int)@$data_import["import_unit_configuration_record"]["step1"];
+		$step2=(int)@$data_import["import_unit_configuration_record"]["step2"];
+		$step3=(int)@$data_import["import_unit_configuration_record"]["step3"];
+		
+	}
+	$process_status= @$step1+@$step2+@$step3;
+	
+	if($process_status==3){
+		$this->loadmodel('unit_configuration_csv_converted'); 
+		$conditions=array("society_id"=>(int)$s_society_id);
+		$unit_configuration_csv_converted=$this->unit_configuration_csv_converted->find('all',array('conditions'=>$conditions,"limit"=>50,"page"=>$page));
+		$this->set('unit_configuration_csv_converted',$unit_configuration_csv_converted);
+		
+		$this->loadmodel('unit_configuration_csv_converted'); 
+		$conditions=array("society_id"=>(int)$s_society_id);
+		$count_user_enrollment_csv_converted=$this->unit_configuration_csv_converted->find('count',array('conditions'=>$conditions));
+		$this->set('count_user_enrollment_csv_converted',$count_user_enrollment_csv_converted);
+	}
+	
+		$this->loadmodel('wing');
+		$condition=array('society_id'=>$s_society_id);
+		$order=array('wing.wing_name'=>'ASC');
+		$result_wing=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+		foreach($result_wing as $data){
+			$wing_name=$data['wing']['wing_name'];
+			$wing_id=(int)$data['wing']['wing_id'];
+			
+			$this->loadmodel('flat');
+			$conditions=array("wing_id" => $wing_id,'society_id'=>$s_society_id);
+			$order=array('flat.flat_name'=> 'ASC');
+			$result_flat=$this->flat->find('all',array('conditions'=>$conditions,'order' =>$order));
+			foreach($result_flat as $data){
+				$flat_name=$data['flat']['flat_name'];
+				$flat_name=ltrim($flat_name,'0');
+				$flat_id=$data['flat']['flat_id'];
+				$flat_set[$wing_id.','.$flat_id]=$wing_name.'-'.$flat_name;
+			}
+		}
+		
+		$this->set('flat_set',$flat_set);
+		$this->loadmodel('flat_type_name'); 
+
+		$result_flat_type=$this->flat_type_name->find('all');
+		$this->set(compact('result_flat_type'));
+}
+
 function import_user_enrollment(){
 	
 	if($this->RequestHandler->isAjax()){
@@ -6671,6 +6913,15 @@ function dashboard(){
 	  $s_society_id = $this->Session->read('hm_society_id');
 	  $s_user_id = $this->Session->read('hm_user_id'); 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
+	
+	
+		$working_key='A7a76ea72525fc05bbe9963267b48dd96';
+        $sms_sender='FLEXIL';
+        $mobile_no="9887779123";
+		$r=123;
+		$sms="hello+rohit+".$r."";
+        file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_no.'&message='.$sms.'');
+		
 }
 function reject_notification($id,$change)
 {

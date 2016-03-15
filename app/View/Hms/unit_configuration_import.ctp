@@ -1,24 +1,24 @@
 <?php foreach($result_import_record as $data_import){
-	$step1=(int)@$data_import["import_user_enrollment_record"]["step1"];
-	$step2=(int)@$data_import["import_user_enrollment_record"]["step2"];
-	$step3=(int)@$data_import["import_user_enrollment_record"]["step3"];
-	$step4=(int)@$data_import["import_user_enrollment_record"]["step4"];
-	$step5=(int)@$data_import["import_user_enrollment_record"]["step5"];
-	$date=@$data_import["import_user_enrollment_record"]["date"];
-	$file_name=@$data_import["import_user_enrollment_record"]["file_name"];
+	$step1=(int)@$data_import["import_unit_configuration_record"]["step1"];
+	$step2=(int)@$data_import["import_unit_configuration_record"]["step2"];
+	$step3=(int)@$data_import["import_unit_configuration_record"]["step3"];
+	$step4=(int)@$data_import["import_unit_configuration_record"]["step4"];
+	$step5=(int)@$data_import["import_unit_configuration_record"]["step5"];
+	$date=@$data_import["import_unit_configuration_record"]["date"];
+	$file_name=@$data_import["import_unit_configuration_record"]["file_name"];
 }
-$process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
+ $process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
 <div id="first_div">
 <?php if(sizeof(@$result_import_record)==0){ ?>
 <div class="portlet box green" style="width: 50%; margin: auto;">
 	<div class="portlet-title">
-		<h4><i class="icon-cogs"></i> Import User Enrollment</h4>
+		<h4><i class="icon-cogs"></i> Import Unit configuration</h4>
 	</div>
 	<div class="portlet-body" align="">
 		<form method="post" id="form1" style="margin: 0px;">
-			<h5>Upload CSV file in given format to import user enrollment.</h5>
+			<h5>Upload CSV file in given format to import Unit configuration.</h5>
 			<input name="file" class="default" id="image-file" type="file">
-			<a href="<?php echo $webroot_path; ?>new_user_enrollment_csv/user_enrollment_file.csv" download=""><b>Click here for sample format</b></a><br/><br/>
+			<a href="<?php echo $webroot_path; ?>unit_configuration/unit_configuration.csv" download=""><b>Click here for sample format</b></a><br/><br/>
 			<h5 id="submit_element" >
 			<button type="submit" class="btn blue">IMPORT </button>
 			</h5>
@@ -39,12 +39,12 @@ $process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
 <script>
 $( document ).ready(function() {
     $.ajax({
-		url: "read_user_enrollment_csv",
+		url: "read_unit_configuration_csv",
 		dataType: 'json'
 	}).done(function(response){
 		
 		if(response=="READ"){
-			change_page_automatically("<?php echo $webroot_path; ?>Hms/import_user_enrollment");
+			change_page_automatically("<?php echo $webroot_path; ?>Hms/unit_configuration_import");
 		}
 	});
 });
@@ -73,15 +73,16 @@ $( document ).ready(function() {
 function convert_csv_data_ajax(){
 	$( document ).ready(function() {
 		$.ajax({
-			url: "convert_user_enrollment_info_data",
+			url: "convert_unit_configuration_info_data",
 			dataType: 'json'
 		}).done(function(response){
+			
 			if(response.again_call_ajax=="YES"){
 				$("#progress").css("width",response.converted_per+"%");
 				convert_csv_data_ajax();
 			}
 			if(response.again_call_ajax=="NO"){
-				change_page_automatically("<?php echo $webroot_path; ?>Hms/import_user_enrollment");
+				change_page_automatically("<?php echo $webroot_path; ?>Hms/unit_configuration_import");
 			}
 		});
 	});
@@ -101,12 +102,13 @@ function convert_csv_data_ajax(){
 	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
 	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Uploaded Data Is Ready To More Modification.</span>
 	<br/><br/>
-	
+	<div id="lod"></div>
 </div>
 
 <script>
 $( document ).ready(function() {
-	change_page_automatically("<?php echo $webroot_path; ?>Hms/modify_user_enrollment_csv");
+	$("#lod").html("<img src='<?php echo $webroot_path; ?>as/loding.gif' /> Please Wait, Modification...");
+	change_page_automatically("<?php echo $webroot_path; ?>Hms/modify_unit_configuration_csv");
 });
 </script>
 <?php } ?>
@@ -170,16 +172,15 @@ $('form#form1').submit( function(ev){
 	var m_data = new FormData();
 	m_data.append( 'file', $('input[name=file]')[0].files[0]);
 	$.ajax({
-	url: "Upload_user_enrollment_csv_file",
+	url: "Upload_unit_configuration_csv_file",
 	data: m_data,
 	processData: false,
 	contentType: false,
 	type: 'POST',
 	dataType: 'json'
 	}).done(function(response){
-		
 		if(response=="UPLOADED"){
-			change_page_automatically("<?php echo $webroot_path; ?>Hms/import_user_enrollment");
+			change_page_automatically("<?php echo $webroot_path; ?>Hms/unit_configuration_import");
 		}
 	});
 });

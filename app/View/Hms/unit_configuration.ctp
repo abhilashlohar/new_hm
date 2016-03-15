@@ -26,6 +26,7 @@ Society Setup
 <div class="tab-content" style="min-height:300px;">
 <div class="tab-pane active" id="tab_1_1">
 Every change you make is automatically saved.<br>
+<a href="<?php echo @$webroot_path; ?>Hms/unit_configuration_import" class="btn purple" style="float:right; margin-right:8px;">Bulk Import</a>
 <p id="msg" style="height:20px;"></p>
 
 <table class="table table-bordered table-condensed">

@@ -4169,7 +4169,7 @@ function multiple_flat_ajax1()
 function multiple_flat_ajax()
 {
 		$this->layout="blank";
-		$s_society_id=$this->Session->read('society_id');
+		$s_society_id=$this->Session->read('hm_society_id');
 		$wing_id = (int)$this->request->query('wngg');
 	    $value = $this->request->query('vv');	
         $this->set('value',$value);

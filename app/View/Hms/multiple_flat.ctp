@@ -60,7 +60,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <script>
 function wing_functtt(wingg)
 {
-$('#record').load('multiple_flat_ajax?wngg=' + wingg);
+$('#record').load('multiple_flat_ajax?wngg=' + wingg+'&vv='+ +'');
 }
 
 function userr_fffnctt(usridd)

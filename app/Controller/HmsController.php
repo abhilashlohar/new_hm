@@ -10600,7 +10600,6 @@ $conditions =array( '$or' => array(
 array('user_id'=> $user_id,'signup_random'=>$q),
 array('user_id'=> $user_id,'signup_random'=>$randm),
 ));
-//$conditions=array('user_id'=> $user_id,'signup_random'=>$q);
 $result_check=$this->user->find('all',array('conditions'=>$conditions));
 $n= sizeof($result_check);
 
@@ -10637,7 +10636,7 @@ $user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'u
 	$this->Session->write('hm_user_flat_id', $user_flat_id);
 	$this->Session->write('hm_society_id', $society_id);
 $this->loadmodel('user');
-$this->user->updateAll(array('password'=>$pass,'signup_random'=>''),array('user.user_id'=>$user_id));
+$this->user->updateAll(array('password'=>$pass,'signup_random'=>'','validation_status'=>'done'),array('user.user_id'=>$user_id));
 $this->redirect(array('action' => 'dashboard'));
 }
 
@@ -17647,38 +17646,71 @@ $result_user_flat= $this->user_flat->find('all',array('conditions'=>$conditions)
 		}
 }
 
-function society_member_view()
-{
-if($this->RequestHandler->isAjax()){
-		$this->layout='blank';
-	}else{
-		$this->layout='session';
+function society_member_view(){
+	if($this->RequestHandler->isAjax()){
+			$this->layout='blank';
+		}else{
+			$this->layout='session';
+		}
+	$this->ath();
+	$this->check_user_privilages();	
+	$s_society_id=$this->Session->read('hm_society_id');
+
+	$arranged_users=array();
+	
+	$this->loadmodel('user');
+	$conditions=array("society_id"=>$s_society_id);
+	$order=array('user.user_name'=>'ASC');	
+	$users=$this->user->find('all',array('conditions'=>$conditions,'order'=>$order));
+	foreach($users as $user_info){
+		$user_id=$user_info["user"]["user_id"];
+		$user_name=$user_info["user"]["user_name"];
+		$user_type=$user_info["user"]["user_type"];
+		$mobile=$user_info["user"]["mobile"];
+		$email=$user_info["user"]["email"];
+		$validation_status=@$user_info["user"]["validation_status"];
+		$date=$user_info["user"]["date"];
+		
+		if($user_type=="member" or $user_type=="family_member"){
+			$user_flat_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($user_id)));
+			$flats=array();
+			foreach($user_flat_info as $user_flat){
+				$wing=$user_flat["user_flat"]["wing"];
+				$flat=$user_flat["user_flat"]["flat"];
+				
+				$this->loadmodel('wing');
+				$conditions=array("wing_id"=>$wing);
+				$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
+				$wing_name=$wing_info[0]["wing"]["wing_name"];
+				
+				$this->loadmodel('flat');
+				$conditions=array("flat_id"=>$flat);
+				$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+				$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
+				
+				$flats[$wing.','.$flat]=$wing_name.' - '.$flat_name;
+			} 
+		}else{
+			$flats=array();
+		}
+		
+		$this->loadmodel('user_role');
+		$conditions=array("user_id"=>$user_id);
+		$user_role_info=$this->user_role->find('all',array('conditions'=>$conditions));
+		$roles=array();
+		foreach($user_role_info as $user_role){
+			$role_id=$user_role["user_role"]["role_id"];
+			
+			$this->loadmodel('role');
+			$conditions=array("role_id"=>$role_id);
+			$role_info=$this->role->find('all',array('conditions'=>$conditions));
+			$roles[]=$role_info[0]["role"]["role_name"];
+		}
+		$roles=implode(',',$roles);
+		
+		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date);
 	}
-$this->ath();
-$this->check_user_privilages();	
-$s_society_id=$this->Session->read('society_id');
-$this->loadmodel('society');	
-$conditions=array('society_id'=>$s_society_id);	
-$this->set('result_society',$this->society->find('all',array('conditions'=>$conditions)));
-$this->loadmodel('user');	
-$conditions1=array('society_id'=>$s_society_id);
-$order=array('user.user_name'=>'ASC');
-$result1=$this->user->find('all',array('conditions'=>$conditions1,'order'=>$order));	
-$this->set('result_user',$result1);
-$this->set('n',sizeof($result1));
-$this->loadmodel('role');	
-$conditions2=array('society_id'=>$s_society_id);
-$this->set('result_role',$this->role->find('all',array('conditions'=>$conditions2)));
-
-$this->loadmodel('user_flat');	
-$conditions1=array('society_id'=>$s_society_id,'active'=>0,'status'=>1);
-$result_user_owner=$this->user_flat->find('count',array('conditions'=>$conditions1,'order'=>$order));	
-$this->set('result_user_owner',$result_user_owner);
-
-$this->loadmodel('user_flat');	
-$conditions1=array('society_id'=>$s_society_id,'active'=>0,'status'=>2);
-$result_user_tenant=$this->user_flat->find('count',array('conditions'=>$conditions1,'order'=>$order));	
-$this->set('result_user_tenant',$result_user_tenant);
+	$this->set(compact("arranged_users"));
 }
 
 function society_member_excel()

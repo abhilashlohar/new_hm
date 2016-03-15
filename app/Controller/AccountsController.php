@@ -1179,9 +1179,8 @@ $this->Session->write('ledgrr_sub_accc', 1);
 				$cursor2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 				$this->set('cursor2',$cursor2);	
 }
-///////////////////////// End Master Ledger Sub Accounts COA (Accounts) //////////////////////////////
-
-////////////////////////////////// Start Over Due Report (Accounts) ///////////////////////////////////
+//End Master Ledger Sub Accounts COA (Accounts)//
+//Start Over Due Report (Accounts)//
 function over_due_report()
 {
 		if($this->RequestHandler->isAjax()){
@@ -1192,7 +1191,7 @@ function over_due_report()
 
 			$this->ath();
 			$this->check_user_privilages();
-				$s_role_id=$this->Session->read('role_id');
+				$s_role_id=$this->Session->read('hm_role_id');
 				$s_society_id = (int)$this->Session->read('hm_society_id');
 				$s_user_id=$this->Session->read('hm_user_id');		
 

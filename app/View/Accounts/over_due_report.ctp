@@ -1,13 +1,9 @@
 <div class="hide_at_print">	
-<?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'));
-?>
-
+	<?php
+	echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'));
+	?>
 </div>
-<?php
-$from = date('1-m-Y');
-$to = date('d-m-Y');
-?>
+<?php  $from = date('1-m-Y'); $to = date('d-m-Y'); ?>
 <center>
 <div id="validate_result"></div>
 <div class="hide_at_print">
@@ -123,7 +119,7 @@ $("#two").show();
 </script>
 
 
-
+*/ ?>
 
 
 

@@ -159,7 +159,7 @@ function ledger_sub_account_id_via_wing_id_and_flat_id($wing_id,$flat_id){
 	$user_flat_id=(int)@$result[0]["user_flat"]["user_flat_id"];
 	
 	$this->loadmodel('ledger_sub_account');
-	$conditions=array("user_flat_id" => $user_flat_id);
+	$conditions=array("user_flat_id" => $user_flat_id,"exited" => "no");
 	$result2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 	return (int)@$result2[0]["ledger_sub_account"]["auto_id"];
 }

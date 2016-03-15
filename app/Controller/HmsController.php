@@ -18040,18 +18040,21 @@ function society_member_view(){
 				$user_flat_id=$user_flat["user_flat"]["user_flat_id"];
 				$wing=$user_flat["user_flat"]["wing"];
 				$flat=$user_flat["user_flat"]["flat"];
+				$exited=$user_flat["user_flat"]["exited"];
+				if($exited=="no"){
+					$this->loadmodel('wing');
+					$conditions=array("wing_id"=>$wing);
+					$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
+					$wing_name=$wing_info[0]["wing"]["wing_name"];
+					
+					$this->loadmodel('flat');
+					$conditions=array("flat_id"=>$flat);
+					$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+					$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
+					
+					$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
+				}
 				
-				$this->loadmodel('wing');
-				$conditions=array("wing_id"=>$wing);
-				$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
-				$wing_name=$wing_info[0]["wing"]["wing_name"];
-				
-				$this->loadmodel('flat');
-				$conditions=array("flat_id"=>$flat);
-				$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
-				$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
-				
-				$flats[$wing.','.$flat]=$wing_name.' - '.$flat_name;
 			} 
 		}else{
 			$user_flat_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($user_id)));

@@ -4775,6 +4775,7 @@ function in_head_report(){
 		$end_date=$regular_bill["regular_bill"]["end_date"];
 		$periods[]=$start_date.'-'.$end_date;
 	}
+	if(empty($periods)){ $periods=array(); }
 	$periods=array_unique($periods);
 	$this->set(compact('periods'));
 

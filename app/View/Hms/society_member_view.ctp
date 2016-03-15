@@ -30,7 +30,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				$date=$user_info["date"];
 				if(sizeof($wing_flats)>0){
 					$q=0;
-					foreach($wing_flats as $wing_flat){ $q++; 
+					foreach($wing_flats as $user_flat_id=>$wing_flat){ $q++; 
 					if($q==1){?>
 						<tr>
 							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $sr_no; ?></td>

@@ -6919,7 +6919,7 @@ function dashboard(){
         $sms_sender='FLEXIL';
         $mobile_no="9887779123";
 		$r=123;
-		$sms="hello+rohit+".$r."";
+		$sms="hello+rohit+your+one+time+password+is+".$r."";
         file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_no.'&message='.$sms.'');
 		
 }

@@ -17650,7 +17650,7 @@ function society_member_view(){
 	$arranged_users=array();
 	
 	$this->loadmodel('user');
-	$conditions=array("society_id"=>$s_society_id);
+	$conditions=array("society_id"=>$s_society_id,"active"=>"yes");
 	$order=array('user.user_name'=>'ASC');	
 	$users=$this->user->find('all',array('conditions'=>$conditions,'order'=>$order));
 	foreach($users as $user_info){
@@ -17666,6 +17666,7 @@ function society_member_view(){
 			$user_flat_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($user_id)));
 			$flats=array();
 			foreach($user_flat_info as $user_flat){
+				$user_flat_id=$user_flat["user_flat"]["user_flat_id"];
 				$wing=$user_flat["user_flat"]["wing"];
 				$flat=$user_flat["user_flat"]["flat"];
 				
@@ -17682,6 +17683,8 @@ function society_member_view(){
 				$flats[$wing.','.$flat]=$wing_name.' - '.$flat_name;
 			} 
 		}else{
+			$user_flat_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($user_id)));
+			$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"];
 			$flats=array();
 		}
 		
@@ -17699,7 +17702,7 @@ function society_member_view(){
 		}
 		$roles=implode(',',$roles);
 		
-		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date);
+		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id);
 	}
 	$this->set(compact("arranged_users"));
 }
@@ -26987,5 +26990,34 @@ $this->flat->updateAll(array("flat_area"=>$value),array("flat_id" => $record_id)
 echo "F";	
 }
 ////////////////////// End auto_save_unit_config ///////////////////////////////
+function exit_user($user_flat_id=null){
+	$this->loadmodel('user_flat');
+	$conditions=array('user_flat_id'=>(int)$user_flat_id);
+	$user_flat_info=$this->user_flat->find('all',array('conditions'=>$conditions));
+	$user_id=$user_flat_info[0]["user_flat"]["user_id"];
+	
+	$this->user_flat->updateAll(array('exited'=>"yes"),array('user_flat.user_flat_id'=>(int)$user_flat_id));
+	
+	$this->loadmodel('ledger_sub_account');
+	$this->ledger_sub_account->updateAll(array('exited'=>"yes"),array('ledger_sub_account.user_flat_id'=>(int)$user_flat_id));
+	
+	$this->loadmodel('user_flat');
+	$conditions=array('user_id'=>$user_id,'exited'=>"no");
+	$count=$this->user_flat->find('count',array('conditions'=>$conditions));
+	if($count==0){
+		$this->loadmodel('user');
+		$this->user->updateAll(array('active'=>"no"),array('user.user_id'=>$user_id));
+	}
+	echo '<div class="modal-backdrop fade in"></div>
+	<div style="display: block;" class="modal hide fade in">
+		<div class="modal-body">
+			<p>User exited successfully.</p>
+		</div>
+		<div class="modal-footer">
+			<button class="btn blue" id="close">OK</button>
+		</div>
+	</div>';
+}
+
 }
 ?>

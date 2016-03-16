@@ -6191,7 +6191,7 @@ if($process_status==3){
 if($this->request->is('post'))	
 {
 
-	echo "hello"; exit;
+	
 	$transaction_date = $this->request->data['date'];	
 	$transaction_date = date('Y-m-d',strtotime($transaction_date));
 

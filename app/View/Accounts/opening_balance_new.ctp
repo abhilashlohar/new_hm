@@ -128,6 +128,56 @@ $wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_f
 		<td><input type="text" class="m-wrap small penalty" name="penalty[]" Placeholder="Penalty" value="<?php echo $penalty_for_view; ?>"></td> 
 	</tr>
 <?php }	?>
+<?php 
+    foreach($ledger_sub_account_dataa as $ledger_sub_account_dataa){
+        $ledger_sub_account_id = $ledger_sub_account_dataa['ledger_sub_account']['auto_id'];
+		$ledger_sub_account_name = $ledger_sub_account_dataa['ledger_sub_account']['name'];
+        $ledger_id = (int)$ledger_sub_account_dataa['ledger_sub_account']['ledger_id'];
+	    $debit_for_view="";
+		$credit_for_view="";
+		if($ledger_id != 34)
+		{		
+		$ledger_data = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_account_info_via_ledger_id'),array('pass'=>array($ledger_id)));
+		foreach ($ledger_data as $ledger_data){
+		$ledger_name = $ledger_data['ledger_account']['ledger_name'];
+		}
+		
+		if(!empty($result_bank_receipt_converted))
+		{
+		foreach($result_bank_receipt_converted as $data){ 
+		$csv_id=(int)$data['opening_balance_csv_converted']['auto_id']; 
+		$group_id2=(int)$data['opening_balance_csv_converted']['group_id'];
+		$ledger_id=(int)$data['opening_balance_csv_converted']['ledger_id'];
+		$ledger_type=(int)$data['opening_balance_csv_converted']['ledger_type'];
+		$wing_id = (int)$data['opening_balance_csv_converted']['wing_id'];
+		$flat_id = (int)$data['opening_balance_csv_converted']['flat_id'];
+		$debit = $data['opening_balance_csv_converted']['debit'];
+		$credit = $data['opening_balance_csv_converted']['credit'];
+		$penalty = $data['opening_balance_csv_converted']['penalty'];
+		if($ledger_sub_account_id == $ledger_id)
+		{
+		$total_debit=$total_debit+$debit;
+		$total_credit=$total_credit+$credit;
+		$grand_total_debit=$grand_total_debit+$debit;
+		$grand_total_credit=$grand_total_credit+$credit;
+		$debit_for_view=$debit;
+		$credit_for_view=$credit;
+		}
+		}	
+		}	
+		?>
+		
+		<tr>
+		<td><?php echo $ledger_name; ?></td>
+		<td><?php echo $ledger_sub_account_name; ?>
+<input type="hidden" value="<?php echo $ledger_id; ?>,<?php echo $ledger_sub_account_id; ?>" name="ledger_id[]">
+		
+		</td>
+		<td><input type="text" class="m-wrap small debit" name="debit[]" Placeholder="Debit"value="<?php echo $debit_for_view; ?>"></td>
+		<td><input type="text" class="m-wrap small credit" name="credit[]" Placeholder="Credit"value="<?php echo $credit_for_view; ?>"></td>
+		<td><input type="hidden" value="" name="penalty[]" Placeholder="Penalty"></td>
+		</tr>
+	<?php }} ?>
 	</table>
 	<button type="submit" name="sub" class="btn green" id="submit_opening_balance">Submit</button>
 </form>

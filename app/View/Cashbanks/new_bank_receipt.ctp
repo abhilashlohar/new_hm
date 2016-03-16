@@ -7,21 +7,21 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <a href="<?php echo $webroot_path; ?>Cashbanks/bank_receipt_view" class="btn" rel='tab'>View</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/bank_receipt_deposit_slip" class="btn" rel='tab'>Deposit Slip</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/bank_receipt_approve" class="btn" rel='tab'>Approve Receipts</a>
-<a href="<?php echo $webroot_path; ?>Cashbanks/import_bank_receipts_csv" class="btn purple"   style="float:right; margin-right:8px;">Import csv</a>
+<a href="<?php echo $webroot_path; ?>Cashbanks/import_bank_receipts_csv" class="btn purple"   style="float:right; margin-right:8px;"><i class="fa fa-database"></i> Import csv</a>
 </center>
 
 <?php $current_date= date('d-m-Y'); ?>
 <div class="portlet box">
-	<div class="portlet-body">
+	<div class="portlet-body" >
 	<form method="post">
 		<table class="table table-condensed table-bordered" id="main">
 			<thead>
 				<tr>
 					<th>Transaction Date</th>
-					<th>Deposited In</th>
+					<th width="200px">Deposited In</th>
 					<th>Receipt Mode</th>
 					<th width="200px">Received From</th>
-					<th>Amount Applied</th>
+					<th  width="115px">Amount Applied</th>
 					<th>Narration</th>
 				</tr>
 			</thead>
@@ -32,7 +32,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		</table>
 		<button type="submit" class="btn blue pull-right" name="submit">Create Receipt</button>
 	</form>
-		<a href="#" role="button" id="add_row" class="btn mini"><i class="icon-plus"></i> Add Row</a>
+		<a href="#" role="button" id="add_row" class="btn"><i class="icon-plus"></i> Add Row</a>
 	</div>
 </div>
 
@@ -44,7 +44,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		</td>
 		<td>
 			<select name="deposited_in[]">
-				<option value="" style="display:none;">Select Bank</option>
+				<option value="" style="display:none;width:200px;">Select Bank</option>
 				<?php 
 				foreach($bank_data as $bank_info){ 
 					$bank_id=$bank_info["ledger_sub_account"]["ledger_id"];
@@ -96,7 +96,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			<input type="text" class="m-wrap span12" placeholder="Amount Applied" name="amount[]">
 		</td>
 		<td>
-			<a style="margin-top: -4px; margin-right: -5px;" role="button" class="btn mini pull-right remove_row" href="#"><i class="icon-trash"></i></a>
+			<a style="margin-top: -4px; margin-right: -5px;font-size: 14px !important;" role="button" class="btn mini pull-right remove_row" href="#"><i class="icon-trash"></i></a>
 			<input type="text" class="m-wrap span9 pull-left" placeholder="Narration" name="narration[]">
 		</td>
 	</tr>
@@ -127,16 +127,7 @@ $(document).ready(function(){
 			$(this).closest("td").find("#non_cheque").hide();
 		}
 	})
-	$('select[name="received_from[]"]').die().live("change",function(){
-		var received_from=$(this).val();
-		if(received_from=="residential"){
-			$(this).closest("td").find("#residential").show();
-			$(this).closest("td").find("#non_residential").hide();
-		}else{
-			$(this).closest("td").find("#residential").hide();
-			$(this).closest("td").find("#non_residential").show();
-		}
-	})
+	
 	
 	
 	function add_row(){
@@ -147,5 +138,123 @@ $(document).ready(function(){
 		$('#main tbody tr:last input[name="date[]"]').datepicker();
 		$('#main tbody tr:last select[name="deposited_in[]"]').chosen();
 	}
+	
+	$("form").on("submit",function(e){
+		var allow="yes";
+		$('#main tbody tr select[name="deposited_in[]"]').each(function(i, obj) {
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		
+		$('#main tbody tr select[name="received_from[]"]').each(function(i, obj) {
+			var received_from=$(this).val();
+			if(received_from==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Select received from</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+			if(received_from=="residential"){
+				var ledger_sub_account=$(this).closest("td").find('select[name="ledger_sub_account[]"]').val();
+				if(ledger_sub_account==""){
+					$(this).closest('td').find(".er").remove();
+					$(this).closest('td').append('<span class="er">Select member</span>');
+					allow="no";
+				}else{
+					$(this).closest('td').find(".er").remove();
+				}
+			}
+		});
+		
+		$('#main tbody tr input[name="amount[]"]').each(function(i, obj) {
+			var a=$(this).val();
+			if(a=="" || a==0){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		
+		if(allow=="no"){
+			e.preventDefault();
+		}
+	});
+	
+	$('select[name="deposited_in[]"]').die().live("change",function(){
+		var deposited_in=$(this).val();
+		if(deposited_in==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+	
+	$('select[name="received_from[]"]').die().live("change",function(){
+		var received_from=$(this).val();
+		if(received_from=="residential"){
+			$(this).closest("td").find("#residential").show();
+			$(this).closest("td").find("#non_residential").hide();
+		}else{
+			$(this).closest("td").find("#residential").hide();
+			$(this).closest("td").find("#non_residential").show();
+		}
+		if(received_from==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Select received from</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+		if(received_from=="residential"){
+			var ledger_sub_account=$(this).closest("td").find('select[name="ledger_sub_account[]"]').val();
+			if(ledger_sub_account==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Select member</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		}
+	})
+	
+	$('select[name="ledger_sub_account[]"]').die().live("change",function(){
+		var ledger_sub_account=$(this).val();
+		if(ledger_sub_account==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+	
+	$('input[name="amount[]"]').die().live("keyup blur",function(){
+		var amount=$(this).val();
+		if(amount=="" || amount==0){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+	
 });
 </script>
+<style>
+.er{
+color: rgb(198, 4, 4);
+font-size: 11px;
+}
+</style>

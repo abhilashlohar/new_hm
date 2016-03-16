@@ -5768,52 +5768,47 @@ $this->set('webroot_path',$webroot_path);
 			$result_user=$this->user->find('all',array('conditions'=>$conditions));
 			$count=sizeof($result_user);
 			if($count>0){
-				
-					 
-						foreach($result_user as $data){
-							$user_id=(int)$data['user']['user_id'];
-							$society_id=$data['user']['society_id'];
-							
-						}
-						
-						if(!empty($uid) && $source=="f"){
-							$this->loadmodel('user');
-							$this->user->updateAll(array("f_profile_pic" => "https://graph.facebook.com/".$uid."/picture"),array("user_id" => (int)$user_id));
-						}
-						if(!empty($uid) && $source=="g"){
-							$this->loadmodel('user');
-							$this->user->updateAll(array("g_profile_pic" => $uid),array("user_id" => (int)$user_id));
-						}
-						 
-							date_default_timezone_set('Asia/kolkata');
-							$date=date("d-m-Y");
-							$time=date('h:i:a',time());
-							$this->loadmodel('log');
-							$i=$this->autoincrement('log','log_id');
-							$this->log->save(array('log_id'=>$i,'user_id'=>$user_id,'society_id'=>$society_id,'date'=>$date,'time'=>$time,'status'=>0));
-							
-								$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));
-								$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
-
-								$this->Session->write('hm_user_id', $user_id);
-								$this->Session->write('hm_user_flat_id', $user_flat_id);
-								$this->Session->write('hm_society_id', $society_id);
-								$this->redirect(array('action' => 'dashboard'));
-							
-						
-					 }
+				foreach($result_user as $data){
+					$user_id=(int)$data['user']['user_id'];
+					$society_id=$data['user']['society_id'];
 					
-			}else{
-						 if($source=="f"){
-							 $this->set('wrong_fb', 'It seems you have not sign up with HousingMatters or your Facebook email is not matching with our system.'); 
-						 }
-						elseif($source=="g"){
-							 $this->set('wrong_fb', 'It seems you have not sign up with HousingMatters or your Google email is not matching with our system.'); 
-						 }
-					 }
+				}
+				
+				if(!empty($uid) && $source=="f"){
+					$this->loadmodel('user');
+					$this->user->updateAll(array("f_profile_pic" => "https://graph.facebook.com/".$uid."/picture"),array("user_id" => (int)$user_id));
+				}
+				if(!empty($uid) && $source=="g"){
+					$this->loadmodel('user');
+					$this->user->updateAll(array("g_profile_pic" => $uid),array("user_id" => (int)$user_id));
+				}
+				 
+					date_default_timezone_set('Asia/kolkata');
+					$date=date("d-m-Y");
+					$time=date('h:i:a',time());
+					$this->loadmodel('log');
+					$i=$this->autoincrement('log','log_id');
+					$this->log->save(array('log_id'=>$i,'user_id'=>$user_id,'society_id'=>$society_id,'date'=>$date,'time'=>$time,'status'=>0));
+					
+					$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));
+					$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
+
+					$this->Session->write('hm_user_id', $user_id);
+					$this->Session->write('hm_user_flat_id', $user_flat_id);
+					$this->Session->write('hm_society_id', $society_id);
+					$this->redirect(array('action' => 'dashboard'));
+			}
+		}else{
+			 if($source=="f"){
+				 $this->set('wrong_fb', 'It seems you have not sign up with HousingMatters or your Facebook email is not matching with our system.'); 
+			 }
+			elseif($source=="g"){
+				 $this->set('wrong_fb', 'It seems you have not sign up with HousingMatters or your Google email is not matching with our system.'); 
+			 }
+		 }
 		
 	
-if ($this->request->is('post')) 
+if ($this->request->is('post'))
 {
 	
 	 $username=htmlentities($this->request->data["username"]);

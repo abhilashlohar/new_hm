@@ -5940,7 +5940,7 @@ $user=$this->request->query['user'];
 $this->set('user', $user);
 }
 
-/////////////////////////////////////////// Start Resident Signup //////////////////////////////////////////////////
+//Start Resident Signup//
 
 function resident_signup()
 {

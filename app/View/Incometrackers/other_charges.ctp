@@ -219,7 +219,7 @@ $income_arrr[] = $data;
 										<div class="span4"><?php echo $amount2; ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										<?php if($type ==1){ ?> One Time/Lumpsum <?php }else if($type ==2){ ?> Periodic <?php } ?>
 										<span style="float:right;" class="tooltips" data-placement="left" data-original-title="delete current charge">
-							<a href="#" role="button" idd="<?php echo $flat ; ?>" inch_id="<?php echo $income_head_id ; ?>" class="btn black mini other_charges_delete_oneby"><i class="icon-remove-sign"></i></a>
+							<a href="#" role="button" idd="<?php echo $ledger_sub_account_id ; ?>" inch_id="<?php echo $income_head_id ; ?>" class="btn black mini other_charges_delete_oneby"><i class="icon-remove-sign"></i></a>
 							</span>
 										
 										</div>

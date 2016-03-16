@@ -5164,20 +5164,24 @@ $this->other_charge->deleteAll($conditions);
 }
 	 if($status==1){
 		
-			 $flat_id=(int)$this->request->query('con');
+			 $ledger_sub_account_id=(int)$this->request->query('con');
 		     $inc_head_id=(int)$this->request->query('con3');
-			 $this->loadmodel('flat');
-			 $result_flat=$this->flat->find('all',array('conditions'=>array('flat_id'=>$flat_id)));
-			 $charges=$result_flat[0]['flat']['other_charges'];
 			
-			foreach($charges as $key=>$value){
-				if($key==$inc_head_id){
-					unset($charges[$key]);
-				}
-			}
-		
-			 $this->flat->updateAll(array('other_charges'=>$charges),array('flat_id'=>$flat_id));
-	 }
+	$this->loadmodel('other_charge');
+	$conditions=array('ledger_sub_account_id'=>$ledger_sub_account_id,'income_head_id'=>$inc_head_id);
+	$this->other_charge->deleteAll($conditions);
+
+/*
+$this->loadmodel('flat');
+$result_flat=$this->flat->find('all',array('conditions'=>array('flat_id'=>$flat_id)));
+$charges=$result_flat[0]['flat']['other_charges'];
+foreach($charges as $key=>$value){
+if($key==$inc_head_id){
+unset($charges[$key]);
+}
+}*/
+//$this->flat->updateAll(array('other_charges'=>$charges),array('flat_id'=>$flat_id));
+}
 	
 	$this->response->header('location:other_charges');
 }

@@ -961,7 +961,7 @@ function final_import_user_enrollment(){
 			if($owner=="yes"){
 				$this->loadmodel('ledger_sub_account');
 				$j=$this->autoincrement('ledger_sub_account','auto_id');
-				$this->ledger_sub_account->saveAll(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$name,'society_id' => $s_society_id,'user_id'=>$i,'user_flat_id'=>$user_flat_id));
+				$this->ledger_sub_account->saveAll(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$name,'society_id' => $s_society_id,'user_id'=>$i,'user_flat_id'=>$user_flat_id,'exited'=>'no'));
 			}
 			
 			$this->loadmodel('user_enrollment_csv_converted');
@@ -4603,7 +4603,7 @@ $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$user_s
 
 $this->loadmodel('ledger_sub_account');
 $j=$this->autoincrement('ledger_sub_account','auto_id');
-$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$user_name,'society_id' => $s_society_id,'user_id'=>$user_sel,'user_flat_id'=>$user_flat_id));
+$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$user_name,'society_id' => $s_society_id,'user_id'=>$user_sel,'user_flat_id'=>$user_flat_id,'exited'=>'no'));
 ?>
 <!----alert-------------->
 <div class="modal-backdrop fade in"></div>
@@ -19367,7 +19367,7 @@ if($this->RequestHandler->isAjax()){
 	}
 $this->ath();
 $this->check_user_privilages();
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $this->loadmodel('user');	
 $conditions1=array('society_id'=>$s_society_id,'tenant'=>2);
 $result1=$this->user->find('all',array('conditions'=>$conditions1));	
@@ -25330,7 +25330,7 @@ $this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>$ro
 if($tenant==1){
 $this->loadmodel('ledger_sub_account');
 $j=$this->autoincrement('ledger_sub_account','auto_id');
-$this->ledger_sub_account->saveAll(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$name,'society_id' => $s_society_id,'user_id'=>$i,'user_flat_id'=>$user_flat_id));
+$this->ledger_sub_account->saveAll(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$name,'society_id' => $s_society_id,'user_id'=>$i,'user_flat_id'=>$user_flat_id,'exited'=>'no'));
 }
 	
 		$special="'";

@@ -130,11 +130,11 @@ $( document ).ready(function() {
 	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Data Validation Process Completed.</span>
 	<br/><br/>
 	<img src="<?php echo $webroot_path; ?>as/loding.gif" /> 
-	<span style="padding-left: 10px; font-weight: bold; color: red;">Importing User Enrollment Into The System.</span>
+	<span style="padding-left: 10px; font-weight: bold; color: red;">Importing Unit Configuration Into The System.</span>
 	<div class="progress progress-striped progress-danger active">
 		<div id="progress_im" style="width: <?php echo $converted_per_im; ?>%;" class="bar"></div>
 	</div>
-	<span style="padding-left: 35px; color: rgb(114, 113, 113);"><b id="text_per_im"></b> User Enrollments Imported.</span>
+	<span style="padding-left: 35px; color: rgb(114, 113, 113);"><b id="text_per_im"></b> Unit Configuration Imported.</span>
 </div>
 <script>
 $( document ).ready(function() {

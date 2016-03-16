@@ -3797,7 +3797,7 @@ $current_date = date('Y-m-d');
 
 
 $this->loadmodel('supplimentry_bill');
-$multipleRowData = Array( Array("supplimentry_bill_id" => $supplimentry_bill_id,"receipt_id"=>$receipt_id3,"company_name"=>$company_name,"ledger_sub_account_id"=>$ledger_sub_account_id,"description"=>$narration,"date"=>$current_date,"society_id"=>$s_society_id,"total_amount"=> $amount,"income_head"=>$income_head_id,"created_by"=>$s_user_id,"due_date"=>strtotime($payment_due_date),"supplimentry_bill_type"=>$supplimentry_bill_type,"transaction_date"=>strtotime($transaction_date),"created_by"=>$s_user_id));
+$multipleRowData = Array( Array("supplimentry_bill_id" => $supplimentry_bill_id,"receipt_id"=>$receipt_id3,"company_name"=>@$company_name,"ledger_sub_account_id"=>$ledger_sub_account_id,"description"=>$narration,"date"=>$current_date,"society_id"=>$s_society_id,"total_amount"=> $amount,"income_head"=>$income_head_id,"created_by"=>$s_user_id,"due_date"=>strtotime($payment_due_date),"supplimentry_bill_type"=>$supplimentry_bill_type,"transaction_date"=>strtotime($transaction_date),"created_by"=>$s_user_id));
 $this->supplimentry_bill->saveAll($multipleRowData);
 
 
@@ -3824,7 +3824,7 @@ $society_phone=$data['society']['society_phone'];
 $neft_type=$data['society']['neft_type'];
 $sig_title=$data['society']['sig_title']; 
 $neft_detail=$data['society']['neft_detail'];
-$area_scale=$data['society']['area_scale'];
+$area_scale=@$data['society']['area_scale'];
 }
 $this->loadmodel('supplimentry_bill');
 $condition=array('society_id'=>$s_society_id,'supplimentry_bill_id'=>$supplimentry_bill_id);

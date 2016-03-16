@@ -6063,8 +6063,8 @@ $this->send_notification('<span class="label label-warning" ><i class="icon-mone
 $output = json_encode(array('type'=>'success', 'text' => 'Please Fill Numeric Amount '));
 		die($output);	
 }
-////////////////////End my_flat_receipt_update_json //////////////////////////////////////
-////////////////// Start opening_balance_new ///////////////////////////////////////////
+//End my_flat_receipt_update_json//
+//Start opening_balance_new//
 function opening_balance_new()
 {
 if($this->RequestHandler->isAjax()){
@@ -6190,8 +6190,12 @@ if($process_status==3){
 }
 if(isset($this->request->data['opening_balance_submit']))	
 {
-	$transaction_date = $this->request->data['date'];	
-	$transaction_date = date('Y-m-d',strtotime($transaction_date));
+		echo "sdgdsgdsg";
+		exit;
+		
+		
+		$transaction_date = $this->request->data['date'];	
+		$transaction_date = date('Y-m-d',strtotime($transaction_date));
 		$ledger_ids = $this->request->data['ledger_id'];
 		$debits = $this->request->data['debit'];
 		

@@ -43,7 +43,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			style="background-color:white !important;" name="transaction_date[]"/>
 		</td>
 		<td>
-			<input type="text" class="m-wrap small date-picker" Placeholder="Payment Due Date"name="payment_due_date[]">
+			<input type="text" class="m-wrap small date-picker" Placeholder="Payment Due Date"name="payment_due_date[]" data-date-format="dd-mm-yyyy">
 		</td>
 		<td>
 			<select class="m-wrap medium" name="bill_type[]" style="width:200px;">
@@ -68,7 +68,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			
 			<div class="hide" id="resident_dropdown_div">
 			
-			<select  class="m-wrap medium chosen" style="width:200px;">
+			<select  class="m-wrap medium chosen" style="width:200px;" name="resident[]">
 				<option value="" style="display:none;">--member--</option>
 				<?php foreach($members_for_billing as $ledger_sub_account_id){
 				$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
@@ -126,7 +126,7 @@ $(document).ready(function(){
 });
 </script>
 
-<script>
+<script>/*
 $('select[name="bill_type[]"]').die().live("change",function(){
 		var received_from=$(this).val();
 		if(received_from=='non_resident'){
@@ -141,7 +141,7 @@ $('select[name="bill_type[]"]').die().live("change",function(){
 		    //$("#company_name_div").show();
 		}
 	})
-
+*/
 </script>
 
 		

@@ -21,6 +21,89 @@ $dd=explode(' ',$name);
 	}
 }
 
+function unit_configuration_sample(){
+	
+	$this->layout="";
+	$filename="unit_configuration_import";
+	header ("Expires: 0");
+	header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+	header ("Cache-Control: no-cache, must-revalidate");
+	header ("Pragma: no-cache");
+	header ("Content-type: application/vnd.ms-excel");
+	header ("Content-Disposition: attachment; filename=".$filename.".csv");
+	header ("Content-Description: Generated Report" );
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	
+	$excel = "Wing,Flat Number,Flat Type,Flat Area (Sq. Ft.) \n";
+				
+		$flat_type=""; $flat_area="";
+		$this->loadmodel('wing');
+        $condition=array('society_id'=>$s_society_id);
+        $order=array('wing.wing_name'=>'ASC');
+        $wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+        foreach($wings as $data){
+            $wing_id=$data["wing"]["wing_id"];
+			$wing_name=$data["wing"]["wing_name"];
+            $this->loadmodel('flat');
+            $condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+            $order=array('flat.flat_name'=>'ASC');
+            $flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+            foreach($flats as $data2){
+                $flat_id=$data2["flat"]["flat_id"];
+				$flat_name=$data2["flat"]["flat_name"];
+				
+				$excel.= "$wing_name,$flat_name,$flat_type,$flat_area\n";
+			}
+		}
+		echo $excel;
+	
+}
+
+function unit_configuration_excel(){
+	
+	$this->layout="";
+	$filename="unit_configuration_import";
+	header ("Expires: 0");
+	header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+	header ("Cache-Control: no-cache, must-revalidate");
+	header ("Pragma: no-cache");
+	header ("Content-type: application/vnd.ms-excel");
+	header ("Content-Disposition: attachment; filename=".$filename.".csv");
+	header ("Content-Description: Generated Report" );
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	
+	$excel = "Wing,Flat Number,Flat Type,Flat Area (Sq. Ft.) \n";
+				
+		$flat_type=""; $flat_area="";
+		$this->loadmodel('wing');
+        $condition=array('society_id'=>$s_society_id);
+        $order=array('wing.wing_name'=>'ASC');
+        $wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+        foreach($wings as $data){
+            $wing_id=$data["wing"]["wing_id"];
+			$wing_name=$data["wing"]["wing_name"];
+            $this->loadmodel('flat');
+            $condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+            $order=array('flat.flat_name'=>'ASC');
+            $flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+            foreach($flats as $data2){
+                $flat_id=$data2["flat"]["flat_id"];
+				$flat_name=$data2["flat"]["flat_name"];
+				$flat_type_id=(int)$data2["flat"]["flat_type_id"];
+				
+				$result_flat_name = $this->requestAction(array('controller' => 'Fns', 'action' => 'flat_type_name_via_flat_type_id'),array('pass'=>array($wing_id)));
+				
+				$excel.= "$wing_name,$flat_name,$result_flat_name,$flat_area\n";
+			}
+		}
+		echo $excel;
+	
+}
+
+
+
+
+
 
 function unit_configuration_import(){
 	

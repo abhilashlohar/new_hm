@@ -10628,7 +10628,7 @@ $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'soc
 if($owner=="yes"){
 $this->loadmodel('ledger_sub_account');
 $j=$this->autoincrement('ledger_sub_account','auto_id');
-$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$user_name,'society_id' => $society_id,'user_flat_id'=>$user_flat_id,'exited'=>"no"));
+$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$user_name,'society_id' => $society_id,'user_flat_id'=>$user_flat_id,'exited'=>'no'));
 }
 /////////////  End code ledger sub accounts //////////////////////////
 
@@ -18529,7 +18529,7 @@ $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'soc
 if($owner=="yes"){
 $this->loadmodel('ledger_sub_account');
 $j=$this->autoincrement('ledger_sub_account','auto_id');
-$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$name,'society_id' => $society_id,'user_flat_id'=>$user_flat_id,'exited'=>"no"));
+$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$name,'society_id' => $society_id,'user_flat_id'=>$user_flat_id,'exited'=>'no'));
 }
 		 
 ///////////////  Insert code ledger Sub Accounts //////////////////////

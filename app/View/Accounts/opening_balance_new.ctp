@@ -207,7 +207,6 @@ name="ledger_id[]">
 </div>
 </div>
 </div>
-
 </form>
 
 <script>

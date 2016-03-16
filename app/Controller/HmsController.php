@@ -86,15 +86,15 @@ function unit_configuration_excel(){
             $condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
             $order=array('flat.flat_name'=>'ASC');
             $flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
-            foreach($flats as $data2){
-                $flat_id=$data2["flat"]["flat_id"];
-				$flat_name=$data2["flat"]["flat_name"];
-				$flat_type_id=(int)$data2["flat"]["flat_type_id"];
-				$flat_area=$data2["flat"]["flat_area"];
-				$result_flat_name = $this->requestAction(array('controller' => 'Fns', 'action' => 'flat_type_name_via_flat_type_id'),array('pass'=>array($flat_type_id)));
-				
-				$excel.= "$wing_name,$flat_name,$result_flat_name,$flat_area\n";
-			}
+				foreach($flats as $data2){
+					$flat_id=$data2["flat"]["flat_id"];
+					$flat_name=$data2["flat"]["flat_name"];
+					$flat_type_id=(int)$data2["flat"]["flat_type_id"];
+					$flat_area=$data2["flat"]["flat_area"];
+					$result_flat_name = $this->requestAction(array('controller' => 'Fns', 'action' => 'flat_type_name_via_flat_type_id'),array('pass'=>array($flat_type_id)));
+					
+					$excel.= "$wing_name,$flat_name,$result_flat_name,$flat_area\n";
+				}
 		}
 		echo $excel;
 	

@@ -3,6 +3,11 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 ?>
 
 <form method="post">
+<div class="portlet box blue">
+<div class="portlet-title">
+<h4 class="block"><i class="icon-reorder"></i>Opening Balance Import</h4>
+</div>
+<div class="portlet-body form">
 	<input type="text" class="m-wrap medium date-picker" data-date-format="dd-mm-yyyy" Placeholder="Opening Balance Date" style="background-color:white !important;" name="date" id="date">
 	<br><br>
 	<table class="table table-bordered table-condensed " style="background-color:white;">
@@ -191,4 +196,6 @@ $wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_f
 </tr>
 	</table>
 	<button type="submit" name="sub" class="btn green" id="submit_opening_balance">Submit</button>
+</div>
+</div>
 </form>

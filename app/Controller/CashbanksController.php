@@ -5748,9 +5748,9 @@ function new_bank_receipt(){
 			$cursor2=$this->society->find('all',array('conditions'=>$conditions));
 			foreach ($cursor2 as $collection){
 					$society_name = $collection['society']['society_name'];
-					$society_reg_no = $collection['society']['society_reg_num'];
-					$society_address = $collection['society']['society_address'];
-					$sig_title = $collection['society']['sig_title'];
+					$society_reg_no = @$collection['society']['society_reg_num'];
+					$society_address = @$collection['society']['society_address'];
+					$sig_title = @$collection['society']['sig_title'];
 					$email_is_on_off=(int)@$collection["society"]["account_email"];
 					$sms_is_on_off=(int)@$collection["society"]["account_sms"];
 			}

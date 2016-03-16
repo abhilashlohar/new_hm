@@ -6191,7 +6191,7 @@ if($process_status==3){
 if(isset($this->request->data['sub']))	
 {
 
-	echo "hello"; exit;
+	
 	$transaction_date = $this->request->data['date'];	
 	$transaction_date = date('Y-m-d',strtotime($transaction_date));
 

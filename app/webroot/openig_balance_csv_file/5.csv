@@ -1,0 +1,302 @@
+Group Name,A/c name,wing,unit,Debit,Credit,Penalty 
+Administrative Expenses,Audit fees,,,100,,
+Administrative Expenses,Bank charges,,,,100,
+Administrative Expenses,Cable TV expenses,,,100,,
+Administrative Expenses,Computer & sofware expenses,,,,100,
+Administrative Expenses,Cultural / Festival expenses,,,100,,
+Administrative Expenses,Depreciation,,,,100,
+Administrative Expenses,Insurance charges,,,100,,
+Administrative Expenses,Interest expenses,,,,100,
+Administrative Expenses,Legal & Professional Charges,,,100,,
+Administrative Expenses,Meeting & Welfare expenses,,,100,,
+Administrative Expenses,Miscellaneous expenses,,,,100,
+Administrative Expenses,Postage & Courier charges,,,100,,
+Administrative Expenses,Printing & Stationery charges,,,,100,
+Administrative Expenses,Reversals & Adjustments,,,100,,
+Administrative Expenses,Salaries,,,,100,
+Administrative Expenses,Staff welfare expenses,,,100,,
+Administrative Expenses,Subscription charges,,,,100,
+Administrative Expenses,Sundry Balances Written Off,,,100,,
+Administrative Expenses,Telecom & Internet expenses,,,100,,
+Administrative Expenses,Traveling & conveyance expenses,,,,100,
+Capital Account,Application Money,,,100,,
+Capital Account,Share Capital,,,,100,
+Contribution from Members,CIDCO Service charges,,,100,,
+Contribution from Members,Cheque Return charges,,,,100,
+Contribution from Members,Cultural Fund contribution,,,100,,
+Contribution from Members,Electricity Charges,,,,100,
+Contribution from Members,Insurance Charges,,,100,,
+Contribution from Members,Interest from members,,,100,,
+Contribution from Members,LAT Charges,,,,100,
+Contribution from Members,Lease Rent,,,100,,
+Contribution from Members,Maintenance charges,,,,100,
+Contribution from Members,Muncipal Tax,,,100,,
+Contribution from Members,Municipal Taxes,,,,100,
+Contribution from Members,Non Occupancy Charges,,,100,,
+Contribution from Members,Parking Charges,,,,100,
+Contribution from Members,Repair Fund,,,100,,
+Contribution from Members,Repair and Renovation Fund,,,100,,
+Contribution from Members,Sinking Fund,,,,100,
+Contribution from Members,Water Charges,,,100,,
+Contribution from Members,Welfare Fund,,,,100,
+Current Assets,Accrued Interest,,,100,,
+Current Assets,Advance given to Vendors,,,,100,
+Current Assets,Cash-in-hand,,,100,,
+Current Assets,Stock / Inventories,,,,100,
+Current Assets,Sundry Debtors,,,100,,
+Current Assets,Sundry Debtors Control A/c,,,100,,
+Current Liabilities,Advance from Members,,,,100,
+Current Liabilities,Advances & Security Deposits taken,,,100,,
+Current Liabilities,Contribution for Conveyance Deed,,,,100,
+Current Liabilities,Provisions,,,100,,
+Current Liabilities,Retention A/c,,,,100,
+Current Liabilities,Service Tax payable,,,100,,
+Current Liabilities,Tax deducted at source (TDS payable),,,,100,
+Fixed Assets,Accumulated Depreciation,,,100,,
+Fixed Assets,Building,,,100,,
+Fixed Assets,Club Center Equipments,,,,100,
+Fixed Assets,Computers,,,100,,
+Fixed Assets,Furniture & Fixtures,,,,100,
+Fixed Assets,Gym Equipments,,,100,,
+Fixed Assets,Income & Expenditure A/c,,,,100,
+Fixed Assets,Land,,,100,,
+Fixed Assets,Office Equipments,,,,100,
+Fixed Assets,Plant & Machinery,,,100,,
+Fixed Assets,Power Back up & Generator,,,100,,
+Fixed Assets,Printer,,,,100,
+Fixed Assets,Surveillance & Security Systems,,,100,,
+Fixed Assets,Vehicles,,,,100,
+Investments,Deposits with Electricity Cos,,,100,,
+Investments,Deposits with Water Supply Cos,,,,100,
+Investments,Fixed Deposits,,,100,,
+Investments,Mutual Funds,,,,100,
+Investments,Shares of Federation,,,100,,
+Other Income,Advertising Income,,,100,,
+Other Income,Income from Advertising & events,,,,100,
+Other Income,Interest from  Fixed deposits,,,100,,
+Other Income,Interest from saving bank accounts,,,,100,
+Other Income,Miscellaneous income,,,100,,
+Other Income,Mobile tower rent,,,,100,
+Repairs & Maintenance,Building R&M,,,100,,
+Repairs & Maintenance,Club / Recreation Center expenses,,,,100,
+Repairs & Maintenance,Electrical R&M,,,100,,
+Repairs & Maintenance,Fire & Safety expenses,,,100,,
+Repairs & Maintenance,Garden / Lawn expenses,,,,100,
+Repairs & Maintenance,General Repairs & Maintenance,,,100,,
+Repairs & Maintenance,Gymnasium R&M,,,,100,
+Repairs & Maintenance,House keeping charges,,,100,,
+Repairs & Maintenance,Lifts & Elevators - R&M,,,,100,
+Repairs & Maintenance,Pest control,,,100,,
+Repairs & Maintenance,Plumbing - R&M,,,,100,
+Repairs & Maintenance,Power back & generator - R&M,,,100,,
+Repairs & Maintenance,Security charges,,,100,,
+Repairs & Maintenance,Swimming pool - R&M,,,,100,
+Reserve & Surplus,Entrance Fees (Reserves),,,100,,
+Reserve & Surplus,Major Repairs Fund (Reserves),,,,100,
+Reserve & Surplus,Membership premium (Reserves),,,100,,
+Reserve & Surplus,Reserve Fund Seed Money,,,,100,
+Reserve & Surplus,Sinking Fund (Reserves),,,100,,
+Reserve & Surplus,Transfer Charges (Reserves),,,,100,
+Taxes & Utilities,Electricity Expenses,,,100,,
+Taxes & Utilities,Property Tax,,,100,,
+Taxes & Utilities,Water charges,,,,100,
+Members Control Accounts,test user 1,A,101,200,,50
+Members Control Accounts,test user 2,A,102,200,,50
+Members Control Accounts,test user 3,A,103,200,,50
+Members Control Accounts,test user 4,A,104,200,,50
+Members Control Accounts,test user 5,A,105,200,,50
+Members Control Accounts,test user 6,A,106,200,,50
+Members Control Accounts,test user 7,A,107,200,,50
+Members Control Accounts,test user 8,A,108,200,,50
+Members Control Accounts,test user 9,A,109,200,,50
+Members Control Accounts,test user 10,A,110,200,,50
+Members Control Accounts,test user 11,A,111,200,,50
+Members Control Accounts,test user 12,A,112,200,,50
+Members Control Accounts,test user 13,A,113,200,,50
+Members Control Accounts,test user 14,A,114,200,,50
+Members Control Accounts,test user 15,A,115,200,,50
+Members Control Accounts,test user 16,A,116,200,,50
+Members Control Accounts,test user 17,A,117,200,,50
+Members Control Accounts,test user 18,A,118,200,,50
+Members Control Accounts,test user 19,A,119,200,,50
+Members Control Accounts,test user 20,A,120,200,,50
+Members Control Accounts,test user 21,A,121,200,,50
+Members Control Accounts,test user 22,A,122,200,,50
+Members Control Accounts,test user 23,A,123,200,,50
+Members Control Accounts,test user 24,A,124,200,,50
+Members Control Accounts,test user 25,A,125,200,,50
+Members Control Accounts,test user 26,A,126,200,,50
+Members Control Accounts,test user 27,A,127,200,,50
+Members Control Accounts,test user 28,A,128,200,,50
+Members Control Accounts,test user 29,A,129,200,,50
+Members Control Accounts,test user 30,A,130,200,,50
+Members Control Accounts,test user 31,A,131,200,,50
+Members Control Accounts,test user 32,A,132,200,,50
+Members Control Accounts,test user 33,A,133,200,,50
+Members Control Accounts,test user 34,A,134,200,,50
+Members Control Accounts,test user 35,A,135,200,,50
+Members Control Accounts,test user 36,A,136,200,,50
+Members Control Accounts,test user 37,A,137,200,,50
+Members Control Accounts,test user 38,A,138,200,,50
+Members Control Accounts,test user 39,A,139,200,,50
+Members Control Accounts,test user 40,A,140,200,,50
+Members Control Accounts,test user 41,A,141,200,,50
+Members Control Accounts,test user 42,A,142,200,,50
+Members Control Accounts,test user 43,A,143,200,,50
+Members Control Accounts,test user 44,A,144,200,,50
+Members Control Accounts,test user 45,A,145,200,,50
+Members Control Accounts,test user 46,A,146,200,,50
+Members Control Accounts,test user 47,A,147,200,,50
+Members Control Accounts,test user 48,A,148,200,,50
+Members Control Accounts,test user 49,A,149,200,,50
+Members Control Accounts,test user 50,A,150,200,,50
+Members Control Accounts,test user 51,B,101,200,,50
+Members Control Accounts,test user 52,B,102,200,,50
+Members Control Accounts,test user 53,B,103,200,,50
+Members Control Accounts,test user 54,B,104,200,,50
+Members Control Accounts,test user 55,B,105,200,,50
+Members Control Accounts,test user 56,B,106,200,,50
+Members Control Accounts,test user 57,B,107,200,,50
+Members Control Accounts,test user 58,B,108,200,,50
+Members Control Accounts,test user 59,B,109,200,,50
+Members Control Accounts,test user 60,B,110,200,,50
+Members Control Accounts,test user 61,B,111,200,,50
+Members Control Accounts,test user 62,B,112,200,,50
+Members Control Accounts,test user 63,B,113,200,,50
+Members Control Accounts,test user 64,B,114,200,,50
+Members Control Accounts,test user 65,B,115,200,,50
+Members Control Accounts,test user 66,B,116,200,,50
+Members Control Accounts,test user 67,B,117,200,,50
+Members Control Accounts,test user 68,B,118,200,,50
+Members Control Accounts,test user 69,B,119,200,,50
+Members Control Accounts,test user 70,B,120,200,,50
+Members Control Accounts,test user 71,B,121,200,,50
+Members Control Accounts,test user 72,B,122,200,,50
+Members Control Accounts,test user 73,B,123,200,,50
+Members Control Accounts,test user 74,B,124,200,,50
+Members Control Accounts,test user 75,B,125,200,,50
+Members Control Accounts,test user 76,B,126,200,,50
+Members Control Accounts,test user 77,B,127,200,,50
+Members Control Accounts,test user 78,B,128,200,,50
+Members Control Accounts,test user 79,B,129,200,,50
+Members Control Accounts,test user 80,B,130,200,,50
+Members Control Accounts,test user 81,B,131,200,,50
+Members Control Accounts,test user 82,B,132,200,,50
+Members Control Accounts,test user 83,B,133,200,,50
+Members Control Accounts,test user 84,B,134,200,,50
+Members Control Accounts,test user 85,B,135,200,,50
+Members Control Accounts,test user 86,B,136,200,,50
+Members Control Accounts,test user 87,B,137,200,,50
+Members Control Accounts,test user 88,B,138,200,,50
+Members Control Accounts,test user 89,B,139,200,,50
+Members Control Accounts,test user 90,B,140,200,,50
+Members Control Accounts,test user 91,B,141,200,,50
+Members Control Accounts,test user 92,B,142,200,,50
+Members Control Accounts,test user 93,B,143,200,,50
+Members Control Accounts,test user 94,B,144,200,,50
+Members Control Accounts,test user 95,B,145,200,,50
+Members Control Accounts,test user 96,B,146,200,,50
+Members Control Accounts,test user 97,B,147,200,,50
+Members Control Accounts,test user 98,B,148,200,,50
+Members Control Accounts,test user 99,B,149,200,,50
+Members Control Accounts,test user 100,B,150,200,,50
+Members Control Accounts,test user 101,C,1001,200,,50
+Members Control Accounts,test user 102,C,1002,200,,50
+Members Control Accounts,test user 103,C,1003,200,,50
+Members Control Accounts,test user 104,C,1004,200,,50
+Members Control Accounts,test user 105,C,1005,200,,50
+Members Control Accounts,test user 106,C,1006,200,,50
+Members Control Accounts,test user 107,C,1007,200,,50
+Members Control Accounts,test user 108,C,1008,200,,50
+Members Control Accounts,test user 109,C,1009,200,,50
+Members Control Accounts,test user 110,C,1010,200,,50
+Members Control Accounts,test user 111,C,1011,200,,50
+Members Control Accounts,test user 112,C,1012,200,,50
+Members Control Accounts,test user 113,C,1013,200,,50
+Members Control Accounts,test user 114,C,1014,200,,50
+Members Control Accounts,test user 115,C,1015,200,,50
+Members Control Accounts,test user 116,C,1016,200,,50
+Members Control Accounts,test user 117,C,1017,200,,50
+Members Control Accounts,test user 118,C,1018,200,,50
+Members Control Accounts,test user 119,C,1019,200,,50
+Members Control Accounts,test user 120,C,1020,200,,50
+Members Control Accounts,test user 121,C,1021,200,,50
+Members Control Accounts,test user 122,C,1022,200,,50
+Members Control Accounts,test user 123,C,1023,200,,50
+Members Control Accounts,test user 124,C,1024,200,,50
+Members Control Accounts,test user 125,C,1025,200,,50
+Members Control Accounts,test user 126,C,1026,200,,50
+Members Control Accounts,test user 127,C,1027,200,,50
+Members Control Accounts,test user 128,C,1028,200,,50
+Members Control Accounts,test user 129,C,1029,200,,50
+Members Control Accounts,test user 130,C,1030,200,,50
+Members Control Accounts,test user 131,C,1031,200,,50
+Members Control Accounts,test user 132,C,1032,200,,50
+Members Control Accounts,test user 133,C,1033,200,,50
+Members Control Accounts,test user 134,C,1034,200,,50
+Members Control Accounts,test user 135,C,1035,200,,50
+Members Control Accounts,test user 136,C,1036,200,,50
+Members Control Accounts,test user 137,C,1037,200,,50
+Members Control Accounts,test user 138,C,1038,200,,50
+Members Control Accounts,test user 139,C,1039,200,,50
+Members Control Accounts,test user 140,C,1040,200,,50
+Members Control Accounts,test user 141,C,1041,200,,50
+Members Control Accounts,test user 142,C,1042,200,,50
+Members Control Accounts,test user 143,C,1043,200,,50
+Members Control Accounts,test user 144,C,1044,200,,50
+Members Control Accounts,test user 145,C,1045,200,,50
+Members Control Accounts,test user 146,C,1046,200,,50
+Members Control Accounts,test user 147,C,1047,200,,50
+Members Control Accounts,test user 148,C,1048,200,,50
+Members Control Accounts,test user 149,C,1049,200,,50
+Members Control Accounts,test user 150,C,1050,200,,50
+Members Control Accounts,test user 151,D,2001,200,,50
+Members Control Accounts,test user 152,D,2002,200,,50
+Members Control Accounts,test user 153,D,2003,200,,50
+Members Control Accounts,test user 154,D,2004,200,,50
+Members Control Accounts,test user 155,D,2005,200,,50
+Members Control Accounts,test user 156,D,2006,200,,50
+Members Control Accounts,test user 157,D,2007,200,,50
+Members Control Accounts,test user 158,D,2008,200,,50
+Members Control Accounts,test user 159,D,2009,200,,50
+Members Control Accounts,test user 160,D,2010,200,,50
+Members Control Accounts,test user 161,D,2011,200,,50
+Members Control Accounts,test user 162,D,2012,200,,50
+Members Control Accounts,test user 163,D,2013,200,,50
+Members Control Accounts,test user 164,D,2014,200,,50
+Members Control Accounts,test user 165,D,2015,200,,50
+Members Control Accounts,test user 166,D,2016,200,,50
+Members Control Accounts,test user 167,D,2017,200,,50
+Members Control Accounts,test user 168,D,2018,200,,50
+Members Control Accounts,test user 169,D,2019,200,,50
+Members Control Accounts,test user 170,D,2020,200,,50
+Members Control Accounts,test user 171,D,2021,200,,50
+Members Control Accounts,test user 172,D,2022,200,,50
+Members Control Accounts,test user 173,D,2023,200,,50
+Members Control Accounts,test user 174,D,2024,200,,50
+Members Control Accounts,test user 175,D,2025,200,,50
+Members Control Accounts,test user 176,D,2026,200,,50
+Members Control Accounts,test user 177,D,2027,200,,50
+Members Control Accounts,test user 178,D,2028,200,,50
+Members Control Accounts,test user 179,D,2029,200,,50
+Members Control Accounts,test user 180,D,2030,200,,50
+Members Control Accounts,test user 181,D,2031,200,,50
+Members Control Accounts,test user 182,D,2032,200,,50
+Members Control Accounts,test user 183,D,2033,200,,50
+Members Control Accounts,test user 184,D,2034,200,,50
+Members Control Accounts,test user 185,D,2035,200,,50
+Members Control Accounts,test user 186,D,2036,200,,50
+Members Control Accounts,test user 187,D,2037,200,,50
+Members Control Accounts,test user 188,D,2038,200,,50
+Members Control Accounts,test user 189,D,2039,200,,50
+Members Control Accounts,test user 190,D,2040,200,,50
+Members Control Accounts,test user 191,D,2041,200,,50
+Members Control Accounts,test user 192,D,2042,200,,50
+Members Control Accounts,test user 193,D,2043,200,,50
+Members Control Accounts,test user 194,D,2044,200,,50
+Members Control Accounts,test user 195,D,2045,200,,50
+Members Control Accounts,test user 196,D,2046,200,,50
+Members Control Accounts,test user 197,D,2047,200,,50
+Members Control Accounts,test user 198,D,2048,200,,50
+Members Control Accounts,test user 199,D,2049,200,,50
+Members Control Accounts,test user 200,D,2050,200,,50

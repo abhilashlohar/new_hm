@@ -123,7 +123,7 @@ $wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_f
 <input type="hidden" value="<?php echo $ledger_id; ?>,<?php echo $ledger_sub_account_id; ?>"
 name="ledger_id[]">
 		</td>
-		<td><input type="text" class="m-wrap small debit" name="debit[]" Placeholder="Debit"      value="<?php echo $debit_for_view; ?>"></td> 
+		<td></td> 
 		<td><input type="text" class="m-wrap small credit" name="cr[]" value="" Placeholder="Credit"></td>
 		<td><input type="text" ></td>
 	</tr>

@@ -102,7 +102,7 @@ $income_arrr[] = $data;
 					<div class="control-group">
 						  <label class="control-label">Select members</label>
 						  <div class="controls">
-							<select name="members[]" data-placeholder="select members" id="flats" class=" m-wrap large" multiple="multiple" tabindex="6">
+							<select name="members[]" data-placeholder="select members" id="flats" class="chosen m-wrap large" multiple="multiple" tabindex="6">
 								<option value="">
 								<?php foreach($members_for_billing as $ledger_sub_account_id){ 
 								$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));

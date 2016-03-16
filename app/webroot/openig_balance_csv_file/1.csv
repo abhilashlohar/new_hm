@@ -1,94 +1,285 @@
 Group Name,A/c name,wing,unit,Debit,Credit,Penalty 
-Administrative Expenses,Audit fees,,,1000,,
-Administrative Expenses,Bank charges,,,1000,,
-Administrative Expenses,Cable TV expenses,,,,2000,
-Administrative Expenses,Computer & sofware expenses,,,,,
-Administrative Expenses,Cultural / Festival expenses,,,,,
-Administrative Expenses,Depreciation,,,,,
-Administrative Expenses,Insurance charges,,,,,
-Administrative Expenses,Interest expenses,,,,,
-Administrative Expenses,Legal & Professional Charges,,,,,
-Administrative Expenses,Meeting & Welfare expenses,,,,,
-Administrative Expenses,Miscellaneous expenses,,,,,
-Administrative Expenses,Postage & Courier charges,,,,,
-Administrative Expenses,Printing & Stationery charges,,,,,
-Administrative Expenses,Reversals & Adjustments,,,,,
-Administrative Expenses,Staff welfare expenses,,,,,
-Administrative Expenses,Sundry Balances Written Off,,,,,
-Capital Account,Application Money,,,,,
-Capital Account,Share Capital,,,,,
-Contribution from Members,CIDCO Service charges,,,,,
-Contribution from Members,Cheque Return charges,,,,,
-Contribution from Members,Cultural Fund contribution,,,,,
-Contribution from Members,Electricity Charges,,,,,
-Contribution from Members,Insurance Charges,,,,,
-Contribution from Members,Interest from members,,,,,
-Contribution from Members,LAT Charges,,,,,
-Contribution from Members,Lease Rent,,,,,
-Contribution from Members,Maintenance charges,,,,,
-Contribution from Members,Muncipal Tax,,,,,
-Contribution from Members,Non Occupancy Charges,,,,,
-Contribution from Members,Parking Charges,,,,,
-Contribution from Members,Repair Fund,,,,,
-Contribution from Members,Repair and Renovation Fund,,,,,
-Contribution from Members,Sinking Fund,,,,,
-Contribution from Members,Water Charges,,,,,
-Contribution from Members,Welfare Fund,,,,,
-Current Assets,Accrued Interest,,,,,
-Current Assets,Advance given to Vendors,,,,,
-Current Assets,Cash-in-hand,,,,,
-Current Assets,Stock / Inventories,,,,,
-Current Assets,Sundry Debtors,,,,,
-Current Assets,Sundry Debtors Control A/c,,,,,
-Current Liabilities,Advance from Members,,,,,
-Current Liabilities,Advances & Security Deposits taken,,,,,
-Current Liabilities,Contribution for Conveyance Deed,,,,,
-Current Liabilities,Provisions,,,,,
-Current Liabilities,Retention A/c ,,,,,
-Current Liabilities,Service Tax payable,,,,,
-Current Liabilities,Tax deducted at source (TDS payable),,,,,
-Fixed Assets,Accumulated Depreciation,,,,,
-Fixed Assets,Building,,,,,
-Fixed Assets,Club Center Equipments,,,,,
-Fixed Assets,Computers,,,,,
-Fixed Assets,Furniture & Fixtures,,,,,
-Fixed Assets,Gym Equipments,,,,,
-Fixed Assets,Office Equipments,,,,,
-Fixed Assets,Plant & Machinery,,,,,
-Fixed Assets,Power Back up & Generator,,,,,
-Fixed Assets,Printer ,,,,,
-Fixed Assets,Surveillance & Security Systems,,,,,
-Fixed Assets,Vehicles,,,,,
-Investments,Deposits with Water Supply Cos,,,,,
-Investments,Fixed Deposits,,,,,
-Investments,Mutual Funds,,,,,
-Investments,Shares of Federation,,,,,
-Other Income,Advertising Income,,,,,
-Other Income,Income from Advertising & events,,,,,
-Other Income,Interest from saving bank accounts,,,,,
-Other Income,Miscellaneous income,,,,,
-Other Income,Mobile tower rent,,,,,
-Repairs & Maintenance,Building R&M,,,,,
-Repairs & Maintenance,Club / Recreation Center expenses,,,,,
-Repairs & Maintenance,Electrical R&M,,,,,
-Repairs & Maintenance,Fire & Safety expenses,,,,,
-Repairs & Maintenance,Garden / Lawn expenses,,,,,
-Repairs & Maintenance,General Repairs & Maintenance,,,,,
-Repairs & Maintenance,Gymnasium R&M,,,,,
-Repairs & Maintenance,House keeping charges,,,,,
-Repairs & Maintenance,Lifts & Elevators - R&M,,,,,
-Repairs & Maintenance,Pest control,,,,,
-Repairs & Maintenance,Plumbing - R&M,,,,,
-Repairs & Maintenance,Power back & generator - R&M,,,,,
-Repairs & Maintenance,Security charges,,,,,
-Repairs & Maintenance,Swimming pool - R&M,,,,,
-Reserve & Surplus,Reserve Fund Seed Money ,,,,,
-Reserve & Surplus,Sinking Fund (Reserves),,,,,
-Taxes & Utilities,Electricity Expenses,,,,,
-Taxes & Utilities,Property Tax,,,,,
-Taxes & Utilities,Water charges,,,,,
-Members Control Accounts,rohit,Wing A,101,1000,,1000
-Members Control Accounts,Abhilash,Wing B,201,1000,,1000
-Sundry Creditors Control A/c,Raju,,,,4000,
-Sundry Debtors Control A/c,suresh,,,,,
-Bank Accounts,SBBJ,,,,,
+Administrative Expenses,Audit fees,,,100,,
+Administrative Expenses,Bank charges,,,100,,
+Administrative Expenses,Cable TV expenses,,,100,,
+Administrative Expenses,Computer & sofware expenses,,,100,,
+Administrative Expenses,Cultural / Festival expenses,,,100,,
+Administrative Expenses,Depreciation,,,100,,
+Administrative Expenses,Insurance charges,,,100,,
+Administrative Expenses,Interest expenses,,,100,,
+Administrative Expenses,Legal & Professional Charges,,,100,,
+Administrative Expenses,Meeting & Welfare expenses,,,100,,
+Administrative Expenses,Miscellaneous expenses,,,100,,
+Administrative Expenses,Postage & Courier charges,,,100,,
+Administrative Expenses,Printing & Stationery charges,,,100,,
+Administrative Expenses,Reversals & Adjustments,,,100,,
+Administrative Expenses,Staff welfare expenses,,,100,,
+Administrative Expenses,Sundry Balances Written Off,,,100,,
+Capital Account,Application Money,,,100,,
+Capital Account,Share Capital,,,100,,
+Contribution from Members,CIDCO Service charges,,,100,,
+Contribution from Members,Cheque Return charges,,,100,,
+Contribution from Members,Cultural Fund contribution,,,100,,
+Contribution from Members,Electricity Charges,,,100,,
+Contribution from Members,Insurance Charges,,,100,,
+Contribution from Members,Interest from members,,,100,,
+Contribution from Members,LAT Charges,,,100,,
+Contribution from Members,Lease Rent,,,100,,
+Contribution from Members,Maintenance charges,,,100,,
+Contribution from Members,Muncipal Tax,,,100,,
+Contribution from Members,Non Occupancy Charges,,,100,,
+Contribution from Members,Parking Charges,,,100,,
+Contribution from Members,Repair Fund,,,100,,
+Contribution from Members,Repair and Renovation Fund,,,100,,
+Contribution from Members,Sinking Fund,,,100,,
+Contribution from Members,Water Charges,,,100,,
+Contribution from Members,Welfare Fund,,,100,,
+Current Assets,Accrued Interest,,,100,,
+Current Assets,Advance given to Vendors,,,100,,
+Current Assets,Cash-in-hand,,,100,,
+Current Assets,Stock / Inventories,,,100,,
+Current Assets,Sundry Debtors,,,100,,
+Current Assets,Sundry Debtors Control A/c,,,100,,
+Current Liabilities,Advance from Members,,,100,,
+Current Liabilities,Advances & Security Deposits taken,,,100,,
+Current Liabilities,Contribution for Conveyance Deed,,,100,,
+Current Liabilities,Provisions,,,100,,
+Current Liabilities,Retention A/c ,,,100,,
+Current Liabilities,Service Tax payable,,,100,,
+Current Liabilities,Tax deducted at source (TDS payable),,,100,,
+Fixed Assets,Accumulated Depreciation,,,100,,
+Fixed Assets,Building,,,100,,
+Fixed Assets,Club Center Equipments,,,100,,
+Fixed Assets,Computers,,,100,,
+Fixed Assets,Furniture & Fixtures,,,100,,
+Fixed Assets,Gym Equipments,,,100,,
+Fixed Assets,Office Equipments,,,100,,
+Fixed Assets,Plant & Machinery,,,100,,
+Fixed Assets,Power Back up & Generator,,,100,,
+Fixed Assets,Printer ,,,100,,
+Fixed Assets,Surveillance & Security Systems,,,100,,
+Fixed Assets,Vehicles,,,100,,
+Investments,Deposits with Water Supply Cos,,,100,,
+Investments,Fixed Deposits,,,100,,
+Investments,Mutual Funds,,,100,,
+Investments,Shares of Federation,,,100,,
+Other Income,Advertising Income,,,100,,
+Other Income,Income from Advertising & events,,,100,,
+Other Income,Interest from saving bank accounts,,,100,,
+Other Income,Miscellaneous income,,,100,,
+Other Income,Mobile tower rent,,,100,,
+Repairs & Maintenance,Building R&M,,,100,,
+Repairs & Maintenance,Club / Recreation Center expenses,,,100,,
+Repairs & Maintenance,Electrical R&M,,,100,,
+Repairs & Maintenance,Fire & Safety expenses,,,100,,
+Repairs & Maintenance,Garden / Lawn expenses,,,100,,
+Repairs & Maintenance,General Repairs & Maintenance,,,100,,
+Repairs & Maintenance,Gymnasium R&M,,,100,,
+Repairs & Maintenance,House keeping charges,,,100,,
+Repairs & Maintenance,Lifts & Elevators - R&M,,,100,,
+Repairs & Maintenance,Pest control,,,100,,
+Repairs & Maintenance,Plumbing - R&M,,,100,,
+Repairs & Maintenance,Power back & generator - R&M,,,100,,
+Repairs & Maintenance,Security charges,,,100,,
+Repairs & Maintenance,Swimming pool - R&M,,,100,,
+Reserve & Surplus,Reserve Fund Seed Money ,,,100,,
+Reserve & Surplus,Sinking Fund (Reserves),,,100,,
+Taxes & Utilities,Electricity Expenses,,,100,,
+Taxes & Utilities,Property Tax,,,100,,
+Taxes & Utilities,Water charges,,,,8700,
+Members Control Accounts,test1,Wing A,105,100,,100
+Members Control Accounts,test2,Wing A,106,100,,100
+Members Control Accounts,test3,Wing A,107,100,,100
+Members Control Accounts,test4,Wing A,108,100,,100
+Members Control Accounts,test5,Wing A,109,100,,100
+Members Control Accounts,test6,Wing A,110,100,,100
+Members Control Accounts,test7,Wing A,111,100,,100
+Members Control Accounts,test8,Wing A,112,100,,100
+Members Control Accounts,test9,Wing A,113,100,,100
+Members Control Accounts,test10,Wing A,114,100,,100
+Members Control Accounts,test11,Wing A,115,100,,100
+Members Control Accounts,test12,Wing A,116,100,,100
+Members Control Accounts,test13,Wing A,117,100,,100
+Members Control Accounts,test14,Wing A,118,100,,100
+Members Control Accounts,test15,Wing A,119,100,,100
+Members Control Accounts,test16,Wing A,120,100,,100
+Members Control Accounts,test17,Wing A,121,100,,100
+Members Control Accounts,test18,Wing A,122,100,,100
+Members Control Accounts,test19,Wing A,123,100,,100
+Members Control Accounts,test20,Wing A,124,100,,100
+Members Control Accounts,test21,Wing A,125,100,,100
+Members Control Accounts,test22,Wing A,126,100,,100
+Members Control Accounts,test23,Wing A,127,100,,100
+Members Control Accounts,test24,Wing A,128,100,,100
+Members Control Accounts,test25,Wing A,129,100,,100
+Members Control Accounts,test26,Wing A,130,100,,100
+Members Control Accounts,test27,Wing A,131,100,,100
+Members Control Accounts,test28,Wing A,132,100,,100
+Members Control Accounts,test29,Wing A,133,100,,100
+Members Control Accounts,test30,Wing A,134,100,,100
+Members Control Accounts,test31,Wing A,135,100,,100
+Members Control Accounts,test32,Wing A,136,100,,100
+Members Control Accounts,test33,Wing A,137,100,,100
+Members Control Accounts,test34,Wing A,138,100,,100
+Members Control Accounts,test35,Wing A,139,100,,100
+Members Control Accounts,test36,Wing A,140,100,,100
+Members Control Accounts,test37,Wing A,141,100,,100
+Members Control Accounts,test38,Wing A,142,100,,100
+Members Control Accounts,test39,Wing A,143,100,,100
+Members Control Accounts,test40,Wing A,144,100,,100
+Members Control Accounts,test41,Wing A,145,100,,100
+Members Control Accounts,test42,Wing A,146,100,,100
+Members Control Accounts,test43,Wing A,147,100,,100
+Members Control Accounts,test44,Wing A,148,100,,100
+Members Control Accounts,test45,Wing A,149,100,,100
+Members Control Accounts,test46,Wing A,150,100,,100
+Members Control Accounts,test47,Wing A,151,100,,100
+Members Control Accounts,test48,Wing A,152,100,,100
+Members Control Accounts,test49,Wing A,153,100,,100
+Members Control Accounts,test50,Wing A,154,100,,100
+Members Control Accounts,test51,Wing A,155,100,,100
+Members Control Accounts,test52,Wing A,156,100,,100
+Members Control Accounts,test53,Wing A,157,100,,100
+Members Control Accounts,test54,Wing A,158,100,,100
+Members Control Accounts,test55,Wing A,159,100,,100
+Members Control Accounts,test56,Wing A,160,100,,100
+Members Control Accounts,test57,Wing A,161,100,,100
+Members Control Accounts,test58,Wing A,162,100,,100
+Members Control Accounts,test59,Wing A,163,100,,100
+Members Control Accounts,test60,Wing A,164,100,,100
+Members Control Accounts,test61,Wing A,165,100,,100
+Members Control Accounts,test62,Wing A,166,100,,100
+Members Control Accounts,test63,Wing A,167,100,,100
+Members Control Accounts,test64,Wing A,168,100,,100
+Members Control Accounts,test65,Wing A,169,100,,100
+Members Control Accounts,test66,Wing A,170,100,,100
+Members Control Accounts,test67,Wing A,171,100,,100
+Members Control Accounts,test68,Wing A,172,100,,100
+Members Control Accounts,test69,Wing A,173,100,,100
+Members Control Accounts,test70,Wing A,174,100,,100
+Members Control Accounts,test71,Wing A,175,100,,100
+Members Control Accounts,test72,Wing A,176,100,,100
+Members Control Accounts,test73,Wing A,177,100,,100
+Members Control Accounts,test74,Wing A,178,100,,100
+Members Control Accounts,test75,Wing A,179,100,,100
+Members Control Accounts,test76,Wing A,180,100,,100
+Members Control Accounts,test77,Wing A,181,100,,100
+Members Control Accounts,test78,Wing A,182,100,,100
+Members Control Accounts,test79,Wing A,183,100,,100
+Members Control Accounts,test80,Wing A,184,100,,100
+Members Control Accounts,test81,Wing A,185,100,,100
+Members Control Accounts,test82,Wing A,186,100,,100
+Members Control Accounts,test83,Wing A,187,100,,100
+Members Control Accounts,test84,Wing A,188,100,,100
+Members Control Accounts,test85,Wing A,189,100,,100
+Members Control Accounts,test86,Wing A,190,100,,100
+Members Control Accounts,test87,Wing A,191,100,,100
+Members Control Accounts,test88,Wing A,192,100,,100
+Members Control Accounts,test89,Wing A,193,100,,100
+Members Control Accounts,test90,Wing A,194,100,,100
+Members Control Accounts,test91,Wing A,195,100,,100
+Members Control Accounts,test92,Wing A,196,100,,100
+Members Control Accounts,test93,Wing A,197,100,,100
+Members Control Accounts,test94,Wing A,198,100,,100
+Members Control Accounts,test95,Wing A,199,100,,100
+Members Control Accounts,test97,Wing B,205,100,,100
+Members Control Accounts,test98,Wing B,206,100,,100
+Members Control Accounts,test99,Wing B,207,100,,100
+Members Control Accounts,test100,Wing B,208,100,,100
+Members Control Accounts,test101,Wing B,209,100,,100
+Members Control Accounts,test102,Wing B,210,100,,100
+Members Control Accounts,test103,Wing B,211,100,,100
+Members Control Accounts,test104,Wing B,212,100,,100
+Members Control Accounts,test105,Wing B,213,100,,100
+Members Control Accounts,test106,Wing B,214,100,,100
+Members Control Accounts,test107,Wing B,215,100,,100
+Members Control Accounts,test108,Wing B,216,100,,100
+Members Control Accounts,test109,Wing B,217,100,,100
+Members Control Accounts,test110,Wing B,218,100,,100
+Members Control Accounts,test111,Wing B,219,100,,100
+Members Control Accounts,test112,Wing B,220,100,,100
+Members Control Accounts,test113,Wing B,221,100,,100
+Members Control Accounts,test114,Wing B,222,100,,100
+Members Control Accounts,test115,Wing B,223,100,,100
+Members Control Accounts,test116,Wing B,224,100,,100
+Members Control Accounts,test117,Wing B,225,100,,100
+Members Control Accounts,test118,Wing B,226,100,,100
+Members Control Accounts,test119,Wing B,227,100,,100
+Members Control Accounts,test120,Wing B,228,100,,100
+Members Control Accounts,test121,Wing B,229,100,,100
+Members Control Accounts,test122,Wing B,230,100,,100
+Members Control Accounts,test123,Wing B,231,100,,100
+Members Control Accounts,test124,Wing B,232,100,,100
+Members Control Accounts,test125,Wing B,233,100,,100
+Members Control Accounts,test126,Wing B,234,100,,100
+Members Control Accounts,test127,Wing B,235,100,,100
+Members Control Accounts,test128,Wing B,236,100,,100
+Members Control Accounts,test129,Wing B,237,100,,100
+Members Control Accounts,test130,Wing B,238,100,,100
+Members Control Accounts,test131,Wing B,239,100,,100
+Members Control Accounts,test132,Wing B,240,100,,100
+Members Control Accounts,test133,Wing B,241,100,,100
+Members Control Accounts,test134,Wing B,242,100,,100
+Members Control Accounts,test135,Wing B,243,100,,100
+Members Control Accounts,test136,Wing B,244,100,,100
+Members Control Accounts,test137,Wing B,245,100,,100
+Members Control Accounts,test138,Wing B,246,100,,100
+Members Control Accounts,test139,Wing B,247,100,,100
+Members Control Accounts,test140,Wing B,248,100,,100
+Members Control Accounts,test141,Wing B,249,100,,100
+Members Control Accounts,test142,Wing B,250,100,,100
+Members Control Accounts,test143,Wing B,251,100,,100
+Members Control Accounts,test144,Wing B,252,100,,100
+Members Control Accounts,test145,Wing B,253,100,,100
+Members Control Accounts,test146,Wing B,254,100,,100
+Members Control Accounts,test147,Wing B,255,100,,100
+Members Control Accounts,test148,Wing B,256,100,,100
+Members Control Accounts,test149,Wing B,257,100,,100
+Members Control Accounts,test150,Wing B,258,100,,100
+Members Control Accounts,test151,Wing B,259,100,,100
+Members Control Accounts,test152,Wing B,260,100,,100
+Members Control Accounts,test153,Wing B,261,100,,100
+Members Control Accounts,test154,Wing B,262,100,,100
+Members Control Accounts,test155,Wing B,263,100,,100
+Members Control Accounts,test156,Wing B,264,100,,100
+Members Control Accounts,test157,Wing B,265,100,,100
+Members Control Accounts,test158,Wing B,266,100,,100
+Members Control Accounts,test159,Wing B,267,100,,100
+Members Control Accounts,test160,Wing B,268,100,,100
+Members Control Accounts,test161,Wing B,269,100,,100
+Members Control Accounts,test162,Wing B,270,100,,100
+Members Control Accounts,test163,Wing B,271,100,,100
+Members Control Accounts,test164,Wing B,272,100,,100
+Members Control Accounts,test165,Wing B,273,100,,100
+Members Control Accounts,test166,Wing B,274,100,,100
+Members Control Accounts,test167,Wing B,275,100,,100
+Members Control Accounts,test168,Wing B,276,100,,100
+Members Control Accounts,test169,Wing B,277,100,,100
+Members Control Accounts,test170,Wing B,278,100,,100
+Members Control Accounts,test171,Wing B,279,100,,100
+Members Control Accounts,test172,Wing B,280,100,,100
+Members Control Accounts,test173,Wing B,281,100,,100
+Members Control Accounts,test174,Wing B,282,100,,100
+Members Control Accounts,test175,Wing B,283,100,,100
+Members Control Accounts,test176,Wing B,284,100,,100
+Members Control Accounts,test177,Wing B,285,100,,100
+Members Control Accounts,test178,Wing B,286,100,,100
+Members Control Accounts,test179,Wing B,287,100,,100
+Members Control Accounts,test180,Wing B,288,100,,100
+Members Control Accounts,test181,Wing B,289,100,,100
+Members Control Accounts,test182,Wing B,290,100,,100
+Members Control Accounts,test183,Wing B,291,100,,100
+Members Control Accounts,test184,Wing B,292,100,,100
+Members Control Accounts,test185,Wing B,293,100,,100
+Members Control Accounts,test186,Wing B,294,100,,100
+Members Control Accounts,test187,Wing B,295,100,,100
+Members Control Accounts,test188,Wing B,296,100,,100
+Members Control Accounts,test189,Wing B,297,100,,100
+Members Control Accounts,test190,Wing B,298,100,,100
+Members Control Accounts,test191,Wing B,299,100,,100
+Members Control Accounts,test192,Wing B,300,100,,100
+Sundry Debtors Control A/c,Ramesh,,,,19100,
+Bank Accounts,SBBJ,,,,19100,
+Sundry Debtors Control A/c,suresh,,,100,,
+Sundry Creditors Control A/c,Raju,,,100,,
+Sundry Creditors Control A/c,Vicky,,,,200,

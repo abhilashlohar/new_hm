@@ -11,6 +11,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 <a href="<?php echo $webroot_path; ?>Incometrackers/other_charges" class="btn" rel='tab'>Other Charges</a>
 </div>
 <br/>
+<?php if($count == 0){ ?>
 <div id="output">Every change you make is automatically saved.</div>
 <div style="background-color: rgb(255, 255, 255);padding: 5px;overflow-x: auto;">
 <table class="table table-condensed table-bordered">
@@ -86,3 +87,10 @@ $(document).ready(function(){
 	})
 });
 </script>
+<?php } else {?>
+<br /><br />					 
+<center>					 
+<h3 style="color:red;"><b>Please Complete Unit Configuration </b></h3>				 
+</center>					 
+<br /><br />					 
+<?php } ?>

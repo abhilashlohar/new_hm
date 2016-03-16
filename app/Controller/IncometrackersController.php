@@ -3704,7 +3704,33 @@ function it_supplimentry_bill()
 				$this->set('datef1',@$datef1);
 				$this->set('datet1',@$datet1);
 				$this->set('count',$count);
-
+$this->loadmodel('ledger_sub_account');
+	$condition=array('society_id'=>$s_society_id,'ledger_id'=>34);
+	$members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
+	foreach($members as $data3){
+	$ledger_sub_account_ids[]=$data3["ledger_sub_account"]["auto_id"];
+	}
+ $this->loadmodel('wing');
+        $condition=array('society_id'=>$s_society_id);
+        $order=array('wing.wing_name'=>'ASC');
+        $wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+        foreach($wings as $data){
+			$wing_id=$data["wing"]["wing_id"];
+			$this->loadmodel('flat');
+			$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+			$order=array('flat.flat_name'=>'ASC');
+			$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+			foreach($flats as $data2){
+				$flat_id=$data2["flat"]["flat_id"];
+				$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+				if(!empty($ledger_sub_account_id)){
+					if (in_array($ledger_sub_account_id, $ledger_sub_account_ids)){
+						$members_for_billing[]=$ledger_sub_account_id;
+					}
+				}
+			}
+		}
+		$this->set(compact("members_for_billing"));
 if(isset($this->request->data['submit']))
 {
 	$transaction_dates = $this->request->data['transaction_date'];
@@ -5377,38 +5403,42 @@ $this->set('cursor2',$cursor2);
 								
 }
 
-///////////////////////////////// End It Setup (Accounts) /////////////////////////////////////////////////
-
-/////////////////////////Start Master rate Card(Accounts)//////////////////////////////
+//End It Setup (Accounts)//
+//Start Master rate Card(Accounts)//
 function master_rate_card(){
 	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
 	}else{
 	$this->layout='session';
 	}
-
 	$this->ath();
 	$this->check_user_privilages();
-
 	$s_society_id=$this->Session->read('hm_society_id');
 	
+	$this->loadmodel('flat');
+	$conditions=array('society_id'=>$s_society_id,'flat_area'=>null,'flat_type_id'=>null);
+	$count=$this->flat->find('count',array('conditions'=>$conditions)); 
+	$this->set('count',$count);
+	if($count==0){
 	$this->loadmodel('flat');
 	$conditions=array('society_id'=>$s_society_id);
 	$flats=$this->flat->find('all',array('conditions'=>$conditions)); 
 	foreach($flats as $flat){
 		$flat_type_ids[]=$flat["flat"]["flat_type_id"];
 	}
+	
 	$flat_type_ids=array_unique($flat_type_ids);
 	asort($flat_type_ids);
 	$this->set(compact("flat_type_ids"));
-	
+	}
 	$this->loadmodel('society');
 	$conditions=array('society_id'=>$s_society_id);
 	$society_info=$this->society->find('all',array('conditions'=>$conditions));
 	$income_heads=@$society_info[0]["society"]["income_head"];
 	$this->set(compact("income_heads"));
 }
-
+//End Master rate Card(Accounts)//
+//Start auto_save_rate_card//
 function auto_save_rate_card($flat_type_id=null,$income_head_id=null,$rate_type=null,$rate=null){
 	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('rate_card');
@@ -5417,9 +5447,8 @@ function auto_save_rate_card($flat_type_id=null,$income_head_id=null,$rate_type=
 
 	$this->rate_card->saveAll(array("flat_type_id" => (int)$flat_type_id,"income_head_id" => (int)$income_head_id,"rate_type" => (int)$rate_type,"rate"=>$rate,"society_id"=>$s_society_id));
 }
-//////////////////////// End Master rate Card(Accounts)//////////////////////////////
-
-/////////////////////// Start auto_save_noc_rate ///////////////////////////////////
+//End auto_save_rate_card//
+//Start auto_save_noc_rate//
 function auto_save_noc_rate($flat_type_id=null,$type=null,$amt=null,$head=null)
 {
 if($this->RequestHandler->isAjax()){

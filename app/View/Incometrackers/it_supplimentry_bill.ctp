@@ -2,19 +2,18 @@
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
 
+<?php $default_date = date('d-m-Y'); ?>
 
-<input type="hidden" id="fi" value="<?php echo $datef1; ?>" />
-<input type="hidden" id="ti" value="<?php echo $datet1;  ?>" /> 
-<input type="hidden" id="cn" value="<?php echo $count;  ?>" /> 
-<?php
-$default_date = date('d-m-Y');
-?>
-<!-----------------------------Start New Supplimentry Bill Form --------------------->
+<!-----------Start New Supplimentry Bill Form -------->
 <div class="portlet box">
 	<div class="portlet-body">
+	
 	<form method="post">
+	
 		<table class="table table-condensed table-bordered" id="main" width="100%">
 			<thead>
+			
+			
 				<tr>
 					<th>Billing Date</th>
 					<th>Payment Due Date</th>
@@ -24,12 +23,13 @@ $default_date = date('d-m-Y');
 					<th>Narration</th>
 				</tr>
 			</thead>
+			
 			<tbody>
 				
 				
 			</tbody>
-		</table>
-<button type="submit" class="btn blue pull-right" name="submit">Create Receipt</button>
+			</table>
+		<button type="submit" class="btn blue pull-right" name="submit">Create Receipt</button>
 </form>
 <a href="#" role="button" id="add_row">Add Row</a>
 </div>
@@ -67,14 +67,20 @@ $default_date = date('d-m-Y');
 		    </div>
 			
 			<div class="hide" id="resident_dropdown_div">
-			<?php 
-			$this->requestAction(array('controller' => 'Hms', 'action' => 'resident_drop_down'));
-			?>
+			
+			<select  class="m-wrap medium chosen" style="width:200px;">
+				<option value="" style="display:none;">--member--</option>
+				<?php foreach($members_for_billing as $ledger_sub_account_id){
+				$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+				echo '<option value='.$ledger_sub_account_id.'>'.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
+				} ?>
+			
 			</div>
 			<div id="company_name_div" class="hide">
 			<input type="text" class="m-wrap span12" style="background-color:white !important;" Placeholder="Company Name" style="width:150px;" name="company_name[]">
 			</div>
 		</td>
+		
 		<td>
 			<select class="m-wrap" style="width:200px;" name="income_head[]">
 			<option value="" style="display:none;">Select</option>
@@ -90,6 +96,7 @@ $default_date = date('d-m-Y');
 			<?php }} ?>
 			</select>	
 		</td>
+		
 		<td>
 			<input type="text" class="m-wrap small" name="amount[]">
 		</td>
@@ -136,7 +143,5 @@ $('select[name="bill_type[]"]').die().live("change",function(){
 	})
 
 </script>
-
-
 
 		

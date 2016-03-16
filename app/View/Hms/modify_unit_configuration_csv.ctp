@@ -186,7 +186,7 @@ $( document ).ready(function() {
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Hms/auto_save_unit_configuration/"+record_id+"/"+field+"/"+value,
 		}).done(function(response){
-			alert(response);
+			
 			if(response=="F"){
 				$("table#report_tb tr#"+record_id+" td").each(function(){
 					$(this).find('select[field="'+field+'"]').parent("div").css("border", "solid 1px red");

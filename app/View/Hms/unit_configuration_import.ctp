@@ -18,6 +18,7 @@
 		<form method="post" id="form1" style="margin: 0px;">
 			<h5>Upload CSV file in given format to import Unit configuration.</h5>
 			<input name="file" class="default" id="image-file" type="file">
+			 <label id="vali"></label>	
 			<a href="<?php echo $webroot_path; ?>unit_configuration/unit_configuration.csv" download=""><b>Click here for sample format</b></a><br/><br/>
 			<h5 id="submit_element" >
 			<button type="submit" class="btn blue">IMPORT </button>
@@ -143,16 +144,16 @@ function final_import_bank_receipt_ajax(){
 	$( document ).ready(function() {
 		$.ajax({
 			url: "final_import_unit_configuration",
-			//dataType: 'json'
+			dataType: 'json'
 		}).done(function(response){
-			alert(response);
+			
 			if(response.again_call_ajax=="YES"){
 				$("#progress_im").css("width",response.converted_per_im+"%");
 				$("#text_per_im").html(response.converted_per_im.toFixed(2)+"%");
 				final_import_bank_receipt_ajax();
 			}
 			if(response.again_call_ajax=="NO"){
-				$("#first_div").html('<div class="alert alert-block alert-success fade in"><h4 class="alert-heading">Success!</h4><p>User Enrollment Imported successfully.</p><p><a class="btn green" href="<?php echo $webroot_path; ?>Hms/unit_configuration_import" >OK</a> </p></div>');
+				$("#first_div").html('<div class="alert alert-block alert-success fade in"><h4 class="alert-heading">Success!</h4><p>Unit Configuration Imported successfully.</p><p><a class="btn green" href="<?php echo $webroot_path; ?>Hms/unit_configuration" >OK</a> </p></div>');
 			}
 		});
 	});
@@ -168,6 +169,23 @@ function final_import_bank_receipt_ajax(){
 <script>
 $('form#form1').submit( function(ev){
 	ev.preventDefault();
+	
+		im_name=$("#image-file").val();
+		var insert = 1;
+		if(im_name==""){
+			$("#vali").html("<span style='color:red;'>Please Select a Csv File</span>");	
+			return false;
+		}
+		
+		var ext = $('#image-file').val().split('.').pop().toLowerCase();
+		if($.inArray(ext, ['csv']) == -1) {
+			$("#vali").html("<span style='color:red;'>Please Select a Csv File</span>");
+			return false;
+		}
+		
+	
+	
+	
 	$("#submit_element").html("<img src='<?php echo $webroot_path; ?>as/loding.gif' /> Please Wait, Csv file is Uploading...");
 	var m_data = new FormData();
 	m_data.append( 'file', $('input[name=file]')[0].files[0]);

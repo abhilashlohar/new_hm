@@ -287,9 +287,15 @@ function auto_save_unit_configuration($record_id=null,$field=null,$value=null){
 		if($field=="flat_area"){
 			if(empty($value)){ echo "F";}
 			else{
-				$this->loadmodel('unit_configuration_csv_converted');
-				$this->unit_configuration_csv_converted->updateAll(array("flat_area" => $value),array("auto_id" => $record_id));
-				echo "T";
+				
+					if (!is_numeric($value)) {
+							echo "F";
+						
+						}else{
+							$this->loadmodel('unit_configuration_csv_converted');
+							$this->unit_configuration_csv_converted->updateAll(array("flat_area" => $value),array("auto_id" => $record_id));
+							echo "T";
+					}	
 			}
 		}	
 	
@@ -324,10 +330,10 @@ function auto_save_unit_configuration($record_id=null,$field=null,$value=null){
 
 function allow_unit_configuration(){
 	
-	$this->layout=null;
+		$this->layout=null;
 	
 		$this->ath();
-		 $s_society_id = $this->Session->read('hm_society_id'); 
+		$s_society_id = $this->Session->read('hm_society_id'); 
 		
 		$this->loadmodel('import_unit_configuration_record');
 		$this->import_unit_configuration_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "UC"));
@@ -367,11 +373,53 @@ function final_import_unit_configuration(){
 	}
 		$process_status= @$step1+@$step2+@$step3+@$step4;
 		if($process_status==4){
-	
-	
+			
+					$this->loadmodel('unit_configuration_csv_converted');
+					$conditions=array("society_id"=>(int)$s_society_id,"is_imported" => "NO");
+					$unit_configuration_csv_converted=$this->unit_configuration_csv_converted->find('all',array('conditions'=>$conditions,'limit'=>10));
+					foreach($unit_configuration_csv_converted as $unit_configuration_csv_converted){ 
+					$auto_id=$unit_configuration_csv_converted["unit_configuration_csv_converted"]["auto_id"];
+					$flat_area=$unit_configuration_csv_converted["unit_configuration_csv_converted"]["flat_area"];
+					$flat_type=(int)$unit_configuration_csv_converted["unit_configuration_csv_converted"]["flat_type"];
+					$wing=(int)$unit_configuration_csv_converted["unit_configuration_csv_converted"]["wing"];
+					$flat=(int)$unit_configuration_csv_converted["unit_configuration_csv_converted"]["flat"];
+			
+					$this->loadmodel('flat');
+					$this->flat->updateAll(array("flat_area"=>$flat_area,"flat_type_id"=>$flat_type),array("flat_id"=>$flat,"society_id"=>$s_society_id));
+					$this->loadmodel('unit_configuration_csv_converted');
+					$this->unit_configuration_csv_converted->updateAll(array("is_imported" => "YES"),array("auto_id" => $auto_id));
+			
+				}
+				$this->loadmodel('unit_configuration_csv_converted');
+				$conditions=array("society_id" => $s_society_id,"is_imported" => "YES");
+				$total_converted_records = $this->unit_configuration_csv_converted->find('count',array('conditions'=>$conditions));
+
+				$this->loadmodel('unit_configuration_csv_converted');
+				$conditions=array("society_id" => $s_society_id);
+				$total_records = $this->unit_configuration_csv_converted->find('count',array('conditions'=>$conditions));
+				$converted_per=($total_converted_records*100)/$total_records;
+				if($converted_per==100){ $again_call_ajax="NO"; 
+
+						$this->loadmodel('unit_configuration_csv_converted');
+						$conditions4=array('society_id'=>$s_society_id);
+						$this->unit_configuration_csv_converted->deleteAll($conditions4);
+
+						$this->loadmodel('unit_configuration_info_csv');
+						$conditions4=array('society_id'=>$s_society_id);
+						$this->unit_configuration_info_csv->deleteAll($conditions4);
+
+						$this->loadmodel('import_unit_configuration_record');
+						$conditions4=array("society_id" => $s_society_id, "module_name" => "UC");
+						$this->import_unit_configuration_record->deleteAll($conditions4);
+				}else{
+						$again_call_ajax="YES"; 
+				}
+
+				die(json_encode(array("again_call_ajax"=>$again_call_ajax,"converted_per_im"=>$converted_per)));
+
+				
 		}
 }
-
 function import_user_enrollment(){
 	
 	if($this->RequestHandler->isAjax()){
@@ -7024,21 +7072,7 @@ function dashboard(){
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	
 	
-	$this->loadmodel('email_request');
-	$result_email_request=$this->email_request->find('all');
-	foreach($result_email_request as $data){
-	$to=$data['email_request']['to'];
-	$from=$data['email_request']['from'];
-	$from_name=$data['email_request']['from_name'];
-	$subject=$data['email_request']['subject'];
-	$message_web=$data['email_request']['message_web'];
-	$reply=$data['email_request']['reply'];
-	$flag=$data['email_request']['flag'];
-	$this->email_request->deleteAll(array("to"=>$to));
-	$this->loadmodel('email_request');
-	$er=$this->autoincrement('email_request','e_id');
-	$this->email_request->saveAll(array('e_id' => $er, 'to' => $to, 'from' => $from, 'from_name' => $from_name, 'subject' => $subject,'message_web' => $message_web, 'reply' => $reply, 'flag' => 0));
-	}
+	
 	
 		
 }

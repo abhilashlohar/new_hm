@@ -6206,7 +6206,7 @@ if($this->request->is('post'))
 		foreach($ledger_ids as $ledger_id){
 			$debit = $debits[$i];	
 			$credit = $credits[$i]; 
-			$penalty = $penaltys[$i];
+			@$penalty = @$penaltys[$i];
 			$ledger_id = explode(',',$ledger_id);
 		$i++; 
 		

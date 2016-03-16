@@ -1236,7 +1236,8 @@ function over_due_report()
 				}
 			}
 		}
-		$this->set(compact("members_for_billing"));				
+		$this->set(compact("members_for_billing"));
+					
 }
 //End Over Due Report (Accounts)//
 //Start over due report show ajax(Accounts)//

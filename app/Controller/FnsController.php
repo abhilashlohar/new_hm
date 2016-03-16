@@ -445,6 +445,12 @@ function is_empty_for_owner($flat_id){
 	$conditions=array("flat"=>$flat_id,'owner'=>"yes");
 	return $this->user_flat->find('count',array('conditions'=>$conditions));
 }
+function ledger_info_via_ledger_sub_account_id($ledger_sub_account_id){
+	$s_society_id=$this->Session->read('hm_society_id');
+	$this->loadmodel('ledger');
+	$conditions=array("ledger_account_id"=>34,'ledger_sub_account_id'=>$ledger_sub_account_id);
+	return $this->ledger->find('all',array('conditions'=>$conditions));
+}
 
 }
 ?>

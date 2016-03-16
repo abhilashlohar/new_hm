@@ -14,12 +14,15 @@ $new_arrear_intrest = @$collection['regular_bill']['new_arrear_intrest'];
 $new_arrear_maintenance = @$collection['regular_bill']['new_arrear_maintenance'];
 $new_intrest_on_arrears = @$collection['regular_bill']['new_intrest_on_arrears'];
 $new_total = @$collection['regular_bill']['new_total'];
-	if(empty($new_total) && empty($new_intrest_on_arrears) && empty($new_arrear_maintenance) && empty($new_arrear_intrest)){ 
-	$due_amt = $total_amt;	
+	$total_debit=0; $total_credit=0;
+	$ledger_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id_via_regular_bill)));		
+	foreach($ledger_detail as $data){
+	$debit = $data['ledger']['debit'];	
+	$credit = $data['ledger']['credit'];
+    $total_debit=$total_debit+$debit;
+	$total_credit=$total_credit+$credit;
 	}
-	else{
-	$due_amt = (($new_arrear_intrest)+($new_arrear_maintenance)+($new_intrest_on_arrears)+($new_total));
-	}
+	echo $due_amt = $total_debit-$total_credit;
 if($ledger_sub_account_id == $ledger_sub_account_id_via_regular_bill){
 if($date_from >= $from_date_renge && $date_from <= $to_date_renge){
 	if($due_amt > 0){
@@ -39,12 +42,15 @@ $new_arrear_maintenance = @$collection['regular_bill']['new_arrear_maintenance']
 $new_intrest_on_arrears = @$collection['regular_bill']['new_intrest_on_arrears'];
 $new_total = @$collection['regular_bill']['new_total'];
 }
-	if(empty($new_total) && empty($new_intrest_on_arrears) && empty($new_arrear_maintenance) && empty($new_arrear_intrest)){
-	$due_amt = $total_amt;	
-	}
-	else{
-	$due_amt = (($new_arrear_intrest)+($new_arrear_maintenance)+($new_intrest_on_arrears)+($new_total));
-	}
+	$total_debit=0; $total_credit=0;
+	/*$ledger_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id_via_regular_bill)));		
+	foreach($ledger_detail as $data){
+	$debit = $data['ledger']['debit'];	
+	$credit = $data['ledger']['credit'];
+    $total_debit=$total_debit+$debit;
+	$total_credit=$total_credit+$credit;
+	}*/
+	$due_amt=$total_credit-$total_debit;
 	$result_user=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 	$wing_id = $result_user['wing_id'];	
 if($wing_id == $wing){

@@ -3665,7 +3665,6 @@ $html_mail.='</table>
 }
 // End Regular Bill View2 //
 //Start It Supplimentry Bill (Accounts)//
-
 function it_supplimentry_bill()
 {
 		if($this->RequestHandler->isAjax()){

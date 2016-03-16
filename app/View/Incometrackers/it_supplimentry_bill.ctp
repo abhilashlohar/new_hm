@@ -1,30 +1,23 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
-
 <?php $default_date = date('d-m-Y'); ?>
-
 <!-----------Start New Supplimentry Bill Form -------->
 <div class="portlet box">
-	<div class="portlet-body">
-	
-	<form method="post">
-	
-		<table class="table table-condensed table-bordered" id="main" width="100%">
-			<thead>
-			
-			
-				<tr>
-					<th>Billing Date</th>
-					<th>Payment Due Date</th>
-					<th style="width:200px !important;">Bill Type</th>
-					<th>Income Head</th>
-					<th>Amount</th>
-					<th>Narration</th>
-				</tr>
-			</thead>
-			
-			<tbody>
+<div class="portlet-body">
+<form method="post">
+	<table class="table table-condensed table-bordered" id="main" width="100%">
+	<thead>
+			<tr>
+				<th>Billing Date</th>
+				<th>Payment Due Date</th>
+				<th style="width:200px !important;">Bill Type</th>
+				<th>Income Head</th>
+				<th>Amount</th>
+				<th>Narration</th>
+			</tr>
+	</thead>
+	<tbody>
 				
 				
 			</tbody>
@@ -38,12 +31,12 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <table id="sample" style="display:none;">
 	<tr>
 		<td>
-			<input type="text" class="m-wrap small date-picker" 
+			<input type="text" class="date-picker m-wrap small" 
 			data-date-format="dd-mm-yyyy" placeholder="Bill Date" value="<?php echo $default_date; ?>" 
 			style="background-color:white !important;" name="transaction_date[]"/>
 		</td>
 		<td>
-			<input type="text" class="m-wrap small date-picker" Placeholder="Payment Due Date"name="payment_due_date[]" data-date-format="dd-mm-yyyy">
+			<input type="text" class="date-picker m-wrap small" Placeholder="Payment Due Date"name="payment_due_date[]" data-date-format="dd-mm-yyyy">
 		</td>
 		<td>
 			<select class="m-wrap medium" name="bill_type[]" style="width:200px;">
@@ -117,6 +110,8 @@ $(document).ready(function(){
 		$("#main tbody").append(new_line);
 		$('#main tbody tr:last select[name="bill_type[]"]').chosen();
 		$('#main tbody tr:last select[name="income_head[]"]').chosen();
+		$('#main tbody tr:last input[name="transaction_date[]"]').datepicker();
+		$('#main tbody tr:last input[name="payment_due_date[]"]').datepicker();
 	}
 	
 	$("#add_row").on("click",function(){

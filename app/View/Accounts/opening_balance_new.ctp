@@ -22,7 +22,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 		<th>Credit</th>
 		<th>Penalty (debit)</th>
 	</tr>
-	<?php 
+	<?php /*
 	   $total_debit=0;
 	   $total_credit=0;
 	   $total_penalty=0;
@@ -200,7 +200,7 @@ name="ledger_id[]">
 	<td colspan="2"></td>
 	<td><input type="text" class="m-wrap small" id="grand_total_debit" value="<?php echo $grand_total_debit; ?>"><br><b>Total Debit</b></td>
 	<td colspan="2"><input type="text" class="m-wrap small" id="grand_total_credit" value="<?php echo $grand_total_credit; ?>"><br><b>Total Credit</b></td>
-</tr>	
+</tr>*/ ?>	
 </table>
 <div id="validation" style="color:red;"></div>
 <div class="form-actions">

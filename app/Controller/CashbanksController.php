@@ -15,8 +15,8 @@ function import_bank_receipts_csv(){
 		$this->layout='session';
 	}
 	$this->ath();
-	$s_society_id = $this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	
 	$this->loadmodel('import_record');
 	$conditions=array("society_id" => $s_society_id,"module_name" => "BR");
@@ -54,8 +54,8 @@ function import_bank_receipts_csv(){
 }
 
 function Upload_Bank_receipt_csv_file(){
-	$s_society_id = $this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$this->ath();
 	if(isset($_FILES['file'])){
 		$file_name=$s_society_id.".csv";
@@ -77,7 +77,7 @@ function Upload_Bank_receipt_csv_file(){
 
 function read_csv_file(){
 	$this->layout=null;
-	$s_society_id = $this->Session->read('society_id');
+	$s_society_id = $this->Session->read('hm_society_id');
 	
 	$f = fopen('Bank_Receipt_csv_files/'.$s_society_id.'.csv', 'r') or die("ERROR OPENING DATA");
 	$batchcount=0;
@@ -117,7 +117,7 @@ function read_csv_file(){
 
 function convert_imported_data(){
 	$this->layout=null;
-	$s_society_id = $this->Session->read('society_id');
+	$s_society_id = $this->Session->read('hm_society_id');
 	
 	$this->loadmodel('bank_receipt_csv');
 	$conditions=array("society_id" => $s_society_id,"is_converted" => "NO");
@@ -132,14 +132,15 @@ function convert_imported_data(){
 		$drown_in_which_bank=trim($import_record["bank_receipt_csv"]["drown_in_which_bank"]);
 		$branch_of_bank=trim($import_record["bank_receipt_csv"]["branch_of_bank"]);
 		$member_name=$import_record["bank_receipt_csv"]["member_name"];
-		 $wing=trim($import_record["bank_receipt_csv"]["wing"]);
-		 $flat=(int)trim($import_record["bank_receipt_csv"]["flat"]);
+		$wing=trim($import_record["bank_receipt_csv"]["wing"]);
+		$flat=(int)trim($import_record["bank_receipt_csv"]["flat"]);
+		$flat=str_pad($flat,10,"0",STR_PAD_LEFT);
 		$receipt_type=trim(strtolower($import_record["bank_receipt_csv"]["receipt_type"]));
 		$amount=trim($import_record["bank_receipt_csv"]["amount"]);
 		$narration=trim($import_record["bank_receipt_csv"]["narration"]);
 		
 		$this->loadmodel('ledger_sub_account'); 
-		$conditions=array("name"=> new MongoRegex('/^' . $deposited_in . '$/i'),"society_id"=>$s_society_id);
+		$conditions=array("name"=> new MongoRegex('/^' . $deposited_in . '$/i'),"society_id"=>$s_society_id,"ledger_id"=>33);
 		$result_ac=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 		if(sizeof($result_ac)>0){
 			foreach($result_ac as $collection){
@@ -176,25 +177,18 @@ function convert_imported_data(){
 		
 		
 		if($true_wing_id==$wing_id && ($true_wing_id!=0)){
-			$this->loadmodel('ledger_sub_account'); 
-			$conditions=array("flat_id"=> (int)$flat_id, "society_id"=>$s_society_id);
-			$result_ac=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-			foreach($result_ac as $collection){
-				$ledger_sub_account_id = (int)$collection['ledger_sub_account']['auto_id'];
-			}
+			$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id))); 
 		}else{
 			$ledger_sub_account_id = 0;
 		}
 		
-		
-		
 		if($receipt_type=="m"){
-			$receipt_type=1;
+			$receipt_type="maintenance";
 		}
 		elseif($receipt_type=="o"){
-			$receipt_type=2;
+			$receipt_type="other";
 		}else{
-			$receipt_type=0;
+			$receipt_type="";
 		}
 
 		$this->loadmodel('bank_receipt_csv_converted');
@@ -235,7 +229,7 @@ function modify_bank_receipt_csv_data($page=null){
 	$this->ath();
 	
 	
-	$s_society_id = $this->Session->read('society_id');
+	$s_society_id = $this->Session->read('hm_society_id');
 	$page=(int)$page;
 	$this->set('page',$page);
 	
@@ -267,7 +261,7 @@ function modify_bank_receipt_csv_data($page=null){
 	$this->set('result_banks',$result_banks);
 	
 	$this->loadmodel('ledger_sub_account');
-	$conditions=array("ledger_id" => 34,"society_id"=>$s_society_id);
+	$conditions=array("ledger_id" => 34,"society_id"=>$s_society_id,"exited"=>"no");
 	$result_members=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 	$this->set('result_members',$result_members);
 			
@@ -435,99 +429,16 @@ function allow_import_bank_receipt(){
 	$this->layout=null;
 	
 	$this->ath();
-	$s_society_id = $this->Session->read('society_id');
+	$s_society_id = $this->Session->read('hm_society_id');
 	
-	$this->loadmodel('bank_receipt_csv_converted'); 
-	$conditions=array("society_id"=>(int)$s_society_id);
-	$order=array('bank_receipt_csv_converted.auto_id'=>'ASC');
-	$result_bank_receipt_converted=$this->bank_receipt_csv_converted->find('all',array('conditions'=>$conditions));
-	foreach($result_bank_receipt_converted as $receipt_converted){
-		$auto_id=$receipt_converted["bank_receipt_csv_converted"]["auto_id"];
-		$trajection_date=$receipt_converted["bank_receipt_csv_converted"]["trajection_date"];
-		$deposited_in=(int)$receipt_converted["bank_receipt_csv_converted"]["deposited_in"];
-		$receipt_mode=$receipt_converted["bank_receipt_csv_converted"]["receipt_mode"];
-		$cheque_or_reference_no=$receipt_converted["bank_receipt_csv_converted"]["cheque_or_reference_no"];
-		$date=$receipt_converted["bank_receipt_csv_converted"]["date"];
-		$drown_in_which_bank=$receipt_converted["bank_receipt_csv_converted"]["drown_in_which_bank"];
-		$branch_of_bank=$receipt_converted["bank_receipt_csv_converted"]["branch_of_bank"];
-		$ledger_sub_account_id=$receipt_converted["bank_receipt_csv_converted"]["ledger_sub_account_id"];
-		$amount=(int)$receipt_converted["bank_receipt_csv_converted"]["amount"];
-		$narration=$receipt_converted["bank_receipt_csv_converted"]["narration"];
-		
-		
-		if(empty($trajection_date)){ $trajection_date_v=1; }else{ $trajection_date_v=0; }
-		
-			$ddatttt = $trajection_date;
-			$dattttt = date('Y-m-d',strtotime($ddatttt));
-			$dddatttt = strtotime($dattttt);
-			
-			$this->loadmodel('financial_year');
-			$conditions=array("society_id"=>$s_society_id,"status"=>1);
-			$cursor=$this->financial_year->find('all',array('conditions'=>$conditions));
-			if(sizeof($cursor) == 0)
-			{
-			$nnnnn = 555;	
-			}
-			foreach($cursor as $dataaa)
-			{
-				$fin_from_date = $dataaa['financial_year']['from'];
-				$fin_to_date = $dataaa['financial_year']['to'];
-				$from_date = date('Y-m-d',$fin_from_date->sec);
-				$to_date = date('Y-m-d',$fin_to_date->sec);
-				$from = strtotime($from_date);
-				$to = strtotime($to_date);
-					if($from <= $dddatttt && $to >= $dddatttt)
-					{
-					$nnnnn = 55;
-					break;
-					}
-					else
-					{
-					$nnnnn = 555;
-					}
-			}
-			
-			if($nnnnn == 555)
-			{
-			$trajection_date_v=1;
-			}
-	   	    else{
-			$trajection_date_v=0;	
-			}
-		
-		
-		if(empty($deposited_in)){ $deposited_in_v=1; }else{ $deposited_in_v=0; }
-		$receipt_mode_v=0;
-		if($receipt_mode=="cheque"){
-			if(empty($cheque_or_reference_no)){	$cheque_or_reference_no_v=1; }else{ $cheque_or_reference_no_v=0; }
-			if(empty($date)){	$date_v=1; }else{ $date_v=0; }
-			if(empty($drown_in_which_bank)){ $drown_in_which_bank_v=1; }else{ $drown_in_which_bank_v=0; }
-			if(empty($branch_of_bank)){ $branch_of_bank_v=1; }else{ $branch_of_bank_v=0; }
-		}elseif($receipt_mode=="neft" || $receipt_mode=="pg"){
-			if(empty($cheque_or_reference_no)){	$cheque_or_reference_no_v=1; }else{ $cheque_or_reference_no_v=0; }
-			if(empty($date)){	$date_v=1; }else{ $date_v=0; }
-			$drown_in_which_bank_v=0;
-			$branch_of_bank_v=0;
-		}
-		
-		if(empty($ledger_sub_account_id)){ $ledger_sub_account_id_v=1; }else{ $ledger_sub_account_id_v=0; }
-		if(empty($amount)){ $amount_v=1; }else{ $amount_v=0; }
-		
-		$v_result[]=array($trajection_date_v,$deposited_in_v,$receipt_mode_v,$cheque_or_reference_no_v,$date_v,$drown_in_which_bank_v,$branch_of_bank_v,$ledger_sub_account_id_v,$amount_v);
-		
-	} 
-	foreach($v_result as $data){
-		if(array_sum($data)==0){ echo "T";
-			$this->loadmodel('import_record');
-			$this->import_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "BR"));	
-		}else{ echo "F"; die; }
-	}
+	$this->loadmodel('import_record');
+	$this->import_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "BR"));
 }
 
 function final_import_bank_receipt_ajax(){
 	$this->layout=null;
-	$s_society_id = $this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	
 	$this->loadmodel('import_record');
 	$conditions=array("society_id" => $s_society_id,"module_name" => "BR");
@@ -562,382 +473,28 @@ function final_import_bank_receipt_ajax(){
 			$narration=$import_converted["bank_receipt_csv_converted"]["narration"];
 			$receipt_type=$import_converted["bank_receipt_csv_converted"]["receipt_type"];
 			
-			$this->loadmodel('ledger_sub_account'); 
-			$conditions=array("auto_id"=> $ledger_sub_account_id);
-			$result_ac=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-			foreach($result_ac as $collection){
-				$flat_id = (int)$collection['ledger_sub_account']['flat_id'];
-			}
 			
-			if($receipt_type == 1){
-				//apply receipt in regular_bill//
-				$result_new_regular_bill = $this->requestAction(array('controller' => 'Incometrackers', 'action' => 'fetch_last_bill_info_via_flat_id'),array('pass'=>array($flat_id)));
+			
+			if($receipt_type == "maintenance"){
 				
-				$auto_id=null; $regular_bill_one_time_id=null;
-				
-				if(sizeof($result_new_regular_bill)>0){
-					foreach($result_new_regular_bill as $data){
-						$auto_id=$data["auto_id"];  
-						$edit_status=$data["edit_status"]; 
-						$latest_bill=@$data["latest_bill"]; 
-						$receipt_applied=@$data["receipt_applied"]; 
-						$regular_bill_one_time_id = (int)$data["one_time_id"];
-						$flat_id = (int)$data["flat_id"];
-						if($edit_status=="NO" && $latest_bill=="YES"){
-							if(empty($receipt_applied)){
-								$arrear_intrest=$data["arrear_intrest"];
-								$intrest_on_arrears=$data["intrest_on_arrears"];
-								$total=$data["total"];
-								$arrear_maintenance=$data["arrear_maintenance"];
-							}else{
-								$arrear_intrest=$data["new_arrear_intrest"];
-								$intrest_on_arrears=$data["new_intrest_on_arrears"];
-								$total=$data["new_total"];
-								$arrear_maintenance=$data["new_arrear_maintenance"];
-							}
-						}else{
-							$number_of_receipt=$this->count_receipt_against_bill($regular_bill_one_time_id,$flat_id);
-							if($number_of_receipt==0){
-								$arrear_intrest=$data["arrear_intrest"];
-								$intrest_on_arrears=$data["intrest_on_arrears"];
-								$total=$data["total"];
-								$arrear_maintenance=$data["arrear_maintenance"]; 
-							}else{
-								$arrear_intrest=$data["new_arrear_intrest"];
-								$intrest_on_arrears=$data["new_intrest_on_arrears"];
-								$total=$data["new_total"];
-								$arrear_maintenance=$data["new_arrear_maintenance"];
-							}
-						}
-					}
-					$amount_after_arrear_intrest=$amount-$arrear_intrest;
-					if($amount_after_arrear_intrest<0)
-					{
-						$new_arrear_intrest=abs($amount_after_arrear_intrest);
-						$new_intrest_on_arrears=$intrest_on_arrears;
-						$new_arrear_maintenance=$arrear_maintenance;
-						$new_total=$total;
-					}
-					else
-					{
-						$new_arrear_intrest=0;
-						$amount_after_intrest_on_arrears=$amount_after_arrear_intrest-$intrest_on_arrears;
-						if($amount_after_intrest_on_arrears<0)
-						{
-							$new_intrest_on_arrears=abs($amount_after_intrest_on_arrears);
-							$new_arrear_maintenance=$arrear_maintenance;
-							$new_total=$total;
-						}
-						else
-						{
-							$new_intrest_on_arrears=0;
-							$amount_after_arrear_maintenance=$amount_after_intrest_on_arrears-$arrear_maintenance;
-							if($amount_after_arrear_maintenance<0){
-								$new_arrear_maintenance=abs($amount_after_arrear_maintenance);
-								$new_total=$total;
-							}else{
-								$new_arrear_maintenance=0;
-								$amount_after_total=$amount_after_arrear_maintenance-$total; 
-								if($amount_after_total>0){
-								$new_total=0;
-								$new_arrear_maintenance=-$amount_after_total;
-								}else{
-											$new_total=abs($amount_after_total);
-											
-									}
-							}
-						}
-					}
-
-					$this->loadmodel('new_regular_bill');
-					$this->new_regular_bill->updateAll(array('new_arrear_intrest'=>$new_arrear_intrest,"new_intrest_on_arrears"=>$new_intrest_on_arrears,"new_arrear_maintenance"=>$new_arrear_maintenance,"new_total"=>$new_total),array('auto_id'=>$auto_id));
-				}
-			
-			
 			$current_date = date('Y-m-d');
 			
-			$t1=$this->autoincrement('new_cash_bank','transaction_id');
-			$k = (int)$this->autoincrement_with_receipt_source('new_cash_bank','receipt_id',1); 
-			$this->loadmodel('new_cash_bank');
-			$multipleRowData = Array( Array("transaction_id"=> $t1,"receipt_id" => $k, "receipt_date" => $trajection_date, "receipt_mode" => $receipt_mode, "cheque_number" =>@$cheque_or_reference_no,"cheque_date" =>$date,"drawn_on_which_bank" =>@$drown_in_which_bank,"reference_utr" => @$cheque_or_reference_no,"deposited_bank_id" => $deposited_in,"bank_branch" => $branch_of_bank,"member_type" => 1,"party_name_id"=>$flat_id,"receipt_type" => $receipt_type,"amount" => $amount,"current_date" => $current_date,"society_id"=>$s_society_id,"flat_id"=>$flat_id,"bill_auto_id"=>$auto_id,"bill_one_time_id"=>$regular_bill_one_time_id,"narration"=>$narration,"receipt_source"=>1,"edit_status"=>"NO","auto_inc"=>"YES","prepaired_by" => $s_user_id,"is_cancel"=>"NO"));  
-			$this->new_cash_bank->saveAll($multipleRowData);
+			$this->loadmodel('cash_bank');
+			$auto_id=$this->autoincrement('cash_bank','auto_id');
+			$receipt_number=$this->autoincrement_with_society_ticket('cash_bank','receipt_number');
+			$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id, "transaction_date" => strtotime($trajection_date),"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_or_reference_no,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number))); 
 			
-			$l=$this->autoincrement('ledger','auto_id');
+			
 			$this->loadmodel('ledger');
-			$multipleRowData = Array( Array("auto_id" => $l, "transaction_date"=> $trajection_date, "debit" => $amount, "credit" =>null,"ledger_account_id" => 33, "ledger_sub_account_id" => $deposited_in, "table_name" => "new_cash_bank","element_id" => $t1, "society_id" => $s_society_id));
-			$this->ledger->saveAll($multipleRowData); 
+			$ledger_id=$this->autoincrement('ledger','auto_id');
+			$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($trajection_date), "debit" => $amount, "credit" =>null, "ledger_account_id" => 33, "ledger_sub_account_id" => $deposited_in,"table_name" => "bank_receipt","element_id" => $auto_id, "society_id" => $s_society_id))); 
 
-			$l=$this->autoincrement('ledger','auto_id');
-			$this->loadmodel('ledger');
-			$multipleRowData = Array( Array("auto_id" => $l, "transaction_date"=> $trajection_date, "credit" => $amount, "debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name" => "new_cash_bank","element_id" => $t1, "society_id" => $s_society_id));
-			$this->ledger->saveAll($multipleRowData);
+			$ledger_id=$this->autoincrement('ledger','auto_id');
+			$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($trajection_date), "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name" => "bank_receipt","element_id" => $auto_id, "society_id" => $s_society_id,"receipt_type" =>$receipt_type)));
 			
 			$this->loadmodel('bank_receipt_csv_converted');
 			$this->bank_receipt_csv_converted->updateAll(array("is_imported" => "YES"),array("auto_id" => $bank_receipt_csv_id));
 					
-					
-			//////email///
-			
-			$receipt_no = $k;
-			$d_date = $trajection_date;
-			$today = date("d-M-Y");
-			$bill_reference = $cheque_or_reference_no;
-			$member = 1;
-			$cheque_number = $cheque_or_reference_no;
-			$which_bank = $drown_in_which_bank;
-			$reference_number = $cheque_or_reference_no;
-			$cheque_date = $date;
-			$sub_account = $deposited_in;
-			$sms_date=date("d-m-Y",($d_date));
-
-			$amount = str_replace( ',', '', $amount );
-			$am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));
-
-			$this->loadmodel('society');
-			$conditions=array("society_id" => $s_society_id);
-			$cursor2=$this->society->find('all',array('conditions'=>$conditions));
-			foreach ($cursor2 as $collection) 
-			{
-			$society_name = $collection['society']['society_name'];
-			$society_reg_no = $collection['society']['society_reg_num'];
-			$society_address = $collection['society']['society_address'];
-			$sig_title = $collection['society']['sig_title'];
-			}
-			
-			
-			$flatt_datta = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
-			foreach ($flatt_datta as $fltt_datttaa) 
-			{
-			$wnngg_idddd = (int)$fltt_datttaa['flat']['wing_id'];
-			}
-
-			$result_lsa = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_user_info_via_flat_id'),array('pass'=>array($wnngg_idddd,$flat_id)));
-			foreach ($result_lsa as $collection) 
-			{
-			$wing_id = $collection['user']['wing'];  
-			$flat_id = (int)$collection['user']['flat'];
-			$tenant = (int)$collection['user']['tenant'];
-			$user_name = $collection['user']['user_name'];
-			$to_mobile = $collection['user']['mobile'];
-			$to_email = $collection['user']['email'];
-			}
-			$wing_flat = $this->requestAction(array('controller' => 'hms', 'action'=>'wing_flat'),array('pass'=>array($wing_id,$flat_id)));									
-			
-			$result2 = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($sub_account))); 
-			foreach($result2 as $collection)
-			{
-			$bank_name = $collection['ledger_sub_account']['name'];
-			}
-												
-			$ip=$this->hms_email_ip();
-			$date=date("d-m-Y",($d_date));
-				
-			$ip=$this->hms_email_ip();
-			$html_receipt='<table style="padding:24px;background-color:#34495e" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
-						<tbody><tr>
-							
-							<td>
-						
-								
-							
-								<table style="padding:38px 30px 30px 30px;background-color:#fafafa" align="center" border="0" cellpadding="0" cellspacing="0" width="540">
-									<tbody>
-									<tr>
-										<td colspan="2" style="font-size:12px;line-height:1.4;font-family:Arial,Helvetica,sans-serif;color:#34495e;">
-										
-										<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
-										<tbody>
-										<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
-										<tr>
-										<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#" style="color:#3b5998;text-decoration:none" target="_blank"><img src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
-										<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-										<td width="100%"><a href="#" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px" target="_blank"><span style="color:#00A0E3">Housing</span><span style="color:#777776">Matters</span></a></td>
-										<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img  src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
-											
-										</td>
-										</tr>
-										<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
-										</tbody>
-										</table>
-										
-										<table style="font-size:12px" width="100%" cellspacing="0">
-											<tbody><tr>
-												<td style="padding:2px;background-color:rgb(0,141,210);color:#fff" align="center" width="100%"><b>'.strtoupper($society_name).'</b></td>
-											</tr>
-										</tbody></table>
-										<table style="font-size:12px" width="100%" cellspacing="0">
-											<tbody>
-											<tr>
-												<td style="padding:5px;border-bottom:solid 1px #767575;border-top:solid 1px #767575" width="100%" align="center">
-												<span style="color:rgb(100,100,99)">Regn# &nbsp; '.$society_reg_no.'</span><br>
-												<span style="color:rgb(100,100,99)">'.$society_address.'</span><br
-												</td>
-											</tr>
-											</tbody>
-										</table>
-										<table style="font-size:12px;border-bottom:solid 1px #767575;" width="100%" cellspacing="0">
-											<tbody><tr>
-												<td style="padding:0px 0 2px 5px" colspan="2">Receipt No: '.$receipt_no.'</td>
-												
-												<td colspan="2" align="right" style="padding:0px 5px 0 0px"><b>Date:</b> '.$date.' </td>
-												
-											</tr>
-											<tr>
-												<td style="padding:0px 0 2px 5px" colspan="2"> Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b></td>
-																					
-											</tr>
-											<tr>
-												<td style="padding:0px 0 2px 5px"  colspan="4">Rupees '.$am_in_words.' Only </td>
-												
-											</tr>';
-											
-										if($receipt_mode=="Cheque"){
-										$receipt_mode_type='Via '.$receipt_mode.'-'.$cheque_number.' drawn on '.$which_bank.' dated '.$cheque_date;
-										}
-										else{
-										$receipt_mode_type='Via '.$receipt_mode.'-'.$reference_number.' dated '.$cheque_date;
-										}
-
-
-											
-											$html_receipt.='<tr>
-												<td style="padding:0px 0 2px 5px"  colspan="4">'.$receipt_mode_type.'</td>
-												
-											</tr>
-											
-											<tr>
-												<td style="padding:0px 0 2px 5px" colspan="4">Payment of previous bill</td>
-												
-											</tr>
-											
-										</tbody></table>
-										
-										
-										
-										<table style="font-size:12px;" width="100%" cellspacing="0">
-											<tbody><tr>
-												<td width="50%" style="padding:5px" valign="top">
-												<span style="font-size:16px;"> <b>Rs '.$amount.'</b></span><br>';
-												if($receipt_mode=="Cheque"){
-												$receipt_title_cheq='Subject to realization of Cheque(s)';
-												}
-																					
-												$html_receipt.='<span>'.@$receipt_title_cheq.'</span></td>
-												<td align="center" width="50%" style="padding:5px" valign="top">
-												For  <b>'.$society_name.'</b><br><br><br>
-												<div><span style="border-top:solid 1px #424141">'.$sig_title.'</span></div>
-												</td>
-											</tr>
-										</tbody></table>
-															
-										
-										</td>
-									</tr>
-									
-									<tr>
-										<td colspan="2">
-											<table style="background-color:#008dd2;font-size:11px;color:#fff;border:solid 1px #767575;border-top:none" width="100%" cellspacing="0">
-											 <tbody>
-											 
-												<tr>
-													<td align="center" colspan="7"><b>
-													Your Society is empowered by HousingMatters - <b> <i>"Making Life Simpler"</i>
-													</b></b></td>
-												</tr>
-												<tr>
-													<td width="50" align="right" style="font-size: 10px;"><b>Email :</b></td>
-													<td width="120" style="color:#fff!important;font-size: 10px;"> 
-													<a href="mailto:support@housingmatters.in" style="color:#fff!important" target="_blank"><b>support@housingmatters.in</b></a>
-													</td>
-													<td align="center" style="font-size: 10px;"></td>
-													<td align="right" style="font-size: 10px;"><b>Phone :</b></td>
-													<td width="84" style="color:#fff!important;text-decoration:none;font-size:10px;"><b>022-41235568</b></td>
-													<td align="center" style="font-size: 10px;"></td>
-													<td width="100" style="padding-right:10px;text-decoration:none"> <a href="http://www.housingmatters.in" style="color:#fff!important" target="_blank"><b>www.housingmatters.in</b></a></td>
-												</tr>
-												
-												
-											</tbody>
-										</table>
-										</td>
-									</tr>
-									<tr>
-										<td align="center"><div class="hmlogobox" ><a href="mailto:Support@housingmatters.in">Do not miss important e-mails from HousingMatters,  add us to your address book</a></div></td>
-									</tr>
-								</tbody></table>
-							</td>
-						</tr>
-					</tbody>
-			</table>';
-			
-			$this->loadmodel('society');
-			$condition=array('society_id'=>$s_society_id);
-			$result_society=$this->society->find('all',array('conditions'=>$condition)); 
-			$this->set('result_society',$result_society);
-			foreach($result_society as $data_society){
-				$society_name=$data_society["society"]["society_name"];
-				$email_is_on_off=(int)@$data_society["society"]["account_email"];
-				$sms_is_on_off=(int)@$data_society["society"]["account_sms"];
-			   }
-
-
-			if($email_is_on_off==1){
-			////email code//
-
-			$r_sms=$this->hms_sms_ip();
-			$working_key=$r_sms->working_key;
-			$sms_sender=$r_sms->sms_sender; 
-			$sms_allow=(int)$r_sms->sms_allow;
-
-			$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".date('d-M-Y',$d_date)." against Unit ".$wing_flat."";
-
-			if(!empty($to_email)){
-				$this->send_email($to_email,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'donotreply@housingmatters.in');
-			}
-			}
-
-			if($sms_is_on_off==1){
-				if($sms_allow==1){
-					$r_sms=$this->hms_sms_ip();
-					$working_key=$r_sms->working_key;
-					$sms_sender=$r_sms->sms_sender; 
-					$sms_allow=(int)$r_sms->sms_allow;
-					$user_name_short=$this->check_charecter_name($user_name);
-					$sms="Dear ".$user_name_short." ,we have received Rs ".$amount." on ".$sms_date." towards Society Maint. dues. Cheques are subject to realization,".$society_name;
-					$sms1=str_replace(' ', '+', $sms);
-
-					$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$to_mobile.'&message='.$sms1.''); 
-				}
-			}	
-			//////email/////		
-		} 
-		if($receipt_type == 2){
-			$current_date = date('Y-m-d');
-			$t2=$this->autoincrement('new_cash_bank','transaction_id');
-			$k = (int)$this->autoincrement_with_receipt_source('new_cash_bank','receipt_id',1);
-			$this->loadmodel('new_cash_bank');
-			$multipleRowData = Array( Array("transaction_id"=>$t2, "receipt_id" => $k, "receipt_date" => $trajection_date, "receipt_mode" => $receipt_mode, "cheque_number" =>@$cheque_or_reference_no,"cheque_date" =>$date,"drawn_on_which_bank" =>@$drown_in_which_bank,"bank_branch" => $branch_of_bank,"reference_utr" => @$cheque_or_reference_no,"deposited_bank_id" => $deposited_in,"member_type" => 1,"party_name_id"=>$flat_id,"receipt_type" => $receipt_type,"amount" => $amount,"current_date" => $current_date,"society_id"=>$s_society_id,"flat_id"=>$flat_id,"narration"=>$narration,"receipt_source"=>1,"prepaired_by" => $s_user_id,"edit_status"=>"NO","auto_inc"=>"YES"));
-			$this->new_cash_bank->saveAll($multipleRowData);
-
-			
-			
-			$result_flat_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'ledger_SubAccount_dattta_by_flat_id'),array('pass'=>array($flat_id)));
-			foreach($result_flat_info as $flat_info){
-				$account_id = (int)$flat_info["ledger_sub_account"]["auto_id"];
-			}
-
-			$l=$this->autoincrement('ledger','auto_id');
-			$this->loadmodel('ledger');
-			$multipleRowData = Array( Array("auto_id" => $l, "transaction_date"=> $trajection_date, "debit" => $amount, "credit" =>null, "ledger_account_id" => 33, "ledger_sub_account_id" => $deposited_in,"table_name" => "new_cash_bank","element_id" => $t2, "society_id" => $s_society_id,));
-			$this->ledger->saveAll($multipleRowData); 
-
-			$l=$this->autoincrement('ledger','auto_id');
-			$this->loadmodel('ledger');
-			$multipleRowData = Array( Array("auto_id" => $l, "transaction_date"=> $trajection_date, "credit" => $amount, "debit" =>null, "ledger_account_id" => 34, "ledger_sub_account_id" => $account_id,"table_name" => "new_cash_bank","element_id" => $t2, "society_id" => $s_society_id,));
-			$this->ledger->saveAll($multipleRowData);
-			
-			$this->loadmodel('bank_receipt_csv_converted');
-			$this->bank_receipt_csv_converted->updateAll(array("is_imported" => "YES"),array("auto_id" => $bank_receipt_csv_id));
 		}
 	}
 		

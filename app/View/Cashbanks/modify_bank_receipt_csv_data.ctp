@@ -1,5 +1,4 @@
 <style>
-
 input.m-wrap[type="text"]{
 	background-color:#FFF !important;
 }
@@ -111,23 +110,19 @@ input.m-wrap[type="text"]{
 				<option value="" style="display:none;">Select...</option>
 				 <?php
 				foreach ($result_members as $member_info){
-					echo $member_id = (int)$member_info['ledger_sub_account']["auto_id"];
-					$member_name = $member_info['ledger_sub_account']["name"];
-					$member_flat = $member_info['ledger_sub_account']["flat_id"];
+					$member_id = (int)$member_info['ledger_sub_account']["auto_id"];
 					
-					//wing_id via flat_id//
-					$result_flat_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($member_flat)));
-					foreach($result_flat_info as $flat_info){
-						$member_wing=$flat_info["flat"]["wing_id"];
-					} 
+					$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($member_id)));
+					$user_name=$member_info["user_name"];
+					$wing_name=$member_info["wing_name"];
+					$flat_name=$member_info["flat_name"];
+					$wing_flat=$wing_name.' - '.$flat_name;
 					
-					$wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($member_wing,$member_flat))); 
-				
 					if($ledger_sub_account_id==$member_id){
 						$select_string='selected="selected"';
 					}else{ $select_string=''; }
 					?>
-					<option value="<?php echo $member_id; ?>" <?php echo $select_string; ?> ><?php echo $member_name; ?> &nbsp;&nbsp; <?php echo $wing_flat; ?></option>
+					<option value="<?php echo $member_id; ?>" <?php echo $select_string; ?> ><?php echo $user_name; ?> &nbsp;&nbsp; <?php echo $wing_flat; ?></option>
 				<?php } ?>
 			</select>
 			</div>
@@ -141,8 +136,8 @@ input.m-wrap[type="text"]{
 			<div class="r_type">
 			<select class="span12 m-wrap"  record_id="<?php echo $auto_id; ?>" field="receipt_type" >
 				<option value="" style="display:none;">Select...</option>
-				<option value="1" <?php if($receipt_type==1){ echo 'selected="selected"'; } ?> >Maintanace</option>
-				<option value="2" <?php if($receipt_type==2){ echo 'selected="selected"'; } ?> >Other</option>
+				<option value="1" <?php if($receipt_type=="maintenance"){ echo 'selected="selected"'; } ?> >Maintanace</option>
+				<option value="2" <?php if($receipt_type=="other"){ echo 'selected="selected"'; } ?> >Other</option>
 			</select>
 			</div>
 		</td>
@@ -202,12 +197,7 @@ $(document).ready(function() {
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Cashbanks/allow_import_bank_receipt",
 		}).done(function(response){
-			if(response=="F"){
-				$("#check_validation_result").html("");
-				alert("Your Data Is Not Validate.");
-			}else{
-				change_page_automatically("<?php echo $webroot_path; ?>Cashbanks/import_bank_receipts_csv");
-			}
+			change_page_automatically("<?php echo $webroot_path; ?>Cashbanks/import_bank_receipts_csv");
 		});
 	});
 });

@@ -116,7 +116,6 @@ function read_unit_configuration_csv(){
 	foreach($test as $child){ $i++;
 			if($i>1){
 				$child_ar=explode(',',$child[0]);
-				
 				$wing_name=$child_ar[0];
 				$flat_name=$child_ar[1];
 				$flat_type=$child_ar[2];

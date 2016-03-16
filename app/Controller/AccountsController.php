@@ -6188,7 +6188,7 @@ if($process_status==3){
 	$count_bank_receipt_converted=$this->opening_balance_csv_converted->find('count',array('conditions'=>$conditions));
 	$this->set('count_bank_receipt_converted',$count_bank_receipt_converted);
 }
-if(isset($this->request->data['opening_balance_submit']))	
+if(isset($this->request->data['sub']))	
 {
 	echo "hello"; exit;
 	$transaction_date = $this->request->data['date'];	
@@ -6266,14 +6266,6 @@ $ledger_account_id2=(int)$ledger_sub_accounts_data['ledger_sub_account']['ledger
 <a href="opening_balance_import" class="btn green">OK</a>
 </div>
 </div>	
-	
-	
-	
-	
-	
-	
-	
-	
 <?php	
 }
 	

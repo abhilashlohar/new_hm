@@ -91,7 +91,7 @@ function unit_configuration_excel(){
 				$flat_name=$data2["flat"]["flat_name"];
 				$flat_type_id=(int)$data2["flat"]["flat_type_id"];
 				$flat_area=$data2["flat"]["flat_area"];
-				$result_flat_name = $this->requestAction(array('controller' => 'Fns', 'action' => 'flat_type_name_via_flat_type_id'),array('pass'=>array($wing_id)));
+				$result_flat_name = $this->requestAction(array('controller' => 'Fns', 'action' => 'flat_type_name_via_flat_type_id'),array('pass'=>array($flat_type_id)));
 				
 				$excel.= "$wing_name,$flat_name,$result_flat_name,$flat_area\n";
 			}

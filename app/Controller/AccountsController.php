@@ -6188,7 +6188,7 @@ if($process_status==3){
 	$count_bank_receipt_converted=$this->opening_balance_csv_converted->find('count',array('conditions'=>$conditions));
 	$this->set('count_bank_receipt_converted',$count_bank_receipt_converted);
 }
-if(isset($this->request->data['sub']))	
+if($this->request->is('post'))	
 {
 
 	echo "hello"; exit;

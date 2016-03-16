@@ -178,6 +178,12 @@ $wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_f
 		<td><input type="hidden" value="" name="penalty[]" Placeholder="Penalty"></td>
 		</tr>
 	<?php }} ?>
+	<tr>	
+	<th colspan="2" style="text-align:right;">Total</th>
+	<th><input type="text" class="m-wrap small total_debit" id="total_debit" value="<?php echo $total_debit; ?>"></th>
+	<th><input type="text" class="m-wrap small total_credit" id="total_credit" value="<?php echo $total_credit; ?>"></th>
+	<th><input type="text" class="m-wrap small total_penalty" id="total_penalty" value="<?php echo $total_penalty; ?>"></th>	
+</tr>
 	</table>
 	<button type="submit" name="sub" class="btn green" id="submit_opening_balance">Submit</button>
 </form>

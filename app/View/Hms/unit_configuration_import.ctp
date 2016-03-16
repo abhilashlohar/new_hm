@@ -19,7 +19,7 @@
 			<h5>Upload CSV file in given format to import Unit configuration.</h5>
 			<input name="file" class="default" id="image-file" type="file">
 			 <label id="vali"></label>	
-			<a href="<?php echo $webroot_path; ?>unit_configuration/unit_configuration.csv" download=""><b>Click here for sample format</b></a><br/><br/>
+			<a href="<?php echo $webroot_path; ?>Hms/unit_configuration_sample" download=""><b>Click here for sample format</b></a><br/><br/>
 			<h5 id="submit_element" >
 			<button type="submit" class="btn blue">IMPORT </button>
 			</h5>

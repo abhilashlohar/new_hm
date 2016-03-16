@@ -23,10 +23,13 @@ Society Setup
 <li><a href="<?php echo $webroot_path; ?>Hms/society_details" rel='tab'>Society Details</a></li>
 <li><a href="<?php echo $webroot_path; ?>Hms/society_settings" rel='tab'>Society Settings</a></li>
 </ul>
+
 <div class="tab-content" style="min-height:300px;">
 <div class="tab-pane active" id="tab_1_1">
 Every change you make is automatically saved.<br>
+
 <a href="<?php echo @$webroot_path; ?>Hms/unit_configuration_import" class="btn purple" style="float:right; margin-right:8px;">Bulk Import</a>
+<a href="<?php echo @$webroot_path; ?>Hms/unit_configuration_excel" class="btn blue" style="float:right; margin-right:8px;">Excel</a>
 <p id="msg" style="height:20px;"></p>
 
 <table class="table table-bordered table-condensed">

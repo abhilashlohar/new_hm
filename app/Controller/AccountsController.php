@@ -6175,7 +6175,7 @@ $step2=(int)@$data_import["import_ob_record"]["step2"];
 $step3=(int)@$data_import["import_ob_record"]["step3"];
 $tra_date = @$data_import["import_ob_record"]["tra_date"];
 }
-//$this->set('tra_date',$tra_date);
+
 $process_status= @$step1+@$step2+@$step3;
 if($process_status==3){
 	$this->loadmodel('opening_balance_csv_converted'); 
@@ -6188,14 +6188,13 @@ if($process_status==3){
 	$count_bank_receipt_converted=$this->opening_balance_csv_converted->find('count',array('conditions'=>$conditions));
 	$this->set('count_bank_receipt_converted',$count_bank_receipt_converted);
 }
-if(isset($this->request->data['opening_balance_submit']))	
+if(isset($this->request->data['sub']))	
 {
-		echo "sdgdsgdsg";
-		exit;
-		
-		
-		$transaction_date = $this->request->data['date'];	
-		$transaction_date = date('Y-m-d',strtotime($transaction_date));
+
+	echo "hello"; exit;
+	$transaction_date = $this->request->data['date'];	
+	$transaction_date = date('Y-m-d',strtotime($transaction_date));
+
 		$ledger_ids = $this->request->data['ledger_id'];
 		$debits = $this->request->data['debit'];
 		
@@ -6269,14 +6268,6 @@ $ledger_account_id2=(int)$ledger_sub_accounts_data['ledger_sub_account']['ledger
 <a href="opening_balance_import" class="btn green">OK</a>
 </div>
 </div>	
-	
-	
-	
-	
-	
-	
-	
-	
 <?php	
 }
 	

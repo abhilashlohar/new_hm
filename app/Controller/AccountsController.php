@@ -6175,7 +6175,7 @@ $step2=(int)@$data_import["import_ob_record"]["step2"];
 $step3=(int)@$data_import["import_ob_record"]["step3"];
 $tra_date = @$data_import["import_ob_record"]["tra_date"];
 }
-//$this->set('tra_date',$tra_date);
+
 $process_status= @$step1+@$step2+@$step3;
 if($process_status==3){
 	$this->loadmodel('opening_balance_csv_converted'); 
@@ -6190,6 +6190,7 @@ if($process_status==3){
 }
 if(isset($this->request->data['opening_balance_submit']))	
 {
+	echo "hello"; exit;
 	$transaction_date = $this->request->data['date'];	
 	$transaction_date = date('Y-m-d',strtotime($transaction_date));
 		$ledger_ids = $this->request->data['ledger_id'];

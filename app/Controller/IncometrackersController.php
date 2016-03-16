@@ -5419,6 +5419,12 @@ function master_rate_card(){
 	$conditions=array('society_id'=>$s_society_id,'flat_area'=>null,'flat_type_id'=>null);
 	$count=$this->flat->find('count',array('conditions'=>$conditions)); 
 	$this->set('count',$count);
+	$this->loadmodel('flat');
+	$conditions=array('society_id'=>$s_society_id,'flat_area'=>null,'flat_type_id'=>0);
+	$count2=$this->flat->find('count',array('conditions'=>$conditions)); 
+	$count=$count+$count2;
+	
+	$this->set('count',$count);
 	if($count==0){
 	$this->loadmodel('flat');
 	$conditions=array('society_id'=>$s_society_id);

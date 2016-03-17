@@ -255,12 +255,12 @@ $(document).ready(function() {
 						<td style="padding: 1px; font-weight: 600; font-size: 12px;">
 							 <table cellpadding="0" cellspacing="0" style="line-height: 14px;">
 							  <tr>
-								<td style="padding: 1px; font-weight: 600; font-size: 12px;">
+								<td style="padding: 1px; font-size: 12px; color: #FFF; font-weight: bold;">
 								<?php echo $name; ?>
 								</td>
 							  </tr>
 							  <tr>
-								<td style="font-size: 12px;">
+								<td style="font-size: 12px;color: #E7E4E4 !important;">
 								<?php echo @$role_name; ?>
 								</td>
 							  </tr>

@@ -27211,7 +27211,7 @@ function menus_as_per_user_rights(){
 		$module_name=$module_info[0]["main_module"]["module_name"];
 		$icon=$module_info[0]["main_module"]["icon"];
 						
-	$page_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_page_info_via_module_id'),array('pass'=>array($module_id)));
+	$page_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_page_info_via_module_id_for_hm'),array('pass'=>array($module_id)));
 	$controller=$page_info[0]["page"]["controller"];
 	$page_name=$page_info[0]["page"]["page_name"];
 		

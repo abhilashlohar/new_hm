@@ -125,6 +125,12 @@ function fetch_page_info_via_module_id($module_id){
 	return $this->page->find('all',array('conditions'=>$conditions));
 }
 
+function fetch_page_info_via_module_id_for_hm($module_id){
+	$this->loadmodel('page');
+	$conditions=array('module_id'=>$module_id);
+	return $this->page->find('all',array('conditions'=>$conditions));
+}
+
 function role_name_via_role_id($role_id){
 	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('role');

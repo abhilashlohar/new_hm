@@ -191,13 +191,75 @@ $(document).ready(function() {
 	});
 	
 	$( "#final_import" ).click(function() {
-		$("#check_validation_result").html('<img src="<?php echo $webroot_path; ?>as/loding.gif" /><span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Importing Receipts.</span>');
-		
-		$.ajax({
-			url: "<?php echo $webroot_path; ?>Cashbanks/allow_import_bank_receipt",
-		}).done(function(response){
-			change_page_automatically("<?php echo $webroot_path; ?>Cashbanks/import_bank_receipts_csv");
+		var allow="yes";
+		$('#report_tb tbody tr select[field=deposited_in]').each(function(i, obj) {
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
 		});
+		$('#report_tb tbody tr select[field=ledger_sub_account_id]').each(function(i, obj) {
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		$('#report_tb tbody tr input[field=amount]').each(function(i, obj) {
+			var a=$(this).val();
+			if(a=="" || a==0){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		if(allow=="yes"){
+			$.ajax({
+				url: "<?php echo $webroot_path; ?>Cashbanks/allow_import_bank_receipt",
+			}).done(function(response){
+				change_page_automatically("<?php echo $webroot_path; ?>Cashbanks/import_bank_receipts_csv");
+			});
+		}
+		
+	});
+	$('select[field=deposited_in]').die().live("change",function(){
+		var ledger_sub_account=$(this).val();
+		if(ledger_sub_account==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+	$('select[field=ledger_sub_account_id]').die().live("change",function(){
+		var ledger_sub_account=$(this).val();
+		if(ledger_sub_account==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+	$('input[field=amount]').die().live("keyup blur",function(){
+		var amount=$(this).val();
+		if(amount=="" || amount==0){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
 	});
 });
 
@@ -301,3 +363,9 @@ $( document ).ready(function() {
 });
 
 </script>
+<style>
+.er{
+color: rgb(198, 4, 4);
+font-size: 11px;
+}
+</style>

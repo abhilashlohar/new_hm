@@ -3763,7 +3763,7 @@ if(empty($child[7])){
 		
 }
 $rr = array();
-$z=1;
+$z=0;
 foreach($myArray as $child)
 {
 $z++;

@@ -21,12 +21,20 @@ Large notebooks and desktops
   		margin-left: 225px; 
 		margin-top: 0px;
 	}
+	
+	.mobile { 
+  		display: none !important;
+	}
+	
 }
 
 /***
 For tablets and phones
 ***/
 @media (max-width:979px) { 
+	.desktop { 
+  		display: none !important;
+	}
 	
 	/***
 	Body

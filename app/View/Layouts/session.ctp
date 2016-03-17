@@ -194,8 +194,11 @@ $(document).ready(function() {
       <div class="navbar-inner">
          <div class="container-fluid">
             <!-- BEGIN LOGO -->
-            <a class="brand" href="<?php echo $webroot_path; ?>Hms/Dashboard" style="margin-top: -3px;"> 
-            <img src="<?php echo $webroot_path; ?>as/hm/housing_matter.png" alt="HousingMatters" style="height: 30px;" />
+            <a class="brand desktop" href="<?php echo $webroot_path; ?>Hms/Dashboard" style="margin-top: -3px;"> 
+            <img src="<?php echo $webroot_path; ?>as/hm/housingmatterslogo.png" alt="HousingMatters" style="height: 30px;" />
+            </a>
+			<a class="brand mobile" href="<?php echo $webroot_path; ?>Hms/Dashboard" style="margin-top: -3px;padding-left: 0 !important;padding-right: 0 !important;"> 
+            <img src="<?php echo $webroot_path; ?>as/hm/housingmattersmobilelogo.png" alt="HousingMatters" style="height: 30px;" />
             </a>
 			<?php
 			$s_user_id=$this->Session->read('hm_user_id');

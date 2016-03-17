@@ -1,28 +1,3 @@
-<!--
-<style>
-#tbb th{
-	font-size: 10px !important;background-color:#C8EFCE;padding:2px;border:solid 1px #55965F; 
-}
-#tbb td{
-	
-	font-size: 10px;border:solid 1px #55965F;background-color:#FFF; 
-}
-.text_bx{
-	width: 50px;
-	height: 15px !important;
-	margin-bottom: 0px !important;
-	font-size: 12px;
-}
-.text_rdoff{
-	width: 50px;
-	height: 15px !important;
-	border: none !important;
-	margin-bottom: 0px !important;
-	font-size: 12px;
-}
-</style>
--->
-
 <style>
 #tbb th{
 	font-size: 10px !important;background-color:#69F1AD; border:solid 1px #000; 

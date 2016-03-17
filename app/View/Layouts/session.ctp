@@ -228,7 +228,7 @@ $(document).ready(function() {
             <!-- BEGIN TOP NAVIGATION MENU -->              
             <ul class="nav pull-right">
                <!-- BEGIN USER LOGIN DROPDOWN -->
-               <li class="dropdown user">
+               <li class="dropdown user" style="margin-right: 10px;">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding: 0px !important;">
                    <table style="" cellpadding="0" cellspacing="0">
 					<tr>

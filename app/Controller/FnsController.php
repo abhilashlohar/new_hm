@@ -236,6 +236,9 @@ function calculate_noc_charge($ledger_sub_account_id,$billing_cycle){
 	if($rate_type==2){
 		return $rate*$flat_area*$billing_cycle;
 	}
+	if($rate_type==4){
+		return 0;
+	}
 	if($rate_type==5){
 		return 0;
 	}

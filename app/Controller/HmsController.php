@@ -5871,6 +5871,38 @@ if ($this->request->is('post'))
 }
 	
 }
+
+function submit_login(){
+	$webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'webroot_path'));
+	$username=htmlentities($this->request->data["username"]);
+	 $password=htmlentities($this->request->data["password"]);
+	 $rememberme=htmlentities(@$this->request->data["rememberme"]);
+	 
+	$this->loadmodel('user');
+		$conditions =array( '$or' => array( 
+		array("email" => $username, "password" => $password),
+		array("mobile" => $username, "password" => $password),
+	));
+	$result_user=$this->user->find('all',array('conditions'=>$conditions));
+	if(sizeof($result_user)==1){
+		$user_id=(int)$result_user[0]["user"]["user_id"];
+		$society_id=(int)@$result_user[0]["user"]["society_id"];
+		$user_type=@$result_user[0]["user"]["user_type"];
+		
+		$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));
+		$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
+		
+		$this->Session->write('hm_user_id', $user_id);
+		$this->Session->write('hm_user_flat_id', $user_flat_id);
+		$this->Session->write('hm_society_id', $society_id);
+		
+		echo $output=json_encode(array('url' => $webroot_path.'hms/dashboard','action' => 'redirect','result' => 'success'));
+	}else{
+		echo $output=json_encode(array('result' => 'error','message' => 'Username and password is wrong.'));
+	}
+	
+}
+
 function login_user_id($login_id)
 {
 	$this->loadmodel('user');

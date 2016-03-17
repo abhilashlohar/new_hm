@@ -18,7 +18,7 @@
 	  <?php } ?>
 
 	
-      <div style="color:red;"><?php echo @$wrong; ?></div><br>
+      <div id="result"></div>
       <div class="control-group">
 	  	<div class="controls">
         	<div class="input-icon left"><i class="icon-user"></i>
@@ -38,7 +38,7 @@
        <label class="checkbox">
         <div class="checker" id="uniform-undefined"><span><input type="checkbox" <?php if(!empty($bgColor)){?> checked="checked" <?php } ?> name="rememberme" value="1" style="opacity: 0;"></span></div> Remember me
         </label>
-			<button type="submit" name="login" class="btn green  pull-right" style="font-size:16px; width:45%">Login  <i class="m-icon-swapright m-icon-white"></i></button>
+			<button type="submit" name="login" class="btn green  pull-right" style="font-size:16px; width:45%" >Login  <i class="icon-signin m-icon-white" ></i></button>
       </div>
 	  
 	    <div align="center" style="color:#7A7A7A;"><b>OR</b></div>
@@ -112,8 +112,32 @@ $(document).ready(function(){
 				element
 				.text('OK!').addClass('valid')
 				.closest('.control-group').removeClass('error').addClass('success');
+			}, 
+			submitHandler: function () {
+				$("button[name=login]").attr('disabled','disabled');
+				$("button[name=login]").text('Please wait..');
+				var url = "<?php echo $webroot_path ; ?>hms/submit_login";
+				$.ajax({
+				   type: "POST",
+				   url: url,
+				   data: $("#contact-form").serialize(), // serializes the form's elements.
+				   success: function(data){
+					   var obj = jQuery.parseJSON(data);
+					   if(obj.result=="success"){
+						   $("#result").removeClass("alert alert-error").addClass("alert alert-success").html("Redirecting...");
+						   window.location.href = obj.url;
+					   }
+					   if(obj.result=="error"){
+						    $("button[name=login]").removeAttr('disabled');
+							$("button[name=login]").html('Login <i class="icon-signin m-icon-white" ></i>');
+							$("#result").addClass("alert alert-error").html(obj.message);
+						}
+				   }
+				 });
 			}
 	  });
+	  
+	
 }); 
 </script>
 

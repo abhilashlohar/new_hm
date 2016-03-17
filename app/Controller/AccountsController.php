@@ -6195,11 +6195,20 @@ if($this->request->is('post'))
 	$ledger_ids = $this->request->data['ledger_id'];
 	$debits = $this->request->data['debit'];
 	$credits = $this->request->data['credit'];	
-	$penaltys = $this->request->data['penalty'];
-		$i=0;
-		
-		pr($ledger_ids);
+	$i=0;
+	foreach($ledger_ids as $ledger_id)
+	{
+	$debit = $debits[$i];
+	$credit = $credits[$i];
+	
+		if(!empty($debit) || !empty($credit)){
+		$this->loadmodel('ledger');
+		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
+		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_id ,"ledger_sub_account_id"=>null,"debit"=>$debit,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));	
+		}
+	}
 		exit;
+		
 		foreach($ledger_ids as $ledger_id){
 			$debit = $debits[$i];	
 			$credit = $credits[$i]; 

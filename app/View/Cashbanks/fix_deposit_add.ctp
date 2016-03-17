@@ -196,6 +196,7 @@ $('.content_'+tt).remove();
  <script>
 $(document).ready(function(){ 
 	$('form').submit( function(ev){
+	
 	ev.preventDefault();
 	var m_data = new FormData(); 	
 		var count = $("#main_table")[0].rows.length;
@@ -212,10 +213,11 @@ $(document).ready(function(){
 		var interest = $("#main_table tr:nth-child("+i+") td:nth-child(1) #sub_tablll tr:nth-child(4) td:nth-child(2) input").val();
 		var purpose = $("#main_table tr:nth-child("+i+") td:nth-child(1) #sub_tablll tr:nth-child(4) td:nth-child(4) select").val();
 		
-		m_data.append( 'file'+i, $('input[name=file'+i+']')[0].files[0]);
+		//m_data.append( 'file'+i, $('input[name=file'+i+']')[0].files[0]);
 		ar.push([bank_name,branch,ac_reference,pricipal_amt,start_date,maturity_date,interest,purpose]);
 		
 		}
+		
 		var myJsonString = JSON.stringify(ar);
 		m_data.append('myJsonString',myJsonString);
 			$.ajax({

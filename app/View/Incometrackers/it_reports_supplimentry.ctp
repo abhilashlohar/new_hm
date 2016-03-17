@@ -5,8 +5,7 @@
 <a href="<?php echo $webroot_path; ?>Incometrackers/it_reports_supplimentry" class="btn yellow" rel='tab'>Supplementary Bill Report</a>
 <a href="<?php echo $webroot_path; ?>Incometrackers/account_statement" class="btn" rel='tab'>Account Statement</a>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
- <?php
+<?php
 $c_date = date('d-m-Y');
 $b_date = date('1-m-Y');
 ?>

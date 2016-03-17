@@ -174,7 +174,6 @@ for($ii=1;$ii<=$loop;$ii++){ ?>
 <div id="check_validation_result"></div>
 
 	
-<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 <script>
 $(document).ready(function() {
 	$( ".receipt_mode" ).change(function() {

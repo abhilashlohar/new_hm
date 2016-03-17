@@ -482,7 +482,7 @@ function final_import_bank_receipt_ajax(){
 			$this->loadmodel('cash_bank');
 			$auto_id=$this->autoincrement('cash_bank','auto_id');
 			$receipt_number=$this->autoincrement_with_society_ticket('cash_bank','receipt_number');
-			$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id, "transaction_date" => strtotime($trajection_date),"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_or_reference_no,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number))); 
+			$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id, "transaction_date" => $trajection_date,"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_or_reference_no,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number))); 
 			
 			
 			$this->loadmodel('ledger');
@@ -573,11 +573,16 @@ function bank_receipt_show_ajax($from=null,$to=null)
 	$this->set('from',$from);
 	$this->set('to',$to);
 
-		$this->loadmodel('cash_bank');
-		$conditions=array('society_id'=>$s_society_id,"source"=>"bank_receipt",	'cash_bank.transaction_date'=>array('$gte'=>$from,'$lte'=>$to));
-		$order=array('cash_bank.transaction_date'=> 'ASC');
-		$receipts=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
-		$this->set('receipts',$receipts);
+	$this->loadmodel('cash_bank');
+	$conditions=array('society_id'=>$s_society_id,"source"=>"bank_receipt",	'cash_bank.transaction_date'=>array('$gte'=>$from,'$lte'=>$to));
+	$order=array('cash_bank.transaction_date'=> 'ASC');
+	$receipts=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
+	$this->set('receipts',$receipts);
+	
+	$this->loadmodel('society');
+	$conditions=array('society_id'=>$s_society_id);
+	$society_info=$this->society->find('all',array('conditions'=>$conditions));
+	$this->set('society_info',$society_info);
 }
 ///////////////////////////////////End bank receipt show ajax//////////////////////////////////////////////////
 

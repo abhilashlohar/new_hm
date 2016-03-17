@@ -6216,7 +6216,7 @@ if($this->request->is('post'))
 	$ii=0;
 		foreach($ledger_sub_account_ids as $ledger_sub_account_id)
 		{
-			echo $ledger_sub_account_id;
+			echo $ledger_sub_account_id; echo "<br>";
 		$debit_member=$debit_members[$ii];
 		$credit_member=$credit_members[$ii];
 		$penalty=$penaltys[$ii];

@@ -70,7 +70,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 		<?php } ?>
 	<?php } ?>
 	
-<?php /*
+<?php 
 	foreach($members_for_billing as $ledger_sub_account_id){
 	$debit_for_view="";
 	$credit_for_view="";
@@ -129,15 +129,15 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 	<tr>
 		<td><?php echo $ledger_name; ?></td> 
 		<td><?php echo $ledger_sub_account_name; ?>&nbsp;&nbsp; (<?php echo $wing_flat; ?>)
-			<input type="hidden" value="<?php echo $ledger_id; ?>,<?php echo $ledger_sub_account_id; ?>"
-name="ledger_id[]">
+<input type="hidden" value="<?php echo $ledger_sub_account_id; ?>"
+name="ledger_sub_account_id[]">
 		</td>
-		<td><input type="text" class="m-wrap small debit" name="debit[]" Placeholder="Debit"value="<?php echo @$debit_for_view; ?>"></td> 
-		<td><input type="text" class="m-wrap small credit" name="credit[]" Placeholder="Credit"value="<?php echo @$credit_for_view; ?>"></td>
+		<td><input type="text" class="m-wrap small debit" name="debit_members[]" Placeholder="Debit"value="<?php echo @$debit_for_view; ?>"></td> 
+		<td><input type="text" class="m-wrap small credit" name="credit_members[]" Placeholder="Credit"value="<?php echo @$credit_for_view; ?>"></td>
 		<td><input type="text" class="m-wrap small penalty" name="penalty[]" Placeholder="Penalty" value="<?php echo @$penalty_for_view; ?>"></td> 
 	</tr>
 <?php }	?>
-<?php 
+<?php /*
     foreach($ledger_sub_account_dataa as $ledger_sub_account_dataa){
         $ledger_sub_account_id = $ledger_sub_account_dataa['ledger_sub_account']['auto_id'];
 		$ledger_sub_account_name = $ledger_sub_account_dataa['ledger_sub_account']['name'];

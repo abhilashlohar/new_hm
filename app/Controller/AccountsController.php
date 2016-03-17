@@ -6197,7 +6197,7 @@ if($this->request->is('post'))
 	$credits = $this->request->data['credit'];	
 	$i=0;
 	foreach($ledger_ids as $ledger_id)
-	{
+	{/*
 	$debit = $debits[$i];
 	$credit = $credits[$i];
 	
@@ -6205,8 +6205,38 @@ if($this->request->is('post'))
 		$this->loadmodel('ledger');
 		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
 		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_id ,"ledger_sub_account_id"=>null,"debit"=>$debit,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));	
-		}
+		}*/
+	$i++;
 	}
+	
+	$ledger_sub_account_ids=$this->request->data['ledger_sub_account_id'];
+	$penaltys=$this->request->data['penalty'];
+	$debit_members=$this->request->data['debit_members'];
+	$credit_members=$this->request->data['credit_members'];
+	$ii=0;
+		foreach($ledger_sub_account_ids as $ledger_sub_account_id)
+		{
+		$debit_member=$debit_members[$ii];
+		$credit_member=$credit_members[$ii];
+		$penalty=$penaltys[$ii];
+
+		if(!empty($debit_member) || !empty($credit_member)){
+		$this->loadmodel('ledger');
+		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
+		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>34,"ledger_sub_account_id"=>$ledger_sub_account_id,"debit"=>$debit_member,"credit"=>$credit_member,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));	
+		}
+		
+		if(!empty($penalty))
+		{
+			$this->loadmodel('ledger');
+			$ledger_auto_id=$this->autoincrement('ledger','auto_id');
+			$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>34,"ledger_sub_account_id"=>$ledger_sub_account_id,"debit"=>$penalty,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date),"intrest_on_arrears"=>"YES"));		
+		}
+		$ii++;
+		}
+	
+	
+	
 		exit;
 		
 		foreach($ledger_ids as $ledger_id){

@@ -460,6 +460,12 @@ function ledger_info_via_ledger_sub_account_id($ledger_sub_account_id){
 	$conditions=array("ledger_account_id"=>34,'ledger_sub_account_id'=>$ledger_sub_account_id);
 	return $this->ledger->find('all',array('conditions'=>$conditions));
 }
+function ledger_sub_account_info_via_user_flat_id($user_flat_id){
+	$s_society_id=$this->Session->read('hm_society_id');
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("ledger_id"=>34,'user_flat_id'=>$user_flat_id);
+	return $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+}
 
 }
 ?>

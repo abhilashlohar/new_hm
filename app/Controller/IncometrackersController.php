@@ -3924,16 +3924,18 @@ $due_date2 = date('d-m-Y',strtotime($due_date));
 $from2 = date('d-m-Y',strtotime($from));
 if($type == 'resident')
 {
-$result1 = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_subLedger_detail_via_flat_id'),
-array('pass'=>array($flat_id)));	
-		foreach($result1 as $collection)
-		{	
-		$auto_id = (int)$collection['ledger_sub_account']['auto_id'];
-		//$user_id = (int)$collection['ledger_sub_account']['user_id'];
-		$flat_id = (int)$collection['ledger_sub_account']['user_flat_id'];
-		$user_name = $collection['ledger_sub_account']['name'];
-		}
-
+	$result1 = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_info_via_user_flat_id'),array('pass'=>array($user_flat_id)));	
+	foreach($result1 as $collection){	
+	$auto_id=(int)$collection['ledger_sub_account']['auto_id'];
+	$user_name=$collection['ledger_sub_account']['name'];
+	$user_id=(int)$collection['ledger_sub_account']['user_id'];
+	}
+	
+	$result_user_flat=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_flat_id'),array('pass'=>array($user_flat_id)));	
+	foreach($result_user_flat as $collection){	
+	$flat_id = (int)$collection['user_flat']['flat'];
+	}
+		
 $flat_detaill = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),
 array('pass'=>array($flat_id)));				
 foreach($flat_detaill as $flat_dataaa)

@@ -30,7 +30,7 @@ $society_phone=$data['society']['society_phone'];
 $neft_type=$data['society']['neft_type'];
 $sig_title=$data['society']['sig_title']; 
 $neft_detail=$data['society']['neft_detail'];
-$area_scale=$data['society']['area_scale'];
+$area_scale=(int)@$data['society']['area_scale'];
 }
 foreach($cursor1 as $collection){
 $creater_name="";
@@ -56,7 +56,7 @@ $ledger_sub_account_id=(int)$collection['supplimentry_bill']['ledger_sub_account
 $ledger_sub_account_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 foreach ($ledger_sub_account_detail as $ledger_sub_account_date) {
 $user_name = $ledger_sub_account_date['ledger_sub_account']['name'];
-$flat_id = $ledger_sub_account_date['ledger_sub_account']['user_flat_id'];
+$user_flat_id = $ledger_sub_account_date['ledger_sub_account']['user_flat_id'];
 }
 $supplimentry_bill_type_for_view="Residential";
 }
@@ -130,23 +130,25 @@ $due_date2 = date('d-m-Y',strtotime($due_date));
 $from2 = date('d-m-Y',strtotime($from));
 if($type == 'resident')
 {
-$result1 = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_subLedger_detail_via_flat_id'),
-array('pass'=>array($flat_id)));	
-		foreach($result1 as $collection)
-		{	
-		$auto_id = (int)$collection['ledger_sub_account']['auto_id'];
-		//$user_id = (int)$collection['ledger_sub_account']['user_id'];
-		$flat_id = (int)$collection['ledger_sub_account']['user_flat_id'];
-		$user_name = $collection['ledger_sub_account']['name'];
-		}
+$result1 = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_info_via_user_flat_id'),array('pass'=>array($user_flat_id)));	
+	foreach($result1 as $collection){	
+	$auto_id=(int)$collection['ledger_sub_account']['auto_id'];
+	$user_name=$collection['ledger_sub_account']['name'];
+	$user_id=(int)$collection['ledger_sub_account']['user_id'];
+	}
+	
+	$result_user_flat=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_flat_id'),array('pass'=>array($user_flat_id)));	
+	foreach($result_user_flat as $collection){	
+	$flat_id = (int)$collection['user_flat']['flat'];
+	}
+	$flat_detaill = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),
+	array('pass'=>array($flat_id)));				
+	foreach($flat_detaill as $flat_dataaa)
+	{
+	$wing_id = (int)$flat_dataaa['flat']['wing_id'];
+	$sq_feet = @$flat_dataaa['flat']['flat_area'];	
+	}
 
-$flat_detaill = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),
-array('pass'=>array($flat_id)));				
-foreach($flat_detaill as $flat_dataaa)
-{
-$wing_id = (int)$flat_dataaa['flat']['wing_id'];
-$sq_feet = @$flat_dataaa['flat']['flat_area'];	
-}
 $wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new')
 ,array('pass'=>array($wing_id,$flat_id)));			
 
@@ -161,13 +163,10 @@ $area_scale_text = "sq.mtr.";
 }
 else
 {
-	$result1 = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),
-	array('pass'=>array($flat_id)));	
-	foreach($result1 as $collection)
-	{	
-	$auto_id = (int)$collection['ledger_sub_account']['auto_id'];
-	//$flat_id = (int)$collection['ledger_sub_account']['flat_id'];
-	$user_name = $collection['ledger_sub_account']['name'];
+	$sub_ledger = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_info_via_user_flat_id'),array('pass'=>array($ledger_sub_account_id)));	
+	foreach($sub_ledger as $collection){	
+	$auto_id=(int)$collection['ledger_sub_account']['auto_id'];
+	$user_name=$collection['ledger_sub_account']['name'];
 	}
 	
 $wing_flat = "";	

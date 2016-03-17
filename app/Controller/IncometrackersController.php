@@ -3957,14 +3957,13 @@ $area_scale_text = "sq.mtr.";
 }
 else
 {
-	$result1 = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),
-	array('pass'=>array($flat_id)));	
-	foreach($result1 as $collection)
-	{	
-	$auto_id = (int)$collection['ledger_sub_account']['auto_id'];
-	$user_name = $collection['ledger_sub_account']['name'];
-	$user_id = (int)$collection['ledger_sub_account']['user_id'];
+	$sub_ledger = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_info_via_user_flat_id'),array('pass'=>array($ledger_sub_account_id)));	
+	foreach($sub_ledger as $collection){	
+	$auto_id=(int)$collection['ledger_sub_account']['auto_id'];
+	$user_name=$collection['ledger_sub_account']['name'];
 	}
+	
+	
 	
 $wing_flat = "";	
 }

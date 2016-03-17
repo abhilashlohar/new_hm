@@ -122,7 +122,9 @@ $(document).ready(function(){
 				   url: url,
 				   data: $("#contact-form").serialize(), // serializes the form's elements.
 				   success: function(data){
+					  
 					   var obj = jQuery.parseJSON(data);
+					  
 					   if(obj.result=="success"){
 						   $("#result").removeClass("alert alert-error").addClass("alert alert-success").html("Redirecting...");
 						   window.location.href = obj.url;

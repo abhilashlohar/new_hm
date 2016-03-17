@@ -57,23 +57,19 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 
 
  <span style="margin-left:10%;">
-<select class="span12 chosen" name="user" id="user"  data-placeholder="Type User Name" tabindex="1" onchange="role(this.value)">
-	<option value="" style="display:none;"></option>
-	<?php
-	
-	foreach ($result_user as $collection) 
-	{
-	$user_id = $collection['user']['user_id'];
-	$user_name=$collection['user']["user_name"];
-	$wing=(int)$collection['user']["wing"];
-	$flat=(int)$collection['user']["flat"];
-	
-$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'),array('pass'=>array($wing,$flat)));
-	
-	?>
-<option value="<?php echo $user_id; ?>" ><?php echo $user_name; ?> &nbsp;&nbsp;<?php echo $wing_flat ; ?></option>
-	<?php } ?>
- </select>
+		<select class="span12 chosen" name="user" id="user"  data-placeholder="Type User Name" tabindex="1" onchange="role(this.value)">
+			<option value="" style="display:none;"></option>
+			<?php
+			
+			foreach ($result_user as $collection){
+				
+				$user_id = $collection['user']['user_id'];
+				$user_name=$collection['user']["user_name"];
+				
+			?>
+					<option value="<?php echo $user_id; ?>" ><?php echo $user_name; ?> &nbsp;&nbsp;<?php //echo $wing_flat ; ?></option>
+			<?php } ?>
+		 </select>
  </span>
 						  
 </div>
@@ -89,3 +85,23 @@ $wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing
 
 <!-- END PAGE CONTENT-->
 </div>
+<script>
+$(document).ready(function(){
+	
+$(".role_assign").die().live('click',function(){
+	
+var chk=$(this).is(":checked");
+var role_id=$(this).val();
+var user_id=$("select").val();
+	$.ajax({
+		url: "<?php echo $webroot_path; ?>Hms/user_assign_role_auto_save/"+chk+"/"+role_id+"/"+user_id,
+	}).done(function(response){
+		
+	}); 
+
+	
+});	
+	
+	
+});
+</script>

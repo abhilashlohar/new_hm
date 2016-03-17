@@ -12288,45 +12288,54 @@ return $n=sizeof($result);
 
 
 
-function user_assign_role()
-{
-$s_society_id=$this->Session->read('hm_society_id');
-if($this->RequestHandler->isAjax()){
-		$this->layout='blank';
+function user_assign_role(){
+	
+	$s_society_id=(int)$this->Session->read('hm_society_id');
+	$s_user_id=(int)$this->Session->read('hm_user_id');
+		if($this->RequestHandler->isAjax()){
+				$this->layout='blank';
+			}else{
+				$this->layout='session';
+			}
+	$this->ath();
+	$this->check_user_privilages();
+	$this->loadmodel('user');
+	$conditions1=array('society_id'=>$s_society_id,'active'=>"yes");
+	$result=$this->user->find('all',array('conditions'=>$conditions1));
+	$this->set('result_user',$result);
+		
+}
+
+function user_assign_role_auto_save($chk=null,$role_id=null,$user_id=null){
+	
+	$this->layout=null;
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	
+	$role_id=(int)$role_id;
+	$user_id=(int)$user_id;
+	if($chk=="true"){
+			$count_role=$this->user_role($role_id,$user_id);
+			if($count_role==0){
+				
+					$default_count=$this->user_role_default_find($user_id);
+					if($default_count>0){ $default="" ; }else{  $default="yes" ; }
+					$this->loadmodel('user_role');
+					$auto_id=$this->autoincrement('user_role','auto_id');
+					$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$user_id,'role_id'=>$role_id,"default"=>$default));	
+				
+			}
+		
 	}else{
-		$this->layout='session';
+		
+		$this->loadmodel('user_role');
+		$this->user_role->deleteAll(array('user_id'=>$user_id,'role_id'=>$role_id));
+		
 	}
-$this->ath();
-$this->check_user_privilages();
-$this->loadmodel('user');
-$conditions1=array('society_id'=>$s_society_id,'active'=>"yes");
-$result=$this->user->find('all',array('conditions'=>$conditions1));
-$this->set('result_user',$result);
-if ($this->request->is('post')) 
-{
-
-$user_id=(int)$this->request->data['user'];
-$this->loadmodel('role');
-$conditions2=array("society_id" => $s_society_id);
-$result_role=$this->role->find('all',array('conditions'=>$conditions2));	
-foreach ($result_role as $collection) 
-{					
-$role_id=(int)$collection['role']["role_id"];
-$r=@$this->request->data['role'.$role_id];
-if($r==1)
-{
-$j[]=$role_id;
+	
+	
 }
-}			
-
-$this->loadmodel('user');
-$this->user->updateAll(array('role_id'=>$j),array('user_id'=>$user_id));
-
-
-}
-
-}
-
 
 function user_assign_role_ajax()
 {
@@ -12342,13 +12351,19 @@ $this->set('user_id',$user_id);
 
 function user_role($role_id,$user_id)
 {
-$this->loadmodel('user');
+$this->loadmodel('user_role');
 $conditions=array("user_id" => $user_id, "role_id" => $role_id); 
-$result=$this->user->find('all',array('conditions'=>$conditions)); 
+$result=$this->user_role->find('all',array('conditions'=>$conditions)); 
 return $n=sizeof($result);        
 }
 
-
+function user_role_default_find($user_id)
+{
+$this->loadmodel('user_role');
+$conditions=array("user_id" => $user_id, "default" =>"yes"); 
+$result=$this->user_role->find('all',array('conditions'=>$conditions)); 
+return $n=sizeof($result);        
+}
 
 ////////////////////////////////////// Notification email and Sms Start ///////////////////////////////////////
 

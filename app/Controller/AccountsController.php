@@ -6204,7 +6204,7 @@ if($this->request->is('post'))
 		if(!empty($debit) || !empty($credit)){
 		$this->loadmodel('ledger');
 		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_id ,"ledger_sub_account_id"=>null,"debit"=>$debit,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));	
+		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>(int)$ledger_id ,"ledger_sub_account_id"=>null,"debit"=>$debit,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));	
 		}*/
 	$i++;
 	}
@@ -6223,14 +6223,14 @@ if($this->request->is('post'))
 		if(!empty($debit_member) || !empty($credit_member)){
 		$this->loadmodel('ledger');
 		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>34,"ledger_sub_account_id"=>$ledger_sub_account_id,"debit"=>$debit_member,"credit"=>$credit_member,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));	
+		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>34,"ledger_sub_account_id"=>(int)$ledger_sub_account_id,"debit"=>$debit_member,"credit"=>$credit_member,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));	
 		}
 		
 		if(!empty($penalty))
 		{
 			$this->loadmodel('ledger');
 			$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-			$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>34,"ledger_sub_account_id"=>$ledger_sub_account_id,"debit"=>$penalty,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date),"intrest_on_arrears"=>"YES"));		
+			$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>34,"ledger_sub_account_id"=>(int)$ledger_sub_account_id,"debit"=>$penalty,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date),"intrest_on_arrears"=>"YES"));		
 		}
 		$ii++;
 		}

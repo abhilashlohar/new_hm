@@ -44,7 +44,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		</select>
 		
 		<div id="div_non_resident_drop_down" class="hide">
-			<select class="chosen m-wrap medium" name="non_resident[]">
+			<select class="m-wrap medium" name="non_resident[]">
 			<option value="" style="display:none;">Select</option>
 			<?php
 			foreach ($cursor11 as $collection) 
@@ -58,7 +58,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		</div>
 		
 		<div id="div_resident_drop_down" class="hide">
-		<select  class="m-wrap medium chosen" style="width:200px;" name="resident[]">
+		<select  class="m-wrap medium" style="width:200px;" name="resident[]">
 				<option value="" style="display:none;">--member--</option>
 				<?php foreach($members_for_billing as $ledger_sub_account_id){
 				$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
@@ -106,6 +106,8 @@ $(document).ready(function(){
 		$("#main tbody").append(new_line);
 		$('#main tbody tr:last select[name="bill_type[]"]').chosen();
 		$('#main tbody tr:last select[name="income_head[]"]').chosen();
+		$('#main tbody tr:last select[name="non_resident[]"]').chosen();
+		$('#main tbody tr:last select[name="resident[]"]').chosen();
 		$('#main tbody tr:last input[name="transaction_date[]"]').datepicker();
 		$('#main tbody tr:last input[name="payment_due_date[]"]').datepicker();
 	}

@@ -212,7 +212,7 @@ $(document).ready(function(){
 		var interest = $("#main_table tr:nth-child("+i+") td:nth-child(1) #sub_tablll tr:nth-child(4) td:nth-child(2) input").val();
 		var purpose = $("#main_table tr:nth-child("+i+") td:nth-child(1) #sub_tablll tr:nth-child(4) td:nth-child(4) select").val();
 		
-		//m_data.append( 'file'+i, $('input[name=file'+i+']')[0].files[0]);
+		m_data.append( 'file'+i, $('input[name=file'+i+']')[0].files[0]);
 		ar.push([bank_name,branch,ac_reference,pricipal_amt,start_date,maturity_date,interest,purpose]);
 		
 		}
@@ -224,8 +224,9 @@ $(document).ready(function(){
 			processData: false,
 			contentType: false,
 			type: 'POST',
-			dataType:'json',
+			//dataType:'json',
 			}).done(function(response){
+					alert(response);
 					if(response.type == 'error'){
 			
 			 $("#validdn").html('<div class="alert alert-error" style="color:red; font-weight:600; font-size:13px;">'+response.text+'</div>');

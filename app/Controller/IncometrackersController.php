@@ -4230,8 +4230,7 @@ Your Society is empowered by HousingMatters - <b/> <i>"Making Life Simpler"</i>
             </tr>
         </tbody>
 		</table>
-             
-            </div>';		
+        </div>';		
 if($type=="resident"){
 $user_data=$this->requestAction(array('controller' => 'Fns', 'action' =>'user_info_via_user_id'),array('pass'=>array($user_id)));	
 foreach($user_data as $user_dataa){	

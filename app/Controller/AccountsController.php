@@ -6197,8 +6197,6 @@ if($this->request->is('post'))
 	$credits = $this->request->data['credit'];	
 	$penaltys = $this->request->data['penalty'];
 		$i=0;
-		pr($ledger_ids);
-		exit;
 		foreach($ledger_ids as $ledger_id){
 			$debit = $debits[$i];	
 			$credit = $credits[$i]; 

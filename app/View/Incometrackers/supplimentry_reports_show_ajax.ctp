@@ -99,10 +99,22 @@ $creater_id=(int)$collection['supplimentry_bill']['created_by'];
 	}
 if($supplimentry_bill_type=="resident"){
 $ledger_sub_account_id=(int)$collection['supplimentry_bill']['ledger_sub_account_id'];
-$ledger_sub_account_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
-foreach ($ledger_sub_account_detail as $ledger_sub_account_date) {
-$user_name = $ledger_sub_account_date['ledger_sub_account']['name'];
+	$ledger_sub_account_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+	foreach($ledger_sub_account_detail as $ledger_sub_account_data) {
+	$user_name=$ledger_sub_account_data['ledger_sub_account']['name'];
+	$user_flat_id=$ledger_sub_account_data['ledger_sub_account']['user_flat_id'];
+	}
+	$result_user_flat=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_flat_id'),array('pass'=>array($user_flat_id)));	
+	foreach($result_user_flat as $collection){	
+	$flat_id = (int)$collection['user_flat']['flat'];
+	}
+$flat_detaill=$this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),
+array('pass'=>array($flat_id)));				
+foreach($flat_detaill as $flat_dataaa){
+$wing_id = (int)$flat_dataaa['flat']['wing_id'];
 }
+$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new')
+,array('pass'=>array($wing_id,$flat_id)));	
 $supplimentry_bill_type_for_view="Residential";
 }
 if($supplimentry_bill_type=="non_resident"){
@@ -112,6 +124,7 @@ foreach ($ledger_sub_account_detail as $ledger_sub_account_date) {
 $user_name = $ledger_sub_account_date['ledger_sub_account']['name'];
 }
 $supplimentry_bill_type_for_view="Non-Residential";
+$wing_flat="";
 }
 if($date_renge_from<=$transaction_date && $date_renge_to>=$transaction_date)
 {
@@ -197,12 +210,22 @@ $current_date = date('d-m-Y',strtotime($date));
 if($residential=="resident")
 {
 $ledger_sub_account_id = (int)$collection['supplimentry_bill']['ledger_sub_account_id'];	
-$ledger_sub_account_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
-foreach ($ledger_sub_account_detail as $ledger_sub_account_date) {
-$user_name = $ledger_sub_account_date['ledger_sub_account']['name'];
-}
-
-$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array(@$wing_id,@$flat_id)));									
+	$ledger_sub_account_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+	foreach ($ledger_sub_account_detail as $ledger_sub_account_data) {
+	$user_name = $ledger_sub_account_data['ledger_sub_account']['name'];
+	$user_flat_id=$ledger_sub_account_data['ledger_sub_account']['user_flat_id'];
+	}
+	$result_user_flat=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_flat_id'),array('pass'=>array($user_flat_id)));	
+	foreach($result_user_flat as $collection){	
+	$flat_id = (int)$collection['user_flat']['flat'];
+	}
+	$flat_detaill = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),
+	array('pass'=>array($flat_id)));				
+	foreach($flat_detaill as $flat_dataaa){
+	$wing_id = (int)$flat_dataaa['flat']['wing_id'];
+	}
+	$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new')
+,array('pass'=>array($wing_id,$flat_id)));									
 $bill_for = $wing_flat;
 $bill_type = "Residential";
 	

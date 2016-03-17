@@ -5,7 +5,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 <a href="opening_balance_new" class="btn">New Opening Balance Import</a>
 <a href="opening_balance_import" class="btn red">Opening Balance Import</a>
 
-<?php foreach($result_import_record as $data_import){
+	<?php foreach($result_import_record as $data_import){
 	$step1=(int)@$data_import["import_ob_record"]["step1"];
 	$step2=(int)@$data_import["import_ob_record"]["step2"];
 	$step3=(int)@$data_import["import_ob_record"]["step3"];
@@ -13,8 +13,8 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 	$step5=(int)@$data_import["import_ob_record"]["step5"];
 	$date=@$data_import["import_ob_record"]["date"];
 	$file_name=@$data_import["import_ob_record"]["file_name"];
-}
-$process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
+	}
+	$process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
 <div id="first_div">
 <?php if(sizeof($result_import_record)==0){ ?>
 <div class="portlet box green" style="width: 50%; margin: auto;">

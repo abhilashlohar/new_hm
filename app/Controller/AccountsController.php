@@ -127,9 +127,9 @@ foreach($test as $child){ $i++;
 $this->loadmodel('import_ob_record');
 $this->import_ob_record->updateAll(array("step2" => 1),array("society_id" => $s_society_id, "module_name" => "OB"));
 die(json_encode("READ"));	
-}
-///////////////////// End read_csv_file_ob //////////////////////////////////////////
-///////////////////// Start convert_imported_data_ob ///////////////////////////////
+
+//End read_csv_file_ob//
+//Start convert_imported_data_ob//
 function convert_imported_data_ob()
 {
 $this->layout=null;

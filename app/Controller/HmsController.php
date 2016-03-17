@@ -3935,7 +3935,7 @@ return ++$auto2;
 
 function autoincrement_with_fixed_deposit($table,$field) 
 {
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $this->loadmodel($table);
 $conditions=array("society_id" => $s_society_id,"auto_inc"=>"YES");
 $order=array($table.'.'.$field=>'DESC');

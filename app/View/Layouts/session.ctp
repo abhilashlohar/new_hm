@@ -23,7 +23,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 	<link href="<?php echo $webroot_path; ?>assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
 	<link href="<?php echo $webroot_path; ?>assets/css/style.css" rel="stylesheet" />
 	<link href="<?php echo $webroot_path; ?>assets/css/flash.css" rel="stylesheet" />
-	<link href="<?php echo $webroot_path; ?>assets/css/style_responsive.css" rel="stylesheet" />
+	<link href="<?php echo $webroot_path; ?>assets/css/style_responsive1.css" rel="stylesheet" />
 	<link href="<?php echo $webroot_path; ?>assets/css/style_default.css" rel="stylesheet" id="style_color" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/uniform/css/uniform.default.css" />
 	    <link href="<?php echo $webroot_path; ?>assets/bootstrap/css/bootstrap-fileupload.css" rel="stylesheet" />

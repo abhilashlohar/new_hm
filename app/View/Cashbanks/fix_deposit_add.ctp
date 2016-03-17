@@ -75,7 +75,7 @@ $default_date = date('d-m-Y');
 			   </td>
 			   
 				 <td>
-				 <input type="text" class="date-picker m-wrap span12 corsrr" data-date-format="dd-mm-yyyy" 
+				 <input type="text" class="date-picker m-wrap span12 corsrr datepick" data-date-format="dd-mm-yyyy" 
 				 value="<?php echo $default_date; ?>" style="background-color:#FFF !important;">
 				 </td>
 			 
@@ -91,7 +91,7 @@ $default_date = date('d-m-Y');
 					<tr style="background-color:#E8F3FF;">
 					
                     <td>
-					<input type="text" class="date-picker m-wrap span12 corsrr" 
+					<input type="text" class="date-picker m-wrap span12 corsrr datepick" 
 					data-date-format="dd-mm-yyyy" style="background-color:#FFF !important;">
 					</td>
 					
@@ -136,6 +136,7 @@ $default_date = date('d-m-Y');
 </div>
 </form>
 <!--------------------------------End Fixed Deposit Form -------------------------------------->
+
 <script>
 function numeric_vali(vv,dd)
 {
@@ -191,10 +192,9 @@ $('.content_'+tt).remove();
 }
 </script>
 
-
-<?php /////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>   
+  
  <script>
-$(document).ready(function() { 
+$(document).ready(function(){ 
 	$('form').submit( function(ev){
 	ev.preventDefault();
 	var m_data = new FormData(); 	
@@ -273,36 +273,7 @@ $this->requestAction(array('controller' => 'hms', 'action' => 'griter_notificati
 });
 </script> 
 	
-<script> 
-$(document).ready(function() {
-	
-shortcut.add("right",function(){ 
-	   
 
-		$('.corsrr').on('keyup', function()
-	   {
-		 $(this).closest("td").next().find(".corsrr").focus();
-	   	
-	  });
-	
-    });
-	shortcut.add("left",function(){ 
-	 
-
-		$('.corsrr').on('keyup', function()
-	   {
-		   $(this).closest("td").prev().find(".corsrr").focus();
-		 
-    });
-	});
-    
-    
-	});
-	
-	//$('.date-picker').datepicker().on('changeDate', function(){
- //$(this).blur();
-//}); 
-</script>
 			
 			
 			

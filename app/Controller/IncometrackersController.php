@@ -3850,7 +3850,7 @@ $ledger_sub_account_id=(int)$collection['supplimentry_bill']['ledger_sub_account
 $ledger_sub_account_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 foreach ($ledger_sub_account_detail as $ledger_sub_account_date) {
 $user_name = $ledger_sub_account_date['ledger_sub_account']['name'];
-$flat_id = $ledger_sub_account_date['ledger_sub_account']['user_flat_id'];
+$user_flat_id = $ledger_sub_account_date['ledger_sub_account']['user_flat_id'];
 }
 $supplimentry_bill_type_for_view="Residential";
 }
@@ -3960,7 +3960,6 @@ else
 	foreach($result1 as $collection)
 	{	
 	$auto_id = (int)$collection['ledger_sub_account']['auto_id'];
-	//$flat_id = (int)$collection['ledger_sub_account']['flat_id'];
 	$user_name = $collection['ledger_sub_account']['name'];
 	$user_id = (int)$collection['ledger_sub_account']['user_id'];
 	}

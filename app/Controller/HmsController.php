@@ -21,6 +21,32 @@ $dd=explode(' ',$name);
 	}
 }
 
+
+function change_role_member(){
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id = (int)$this->Session->read('hm_user_id');
+	
+	$result_user_role=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_all_role_via_user_id'), array('pass' => array($s_user_id)));
+	$this->set(compact('result_user_role'));
+	
+		if($this->request->is('post')){
+			
+			$auto_id= (int)$this->request->data['role_change'];
+			$this->loadmodel('user_role');
+			$this->user_role->updateAll(array("default"=>""),array("user_id"=>$s_user_id));
+			$this->user_role->updateAll(array("default"=>"yes"),array("auto_id"=>$auto_id));
+			$this->redirect(array('action' => 'dashboard'));
+		}
+	
+}
+
+
+
 function unit_configuration_sample(){
 	
 	$this->layout="";
@@ -3591,6 +3617,9 @@ function parking_slot($park)
 
 //////////////////////////////// End Parking system ////////////////////////////////
 
+
+
+
 function change_role() 
 {
 $this->layout='blank';
@@ -5723,6 +5752,7 @@ $this->layout='without_session';
 $s_user_id=(int)$this->Session->read('hm_user_id');	
 
 	$result_hms_right=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_society_hm_child_user_id'), array('pass' => array($s_user_id)));
+	
 		if(sizeof($result_hms_right)>1){
 			
 			$this->set(compact('result_hms_right'));

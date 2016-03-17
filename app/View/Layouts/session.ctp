@@ -270,7 +270,7 @@ $(document).ready(function() {
                   </a>
                   <ul class="dropdown-menu">
                      <li><a href="<?php echo $webroot_path; ?>Hms/profile" rel='tab'><i class="icon-user"></i> My Profile</a></li>
-                     <li><a href="#"><i class="icon-calendar"></i> My Calendar</a></li>
+                     <li><a href="<?php echo $webroot_path; ?>Hms/change_role_member" rel='tab'><i class="icon-group"></i> Change Role</a></li>
                      <li><a href="#"><i class="icon-tasks"></i> My Tasks</a></li>
                      <li class="divider"></li>
                      <li><a href="<?php echo $webroot_path; ?>Hms/logout"><i class="icon-key"></i> Log Out</a></li>

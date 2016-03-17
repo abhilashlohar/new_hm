@@ -116,6 +116,9 @@ $(document).ready(function(){
 		add_row();
 		
 	})
+	$(".remove_row").die().live("click",function(){
+		$(this).closest("tr").remove();
+	})
 });
 </script>
 

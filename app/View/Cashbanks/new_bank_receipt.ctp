@@ -1,7 +1,6 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'),array('pass' => array()));
 ?>
-
 <center>
 <a href="<?php echo $webroot_path; ?>Cashbanks/new_bank_receipt" class="btn yellow" rel='tab'>Create</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/bank_receipt_view" class="btn" rel='tab'>View</a>

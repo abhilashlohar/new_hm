@@ -181,8 +181,6 @@ $prepaired_by_name = $collection['user']['user_name'];
 	
 	<?php if(!empty($file_name)){ ?><a href="<?php echo $webroot_path ; ?>/fix_deposit/<?php echo $file_name; ?>" target="_blank" class=""  download="download"> <i class=" icon-download-alt"></i> </a> <?php } ?>
 
-
-
 </td>
 </tr>
 <?php

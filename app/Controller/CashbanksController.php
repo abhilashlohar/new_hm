@@ -3224,9 +3224,8 @@ if(!empty($kendo_array2))
 $this->set('kendo_implode2',@$kendo_implode2);
 
 }
-/////////////////////////////////////End Fix Deposit Add (Accounts) ////////////////////
-
-///////////////////// Start Fix Deposit View (Accounts) //////////////////////////////////
+//End Fix Deposit Add (Accounts)//
+//Start Fix Deposit View (Accounts)//
 function fix_deposit_view()
 {
 if($this->RequestHandler->isAjax()){
@@ -3288,11 +3287,8 @@ $society_name = $dataa['society']['society_name'];
 $this->set('society_name',$society_name);
 
 }
-
-//////////////////////////////////////////////////////////// End Fix Deposit View (Accounts) /////////////////////////////
-
-//////////////////////////////////// Start Fix Deposit Show Ajax ///////////////////////////////////////////////////////
-
+//End Fix Deposit View (Accounts)//
+//Start Fix Deposit Show Ajax//
 function fixed_diposit_show_ajax()
 {
 $this->layout='blank';

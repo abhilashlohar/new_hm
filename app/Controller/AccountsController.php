@@ -6190,13 +6190,15 @@ if($process_status==3){
 }
 if($this->request->is('post'))	
 {
-	      $transaction_date = $this->request->data['date'];	
-	      $transaction_date = date('Y-m-d',strtotime($transaction_date));
-     	  $ledger_ids = $this->request->data['ledger_id'];
-		  $debits = $this->request->data['debit'];
-		  $credits = $this->request->data['credit'];	
-		  $penaltys = $this->request->data['penalty'];
+	$transaction_date = $this->request->data['date'];	
+	$transaction_date = date('Y-m-d',strtotime($transaction_date));
+	$ledger_ids = $this->request->data['ledger_id'];
+	$debits = $this->request->data['debit'];
+	$credits = $this->request->data['credit'];	
+	$penaltys = $this->request->data['penalty'];
 		$i=0;
+		pr($ledger_ids);
+		exit;
 		foreach($ledger_ids as $ledger_id){
 			$debit = $debits[$i];	
 			$credit = $credits[$i]; 

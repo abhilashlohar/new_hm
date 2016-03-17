@@ -3714,9 +3714,9 @@ echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' id='.$sub_module_id
 
 
 function submenu_as_per_role_privilage(){
-		$this->layout=null;
-		$s_society_id=$this->Session->read('hm_society_id');
-		$s_user_id=$this->Session->read('hm_user_id');
+	$this->layout=null;
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 
 $user_detail=$this->requestAction(array('controller' => 'Fns', 'action'=> 'user_info_via_user_id'),array('pass'=>array($s_user_id)));
 foreach($user_detail as $dataa)
@@ -3791,6 +3791,7 @@ $page_namr_url=  $url['path'];
 		$cursor=$this->role_privilege->find('all',array('conditions'=>$conditions));
 		sort($cursor);
 		if(sizeof($cursor)>1){
+			echo '<div align="center">';
 		foreach ($cursor as $collection){
 		$sub_module_id=$collection["role_privilege"]["sub_module_id"];
 
@@ -3817,6 +3818,7 @@ $sub_module_name=$collection["sub_module"]["sub_module_name"];
 		}
 		
 		}
+		echo '</div>';
 	}
 }
 }

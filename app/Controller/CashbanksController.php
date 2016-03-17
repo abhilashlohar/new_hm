@@ -546,66 +546,38 @@ function bank_receipt_view()
 		$this->layout='session';
 		}
 	
-			$this->ath();
-			$this->check_user_privilages();	
+		$this->ath();
+		$this->check_user_privilages();	
 	
-				$s_role_id=$this->Session->read('role_id');
-				$s_society_id = $this->Session->read('society_id');
-				$s_user_id=$this->Session->read('user_id');
+		$s_society_id = $this->Session->read('hm_society_id');
+		$s_user_id=$this->Session->read('hm_user_id');
 
-		$this->set('s_role_id',$s_role_id);
 }
 ////////////////////End Bank receipt View////////////////////////////////////////////////////////////
 
 /////////////////////// Start bank receipt show ajax //////////////////////////////////////////////
-function bank_receipt_show_ajax()
+function bank_receipt_show_ajax($from=null,$to=null)
 {
 	$this->layout='blank';
 
-		$this->ath();
-		$s_role_id=$this->Session->read('role_id');
-		$s_society_id = $this->Session->read('society_id');
-		$s_user_id=$this->Session->read('user_id');
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 
-	$this->set('s_user_id',$s_user_id);
-	$this->set('s_role_id',$s_role_id);
+	$from = date('Y-m-d',strtotime($from));
+	$to = date('Y-m-d',strtotime($to));
 
-		$from = $this->request->query('date1');
-		$to = $this->request->query('date2');
-
-	$date_from = date('Y-m-d',strtotime($from));
-	$date_to = date('Y-m-d',strtotime($to));
-
-		$from_strtotime = strtotime($date_from);
-		$to_strtotime = strtotime($date_to);
+	$from = strtotime($from);
+	$to = strtotime($to);
 
 	$this->set('from',$from);
 	$this->set('to',$to);
 
-		$this->loadmodel('new_cash_bank');
-		$order=array('new_cash_bank.receipt_date'=> 'ASC');
-		$conditions=array('society_id'=>$s_society_id,"receipt_source"=>1,"edit_status"=>"NO",
-		'new_cash_bank.receipt_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime));
-		$cursor2=$this->new_cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
-		$this->set('cursor2',$cursor2);
-
-			$this->loadmodel('society');
-			$conditions=array("society_id" => $s_society_id);
-			$cursor = $this->society->find('all',array('conditions'=>$conditions));
-			foreach($cursor as $collection)
-			{
-			$society_name = $collection['society']['society_name'];
-			}
-			$this->set('society_name',$society_name);
-		
-	$this->loadmodel('new_regular_bill');
-	$conditions2=array("society_id" => $s_society_id,"approval_status" => 1);
-	$result_new_regular_bill_max = $this->new_regular_bill->find('all',array('conditions'=>$conditions2));
-	foreach($result_new_regular_bill_max as $data_max){
-	$one_time_ids[]=$data_max["new_regular_bill"]["one_time_id"];
-	}
-	@$maximum_one_time_id=max(@$one_time_ids);
-	$this->set("maximum_one_time_id",$maximum_one_time_id);
+		$this->loadmodel('cash_bank');
+		$conditions=array('society_id'=>$s_society_id,"source"=>"bank_receipt",	'cash_bank.transaction_date'=>array('$gte'=>$from,'$lte'=>$to));
+		$order=array('cash_bank.transaction_date'=> 'ASC');
+		$receipts=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
+		$this->set('receipts',$receipts);
 }
 ///////////////////////////////////End bank receipt show ajax//////////////////////////////////////////////////
 

@@ -25,6 +25,11 @@ else
 {
 $income_head_arr2 = $income_head_arr1;	
 }
+if(!empty($income_head_other_charges))
+{
+$income_head_arr2=array_diff($income_head_arr2,$income_head_other_charges);
+}
+
 foreach($income_head_arr2 as $data)
 {
 $income_arrr[] = $data;

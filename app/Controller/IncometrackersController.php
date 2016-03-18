@@ -465,7 +465,7 @@ function generate_bills(){
 		$bill_number=$this->autoincrement_with_society_ticket('regular_bill','bill_number');
 		$this->regular_bill->saveAll(array("auto_id" => $regular_bill_id,"bill_number"=>$bill_number, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_maintenance"=> $arrear_maintenance, "arrear_intrest" => $arrear_intrest, "intrest_on_arrears" => $intrest_on_arrears,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"credit_stock"=>$credit_stock,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by,"current_date"=>$current_date,"edited"=>"no","end_date"=>$end_date));
 		
-		//LEDGER CODE START//
+	//LEDGER CODE START//
 		foreach($income_head_array as $income_head_id=>$income_head_amount){
 			if(!empty($income_head_amount)){
 				$this->loadmodel('ledger');
@@ -3864,7 +3864,7 @@ $supplimentry_bill_type_for_view="Non-Residential";
 }
 }
 
-
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 
 
 $html='<div style="margin: 0px;">
@@ -4236,6 +4236,7 @@ $user_data=$this->requestAction(array('controller' => 'Fns', 'action' =>'user_in
 foreach($user_data as $user_dataa){	
 $email=(int)$user_dataa['user']['email'];
 }
+
 $this->loadmodel('society');
 $condition=array('society_id'=>$s_society_id);
 $result_society=$this->society->find('all',array('conditions'=>$condition)); 
@@ -4246,7 +4247,7 @@ $this->set('result_society',$result_society);
 		$sms_is_on_off=(int)@$data_society["society"]["account_sms"];
 		}
 if($email_is_on_off==1){
-$r_sms=$this->hms_sms_ip();
+$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
 $working_key=$r_sms->working_key;
 $sms_sender=$r_sms->sms_sender; 
 $sms_allow=(int)$r_sms->sms_allow;
@@ -5077,9 +5078,8 @@ $excel.="$grand_total2</th>
 echo $excel;
 
 }
-//////////////////////// End income Head report Excel///////////////////////////////
-
-/////////////////// Start Select Income Heads (Accounts)//////////////////////////////
+//End income Head report Excel//
+//Start Select Income Heads (Accounts)//
 function select_income_heads()
 {
 if($this->RequestHandler->isAjax()){
@@ -5147,6 +5147,17 @@ $conditions=array("society_id"=>$s_society_id);
 $cursor3 = $this->society->find('all',array('conditions'=>$conditions));
 $this->set('cursor3',$cursor3);
 
+$this->loadmodel('other_charge');
+$conditions=array("society_id"=>$s_society_id);
+$other_charges = $this->other_charge->find('all',array('conditions'=>$conditions));
+foreach($other_charges as $data){
+$income_head_other_charges[]=$data['other_charge']['income_head_id'];	
+}
+if(!empty($income_head_other_charges))
+{
+array_unique(@$income_head_other_charges);
+$this->set('income_head_other_charges',$income_head_other_charges);
+}
 }
 //End Select Income Heads (Accounts)//
 //other_charges_all_remove//
@@ -5251,7 +5262,7 @@ function other_charges(){
 			$this->loadmodel('other_charge');
 			$this->other_charge->deleteAll(array('ledger_sub_account_id'=> (int)$ledger_sub_account_id,'income_head_id'=> $income_head_id));
 			
-			$this->other_charge->saveAll(array("ledger_sub_account_id" => (int)$ledger_sub_account_id,"income_head_id"=>$income_head_id,"amount"=>$amount,"charge_type"=>$charge_type));
+			$this->other_charge->saveAll(array("ledger_sub_account_id" => (int)$ledger_sub_account_id,"income_head_id"=>$income_head_id,"amount"=>$amount,"charge_type"=>$charge_type,"society_id"=>$s_society_id));
 		}
 	?>
 
@@ -5439,7 +5450,7 @@ function master_rate_card(){
 	$conditions=array('society_id'=>$s_society_id);
 	$flats=$this->flat->find('all',array('conditions'=>$conditions)); 
 	foreach($flats as $flat){
-		$flat_type_ids[]=$flat["flat"]["flat_type_id"];
+		$flat_type_ids[]=@$flat["flat"]["flat_type_id"];
 	}
 	
 	$flat_type_ids=array_unique($flat_type_ids);
@@ -5464,13 +5475,9 @@ function auto_save_rate_card($flat_type_id=null,$income_head_id=null,$rate_type=
 }
 //End auto_save_rate_card//
 //Start auto_save_noc_rate//
-function auto_save_noc_rate($flat_type_id=null,$type=null,$amt=null,$head=null)
+function auto_save_noc_rate($flat_type_id=null,$type=null,$head=null,$amt=null)
 {
-if($this->RequestHandler->isAjax()){
-	$this->layout='blank';
-	}else{
-	$this->layout='session';
-	}
+$this->layout=null;
 
 	
 	
@@ -5685,24 +5692,34 @@ $area_typppp = (int)@$collection['society']['area_scale'];
 }
 $this->set('area_typppp',@$area_typppp);
 
-if(isset($this->request->data['sub']))
-{
-
-
-
-}
-
-
-$this->loadmodel('flat');
-$conditions=array('society_id'=>$s_society_id);
-$flats=$this->flat->find('all',array('conditions'=>$conditions)); 
-foreach($flats as $flat){
-$flat_type_ids[]=@$flat["flat"]["flat_type_id"];
-}
+	$this->loadmodel('flat');
+	$conditions=array('society_id'=>$s_society_id,'flat_area'=>null,'flat_type_id'=>null);
+	$count=$this->flat->find('count',array('conditions'=>$conditions)); 
+	$this->loadmodel('flat');
+	$conditions=array('society_id'=>$s_society_id,'flat_area'=>null,'flat_type_id'=>0);
+	$count2=$this->flat->find('count',array('conditions'=>$conditions)); 
+	$this->loadmodel('flat');
+	$conditions=array('society_id'=>$s_society_id,'flat_type_id'=>0);
+	$count3=$this->flat->find('count',array('conditions'=>$conditions)); 
+	$this->loadmodel('flat');
+	$conditions=array('society_id'=>$s_society_id,'flat_area'=>null);
+	$count4=$this->flat->find('count',array('conditions'=>$conditions));
+    $this->loadmodel('flat');
+	$conditions=array('society_id'=>$s_society_id,'flat_area'=>'0');
+	$count5=$this->flat->find('count',array('conditions'=>$conditions));	
+	$count=$count+$count2+$count3+$count4+$count5;
+	$this->set('count',$count);
+	if($count == 0){
+	$this->loadmodel('flat');
+	$conditions=array('society_id'=>$s_society_id);
+	$flats=$this->flat->find('all',array('conditions'=>$conditions)); 
+	foreach($flats as $flat){
+	$flat_type_ids[]=@$flat["flat"]["flat_type_id"];
+	}
 $flat_type_ids=array_unique($flat_type_ids);
 asort($flat_type_ids);
 $this->set(compact("flat_type_ids"));
-
+	}
 $this->loadmodel('society');
 $conditions=array("society_id"=>$s_society_id);
 $cursor3 = $this->society->find('all',array('conditions'=>$conditions));
@@ -6373,20 +6390,20 @@ $this->set('tems_arr',$tems_arr);
 //////////////////////////////////////////// End Supplimentry Bill Pdf (Accounts)///////////////////////////////////////////////////////////////////////
 
 //////////////////////////// Start Regular Bill View (Accounts)////////////////////////////////////////////////////////
-function regular_bill_view($auto_id=null)
-{
+function regular_bill_view($auto_id=null){
+	
 $this->layout='session';
 $this->ath();
 
 $s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('user_id');
 
  $auto_id = (int)$auto_id;
 
-$this->loadmodel('new_regular_bill');
+$this->loadmodel('regular_bill');
 $conditions=array("auto_id"=>$auto_id);
-$result_new_regular_bill=$this->new_regular_bill->find('all',array('conditions'=>$conditions));
+$result_new_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions));
 $this->set('result_new_regular_bill',$result_new_regular_bill);
 
 $this->loadmodel('society');
@@ -6394,6 +6411,7 @@ $conditions=array("society_id" => $s_society_id);
 $result_society=$this->society->find('all',array('conditions'=>$conditions));
 $this->set('result_society',$result_society);
 
+/*
 $this->loadmodel('new_regular_bill');
 $conditions=array("auto_id"=>$auto_id);
 $cursor=$this->new_regular_bill->find('all',array('conditions'=>$conditions));
@@ -6431,6 +6449,7 @@ else
 $size=0;
 }
 $this->set('size',$size);
+*/
 }
 
 function regular_bill_edit2($auto_id=null){
@@ -7343,8 +7362,8 @@ $this->flat_type->updateAll(array('charge'=> @$charge3),array('society_id'=>$s_s
 
 $this->redirect(array('controller' => 'Incometrackers','action' => 'select_income_heads'));
 }
-/////////////////////////////////// End delete_select_income ////////////////////////////////////////////////////////
-//////////////////////// Start Account Statement (Accounts)//////////////////////////////
+//End delete_select_income//
+//Start Account Statement (Accounts)//
 function account_statement(){
 	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';

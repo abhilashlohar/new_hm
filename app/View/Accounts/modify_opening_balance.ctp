@@ -1,8 +1,8 @@
 <input type="text" class="date-picker m-wrap span4" data-date-format="dd-mm-yyyy" 
 value="<?php echo $tra_date; ?>" 
 style="background-color:white !important; margin-top:2.5px;" field="transaction_date" record_id="1" placeholder="Date">
- 
- 
+<br>
+ <br>
 <div style="background-color: #FFF;"> 
 <table class="table table-bordered table-striped" style="width:100%; background-color:white;" id="open_bal">
 <tr>
@@ -11,12 +11,13 @@ style="background-color:white !important; margin-top:2.5px;" field="transaction_
 <th>Debit</th>
 <th>Credit</th>
 <th>Penalty</th>
-<th>Delete</th>
 </tr>
 <?php $j=0;
 $total_debit = 0;
 $total_credit = 0; 
 $total_penalty = 0;
+$grand_total_debit=0;
+$grand_total_credit=0;
 ?>
 			
 <?php foreach($result_bank_receipt_converted as $data){ 
@@ -32,56 +33,39 @@ $total_penalty = 0;
  $total_debit=$total_debit+$debit;
  $total_credit=$total_credit+$credit;
  $total_penalty=$total_penalty+$penalty;
+ $grand_total_credit=$grand_total_credit+$credit;
+ $grand_total_debit=$grand_total_debit+$debit+$penalty;
  ?>
 <tr id="<?php echo $csv_id; ?>">
 <td>
-<select class="m-wrap medium" disabled="disabled">
-<option value="">Select Group Account</option>
-<?php
-foreach($cursor3 as $collection){
+<?php foreach($cursor3 as $collection){
 $group_id5 = (int)$collection['accounts_group']['auto_id'];
 $group_name1= $collection['accounts_group']['group_name'];
 ?>
-<option value="<?php echo $group_id5; ?>" <?php if($group_id2 == $group_id5) { ?> selected="selected" <?php } ?>><?php echo $group_name1; ?></option>
-<?php } ?>
-<option value="15" <?php if($group_id2 == 15) { ?> selected="selected" <?php } ?>>Sundry Creditors Control A/c</option>
-<option value="112" <?php if($group_id2 == 112) { ?> selected="selected" <?php } ?>>Sundry Debtors Control A/c </option>
-<option value="33" <?php if($group_id2 == 33) { ?> selected="selected" <?php } ?>>Bank Accounts</option>
-<option value="35" <?php if($group_id2 == 35) { ?> selected="selected" <?php } ?>>Tax deducted at source (TDS receivable)</option>
-<option value="34" <?php if($group_id2 == 34) { ?> selected="selected" <?php } ?>>Members Control Account</option>
-</select>
+<?php if($group_id2 == $group_id5) { ?><?php echo $group_name1; ?><?php }} ?>
+<?php if($group_id2 == 15) { ?> Sundry Creditors Control A/c <?php } ?>
+<?php if($group_id2 == 112) { ?> Sundry Debtors Control A/c <?php } ?>
+<?php if($group_id2 == 33) { ?> Bank Accounts <?php } ?>
+<?php if($group_id2 == 35) { ?> Tax deducted at source (TDS receivable) <?php } ?>
+<?php if($group_id2 == 34) { ?> Members Control Account <?php } ?>
 </td>
-            
-            
 <td>
-<?php
-if($ledger_type == 1)
-{
-?>	
-<select class="m-wrap medium" disabled="disabled">
-<option value="" style="display:none;">Select</option>
-<?php foreach($cursor1 as $dataa)
-{
+<?php if($ledger_type == 1){ ?>	
+<?php foreach($cursor1 as $dataa){
 $auto_id = (int)$dataa['ledger_sub_account']['auto_id'];
 $name = $dataa['ledger_sub_account']['name'];
 ?>
-<option value="<?php echo $auto_id; ?>" <?php if($auto_id == $ledger_id) { ?> selected="selected" <?php } ?>><?php echo $name; ?></option>
-<?php	
-}
-?>
-</select>
+<?php if($auto_id == $ledger_id) { ?><?php echo $name; ?><?php } ?>
+<?php } ?>
 <?php	
 }
 else{
 ?>	
-<select class="m-wrap medium" disabled="disabled">
-<option value="" style="display:none;">Select</option>
-<?php foreach($cursor2 as $dataa)
-{
+<?php foreach($cursor2 as $dataa){
 $auto_id = (int)$dataa['ledger_account']['auto_id'];
 $name = $dataa['ledger_account']['ledger_name'];
 ?>
-<option value="<?php echo $auto_id; ?>" <?php if($auto_id == $ledger_id) { ?> selected="selected" <?php } ?>><?php echo $name; ?></option>
+<?php if($auto_id == $ledger_id) { ?><?php echo $name; ?><?php } ?></option>
 <?php	
 }
 ?>
@@ -92,55 +76,37 @@ $name = $dataa['ledger_account']['ledger_name'];
 </td>
 
 <td>
-<input type="text" class="m-wrap span10" style="background-color:white !important;"
+<input type="text" class="m-wrap span10 debit" style="background-color:white !important;"
 value="<?php echo @$debit; ?>" field="debit" record_id="<?php echo $csv_id; ?>" />
 </td>
 
 <td>
-<input type="text" class="m-wrap span10" style="background-color:white !important;"
+<input type="text" class="m-wrap span10 credit" style="background-color:white !important;"
 value="<?php echo @$credit; ?>" field="credit" record_id="<?php echo $csv_id; ?>" />
 </td>
 
 <td>
-<input type="text" class="m-wrap span10" style="background-color:white !important;"
+<input type="text" class="m-wrap span10 penalty" style="background-color:white !important;"
 value="<?php echo @$penalty; ?>" field="penalty" record_id="<?php echo $csv_id; ?>" />                       
 </td>                      
 
-<td>
-<a href="#" role="button" class="btn mini red delete" del="<?php echo $j; ?>"><i class="icon-remove icon-white"></i></a>
-</td>
-
-	
 </tr>
 <?php } ?>
 <tr>
 <th colspan="2" style="text-align:right;">Total</th>
-<th><input type="text" class="m-wrap small" value="<?php echo $total_debit; ?>" style="background-color:white !important;"></th>
-<th><input type="text" class="m-wrap small" value="<?php echo $total_credit; ?>" style="background-color:white !important;"></th>
-<th><input type="text" class="m-wrap small" value="<?php echo $total_penalty; ?>" style="background-color:white !important;"></th>
-<th></th>
+<th><input type="text" class="m-wrap small total_debit" value="<?php echo $total_debit; ?>" style="background-color:white !important;" id="total_debit"></th>
+<th><input type="text" class="m-wrap small total_credit" value="<?php echo $total_credit; ?>" style="background-color:white !important;" id="total_credit"></th>
+<th><input type="text" class="m-wrap small total_penalty" value="<?php echo $total_penalty; ?>" style="background-color:white !important;" id="total_penalty"></th>
 </tr>
+<tr>
+<th colspan="2" style="text-align:right;">Grand Total</th>
+<th><input type="text" class="m-wrap small" id="grand_total_debit" value="<?php echo $grand_total_debit; ?>"><br><b>Total Debit</b></th>
+<th colspan="2"><input type="text" class="m-wrap small" id="grand_total_credit" value="<?php echo $grand_total_credit; ?>"><br><b>Total Credit</b></th>
 </table>
 </div>
 
 
-<?php if(empty($page)){ $page=1;} ?>
-<div >
-	<span>Showing page:</span><span> <?php echo $page; ?></span> <br/>
-	<span>Total entries: <?php echo ($count_bank_receipt_converted); ?></span>
-</div>
-<div class="pagination pagination-large ">
-<ul>
-<?php 
-$loop=(int)($count_bank_receipt_converted/20);
-if($count_bank_receipt_converted%20>0){
-	$loop++;
-}
-for($ii=1;$ii<=$loop;$ii++){ ?>
-	<li><a href="<?php echo $webroot_path; ?>Accounts/modify_opening_balance/<?php echo $ii; ?>" rel='tab' role="button" ><?php echo $ii; ?></a></li>
-<?php } ?>
-</ul>
-</div>
+
 <br/>
 <a href="<?php echo $webroot_path; ?>Accounts/opening_balance_import?bbb=55" rel="tab" class="btn purple big"><i class="m-icon-big-swapleft m-icon-white"></i> Back</a>
 <a class="btn purple big" role="button" id="final_import">IMPORT OPENING BALANCE <i class="m-icon-big-swapright m-icon-white"></i></a>									
@@ -241,7 +207,7 @@ $("#check_validation_result").html('<img src="<?php echo $webroot_path; ?>as/lod
 $.ajax({
 url: "<?php echo $webroot_path; ?>Accounts/allow_import_opening_balance",
 }).done(function(response){
-	alert(response);
+	//alert(response);
 response = response.replace(/\s+/g,' ').trim();
 if(response=="F"){
 $("#check_validation_result").html("");
@@ -277,3 +243,61 @@ change_page_automatically("<?php echo $webroot_path; ?>Accounts/opening_balance_
 	window.history.pushState({path:pageurl},'',pageurl);
 }		  
 </script>	
+<style>
+input{
+margin: 0 !important;
+padding: 2px !important;
+}
+</style>
+
+
+<script>
+$(document).ready(function(){
+	  function grand_total(){
+		var total_debit = $("#total_debit").val();
+		var total_credit = $("#total_penalty").val();
+		if($.isNumeric(total_debit)==false){ total_debit=0; }
+		if($.isNumeric(total_credit)==false){ total_credit=0; }
+		var grand_total_debit = parseFloat(total_debit) + parseFloat(total_credit);
+		var grand_total_credit=parseFloat($("#total_credit").val());
+		if($.isNumeric(grand_total_credit)==false){ grand_total_credit=0; }
+		$("#grand_total_debit").val(grand_total_debit);	
+		$("#grand_total_credit").val(grand_total_credit);
+	}   
+	
+	$(".debit").on("blur",function(){
+		var sum = 0;
+		$(".debit").each(function(){
+			sum2 = +$(this).val();
+			if($.isNumeric(sum2)==false){ sum2=0; }
+			sum+=sum2;
+			total_debit+= +$(this).val();
+		});
+		$(".total_debit").val(sum);
+		grand_total();
+	});
+	
+	$(".credit").on("blur",function(){
+		
+		 var sum = 0;
+		$(".credit").each(function(){
+			sum2=+$(this).val();
+			if($.isNumeric(sum2)==false){ sum2=0; }
+			sum+=sum2;
+		});
+		$(".total_credit").val(sum);
+		grand_total();
+	});
+	
+	$(".penalty").on("blur",function(){
+				var sum = 0;
+		$(".penalty").each(function(){
+			sum2= +$(this).val();
+			if($.isNumeric(sum2)==false){ sum2=0; }
+			sum+=sum2;
+		});
+		$(".total_penalty").val(sum);
+		grand_total();
+	});
+});
+</script>

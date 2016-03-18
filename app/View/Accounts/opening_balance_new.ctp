@@ -137,7 +137,7 @@ name="ledger_sub_account_id[]">
 		<td><input type="text" class="m-wrap small penalty" name="penalty[]" Placeholder="Penalty" value="<?php echo @$penalty_for_view; ?>"></td> 
 	</tr>
 <?php }	?>
-<?php /*
+<?php 
     foreach($ledger_sub_account_dataa as $ledger_sub_account_dataa){
         $ledger_sub_account_id = $ledger_sub_account_dataa['ledger_sub_account']['auto_id'];
 		$ledger_sub_account_name = $ledger_sub_account_dataa['ledger_sub_account']['name'];
@@ -186,7 +186,7 @@ name="ledger_sub_account_id[]">
 		<td><input type="text" class="m-wrap small credit" name="credit[]" Placeholder="Credit"value="<?php echo $credit_for_view; ?>"></td>
 		<td><input type="hidden" value="" name="penalty[]" Placeholder="Penalty"></td>
 		</tr>
-	<?php }} */?>
+	<?php }} ?>
 <tr>	
 	<th colspan="2" style="text-align:right;">Total</th>
 	<th><input type="text" class="m-wrap small total_debit" id="total_debit" value="<?php echo $total_debit; ?>"></th>
@@ -313,17 +313,6 @@ if(nnn == 55)
 $("#validation").html('Date Should be in Open Financial Year');	
 return false;		
 }	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 });
 </script>
 <style>
@@ -332,3 +321,22 @@ margin: 0 !important;
 padding: 2px !important;
 }
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

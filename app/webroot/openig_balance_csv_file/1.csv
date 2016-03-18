@@ -293,6 +293,6 @@ Members Control Accounts,test191,Wing B,299,100,,100
 Members Control Accounts,test192,Wing B,300,100,,100
 Sundry Debtors Control A/c,Ramesh,,,,19100,
 Bank Accounts,SBBJ,,,,19100,
-Sundry Debtors Control A/c,suresh,,,,,
-Sundry Creditors Control A/c,Raju,,,,,
-Sundry Creditors Control A/c,Vicky,,,,,
+Sundry Debtors Control A/c,suresh,,,100,,
+Sundry Creditors Control A/c,Raju,,,,200,
+Sundry Creditors Control A/c,Vicky,,,100,,

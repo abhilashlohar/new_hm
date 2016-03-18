@@ -9,7 +9,6 @@ foreach($cursor3 as $dataaa)
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
 
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////////////// ?>            
 <table  align="center" border="1" bordercolor="#FFFFFF" cellpadding="0">
 <tr>
 <td><a href="<?php echo $webroot_path; ?>Incometrackers/select_income_heads" class="btn" rel='tab'>Selection of Income Heads</a>
@@ -33,7 +32,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </td>
 </tr>
 </table> 
-
+<?php if($count == 0){ ?>
     <div align="center">
     <a href="master_noc" class='btn red' role="button" rel='tab'>Non Occupancy Charges</a>
     <a href="master_noc_status" class='btn blue' role="button"  rel='tab'>Non Occupancy Status</a>
@@ -101,7 +100,7 @@ $heads=@$rate_info[0]["noc_rate"]["income_heads"];
 <input type="text" name="" class="m-wrap small" value="<?php echo $rate; ?>" style="text-align:right; background-color:white !important;" maxlength="10" onblur="save_noc_charges(<?php echo $flat_type_id; ?>)" id="amt<?php echo $flat_type_id; ?>">
 </div>
 </th>
-<th>
+<td>
 <div id="income_head<?php echo $flat_type_id; ?>" <?php if($rate_type != 4) { ?> class="hide" <?php } ?>>
 <select data-placeholder="Select Account Heads" class="m-wrap large chosen" multiple="multiple" tabindex="6" onchange="save_noc_charges(<?php echo $flat_type_id; ?>)" id="head<?php echo $flat_type_id; ?>">	
 <option value="" style="display:none;">Select</option>
@@ -122,7 +121,7 @@ if($head_id == $income_id){ ?> selected="selected" <?php }} ?>><?php echo $ac_na
 <?php } ?>
 </select>
 </div>
-</th>
+</td>
 <th></th>
 </tr>
 <?php } ?>
@@ -140,6 +139,8 @@ function save_noc_charges(vvv)
 var type = $("#type" + vvv).val();
 var amt = $("#amt" + vvv).val();
 var head = $("#head"+vvv).val();
+//var head_implode = head.join(',');
+  
 if(type == 4)
 {
 $("#amt_div"+vvv).hide();	
@@ -162,7 +163,7 @@ $("#income_head"+vvv).hide();
 $("#output").html("Saving changes...");
 
 $.ajax({
-url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_noc_rate/"+vvv+"/"+type+"/"+amt+"/"+head,
+url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_noc_rate/"+vvv+"/"+type+"/"+head+"/"+amt,
 }).done(function(response){
 $("#output").html("Every change you make is automatically saved.");
 });
@@ -178,7 +179,13 @@ alert();
 }
 </script>
 
-
+<?php } else {?>
+<br /><br />					 
+<center>					 
+<h3 style="color:red;"><b>Please Complete Unit Configuration </b></h3>				 
+</center>					 
+<br /><br />					 
+<?php } ?>
 
 
 

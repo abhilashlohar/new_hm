@@ -253,9 +253,8 @@ $converted_per=($total_converted_records*100)/$total_records;
 	die(json_encode(array("again_call_ajax"=>$again_call_ajax,"converted_per"=>$converted_per)));	
 	
 }
-//////////////////////// End convert_imported_data_ob /////////////////////////////////////
-
-//////////////////////// Start modify_opening_balance ///////////////////////////////////
+//End convert_imported_data_ob//
+//Start modify_opening_balance//
 function modify_opening_balance($page=null)
 {
 if($this->RequestHandler->isAjax()){
@@ -284,7 +283,7 @@ $process_status= @$step1+@$step2+@$step3;
 if($process_status==3){
 	$this->loadmodel('opening_balance_csv_converted'); 
 	$conditions=array("society_id"=>(int)$s_society_id);
-	$result_bank_receipt_converted=$this->opening_balance_csv_converted->find('all',array('conditions'=>$conditions,"limit"=>20,"page"=>$page));
+	$result_bank_receipt_converted=$this->opening_balance_csv_converted->find('all',array('conditions'=>$conditions));
 	$this->set('result_bank_receipt_converted',$result_bank_receipt_converted);
 		
 	$this->loadmodel('opening_balance_csv_converted'); 

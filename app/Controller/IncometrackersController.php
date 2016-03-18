@@ -4249,7 +4249,7 @@ $this->set('result_society',$result_society);
 		$sms_is_on_off=(int)@$data_society["society"]["account_sms"];
 		}
 if($email_is_on_off==1){
-$r_sms=$this->hms_sms_ip();
+$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
 $working_key=$r_sms->working_key;
 $sms_sender=$r_sms->sms_sender; 
 $sms_allow=(int)$r_sms->sms_allow;

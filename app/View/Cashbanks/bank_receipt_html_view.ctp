@@ -20,13 +20,15 @@ foreach($result_cash_bank as $receipt){
 				
 				$deposited_in=$receipt["cash_bank"]["deposited_in"];
 				$deposited_in_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($deposited_in)));
-				pr($deposited_in_info);
+
 				$bank_name=$deposited_in_info[0]["ledger_sub_account"]["name"];
 				$bank_account=$deposited_in_info[0]["ledger_sub_account"]["bank_account"];
 				$receipt_mode=$receipt["cash_bank"]["receipt_mode"];
 				$cheque_number=$receipt["cash_bank"]["cheque_number"];
 				$narration=$receipt["cash_bank"]["narration"];
 				$amount=$receipt["cash_bank"]["amount"];
+				$drown_in_which_bank=$receipt["cash_bank"]["drown_in_which_bank"];
+				$cheque_date=$receipt["cash_bank"]["date"];
 }	
 				
 				
@@ -35,7 +37,7 @@ foreach($result_cash_bank as $receipt){
 					$amount = str_replace( ',', '', $amount );
 					$am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));
 					
-				$date=date("d-m-Y",strtotime($transaction_date));
+				 $date=date("d-m-Y",$transaction_date);
 				$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($ledger_sub_account_id))); 
 				
 						 $user_name=$result_member_info["user_name"];
@@ -48,7 +50,7 @@ foreach($result_cash_bank as $receipt){
 				
 				
 				
-					$html_receipt='<table style="padding:24px;background-color:#34495e" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+					$html_receipt='<table style="padding:24px;background-color:#F5F8F9" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" class="">
 				<tbody><tr>
 					<td>
 						<table style="padding:38px 30px 30px 30px;background-color:#fafafa" align="center" border="0" cellpadding="0" cellspacing="0" width="540">
@@ -193,6 +195,10 @@ foreach($result_cash_bank as $receipt){
 
 
 <style>
+.hmlogobox{
+display: none;
+	
+}
 @media screen {
     .bill_on_screen {
        width:70%;

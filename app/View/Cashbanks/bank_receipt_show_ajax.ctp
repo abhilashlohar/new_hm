@@ -31,7 +31,7 @@
 				$user_name=$member_info["user_name"];
 				$wing_name=$member_info["wing_name"];
 				$flat_name=$member_info["flat_name"];
-				echo $deposited_in=$receipt["cash_bank"]["deposited_in"];
+				 $deposited_in=$receipt["cash_bank"]["deposited_in"];
 				$deposited_in_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($deposited_in)));
 				
 				$bank_name=$deposited_in_info[0]["ledger_sub_account"]["name"];

@@ -470,9 +470,9 @@ $ledger="";
 $ob_id=(int)$receipt_converted["opening_balance_csv_converted"]["auto_id"];
 $ledger_type=(int)$receipt_converted["opening_balance_csv_converted"]["ledger_type"];
 $ledger = $receipt_converted["opening_balance_csv_converted"]["ledger_id"];
-$debit = @$receipt_converted["opening_balance_csv_converted"]["debit"];
-$credit = @$receipt_converted["opening_balance_csv_converted"]["credit"];
-$penalty=@$receipt_converted["opening_balance_csv_converted"]["penalty"];
+$debit = (int)@$receipt_converted["opening_balance_csv_converted"]["debit"];
+$credit = (int)@$receipt_converted["opening_balance_csv_converted"]["credit"];
+$penalty=(int)@$receipt_converted["opening_balance_csv_converted"]["penalty"];
 		
 		
 if(empty($ledger)) { $ledger_v = 1; }else{ $ledger_v = 0; } 

@@ -402,8 +402,8 @@ $this->set('cursor2',$cursor2);
 }	
 	
 }
-////////////////////// End modify_opening_balance_ajax ////////////////////////////////
-//////////////////////// Start allow_import_opening_balance ////////////////////////////
+//End modify_opening_balance_ajax//
+//Start allow_import_opening_balance//
 function allow_import_opening_balance()
 {
 $this->layout=null;
@@ -468,9 +468,9 @@ $result_bank_receipt_converted=$this->opening_balance_csv_converted->find('all',
 foreach($result_bank_receipt_converted as $receipt_converted){
 $ledger="";
 $ob_id=(int)$receipt_converted["opening_balance_csv_converted"]["auto_id"];
-//$type=$receipt_converted["opening_balance_csv_converted"]["type"];
+$ledger_type=(int)$receipt_converted["opening_balance_csv_converted"]["ledger_type"];
 $ledger = $receipt_converted["opening_balance_csv_converted"]["ledger_id"];
-$debit = (int)@$receipt_converted["opening_balance_csv_converted"]["debit"];
+$debit = @$receipt_converted["opening_balance_csv_converted"]["debit"];
 $credit = @$receipt_converted["opening_balance_csv_converted"]["credit"];
 $penalty=@$receipt_converted["opening_balance_csv_converted"]["penalty"];
 		
@@ -598,20 +598,15 @@ function final_import_opening_balance()
 	
 	
 	
-		if($group_id==34 && !empty($debit)){
+		if($group_id==34 && (!empty($debit) || !empty($credit))){
 
 		$this->loadmodel('ledger');
 		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_id,"debit"=>$debit,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));
+		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_id,"debit"=>$debit,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));
         }
 		
-		if($group_id==34 && !empty($credit)){
-		$this->loadmodel('ledger');
-		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_id,"debit"=>null,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date),"arrear_int_type"=>"YES"));
-		
-		}
-		else if(($group_id==33 || $group_id==35 || $group_id==15 || $group_id==112) && !empty($debit)){
+	
+		else if(($group_id==33 || $group_id==35 || $group_id==15 || $group_id==112) && (!empty($debit) || !empty($credit))){
 		
 		$this->loadmodel('ledger');
 		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
@@ -620,19 +615,11 @@ function final_import_opening_balance()
 		"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,
 		"transaction_date"=>strtotime($transaction_date)));	
 		}
-		else if(($group_id==33 || $group_id==35 || $group_id==15 || $group_id==112) && !empty($credit)){
-		$this->loadmodel('ledger');
-		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$group_id,
-		"ledger_sub_account_id" => $ledger_id,"debit"=>null,"credit"=>$credit,
-		"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,
-		"transaction_date"=>strtotime($transaction_date)));	
-		}
 		else 
 		{
 		$this->loadmodel('ledger');
 		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" => $ledger_id,"ledger_sub_account_id" =>$credit,"debit"=>$debit,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));
+		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" => $ledger_id,"ledger_sub_account_id" =>$credit,"debit"=>$debit,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));
 		}
 		
 	$this->loadmodel('opening_balance_csv_converted');

@@ -465,7 +465,7 @@ function generate_bills(){
 		$bill_number=$this->autoincrement_with_society_ticket('regular_bill','bill_number');
 		$this->regular_bill->saveAll(array("auto_id" => $regular_bill_id,"bill_number"=>$bill_number, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_maintenance"=> $arrear_maintenance, "arrear_intrest" => $arrear_intrest, "intrest_on_arrears" => $intrest_on_arrears,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"credit_stock"=>$credit_stock,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by,"current_date"=>$current_date,"edited"=>"no","end_date"=>$end_date));
 		
-		//LEDGER CODE START//
+	//LEDGER CODE START//
 		foreach($income_head_array as $income_head_id=>$income_head_amount){
 			if(!empty($income_head_amount)){
 				$this->loadmodel('ledger');
@@ -6373,20 +6373,20 @@ $this->set('tems_arr',$tems_arr);
 //////////////////////////////////////////// End Supplimentry Bill Pdf (Accounts)///////////////////////////////////////////////////////////////////////
 
 //////////////////////////// Start Regular Bill View (Accounts)////////////////////////////////////////////////////////
-function regular_bill_view($auto_id=null)
-{
+function regular_bill_view($auto_id=null){
+	
 $this->layout='session';
 $this->ath();
 
 $s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('user_id');
 
  $auto_id = (int)$auto_id;
 
-$this->loadmodel('new_regular_bill');
+$this->loadmodel('regular_bill');
 $conditions=array("auto_id"=>$auto_id);
-$result_new_regular_bill=$this->new_regular_bill->find('all',array('conditions'=>$conditions));
+$result_new_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions));
 $this->set('result_new_regular_bill',$result_new_regular_bill);
 
 $this->loadmodel('society');
@@ -6394,6 +6394,7 @@ $conditions=array("society_id" => $s_society_id);
 $result_society=$this->society->find('all',array('conditions'=>$conditions));
 $this->set('result_society',$result_society);
 
+/*
 $this->loadmodel('new_regular_bill');
 $conditions=array("auto_id"=>$auto_id);
 $cursor=$this->new_regular_bill->find('all',array('conditions'=>$conditions));
@@ -6431,6 +6432,7 @@ else
 $size=0;
 }
 $this->set('size',$size);
+*/
 }
 
 function regular_bill_edit2($auto_id=null){

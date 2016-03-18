@@ -92,7 +92,7 @@
 							<i class="icon-chevron-down"></i>	
 							</a>
 							<ul class="dropdown-menu" style="min-width: 80px ! important; margin-left: -52px;">
-							<li><a href="regular_bill_view/420" target="_blank"><i class="icon-search"></i> View</a></li>
+							<li><a href="regular_bill_view/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i> View</a></li>
 							<li>
 							<a href="regular_bill_edit2/<?php echo $auto_id; ?>" role="button" rel="tab"><i class="icon-edit"></i> Edit</a></li>
 							</ul>

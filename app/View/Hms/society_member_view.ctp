@@ -23,16 +23,15 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				$user_name=$user_info["user_name"];
 				$user_flat_id=$user_info["user_flat_id"];
 				$wing_flats=$user_info["wing_flat"];
-				pr($wing_flats);
 				$roles=$user_info["roles"];
 				$email=$user_info["email"];
 				$mobile=$user_info["mobile"];
-				$validation_status=$user_info["validation_status"];
+				echo $validation_status=$user_info["validation_status"];
 				$date=$user_info["date"];
 				if(sizeof($wing_flats)>0){
 					$q=0;
 					foreach($wing_flats as $user_flat_id=>$wing_flat){ $q++; 
-					if($q==1){ echo "yes";?>
+					if($q==1){?>
 						<tr>
 							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $sr_no; ?></td>
 							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $user_name; ?></td>

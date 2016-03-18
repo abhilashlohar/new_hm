@@ -17723,6 +17723,7 @@ function resident_directory(){
 	foreach($users as $user_info){
 		$user_id=$user_info["user"]["user_id"];
 		$user_name=$user_info["user"]["user_name"];
+		$profile_pic=@$user_info["user"]["profile_pic"];
 		$user_type=$user_info["user"]["user_type"];
 		$mobile=$user_info["user"]["mobile"];
 		$email=$user_info["user"]["email"];
@@ -17772,7 +17773,7 @@ function resident_directory(){
 		}
 		$roles=implode(',',$roles);
 		
-		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id);
+		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"profile_pic"=>$profile_pic,"date"=>$date,"user_flat_id"=>$user_flat_id);
 	}
 	$this->set(compact("arranged_users"));
 }

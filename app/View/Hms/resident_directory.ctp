@@ -1,11 +1,9 @@
-<div style="background-color: rgb(255, 255, 255); padding: 0px 20px;">
+<div style="background-color: rgb(255, 255, 255); padding: 0px 20px; border: 1px solid rgb(233, 231, 231);">
 <table cellpadding="0" cellspacing="0" width="100%">
 	<tbody><tr>
 		<td><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-book"></i> Resident Directory</span></td>
 		<td align="right">
-			<div class="input-append ">  
-			   <input class="m-wrap medium" size="10" placeholder="Search" id="search" type="text"><button class="btn red ser">Search</button>
-			</div>
+			   <input class="m-wrap medium"  placeholder="Search" id="search" type="text" style="margin-top: 5px; margin-bottom: 5px;">
 		</td>
 	</tr>
 </tbody></table>
@@ -27,39 +25,59 @@ width:100%; float:left; padding:5px;
 }
 }
 
-.hv_b:hover{
-background-color:rgb(218, 236, 240);
+.qwe{
+	background-color: #FFF; padding: 4px;border: 1px solid #ECECEC;
+}
+.qwe:hover{
+background-color:#E5EFEF;
 }
 </style>
+<div id="main" style="overflow: auto;">
 <?php foreach($arranged_users as $user_info){ 
 	$user_name=$user_info["user_name"];
 	$wing_flats=$user_info["wing_flat"];
+	$profile_pic=$user_info["profile_pic"];
 	foreach($wing_flats as $user_flat_id=>$wing_flat){?>
 	<div class="r_d">
-		<div style="background-color: rgb(255, 255, 255); padding: 4px;">
-			<table cellpadding="0" cellspacing="0">
-				<tr>
-					<td rowspan="2" valign="top">
-						<img alt="" src="http://localhost/new_hm/profile/blank.jpg" style="width:50px; height:28px;">
-					</td>
-					<td valign="top">
-						<table cellpadding="0" cellspacing="0">
-							<tr>
-								<td valign="top">
-								<?php echo $user_name; ?>
-								</td>
-							 </tr>
-							 <tr>
-								<td valign="top">
-								<?php echo $wing_flat; ?>
-								</td>
-							 </tr>
-						</table>
-					</td>
-				</tr>
-			</table>
+		<div class="qwe">
+			<div class="hv_b" style="overflow: auto;padding: 5px;cursor: pointer;" title="">
+				<?php if(!empty($profile_pic) && $profile_pic!="blank.jpg"){ ?>
+						<img alt="" src="<?php echo $webroot_path; ?>profile/<?php echo @$profile_pic; ?>" class="profile_pic"/>
+						<?php }
+						elseif(!empty($f_profile_pic)){ ?>
+							<img alt="" src="<?php echo $f_profile_pic; ?>" class="profile_pic" />
+						<?php }
+						elseif(!empty($g_profile_pic)){ ?>
+							<img alt="" src="<?php echo $g_profile_pic; ?>" class="profile_pic" />
+						<?php }
+						else{ ?>
+							<img alt="" src="<?php echo $webroot_path; ?>profile/blank.jpg" class="profile_pic" />
+						<?php } ?>
+				<div style="float:left;margin-left:3%;">
+					<span style="font-size:18px;"><?php echo ucfirst($user_name); ?></span> 
+					 <br>
+					<span style="font-size:14px;"><?php echo $wing_flat; ?></span>
+				</div>
+			</div>
 		</div>
 	</div>
 	<?php } ?>
 <?php } ?>
+</div>
+<style>
+.profile_pic{
+	float:left;max-width:25%;width:50px;height:60px;
+}
+</style>
+<script type="text/javascript">
 
+	 var $rows = $('#main div');
+	 $('#search').keyup(function() {
+		var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+		
+		$rows.show().filter(function() {
+			var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+			return !~text.indexOf(val);
+		}).hide();
+	});
+ </script>

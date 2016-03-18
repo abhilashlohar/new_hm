@@ -100,7 +100,7 @@ $heads=@$rate_info[0]["noc_rate"]["income_heads"];
 <input type="text" name="" class="m-wrap small" value="<?php echo $rate; ?>" style="text-align:right; background-color:white !important;" maxlength="10" onblur="save_noc_charges(<?php echo $flat_type_id; ?>)" id="amt<?php echo $flat_type_id; ?>">
 </div>
 </th>
-<th>
+<td>
 <div id="income_head<?php echo $flat_type_id; ?>" <?php if($rate_type != 4) { ?> class="hide" <?php } ?>>
 <select data-placeholder="Select Account Heads" class="m-wrap large chosen" multiple="multiple" tabindex="6" onchange="save_noc_charges(<?php echo $flat_type_id; ?>)" id="head<?php echo $flat_type_id; ?>">	
 <option value="" style="display:none;">Select</option>
@@ -121,7 +121,7 @@ if($head_id == $income_id){ ?> selected="selected" <?php }} ?>><?php echo $ac_na
 <?php } ?>
 </select>
 </div>
-</th>
+</td>
 <th></th>
 </tr>
 <?php } ?>

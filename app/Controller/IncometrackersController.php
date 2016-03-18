@@ -5146,14 +5146,17 @@ $conditions=array("society_id"=>$s_society_id);
 $cursor3 = $this->society->find('all',array('conditions'=>$conditions));
 $this->set('cursor3',$cursor3);
 
-
 $this->loadmodel('other_charge');
-$conditions=array("delete_id"=>0,"accounts_id"=>3);
+$conditions=array("society_id"=>$s_society_id);
 $other_charges = $this->other_charge->find('all',array('conditions'=>$conditions));
-$this->set('other_charges',$other_charges);
-
-
-
+foreach($other_charges as $data){
+$income_head_other_charges[]=$data['other_charge']['income_head_id'];	
+}
+if(!empty($income_head_other_charges))
+{
+array_unique(@$income_head_other_charges);
+$this->set('income_head_other_charges',$income_head_other_charges);
+}
 }
 //End Select Income Heads (Accounts)//
 //other_charges_all_remove//

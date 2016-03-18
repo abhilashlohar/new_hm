@@ -418,7 +418,7 @@ $this->layout=null;
 	$conditions=array("society_id"=>(int)$s_society_id);
 	$ddddd=$this->import_ob_record->find('all',array('conditions'=>$conditions));
 	foreach($ddddd as $fffff){
-	$tra_date=$fffff['import_ob_record']['tra_date'];
+	@$tra_date=$fffff['import_ob_record']['tra_date'];
 	}
 	if(empty($tra_date)){ $trr_v=1;   }else{ $trr_v=0;    }
 	
@@ -536,10 +536,10 @@ if(!empty($credit))
 			
 			
 			
-			//if($tt == "T" && $trr_v == 0 && $trajection_date_v == 0 && $tt_v == 0){
+			if($tt == "T" && $trr_v == 0 && $trajection_date_v == 0 && $tt_v == 0){
 			$this->loadmodel('import_ob_record');
 			$this->import_ob_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "OB"));	
-		    //}else{ echo "F"; die; }
+		    }else{ echo "F"; die; }
 	
 	
 }

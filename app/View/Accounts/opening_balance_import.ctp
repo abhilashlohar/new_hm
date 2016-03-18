@@ -139,7 +139,7 @@ function convert_csv_data_ajax(){
 	<img src="<?php echo $webroot_path; ?>as/loding.gif" /> 
 	<span style="padding-left: 10px; font-weight: bold; color: red;">Importing Receipt Into The System.</span>
 	<div class="progress progress-striped progress-danger active">
-		<div id="progress_im" style="width: <?php echo $converted_per_im; ?>%;" class="bar"></div>
+		<div id="progress_im" style="width: <?php echo @$converted_per_im; ?>%;" class="bar"></div>
 	</div>
 	<span style="padding-left: 35px; color: rgb(114, 113, 113);"><b id="text_per_im"></b> Receipts Imported.</span>
 </div>

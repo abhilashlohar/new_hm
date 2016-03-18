@@ -21,6 +21,8 @@
 			</thead>
 			<tbody>
 			<?php foreach($receipts as $receipt){
+			
+				$auto_id=$receipt["cash_bank"]["auto_id"];
 				$receipt_number=$receipt["cash_bank"]["receipt_number"];
 				$transaction_date=$receipt["cash_bank"]["transaction_date"];
 				$receipt_type=$receipt["cash_bank"]["receipt_type"];
@@ -29,7 +31,7 @@
 				$user_name=$member_info["user_name"];
 				$wing_name=$member_info["wing_name"];
 				$flat_name=$member_info["flat_name"];
-				$deposited_in=$receipt["cash_bank"]["deposited_in"];
+				echo $deposited_in=$receipt["cash_bank"]["deposited_in"];
 				$deposited_in_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($deposited_in)));
 				
 				$bank_name=$deposited_in_info[0]["ledger_sub_account"]["name"];
@@ -54,7 +56,7 @@
 							<i class="icon-chevron-down"></i>	
 							</a>
 							<ul class="dropdown-menu" style="min-width:80px !important;left:-53px;padding: 3px 0px; box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3); font-size: 12px;">
-							<li><a href="bank_receipt_html_view/36" target="_blank"><i class="icon-search"></i>View</a></li>
+							<li><a href="bank_receipt_html_view/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i>View</a></li>
 							</ul>
 						</div>
 					</td>

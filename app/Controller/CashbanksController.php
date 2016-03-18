@@ -4735,19 +4735,19 @@ $this->ath();
 $auto_id = (int)$auto_id;
 
 $s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id = (int)$this->Session->read('user_id');	
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id = (int)$this->Session->read('hm_user_id');	
 
 
-$this->loadmodel('new_cash_bank');
-$conditions=array("transaction_id" => $auto_id,"receipt_source"=>1,"society_id"=>$s_society_id);
-$cursor1=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
-$this->set('cursor1',$cursor1);
+$this->loadmodel('cash_bank');
+$conditions=array("auto_id" => $auto_id,"society_id"=>$s_society_id);
+$cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions));
+$this->set('result_cash_bank',$cursor1);
 
 $this->loadmodel('society');
 $conditions=array("society_id" => $s_society_id);
 $cursor2=$this->society->find('all',array('conditions'=>$conditions));
-$this->set('cursor2',$cursor2);
+$this->set('result_society',$cursor2);
 
 }
 ///////////////////////////// End bank receipt html view //////////////////////////////////////////////////////////////

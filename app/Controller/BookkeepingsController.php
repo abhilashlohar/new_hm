@@ -373,9 +373,8 @@ $cursor1=$this->ledger_sub_account->find('all',array('conditions'=>$conditions))
 $this->set('cursor1',$cursor1);
 
 }
-//////////////////////// End Show Ledger Type Journal(Accounts) ////////////////////////
-
-////////////////////////// Start Ledger (Accounts)/////////////////////////////////////
+//End Show Ledger Type Journal(Accounts)//
+//Start Ledger (Accounts)//
 function ledger()
 {
 if($this->RequestHandler->isAjax()){
@@ -408,9 +407,8 @@ $cursor2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions))
 $this->set('cursor2',$cursor2);
 
 }
-/////////////////////////////////////////// End Ledger (Accounts)//////////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////// Start Ledger Ajax (Accounts) //////////////////////////////////////////////////////////////////////////////
+//End Ledger (Accounts)//
+//Start Ledger Ajax (Accounts)//
 function ledger_ajax()
 {
 $this->layout='blank';

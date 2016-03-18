@@ -46,7 +46,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				<option value="" style="display:none;width:200px;">Select Bank</option>
 				<?php 
 				foreach($bank_data as $bank_info){ 
-					$bank_id=$bank_info["ledger_sub_account"]["ledger_id"];
+					$bank_id=$bank_info["ledger_sub_account"]["auto_id"];
 					$bank_name=$bank_info["ledger_sub_account"]["name"];
 					$bank_account=$bank_info["ledger_sub_account"]["bank_account"];
 					

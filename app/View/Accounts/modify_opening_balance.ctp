@@ -11,7 +11,6 @@ style="background-color:white !important; margin-top:2.5px;" field="transaction_
 <th>Debit</th>
 <th>Credit</th>
 <th>Penalty</th>
-<th>Delete</th>
 </tr>
 <?php $j=0;
 $total_debit = 0;
@@ -91,11 +90,6 @@ value="<?php echo @$credit; ?>" field="credit" record_id="<?php echo $csv_id; ?>
 value="<?php echo @$penalty; ?>" field="penalty" record_id="<?php echo $csv_id; ?>" />                       
 </td>                      
 
-<td>
-<a href="#" role="button" class="btn mini red delete" del="<?php echo $j; ?>"><i class="icon-remove icon-white"></i></a>
-</td>
-
-	
 </tr>
 <?php } ?>
 <tr>
@@ -103,13 +97,11 @@ value="<?php echo @$penalty; ?>" field="penalty" record_id="<?php echo $csv_id; 
 <th><input type="text" class="m-wrap small total_debit" value="<?php echo $total_debit; ?>" style="background-color:white !important;" id="total_debit"></th>
 <th><input type="text" class="m-wrap small total_credit" value="<?php echo $total_credit; ?>" style="background-color:white !important;" id="total_credit"></th>
 <th><input type="text" class="m-wrap small total_penalty" value="<?php echo $total_penalty; ?>" style="background-color:white !important;" id="total_penalty"></th>
-<th></th>
 </tr>
 <tr>
 <th colspan="2" style="text-align:right;">Grand Total</th>
 <th><input type="text" class="m-wrap small" id="grand_total_debit" value="<?php echo $grand_total_debit; ?>"><br><b>Total Debit</b></th>
 <th colspan="2"><input type="text" class="m-wrap small" id="grand_total_credit" value="<?php echo $grand_total_credit; ?>"><br><b>Total Credit</b></th>
-<th></th>
 </table>
 </div>
 

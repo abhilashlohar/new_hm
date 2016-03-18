@@ -5685,24 +5685,34 @@ $area_typppp = (int)@$collection['society']['area_scale'];
 }
 $this->set('area_typppp',@$area_typppp);
 
-if(isset($this->request->data['sub']))
-{
-
-
-
-}
-
-
-$this->loadmodel('flat');
-$conditions=array('society_id'=>$s_society_id);
-$flats=$this->flat->find('all',array('conditions'=>$conditions)); 
-foreach($flats as $flat){
-$flat_type_ids[]=@$flat["flat"]["flat_type_id"];
-}
+	$this->loadmodel('flat');
+	$conditions=array('society_id'=>$s_society_id,'flat_area'=>null,'flat_type_id'=>null);
+	$count=$this->flat->find('count',array('conditions'=>$conditions)); 
+	$this->loadmodel('flat');
+	$conditions=array('society_id'=>$s_society_id,'flat_area'=>null,'flat_type_id'=>0);
+	$count2=$this->flat->find('count',array('conditions'=>$conditions)); 
+	$this->loadmodel('flat');
+	$conditions=array('society_id'=>$s_society_id,'flat_type_id'=>0);
+	$count3=$this->flat->find('count',array('conditions'=>$conditions)); 
+	$this->loadmodel('flat');
+	$conditions=array('society_id'=>$s_society_id,'flat_area'=>null);
+	$count4=$this->flat->find('count',array('conditions'=>$conditions));
+    $this->loadmodel('flat');
+	$conditions=array('society_id'=>$s_society_id,'flat_area'=>'0');
+	$count5=$this->flat->find('count',array('conditions'=>$conditions));	
+	$count=$count+$count2+$count3+$count4+$count5;
+	$this->set('count',$count);
+	if($count == 0){
+	$this->loadmodel('flat');
+	$conditions=array('society_id'=>$s_society_id);
+	$flats=$this->flat->find('all',array('conditions'=>$conditions)); 
+	foreach($flats as $flat){
+	$flat_type_ids[]=@$flat["flat"]["flat_type_id"];
+	}
 $flat_type_ids=array_unique($flat_type_ids);
 asort($flat_type_ids);
 $this->set(compact("flat_type_ids"));
-
+	}
 $this->loadmodel('society');
 $conditions=array("society_id"=>$s_society_id);
 $cursor3 = $this->society->find('all',array('conditions'=>$conditions));

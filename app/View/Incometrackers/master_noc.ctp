@@ -9,7 +9,6 @@ foreach($cursor3 as $dataaa)
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
 
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////////////// ?>            
 <table  align="center" border="1" bordercolor="#FFFFFF" cellpadding="0">
 <tr>
 <td><a href="<?php echo $webroot_path; ?>Incometrackers/select_income_heads" class="btn" rel='tab'>Selection of Income Heads</a>
@@ -33,7 +32,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </td>
 </tr>
 </table> 
-
+<?php if($count == 0){ ?>
     <div align="center">
     <a href="master_noc" class='btn red' role="button" rel='tab'>Non Occupancy Charges</a>
     <a href="master_noc_status" class='btn blue' role="button"  rel='tab'>Non Occupancy Status</a>
@@ -178,7 +177,13 @@ alert();
 }
 </script>
 
-
+<?php } else {?>
+<br /><br />					 
+<center>					 
+<h3 style="color:red;"><b>Please Complete Unit Configuration </b></h3>				 
+</center>					 
+<br /><br />					 
+<?php } ?>
 
 
 

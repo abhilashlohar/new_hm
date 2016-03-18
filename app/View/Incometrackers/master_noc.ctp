@@ -139,6 +139,8 @@ function save_noc_charges(vvv)
 var type = $("#type" + vvv).val();
 var amt = $("#amt" + vvv).val();
 var head = $("#head"+vvv).val();
+//var head_implode = head.join(',');
+  
 if(type == 4)
 {
 $("#amt_div"+vvv).hide();	
@@ -161,7 +163,7 @@ $("#income_head"+vvv).hide();
 $("#output").html("Saving changes...");
 
 $.ajax({
-url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_noc_rate/"+vvv+"/"+type+"/"+amt+"/"+head,
+url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_noc_rate/"+vvv+"/"+type+"/"+head+"/"+amt,
 }).done(function(response){
 $("#output").html("Every change you make is automatically saved.");
 });

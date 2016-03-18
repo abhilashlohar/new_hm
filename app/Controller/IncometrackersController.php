@@ -5474,13 +5474,9 @@ function auto_save_rate_card($flat_type_id=null,$income_head_id=null,$rate_type=
 }
 //End auto_save_rate_card//
 //Start auto_save_noc_rate//
-function auto_save_noc_rate($flat_type_id=null,$type=null,$amt=null,$head=null)
+function auto_save_noc_rate($flat_type_id=null,$type=null,$head=null,$amt=null)
 {
-if($this->RequestHandler->isAjax()){
-	$this->layout='blank';
-	}else{
-	$this->layout='session';
-	}
+$this->layout=null;
 
 	
 	

@@ -4754,9 +4754,8 @@ function pay_bill()
 		<?php
 	}
 }
-///////////////////////////////// End pay Bill //////////////////////////////////////////////////////////////////
-
-///////////////// Start Opening Balance  Excel Export /////////////////////////////////////
+//End pay Bill//
+//Start Opening Balance  Excel Export//
 function open_excel()
 {
 	$this->layout="";
@@ -4783,7 +4782,8 @@ foreach($accounts_groups as $accounts_group_data){
 	$group_name=$accounts_group_data["accounts_group"]["group_name"];
 	
 	$this->loadmodel('ledger_account');
-	$conditions=array("group_id" => $accounts_group_id);
+	$conditions = array( '$or' => array(array("group_id" => $accounts_group_id,'society_id' =>$s_society_id),array("group_id" => $accounts_group_id,'society_id' =>0)));
+	//$conditions=array("group_id" => $accounts_group_id);
 	$order=(array('ledger_account.ledger_name'=>'ASC'));
 	$ledger_accounts= $this->ledger_account->find('all',array('conditions'=>$conditions,'order'=>$order));
 	$arranged_groups[$accounts_group_id][]=array("group_name"=>$group_name);

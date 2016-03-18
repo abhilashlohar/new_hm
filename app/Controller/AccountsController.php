@@ -536,10 +536,10 @@ if(!empty($credit))
 			
 			
 			
-			if($tt == "T" && $trr_v == 0 && $trajection_date_v == 0 && $tt_v == 0){
+			//if($tt == "T" && $trr_v == 0 && $trajection_date_v == 0 && $tt_v == 0){
 			$this->loadmodel('import_ob_record');
 			$this->import_ob_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "OB"));	
-		    }else{ echo "F"; die; }
+		    //}else{ echo "F"; die; }
 	
 	
 }

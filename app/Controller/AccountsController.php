@@ -4789,7 +4789,7 @@ foreach($accounts_groups as $accounts_group_data){
 	$arranged_groups[$accounts_group_id][]=array("group_name"=>$group_name);
 	foreach($ledger_accounts as $ledger_account_data){
 		$ledger_account_id=$ledger_account_data["ledger_account"]["auto_id"];
-		if($ledger_account_id!=33&&$ledger_account_id!=34&&$ledger_account_id!=35&&$ledger_account_id!=15){
+		if($ledger_account_id!=33&&$ledger_account_id!=34&&$ledger_account_id!=35&&$ledger_account_id!=15&&$ledger_account_id!=112){
 			$arranged_groups[$accounts_group_id][]=$ledger_account_data;
 		}
 	}

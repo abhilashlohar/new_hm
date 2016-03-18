@@ -37,6 +37,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					$deactive = @$collection['ledger_sub_account']['deactive'];
 					$name = $collection['ledger_sub_account']['name'];
                     $auto_id = (int)$collection['ledger_sub_account']['auto_id'];
+					$ledgersub_number=str_pad($auto_id,4,"0",STR_PAD_LEFT);
 					$wing_flat = "";
 					$wing_id = "";
                     $flat_id = "";
@@ -59,7 +60,9 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					foreach ($result_la as $collection) 
 					{
 					$group_id = (int)$collection['ledger_account']['group_id'];	
-					$ledger_name = $collection['ledger_account']['ledger_name'];	
+					$ledger_name = $collection['ledger_account']['ledger_name'];
+					$ledger_account_id = $collection['ledger_account']['auto_id'];
+					$ledger_number=str_pad($ledger_account_id,3,"0",STR_PAD_LEFT);					
 					}
 					
 					
@@ -70,13 +73,15 @@ $result_ag = $this->requestAction(array('controller' => 'hms', 'action' => 'acco
 foreach ($result_ag as $collection) 
 {
 $accounts_id = (int)$collection['accounts_group']['accounts_id'];	
-$group_name = $collection['accounts_group']['group_name'];	
+$group_name = $collection['accounts_group']['group_name'];
+$group_number = $collection['accounts_group']['number'];
 }
 
 $result_ac = $this->requestAction(array('controller' => 'hms', 'action' => 'accounts_category'),array('pass'=>array($accounts_id)));		   
 foreach ($result_ac as $collection) 
 {
 $main_name = $collection['accounts_category']['category_name'];	
+$cat_number = $collection['accounts_category']['number'];
 } 
 ?>        
 					
@@ -84,8 +89,8 @@ $main_name = $collection['accounts_category']['category_name'];
 <td><?php echo $n; ?></td>
 <td><?php echo $main_name; ?></td>
 <td><?php echo $group_name; ?></td>
-<td><?php echo $ledger_name; ?></td>
-<td><?php echo $name; ?> &nbsp;&nbsp;&nbsp;&nbsp; <?php echo $wing_flat;  ?>  </td>
+<td><?php echo $ledger_name.' ['.$cat_number.$group_number.$ledger_number.']'; ?></td>
+<td><?php echo '['.$cat_number.$group_number.$ledger_number.$ledgersub_number.'] '.$name; ?> &nbsp;&nbsp;&nbsp;&nbsp; <?php echo $wing_flat;  ?>  </td>
 </tr>           
 <?php $n++; $name=''; } ?> 
 </tbody>  

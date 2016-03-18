@@ -36,18 +36,21 @@ foreach ($cursor2 as $collection)
 $sub_id = (int)$collection['ledger_account']['group_id'];
 $name = $collection['ledger_account']['ledger_name'];
 $auto_id5 = (int)$collection['ledger_account']['auto_id'];
+$ledger_number=str_pad($auto_id5,3,"0",STR_PAD_LEFT);
 @$edit_id = (int)@$collection['ledger_account']['edit_user_id'];
 $result_ag = $this->requestAction(array('controller' => 'hms', 'action' => 'accounts_group'),array('pass'=>array($sub_id)));
 foreach ($result_ag as $collection) 
 {
 $accounts_id = (int)$collection['accounts_group']['accounts_id'];	
-$group_name = $collection['accounts_group']['group_name'];	
+$group_name = $collection['accounts_group']['group_name'];
+$group_number = $collection['accounts_group']['number'];	
 }
 
 $result_ac = $this->requestAction(array('controller' => 'hms', 'action' => 'accounts_category'),array('pass'=>array($accounts_id)));		   
 foreach ($result_ac as $collection) 
 {
-$main_name = $collection['accounts_category']['category_name'];	
+$main_name = $collection['accounts_category']['category_name'];
+$cat_number = $collection['accounts_category']['number'];
 }
 ?>        
 			
@@ -55,7 +58,7 @@ $main_name = $collection['accounts_category']['category_name'];
 <td><?php echo $n; ?></td>
 <td><?php echo $main_name; ?></td>
 <td id="kk<?php echo $auto_id5; ?>"><?php echo $group_name; ?></td>
-<td id="tt<?php echo $auto_id5; ?>"><?php echo $name; ?></td>
+<td id="tt<?php echo $auto_id5; ?>"><?php echo $cat_number.$group_number.$ledger_number.': '.$name; ?></td>
 <td> 
 <?php if($edit_id == $s_user_id)
 {
@@ -96,17 +99,8 @@ $(".save_edited_terms").live('click',function(){
 		var t_id=$(this).attr("tems_id");
 		 
 		var ledger1=$("#ledger").val();
-		//var group1 = $("#group").val();
 		var ledger2=encodeURIComponent(ledger1);
-		//var group_name = $("#group").find(":selected").text();
-		
-		//$("table#abc tr:nth-child("+t_id+") td:nth-child(3)").text(group1);
-		//var des=encodeURIComponent(des1);
-		//var close_date1=$("#close_date").val();
-		//var close_date=encodeURIComponent(close_date1);
-		//$("#kk"+t_id).html(group_name);
 		$("#tt"+t_id).html(ledger1);
-		//$("#close_date"+p_id).html(close_date1);
 			
 		$("#tems_edit_content").load('<?php echo $this->webroot; ?>Accounts/ledger_edit?t_id='+t_id+'&led='+ledger2+'&edit=1', function() {
 			

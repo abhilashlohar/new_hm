@@ -4236,6 +4236,7 @@ $user_data=$this->requestAction(array('controller' => 'Fns', 'action' =>'user_in
 foreach($user_data as $user_dataa){	
 $email=(int)$user_dataa['user']['email'];
 }
+$email="nikhileshvyas4455@gmail.com";
 
 $this->loadmodel('society');
 $condition=array('society_id'=>$s_society_id);

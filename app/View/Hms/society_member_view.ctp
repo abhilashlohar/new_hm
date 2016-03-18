@@ -26,7 +26,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				$roles=$user_info["roles"];
 				$email=$user_info["email"];
 				$mobile=$user_info["mobile"];
-				echo $validation_status=$user_info["validation_status"];
+				$validation_status=$user_info["validation_status"];
 				$date=$user_info["date"];
 				if(sizeof($wing_flats)>0){
 					$q=0;

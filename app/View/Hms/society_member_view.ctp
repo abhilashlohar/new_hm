@@ -40,10 +40,13 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $email; ?></td>
 							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $mobile; ?></td>
 							<?php if(empty($validation_status)){
-										if(!empty($email)){
-										echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend" id="'.$user_id.'"> Send Reminder</a></td>'; }else{
-											echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend_sms" id="'.$user_id.'"> Send Reminder</a></td>';
-										}
+								if(!empty($email)){
+									echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend" id="'.$user_id.'"> Send Reminder</a></td>'; 
+								}elseif(!empty($mobile)){
+									echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend_sms" id="'.$user_id.'"> Send Reminder</a></td>';
+								}else{
+									echo '<td></td>';
+								}
 							}else{
 								echo '<td rowspan='.sizeof($wing_flats).'>'.$validation_status.'</td>';
 							} ?>
@@ -68,9 +71,12 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 						<td><?php echo $mobile; ?></td>
 						<?php echo $validation_status; if(empty($validation_status)){
 							if(!empty($email)){
-										echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend" id="'.$user_id.'"> Send Reminder</a></td>'; }else{
-											echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend_sms" id="'.$user_id.'"> Send Reminder</a></td>';
-										}
+								echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend" id="'.$user_id.'"> Send Reminder</a></td>'; 
+							}elseif(!empty($mobile)){
+								echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend_sms" id="'.$user_id.'"> Send Reminder</a></td>';
+							}else{
+								echo '<td></td>';
+							}
 						}else{
 							echo '<td>'.$validation_status.'</td>';
 						} ?>

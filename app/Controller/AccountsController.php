@@ -6188,6 +6188,8 @@ if($process_status==3){
 	$count_bank_receipt_converted=$this->opening_balance_csv_converted->find('count',array('conditions'=>$conditions));
 	$this->set('count_bank_receipt_converted',$count_bank_receipt_converted);
 }
+
+/*
 if($this->request->is('post'))	
 {
 	$transaction_date = $this->request->data['date'];	
@@ -6304,7 +6306,7 @@ $ledger_account_id2=(int)$ledger_sub_accounts_data['ledger_sub_account']['ledger
 </div>
 </div>	
 <?php	
-}
+} */
 	
 }
 /////////////////////// End opening_balance_new //////////////////////////////////////

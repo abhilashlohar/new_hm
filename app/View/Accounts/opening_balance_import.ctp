@@ -151,9 +151,9 @@ function final_import_opening_balance(){
 	$( document ).ready(function() {
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Accounts/final_import_opening_balance",
-			//dataType: 'json'
+			dataType: 'json'
 		}).done(function(response){
-			alert(response);
+			//alert(response);
 			if(response.again_call_ajax=="YES"){
 				$("#progress_im").css("width",response.converted_per_im+"%");
 				$("#text_per_im").html(response.converted_per_im.toFixed(2)+"%");

@@ -28,7 +28,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				$mobile=$user_info["mobile"];
 				$validation_status=$user_info["validation_status"];
 				$date=$user_info["date"];
-				if(sizeof($wing_flats)>0){
+				echo sizeof($wing_flats);
+				if(sizeof($wing_flats)>0){ echo 'hello';
 					$q=0;
 					foreach($wing_flats as $user_flat_id=>$wing_flat){ $q++; 
 					if($q==1){?>

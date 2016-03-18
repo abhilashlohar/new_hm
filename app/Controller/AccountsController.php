@@ -534,7 +534,7 @@ if(!empty($credit))
 	if(array_sum($data)==0) { $tt ="T"; }else{ $tt="F"; break;  }
 	}
 			
-			echo $tt;
+			echo $trr_v;
 			exit;
 			
 			if($tt == "T" && $trr_v == 0 && $trajection_date_v == 0 && $tt_v == 0){

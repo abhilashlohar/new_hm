@@ -69,7 +69,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 						<td><?php echo $roles; ?></td>
 						<td><?php echo $email; ?></td>
 						<td><?php echo $mobile; ?></td>
-						<?php echo $validation_status; if(empty($validation_status)){
+						<?php if(empty($validation_status)){
 							if(!empty($email)){
 								echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend" id="'.$user_id.'"> Send Reminder</a></td>'; 
 							}elseif(!empty($mobile)){

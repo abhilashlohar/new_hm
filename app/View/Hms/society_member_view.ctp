@@ -28,8 +28,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				$mobile=$user_info["mobile"];
 				$validation_status=$user_info["validation_status"];
 				$date=$user_info["date"];
-				echo sizeof($wing_flats);
-				if(sizeof($wing_flats)>0){ echo 'hello';
+				if(sizeof($wing_flats)>0){
 					$q=0;
 					foreach($wing_flats as $user_flat_id=>$wing_flat){ $q++; 
 					if($q==1){?>
@@ -67,7 +66,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 						<td><?php echo $roles; ?></td>
 						<td><?php echo $email; ?></td>
 						<td><?php echo $mobile; ?></td>
-						<?php if(empty($validation_status)){
+						<?php echo $validation_status; if(empty($validation_status)){
 							if(!empty($email)){
 										echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend" id="'.$user_id.'"> Send Reminder</a></td>'; }else{
 											echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend_sms" id="'.$user_id.'"> Send Reminder</a></td>';

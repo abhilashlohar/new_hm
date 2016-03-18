@@ -17700,33 +17700,77 @@ $this->set('count_yellow',sizeof($result));
 ////////////////////////////////////////////////////   Resident Directory Start ////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function resident_directory() 
-{
-if($this->RequestHandler->isAjax()){
-		$this->layout='blank';
-	}else{
-		$this->layout='session';
+function resident_directory(){
+	if($this->RequestHandler->isAjax()){
+			$this->layout='blank';
+		}else{
+			$this->layout='session';
+		}
+	$this->ath();
+	$this->check_user_privilages();	
+	$s_society_id=$this->Session->read('hm_society_id');
+
+	$arranged_users=array();
+	
+	$this->loadmodel('user');
+	$conditions=array("society_id"=>$s_society_id,"active"=>"yes");
+	$order=array('user.user_name'=>'ASC');	
+	$users=$this->user->find('all',array('conditions'=>$conditions,'order'=>$order));
+	foreach($users as $user_info){
+		$user_id=$user_info["user"]["user_id"];
+		$user_name=$user_info["user"]["user_name"];
+		$user_type=$user_info["user"]["user_type"];
+		$mobile=$user_info["user"]["mobile"];
+		$email=$user_info["user"]["email"];
+		$validation_status=@$user_info["user"]["validation_status"];
+		$date=$user_info["user"]["date"];
+		
+		if($user_type=="member" or $user_type=="family_member"){
+			$user_flat_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($user_id)));
+			$flats=array();
+			foreach($user_flat_info as $user_flat){
+				$user_flat_id=$user_flat["user_flat"]["user_flat_id"];
+				$wing=$user_flat["user_flat"]["wing"];
+				$flat=$user_flat["user_flat"]["flat"];
+				$exited=$user_flat["user_flat"]["exited"];
+				if($exited=="no"){
+					$this->loadmodel('wing');
+					$conditions=array("wing_id"=>$wing);
+					$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
+					$wing_name=$wing_info[0]["wing"]["wing_name"];
+					
+					$this->loadmodel('flat');
+					$conditions=array("flat_id"=>$flat);
+					$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+					$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
+					
+					$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
+				}
+				
+			} 
+		}else{
+			$user_flat_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($user_id)));
+			$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"];
+			$flats=array();
+		}
+		
+		$this->loadmodel('user_role');
+		$conditions=array("user_id"=>$user_id);
+		$user_role_info=$this->user_role->find('all',array('conditions'=>$conditions));
+		$roles=array();
+		foreach($user_role_info as $user_role){
+			$role_id=$user_role["user_role"]["role_id"];
+			
+			$this->loadmodel('role');
+			$conditions=array("role_id"=>$role_id);
+			$role_info=$this->role->find('all',array('conditions'=>$conditions));
+			$roles[]=$role_info[0]["role"]["role_name"];
+		}
+		$roles=implode(',',$roles);
+		
+		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id);
 	}
-$s_role_id=$this->Session->read('role_id');	
-
- $s_society_id=$this->Session->read('society_id');
-$this->ath();
-$this->loadmodel('wing');
-$conditions1=array('society_id'=>$s_society_id);
-$result1=$this->wing->find('all',array('conditions'=>$conditions1));
-$this->set('result_wing',$result1);
-$this->loadmodel('user');
-$conditions=array("society_id" => $s_society_id,'deactive'=>0);
-$order=array('user.user_name'=> 'ASC');
-$result_user=$this->user->find('all',array('conditions'=> $conditions,'order'=>$order));
-$this->set('result_user',$result_user);
-
-
-$this->loadmodel('user_flat');
-$conditions=array("society_id" => $s_society_id,'active'=>0);
-$result_user_count=$this->user_flat->find('count',array('conditions'=> $conditions));
-$this->set('result_user_count',$result_user_count);
-
+	$this->set(compact("arranged_users"));
 }
 
 

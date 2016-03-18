@@ -10833,7 +10833,7 @@ function resident_approve_resend_sms()
 	
 $this->layout='blank';
 $user_temp_id=(int)$this->request->query('con');
-
+/*
 $s_society_id=(int)$this->Session->read('hm_society_id');
 $result_society=$this->society_name($s_society_id);
 foreach($result_society as $dd)
@@ -10874,7 +10874,7 @@ $this->loadmodel('user');
 $this->user->updateAll(array('password'=>$random,'signup_random'=>$random),array('user_id'=>$user_temp_id)); 
  
 }
-
+*/
 }
 
 

@@ -103,14 +103,17 @@ $(document).ready(function(){
 	 $(".resend").bind('click',function(){
 		var id=$(this).attr('id');
 		$(this).html('Sending Email...').load( 'resident_approve_resend_mail?con=' + id, function() {
-		$(this).removeClass( "resend green" ).addClass( "red" );
+		$(this).closest( "td" ).append( "<strong>Email sent.</strong>" );
+		$(this).remove();
 		});
 	 });
 	
 	$(".resend_sms").bind('click',function(){
 		var id=$(this).attr('id');
+		
 		$(this).html('Sending Sms...').load( 'resident_approve_resend_sms?con=' + id, function() {
-		$(this).removeClass( "resend_sms green" ).addClass( "red" );
+		$(this).closest( "td" ).append( "<strong>Sms sent.</strong>" );
+		$(this).remove();
 		});
 	 });
 	 

@@ -29,7 +29,9 @@ width:100%; float:left; padding:5px;
 	background-color: #FFF; padding: 4px;border: 1px solid #ECECEC;
 }
 .qwe:hover{
-background-color:#E5EFEF;
+background: transparent linear-gradient(141deg, #0FB8AD 0%, #1FC8DB 61%, #2CB5E8 75%) repeat scroll 0% 0%;
+
+color:#FFF;
 }
 </style>
 <div id="main" style="overflow: auto;">

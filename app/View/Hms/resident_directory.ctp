@@ -31,9 +31,35 @@ width:100%; float:left; padding:5px;
 background-color:rgb(218, 236, 240);
 }
 </style>
-<?php foreach($arranged_users as $user_info){ ?>
-<div class="r_d">
-<div>hello</div>
-</div>
+<?php foreach($arranged_users as $user_info){ 
+	$user_name=$user_info["user_name"];
+	$wing_flats=$user_info["wing_flat"];
+	foreach($wing_flats as $user_flat_id=>$wing_flat){?>
+	<div class="r_d">
+		<div style="background-color: rgb(255, 255, 255); padding: 4px;">
+			<table cellpadding="0" cellspacing="0">
+				<tr>
+					<td rowspan="2" valign="top">
+						<img alt="" src="http://localhost/new_hm/profile/blank.jpg" style="width:50px; height:28px;">
+					</td>
+					<td valign="top">
+						<table cellpadding="0" cellspacing="0">
+							<tr>
+								<td valign="top">
+								<?php echo $user_name; ?>
+								</td>
+							 </tr>
+							 <tr>
+								<td valign="top">
+								<?php echo $wing_flat; ?>
+								</td>
+							 </tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<?php } ?>
 <?php } ?>
 

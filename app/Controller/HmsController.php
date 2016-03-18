@@ -10834,7 +10834,7 @@ function resident_approve_resend_sms()
 $this->layout='blank';
 $user_temp_id=(int)$this->request->query('con');
 
-$s_society_id=(int)$this->Session->read('society_id');
+$s_society_id=(int)$this->Session->read('hm_society_id');
 $result_society=$this->society_name($s_society_id);
 foreach($result_society as $dd)
 {
@@ -10845,8 +10845,8 @@ $s_n='';
 $sco_na=$society_name;
 $dd=explode(' ',$sco_na);
 $first=$dd[0];
-$two=$dd[1];
-$three=$dd[2];
+$two=@$dd[1];
+$three=@$dd[2];
 $s_n.=" $first $two $three ";
 
 $this->loadmodel('user');
@@ -10856,24 +10856,25 @@ foreach($result_user as $data)
 {
 	 $mobile=$data['user']['mobile'];
 	 $user_name=$data['user']['user_name'];
-	 $login_id=(int)$data['user']['login_id'];
+	
 }
-
- $r_sms=$this->hms_sms_ip();
-  $working_key=$r_sms->working_key;
- $sms_sender=$r_sms->sms_sender; 
-$sms_allow=(int)$r_sms->sms_allow;
+$user_name=$this->check_charecter_name($user_name);
+$r_sms=$this->requestAction(array('controller'=>'Fns','action'=>'hms_sms_ip'));
+$working_key=$r_sms->working_key;
+$sms_sender=$r_sms->sms_sender; 
+$sms_allow=(int)$r_sms->sms_allow; 
 if($sms_allow==1){
 $random=(string)mt_rand(1000,9999);
-$sms="".$user_name.", Your housing society ".$s_n." has enrolled you in HousingMatters portal. Pls log into www.housingmatters.co.in One Time Password ".$random."";
+$sms="".$user_name.", Your housing society ".$s_n." has enrolled you in HousingMatters portal. Pls log into www.housingmatters.in One Time Password ".$random."";
 $sms1=str_replace(" ", '+', $sms);
 $payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');
- 
- }
+
+
 $this->loadmodel('user');
-$this->user->updateAll(array('password'=>$random,'signup_random'=>$random),array('user_id'=>$user_temp_id));
-$this->loadmodel('login');
-$this->login->updateAll(array('password'=>$random,'signup_random'=>$random),array('login_id'=>$login_id));
+$this->user->updateAll(array('password'=>$random,'signup_random'=>$random),array('user_id'=>$user_temp_id)); 
+ 
+}
+
 }
 
 
@@ -10882,7 +10883,7 @@ function resident_approve_resend_mail()
 $this->layout='blank';
 $user_temp_id=(int)$this->request->query('con');
 
-$s_society_id=(int)$this->Session->read('society_id');
+$s_society_id=(int)$this->Session->read('hm_society_id');
 // //////////////fetch data user_temp table  ////////////////////
 $this->loadmodel('user');
 $conditions=array('user_id'=>$user_temp_id);
@@ -10894,9 +10895,9 @@ $user_name=$collection['user']['user_name'];
 $mobile=$collection['user']['mobile'];
 $email=$collection['user']['email'];
 $password=$collection['user']['password'];
-$wing=(int)$collection['user']['wing'];
-$flat=(int)$collection['user']['flat'];
-$tenant=(int)$collection['user']['tenant'];
+//$wing=(int)$collection['user']['wing'];
+//$flat=(int)$collection['user']['flat'];
+//$tenant=(int)$collection['user']['tenant'];
 //$residing=(int)$collection['user']['residing'];
 
 }
@@ -10919,7 +10920,9 @@ $random2=mt_rand(1000000000,9999999999);
 $random=$random1.$random2 ;
 
 //////////////// insert data user table //////////////////////////
-$ip=$this->hms_email_ip();
+
+ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
+
 $de_user_id=$this->encode($user_temp_id,'housingmatters');
 $random=$de_user_id.'/'.$random;
 
@@ -11296,8 +11299,8 @@ function send_sms_for_verify_mobile(){
 	$q_new=explode('/',$q);
 	$q_new[0];
 
-	$user_id=(int)$this->decode($q_new[0],'housingmatters');
-	$randm=$q_new[1];
+	 $user_id=(int)$this->decode($q_new[0],'housingmatters');
+	 $randm=$q_new[1];
 	
 	$this->loadmodel('user');
 	$conditions=array('user_id'=> $user_id); 
@@ -11309,6 +11312,7 @@ function send_sms_for_verify_mobile(){
 	
 	$this->loadmodel('user');
 	$conditions=array('user_id'=> $user_id,'signup_random'=>$q);
+	
 	$result_check=$this->user->find('all',array('conditions'=>$conditions));
 	foreach($result_check as $data9)
 	{
@@ -11316,7 +11320,7 @@ function send_sms_for_verify_mobile(){
 		$active=@$data9['user']['active'];
 		$one_time_sms=(int)@$data9['user']["one_time_sms"];
 	}
-	$n= sizeof($result_check);
+	 $n= sizeof($result_check);
 	if($n>0){ 
 	$random_otp=(string)mt_rand(1000,9999);
 
@@ -18255,12 +18259,12 @@ function society_member_view(){
 					$this->loadmodel('wing');
 					$conditions=array("wing_id"=>$wing);
 					$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
-					$wing_name=$wing_info[0]["wing"]["wing_name"];
+					$wing_name=@$wing_info[0]["wing"]["wing_name"];
 					
 					$this->loadmodel('flat');
 					$conditions=array("flat_id"=>$flat);
 					$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
-					$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
+					$flat_name=ltrim(@$flat_info[0]["flat"]["flat_name"],'0');
 					
 					$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
 				}

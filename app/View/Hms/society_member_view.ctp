@@ -40,7 +40,10 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $email; ?></td>
 							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $mobile; ?></td>
 							<?php if(empty($validation_status)){
-								echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend" id="14"> Send Reminder</a></td>';
+										if(!empty($email)){
+										echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend" id="'.$user_id.'"> Send Reminder</a></td>'; }else{
+											echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend_sms" id="'.$user_id.'"> Send Reminder</a></td>';
+										}
 							}else{
 								echo '<td rowspan='.sizeof($wing_flats).'>'.$validation_status.'</td>';
 							} ?>
@@ -64,7 +67,10 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 						<td><?php echo $email; ?></td>
 						<td><?php echo $mobile; ?></td>
 						<?php if(empty($validation_status)){
-							echo '<td><a href="#" role="button" class="resend" id="14"> Send Reminder</a></td>';
+							if(!empty($email)){
+										echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend" id="'.$user_id.'"> Send Reminder</a></td>'; }else{
+											echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend_sms" id="'.$user_id.'"> Send Reminder</a></td>';
+										}
 						}else{
 							echo '<td>'.$validation_status.'</td>';
 						} ?>
@@ -94,6 +100,21 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </div>
 <script>
 $(document).ready(function(){
+	 $(".resend").bind('click',function(){
+		var id=$(this).attr('id');
+		$(this).html('Sending Email...').load( 'resident_approve_resend_mail?con=' + id, function() {
+		$(this).removeClass( "resend green" ).addClass( "red" );
+		});
+	 });
+	
+	$(".resend_sms").bind('click',function(){
+		var id=$(this).attr('id');
+		$(this).html('Sending Sms...').load( 'resident_approve_resend_sms?con=' + id, function() {
+		$(this).removeClass( "resend_sms green" ).addClass( "red" );
+		});
+	 });
+	 
+	
 	$(".exit").on("click",function(){
 		$("#confirm").show();
 		var user_flat_id=$(this).attr("user_flat_id");

@@ -17,6 +17,8 @@ style="background-color:white !important; margin-top:2.5px;" field="transaction_
 $total_debit = 0;
 $total_credit = 0; 
 $total_penalty = 0;
+$grand_total_debit=0;
+$grand_total_credit=0;
 ?>
 			
 <?php foreach($result_bank_receipt_converted as $data){ 
@@ -32,6 +34,8 @@ $total_penalty = 0;
  $total_debit=$total_debit+$debit;
  $total_credit=$total_credit+$credit;
  $total_penalty=$total_penalty+$penalty;
+ $grand_total_credit=$grand_total_credit+$credit;
+ $grand_total_debit=$grand_total_debit+$debit+$penalty;
  ?>
 <tr id="<?php echo $csv_id; ?>">
 <td>
@@ -73,17 +77,17 @@ $name = $dataa['ledger_account']['ledger_name'];
 </td>
 
 <td>
-<input type="text" class="m-wrap span10" style="background-color:white !important;"
+<input type="text" class="m-wrap span10 debit" style="background-color:white !important;"
 value="<?php echo @$debit; ?>" field="debit" record_id="<?php echo $csv_id; ?>" />
 </td>
 
 <td>
-<input type="text" class="m-wrap span10" style="background-color:white !important;"
+<input type="text" class="m-wrap span10 credit" style="background-color:white !important;"
 value="<?php echo @$credit; ?>" field="credit" record_id="<?php echo $csv_id; ?>" />
 </td>
 
 <td>
-<input type="text" class="m-wrap span10" style="background-color:white !important;"
+<input type="text" class="m-wrap span10 penalty" style="background-color:white !important;"
 value="<?php echo @$penalty; ?>" field="penalty" record_id="<?php echo $csv_id; ?>" />                       
 </td>                      
 
@@ -96,11 +100,16 @@ value="<?php echo @$penalty; ?>" field="penalty" record_id="<?php echo $csv_id; 
 <?php } ?>
 <tr>
 <th colspan="2" style="text-align:right;">Total</th>
-<th><input type="text" class="m-wrap small" value="<?php echo $total_debit; ?>" style="background-color:white !important;"></th>
-<th><input type="text" class="m-wrap small" value="<?php echo $total_credit; ?>" style="background-color:white !important;"></th>
-<th><input type="text" class="m-wrap small" value="<?php echo $total_penalty; ?>" style="background-color:white !important;"></th>
+<th><input type="text" class="m-wrap small total_debit" value="<?php echo $total_debit; ?>" style="background-color:white !important;" id="total_debit"></th>
+<th><input type="text" class="m-wrap small total_credit" value="<?php echo $total_credit; ?>" style="background-color:white !important;" id="total_credit"></th>
+<th><input type="text" class="m-wrap small total_penalty" value="<?php echo $total_penalty; ?>" style="background-color:white !important;" id="total_penalty"></th>
 <th></th>
 </tr>
+<tr>
+<th colspan="2" style="text-align:right;">Grand Total</th>
+<th><input type="text" class="m-wrap small" id="grand_total_debit" value="<?php echo $grand_total_debit; ?>"><br><b>Total Debit</b></th>
+<th colspan="2"><input type="text" class="m-wrap small" id="grand_total_credit" value="<?php echo $grand_total_credit; ?>"><br><b>Total Credit</b></th>
+<th></th>
 </table>
 </div>
 
@@ -206,7 +215,7 @@ $("#check_validation_result").html('<img src="<?php echo $webroot_path; ?>as/lod
 $.ajax({
 url: "<?php echo $webroot_path; ?>Accounts/allow_import_opening_balance",
 }).done(function(response){
-	alert(response);
+	//alert(response);
 response = response.replace(/\s+/g,' ').trim();
 if(response=="F"){
 $("#check_validation_result").html("");
@@ -248,3 +257,55 @@ margin: 0 !important;
 padding: 2px !important;
 }
 </style>
+
+
+<script>
+$(document).ready(function(){
+	  function grand_total(){
+		var total_debit = $("#total_debit").val();
+		var total_credit = $("#total_penalty").val();
+		if($.isNumeric(total_debit)==false){ total_debit=0; }
+		if($.isNumeric(total_credit)==false){ total_credit=0; }
+		var grand_total_debit = parseFloat(total_debit) + parseFloat(total_credit);
+		var grand_total_credit=parseFloat($("#total_credit").val());
+		if($.isNumeric(grand_total_credit)==false){ grand_total_credit=0; }
+		$("#grand_total_debit").val(grand_total_debit);	
+		$("#grand_total_credit").val(grand_total_credit);
+	}   
+	
+	$(".debit").on("blur",function(){
+		var sum = 0;
+		$(".debit").each(function(){
+			sum2 = +$(this).val();
+			if($.isNumeric(sum2)==false){ sum2=0; }
+			sum+=sum2;
+			total_debit+= +$(this).val();
+		});
+		$(".total_debit").val(sum);
+		grand_total();
+	});
+	
+	$(".credit").on("blur",function(){
+		
+		 var sum = 0;
+		$(".credit").each(function(){
+			sum2=+$(this).val();
+			if($.isNumeric(sum2)==false){ sum2=0; }
+			sum+=sum2;
+		});
+		$(".total_credit").val(sum);
+		grand_total();
+	});
+	
+	$(".penalty").on("blur",function(){
+				var sum = 0;
+		$(".penalty").each(function(){
+			sum2= +$(this).val();
+			if($.isNumeric(sum2)==false){ sum2=0; }
+			sum+=sum2;
+		});
+		$(".total_penalty").val(sum);
+		grand_total();
+	});
+});
+</script>

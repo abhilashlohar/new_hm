@@ -5077,9 +5077,8 @@ $excel.="$grand_total2</th>
 echo $excel;
 
 }
-//////////////////////// End income Head report Excel///////////////////////////////
-
-/////////////////// Start Select Income Heads (Accounts)//////////////////////////////
+//End income Head report Excel//
+//Start Select Income Heads (Accounts)//
 function select_income_heads()
 {
 if($this->RequestHandler->isAjax()){
@@ -5146,6 +5145,14 @@ $this->loadmodel('society');
 $conditions=array("society_id"=>$s_society_id);
 $cursor3 = $this->society->find('all',array('conditions'=>$conditions));
 $this->set('cursor3',$cursor3);
+
+
+$this->loadmodel('other_charge');
+$conditions=array("delete_id"=>0,"accounts_id"=>3);
+$other_charges = $this->other_charge->find('all',array('conditions'=>$conditions));
+$this->set('other_charges',$other_charges);
+
+
 
 }
 //End Select Income Heads (Accounts)//
@@ -5251,7 +5258,7 @@ function other_charges(){
 			$this->loadmodel('other_charge');
 			$this->other_charge->deleteAll(array('ledger_sub_account_id'=> (int)$ledger_sub_account_id,'income_head_id'=> $income_head_id));
 			
-			$this->other_charge->saveAll(array("ledger_sub_account_id" => (int)$ledger_sub_account_id,"income_head_id"=>$income_head_id,"amount"=>$amount,"charge_type"=>$charge_type));
+			$this->other_charge->saveAll(array("ledger_sub_account_id" => (int)$ledger_sub_account_id,"income_head_id"=>$income_head_id,"amount"=>$amount,"charge_type"=>$charge_type,"society_id"=>$s_society_id));
 		}
 	?>
 
@@ -7355,8 +7362,8 @@ $this->flat_type->updateAll(array('charge'=> @$charge3),array('society_id'=>$s_s
 
 $this->redirect(array('controller' => 'Incometrackers','action' => 'select_income_heads'));
 }
-/////////////////////////////////// End delete_select_income ////////////////////////////////////////////////////////
-//////////////////////// Start Account Statement (Accounts)//////////////////////////////
+//End delete_select_income//
+//Start Account Statement (Accounts)//
 function account_statement(){
 	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';

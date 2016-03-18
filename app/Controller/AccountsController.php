@@ -533,8 +533,7 @@ if(!empty($credit))
 	if(array_sum($data)==0) { $tt ="T"; }else{ $tt="F"; break;  }
 	}
 			
-			echo $total_credit; echo"asfasf"; echo $total_debit;
-			exit;
+		
 			
 			if($tt == "T" && $trr_v == 0 && $trajection_date_v == 0 && $tt_v == 0){
 			$this->loadmodel('import_ob_record');

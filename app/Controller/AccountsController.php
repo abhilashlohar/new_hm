@@ -1506,8 +1506,7 @@ function ac_statement_bill_view($receipt_id=null)
 ///////////////////////////////////// End ac statement Bill View////////////////////////////////////////
 
 //////////////////////// Start My Flat Bill (Accounts) //////////////////////////////
-function my_flat_bill()
-{
+function my_flat_bill(){
 	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
 	}else{
@@ -1525,18 +1524,17 @@ function my_flat_bill()
 	
 	$this->ath();
 	$this->check_user_privilages();
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 	
-	$s_user_id=$this->Session->read('user_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$this->set("s_user_id",$s_user_id);
 	
-	$result_user_info=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($s_user_id)));
+	$result_user_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($s_user_id)));
+	//pr($result_user_info["wing_flat"]);
 	foreach ($result_user_info as $collection2){
 		$user_id=$collection2["user"]["user_id"];
 		$user_name=$collection2["user"]["user_name"];
 		$this->set('user_name',$user_name);
-		//$multiple_flat=@$collection2["user"]["multiple_flat"];
-		//$this->set('multiple_flat',$multiple_flat);
 		$flat_id=$collection2["user"]["flat"];
 	}
 	

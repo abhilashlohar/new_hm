@@ -494,11 +494,38 @@ function rate_card_info_via_flat_type_id_and_income_head_id($flat_type_id,$incom
 	$conditions=array("income_head_id"=>$income_head_id,"flat_type_id"=>$flat_type_id,'society_id'=>$s_society_id);
 	return $this->rate_card->find('count',array('conditions'=>$conditions));
 }
+
 function noc_rate_info_via_flat_type_id($flat_type_id){
 	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('noc_rate');
 	$conditions=array("flat_type_id"=>$flat_type_id,'society_id'=>$s_society_id);
 	return $this->noc_rate->find('count',array('conditions'=>$conditions));
+}
+
+function member_info_via_user_id($user_id){
+	$s_society_id=$this->Session->read('hm_society_id');
+	$this->loadmodel('user_flat');
+	$conditions=array("user_id"=>$user_id, "exited"=>"no");
+	$result=$this->user_flat->find('all',array('conditions'=>$conditions));
+	$flats=array();
+	foreach($result as $data){
+		$user_flat_id=$data["user_flat"]["user_flat_id"];
+		$wing=$data["user_flat"]["wing"];
+		$flat=$data["user_flat"]["flat"];
+		
+		$this->loadmodel('wing');
+		$conditions=array("wing_id"=>$wing);
+		$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
+		$wing_name=$wing_info[0]["wing"]["wing_name"];
+		
+		$this->loadmodel('flat');
+		$conditions=array("flat_id"=>$flat);
+		$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+		$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
+		
+		$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
+	}
+	return array("wing_flat"=>$flats);
 }
 
 }

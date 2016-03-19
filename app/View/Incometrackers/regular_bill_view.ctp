@@ -157,9 +157,9 @@
 								</tr>';
 								
 								
-							foreach($income_head_array as $key=>$value){
+							foreach($income_head_array as $key=>$value){ 
 							$result_income_head = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch2'),array('pass'=>array($key)));	
-								foreach($result_income_head as $data2){
+								foreach($result_income_head as $data2){ 
 									$income_head_name = $data2['ledger_account']['ledger_name'];
 								}
 								if(!empty($value)){

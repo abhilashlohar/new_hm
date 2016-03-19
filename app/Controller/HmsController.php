@@ -23066,23 +23066,16 @@ $conditions=array("bill_for_user" => $user_id, "status" => 0, "society_id"=>$s_s
 return $this->regular_bill->find('all',array('conditions'=>$conditions));
 }
 
-////////////////// End Regular Bill Fetch(Accounts)/////////////////////////////////////////
-
-
-
-
-///////////////////// Start Ledger Account Fetch(Accounts)/////////////////////////////////////
+//End Regular Bill Fetch(Accounts)//
+//Start Ledger Account Fetch(Accounts)//
 function ledger_account_fetch2($auto_id) 
 {
 $this->loadmodel('ledger_account');
-$conditions=array("auto_id" => $auto_id);
+$conditions=array("auto_id" =>$auto_id);
 return $this->ledger_account->find('all',array('conditions'=>$conditions));
 }
-/////////////////////End Ledger Account Fetch(Accounts)/////////////////////////////////////
-
-
-
-////////////////////////// Start Profit And Loss Report////////////////////////////////////////
+//End Ledger Account Fetch(Accounts)//
+//Start Profit And Loss Report//
 function profit_loss_report()
 {
 $this->layout = 'session';

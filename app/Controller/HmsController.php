@@ -19519,10 +19519,10 @@ if($this->RequestHandler->isAjax()){
 $this->ath();
 $this->check_user_privilages();
 $s_society_id=$this->Session->read('hm_society_id');
-$this->loadmodel('user');	
-$conditions1=array('society_id'=>$s_society_id,'tenant'=>2);
-$result1=$this->user->find('all',array('conditions'=>$conditions1));	
-$this->set('result_user',$result1);
+$this->loadmodel('user_flat');	
+$conditions1=array('society_id'=>$s_society_id,'owner'=>'no');
+$result1=$this->user_flat->find('all',array('conditions'=>$conditions1));	
+$this->set('result_user_flat',$result1);
 $this->loadmodel('wing');
 $conditions=array('society_id'=>$s_society_id);
 $result=$this->wing->find('all',array('conditions'=>$conditions));
@@ -19611,8 +19611,8 @@ function new_tenant_file_upload(){
 	$this->layout=null;
 	$this->ath();
 	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$post_data=$this->request->data;
 	$tenant_id=(int)$post_data['tenant_id'];
 	$file_name=@$_FILES["file"]["name"];
@@ -19630,7 +19630,7 @@ function new_tenant_file_upload(){
 function new_tenant_enrollment_ajax1(){
 	$this->layout=null;
 	$this->ath();
-	 $s_society_id=(int)$this->Session->read('society_id');
+	 $s_society_id=(int)$this->Session->read('hm_society_id');
 	  $t_id=(int)$this->request->query('con');
 	  $update_field=$this->request->query('con2');
 	  $whichplace=$this->request->query('con3');
@@ -19747,7 +19747,7 @@ if($this->RequestHandler->isAjax()){
 	}
 $this->ath();
 $this->check_user_privilages();
-$s_society_id=(int)$this->Session->read('society_id');
+$s_society_id=(int)$this->Session->read('hm_society_id');
 $this->loadmodel('tenant');
 $condition=array('society_id'=>$s_society_id);
 $result=$this->tenant->find('all',array('conditions'=>$condition)); 

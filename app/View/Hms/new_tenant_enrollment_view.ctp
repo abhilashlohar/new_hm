@@ -1,14 +1,7 @@
 <?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
+echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
 
-<script>
-$(document).ready(function() {
-
-$("#fix<?php echo $id_current_page; ?>").removeClass("blue");
-$("#fix<?php echo $id_current_page; ?>").addClass("red");
-});
-</script>
 <!--<div style="background-color:#EFEFEF; border-top:1px solid #e6e6e6; border-bottom:1px solid #e6e6e6; padding:10px; box-shadow:5px; font-size:16px; color:#006;">
 View
 </div>-->
@@ -62,25 +55,22 @@ View
             $t_start_date=@$collection['tenant']['t_start_date'];
             $t_end_date=@$collection['tenant']['t_end_date'];
 			$t_file=@$collection['tenant']['t_file'];
-			if($t_agreement==1)
-			{
+			if($t_agreement==1){
 				$t_agreement='Yes';
 			}
-			else
-			{
-			$t_agreement='No';
+			else{
+				$t_agreement='No';
 			
 			}
-			if($t_police==1)
-			{
+			if($t_police==1){
 				$t_police='Yes';
 			}
-			else
-			{
-			$t_police='No';
+			else{
+				$t_police='No';
 			
 			}
-$result_user = $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($d_user_id)));
+				$result_user = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($d_user_id)));
+pr($result_user);
 foreach($result_user as $data)
 {
 $wing=$data['user']['wing'];

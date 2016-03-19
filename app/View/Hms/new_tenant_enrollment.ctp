@@ -1,14 +1,7 @@
-
 <?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
+echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
-<script>
-$(document).ready(function() {
 
-$("#fix<?php echo $id_current_page; ?>").removeClass("blue");
-$("#fix<?php echo $id_current_page; ?>").addClass("red");
-});
-</script>
 <style>
 table th {font-size: 12px !important; }
 </style>
@@ -32,16 +25,17 @@ table th {font-size: 12px !important; }
 		</thead>
 		<tbody>
 		<?php 
-		foreach($result_user as $collection){
-					$user_tenant_id=(int)$collection['user']['user_id'];
-					$wing_id=$collection['user']['wing'];
-					$flat_id=$collection['user']['flat'];
-					$user_name=$collection['user']['user_name'];
-					$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'),array('pass'=>array($wing_id,$flat_id)));
+		 $result_tenant = $this->requestAction(array('controller' => 'Fns', 'action' => 'tenant_member_info_via_society_id'));
 
-                $result_tenat = $this->requestAction(array('controller' => 'hms', 'action' => 'new_tenant_data_fetch'),array('pass'=>array($user_tenant_id)));
+		foreach($result_tenant as $collection){
+					$wing_name=$collection['wing_name'];
+					$result_user=$collection['result_user'];
+					$result_user_tenant=$collection['result_user_tenant'];
+					$user_name=$result_user[0]['user']['user_name'];
+					$user_tenant_id=(int)$result_user[0]['user']['user_id'];
+				
 				$t_address=''; $t_agreement=''; $t_police='';$verification='';$t_start_date='';$t_end_date='';$t_file='';
-				foreach($result_tenat as $data){
+				foreach($result_user_tenant as $data){
 					$t_address=@$data['tenant']['t_address'];
 					$t_agreement=@$data['tenant']['t_agreement'];
 					$t_police=@$data['tenant']['t_police'];
@@ -54,31 +48,31 @@ table th {font-size: 12px !important; }
 		
 		?>
 			<tr>
-			<td> <?php echo $user_name ; ?>  <?php echo $wing_flat; ?></td>
-			<td> 
-				<input type="text" class="span12 m-wrap per_add" permanet_address="permanet_address" tenant_id="<?php echo $user_tenant_id;?>" value="<?php echo @$t_address; ?>">
-			</td>
-			<td> 
-				<input type="text" class="span8 m-wrap  date-picker ten_start" tenancy_start="tenancy_start"  data-date-format="dd-mm-yyyy" tenant_id="<?php echo $user_tenant_id;?>" value="<?php echo @$t_start_date; ?>">
-			</td>
-			<td> 
-				<input type="text" class="span8 m-wrap  date-picker ten_end" tenancy_end="tenancy_end" data-date-format="dd-mm-yyyy" tenant_id="<?php echo $user_tenant_id;?>" value="<?php echo @$t_end_date; ?>">
-			</td>
-			<td>
-				<input type="text" class="span12 m-wrap ten_ver" verification="verification" tenant_id="<?php echo $user_tenant_id;?>" value="<?php echo @$verification; ?>" >
-			</td>
-			<td> 
-			<label class="">
-                <input type="checkbox" value="1" name="ten_agr" class="ten_agr" tenancy_agreement="tenancy_agreement" tenant_id="<?php echo $user_tenant_id;?>"<?php if(@$t_agreement==1){?> checked <?php } ?>> 
-             </label>
-			 </td>
-			<td> 
-			<label class="">
-                  <input type="checkbox" value="1" name="pol_ver" class="pol_ver" police_verification="police_verification" tenant_id="<?php echo $user_tenant_id;?>" <?php if(@$t_police==1){?> checked <?php } ?> >
-             </label>
-			</td>
-			
-			<td>
+				<td> <?php echo $user_name ; ?>  <?php echo $wing_name; ?></td>
+				<td> 
+					<input type="text" class="span12 m-wrap per_add" permanet_address="permanet_address" tenant_id="<?php echo $user_tenant_id;?>" value="<?php echo @$t_address; ?>">
+				</td>
+				<td> 
+					<input type="text" class="span8 m-wrap  date-picker ten_start" tenancy_start="tenancy_start"  data-date-format="dd-mm-yyyy" tenant_id="<?php echo $user_tenant_id;?>" value="<?php echo @$t_start_date; ?>">
+				</td>
+				<td> 
+					<input type="text" class="span8 m-wrap  date-picker ten_end" tenancy_end="tenancy_end" data-date-format="dd-mm-yyyy" tenant_id="<?php echo $user_tenant_id;?>" value="<?php echo @$t_end_date; ?>">
+				</td>
+				<td>
+					<input type="text" class="span12 m-wrap ten_ver" verification="verification" tenant_id="<?php echo $user_tenant_id;?>" value="<?php echo @$verification; ?>" >
+				</td>
+				<td> 
+					<label class="">
+						<input type="checkbox" value="1" name="ten_agr" class="ten_agr" tenancy_agreement="tenancy_agreement" tenant_id="<?php echo $user_tenant_id;?>"<?php if(@$t_agreement==1){?> checked <?php } ?>> 
+					 </label>
+				 </td>
+				<td> 
+					<label class="">
+						  <input type="checkbox" value="1" name="pol_ver" class="pol_ver" police_verification="police_verification" tenant_id="<?php echo $user_tenant_id;?>" <?php if(@$t_police==1){?> checked <?php } ?> >
+					 </label>
+				</td>
+				
+				<td>
 						<div class="control-group">
 										  
 								<div class="controls">
@@ -93,7 +87,7 @@ table th {font-size: 12px !important; }
 											 </div>
 								  </div>
 					  </div>
-			</td>
+				</td>
 			</tr>			
 		<?php }  ?>		
 		</tbody>

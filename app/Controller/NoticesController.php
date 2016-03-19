@@ -1375,7 +1375,8 @@ function new_notice(){
 	$role_result=$this->role->find('all',array('conditions'=>$conditions));
 	$this->set('role_result',$role_result);
 	$this->loadmodel('wing');
-	$wing_result=$this->wing->find('all');
+	$conditions=array("society_id" => $s_society_id);
+	$wing_result=$this->wing->find('all',array('conditions'=>$conditions));
 	$this->set('wing_result',$wing_result);
 	
 }
@@ -1400,7 +1401,8 @@ function edit_notice($id=null){
 	$role_result=$this->role->find('all',array('conditions'=>$conditions));
 	$this->set('role_result',$role_result);
 	$this->loadmodel('wing');
-	$wing_result=$this->wing->find('all');
+	$conditions=array("society_id" => $s_society_id);
+	$wing_result=$this->wing->find('all',array('conditions'=>$conditions));
 	$this->set('wing_result',$wing_result);
 	
 	$notice_id=(int)$id;
@@ -1415,6 +1417,7 @@ function submit_notice(){
 	$this->layout=null;
 	$post_data=$this->request->data;
 	
+	
 	$this->ath();
 	$s_society_id=$this->Session->read('society_id');
 	$s_role_id=$this->Session->read('role_id'); 
@@ -1426,6 +1429,8 @@ function submit_notice(){
 		@$notice=$child['society']['notice'];
 		 @$s_duser_id[]=$child['society']['user_id'];
 	}
+	
+	
 	
 	if(empty($post_data['notice_subject'])){
 		$output = json_encode(array('type'=>'error', 'text' => 'Please fill subject.'));
@@ -1439,6 +1444,18 @@ function submit_notice(){
 		$output = json_encode(array('type'=>'error', 'text' => 'Please select expire date for notice.'));
 		die($output);
 	}
+	
+	if(!empty($post_data['notice_expire_date'])){
+		 if(strtotime($post_data['notice_expire_date'])<strtotime($date)){
+				$output = json_encode(array('type'=>'error', 'text' => 'Notice expire date should be >current date'));
+				die($output);
+		
+			}
+	
+		
+	}
+
+	
 	if(empty($post_data['code'])){
 		$output = json_encode(array('type'=>'error', 'text' => 'Please create notice.'));
 		die($output);

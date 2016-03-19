@@ -100,16 +100,16 @@ foreach($result_ledger as $ledger_data){
 					
 					
 				}
-				if($table_name=="new_regular_bill"){
+				if($table_name=="regular_bill"){
 					$result_regular_bill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'regular_bill_info_via_auto_id'), array('pass' => array($element_id)));
 					if(sizeof($result_regular_bill)>0){
 						$bill_approved="yes";
-						$refrence_no = $result_regular_bill[0]["regular_bill"]["bill_no"];
+						$refrence_no = $result_regular_bill[0]["regular_bill"]["bill_number"];
 						$description = $result_regular_bill[0]["regular_bill"]["description"];
 						$prepaired_by = (int)$result_regular_bill[0]["regular_bill"]["created_by"]; 
 						$current_date = $result_regular_bill[0]["regular_bill"]["current_date"];
 	
-				$date = date('d-m-Y',($current_date));
+				$date = date('d-m-Y',strtotime($current_date));
 					
 				$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by)));
 				foreach ($user_dataaaa as $user_detailll) 
@@ -178,10 +178,10 @@ foreach($result_ledger as $ledger_data){
 					<tr>
 						<td><?php echo date("d-m-Y",$transaction_date); ?></td>
 						<td>
-						<?php if($table_name=="new_regular_bill"){
+						<?php if($table_name=="regular_bill"){
 							echo '<a class="tooltips" data-original-title="Click for view Source" data-placement="bottom" href="'.$this->webroot.'Incometrackers/regular_bill_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
 						}
-						if($table_name=="new_cash_bank"){
+						if($table_name=="cash_bank"){
 							echo '<a class="tooltips" data-original-title="Click for view Source" data-placement="bottom" href="'.$this->webroot.'Cashbanks/bank_receipt_html_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
 						}
                         if($table_name=="supplimentry_bill")
@@ -191,10 +191,10 @@ foreach($result_ledger as $ledger_data){
 						?>
 						</td>
 						<td>
-						<?php if($table_name=="new_regular_bill"){
+						<?php if($table_name=="regular_bill"){
 						echo "Regular Bill";
 						}
-						if($table_name=="new_cash_bank"){
+						if($table_name=="cash_bank"){
 							echo "Bank Receipt";
 						}
 						if($table_name=="supplimentry_bill")

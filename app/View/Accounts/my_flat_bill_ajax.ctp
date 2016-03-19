@@ -25,7 +25,7 @@ foreach($result_ledger as $ledger_data){
 }
 ?>
 <div style="overflow: auto;">
-<a href="<?php echo $webroot_path; ?>Accounts/my_flat_bill_excel_export/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $user_flat_id; ?>" class="btn mini blue pull-right hide_at_print" style="margin-left: 2px;" ><i class="icon-download"></i></a>
+<a href="<?php echo $webroot_path; ?>Accounts/my_flat_bill_excel_export/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $ledger_sub_account_id; ?>" class="btn mini blue pull-right hide_at_print" style="margin-left: 2px;" ><i class="icon-download"></i></a>
 
 <a href="#" role="button" class="btn mini purple pull-right hide_at_print" style="margin-left: 2px;" onclick="window.print();"><i class="fa fa-print"></i></a>
 
@@ -38,7 +38,7 @@ foreach($result_ledger as $ledger_data){
 	<div class="row-fluid" style="font-size:14px;">
 		<div class="span6">
 		<?php
-		$result_user_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($s_user_id)));
+		$result_user_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array((int)$s_user_id)));
 		$multiple_flat=$result_user_info["wing_flat"];
 		?>
 			For : <?php echo $result_user_info['user_name']; ?> (<?php echo $result_user_info['wing_flat'][$user_flat_id]; ?>)
@@ -105,16 +105,16 @@ foreach($result_ledger as $ledger_data){
 					
 					
 				}
-				if($table_name=="new_regular_bill"){
+				if($table_name=="regular_bill"){
 					$result_regular_bill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'regular_bill_info_via_auto_id'), array('pass' => array($element_id)));
 					if(sizeof($result_regular_bill)>0){
 						$bill_approved="yes";
-						$refrence_no = $result_regular_bill[0]["new_regular_bill"]["bill_no"];
-						$description = $result_regular_bill[0]["new_regular_bill"]["description"];
-					    $prepaired_by = (int)$result_regular_bill[0]["new_regular_bill"]["created_by"]; 
-						$current_date = $result_regular_bill[0]["new_regular_bill"]["current_date"];
+						$refrence_no = $result_regular_bill[0]["regular_bill"]["bill_number"];
+						$description = $result_regular_bill[0]["regular_bill"]["description"];
+						$prepaired_by = (int)$result_regular_bill[0]["regular_bill"]["created_by"]; 
+						$current_date = $result_regular_bill[0]["regular_bill"]["current_date"];
 	
-				       $date = date('d-m-Y',($current_date));
+				       $date = date('d-m-Y',strtotime($current_date));
 					}
 					
 					
@@ -134,26 +134,27 @@ foreach($result_ledger as $ledger_data){
 					$element_id=$element_id;
 					
 					$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array($element_id)));
-					$refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_id"]; 
-					$flat_id = (int)@$result_cash_bank[0]["cash_bank"]["party_name_id"];
-					$description = @$result_cash_bank[0]["cash_bank"]["narration"];
-			        $date = $result_cash_bank[0]["cash_bank"]["current_date"];	
-					$prepaired_by = (int)$result_cash_bank[0]["cash_bank"]["prepaired_by"];
+	$refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_number"]; 
+	$ledger_sub_account_id = (int)@$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
+	$description = @$result_cash_bank[0]["cash_bank"]["narration"];
+	$date = $result_cash_bank[0]["cash_bank"]["date"];	
+	$prepaired_by = (int)$result_cash_bank[0]["cash_bank"]["created_by"];	
 					
 					$interest="";
 					$maint_charges="";
 					$credits=$debit+$credit;
 					$account_balance=$account_balance-(int)$credits;
 				} 
-				if($table_name=='adhoc_bill')
+				if($table_name=='supplimentry_bill')
 				{
 				$element_id=$element_id;	
 				$result_adhoc=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'adhoc_info_via_auto_id'), array('pass' => array($element_id)));
-			$refrence_no=@$result_adhoc[0]["adhoc_bill"]["receipt_id"]; 
-			$flat_id = (int)@$result_adhoc[0]["adhoc_bill"]["person_name"];
-			$description = @$result_adhoc[0]["adhoc_bill"]["description"];
-				$date = $result_adhoc[0]["adhoc_bill"]["date"];	
-			$prepaired_by = (int)$result_adhoc[0]["adhoc_bill"]["created_by"];	
+			
+	$refrence_no=@$result_adhoc[0]["supplimentry_bill"]["receipt_id"]; 
+	$ledger_sub_account_id = @$result_adhoc[0]["supplimentry_bill"]["ledger_sub_account_id"];
+	$description = @$result_adhoc[0]["supplimentry_bill"]["description"];
+	$date = $result_adhoc[0]["supplimentry_bill"]["date"];	
+	$prepaired_by = (int)$result_adhoc[0]["supplimentry_bill"]["created_by"];
 			
 			
                $maint_charges=$debit+$credit;
@@ -177,26 +178,26 @@ foreach ($user_dataaaa as $user_detailll)
 					<tr>
 						<td><?php echo date("d-m-Y",$transaction_date); ?></td>
 						<td>
-						<?php if($table_name=="new_regular_bill"){
+						<?php if($table_name=="regular_bill"){
 							echo '<a class="tooltips" data-original-title="Click for view Source" data-placement="bottom" href="'.$this->webroot.'Incometrackers/regular_bill_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
 						}
-						if($table_name=="new_cash_bank"){
+						if($table_name=="cash_bank"){
 							echo '<a class="tooltips" data-original-title="Click for view Source" data-placement="bottom" href="'.$this->webroot.'Cashbanks/bank_receipt_html_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
 						} 
-						if($table_name=="adhoc_bill")
+						if($table_name=="supplimentry_bill")
 						{
 						echo '<a class="tooltips" data-original-title="Click for view Source" data-placement="bottom" href="'.$this->webroot.'Incometrackers/supplimentry_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';	
 						}
 						?>
 						</td>
 						<td>
-						<?php if($table_name=="new_regular_bill"){
+						<?php if($table_name=="regular_bill"){
 						echo "Regular Bill";
 						}
-						if($table_name=="new_cash_bank"){
+						if($table_name=="cash_bank"){
 							echo "Bank Receipt";
 						}
-						if($table_name=="adhoc_bill")
+						if($table_name=="supplimentry_bill")
 						{
 							echo "Supplimentry Bill";
 						}

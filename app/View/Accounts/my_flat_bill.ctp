@@ -33,7 +33,7 @@ $multiple_flat = sizeof($result_user_info);
 		<tr>
 		<?php  if($multiple_flat>1){  ?>
 		<td>
-		<select name="ledger_sub_account[]" class="m-wrap" style="width:200px;">
+		<select name="ledger_sub_account[]" class="m-wrap" style="width:200px;" id="ledger_sub_account">
 		<option value="" style="display:none;">--member--</option>
 		<?php foreach($members_for_billing as $ledger_sub_account_id){
 		$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
@@ -59,12 +59,12 @@ $multiple_flat = sizeof($result_user_info);
 <script>
 $(document).ready(function() {
 	$("#go").die().live('click',function(){
-		var user_flat_id=$("#flat_select_box option:selected").val();
+		var ledger_sub_account_id=$("#ledger_sub_account option:selected").val();
 		var from=$("#from").val();
 		var to=$("#to").val();
 		$("#result_statement").show();
 		$.ajax({
-		   url: '<?php echo $webroot_path; ?>Accounts/my_flat_bill_ajax/'+from+'/'+to+'/'+user_flat_id,
+		   url: '<?php echo $webroot_path; ?>Accounts/my_flat_bill_ajax/'+from+'/'+to+'/'+ledger_sub_account_id,
 		   success: function(data){
 			   $("#result_statement").html(data);
 		   }

@@ -89,8 +89,8 @@ function upload_opening_balance_csv_file()
 		die(json_encode("UPLOADED"));
 	}
 }
-////////////////// End upload_opening_balance_csv_file ////////////////////////////////////
-//////////////////// Start read_csv_file_ob ///////////////////////////////////////
+//End upload_opening_balance_csv_file//
+//Start read_csv_file_ob//
 function read_csv_file_ob()
 {
 	$this->layout=null;
@@ -1564,8 +1564,8 @@ function my_flat_bill(){
 	}
 //End My Flat Bill//
 //Start my_flat_bill_ajax//
-function my_flat_bill_ajax($from=null,$to=null,$user_flat_id=null){
-	$user_flat_id=(int)$user_flat_id; 
+function my_flat_bill_ajax($from=null,$to=null,$ledger_sub_account_id=null){
+	 
 	$this->ath();
 	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
@@ -1578,11 +1578,10 @@ function my_flat_bill_ajax($from=null,$to=null,$user_flat_id=null){
 	$to=date("Y-m-d",strtotime($to));
 	$this->set("to",$to);
 
-	$this->set("user_flat_id",$user_flat_id);
+	$this->set("ledger_sub_account_id",$ledger_sub_account_id);
 
 	$this->ath();
 	$s_society_id = (int)$this->Session->read('hm_society_id');
-
 	$s_user_id=(int)$this->Session->read('hm_user_id');
 	$this->set("s_user_id",$s_user_id);
 
@@ -1595,26 +1594,25 @@ function my_flat_bill_ajax($from=null,$to=null,$user_flat_id=null){
 	$society_name = $dataaaaa['society']['society_name'];
 	}
 	
+	$result_ledger_sub_account=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'), array('pass' => array((int)$ledger_sub_account_id)));
+	foreach($result_ledger_sub_account as $data){
+	$user_flat_id = $data['ledger_sub_account']['user_flat_id'];	
+	}	
+	$this->set('user_flat_id',$user_flat_id);	
+	
 	
 	$this->loadmodel('society');
 	$conditions=array("society_id" => $s_society_id);
 	$result_society=$this->society->find('all',array('conditions'=>$conditions));
 	$this->set('result_society',$result_society);
-	
-	$this->loadmodel('ledger_sub_account');
-	$conditions=array("society_id" => $s_society_id,"user_flat_id" => (int)$user_flat_id);
-	$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-	$ledger_sub_account_id=@$result_ledger_sub_account[0]["ledger_sub_account"]["auto_id"];
-	
-	$this->loadmodel('ledger');
-	$conditions=array("society_id" => $s_society_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id,'transaction_date'=> array('$gte' => strtotime($from),'$lte' => strtotime($to)));
-	$order=array('ledger.transaction_date'=>'ASC');
-	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
-	$this->set('result_ledger',$result_ledger);
-
-	
+		
+$this->loadmodel('ledger');
+$conditions=array("society_id"=>$s_society_id,"ledger_account_id"=>34,"ledger_sub_account_id" => (int)$ledger_sub_account_id,'transaction_date'=> array('$gte' => strtotime($from),'$lte' => strtotime($to)));
+$order=array('ledger.transaction_date'=>'ASC');
+$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
+$this->set('result_ledger',$result_ledger);
 }
-////////////////////////////End My Flat Bill Ajax/////////////////////////////////////////////////
+//End My Flat Bill Ajax//
 function my_flat_bill_excel_export($from=null,$to=null,$flat_id=null)
 {
 $this->layout=null;

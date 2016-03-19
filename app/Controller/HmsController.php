@@ -17726,7 +17726,7 @@ function resident_directory(){
 	$order=array('user.user_name'=>'ASC');	
 	$users=$this->user->find('all',array('conditions'=>$conditions,'order'=>$order));
 	foreach($users as $user_info){
-		$user_id=$user_info["user"]["user_id"];
+		 $user_id=$user_info["user"]["user_id"];
 		$user_name=$user_info["user"]["user_name"];
 		$profile_pic=@$user_info["user"]["profile_pic"];
 		$user_type=$user_info["user"]["user_type"];
@@ -17736,6 +17736,7 @@ function resident_directory(){
 		$date=$user_info["user"]["date"];
 		
 		if($user_type=="member" or $user_type=="family_member"){
+			
 			$user_flat_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($user_id)));
 			$flats=array();
 			foreach($user_flat_info as $user_flat){
@@ -17758,39 +17759,32 @@ function resident_directory(){
 				}
 				
 			} 
-		}else{
-			$user_flat_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($user_id)));
-			$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"];
-			$flats=array();
-		}
-		
-		$this->loadmodel('user_role');
-		$conditions=array("user_id"=>$user_id);
-		$user_role_info=$this->user_role->find('all',array('conditions'=>$conditions));
-		$roles=array();
-		foreach($user_role_info as $user_role){
-			$role_id=$user_role["user_role"]["role_id"];
 			
-			$this->loadmodel('role');
-			$conditions=array("role_id"=>$role_id);
-			$role_info=$this->role->find('all',array('conditions'=>$conditions));
-			$roles[]=$role_info[0]["role"]["role_name"];
+			
+			
+			
+			$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"mobile"=>$mobile,"email"=>$email,"profile_pic"=>$profile_pic,"date"=>$date,"user_flat_id"=>$user_flat_id);
+			
 		}
-		$roles=implode(',',$roles);
-		
-		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"profile_pic"=>$profile_pic,"date"=>$date,"user_flat_id"=>$user_flat_id);
 	}
 	$this->set(compact("arranged_users"));
 }
 
-function member_all_detail($user_flat_id=null){
+function member_profile($user_flat_id=null){
 	
-	$this->layout=null;	
-	$this->ath();
-		$this->loadmodel('user_flat');	
-		$conditions=array('user_flat_id'=>$user_flat_id);
-		$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions));
-		$this->set(compact("result_user_flat"));
+	if($this->RequestHandler->isAjax()){
+			$this->layout='blank';
+		}else{
+			$this->layout='session';
+		}
+		$this->ath();
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$result_society=$this->society_name($s_society_id);
+	$society_name=	$result_society[0]['society']['society_name'];
+	$this->set(compact("society_name"));
+	$this->set(compact("s_user_id"));
+	$this->set(compact("user_flat_id"));
 }
 
 function resident_directory_view()

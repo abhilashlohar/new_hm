@@ -1,3 +1,28 @@
+<?php 
+function substrwords($text, $maxchar, $end='...') {
+    if (strlen($text) > $maxchar || $text == '') {
+        $words = preg_split('/\s/', $text);      
+        $output = '';
+        $i      = 0;
+        while (1) {
+            @$length = strlen($output)+strlen($words[$i]);
+            if ($length > $maxchar) {
+                break;
+            } 
+            else {
+                @$output .= " " . $words[$i];
+                ++$i;
+            }
+        }
+        $output .= $end;
+    } 
+    else {
+        $output = $text;
+    }
+    return $output;
+}
+
+?>
 <div style="background-color: rgb(255, 255, 255); padding: 0px 20px; border: 1px solid rgb(233, 231, 231);">
 <table cellpadding="0" cellspacing="0" width="100%">
 	<tbody><tr>
@@ -35,15 +60,18 @@ color:#FFF;
 }
 </style>
 <div id="main" style="overflow: auto;">
-<?php foreach($arranged_users as $user_info){ 
+<?php 
+
+foreach($arranged_users as $user_info){ 
 	$user_flat_id=(int)$user_info["user_flat_id"];
 	$user_name=$user_info["user_name"];
+	$user_name=substrwords($user_name,20,'...');
 	$wing_flats=$user_info["wing_flat"];
 	$profile_pic=$user_info["profile_pic"];
 	foreach($wing_flats as $user_flat_id=>$wing_flat){?>
 	
 	<div class="r_d">
-		<a href="member_all_detail/<?php echo $user_flat_id; ?>" role="button" rel='tab'>
+		<a href="member_profile/<?php echo $user_flat_id; ?>" role="button" rel='tab'>
 			<div class="qwe">
 				<div class="hv_b" style="overflow: auto;padding: 5px;cursor: pointer;" title="">
 					<?php if(!empty($profile_pic) && $profile_pic!="blank.jpg"){ ?>

@@ -561,5 +561,42 @@ return @$wing_name.' '.@$flat_name;
 
 
 
+ function member_info_via_user_flat_id($user_flat_id){
+		$s_society_id=$this->Session->read('hm_society_id');
+		
+		
+		$this->loadmodel('user_flat');
+		$conditions=array("user_flat_id"=>$user_flat_id, "exited"=>"no");
+		$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions));
+			foreach($result_user_flat as $data){
+				$user_id=(int)$data["user_flat"]["user_id"];
+				$wing=$data["user_flat"]["wing"];
+				$flat=$data["user_flat"]["flat"];
+				$owner=$data["user_flat"]["owner"];
+			}
+			$this->loadmodel('wing');
+			$conditions=array("wing_id"=>$wing);
+			$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
+			$wing_name=$wing_info[0]["wing"]["wing_name"];
+			
+			$this->loadmodel('flat');
+			$conditions=array("flat_id"=>$flat);
+			$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+			$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
+			
+			$flats=$wing_name.' - '.$flat_name;
+			
+			$this->loadmodel('user');
+			$conditions=array("user_id"=>$user_id);
+			$result_user=$this->user->find('all',array('conditions'=>$conditions));
+			
+			$this->loadmodel('user_profile');
+			$conditions=array("user_id"=>$user_id);
+			$result_user_profile=$this->user_profile->find('all',array('conditions'=>$conditions));
+			
+			
+			return array("wing_flat"=>$flats,"owner"=>$owner,"result_user"=>$result_user,"result_user_profile"=>$result_user_profile);
+	}	
+		
 }
 ?>

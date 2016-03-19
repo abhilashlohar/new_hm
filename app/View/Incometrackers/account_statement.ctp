@@ -57,7 +57,6 @@ background-color: #E6ECE7;
 $(document).ready(function(){
 	$( "#go" ).click(function() {
 		var ledger_sub_account_id=$("#ledger_sub_account_id").val();
-		alert(ledger_sub_account_id);
 		var from=$("#from").val();
 		var to=$("#to").val();
 		$("#result_statement").show();

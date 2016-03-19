@@ -11,9 +11,9 @@ var $name = 'Bookkeepings';
 ////////////////////////// Start Detail fetch function//////////////////////////////////// 
 	function regular_bill_info_via_auto_id($auto_id){
 		$auto_id=(int)$auto_id;
-		$this->loadmodel('new_regular_bill');
-		$conditions=array('auto_id'=>$auto_id,'approval_status'=>1);
-		return $this->new_regular_bill->find('all',array('conditions'=>$conditions)); 
+		$this->loadmodel('regular_bill');
+		$conditions=array('auto_id'=>$auto_id);
+		return $this->regular_bill->find('all',array('conditions'=>$conditions)); 
 	}
 	
 	function receipt_info_via_auto_id($auto_id){
@@ -24,11 +24,11 @@ var $name = 'Bookkeepings';
 	}
 	
 function adhoc_info_via_auto_id($auto_id){
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 		$auto_id=(int)$auto_id;
-		$this->loadmodel('adhoc_bill');
-		$conditions=array('adhoc_bill_id'=>$auto_id,'society_id'=>$s_society_id);
-		return $this->adhoc_bill->find('all',array('conditions'=>$conditions)); 
+		$this->loadmodel('supplimentry_bill');
+		$conditions=array('supplimentry_bill_id'=>$auto_id,'society_id'=>$s_society_id);
+		return $this->supplimentry_bill->find('all',array('conditions'=>$conditions)); 
 	}
 	
 	function ledger_sub_account_detail_via_auto_id($auto_id){
@@ -214,9 +214,8 @@ $s_user_id=$this->Session->read('hm_user_id');
 		}
 }
 
-//////////////////////////////////////////////// End Journal View (Accounts) //////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////// Start Journal View Ajax(Accounts)///////////////////////////////////////////////////////////////////////
+//End Journal View (Accounts)//
+//Start Journal View Ajax(Accounts)//
 
 function journal_view_ajax($page=null,$from=null,$to=null){
 if($this->RequestHandler->isAjax()){

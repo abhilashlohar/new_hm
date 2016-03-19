@@ -1512,6 +1512,7 @@ function my_flat_bill(){
 	}else{
 	$this->layout='session';
 	}
+	$this->ath();
 	
 	$last_date=date('t'); 
 	$current_month=date('m');
@@ -1522,7 +1523,7 @@ function my_flat_bill(){
 	$this->set("to",$to);
 	
 	
-	$this->ath();
+	
 	$this->check_user_privilages();
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	
@@ -1541,27 +1542,29 @@ function my_flat_bill(){
 ////////////////////////////////// End My Flat Bill /////////////////////////////////////////////////////
 
 /////////////////////////////////// Start my_flat_bill_ajax ////////////////////////////////////////////
-function my_flat_bill_ajax($from=null,$to=null,$flat_id=null)
-{
-		if($this->RequestHandler->isAjax()){
-		$this->layout='blank';
-		}else{
-		$this->layout='session';
-		} 
-			 $from=date("Y-m-d",strtotime($from));
-			 $this->set("from",$from);
-			 $to=date("Y-m-d",strtotime($to));
-			 $this->set("to",$to);
-			 
-			 $this->set("flat_id",$flat_id);
-		
-		$this->ath();
-		$s_society_id = (int)$this->Session->read('society_id');
+function my_flat_bill_ajax($from=null,$to=null,$user_flat_id=null){
+	$user_flat_id=(int)$user_flat_id; 
+	$this->ath();
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
 	
-		$s_user_id=(int)$this->Session->read('user_id');
-		$this->set("s_user_id",$s_user_id);
-	
-	
+	$from=date("Y-m-d",strtotime($from));
+	$this->set("from",$from);
+	$to=date("Y-m-d",strtotime($to));
+	$this->set("to",$to);
+
+	$this->set("user_flat_id",$user_flat_id);
+
+	$this->ath();
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+
+	$s_user_id=(int)$this->Session->read('hm_user_id');
+	$this->set("s_user_id",$s_user_id);
+
+
 	$this->loadmodel('society');
 	$conditions=array("society_id" => $s_society_id);
 	$result_societydattt=$this->society->find('all',array('conditions'=>$conditions));
@@ -1570,39 +1573,6 @@ function my_flat_bill_ajax($from=null,$to=null,$flat_id=null)
 	$society_name = $dataaaaa['society']['society_name'];
 	}
 	
-
-	
-	$flat_id=(int)$flat_id; 
-	if($flat_id==0)
-	{
-		$result_user_info=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($s_user_id)));
-		foreach($result_user_info as $collection2)
-		{
-		$user_name=$collection2["user"]["user_name"];
-		$this->set('user_name',$user_name);
-		$wing_id=$collection2["user"]["wing"];
-		$flat_id=$collection2["user"]["flat"];
-		}
-
-		$wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing_id,$flat_id)));
-		$this->set('wing_flat',$wing_flat);
-	}else{
-		$result_flat_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array((int)$flat_id)));
-		foreach($result_flat_info as $flat_info){
-		$wing_id=$flat_info["flat"]["wing_id"];
-		} 
-		
-	$wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'wing_flat'), array('pass' => array($wing_id,(int)$flat_id)));
-	$this->set('wing_flat',$wing_flat);
-		
-		//user info via flat_id//
-		$result_user_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_user_info_via_flat_id'),array('pass'=>array($wing_id,$flat_id)));
-		foreach($result_user_info as $user_info){
-			$user_id=(int)$user_info["user"]["user_id"];
-			$user_name=$user_info["user"]["user_name"];
-			$this->set('user_name',$user_name);
-		} 
-	}
 	
 	$this->loadmodel('society');
 	$conditions=array("society_id" => $s_society_id);
@@ -1610,7 +1580,7 @@ function my_flat_bill_ajax($from=null,$to=null,$flat_id=null)
 	$this->set('result_society',$result_society);
 	
 	$this->loadmodel('ledger_sub_account');
-	$conditions=array("society_id" => $s_society_id,"flat_id" => (int)$flat_id);
+	$conditions=array("society_id" => $s_society_id,"user_flat_id" => (int)$user_flat_id);
 	$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 	$ledger_sub_account_id=@$result_ledger_sub_account[0]["ledger_sub_account"]["auto_id"];
 	
@@ -1619,11 +1589,6 @@ function my_flat_bill_ajax($from=null,$to=null,$flat_id=null)
 	$order=array('ledger.transaction_date'=>'ASC');
 	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
 	$this->set('result_ledger',$result_ledger);
-	
-//$this->loadmodel('ledger_sub_account');
-//$conditions=array("society_id"=>$s_society_id,"user_id" =>$s_user_id);
-//$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-//$this->set('result_ledger_sub_account',$result_ledger_sub_account);
 
 	
 }

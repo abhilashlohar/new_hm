@@ -504,7 +504,10 @@ function noc_rate_info_via_flat_type_id($flat_type_id){
 
 function member_info_via_user_id($user_id){
 	$s_society_id=$this->Session->read('hm_society_id');
-	
+	$this->loadmodel('user');
+	$conditions=array("user_id"=>$user_id);
+	$userresult=$this->user->find('all',array('conditions'=>$conditions));
+	$user_name=$userresult[0]["user"]["user_name"];
 	
 	$this->loadmodel('user_flat');
 	$conditions=array("user_id"=>$user_id, "exited"=>"no");
@@ -527,7 +530,7 @@ function member_info_via_user_id($user_id){
 		
 		$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
 	}
-	return array("wing_flat"=>$flats);
+	return array("user_name"=>$user_name,"wing_flat"=>$flats);
 }
 function society_info_via_society_id($society_id){
 	$this->loadmodel('society');

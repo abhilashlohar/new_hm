@@ -25,13 +25,11 @@ foreach($result_ledger as $ledger_data){
 }
 ?>
 <div style="overflow: auto;">
-<a href="<?php echo $webroot_path; ?>Accounts/my_flat_bill_excel_export/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $flat_id; ?>" class="btn mini blue pull-right hide_at_print" style="margin-left: 2px;" ><i class="icon-download"></i></a>
+<a href="<?php echo $webroot_path; ?>Accounts/my_flat_bill_excel_export/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $user_flat_id; ?>" class="btn mini blue pull-right hide_at_print" style="margin-left: 2px;" ><i class="icon-download"></i></a>
 
 <a href="#" role="button" class="btn mini purple pull-right hide_at_print" style="margin-left: 2px;" onclick="window.print();"><i class="fa fa-print"></i></a>
-</div>
 
-
-	<div align="center" style="color:#606060;">
+<div align="center" style="color:#606060;">
 		<h4 style="color:#5D9B5D;"><b><?php echo strtoupper($society_name); ?></b></h4>
 		Regn # <?php echo $society_reg_num; ?><br/>
 		
@@ -39,14 +37,20 @@ foreach($result_ledger as $ledger_data){
 	</div>
 	<div class="row-fluid" style="font-size:14px;">
 		<div class="span6">
-			For : <?php echo $user_name; ?> (<?php echo $wing_flat; ?>)
+		<?php
+		$result_user_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($s_user_id)));
+		$multiple_flat=$result_user_info["wing_flat"];
+		?>
+			For : <?php echo $result_user_info['user_name']; ?> (<?php echo $result_user_info['wing_flat'][$user_flat_id]; ?>)
 		</div>
 		<div class="span6" align="right">
 			<span style="font-size:16px;">Statement of Account</span><br/>
 			<span style="font-size:12px;">From <?php echo date("d-m-Y",strtotime($from)); ?> to <?php echo date("d-m-Y",strtotime($to)); ?></span>
 		</div>
 	</div>
-	<div>
+</div>
+
+<div>
 		<table class="table table-bordered table-striped table-hover" width="100%">
 			<thead>
             <tr>
@@ -125,16 +129,16 @@ foreach($result_ledger as $ledger_data){
 					}
 					$credits="";
 				}
-				if($table_name=="new_cash_bank"){
+				if($table_name=="cash_bank"){
 					
 					$element_id=$element_id;
 					
 					$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array($element_id)));
-					$refrence_no=@$result_cash_bank[0]["new_cash_bank"]["receipt_id"]; 
-					$flat_id = (int)@$result_cash_bank[0]["new_cash_bank"]["party_name_id"];
-					$description = @$result_cash_bank[0]["new_cash_bank"]["narration"];
-			        $date = $result_cash_bank[0]["new_cash_bank"]["current_date"];	
-					$prepaired_by = (int)$result_cash_bank[0]["new_cash_bank"]["prepaired_by"];
+					$refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_id"]; 
+					$flat_id = (int)@$result_cash_bank[0]["cash_bank"]["party_name_id"];
+					$description = @$result_cash_bank[0]["cash_bank"]["narration"];
+			        $date = $result_cash_bank[0]["cash_bank"]["current_date"];	
+					$prepaired_by = (int)$result_cash_bank[0]["cash_bank"]["prepaired_by"];
 					
 					$interest="";
 					$maint_charges="";
@@ -230,19 +234,3 @@ foreach ($user_dataaaa as $user_detailll)
                     </tbody>
 		</table>
 	</div>
-	
-
-
-
-	
-<script>
-		/* var $rows = $('#table tr');
-		 $('#search').keyup(function() {
-			var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-			
-			$rows.show().filter(function() {
-				var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-				return !~text.indexOf(val);
-			}).hide();
-		}); */
- </script>

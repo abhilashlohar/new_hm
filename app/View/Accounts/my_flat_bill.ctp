@@ -58,12 +58,17 @@ $result_user_info=$this->requestAction(array('controller' => 'Fns', 'action' => 
 
 <script>
 $(document).ready(function() {
-	$("#go").live('click',function(){
-		var flat_id=$("#flat_select_box").val();
+	$("#go").die().live('click',function(){
+		var user_flat_id=$("#flat_select_box option:selected").val();
 		var from=$("#from").val();
 		var to=$("#to").val();
 		$("#result_statement").show();
-		$("#result_statement").html('<div align="center"><h4>Loading...</h4></div>').load('my_flat_bill_ajax/'+from+'/'+to+'/'+flat_id);
+		$.ajax({
+		   url: '<?php echo $webroot_path; ?>Accounts/my_flat_bill_ajax/'+from+'/'+to+'/'+user_flat_id,
+		   success: function(data){
+			   $("#result_statement").html(data);
+		   }
+		 });
 	});
 });
 </script>

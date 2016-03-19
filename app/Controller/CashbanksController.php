@@ -5744,6 +5744,7 @@ function new_bank_receipt(){
 			
 			$i=0;
 			foreach($transaction_dates as $transaction_date){
+				$transaction_date=date("Y-m-d",strtotime($transaction_date));
 				$deposited_in=(int)$deposited_ins[$i];
 				$receipt_mode=$receipt_modes[$i];
 				$cheque_number=$cheque_numbers[$i];

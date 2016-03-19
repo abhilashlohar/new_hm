@@ -8,21 +8,32 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
       $penalty_tax = @$data['society']['tax'];
 	  $neft_type = @$data['society']['neft_type'];
 	  }
-	  
+	$nn=55; 
 	foreach($select_income_head_array as $income_head){  
 	foreach($flat_type_ids as $flat_type_id){  
-	  
-	  
-	  
-	  
-	}}
-	  
-	  
-	  
-	  
-	  
-	  
-if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type))
+	$rate_card_count = $this->requestAction(array('controller' => 'Fns', 'action' => 'rate_card_info_via_flat_type_id_and_income_head_id'),array('pass'=>array($flat_type_id,$income_head)));  
+		 if($rate_card_count == 0)
+		 {
+			$nn=555;
+			break;		
+		 }		 
+	 }}
+
+
+$nnn=55; 
+	
+	foreach($flat_type_ids as $flat_type_id){  
+	$noc_card_count = $this->requestAction(array('controller' => 'Fns', 'action' => 'noc_rate_info_via_flat_type_id'),array('pass'=>array($flat_type_id)));  
+		 if($noc_card_count == 0)
+		 {
+			$nnn=555;
+			break;		
+		 }		 
+	 }
+
+
+	 
+if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type) || $nn==555 || $nnn=555)
 {
 ?>
 <br>
@@ -38,12 +49,18 @@ if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type))
 		<?php if(empty($neft_type)){ ?>
 		<li style="text-align:left;"><p style="font-size:18px;">Please Fill NEFT Detail</p></li>
 		<?php } ?>
+		<?php if($nn==555){?>
+		<li style="text-align:left;"><p style="font-size:18px;">Please Fill Rate Card</p></li>
+		<?php } ?>
+		<?php if($nnn==555){?>
+		<li style="text-align:left;"><p style="font-size:18px;">Please Fill NOC Charges</p></li>
+		<?php } ?>
 	</ul>
 <br>
 </div>
 </center>
 <?php } ?>
-<?php if(!empty($select_income_head_array) && !empty($penalty_tax) && !empty($neft_type)){ ?>
+<?php if(!empty($select_income_head_array) && !empty($penalty_tax) && !empty($neft_type) && $nn==55 && $nnn==55){ ?>
 
 <div class="portlet box blue">
 	<div class="portlet-title">

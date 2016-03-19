@@ -481,6 +481,18 @@ function ledger_sub_account_info_via_user_flat_id($user_flat_id){
 	$conditions=array("ledger_id"=>34,'user_flat_id'=>$user_flat_id);
 	return $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 }
+function rate_card_info_via_flat_type_id_and_income_head_id($flat_type_id,$income_head_id){
+	$s_society_id=$this->Session->read('hm_society_id');
+	$this->loadmodel('rate_card');
+	$conditions=array("income_head_id"=>$income_head_id,"flat_type_id"=>$flat_type_id,'society_id'=>$s_society_id);
+	return $this->rate_card->find('count',array('conditions'=>$conditions));
+}
+function noc_rate_info_via_flat_type_id($flat_type_id){
+	$s_society_id=$this->Session->read('hm_society_id');
+	$this->loadmodel('noc_rate');
+	$conditions=array("flat_type_id"=>$flat_type_id,'society_id'=>$s_society_id);
+	return $this->noc_rate->find('count',array('conditions'=>$conditions));
+}
 
 }
 ?>

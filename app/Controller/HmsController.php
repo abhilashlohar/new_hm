@@ -22331,10 +22331,10 @@ function master_ledger_account_hm()
 		$auto_id = (int)$collection['ledger_account']['auto_id']; 
 			if(isset($this->request->data['sub'.$auto_id]))
 			{
-			$ledger_name = $this->request->data['cat'.$auto_id];
-			$gr_id = (int)$this->request->data['gr_id'.$auto_id];
+			//$ledger_name = $this->request->data['cat'.$auto_id];
+			//$gr_id = (int)$this->request->data['gr_id'.$auto_id];
 			$this->loadmodel('ledger_account');
-			$this->ledger_account->updateAll(array("ledger_name" => $ledger_name,"group_id"=>$gr_id),array("auto_id" => $auto_id));	
+			$this->ledger_account->updateAll(array("society_id"=>0),array("auto_id" => $auto_id));	
 			}
 	} 
 

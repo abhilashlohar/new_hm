@@ -8,6 +8,20 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
       $penalty_tax = @$data['society']['tax'];
 	  $neft_type = @$data['society']['neft_type'];
 	  }
+	  
+	foreach($select_income_head_array as $income_head){  
+	foreach($flat_type_ids as $flat_type_id){  
+	  
+	  
+	  
+	  
+	}}
+	  
+	  
+	  
+	  
+	  
+	  
 if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type))
 {
 ?>

@@ -296,6 +296,15 @@ $condition=array('society_id'=>$s_society_id);
 $result_society=$this->society->find('all',array('conditions'=>$condition));
 $this->set(compact("result_society"));	
 
+
+$this->loadmodel('flat');
+$conditions=array('society_id'=>$s_society_id);
+$flats=$this->flat->find('all',array('conditions'=>$conditions)); 
+foreach($flats as $flat){
+$flat_type_ids[]=@$flat["flat"]["flat_type_id"];
+}
+$flat_type_ids=array_unique($flat_type_ids);
+$this->set(compact("flat_type_ids"));
 }
 
 function preview_regular_bill(){

@@ -5772,14 +5772,14 @@ $this->set('bank_detail',$bank_detail);
 
 }
 
-/////////////////End my_flat_receipt_update_form ///////////////////////////////////////
-////////////////////Start my_flat_receipt_update_json ///////////////////////////////////
+//End my_flat_receipt_update_form//
+//Start my_flat_receipt_update_json//
 function my_flat_receipt_update_json()
 {
 $this->layout=null;
 $this->ath();
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $date=date('d-m-Y');
 $time = date(' h:i a', time());
 
@@ -5796,47 +5796,41 @@ foreach($myArray as $child)
 	die($output);
 	}	
 	
-	
- $TransactionDate = $child[0];
-		$this->loadmodel('financial_year');
-		$conditions=array("society_id" => $s_society_id,"status"=>1);
-		$cursor = $this->financial_year->find('all',array('conditions'=>$conditions));
-		$abc = 555;
-		foreach($cursor as $collection){
-				$from = $collection['financial_year']['from'];
-				$to = $collection['financial_year']['to'];
-				$from1 = date('Y-m-d',$from->sec);
-				$to1 = date('Y-m-d',$to->sec);
-				$from2 = strtotime($from1);
-				$to2 = strtotime($to1);
-				$transaction1 = date('Y-m-d',strtotime($TransactionDate));
-				$transaction2 = strtotime($transaction1);
-					if($transaction2 <= $to2 && $transaction2 >= $from2){
-					$abc = 5;
-					break;
-					}	
-		}
+	$TransactionDate = $child[0];
+	$this->loadmodel('financial_year');
+	$conditions=array("society_id" => $s_society_id,"status"=>1);
+	$cursor = $this->financial_year->find('all',array('conditions'=>$conditions));
+	$abc = 555;
+	foreach($cursor as $collection){
+	$from = $collection['financial_year']['from'];
+	$to = $collection['financial_year']['to'];
+	$from1 = date('Y-m-d',$from->sec);
+	$to1 = date('Y-m-d',$to->sec);
+	$from2 = strtotime($from1);
+	$to2 = strtotime($to1);
+	$transaction1 = date('Y-m-d',strtotime($TransactionDate));
+	$transaction2 = strtotime($transaction1);
+		if($transaction2 <= $to2 && $transaction2 >= $from2){
+		$abc = 5;
+		break;
+		}	
+	}
 	if($abc == 555){
-		$output=json_encode(array('type'=>'error','text'=>'Transaction date is not in open Financial Year '));
-		die($output);
+	$output=json_encode(array('type'=>'error','text'=>'Transaction date is not in open Financial Year '));
+	die($output);
 	}	
 
-if(empty($child[10]))
-{
-$output = json_encode(array('type'=>'error', 'text' => 'Please Select Deposited In '));
-die($output);
-}
-
-
-
-
-
+	if(empty($child[10]))
+	{
+	$output = json_encode(array('type'=>'error', 'text' => 'Please Select Deposited In '));
+	die($output);
+	}
 	
-if(empty($child[1]))
-		{
-		$output = json_encode(array('type'=>'error', 'text' => 'Please Select Receipt Mode '));
-		die($output);
-		}
+	if(empty($child[1]))
+	{
+	$output = json_encode(array('type'=>'error', 'text' => 'Please Select Receipt Mode '));
+	die($output);
+	}
 
 if($child[1] == "Cheque")
 {		
@@ -5919,7 +5913,7 @@ foreach($myArray as $child)
 $transaction_date = $child[0];
 $mode = $child[1];
 
-if($mode == "Cheque" || $mode == "cheque")
+if($mode=="Cheque" || $mode=="cheque")
 {
 $cheque_number = $child[2];
 $cheque_date = $child[3];
@@ -5931,36 +5925,26 @@ else
 $utr_ref = $child[7];
 $cheque_date = $child[6];
 }
-$amount = $child[8];
-$narration = $child[9];
-$bank_id = (int)$child[10];
-$flat_id = (int)$child[11];
+$amount=$child[8];
+$narration=$child[9];
+$bank_id=(int)$child[10];
+$ledger_sub_account_id=(int)$child[11];
 
 
-$flatt_datta = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
-foreach ($flatt_datta as $fltt_datttaa) 
-{
-$wnngg_idddd = (int)$fltt_datttaa['flat']['wing_id'];
+$user_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id)));
+$user_id=$user_detail['user_id'];
+$user_name=$user_detail['user_name'];
+$wing_id=$user_detail['wing_id'];
+$flat_id=$user_detail['flat_id'];
+
+$wing_flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+
+
+$result_user=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'),array('pass'=>array($user_id)));
+foreach($result_user as $user_data){
+$user_email=@$user_data['user']['email'];
 }	
-
-$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array($wnngg_idddd,$flat_id)));
-
-
-
-
-$ledger_sub_accdetailll = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_subLedger_detail_via_flat_id'),array('pass'=>array($flat_id)));
-foreach($ledger_sub_accdetailll as $subledger_dataaa) 
-{
-$user_id=(int)$subledger_dataaa['ledger_sub_account']['user_id'];
-$user_name = $subledger_dataaa['ledger_sub_account']['name'];
-}	
-
-$user_detailll = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($user_id)));
-foreach($user_detailll as $user_dataaa) 
-{
-$user_email=$user_dataaa['user']['email'];
-}	
-////////////Email ////////////////////////
+$user_email="nikhileshvyas4455@gmail.com";
 
 $this->loadmodel('society');
 $condition=array('society_id'=>$s_society_id);
@@ -5972,10 +5956,9 @@ foreach($result_society as $data_society){
 	$sms_is_on_off=(int)@$data_society["society"]["account_sms"];
     $admin_user_id = (int)$data_society["society"]["user_id"]; 
   }
-
+ 
 if($email_is_on_off==1){
-////email code//
-$r_sms=$this->hms_sms_ip();
+$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip'));
 $working_key=$r_sms->working_key;
 $sms_sender=$r_sms->sms_sender; 
 $sms_allow=(int)$r_sms->sms_allow;
@@ -5986,54 +5969,33 @@ $email_content = "Dear ".$user_name.", Thanks for updating your payment details.
 $this->send_email($user_email,'accounts@housingmatters.in','HousingMatters',$subject,$email_content,'donotreply@housingmatters.in');
 }
 
-$user_detailll2 = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($admin_user_id)));
-foreach($user_detailll2 as $user_dataaa2) 
+$result_admin_user=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'),array('pass'=>array($admin_user_id)));
+foreach($result_admin_user as $user_dataaa2) 
 {
 $admin_email=$user_dataaa2['user']['email'];
 }
 
 if($email_is_on_off==1){
-////email code//
-$r_sms=$this->hms_sms_ip();
+$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip'));
 $working_key=$r_sms->working_key;
 $sms_sender=$r_sms->sms_sender; 
 $sms_allow=(int)$r_sms->sms_allow;
-
 $subject="[".$society_name."]- ".$wing_flat." payment update";
-//$subject = "[".$society_name."]- Receipt,"date('d-M-Y',$d_date).""; 
 $email_content2 = "".$user_name."-".$wing_flat." has updated his/her payment details (Receipt of ".$amount." via-".$mode." on ".$transaction_date."). Please verify with bank statement & confirm for issuing formal receipt to resident.";
 
 $this->send_email($admin_email,'accounts@housingmatters.in','HousingMatters',$subject,$email_content2,'donotreply@housingmatters.in');
 }
 
 
-
-
-
-	
-//////////////////////////////////////////
 $current_date = date('d-m-Y');
-
 $l=$this->autoincrement('temp_cash_bank','auto_id');
 $this->loadmodel('temp_cash_bank');
-$multipleRowData = Array( Array("auto_id"=> $l,
-"receipt_date" => $transaction_date, "receipt_mode" => $mode, 
-"cheque_number" =>@$cheque_number,"cheque_date" =>@$cheque_date,
-"drawn_on_which_bank" =>@$drawn_bank_name,"reference_utr" => @$utr_ref,
-"deposited_bank_id"=>$bank_id,"member_type"=>1,
-"ledger_sub_account_id"=>$flat_id,"receipt_type"=>1,"amount"=>$amount,
-"current_date"=>$current_date,"society_id"=>$s_society_id,"ledger_sub_account_id"=>$flat_id,
-"narration"=>$narration,"prepaired_by"=>$s_user_id,"bank_branch"=>@$branch));
+$multipleRowData = Array( Array("auto_id"=> $l,"receipt_date" => $transaction_date,"receipt_mode" => $mode,"cheque_number" =>@$cheque_number,"cheque_date" =>@$cheque_date,"drawn_on_which_bank" =>@$drawn_bank_name,"reference_utr" => @$utr_ref,"deposited_bank_id"=>$bank_id,"member_type"=>1,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>1,"amount"=>$amount,
+"current_date"=>$current_date,"society_id"=>$s_society_id,"narration"=>$narration,"prepaired_by"=>$s_user_id,"bank_branch"=>@$branch));
 $this->temp_cash_bank->saveAll($multipleRowData);
-
-$transaction_date_format = date('d-M-Y',strtotime($transaction_date)); 
-$this->send_notification('<span class="label label-warning" ><i class="icon-money"></i></span>','Payment update waiting for verification ('.$wing_flat.') '.$transaction_date_format.'',28,$l,$this->webroot.'Cashbanks/bank_receipt_approve/'.$l,0,$admin_user_id);
-
-
 }
-
 $output = json_encode(array('type'=>'success', 'text' => 'Please Fill Numeric Amount '));
-		die($output);	
+die($output);	
 }
 //End my_flat_receipt_update_json//
 //Start opening_balance_new//

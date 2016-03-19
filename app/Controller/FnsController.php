@@ -292,7 +292,7 @@ function member_info_via_ledger_sub_account_id($ledger_sub_account_id){
 	$conditions=array("flat_id" => $flat);
 	$result5=$this->flat->find('all',array('conditions'=>$conditions));
 	$flat_name=ltrim($result5[0]["flat"]["flat_name"],'0');
-	$flat_area=$result5[0]["flat"]["flat_area"];
+	$flat_area=@$result5[0]["flat"]["flat_area"];
 	
 	return array("user_name"=>$user_name,"wing_name"=>$wing_name,"flat_name"=>$flat_name,"email"=>$email,"mobile"=>$mobile,"wing_id"=>$wing,"flat_id"=>$flat,"flat_area"=>$flat_area,"user_id"=>$user_id);
 }

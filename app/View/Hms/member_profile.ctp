@@ -16,7 +16,7 @@ $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' =
 	$mobile=$result_user[0]['user']['mobile'];
 	$email_privacy=@$result_user[0]['user']['email_privacy'];
 	$mobile_privacy=@$result_user[0]['user']['mobile_privacy'];
-	$profile_pic=$result_user[0]['user']['profile_pic'];
+	$profile_pic=@$result_user[0]['user']['profile_pic'];
 	$f_profile_pic = @$result_user[0]['user']['f_profile_pic'];
 	$g_profile_pic = @$result_user[0]['user']['g_profile_pic'];
 	

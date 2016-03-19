@@ -305,6 +305,24 @@ $flat_type_ids[]=@$flat["flat"]["flat_type_id"];
 }
 $flat_type_ids=array_unique($flat_type_ids);
 $this->set(compact("flat_type_ids"));
+
+
+$this->loadmodel('flat');
+$conditions=array('society_id'=>$s_society_id,'noc_ch_tp'=>2);
+$flats=$this->flat->find('all',array('conditions'=>$conditions)); 
+foreach($flats as $flat){
+$flat_type_idss[]=@$flat["flat"]["flat_type_id"];
+}
+if(!empty($flat_type_idss)){
+$flat_type_idss=array_unique($flat_type_idss);
+$this->set(compact("flat_type_idss"));
+}
+
+
+
+
+
+
 }
 
 function preview_regular_bill(){
@@ -5746,14 +5764,14 @@ function master_noc_status_update_ajax($update=null,$flat_id=null){
 				
 				$s_society_id = (int)$this->Session->read('hm_society_id');
 				$this->loadmodel('flat');
-				$this->flat->updateAll(array('noc_ch_tp'=>$update),array('flat_id'=>(int)$flat_id));
+				$this->flat->updateAll(array('noc_ch_tp'=>(int)$update),array('flat_id'=>(int)$flat_id));
 				
 				$this->loadmodel('flat');
-				$conditions=array("society_id"=>$s_society_id,'noc_ch_tp'=>'1');
+				$conditions=array("society_id"=>$s_society_id,'noc_ch_tp'=>1);
 				$result_count_flat_self = $this->flat->find('count',array('conditions'=>$conditions));
 				
 				$this->loadmodel('flat');
-				$conditions1=array("society_id"=>$s_society_id,'noc_ch_tp'=>'2');
+				$conditions1=array("society_id"=>$s_society_id,'noc_ch_tp'=>2);
 				$result_count_flat_les = $this->flat->find('count',array('conditions'=>$conditions1));
 				
 					echo '<span class="label label-info"> Number of Self Occupied flats <span style="font-size:15px;">'.$result_count_flat_self.'</span> </span> 
@@ -5764,14 +5782,14 @@ function master_noc_status_update_ajax($update=null,$flat_id=null){
 function master_noc_status_update_ajax_all($update=null){
 				$s_society_id = (int)$this->Session->read('hm_society_id');
 				$this->loadmodel('flat');
-				$this->flat->updateAll(array('noc_ch_tp'=>$update),array('society_id'=>(int)$s_society_id));
+				$this->flat->updateAll(array('noc_ch_tp'=>(int)$update),array('society_id'=>(int)$s_society_id));
 				
 				$this->loadmodel('flat');
-				$conditions=array("society_id"=>$s_society_id,'noc_ch_tp'=>'1');
+				$conditions=array("society_id"=>$s_society_id,'noc_ch_tp'=>1);
 				$result_count_flat_self = $this->flat->find('count',array('conditions'=>$conditions));
 				
 				$this->loadmodel('flat');
-				$conditions1=array("society_id"=>$s_society_id,'noc_ch_tp'=>'2');
+				$conditions1=array("society_id"=>$s_society_id,'noc_ch_tp'=>2);
 				$result_count_flat_les = $this->flat->find('count',array('conditions'=>$conditions1));
 				
 				echo '<span class="label label-info"> Number of Self Occupied flats <span style="font-size:15px;">'.$result_count_flat_self.'</span> </span> 
@@ -7355,25 +7373,11 @@ $arrr[] = $incid;
 $this->loadmodel('society');
 $this->society->updateAll(array('income_head'=> @$arrr),array('society_id'=>$s_society_id));
 
-$this->loadmodel('flat_type');
-$conditions=array("society_id" => $s_society_id);
-$cursor=$this->flat_type->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection2)
-{
-$auto_id = (int)$collection2['flat_type']['auto_id'];
-$charge3 = array();
-$charge = @$collection2['flat_type']['charge'];
-foreach($charge as $charge2)
-{
-$in1 = $charge2[0];
-if($in1 != $inid)
-{
-$charge3[] = $charge2;
-}
-}
-$this->loadmodel('flat_type');
-$this->flat_type->updateAll(array('charge'=> @$charge3),array('society_id'=>$s_society_id,"auto_id"=>$auto_id));
-}
+$this->loadmodel('rate_card');
+$conditions4=array("society_id"=>$s_society_id,'income_head_id'=>$inid);
+$this->rate_card->deleteAll($conditions4);
+
+
 
 
 $this->redirect(array('controller' => 'Incometrackers','action' => 'select_income_heads'));

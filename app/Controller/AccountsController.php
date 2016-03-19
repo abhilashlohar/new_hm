@@ -1529,30 +1529,13 @@ function my_flat_bill(){
 	$s_user_id=$this->Session->read('hm_user_id');
 	$this->set("s_user_id",$s_user_id);
 	
-	$result_user_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($s_user_id)));
-	//pr($result_user_info["wing_flat"]);
-	foreach ($result_user_info as $collection2){
-		$user_id=$collection2["user"]["user_id"];
-		$user_name=$collection2["user"]["user_name"];
-		$this->set('user_name',$user_name);
-		$flat_id=$collection2["user"]["flat"];
-	}
+	
 	
 	$this->loadmodel('society');
 	$conditions=array("society_id" => $s_society_id);
 	$result_society=$this->society->find('all',array('conditions'=>$conditions));
 	$this->set('result_society',$result_society);
 	
-	$this->loadmodel('ledger_sub_account');
-	$conditions=array("society_id" => $s_society_id,"user_id" => (int)$user_id);
-	$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-	$ledger_sub_account_id=@$result_ledger_sub_account[0]["ledger_sub_account"]["auto_id"];
-	
-	$this->loadmodel('ledger');
-	$conditions=array("society_id" => $s_society_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id,'transaction_date'=> array('$gte' => strtotime($from),'$lte' => strtotime($to)));
-	$order=array('new_regular_bill.one_time_id'=>'ASC');
-	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
-	$this->set('result_ledger',$result_ledger);
 
 }
 ////////////////////////////////// End My Flat Bill /////////////////////////////////////////////////////

@@ -504,6 +504,8 @@ function noc_rate_info_via_flat_type_id($flat_type_id){
 
 function member_info_via_user_id($user_id){
 	$s_society_id=$this->Session->read('hm_society_id');
+	
+	
 	$this->loadmodel('user_flat');
 	$conditions=array("user_id"=>$user_id, "exited"=>"no");
 	$result=$this->user_flat->find('all',array('conditions'=>$conditions));

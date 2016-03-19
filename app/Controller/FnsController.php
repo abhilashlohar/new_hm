@@ -249,7 +249,14 @@ function calculate_noc_charge($ledger_sub_account_id,$billing_cycle){
 		return $rate*$flat_area*$billing_cycle;
 	}
 	if($rate_type==4){
-		return 0;
+		$income_heads=$result5[0]["noc_rate"]["income_heads"];
+		$income_heads=explode(',',$income_heads);
+		$ih_amount=0;
+		foreach($income_heads as $income_head_id){
+			$income_head_id=(int)$income_head_id;
+			$ih_amount+= round($this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_income_head_amount'),array('pass'=>array($ledger_sub_account_id,$income_head_id,$billing_cycle))));
+		}
+		return $ih_amount*0.1;
 	}
 	if($rate_type==5){
 		return 0;

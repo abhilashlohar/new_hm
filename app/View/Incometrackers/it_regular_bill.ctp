@@ -4,11 +4,11 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 
 <?php foreach($result_society as $data)
       {
-	  $select_income_head_array = $data['society']['income_head'];
-      $penalty_tax = $data['society']['tax'];
-	  $neft_type = $data['society']['neft_type'];
+	  $select_income_head_array = @$data['society']['income_head'];
+      $penalty_tax = @$data['society']['tax'];
+	  $neft_type = @$data['society']['neft_type'];
 	  }
-if(!empty($select_income_head_array) || !empty($penalty_tax) || !empty($neft_type))
+if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type))
 {
 ?>
 <br>

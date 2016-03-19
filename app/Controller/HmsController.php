@@ -17094,12 +17094,17 @@ if(empty($photo_name))
 	$result_user_profile=$this->user_profile->find('count',array('conditions'=>$conditions));
 	if($result_user_profile>0){
 		
-	$this->user_profile->updateAll(array('gender'=>$sex,'age'=>$age,'per_address'=>$per_address,'comm_address'=>$com_address,'hobbies'=>$hob,'profile_pic'=>$photo_name,'blood_group'=>$blood_group,'medical_pro'=>$medical,'contact_emergency'=>$contact_emergency),array("user_id" => $s_user_id));
+			$this->user_profile->updateAll(array('gender'=>$sex,'age'=>$age,'per_address'=>$per_address,'comm_address'=>$com_address,'hobbies'=>$hob,'blood_group'=>$blood_group,'medical_pro'=>$medical,'contact_emergency'=>$contact_emergency),array("user_id" => $s_user_id));
+			
+			$this->loadmodel('user');
+			$this->user->updateAll(array('profile_pic'=>$photo_name),array("user_id" => $s_user_id));
 		
 	}else{
-		$user_profile_id=$this->autoincrement('user_profile','user_profile_id');
-		$this->user_profile->saveAll(array('gender'=>$sex,'age'=>$age,'per_address'=>$per_address,'comm_address'=>$com_address,'hobbies'=>$hob,'profile_pic'=>$photo_name,'blood_group'=>$blood_group,'medical_pro'=>$medical,'contact_emergency'=>$contact_emergency,'user_profile_id'=>$user_profile_id,'user_id'=>$s_user_id,'society_id'=>$s_society_id));
-		
+			$user_profile_id=$this->autoincrement('user_profile','user_profile_id');
+			$this->user_profile->saveAll(array('gender'=>$sex,'age'=>$age,'per_address'=>$per_address,'comm_address'=>$com_address,'hobbies'=>$hob,'blood_group'=>$blood_group,'medical_pro'=>$medical,'contact_emergency'=>$contact_emergency,'user_profile_id'=>$user_profile_id,'user_id'=>$s_user_id,'society_id'=>$s_society_id));
+			
+			$this->loadmodel('user');
+			$this->user->updateAll(array('profile_pic'=>$photo_name),array("user_id" => $s_user_id));
 	}
 	
 $to=$email;
@@ -17742,12 +17747,12 @@ function resident_directory(){
 					$this->loadmodel('wing');
 					$conditions=array("wing_id"=>$wing);
 					$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
-					$wing_name=$wing_info[0]["wing"]["wing_name"];
+					$wing_name=@$wing_info[0]["wing"]["wing_name"];
 					
 					$this->loadmodel('flat');
 					$conditions=array("flat_id"=>$flat);
 					$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
-					$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
+					$flat_name=ltrim(@$flat_info[0]["flat"]["flat_name"],'0');
 					
 					$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
 				}
@@ -17778,6 +17783,15 @@ function resident_directory(){
 	$this->set(compact("arranged_users"));
 }
 
+function member_all_detail($user_flat_id=null){
+	
+	$this->layout=null;	
+	$this->ath();
+		$this->loadmodel('user_flat');	
+		$conditions=array('user_flat_id'=>$user_flat_id);
+		$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions));
+		$this->set(compact("result_user_flat"));
+}
 
 function resident_directory_view()
 {

@@ -36,33 +36,38 @@ color:#FFF;
 </style>
 <div id="main" style="overflow: auto;">
 <?php foreach($arranged_users as $user_info){ 
+	$user_flat_id=(int)$user_info["user_flat_id"];
 	$user_name=$user_info["user_name"];
 	$wing_flats=$user_info["wing_flat"];
 	$profile_pic=$user_info["profile_pic"];
 	foreach($wing_flats as $user_flat_id=>$wing_flat){?>
+	
 	<div class="r_d">
-		<div class="qwe">
-			<div class="hv_b" style="overflow: auto;padding: 5px;cursor: pointer;" title="">
-				<?php if(!empty($profile_pic) && $profile_pic!="blank.jpg"){ ?>
-						<img alt="" src="<?php echo $webroot_path; ?>profile/<?php echo @$profile_pic; ?>" class="profile_pic"/>
-						<?php }
-						elseif(!empty($f_profile_pic)){ ?>
-							<img alt="" src="<?php echo $f_profile_pic; ?>" class="profile_pic" />
-						<?php }
-						elseif(!empty($g_profile_pic)){ ?>
-							<img alt="" src="<?php echo $g_profile_pic; ?>" class="profile_pic" />
-						<?php }
-						else{ ?>
-							<img alt="" src="<?php echo $webroot_path; ?>profile/blank.jpg" class="profile_pic" />
-						<?php } ?>
-				<div style="float:left;margin-left:3%;">
-					<span style="font-size:18px;"><?php echo ucfirst($user_name); ?></span> 
-					 <br>
-					<span style="font-size:14px;"><?php echo $wing_flat; ?></span>
+		<a href="member_all_detail/<?php echo $user_flat_id; ?>" role="button" rel='tab'>
+			<div class="qwe">
+				<div class="hv_b" style="overflow: auto;padding: 5px;cursor: pointer;" title="">
+					<?php if(!empty($profile_pic) && $profile_pic!="blank.jpg"){ ?>
+							<img alt="" src="<?php echo $webroot_path; ?>profile/<?php echo @$profile_pic; ?>" class="profile_pic"/>
+							<?php }
+							elseif(!empty($f_profile_pic)){ ?>
+								<img alt="" src="<?php echo $f_profile_pic; ?>" class="profile_pic" />
+							<?php }
+							elseif(!empty($g_profile_pic)){ ?>
+								<img alt="" src="<?php echo $g_profile_pic; ?>" class="profile_pic" />
+							<?php }
+							else{ ?>
+								<img alt="" src="<?php echo $webroot_path; ?>profile/blank.jpg" class="profile_pic" />
+							<?php } ?>
+					<div style="float:left;margin-left:3%;">
+						<span style="font-size:18px;"><?php echo ucfirst($user_name); ?></span> 
+						 <br>
+						<span style="font-size:14px;"><?php echo $wing_flat; ?></span>
+					</div>
 				</div>
 			</div>
-		</div>
+		</a>
 	</div>
+		
 	<?php } ?>
 <?php } ?>
 </div>

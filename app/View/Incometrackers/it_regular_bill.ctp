@@ -21,15 +21,15 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 
 
 $nnn=55; 
-	
-	foreach($flat_type_ids as $flat_type_id){  
-	$noc_card_count = $this->requestAction(array('controller' => 'Fns', 'action' => 'noc_rate_info_via_flat_type_id'),array('pass'=>array($flat_type_id)));  
+	if(!empty($flat_type_idss)){
+	foreach($flat_type_idss as $flat_type_id){  
+	echo $noc_card_count = $this->requestAction(array('controller' => 'Fns', 'action' => 'noc_rate_info_via_flat_type_id'),array('pass'=>array($flat_type_id)));  
 		 if($noc_card_count == 0)
 		 {
 			$nnn=555;
 			break;		
 		 }		 
-	 }
+	}}
 
 
 	 

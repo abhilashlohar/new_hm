@@ -33,7 +33,7 @@ function add_new_party_account_head($party_name=null){
 		echo "OK"; exit;
 	}
 }
-/////////////////////////Start It Regular Bill (Accounts) //////////////////////////////////////
+//Start It Regular Bill (Accounts)//
 function it_regular_bill(){
 	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
@@ -289,6 +289,13 @@ function it_regular_bill(){
 		$this->redirect(array('controller' => 'Incometrackers','action' => 'preview_regular_bill'));
 	
 	}
+	
+	
+$this->loadmodel('society');
+$condition=array('society_id'=>$s_society_id);
+$result_society=$this->society->find('all',array('conditions'=>$condition));
+$this->set(compact("result_society"));	
+
 }
 
 function preview_regular_bill(){

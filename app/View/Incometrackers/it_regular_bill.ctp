@@ -2,6 +2,35 @@
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>
 
+<?php foreach($result_society as $data)
+      {
+	  $select_income_head_array = $data['society']['income_head'];
+      $penalty_tax = $data['society']['tax'];
+	  $neft_type = $data['society']['neft_type'];
+	  }
+if(!empty($select_income_head_array) || !empty($penalty_tax) || !empty($neft_type))
+{
+?>
+<br>
+<center>
+<div style="border:solid; background-color:white; width:80%;">
+<br>
+	<ul>
+	    <?php if(empty($select_income_head_array)){ ?>
+		<li style="text-align:left;"><p style="font-size:18px;">Please Select Income Heads in Selection of Income Head</p></li><?php } ?>
+		<?php if(empty($penalty_tax)){ ?>
+		<li style="text-align:left;"><p style="font-size:18px;">Please Fill Penalty</p></li>
+		<?php } ?>
+		<?php if(empty($neft_type)){ ?>
+		<li style="text-align:left;"><p style="font-size:18px;">Please Fill NEFT Detail</p></li>
+		<?php } ?>
+	</ul>
+<br>
+</div>
+</center>
+<?php } ?>
+<?php if(!empty($select_income_head_array) && !empty($penalty_tax) && !empty($neft_type)){ ?>
+
 <div class="portlet box blue">
 	<div class="portlet-title">
 	<h4 class="block"><i class="icon-reorder"></i>Create regular bill</h4>
@@ -90,3 +119,5 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<!-- END FORM-->
 	</div>
 </div>
+
+<?php } ?>

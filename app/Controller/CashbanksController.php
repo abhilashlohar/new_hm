@@ -584,8 +584,7 @@ function bank_receipt_show_ajax($from=null,$to=null)
 	$society_info=$this->society->find('all',array('conditions'=>$conditions));
 	$this->set('society_info',$society_info);
 }
-///////////////////////////////////End bank receipt show ajax//////////////////////////////////////////////////
-
+//End bank receipt show ajax//
 function cancel_receipt_due_to_check_bounce($record_id=null){
 	$this->ath();
 	$s_role_id=$this->Session->read('role_id');

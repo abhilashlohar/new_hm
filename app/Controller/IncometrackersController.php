@@ -7373,25 +7373,11 @@ $arrr[] = $incid;
 $this->loadmodel('society');
 $this->society->updateAll(array('income_head'=> @$arrr),array('society_id'=>$s_society_id));
 
-$this->loadmodel('flat_type');
-$conditions=array("society_id" => $s_society_id);
-$cursor=$this->flat_type->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection2)
-{
-$auto_id = (int)$collection2['flat_type']['auto_id'];
-$charge3 = array();
-$charge = @$collection2['flat_type']['charge'];
-foreach($charge as $charge2)
-{
-$in1 = $charge2[0];
-if($in1 != $inid)
-{
-$charge3[] = $charge2;
-}
-}
-$this->loadmodel('flat_type');
-$this->flat_type->updateAll(array('charge'=> @$charge3),array('society_id'=>$s_society_id,"auto_id"=>$auto_id));
-}
+$this->loadmodel('rate_card');
+$conditions4=array("society_id"=>$s_society_id,'income_head_id'=>$inid);
+$this->rate_card->deleteAll($conditions4);
+
+
 
 
 $this->redirect(array('controller' => 'Incometrackers','action' => 'select_income_heads'));

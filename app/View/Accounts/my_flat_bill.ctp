@@ -11,7 +11,7 @@ foreach($result_society as $data){
 	$society_phone=@$data["society"]["society_phone"];
 }
 
-$result_opening_balance= $this->requestAction(array('controller' => 'Incometrackers', 'action' => 'fetch_opening_balance_via_user_id'),array('pass'=>array($s_user_id)));
+//$result_opening_balance= $this->requestAction(array('controller' => 'Incometrackers', 'action' => 'fetch_opening_balance_via_user_id'),array('pass'=>array($s_user_id)));
 
 
 ?>
@@ -24,22 +24,22 @@ $result_opening_balance= $this->requestAction(array('controller' => 'Incometrack
 </style>
 <?php
 $result_user_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($s_user_id)));
-	$multiple_flat=$result_user_info["wing_flat"];
+$multiple_flat = sizeof($result_user_info);	
 ?>
 
 
 <div align="center" class="hide_at_print">
 	<table>
 		<tr>
-		<?php  if(sizeof($multiple_flat)>1){  ?>
+		<?php  if($multiple_flat>1){  ?>
 		<td>
-		<select class="m-wrap" data-placeholder="Choose a Category"  id="flat_select_box">
-			<option value="" style="display:none;" >Select...</option>
-			<?php $count=0; foreach($multiple_flat as $user_flat_id=>$wing_flat){ $count++;
-				?>
-			<option value="<?php echo $user_flat_id; ?>" <?php if($count==1){ echo 'selected="selected"'; } ?> ><?php echo $wing_flat; ?></option>
-			<?php } ?>
-		</select>
+		<select name="ledger_sub_account[]" class="m-wrap" style="width:200px;">
+		<option value="" style="display:none;">--member--</option>
+		<?php foreach($members_for_billing as $ledger_sub_account_id){
+		$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+		echo '<option value='.$ledger_sub_account_id.'>'.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
+		} ?>
+		</select>  
 		</td>
 		<?php } ?>
 		<td><input class="date-picker m-wrap medium" id="from" data-date-format="dd-mm-yyyy" name="from" placeholder="From" style="background-color:white !important;" value="<?php echo date("d-m-Y",strtotime($from)); ?>" type="text"></td>

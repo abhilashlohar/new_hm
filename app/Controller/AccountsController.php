@@ -1523,25 +1523,47 @@ function my_flat_bill(){
 	$this->set("to",$to);
 	
 	
-	
 	$this->check_user_privilages();
 	$s_society_id = (int)$this->Session->read('hm_society_id');
-	
 	$s_user_id=$this->Session->read('hm_user_id');
 	$this->set("s_user_id",$s_user_id);
-	
-	
-	
+
 	$this->loadmodel('society');
 	$conditions=array("society_id" => $s_society_id);
 	$result_society=$this->society->find('all',array('conditions'=>$conditions));
 	$this->set('result_society',$result_society);
 	
+	$this->loadmodel('ledger_sub_account');
+	$condition=array('society_id'=>$s_society_id,'ledger_id'=>34,'user_id'=>$s_user_id);
+	$members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
+	foreach($members as $data3){
+	$ledger_sub_account_ids[]=$data3["ledger_sub_account"]["auto_id"];
+	}
+		$this->loadmodel('wing');
+        $condition=array('society_id'=>$s_society_id);
+        $order=array('wing.wing_name'=>'ASC');
+        $wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+        foreach($wings as $data){
+			$wing_id=$data["wing"]["wing_id"];
+			$this->loadmodel('flat');
+			$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+			$order=array('flat.flat_name'=>'ASC');
+			$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+			foreach($flats as $data2){
+				$flat_id=$data2["flat"]["flat_id"];
+				$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+				if(!empty($ledger_sub_account_id)){
+					if (in_array($ledger_sub_account_id, $ledger_sub_account_ids)){
+						$members_for_billing[]=$ledger_sub_account_id;
+					}
+				}
+			}
+		}
+		$this->set(compact("members_for_billing"));	
 
-}
-////////////////////////////////// End My Flat Bill /////////////////////////////////////////////////////
-
-/////////////////////////////////// Start my_flat_bill_ajax ////////////////////////////////////////////
+	}
+//End My Flat Bill//
+//Start my_flat_bill_ajax//
 function my_flat_bill_ajax($from=null,$to=null,$user_flat_id=null){
 	$user_flat_id=(int)$user_flat_id; 
 	$this->ath();

@@ -6014,18 +6014,17 @@ $this->send_email($admin_email,'accounts@housingmatters.in','HousingMatters',$su
 //////////////////////////////////////////
 $current_date = date('d-m-Y');
 
-$l=$this->autoincrement('my_flat_receipt_update','auto_id');
-	   
-$this->loadmodel('my_flat_receipt_update');
+$l=$this->autoincrement('temp_cash_bank','auto_id');
+$this->loadmodel('temp_cash_bank');
 $multipleRowData = Array( Array("auto_id"=> $l,
 "receipt_date" => $transaction_date, "receipt_mode" => $mode, 
 "cheque_number" =>@$cheque_number,"cheque_date" =>@$cheque_date,
 "drawn_on_which_bank" =>@$drawn_bank_name,"reference_utr" => @$utr_ref,
-"deposited_bank_id" => $bank_id,"member_type" => 1,
-"party_name_id"=>$flat_id,"receipt_type" => 1,"amount" => $amount,
-"current_date" => $current_date,"society_id"=>$s_society_id,"flat_id"=>$flat_id,
-"narration"=>$narration,"prepaired_by"=>$s_user_id,"bank_branch"=>@$branch,"approval_id"=>1));
-$this->my_flat_receipt_update->saveAll($multipleRowData);
+"deposited_bank_id"=>$bank_id,"member_type"=>1,
+"ledger_sub_account_id"=>$flat_id,"receipt_type"=>1,"amount"=>$amount,
+"current_date"=>$current_date,"society_id"=>$s_society_id,"ledger_sub_account_id"=>$flat_id,
+"narration"=>$narration,"prepaired_by"=>$s_user_id,"bank_branch"=>@$branch));
+$this->temp_cash_bank->saveAll($multipleRowData);
 
 $transaction_date_format = date('d-M-Y',strtotime($transaction_date)); 
 $this->send_notification('<span class="label label-warning" ><i class="icon-money"></i></span>','Payment update waiting for verification ('.$wing_flat.') '.$transaction_date_format.'',28,$l,$this->webroot.'Cashbanks/bank_receipt_approve/'.$l,0,$admin_user_id);

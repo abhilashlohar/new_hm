@@ -131,14 +131,7 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 			} ?>
 			</select>  
 			<?php } ?>	
-			
-			
-			
-			
-			
-			
-			
-				</td>
+			</td>
 								 
 				<td>
 				<select class="m-wrap span12" disabled="disabled">

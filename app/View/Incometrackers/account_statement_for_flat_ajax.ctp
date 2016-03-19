@@ -131,16 +131,16 @@ foreach($result_ledger as $ledger_data){
 					}
 					$credits="";
 				}
-				if($table_name=="new_cash_bank"){
+				if($table_name=="cash_bank"){
 					
 					$element_id=$element_id;
 					
-					$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array($element_id)));
-					$refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_id"]; 
-					$flat_id = (int)@$result_cash_bank[0]["cash_bank"]["party_name_id"];
-					$description = @$result_cash_bank[0]["cash_bank"]["narration"];
-					$date = $result_cash_bank[0]["cash_bank"]["current_date"];	
-					$prepaired_by = (int)$result_cash_bank[0]["cash_bank"]["prepaired_by"];	
+			$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array($element_id)));
+			$refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_number"]; 
+			$ledger_sub_account_id = (int)@$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
+			$description = @$result_cash_bank[0]["cash_bank"]["narration"];
+			$date = $result_cash_bank[0]["cash_bank"]["date"];	
+			$prepaired_by = (int)$result_cash_bank[0]["cash_bank"]["created_by"];	
 							
 					$interest="";
 					$maint_charges="";

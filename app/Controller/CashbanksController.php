@@ -5766,10 +5766,10 @@ function new_bank_receipt(){
 					
 					$this->loadmodel('ledger');
 					$ledger_id=$this->autoincrement('ledger','auto_id');
-					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" => $amount, "credit" =>null, "ledger_account_id" => 33, "ledger_sub_account_id" => $deposited_in,"table_name" => "bank_receipt","element_id" => $auto_id, "society_id" => $s_society_id))); 
+					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" => $amount, "credit" =>null, "ledger_account_id" => 33, "ledger_sub_account_id" => $deposited_in,"table_name" => "cash_bank","element_id" => $auto_id, "society_id" => $s_society_id))); 
 
 					$ledger_id=$this->autoincrement('ledger','auto_id');
-					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name" => "bank_receipt","element_id" => $auto_id, "society_id" => $s_society_id,"receipt_type" =>$receipt_type)));
+					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name"=>"cash_bank","element_id" => $auto_id, "society_id" => $s_society_id,"receipt_type" =>$receipt_type)));
 				}
 				
 				// start Email & Sms code

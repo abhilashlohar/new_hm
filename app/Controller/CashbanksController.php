@@ -431,6 +431,20 @@ function allow_import_bank_receipt(){
 	$this->ath();
 	$s_society_id = $this->Session->read('hm_society_id');
 	
+	$this->loadmodel('bank_receipt_csv_converted'); 
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$order=array('bank_receipt_csv_converted.auto_id'=>'ASC');
+	$result_bank_receipt_converted=$this->bank_receipt_csv_converted->find('all',array('conditions'=>$conditions,'order'=>$order));
+	foreach($result_bank_receipt_converted as $receipt_converted){
+		$deposited_in=(int)$receipt_converted["bank_receipt_csv_converted"]["deposited_in"];
+		$ledger_sub_account_id=$receipt_converted["bank_receipt_csv_converted"]["ledger_sub_account_id"];
+		$amount=(float)$receipt_converted["bank_receipt_csv_converted"]["amount"];
+		if(empty($deposited_in) or empty($ledger_sub_account_id) or empty($amount)){
+			die("not_validate");
+		}
+	}
+	
+	
 	$this->loadmodel('import_record');
 	$this->import_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "BR"));
 }
@@ -475,27 +489,26 @@ function final_import_bank_receipt_ajax(){
 			
 			
 			
-			if($receipt_type == "maintenance"){
 				
-			$current_date = date('Y-m-d');
-			
-			$this->loadmodel('cash_bank');
-			$auto_id=$this->autoincrement('cash_bank','auto_id');
-			$receipt_number=$this->autoincrement_with_society_ticket('cash_bank','receipt_number');
-			$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id, "transaction_date" => $trajection_date,"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_or_reference_no,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number))); 
-			
-			
-			$this->loadmodel('ledger');
-			$ledger_id=$this->autoincrement('ledger','auto_id');
-			$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($trajection_date), "debit" => $amount, "credit" =>null, "ledger_account_id" => 33, "ledger_sub_account_id" => $deposited_in,"table_name" => "bank_receipt","element_id" => $auto_id, "society_id" => $s_society_id))); 
+				$current_date = date('Y-m-d');
+				
+				$this->loadmodel('cash_bank');
+				$auto_id=$this->autoincrement('cash_bank','auto_id');
+				$receipt_number=$this->autoincrement_with_society_ticket('cash_bank','receipt_number');
+				$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id, "transaction_date" => $trajection_date,"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_or_reference_no,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number))); 
+				
+				
+				$this->loadmodel('ledger');
+				$ledger_id=$this->autoincrement('ledger','auto_id');
+				$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($trajection_date), "debit" => $amount, "credit" =>null, "ledger_account_id" => 33, "ledger_sub_account_id" => $deposited_in,"table_name" => "cash_bank","element_id" => $auto_id, "society_id" => $s_society_id))); 
 
-			$ledger_id=$this->autoincrement('ledger','auto_id');
-			$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($trajection_date), "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name" => "bank_receipt","element_id" => $auto_id, "society_id" => $s_society_id,"receipt_type" =>$receipt_type)));
+				$ledger_id=$this->autoincrement('ledger','auto_id');
+				$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($trajection_date), "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name" => "cash_bank","element_id" => $auto_id, "society_id" => $s_society_id,"receipt_type" =>$receipt_type)));
+				
+				$this->loadmodel('bank_receipt_csv_converted');
+				$this->bank_receipt_csv_converted->updateAll(array("is_imported" => "YES"),array("auto_id" => $bank_receipt_csv_id));
+						
 			
-			$this->loadmodel('bank_receipt_csv_converted');
-			$this->bank_receipt_csv_converted->updateAll(array("is_imported" => "YES"),array("auto_id" => $bank_receipt_csv_id));
-					
-		}
 	}
 		
 		

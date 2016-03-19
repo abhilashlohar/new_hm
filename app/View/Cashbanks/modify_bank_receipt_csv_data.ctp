@@ -4,7 +4,7 @@ input.m-wrap[type="text"]{
 }
 </style>
 <div style="background-color:#FFF;">
-<table id="report_tb" class="table table-bordered table-striped" width="100%">
+<table id="report_tb" class="table table-bordered table-condensed" width="100%">
 	<tr>
 		<th>Transaction Date</th>
 		<th>Deposited In</th>
@@ -170,8 +170,10 @@ for($ii=1;$ii<=$loop;$ii++){ ?>
 </div>
 <br/>
 
-<a class="btn purple big" role="button" id="final_import">IMPORT RECEIPTS <i class="m-icon-big-swapright m-icon-white"></i></a>									
+<div align="center" id="submit_sec">
+<a class="btn blue" role="button" id="final_import">IMPORT RECEIPTS </a>									
 <div id="check_validation_result"></div>
+</div>
 
 	
 <script>
@@ -226,8 +228,18 @@ $(document).ready(function() {
 			$.ajax({
 				url: "<?php echo $webroot_path; ?>Cashbanks/allow_import_bank_receipt",
 			}).done(function(response){
-				change_page_automatically("<?php echo $webroot_path; ?>Cashbanks/import_bank_receipts_csv");
+				alert(response);
+				if(response=="not_validate"){
+					$("#submit_sec").find(".alert-error").remove();
+					$("#final_import").before('<div class="alert alert-error" style="width: 50%;">There are errors on other pages.</div>');
+				}else{
+					change_page_automatically("<?php echo $webroot_path; ?>Cashbanks/import_bank_receipts_csv");
+				}
+				
 			});
+		}else{
+			$("#submit_sec").find(".alert-error").remove();
+			$("#final_import").before('<div class="alert alert-error" style="width: 50%;">There are errors above, marked with red color.</div>');
 		}
 		
 	});
@@ -269,8 +281,6 @@ function change_page_automatically(pageurl){
 	$.ajax({
 		url: pageurl,
 		}).done(function(response) {
-		
-		//$("#loading_ajax").html('');
 		
 		$(".page-content").html(response);
 		$("#loading").hide();
@@ -315,7 +325,7 @@ $( document ).ready(function() {
 		}).done(function(response){
 			if(response=="F"){
 				$("table#report_tb tr#"+record_id+" td").each(function(){
-					$(this).find('input[field="'+field+'"]').parent("div").css("border", "solid 1px red");
+					$(this).find('input[field="'+field+'"]').parent("div").css("border", "");
 				});
 			}else{
 				$("table#report_tb tr#"+record_id+" td").each(function(){

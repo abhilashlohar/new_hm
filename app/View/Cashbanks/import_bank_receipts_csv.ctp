@@ -159,29 +159,44 @@ function final_import_bank_receipt_ajax(){
 <script>
 $('form#form1').submit( function(ev){
 	ev.preventDefault();
-	$("#submit_element").html("<img src='<?php echo $webroot_path; ?>as/loding.gif' /> Please Wait, Csv file is Uploading...");
+	
 	var m_data = new FormData();
-	m_data.append( 'file', $('input[name=file]')[0].files[0]);
-	$.ajax({
-	url: "Upload_Bank_receipt_csv_file",
-	data: m_data,
-	processData: false,
-	contentType: false,
-	type: 'POST',
-	dataType: 'json'
-	}).done(function(response){
-		if(response=="UPLOADED"){
-			change_page_automatically("<?php echo $webroot_path; ?>Cashbanks/import_bank_receipts_csv");
-		}
-	});
+	var fileName=$('input[name=file]').val();
+	var ext = fileName.split('.').pop();
+	var allow="yes";
+	if(fileName==""){
+		alert("please select file");
+		allow="no";
+		return;
+	}
+	if(ext!="csv"){
+		alert("csv extension allowed");
+		allow="no";
+		return;
+	}
+	if(allow=="yes"){
+		$("#submit_element").html("<img src='<?php echo $webroot_path; ?>as/loding.gif' /> Please Wait, Csv file is Uploading...");
+		m_data.append( 'file', $('input[name=file]')[0].files[0]);
+		$.ajax({
+		url: "Upload_Bank_receipt_csv_file",
+		data: m_data,
+		processData: false,
+		contentType: false,
+		type: 'POST',
+		dataType: 'json'
+		}).done(function(response){
+			if(response=="UPLOADED"){
+				change_page_automatically("<?php echo $webroot_path; ?>Cashbanks/import_bank_receipts_csv");
+			}
+		});
+	}
+	
 });
 
 function change_page_automatically(pageurl){
 	$.ajax({
 		url: pageurl,
 		}).done(function(response) {
-		
-		//$("#loading_ajax").html('');
 		
 		$(".page-content").html(response);
 		$("html, body").animate({

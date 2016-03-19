@@ -25,6 +25,13 @@ background-color: #E6ECE7;
 <table>
 		<tr>
 			<td>
+				<select name="ledger_sub_account[]" class="m-wrap chosen medium" style="width:200px;" id="ledger_sub_account_id">
+				<option value="" style="display:none;">--member--</option>
+				<?php foreach($members_for_billing as $ledger_sub_account_id){
+				$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+				echo '<option value='.$ledger_sub_account_id.'>'.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
+				} ?>
+				</select> 
 			</td>
 			<td>
 			<input class="date-picker m-wrap medium" id="from" data-date-format="dd-mm-yyyy" name="from" 
@@ -47,9 +54,10 @@ background-color: #E6ECE7;
 	
 </div>
 <script>
-$(document).ready(function() {
+$(document).ready(function(){
 	$( "#go" ).click(function() {
-		var ledger_sub_account_id=$(".resident_drop_down").val();
+		var ledger_sub_account_id=$("#ledger_sub_account_id").val();
+		alert(ledger_sub_account_id);
 		var from=$("#from").val();
 		var to=$("#to").val();
 		$("#result_statement").show();

@@ -7,7 +7,7 @@ public $components = array(
 'Session','Cookie','RequestHandler'
 );
 var $name = 'Accounts';
-////////////////// Start Master Ledger Sub Account Ajax ///////////////////////
+//Start Master Ledger Sub Account Ajax//
 function master_ledger_sub_account_ajax()
 {
 		$this->layout='blank';
@@ -18,9 +18,8 @@ function master_ledger_sub_account_ajax()
 			$value = (int)$this->request->query('value');
 			$this->set('value',$value);
 }
-/////////////////////////////End Master Ledger Sub Account Ajax///////////////////////////////
-
-//////////////////////////// Start Opening Balance Import (Accounts)//////////////////////////
+//End Master Ledger Sub Account Ajax//
+//Start Opening Balance Import (Accounts)//
 function opening_balance_import()
 {
 	if($this->RequestHandler->isAjax()){
@@ -64,9 +63,8 @@ $this->ath();
 	$process_status= @$step1+@$step2+@$step3+@$step4;			
 				
 }
-//////////////////// End Opening Balance Import (Accounts)/////////////////////////////////////
-
-/////////////////// Start upload_opening_balance_csv_file ///////////////////////////////
+//End Opening Balance Import (Accounts)//
+//Start upload_opening_balance_csv_file//
 function upload_opening_balance_csv_file()
 {
 	$s_society_id = $this->Session->read('hm_society_id');
@@ -89,8 +87,8 @@ function upload_opening_balance_csv_file()
 		die(json_encode("UPLOADED"));
 	}
 }
-////////////////// End upload_opening_balance_csv_file ////////////////////////////////////
-//////////////////// Start read_csv_file_ob ///////////////////////////////////////
+//End upload_opening_balance_csv_file//
+//Start read_csv_file_ob//
 function read_csv_file_ob()
 {
 	$this->layout=null;
@@ -1503,9 +1501,8 @@ function ac_statement_bill_view($receipt_id=null)
 		}
 			$this->set('bill_html',$bill_html);
 }
-///////////////////////////////////// End ac statement Bill View////////////////////////////////////////
-
-//////////////////////// Start My Flat Bill (Accounts) //////////////////////////////
+//End ac statement Bill View//
+//Start My Flat Bill (Accounts)//
 function my_flat_bill()
 {
 	if($this->RequestHandler->isAjax()){
@@ -1525,9 +1522,8 @@ function my_flat_bill()
 	
 	$this->ath();
 	$this->check_user_privilages();
-	$s_society_id = (int)$this->Session->read('society_id');
-	
-	$s_user_id=$this->Session->read('user_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$this->set("s_user_id",$s_user_id);
 	
 	$result_user_info=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($s_user_id)));
@@ -1537,7 +1533,7 @@ function my_flat_bill()
 		$this->set('user_name',$user_name);
 		//$multiple_flat=@$collection2["user"]["multiple_flat"];
 		//$this->set('multiple_flat',$multiple_flat);
-		$flat_id=$collection2["user"]["flat"];
+		$flat_id=@$collection2["user"]["flat"];
 	}
 	
 	$this->loadmodel('society');
@@ -1557,9 +1553,9 @@ function my_flat_bill()
 	$this->set('result_ledger',$result_ledger);
 
 }
-////////////////////////////////// End My Flat Bill /////////////////////////////////////////////////////
+//End My Flat Bill//
 
-/////////////////////////////////// Start my_flat_bill_ajax ////////////////////////////////////////////
+//Start my_flat_bill_ajax//
 function my_flat_bill_ajax($from=null,$to=null,$flat_id=null)
 {
 		if($this->RequestHandler->isAjax()){
@@ -1646,7 +1642,7 @@ function my_flat_bill_ajax($from=null,$to=null,$flat_id=null)
 
 	
 }
-////////////////////////////End My Flat Bill Ajax/////////////////////////////////////////////////
+//End My Flat Bill Ajax//
 function my_flat_bill_excel_export($from=null,$to=null,$flat_id=null)
 {
 $this->layout=null;
@@ -1732,9 +1728,8 @@ $sss_namm = str_replace(' ','-',$society_name);
 	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
 	$this->set('result_ledger',$result_ledger);
 }
-/////////////////////////// End my_flat_bill_ajax (Accounts) /////////////////////////////////////
-
-/////////////////////////// Start Bank Receipt Pdf (Accounts)//////////////////////////////////////
+//End my_flat_bill_ajax (Accounts)//
+//Start Bank Receipt Pdf (Accounts)//
 function bank_receipt_pdf()
 {
 	$this->layout = 'pdf'; //this will use the pdf.ctp layout 
@@ -1757,9 +1752,9 @@ $conditions=array("society_id" => $s_society_id);
 $cursor2=$this->society->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
 }
-/////////////////////////////////// End Bank Receipt Pdf (Accounts)////////////////////////////////////
+//End Bank Receipt Pdf (Accounts)//
 
-/////////////////////////////// Start my flat Bill Excel ////////////////////////////////////////////
+//Start my flat Bill Excel//
 function my_flat_bill_excel()
 {
 	$this->layout="";

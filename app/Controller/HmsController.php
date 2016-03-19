@@ -22557,6 +22557,21 @@ if(isset($this->request->data['sub']))
 $main_id = $this->request->data['main_id'];
 $name = $this->request->data['cat_name'];
 
+$start_number=$main_id*10;
+$this->loadmodel('accounts_group');
+$order=array('accounts_group.number'=> 'ASC');
+$cursor=$this->accounts_group->find('all',array('order' =>$order));
+foreach($cursor as $data10){
+	$numbers[]=$data10["accounts_group"]["number"];
+}
+for($i=$start_number;$i<=($start_number+10);$i++){
+	if(!in_array($i,$numbers)){
+		$g_number=$i;
+		break;
+	}
+}
+
+
 $this->loadmodel('accounts_group');
 $order=array('accounts_group.auto_id'=> 'ASC');
 $cursor=$this->accounts_group->find('all',array('order' =>$order,'limit'=>1));
@@ -22574,7 +22589,7 @@ $i=$last;
 }
 $i++;
 $this->loadmodel('accounts_group');
-$multipleRowData = Array( Array("auto_id" => $i, "accounts_id" => $main_id, "group_name" => $name,"delete_id" => 0));
+$multipleRowData = Array( Array("auto_id" => $i, "accounts_id" => $main_id, "number" => $g_number, "group_name" => $name,"delete_id" => 0));
 $this->accounts_group->saveAll($multipleRowData);	
 }
 

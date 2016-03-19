@@ -7,7 +7,6 @@
 <a href="master_ledger_account_hm" class="btn yellow">Ledger Account</a>
 
 </div>
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
 
 <form method="post" id="contact-form"> 
 <div class="portlet box blue">
@@ -24,6 +23,7 @@ foreach($cursor2 as $collection)
 {
 $auto_ida = (int)$collection['accounts_category']['auto_id'];
 $categorya = $collection['accounts_category']['category_name'];
+$category_number = $collection['accounts_category']['number'];
 ?>
 <option value="<?php echo $auto_ida; ?>"><?php echo $categorya; ?></option>
 <?php } ?>

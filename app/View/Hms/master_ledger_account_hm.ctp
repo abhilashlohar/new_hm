@@ -89,17 +89,25 @@ Are you sure
                     <tbody>  
             <?php
             $n = 1;
-			foreach ($cursor2 as $collection) 
+		foreach ($cursor2 as $collection) {
+		$auto_id5 = (int)$collection['ledger_account']['auto_id'];
+		$sub_id = (int)$collection['ledger_account']['group_id'];
+		$name = $collection['ledger_account']['ledger_name'];
+		$edit_id = (int)@$collection['ledger_account']['edit_user_id'];
+		$ledger_number=str_pad($auto_id5,3,"0",STR_PAD_LEFT);
+		$society_id_ledger_account = (int)$collection['ledger_account']['society_id'];
+	    	if($society_id_ledger_account != 0){
+				$result_society = $this->requestAction(array('controller' => 'Fns', 'action' => 'society_info_via_society_id'),array('pass'=>array($society_id_ledger_account)));
+				foreach($result_society as $data){
+				$society_name = $data['society']['society_name'];
+				}
+			}
+			else
 			{
-			$auto_id5 = (int)$collection['ledger_account']['auto_id'];
-            $sub_id = (int)$collection['ledger_account']['group_id'];
-			$name = $collection['ledger_account']['ledger_name'];
-            $edit_id = (int)@$collection['ledger_account']['edit_user_id'];
-            $ledger_number=str_pad($auto_id5,3,"0",STR_PAD_LEFT);
-	        $society_id_ledger_account = $collection['ledger_account']['society_id'];
-	
-	
-	$result_ag = $this->requestAction(array('controller' => 'hms', 'action' => 'accounts_group'),array('pass'=>array($sub_id)));
+				
+			}
+		
+		$result_ag = $this->requestAction(array('controller' => 'hms', 'action' => 'accounts_group'),array('pass'=>array($sub_id)));
 	foreach ($result_ag as $collection) 
 	{
 	$accounts_id = (int)$collection['accounts_group']['accounts_id'];	
@@ -118,7 +126,7 @@ Are you sure
 			<td style="text-align:left;"><?php echo $n; ?></td>
 			<td style="text-align:left;"><?php echo $main_name; ?></td>
 			<td style="text-align:left;"><?php echo $group_name; ?></td>
-			<td style="text-align:left;"><?php echo $cat_number.$group_number.$ledger_number.':'.$name; ?></td>
+			<td style="text-align:left;"><?php echo $cat_number.$group_number.$ledger_number.':'.$name; ?><?phpif($society_id_ledger_account != 0){ echo $society_name;  }?></td>
             <td style="text-align:left;">
             <?php if($society_id_ledger_account != 0) { ?>
 			 <a href="#myModal<?php echo $auto_id5; ?>" role="button" class="btn mini purple" data-toggle="modal">Make it Default</a>

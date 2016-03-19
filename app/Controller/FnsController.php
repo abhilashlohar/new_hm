@@ -529,6 +529,16 @@ function member_info_via_user_id($user_id){
 	}
 	return array("wing_flat"=>$flats);
 }
+function society_info_via_society_id($society_id){
+	$this->loadmodel('society');
+	$conditions=array('society_id'=>$society_id);
+	return $this->society->find('all',array('conditions'=>$conditions));
+}
+
+
+
+
+
 
 }
 ?>

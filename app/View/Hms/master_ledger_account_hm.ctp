@@ -126,7 +126,7 @@ Are you sure
 			<td style="text-align:left;"><?php echo $n; ?></td>
 			<td style="text-align:left;"><?php echo $main_name; ?></td>
 			<td style="text-align:left;"><?php echo $group_name; ?></td>
-			<td style="text-align:left;"><?php echo $cat_number.$group_number.$ledger_number.':'.$name; ?><?phpif($society_id_ledger_account != 0){ echo $society_name;  }?></td>
+			<td style="text-align:left;"><?php echo $cat_number.$group_number.$ledger_number.':'.$name; ?><?phpif($society_id_ledger_account != 0){?> (<?php echo $society_name; ?>) <?php }?></td>
             <td style="text-align:left;">
             <?php if($society_id_ledger_account != 0) { ?>
 			 <a href="#myModal<?php echo $auto_id5; ?>" role="button" class="btn mini purple" data-toggle="modal">Make it Default</a>

@@ -45,7 +45,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 								}elseif(!empty($mobile)){
 									echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend_sms" id="'.$user_id.'"> Send Reminder</a></td>';
 								}else{
-									echo '<td></td>';
+									echo '<td rowspan="'.sizeof($wing_flats).'"></td>';
 								}
 							}else{
 								echo '<td rowspan='.sizeof($wing_flats).'>'.$validation_status.'</td>';

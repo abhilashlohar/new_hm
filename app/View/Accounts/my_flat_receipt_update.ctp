@@ -113,41 +113,31 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 				    </td>
 										 
 					<td>
-					
-					<select <?php if(sizeof($ledger_sub_account_data) <= 1)
-					 { ?> disabled="disabled" class="m-wrap span12" <?php } else { ?> class="m-wrap span12 chosen" <?php } ?>>
-					<option value="" style="display:none;">Select</option>
-					<?php
-					foreach($ledger_sub_account_data as $data)
-					{
-					 $flatt_iddd = "";
-									 
-						
-					$flat_iddd = (int)$data['ledger_sub_account']['flat_id'];	
-					$resident_name = $data['ledger_sub_account']['name'];
-                    $user_id = (int)$data['ledger_sub_account']['user_id'];
-					
-					 if(sizeof($ledger_sub_account_data) == 1)
-					 {
-					 $flatt_iddd = $flat_iddd;
-					 }
-					
-					
-					$wing_detailll = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_iddd)));
-					foreach($wing_detailll as $wing_dataaa)
-					{
-					$wing_idddd = (int)$wing_dataaa['flat']['wing_id'];	
-					}
-					$wing_flat= $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array($wing_idddd,$flat_iddd)));
-					
-					?>
-					<option value="<?php echo $flat_iddd; ?>" <?php if($flatt_iddd == $flat_iddd) { ?> selected="selected"<?php } ?>><?php echo $resident_name; ?> <?php echo $wing_flat; ?></option>
-					<?php
-					
-					}
-					?>
-					</select>
-							
+			<?php if(sizeof($members_for_billing)>1){ ?>
+			<select name="ledger_sub_account[]" class="m-wrap" style="width:200px;">
+			<option value="" style="display:none;">--member--</option>
+			<?php foreach($members_for_billing as $ledger_sub_account_id){
+			$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+			echo '<option value='.$ledger_sub_account_id.'>'.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
+			} ?>
+			</select>  
+			<?php } ?>		
+			<?php if(sizeof($members_for_billing)==1){ ?>
+			<select name="ledger_sub_account[]" class="m-wrap" style="width:200px;" disabled="disabled">
+			<option value="" style="display:none;">--member--</option>
+			<?php foreach($members_for_billing as $ledger_sub_account_id){
+			$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+			echo '<option value='.$ledger_sub_account_id.' selected="selected">'.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
+			} ?>
+			</select>  
+			<?php } ?>	
+			
+			
+			
+			
+			
+			
+			
 				</td>
 								 
 				<td>

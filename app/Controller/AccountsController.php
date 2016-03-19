@@ -1503,9 +1503,8 @@ function ac_statement_bill_view($receipt_id=null)
 		}
 			$this->set('bill_html',$bill_html);
 }
-///////////////////////////////////// End ac statement Bill View////////////////////////////////////////
-
-//////////////////////// Start My Flat Bill (Accounts) //////////////////////////////
+//End ac statement Bill View//
+//Start My Flat Bill (Accounts)//
 function my_flat_bill(){
 	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
@@ -5657,8 +5656,8 @@ if(empty($from) || empty($to) || empty($wise)){
 	$this->set('result_ledger_account',$result_ledger_account);
 	
 }	
-/////////////////End trial_balance_ajax_show_excel_with_sub_ledger/////////////////////////////////
-///////////////// Start my_flat_receipt_update //////////////////////////////////////////////
+//End trial_balance_ajax_show_excel_with_sub_ledger//
+//Start my_flat_receipt_update//
 function my_flat_receipt_update()
 {
 if($this->RequestHandler->isAjax()){
@@ -5669,17 +5668,39 @@ $this->layout='session';
 $this->ath();
 $this->check_user_privilages();	
 
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=(int)$this->Session->read('user_id');	
-
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=(int)$this->Session->read('hm_user_id');	
 $this->set('s_user_id',$s_user_id);
 
+	$this->loadmodel('ledger_sub_account');
+	$condition=array('society_id'=>$s_society_id,'ledger_id'=>34,'user_id'=>$s_user_id);
+	$members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
+	foreach($members as $data3){
+	$ledger_sub_account_ids[]=$data3["ledger_sub_account"]["auto_id"];
+	}
+		$this->loadmodel('wing');
+        $condition=array('society_id'=>$s_society_id);
+        $order=array('wing.wing_name'=>'ASC');
+        $wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+        foreach($wings as $data){
+			$wing_id=$data["wing"]["wing_id"];
+			$this->loadmodel('flat');
+			$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+			$order=array('flat.flat_name'=>'ASC');
+			$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+			foreach($flats as $data2){
+				$flat_id=$data2["flat"]["flat_id"];
+				$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+				if(!empty($ledger_sub_account_id) && !empty($ledger_sub_account_ids)){
+					if (in_array($ledger_sub_account_id, $ledger_sub_account_ids)){
+						$members_for_billing[]=$ledger_sub_account_id;
+					}
+				}
+			}
+		}
+		$this->set(compact("members_for_billing"));	
 
-$this->loadmodel('ledger_sub_account');
-$conditions=array("ledger_id" => 34,"society_id"=>$s_society_id,"deactive"=>0,'user_id'=>$s_user_id);
-$ledger_sub_account_data = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-$this->set('ledger_sub_account_data',$ledger_sub_account_data);	
 
 
 $this->loadmodel('ledger_sub_account');

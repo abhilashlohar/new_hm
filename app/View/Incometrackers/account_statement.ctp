@@ -1,7 +1,6 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>	
-
 <style>
 #report_tb th{
 	font-size: 14px !important;background-color:#C8EFCE;padding:5px;border:solid 1px #55965F;text-align: left;
@@ -14,11 +13,7 @@ table#report_tb tr:hover td {
 background-color: #E6ECE7;
 }
 </style>
-<?php
-$default_from = date('1-m-Y');
-$default_to = date('d-m-Y');
-
-?>
+<?php $default_from = date('1-m-Y'); $default_to = date('d-m-Y'); ?>
 
 <div style="text-align:center;" class="hide_at_print">
 <a href="<?php echo $webroot_path; ?>Incometrackers/in_head_report" class="btn" rel='tab'>Regular Bill Report</a>
@@ -27,26 +22,24 @@ $default_to = date('d-m-Y');
 </div>
 
 <div class="hide_at_print" align="center">
-	<table>
+<table>
 		<tr>
-			<td><?php
-				$this->requestAction(array('controller' => 'Hms', 'action' => 'resident_drop_down')); ?>
+			<td>
 			</td>
 			<td>
-<input class="date-picker m-wrap medium" id="from" data-date-format="dd-mm-yyyy" name="from" 
-placeholder="From" style="background-color:white !important; margin-top:8px;" value="<?php echo $default_from; ?>" type="text">
+			<input class="date-picker m-wrap medium" id="from" data-date-format="dd-mm-yyyy" name="from" 
+			placeholder="From" style="background-color:white !important; margin-top:8px;" value="<?php echo $default_from; ?>" type="text">
 			</td>
 			<td>
 				<input class="date-picker  m-wrap medium" id="to" data-date-format="dd-mm-yyyy" 
 				name="to" placeholder="To" style="background-color:white !important; margin-top:8px;" 
 				value="<?php echo $default_to; ?>" type="text">
 			</td>
-			<td valign="top"><button type="button" name="sub" class="btn yellow" id="go" style="margin-top:8px;">Go</button></td>
+			<td valign="top"><button type="button" name="sub" class="btn yellow" id="go" style="margin-top:8px;">Go</button>
+			</td>
 		</tr>
-	</table>
+</table>
 </div>
-
-	
 
 
 <br/>
@@ -65,3 +58,14 @@ $(document).ready(function() {
 	});
 });
 </script>
+
+
+
+
+
+
+
+
+
+
+

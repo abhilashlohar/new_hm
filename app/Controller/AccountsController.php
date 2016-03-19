@@ -4254,9 +4254,8 @@ function fetch_sub_accounts_from_ledger_account_id($ledger_account_id){
 		$cursor2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 		$this->set('cursor2',$cursor2);	
 }
-///////////////////////////////////// End Master Ledger Sub Account View/////////////////////////////////////////////
-
-//////////////////////// Start Master Ledger Accounts View ////////////////////////////////////////////////////////////
+//End Master Ledger Sub Account View//
+//Start Master Ledger Accounts View//
 function master_ledger_accounts_view()
 {
 	if($this->RequestHandler->isAjax()){
@@ -4292,9 +4291,8 @@ $this->set('result_accounts_category',$result_accounts_category);
 		$cursor3=$this->accounts_group->find('all',array('conditions'=>$conditions));
 		$this->set('cursor3',$cursor3);
 }
-/////////////////////// End Master Ledger Accounts View ////////////////////////////////////////////////
-
-////////////////////////////// Start ledger Edit //////////////////////////////////////////////////////
+//End Master Ledger Accounts View//
+//Start ledger Edit//
 function ledger_edit()
 {
 $this->layout='blank';

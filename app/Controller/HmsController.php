@@ -22289,7 +22289,7 @@ return $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 
 }
 
-///////////////// End Ledger Sub Account Fetch (Accounts)///////////////////////////////////////////////////////////
+//End Ledger Sub Account Fetch (Accounts)//
 
 function subledger_fetch_by_auto_id($auto_id) 
 {
@@ -22297,46 +22297,30 @@ $this->loadmodel('ledger_sub_account');
 $conditions=array("auto_id" => $auto_id);
 return $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 }
-////////////////////////////// Start Master Ledger Account Hm (Accounts)///////////////
+//Start Master Ledger Account Hm (Accounts)//
 function master_ledger_account_hm()
 {
 	$this->layout='session';
-	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id= (int)$this->Session->read('user_id');	
+	$s_role_id=$this->Session->read('hm_role_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id= (int)$this->Session->read('hm_user_id');	
 	$this->set('s_user_id',$s_user_id);
 
 	$del_id = (int)$this->request->query('con');
 	$this->set('del_id',$del_id);
 
-	if(isset($this->request->data['delc']))
-	{
-	$del = (int)$this->request->data['del_id'];
-
-	$this->loadmodel('ledger_account');
-	$this->ledger_account->updateAll(array("delete_id" => 1),array("auto_id" => $del));	
-	?>
-	<script>
-	window.location.href="master_ledger_account_hm";
-	</script>
-	<?php
-	}
+	
 	$this->loadmodel('ledger_account');
 	$cursor=$this->ledger_account->find('all');
-	foreach ($cursor as $collection) 
-	{
+		foreach ($cursor as $collection) 
+		{
 		$auto_id = (int)$collection['ledger_account']['auto_id']; 
-		//submit code edit//
 			if(isset($this->request->data['sub'.$auto_id]))
 			{
 			$ledger_name = $this->request->data['cat'.$auto_id];
 			$gr_id = (int)$this->request->data['gr_id'.$auto_id];
-
-
-
 			$this->loadmodel('ledger_account');
 			$this->ledger_account->updateAll(array("ledger_name" => $ledger_name,"group_id"=>$gr_id),array("auto_id" => $auto_id));	
-
 			}
 	} 
 

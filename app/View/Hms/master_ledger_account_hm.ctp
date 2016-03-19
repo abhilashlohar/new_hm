@@ -1,56 +1,47 @@
 <center><h3><b>Master Ledger Accounts</b></h3></center>
 <br>
-<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
-<div style="width:100%;">
-<a href="master_accounts_category_hm" class="btn yellow">Accounts Category</a>
-<a href="master_accounts_group_hm" class="btn yellow">Accounts Group</a>
-<a href="master_ledger_account_hm" class="btn purple">Ledger Account</a>
-</div>
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
-<form method="post" id="contact-form">
-<div class="portlet box blue">
-<div class="portlet-title">
-<h4 class="block"><i class="icon-reorder"></i>Add Ledger Accounts</h4>
-</div>
-<div class="portlet-body form">
 
-<label style="font-size:14px;">Accounts Group</label>
-<select class="span5 m-wrap" name="main_id" id="go">
-<option value="">--SELECT CATEGORY--</option>
-<?php
-foreach ($cursor1 as $collection) 
-{
-$auto_id = (int)$collection['accounts_group']['auto_id'];
-$name = $collection['accounts_group']['group_name']; 
-?>
-<option value="<?php echo $auto_id; ?>"><?php echo $name; ?></option>
-<?php } ?>
-</select>
-<label id="go"></label>
+	<div style="width:100%;">
+	<a href="master_accounts_category_hm" class="btn yellow">Accounts Category</a>
+	<a href="master_accounts_group_hm" class="btn yellow">Accounts Group</a>
+	<a href="master_ledger_account_hm" class="btn purple">Ledger Account</a>
+	</div>
 
-<br>
+	<form method="post" id="contact-form">
+	<div class="portlet box blue">
+	<div class="portlet-title">
+	<h4 class="block"><i class="icon-reorder"></i>Add Ledger Accounts</h4>
+	</div>
+	<div class="portlet-body form">
 
-<label style="font-size:14px;">Ledger Account</label>
- <input type="text" name="cat_name" placeholder="Name" class="m-wrap span5" style="background-color:white !important;" id="cat">
-<label id="cat"></label>
+	<label style="font-size:14px;">Accounts Group</label>
+	<select class="span5 m-wrap" name="main_id" id="go">
+	<option value="">--SELECT CATEGORY--</option>
+	<?php
+	foreach ($cursor1 as $collection) 
+	{
+	$auto_id = (int)$collection['accounts_group']['auto_id'];
+	$name = $collection['accounts_group']['group_name']; 
+	?>
+	<option value="<?php echo $auto_id; ?>"><?php echo $name; ?></option>
+	<?php } ?>
+	</select>
+	<label id="go"></label>
 
 <br>
 
-
-
-
-
-
-
-
+	<label style="font-size:14px;">Ledger Account</label>
+	<input type="text" name="cat_name" placeholder="Name" class="m-wrap span5" style="background-color:white !important;" id="cat">
+	<label id="cat"></label>
+<br>
 <div class="form-actions">
 <button type="submit" name="sub" class="btn blue">Add</button>
 </div>
 </div>
 </div>
 </form>
-    
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+<?php
 if(!empty($del_id))
 {
 ?>
@@ -72,7 +63,7 @@ Are you sure
 <!----alert-------------->
 <?php
 }
-////////////////////////////////////////////////////////////////////////////////////////////// ?>
+?>
 <br>
 			
             
@@ -103,33 +94,35 @@ Are you sure
 			$auto_id5 = (int)$collection['ledger_account']['auto_id'];
             $sub_id = (int)$collection['ledger_account']['group_id'];
 			$name = $collection['ledger_account']['ledger_name'];
-            $edit_id = (int)$collection['ledger_account']['edit_user_id'];
+            $edit_id = (int)@$collection['ledger_account']['edit_user_id'];
+            $ledger_number=str_pad($auto_id5,3,"0",STR_PAD_LEFT);
+	        $society_id_ledger_account = $collection['ledger_account']['society_id'];
+	
+	
+	$result_ag = $this->requestAction(array('controller' => 'hms', 'action' => 'accounts_group'),array('pass'=>array($sub_id)));
+	foreach ($result_ag as $collection) 
+	{
+	$accounts_id = (int)$collection['accounts_group']['accounts_id'];	
+	$group_name = $collection['accounts_group']['group_name'];	
+	$group_number=$collection['accounts_group']['number'];
+	}
 
-$result_ag = $this->requestAction(array('controller' => 'hms', 'action' => 'accounts_group'),array('pass'=>array($sub_id)));
-            foreach ($result_ag as $collection) 
-			{
-			$accounts_id = (int)$collection['accounts_group']['accounts_id'];	
-			$group_name = $collection['accounts_group']['group_name'];	
-			}
-
-$result_ac = $this->requestAction(array('controller' => 'hms', 'action' => 'accounts_category'),array('pass'=>array($accounts_id)));		   
-            foreach ($result_ac as $collection) 
-			{
-			$main_name = $collection['accounts_category']['category_name'];	
-			}
-            ?>     
+	$result_ac = $this->requestAction(array('controller' => 'hms', 'action' => 'accounts_category'),array('pass'=>array($accounts_id)));		   
+	foreach ($result_ac as $collection) 
+	{
+	$main_name=$collection['accounts_category']['category_name'];	
+	$cat_number=$collection['accounts_category']['number'];	
+	}
+?>     
 <tr>
 			<td style="text-align:left;"><?php echo $n; ?></td>
 			<td style="text-align:left;"><?php echo $main_name; ?></td>
 			<td style="text-align:left;"><?php echo $group_name; ?></td>
-			<td style="text-align:left;"><?php echo $name; ?></td>
+			<td style="text-align:left;"><?php echo $cat_number.$group_number.$ledger_number.':'.$name; ?></td>
             <td style="text-align:left;">
-           <?php if($edit_id == $s_user_id)
-		   {
-		   ?>
-           
-            <a href="#myModal<?php echo $auto_id5; ?>" role="button" class="btn mini purple" data-toggle="modal">Edit</a>
-         <?php } ?> 
+            <?php if($society_id_ledger_account != 0) { ?>
+			 <a href="#myModal<?php echo $auto_id5; ?>" role="button" class="btn mini purple" data-toggle="modal">Make it Default</a>
+			<?php } ?>
             </td>
 			</tr> 
             <?php $n++; } ?>
@@ -163,33 +156,11 @@ $group_id = (int)$collection['accounts_group']['auto_id'];
 </center>
 </div>
 <div class="modal-body">
-<center>
-<table border="0">
-<tr>
-<td>
-<select name="gr_id<?php echo $auto_id2; ?>" class="m-wrap medium">
-<?php
-foreach($cursor3 as $collection)
-{
-$group_id2 = (int)$collection['accounts_group']['auto_id'];	
-$group_name2 = $collection['accounts_group']['group_name'];	
-?>
-<option value="<?php echo $group_id2; ?>" <?php if($group_id2 == $group_id) { ?> selected="selected" <?php } ?>><?php echo $group_name2; ?></option>
-<?php } ?>
-</select>
-</td>
-</tr>
-<tr>
-<td>
-<input type="text" style="margin-top:10px; background-color:white !important;" class="m-wrap medium" value="<?php echo $name2; ?>" name="cat<?php echo $auto_id2; ?>" >
-</td>
-</tr>
-</table>  
-  </center>
+<h4>Are You Sure</h4>
 </div>
 <div class="modal-footer">
 <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-<button type="submit" class="btn blue" name="sub<?php echo $auto_id2; ?>">Update</button>
+<button type="submit" class="btn blue" name="sub<?php echo $auto_id2; ?>">YES</button>
 </div>
 </div>             
 <?php
@@ -209,7 +180,7 @@ $group_name2 = $collection['accounts_group']['group_name'];
             
             
 			</form>
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>			
+		
 
 <script>
 

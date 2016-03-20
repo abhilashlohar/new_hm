@@ -25,9 +25,8 @@ table th {font-size: 12px !important; }
 		</thead>
 		<tbody>
 		<?php 
-		 $result_tenant = $this->requestAction(array('controller' => 'Fns', 'action' => 'tenant_member_info_via_society_id'));
-
-		foreach($result_tenant as $collection){
+		
+		foreach($result_tenant_info as $collection){
 					$wing_name=$collection['wing_name'];
 					$result_user=$collection['result_user'];
 					$result_user_tenant=$collection['result_user_tenant'];

@@ -42,8 +42,7 @@ View
             <?php
 			$i=0;
            
-            foreach ($user_tenant as $collection) 
-            {
+     foreach ($user_tenant as $collection){
 			$i++;
             $name=$collection['tenant']['name'];
 			$d_user_id=(int)$collection['tenant']['user_id'];
@@ -55,31 +54,32 @@ View
             $t_start_date=@$collection['tenant']['t_start_date'];
             $t_end_date=@$collection['tenant']['t_end_date'];
 			$t_file=@$collection['tenant']['t_file'];
-			if($t_agreement==1){
-				$t_agreement='Yes';
-			}
-			else{
-				$t_agreement='No';
+				if($t_agreement==1){
+					$t_agreement='Yes';
+				}
+				else{
+					$t_agreement='No';
+				
+				}
 			
-			}
-			if($t_police==1){
-				$t_police='Yes';
-			}
-			else{
-				$t_police='No';
-			
-			}
-				$result_user = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($d_user_id)));
-pr($result_user);
-foreach($result_user as $data)
-{
-$wing=$data['user']['wing'];
-$flat=$data['user']['flat'];
-$email=$data['user']['email'];
-}
+				if($t_police==1){
+					$t_police='Yes';
+				}
+				else{
+					$t_police='No';
+				
+				}
+					$result_user = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($d_user_id)));
+					
+					$user_name=$result_user['user_name'];
+					$wing_flat_result=$result_user['wing_flat'];
+						foreach($wing_flat_result as $data){
+							 $wing_flat= $data;
+						}
+					$email=$result_user['email'];
+					$mobile=$result_user['mobile'];
 
-$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'),array('pass'=>array($wing,$flat)));
-		
+
             ?>
              <tr>
             <td><?php echo $i; ?></td>

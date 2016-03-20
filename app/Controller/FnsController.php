@@ -600,46 +600,14 @@ function wing_flat_via_wing_id_and_flat_id($wing_id,$flat_id){
 			return array("wing_flat"=>$flats,"owner"=>$owner,"result_user"=>$result_user,"result_user_profile"=>$result_user_profile);
 	}
 
-function tenant_member_info_via_society_id(){
-			$s_society_id=$this->Session->read('hm_society_id');
-			
-			
-			$this->loadmodel('user_flat');
-			$conditions=array("society_id"=>$s_society_id, "owner"=>"no");
-			$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions));
-				foreach($result_user_flat as $data){
-					$user_id=(int)$data["user_flat"]["user_id"];
-					$wing=$data["user_flat"]["wing"];
-					$flat=$data["user_flat"]["flat"];
-					$owner=$data["user_flat"]["owner"];
-					
-					$this->loadmodel('wing');
-					$conditions=array("wing_id"=>$wing);
-					$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
-					$wing_name=$wing_info[0]["wing"]["wing_name"];
-
-					$this->loadmodel('flat');
-					$conditions=array("flat_id"=>$flat);
-					$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
-					$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
-
-					$flats=$wing_name.' - '.$flat_name;
-
-					$this->loadmodel('user');
-					$conditions=array("user_id"=>$user_id);
-					$result_user=$this->user->find('all',array('conditions'=>$conditions));
-
-					$this->loadmodel('tenant');
-					$conditions=array("user_id"=>$user_id);
-					$result_user_tenant=$this->tenant->find('all',array('conditions'=>$conditions));
-					
-					
-					
-					
-					$result_tenant_info[]=array("wing_name"=>$flats,"result_user"=>$result_user,"result_user_tenant"=>$result_user_tenant);
-				}
-			return $result_tenant_info ;
+	function tenancy_agreement_via_user_fetch($society_id,$user_id){
+		
+		$this->loadmodel('tenant');
+		$conditions=array("society_id" => $society_id,'user_id'=>$user_id);
+		return $this->tenant->find('all',array('conditions'=>$conditions));
+		
 	}
+
 	
 	
 

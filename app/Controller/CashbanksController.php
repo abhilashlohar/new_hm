@@ -4762,71 +4762,56 @@ $cursor2=$this->society->find('all',array('conditions'=>$conditions));
 $this->set('result_society',$cursor2);
 
 }
-///////////////////////////// End bank receipt html view //////////////////////////////////////////////////////////////
-////////////////////////Start Bank Receipt Deposit Slip /////////////////////////////////////////////////////////////
+//End bank receipt html view//
+//Start Bank Receipt Deposit Slip//
 function bank_receipt_deposit_slip()
 {
-if($this->RequestHandler->isAjax()){
-$this->layout='blank';
-}else{
-$this->layout='session';
-}
-
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id = (int)$this->Session->read('user_id');
-$this->set('s_role_id',$s_role_id);
-
-$this->ath();
-$this->check_user_privilages();
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	$s_role_id=$this->Session->read('hm_role_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id = (int)$this->Session->read('hm_user_id');
+	$this->set('s_role_id',$s_role_id);
+	$this->ath();
+	$this->check_user_privilages();
 
 if(isset($this->request->data['dep_slip']))
 {
-$arr = array();
-$this->loadmodel('new_cash_bank');
-$conditions=array('society_id'=>$s_society_id,"receipt_source"=>1,"edit_status"=>"NO");
-$cursor2=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
-foreach($cursor2 as $data)
-{
-$trns_id = (int)$data['new_cash_bank']['transaction_id'];
-$receipt_mode = $data['new_cash_bank']['receipt_mode'];
-$value = @$this->request->data['dd'.$trns_id];
-if(!empty($value))
-{
-$arr[] = $value;
-
-$this->loadmodel('new_cash_bank');
-$this->new_cash_bank->updateAll(array("deposit_status" => 1)
-,array("transaction_id" => $trns_id));	
-
-}
-}
-$arrr =implode(",",$arr);
-$this->response->header('Location', 'show_deposit_slip?ar='.$arrr.'');
+	$arr = array();
+		$this->loadmodel('cash_bank');
+		$conditions=array('society_id'=>$s_society_id,"source"=>"bank_receipt");
+		$cursor2=$this->cash_bank->find('all',array('conditions'=>$conditions));
+		foreach($cursor2 as $data)
+		{
+		$trns_id = (int)$data['cash_bank']['auto_id'];
+		$receipt_mode = $data['cash_bank']['receipt_mode'];
+		$value = @$this->request->data['dd'.$trns_id];
+			if(!empty($value)){
+			$arr[] = $value;
+			}
+		}
+	$arrr =implode(",",$arr);
+	$this->response->header('Location', 'show_deposit_slip?ar='.$arrr.'');
 }
 
-
-$this->loadmodel('new_cash_bank');
-$conditions=array('society_id'=>$s_society_id,"receipt_source"=>1,"edit_status"=>"NO");
-$cursor1=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
+$this->loadmodel('cash_bank');
+$conditions=array('society_id'=>$s_society_id,"source"=>"bank_receipt");
+$cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
 
-$this->loadmodel('new_cash_bank');
-$conditions=array('society_id'=>$s_society_id,"receipt_source"=>1,"edit_status"=>"NO","deposit_status"=>1);
-$cursor2=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
-$this->set('cursor2',$cursor2);
 
 }
-////////////////////////End Bank Receipt Deposit Slip /////////////////////////////////////////////////////////////
-
-/////////////////////////////Start print_deposit_slip /////////////////////////////////////////////////////////
+//End Bank Receipt Deposit Slip//
+//Start print_deposit_slip//
 function print_deposit_slip()
 {
 $this->layout='blank';
 }
-/////////////////////////////End print_deposit_slip /////////////////////////////////////////////////////////
-
-///////////////////////////// Start petty_cash_payment_html_view /////////////////////////////////////////////
+//End print_deposit_slip//
+//Start petty_cash_payment_html_view//
 function petty_cash_payment_html_view($auto_id=null)
 {
 	if($this->RequestHandler->isAjax()){
@@ -5621,29 +5606,26 @@ $cursor13=$this->accounts_group->find('all',array('conditions'=>$conditions));
 $this->set('cursor13',$cursor13);
 
 }
-////////////////////////////// End bank_payment_add_row //////////////////////////////////////// 
-////////////////////////// Start show_deposit_slip ///////////////////////////////////////////////////// 
+//End bank_payment_add_row//
+//Start show_deposit_slip//
 function show_deposit_slip()
 {
 $this->layout='session';
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id = (int)$this->Session->read('user_id');
-
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id = (int)$this->Session->read('hm_user_id');
 $this->ath();
 
+	$this->loadmodel('society');
+	$conditions=array("society_id" =>$s_society_id);
+	$cursor=$this->society->find('all',array('conditions'=>$conditions));
+	foreach($cursor as $collection){
+	$society_name = $collection['society']['society_name'];
+	}
 
-$this->loadmodel('society');
-$conditions=array("society_id" =>$s_society_id);
-$cursor=$this->society->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
-$society_name = $collection['society']['society_name'];
-}
+	$this->set('society_name',$society_name);
 
-$this->set('society_name',$society_name);
-
-$arrr = $this->request->query('ar');
-$this->set('arrr',$arrr);
+	$arrr = $this->request->query('ar');
+	$this->set('arrr',$arrr);
 
 
 $this->loadmodel('ledger_sub_account');
@@ -5655,9 +5637,8 @@ $bank_account = $data['ledger_sub_account']['bank_account'];
 }
 $this->set('bank_account',$bank_account);
 }
-////////////////////////// End show_deposit_slip /////////////////////////////////////
-
-/////////////////////////////// start new bank receipt ///////////////////////////////
+//End show_deposit_slip//
+//start new bank receipt//
 
 function new_cash_receipt_add(){
 	

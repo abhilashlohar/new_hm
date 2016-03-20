@@ -55,28 +55,27 @@ $sr=0;
 for($v=0; $v<sizeof($arrrrr); $v++)
 {
 $value = (int)$arrrrr[$v];	
-	
 	$new_cash_bank_result = $this->requestAction(array('controller' => 'hms', 'action' => 'new_cash_bank_detail_via_transaction_id'),array('pass'=>array($value)));			
 	foreach($new_cash_bank_result as $dataa)
 	{
-    $amount = $dataa['new_cash_bank']['amount'];
-	$bank_id = (int)$dataa['new_cash_bank']['deposited_bank_id'];	
-	$cheque_no = (int)$dataa['new_cash_bank']['cheque_number'];
-	$date = @$dataa['new_cash_bank']['cheque_date'];
-	$type = (int)$dataa['new_cash_bank']['member_type'];
-	$drawn_bank_name = $dataa['new_cash_bank']['drawn_on_which_bank'];
-	$branch = @$dataa['new_cash_bank']['bank_branch'];
+	$amount = $dataa['cash_bank']['amount'];
+	$bank_id = (int)$dataa['cash_bank']['deposited_in'];	
+	$cheque_no = (int)$dataa['cash_bank']['cheque_number'];
+	$date = @$dataa['cash_bank']['date'];
+	$type = $dataa['cash_bank']['received_from'];
+	$drawn_bank_name = $dataa['cash_bank']['drown_in_which_bank'];
+	$branch = @$dataa['cash_bank']['branch_of_bank'];
 	
-			if($type == 1)
+			if($type == "residential")
 			{
-			$flat_id = (int)$dataa['new_cash_bank']['flat_id'];
+			$ledger_sub_account_id=(int)$dataa['cash_bank']['ledger_sub_account_id'];
 					
-		$flatt_datta = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
-		foreach ($flatt_datta as $fltt_datttaa) 
-		{
-		$wnngg_idddd = (int)$fltt_datttaa['flat']['wing_id'];
-		}	
-		$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array($wnngg_idddd,$flat_id)));			
+		$member_info = $this->requestAction(array('controller'=>'Fns','action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+		$flat_id=$member_info['flat_id'];	
+		$wing_id=$member_info['wing_id'];
+		$user_name=$member_info['user_name'];
+		
+		$wing_flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));			
 			
 			}
 			else

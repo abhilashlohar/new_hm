@@ -2188,11 +2188,11 @@ return $this->module_type->find('all',array('conditions'=>$conditions));
 
 function new_cash_bank_detail_via_transaction_id($value)
 {
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 
-$this->loadmodel('new_cash_bank');
-$conditions=array("society_id"=>$s_society_id,"transaction_id"=>$value);
-return $this->new_cash_bank->find('all',array('conditions'=>$conditions));
+$this->loadmodel('cash_bank');
+$conditions=array("society_id"=>$s_society_id,"auto_id"=>$value);
+return $this->cash_bank->find('all',array('conditions'=>$conditions));
 }
 
 

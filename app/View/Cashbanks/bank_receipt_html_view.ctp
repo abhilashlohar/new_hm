@@ -31,6 +31,7 @@ foreach($result_cash_bank as $receipt){
 						 $wing_id=$result_member_info["wing_id"];
 				
 				}else{
+					$wing_flat="";
 					 $date=date("d-m-Y",$transaction_date);
 				$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];
 				$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];	

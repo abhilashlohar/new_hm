@@ -7907,15 +7907,15 @@ $this->layout='blank';
 }else{
 $this->layout='session';
 }
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');		
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');		
 	
 $transaction_id = (int)$this->request->query('bb');	
 
-$this->loadmodel('my_flat_receipt_update');
-$conditions=array('society_id'=>$s_society_id,"approval_id"=>1,"auto_id"=>$transaction_id);
-$cursor1=$this->my_flat_receipt_update->find('all',array('conditions'=>$conditions));
+$this->loadmodel('temp_cash_bank');
+$conditions=array('society_id'=>$s_society_id,"auto_id"=>$transaction_id);
+$cursor1=$this->temp_cash_bank->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);	
 
 $this->loadmodel('ledger_sub_account');

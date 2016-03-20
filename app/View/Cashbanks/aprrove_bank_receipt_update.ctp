@@ -3,25 +3,25 @@
 <?php
 foreach($cursor1 as $dataaa)
 {
-$transaction_id = (int)$dataaa['my_flat_receipt_update']['auto_id'];	
-$transaction_date = $dataaa['my_flat_receipt_update']['receipt_date'];	
-$deposited_in = (int)$dataaa['my_flat_receipt_update']['deposited_bank_id'];	
-$receipt_mode = $dataaa['my_flat_receipt_update']['receipt_mode'];
+$transaction_id = (int)$dataaa['temp_cash_bank']['auto_id'];	
+$transaction_date = $dataaa['temp_cash_bank']['receipt_date'];	
+$deposited_in = (int)$dataaa['temp_cash_bank']['deposited_bank_id'];	
+$receipt_mode = $dataaa['temp_cash_bank']['receipt_mode'];
 if($receipt_mode == "Cheque")
 {
-$cheque_number = $dataaa['my_flat_receipt_update']['cheque_number'];	
-$cheque_date = $dataaa['my_flat_receipt_update']['cheque_date'];
-$drawn_bank_name = $dataaa['my_flat_receipt_update']['drawn_on_which_bank'];
-$branch = $dataaa['my_flat_receipt_update']['bank_branch'];
+$cheque_number = $dataaa['temp_cash_bank']['cheque_number'];	
+$cheque_date = $dataaa['temp_cash_bank']['cheque_date'];
+$drawn_bank_name = $dataaa['temp_cash_bank']['drawn_on_which_bank'];
+$branch = $dataaa['temp_cash_bank']['bank_branch'];
 }
 else
 {
-$cheque_number = $dataaa['my_flat_receipt_update']['reference_utr'];	
-$cheque_date = $dataaa['my_flat_receipt_update']['cheque_date'];	
+$cheque_number = $dataaa['temp_cash_bank']['reference_utr'];	
+$cheque_date = $dataaa['temp_cash_bank']['cheque_date'];	
 }	
-$flat_id = (int)$dataaa['my_flat_receipt_update']['flat_id'];
-$amount = $dataaa['my_flat_receipt_update']['amount'];
-$narration = $dataaa['my_flat_receipt_update']['narration'];
+$ledger_sub_account_id=(int)$dataaa['temp_cash_bank']['ledger_sub_account_id'];
+$amount = $dataaa['temp_cash_bank']['amount'];
+$narration = $dataaa['temp_cash_bank']['narration'];
 }
 ?>
 

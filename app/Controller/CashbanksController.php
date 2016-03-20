@@ -5732,6 +5732,8 @@ function new_bank_receipt(){
 			$drown_in_which_banks = $this->request->data['drown_in_which_bank'];
 			$branch_of_banks = $this->request->data['branch_of_bank'];
 			$received_froms = $this->request->data['received_from'];
+			$non_members_ledger_sub_account_ids=$this->request->data['non_member_ledger_sub_account'];
+			$bill_references=$this->request->data['bill_reference'];
 			$ledger_sub_accounts = $this->request->data['ledger_sub_account'];
 			$receipt_types = $this->request->data['receipt_type'];
 			$amounts = $this->request->data['amount'];
@@ -5747,8 +5749,18 @@ function new_bank_receipt(){
 				$drown_in_which_bank=$drown_in_which_banks[$i];
 				$branch_of_bank=$branch_of_banks[$i];
 				$received_from=$received_froms[$i];
-				$ledger_sub_account_id=(int)$ledger_sub_accounts[$i];
-				$receipt_type=$receipt_types[$i];
+				if($received_from == 'residential'){
+				echo $ledger_sub_account_id=(int)$ledger_sub_accounts[$i];
+				echo $receipt_type=$receipt_types[$i];	
+				}
+				else{
+				echo $non_members_ledger_sub_account_id=$non_members_ledger_sub_account_ids[$i];
+				echo $bill_reference=$bill_references[$i];
+				}
+				
+			
+			
+				
 				$amount=$amounts[$i];
 				$narration=$narrations[$i];
 				$cheque_date=$date;

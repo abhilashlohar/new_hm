@@ -7440,21 +7440,20 @@ $cursor1=$this->fix_deposit->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
 	
 }
-///////////////////////////// End fixed_deposit_renewal_show ///////////////////////////////////////////
-/////////////////////////// Start bank_receipt_approve //////////////////////////////////////////////
+//End fixed_deposit_renewal_show//
+//Start bank_receipt_approve//
 function bank_receipt_approve($rrr=null)
 {
-if($this->RequestHandler->isAjax()){
+	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
 	}else{
 	$this->layout='session';
 	}
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');	
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');	
 
 $approved_date = date('d-m-Y');
-
 $this->set('s_role_id',$s_role_id);
 $this->ath();		
 $this->check_user_privilages();	
@@ -7894,15 +7893,14 @@ $this->my_flat_receipt_update->updateAll(array("approval_id"=>2),array('society_
 <?php	
 }
 
-$this->loadmodel('my_flat_receipt_update');
-$conditions=array('society_id'=>$s_society_id,"approval_id"=>1);
-$cursor1=$this->my_flat_receipt_update->find('all',array('conditions'=>$conditions));
-$this->set('cursor1',$cursor1);
+$this->loadmodel('temp_cash_bank');
+$conditions=array('society_id'=>$s_society_id);
+$result_temp_cash_bank=$this->temp_cash_bank->find('all',array('conditions'=>$conditions));
+$this->set('result_temp_cash_bank',$result_temp_cash_bank);
 
 }
-
-/////////////////////////////End bank_receipt_approve //////////////////////////////////////////////
-/////////////////////////////Start aprrove_bank_receipt_update ////////////////////////////////////
+//End bank_receipt_approve//
+//Start aprrove_bank_receipt_update//
 function aprrove_bank_receipt_update()
 {
 if($this->RequestHandler->isAjax()){

@@ -1316,7 +1316,7 @@ $cursor1=$this->bank_payment->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
 
 $this->loadmodel('cash_bank');
-$conditions=array("society_id" => $s_society_id,"receipt_source"=>"bank_payment");
+$conditions=array("society_id" => $s_society_id,"source"=>"bank_payment");
 $order=array('cash_bank.transaction_date'=> 'ASC');
 $cursor2=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor2',$cursor2);
@@ -3426,7 +3426,7 @@ $multipleRowData = Array( Array("transaction_id" => $i, "receipt_id" => $bbb,"cu
 "transaction_date" => strtotime($transaction_date), "prepaired_by" => $s_user_id, 
 "user_id" => $ledger_acc,"invoice_reference" => @$invoice,"narration" => $narration, "receipt_mode" => $mode,
 "receipt_instruction" => $instrument, "account_head" => $bank_ac,  
-"amount" => $amount,"society_id" => $s_society_id, "tds_id" =>$tds_id,"account_type"=>$acc_type,"receipt_source"=>"bank_payment","auto_inc"=>"YES"));
+"amount" => $amount,"society_id" => $s_society_id, "tds_id" =>$tds_id,"account_type"=>$acc_type,"source"=>"bank_payment","auto_inc"=>"YES"));
 $this->cash_bank->saveAll($multipleRowData);  
 
 $this->loadmodel('reference');

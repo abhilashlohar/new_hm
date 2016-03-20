@@ -19,7 +19,7 @@ var $name = 'Bookkeepings';
 	function receipt_info_via_auto_id($auto_id){
 		$auto_id=(int)$auto_id;
 		$this->loadmodel('cash_bank');
-		$conditions=array('auto_id'=>$auto_id);
+		$conditions = array('$or'=>array(array('auto_id'=>$auto_id),array('transaction_id'=>$auto_id)));
 		return $this->cash_bank->find('all',array('conditions'=>$conditions)); 
 	}
 	

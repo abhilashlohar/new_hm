@@ -601,46 +601,194 @@ function wing_flat_via_wing_id_and_flat_id($wing_id,$flat_id){
 	}
 
 function tenant_member_info_via_society_id(){
-			$s_society_id=$this->Session->read('hm_society_id');
-			
-			
-			$this->loadmodel('user_flat');
-			$conditions=array("society_id"=>$s_society_id, "owner"=>"no");
-			$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions));
-				foreach($result_user_flat as $data){
-					$user_id=(int)$data["user_flat"]["user_id"];
-					$wing=$data["user_flat"]["wing"];
-					$flat=$data["user_flat"]["flat"];
-					$owner=$data["user_flat"]["owner"];
-					
-					$this->loadmodel('wing');
-					$conditions=array("wing_id"=>$wing);
-					$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
-					$wing_name=$wing_info[0]["wing"]["wing_name"];
+		$s_society_id=$this->Session->read('hm_society_id');
+		
+		$this->loadmodel('user_flat');
+		$conditions=array("society_id"=>$s_society_id, "owner"=>"no");
+		$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions));
+			foreach($result_user_flat as $data){
+				$user_id=(int)$data["user_flat"]["user_id"];
+				$wing=$data["user_flat"]["wing"];
+				$flat=$data["user_flat"]["flat"];
+				$owner=$data["user_flat"]["owner"];
+				
+				$this->loadmodel('wing');
+				$conditions=array("wing_id"=>$wing);
+				$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
+				$wing_name=$wing_info[0]["wing"]["wing_name"];
 
-					$this->loadmodel('flat');
-					$conditions=array("flat_id"=>$flat);
-					$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
-					$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
+				$this->loadmodel('flat');
+				$conditions=array("flat_id"=>$flat);
+				$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+				$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
 
-					$flats=$wing_name.' - '.$flat_name;
+				$flats=$wing_name.' - '.$flat_name;
 
-					$this->loadmodel('user');
-					$conditions=array("user_id"=>$user_id);
-					$result_user=$this->user->find('all',array('conditions'=>$conditions));
+				$this->loadmodel('user');
+				$conditions=array("user_id"=>$user_id);
+				$result_user=$this->user->find('all',array('conditions'=>$conditions));
 
-					$this->loadmodel('tenant');
-					$conditions=array("user_id"=>$user_id);
-					$result_user_tenant=$this->tenant->find('all',array('conditions'=>$conditions));
-					
-					
-					
-					
-					$result_tenant_info[]=array("wing_name"=>$flats,"result_user"=>$result_user,"result_user_tenant"=>$result_user_tenant);
-				}
-			return $result_tenant_info ;
-	}
+				$this->loadmodel('tenant');
+				$conditions=array("user_id"=>$user_id);
+				$result_user_tenant=$this->tenant->find('all',array('conditions'=>$conditions));
+				
+				
+				
+				
+				$result_tenant_info[]=array("wing_name"=>$flats,"result_user"=>$result_user,"result_user_tenant"=>$result_user_tenant);
+			}
+		return $result_tenant_info ;
+}
 	
+function sending_options(){
+	$s_society_id=$this->Session->read('hm_society_id');
+	?>
+	<div class="controls">
+		<label class="radio line">
+		<div class="radio"><span><input name="send_to" value="all_users" type="radio" checked></span></div>
+		All users
+		</label>
+		<label class="radio line">
+		<div class="radio"><span><input name="send_to" value="role_wise" type="radio"></span></div>
+		Role wise
+		</label>
+			<div style="padding-left:5%;display:none;" id="role_wise">
+				<div class="controls" style="background-color: rgb(252, 250, 250); padding: 2px; border: 1px solid rgba(204, 204, 204, 0.3);">
+					<table width="100%">
+					<tr>
+						<td>
+							<label class="checkbox">
+							<div class="checker"><span><input class="owner" value="3" type="checkbox" name="roles[]"></span></div> Owners
+							</label>
+						</td>
+						<td class="owner_family" style="display:none;">
+							<label class="checkbox" >
+							<div class="checker"><span><input value="5"  type="checkbox" name="roles[]"></span></div> Family members also
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label class="checkbox">
+							<div class="checker"><span><input class="tenant" value="4" type="checkbox" name="roles[]"></span></div> Tenants
+							</label>
+						</td>
+						<td class="tenant_family" style="display:none;">
+							<label class="checkbox">
+							<div class="checker"><span><input value="6" type="checkbox" name="roles[]"></span></div> Family members also
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label class="checkbox">
+							<div class="checker"><span><input class="resident" value="" type="checkbox" name="roles[]"></span></div> Residents
+							</label>
+						</td>
+						<td class="resident_family" style="display:none;">
+							<label class="checkbox">
+							<div class="checker"><span><input value="" type="checkbox" name="roles[]"></span></div> Family members also
+							</label>
+						</td>
+					</tr>
+					<?php
+					$this->loadmodel('role');
+					$conditions =array( '$and' => array( 
+						array("society_id"=>$s_society_id,'role.role_id'=>array('$ne'=>3)),
+						array("society_id"=>$s_society_id,'role.role_id'=>array('$ne'=>4)),
+						array("society_id"=>$s_society_id,'role.role_id'=>array('$ne'=>5)),
+						array("society_id"=>$s_society_id,'role.role_id'=>array('$ne'=>6)),
+					));
+					$result_role=$this->role->find('all',array('conditions'=>$conditions));
+					foreach($result_role as $data){
+						$role_id=$data["role"]["role_id"];
+						$role_name=$data["role"]["role_name"];?>
+						<tr>
+							<td colspan="2">
+								<label class="checkbox">
+								<div class="checker"><span><input class="requirecheck1" value="<?php echo $role_id; ?>" type="checkbox" name="roles[]"></span></div> <?php echo $role_name; ?>
+								</label>
+							</td>
+						</tr>
+					<?php } ?>
+					</table>
+				</div>
+			</div>
+		<label class="radio line">
+		<div class="radio"><span><input name="send_to" value="wing_wise" type="radio"></span></div>
+		Wing wise
+		</label>
+			<div style="padding-left:5%;display:none;" id="wing_wise">
+			<?php
+			$this->loadmodel('wing');
+			$conditions=array("society_id"=>$s_society_id);
+			$result_wing=$this->wing->find('all',array('conditions'=>$conditions));
+			foreach($result_wing as $data2){
+				$wing_id=$data2["wing"]["wing_id"];
+				$wing_name=$data2["wing"]["wing_name"];?>
+				<label class="checkbox">
+				<div class="checker"><span><input value="<?php echo $wing_id; ?>" type="checkbox" name="wings[]"></span></div> <?php echo $wing_name; ?>
+				</label>
+			<?php } ?>
+			</div>
+		<label class="radio line">
+		<div class="radio"><span><input name="send_to" value="group_wise" type="radio"></span></div>
+		Group wise
+		</label>
+			<div style="padding-left:5%;display:none;" id="group_wise">
+			group_wise
+			</div>
+	</div>
+<script>
+$(document).ready(function() {
+	$("input[type=radio][name=send_to]").on("click",function(){
+		var send_to=$(this).val();
+		if(send_to=="all_users"){
+			$("#role_wise").hide();
+			$("#wing_wise").hide();
+			$("#group_wise").hide();
+		}
+		if(send_to=="role_wise"){
+			$("#role_wise").show();
+			$("#wing_wise").hide();
+			$("#group_wise").hide();
+		}
+		if(send_to=="wing_wise"){
+			$("#wing_wise").show();
+			$("#role_wise").hide();
+			$("#group_wise").hide();
+		}
+		if(send_to=="group_wise"){
+			$("#group_wise").show();
+			$("#role_wise").hide();
+			$("#wing_wise").hide();
+		}
+	});
+	$(".owner").on("click",function(){
+		if($(this).is(":checked")===true){
+			$(".owner_family").show();
+		}else{
+			$(".owner_family").hide();
+		}
+	});
+	$(".tenant").on("click",function(){
+		if($(this).is(":checked")===true){
+			$(".tenant_family").show();
+		}else{
+			$(".tenant_family").hide();
+		}
+	});
+	$(".resident").on("click",function(){
+		if($(this).is(":checked")===true){
+			$(".resident_family").show();
+		}else{
+			$(".resident_family").hide();
+		}
+	});
+});
+</script>
+	<?php
+}
 	
 
 }

@@ -174,18 +174,14 @@ $creater_name = @$user_detailll['user']['user_name'];
 	
 	$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array($element_id)));
 	$receipt_source = $result_cash_bank[0]["cash_bank"]["source"];  
-
-	
 	if($receipt_source == "bank_receipt")
 	{
 	$source="Receipt";
-	$trans_id = (int)$result_cash_bank[0]["cash_bank"]["transaction_id"]; 
-	$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_id"]; 
-	$flat_id = (int)$result_cash_bank[0]["cash_bank"]["party_name_id"];
+	$trans_id = (int)$result_cash_bank[0]["cash_bank"]["auto_id"]; 
+	$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_number"]; 
+	$ledger_sub_account_id = (int)$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
 	$description = @$result_cash_bank[0]["cash_bank"]["narration"];
-	$current_date = $result_cash_bank[0]['cash_bank']['current_date']; 	
-	$current_datttt = date('d-m-Y',strtotime($current_date));
-    $creater_user_id =(int)@$result_cash_bank[0]['cash_bank']['prepaired_by'];
+	$creater_user_id =(int)@$result_cash_bank[0]['cash_bank']['prepaired_by'];
 	$approved_by = (int)@$result_cash_bank[0]['cash_bank']['approved_by'];
 	$approved_date = @$result_cash_bank[0]['cash_bank']['approved_date'];
 	$description=substrwords($description,200,'...');

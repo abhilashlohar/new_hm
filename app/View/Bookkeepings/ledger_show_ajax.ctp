@@ -173,7 +173,7 @@ $creater_name = @$user_detailll['user']['user_name'];
 			$element_id=$element_id;
 	
 	$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array($element_id)));
-	$receipt_source = $result_cash_bank[0]["cash_bank"]["receipt_source"];  
+	$receipt_source = $result_cash_bank[0]["cash_bank"]["source"];  
 
 	
 	if($receipt_source == "bank_receipt")

@@ -47,18 +47,9 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 <link href="<?php echo $webroot_path; ?>as/demo-styles.css" rel="stylesheet" />
 
 		<style>
-		label.valid {
-		  width: 24px;
-		  height: 0px;
-		  background: url(as/img/valid.png) center center no-repeat;
-		  text-indent: -9999px;
-		  position:fixed;
-		}
 		label.error {
-			/*font-weight: bold;*/
 			color: red;
-			padding: 2px 8px;
-			margin-top: 10px;
+			font-size: 12px;
 		}
 		</style>
 		<style media="print">

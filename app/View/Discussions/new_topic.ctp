@@ -1,7 +1,7 @@
 <div style="background-color: #FFF; padding: 0px 10px; border: 1px solid rgb(233, 231, 231);">
 <table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-		<td><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-comments"></i> Discussion Forum</span></td>
+		<td style="white-space: nowrap;"><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-comments"></i> Discussion Forum</span></td>
 		<td align="right">
 			<a href="<?php echo $webroot_path; ?>Discussions/index/0" role="button" rel="tab" class="btn" style="margin-top: 5px; margin-bottom: 5px;"><i class="icon-cloud"></i> All Topics</a>
 			<a href="<?php echo $webroot_path; ?>Discussions/index/1" role="button" rel="tab" class="btn" style="margin-top: 5px; margin-bottom: 5px;"><i class="icon-heart"></i> My Topics</a>
@@ -50,6 +50,9 @@
 				</div>
 			</div>
 			<div class="span6">
+				<?php
+				echo $sending_options=$this->requestAction(array('controller' => 'Fns', 'action' => 'sending_options'));
+				?>
 				<div style="padding-top:25px;"><button type="submit" class="btn green" name="sub">Start Topic</button></div>
 			</div>
 		</div>
@@ -93,7 +96,7 @@ $(document).ready(function(){
                     //place all errors in a <div id="errors"> element
                     errorPlacement: function(error, element) {
                         //error.appendTo("label#errors");
-						error.appendTo('label#' + element.attr('id'));
+						error.appendTo('label#' + element.attr('e_id'));
                     }, 
 	    groups: {
             asdfg: checkbox_names,
@@ -111,7 +114,6 @@ $(document).ready(function(){
 		  description: {
 	        required: true,
 			maxlength: 500,
-			//remote:"<?php echo $webroot_path;?>hms/content_check_des"
 	      },
 		  file: {
 			accept: "gif,jpg",

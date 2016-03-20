@@ -600,9 +600,10 @@ function wing_flat_via_wing_id_and_flat_id($wing_id,$flat_id){
 			return array("wing_flat"=>$flats,"owner"=>$owner,"result_user"=>$result_user,"result_user_profile"=>$result_user_profile);
 	}
 
+<<<<<<< HEAD
 function tenant_member_info_via_society_id(){
 		$s_society_id=$this->Session->read('hm_society_id');
-
+		
 		$this->loadmodel('user_flat');
 		$conditions=array("society_id"=>$s_society_id, "owner"=>"no");
 		$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions));
@@ -639,13 +640,17 @@ function tenant_member_info_via_society_id(){
 			}
 		return $result_tenant_info ;
 }
-function tenancy_agreement_via_user_fetch($society_id,$user_id){
-	
-	$this->loadmodel('tenant');
-	$conditions=array("society_id" => $society_id,'user_id'=>$user_id);
-	return $this->tenant->find('all',array('conditions'=>$conditions));
-}
+=======
+	function tenancy_agreement_via_user_fetch($society_id,$user_id){
+		
+		$this->loadmodel('tenant');
+		$conditions=array("society_id" => $society_id,'user_id'=>$user_id);
+		return $this->tenant->find('all',array('conditions'=>$conditions));
+		
+	}
 
+>>>>>>> origin/master
+	
 function sending_options(){
 	$s_society_id=$this->Session->read('hm_society_id');
 	?>
@@ -664,7 +669,7 @@ function sending_options(){
 					<tr>
 						<td>
 							<label class="checkbox">
-							<div class="checker"><span><input class="owner requirecheck1" e_id="requirecheck1" value="3" type="checkbox" name="roles[]"></span></div> Owners
+							<div class="checker"><span><input class="owner" value="3" type="checkbox" name="roles[]"></span></div> Owners
 							</label>
 						</td>
 						<td class="owner_family" style="display:none;">
@@ -676,7 +681,7 @@ function sending_options(){
 					<tr>
 						<td>
 							<label class="checkbox">
-							<div class="checker"><span><input class="tenant requirecheck1" e_id="requirecheck1" value="4" type="checkbox" name="roles[]"></span></div> Tenants
+							<div class="checker"><span><input class="tenant" value="4" type="checkbox" name="roles[]"></span></div> Tenants
 							</label>
 						</td>
 						<td class="tenant_family" style="display:none;">
@@ -688,7 +693,7 @@ function sending_options(){
 					<tr>
 						<td>
 							<label class="checkbox">
-							<div class="checker"><span><input class="resident requirecheck1" e_id="requirecheck1" value="" type="checkbox" name="roles[]"></span></div> Residents
+							<div class="checker"><span><input class="resident" value="" type="checkbox" name="roles[]"></span></div> Residents
 							</label>
 						</td>
 						<td class="resident_family" style="display:none;">
@@ -712,16 +717,11 @@ function sending_options(){
 						<tr>
 							<td colspan="2">
 								<label class="checkbox">
-								<div class="checker"><span><input class="requirecheck1" e_id="requirecheck1" value="<?php echo $role_id; ?>" type="checkbox" name="roles[]"></span></div> <?php echo $role_name; ?>
+								<div class="checker"><span><input class="requirecheck1" value="<?php echo $role_id; ?>" type="checkbox" name="roles[]"></span></div> <?php echo $role_name; ?>
 								</label>
 							</td>
 						</tr>
 					<?php } ?>
-					<tr>
-						<td >
-							<label id="requirecheck1"></label>
-						</td>
-					</tr>
 					</table>
 				</div>
 			</div>
@@ -730,19 +730,17 @@ function sending_options(){
 		Wing wise
 		</label>
 			<div style="padding-left:5%;display:none;" id="wing_wise">
-				<div style="background-color: rgb(252, 250, 250); padding: 2px; border: 1px solid rgba(204, 204, 204, 0.3);">
-				<?php
-				$this->loadmodel('wing');
-				$conditions=array("society_id"=>$s_society_id);
-				$result_wing=$this->wing->find('all',array('conditions'=>$conditions));
-				foreach($result_wing as $data2){
-					$wing_id=$data2["wing"]["wing_id"];
-					$wing_name=$data2["wing"]["wing_name"];?>
-					<label class="checkbox">
-					<div class="checker"><span><input value="<?php echo $wing_id; ?>" type="checkbox" name="wings[]"></span></div> <?php echo $wing_name; ?>
-					</label>
-				<?php } ?>
-				</div>
+			<?php
+			$this->loadmodel('wing');
+			$conditions=array("society_id"=>$s_society_id);
+			$result_wing=$this->wing->find('all',array('conditions'=>$conditions));
+			foreach($result_wing as $data2){
+				$wing_id=$data2["wing"]["wing_id"];
+				$wing_name=$data2["wing"]["wing_name"];?>
+				<label class="checkbox">
+				<div class="checker"><span><input value="<?php echo $wing_id; ?>" type="checkbox" name="wings[]"></span></div> <?php echo $wing_name; ?>
+				</label>
+			<?php } ?>
 			</div>
 		<label class="radio line">
 		<div class="radio"><span><input name="send_to" value="group_wise" type="radio"></span></div>

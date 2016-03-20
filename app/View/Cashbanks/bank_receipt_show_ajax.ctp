@@ -37,7 +37,7 @@
 				}
 				else
 				{
-					$receipt_type="";
+					$receipt_type="Non Residential";
 				$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];	
 				$result_ledger_sub_account = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id)));
 				foreach($result_ledger_sub_account as $data)

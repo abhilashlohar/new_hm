@@ -15,9 +15,35 @@ foreach($result_cash_bank as $receipt){
 				$auto_id=$receipt["cash_bank"]["auto_id"];
 				$receipt_number=$receipt["cash_bank"]["receipt_number"];
 				$transaction_date=$receipt["cash_bank"]["transaction_date"];
+				$received_from=$receipt["cash_bank"]["received_from"];
+				if($received_from == "residential"){				
 				$receipt_type=$receipt["cash_bank"]["receipt_type"];
 				$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];
+				 $date=date("d-m-Y",$transaction_date);
+				$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($ledger_sub_account_id))); 
 				
+						 $user_name=$result_member_info["user_name"];
+						 $wing_name=$result_member_info["wing_name"];
+						 $flat_name=$result_member_info["flat_name"];
+						 $wing_flat=$wing_name.'-'.$flat_name;
+						 $email=$result_member_info["email"];
+						 $mobile=$result_member_info["mobile"];
+						 $wing_id=$result_member_info["wing_id"];
+				
+				}else{
+					 $date=date("d-m-Y",$transaction_date);
+				$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];
+				$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];	
+				$result_ledger_sub_account = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id)));
+				foreach($result_ledger_sub_account as $data)
+				{
+				$user_name = $data['ledger_sub_account']['name'];	
+				}	
+					
+					
+				}
+				
+						
 				$deposited_in=$receipt["cash_bank"]["deposited_in"];
 				$deposited_in_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($deposited_in)));
 
@@ -37,16 +63,7 @@ foreach($result_cash_bank as $receipt){
 					$amount = str_replace( ',', '', $amount );
 					$am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));
 					
-				 $date=date("d-m-Y",$transaction_date);
-				$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($ledger_sub_account_id))); 
 				
-						 $user_name=$result_member_info["user_name"];
-						 $wing_name=$result_member_info["wing_name"];
-						 $flat_name=$result_member_info["flat_name"];
-						 $wing_flat=$wing_name.'-'.$flat_name;
-						 $email=$result_member_info["email"];
-						 $mobile=$result_member_info["mobile"];
-						 $wing_id=$result_member_info["wing_id"];
 				
 				
 				

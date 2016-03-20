@@ -172,7 +172,7 @@ $amount = number_format($amount);
 }
 echo $amount; ?></td>
 <td class="hide_at_print">
-<a href="bank_receipt_approve?aa=<?php echo $transaction_id; ?>" class="btn mini red">Approve</a>
+<a href="approve_bank_receipt_ajax/<?php echo $transaction_id; ?>" class="btn mini red">Approve</a>
 <a href="aprrove_bank_receipt_update?bb=<?php echo $transaction_id; ?>" class="btn mini blue">Edit</a>
 </td>
 </tr>

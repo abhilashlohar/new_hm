@@ -5750,34 +5750,37 @@ function new_bank_receipt(){
 				$branch_of_bank=$branch_of_banks[$i];
 				$received_from=$received_froms[$i];
 				if($received_from == 'residential'){
-				echo $ledger_sub_account_id=(int)$ledger_sub_accounts[$i];
-				echo $receipt_type=$receipt_types[$i];	
+				$ledger_sub_account_id=(int)$ledger_sub_accounts[$i];
+				$receipt_type=$receipt_types[$i];	
+				$ledger_sub_account_id_for_insertion=$ledger_sub_account_id;
+				$bill_reference=null;
+				}else{
+				 $non_members_ledger_sub_account_id=(int)$non_members_ledger_sub_account_ids[$i];
+				 $bill_reference=$bill_references[$i];
+				 $ledger_sub_account_id_for_insertion=$non_members_ledger_sub_account_id;
+				 $receipt_type=null;
 				}
-				else{
-				echo $non_members_ledger_sub_account_id=$non_members_ledger_sub_account_ids[$i];
-				echo $bill_reference=$bill_references[$i];
-				}
-				
-			
-			
-				
 				$amount=$amounts[$i];
 				$narration=$narrations[$i];
 				$cheque_date=$date;
-				if($receipt_type=="maintenance"){
+				
 					$this->loadmodel('cash_bank');
 					$auto_id=$this->autoincrement('cash_bank','auto_id');
 					$receipt_number=$this->autoincrement_with_society_ticket('cash_bank','receipt_number');
-					$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id, "transaction_date" => strtotime($transaction_date),"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$received_from,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number))); 
+					$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id, "transaction_date" => strtotime($transaction_date),"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$received_from,"ledger_sub_account_id"=>$ledger_sub_account_id_for_insertion,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number,"bill_reference"=>$bill_reference))); 
 					
 					
 					$this->loadmodel('ledger');
 					$ledger_id=$this->autoincrement('ledger','auto_id');
 					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" => $amount, "credit" =>null, "ledger_account_id" => 33, "ledger_sub_account_id" => $deposited_in,"table_name" => "cash_bank","element_id" => $auto_id, "society_id" => $s_society_id))); 
-
+                    
+					if($received_from == "residential"){
 					$ledger_id=$this->autoincrement('ledger','auto_id');
 					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name"=>"cash_bank","element_id" => $auto_id, "society_id" => $s_society_id,"receipt_type" =>$receipt_type)));
-				}
+				    }else{
+					$ledger_id=$this->autoincrement('ledger','auto_id');
+					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "credit" => $amount,"debit" =>null,"ledger_account_id" => 112, "ledger_sub_account_id" => $non_members_ledger_sub_account_id,"table_name"=>"cash_bank","element_id" => $auto_id, "society_id" => $s_society_id,"receipt_type" =>$receipt_type)));	
+					}
 				
 				// start Email & Sms code
 				

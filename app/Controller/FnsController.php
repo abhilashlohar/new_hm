@@ -607,7 +607,6 @@ function wing_flat_via_wing_id_and_flat_id($wing_id,$flat_id){
 		return $this->tenant->find('all',array('conditions'=>$conditions));
 		
 	}
-
 	
 	
 

@@ -25,13 +25,31 @@
 				$auto_id=$receipt["cash_bank"]["auto_id"];
 				$receipt_number=$receipt["cash_bank"]["receipt_number"];
 				$transaction_date=$receipt["cash_bank"]["transaction_date"];
+				$received_from = $receipt['cash_bank']['received_from'];
+				if($received_from == "residential")
+				{
 				$receipt_type=$receipt["cash_bank"]["receipt_type"];
 				$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];
 				$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 				$user_name=$member_info["user_name"];
 				$wing_name=$member_info["wing_name"];
 				$flat_name=$member_info["flat_name"];
-				 $deposited_in=$receipt["cash_bank"]["deposited_in"];
+				}
+				else
+				{
+					$receipt_type="";
+				$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];	
+				$result_ledger_sub_account = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id)));
+				foreach($result_ledger_sub_account as $data)
+				{
+				$user_name = $data['ledger_sub_account']['name'];	
+				}
+				
+				
+				
+				
+				}
+				$deposited_in=$receipt["cash_bank"]["deposited_in"];
 				$deposited_in_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($deposited_in)));
 				
 				$bank_name=$deposited_in_info[0]["ledger_sub_account"]["name"];
@@ -44,7 +62,12 @@
 					<td><?php echo $receipt_number; ?></td>
 					<td><?php echo date("d-m-Y",$transaction_date); ?></td>
 					<td><?php echo $receipt_type; ?></td>
-					<td><?php echo $user_name.' ('.$wing_name.' - '.$flat_name.')'; ?></td>
+					<td>
+					<?php if($received_from == "residential"){ ?>
+					<?php echo $user_name.' ('.$wing_name.' - '.$flat_name.')'; ?> <?php }else { ?>
+					<?php echo $user_name; ?>
+					<?php } ?>
+					</td>
 					<td><?php echo $bank_name.' - '.$bank_account; ?></td>
 					<td><?php echo $receipt_mode; ?></td>
 					<td><?php echo $cheque_number; ?></td>

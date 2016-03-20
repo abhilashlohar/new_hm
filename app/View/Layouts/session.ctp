@@ -51,6 +51,13 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 			color: red;
 			font-size: 12px;
 		}
+		label.valid {
+		  width: 24px;
+		  height: 0px;
+		  background: url(as/img/valid.png) center center no-repeat;
+		  text-indent: -9999px;
+		  position:fixed;
+		}
 		</style>
 		<style media="print">
 		.hide_at_print {

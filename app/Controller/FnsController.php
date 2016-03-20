@@ -739,9 +739,10 @@ function sending_options(){
 					$wing_id=$data2["wing"]["wing_id"];
 					$wing_name=$data2["wing"]["wing_name"];?>
 					<label class="checkbox">
-					<div class="checker"><span><input value="<?php echo $wing_id; ?>" type="checkbox" name="wings[]"></span></div> <?php echo $wing_name; ?>
+					<div class="checker"><span><input class="requirecheck2" e_id="requirecheck2" value="<?php echo $wing_id; ?>" type="checkbox" name="wings[]"></span></div> <?php echo $wing_name; ?>
 					</label>
 				<?php } ?>
+				<label id="requirecheck2"></label>
 				</div>
 			</div>
 		<label class="radio line">

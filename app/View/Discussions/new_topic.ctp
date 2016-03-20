@@ -19,14 +19,14 @@
 				<div class="control-group ">
 					<div class="controls">
 					<label  style="font-size:14px;">Topic Name <span style="font-size:12px; color:#999;">(Maximum 100 characters.)</span></label>
-					<input type="text" class="span12 m-wrap" id="alloptions" style="background-color: #fff !important;" maxlength="100"  name="topic" >
+					<input type="text" class="span12 m-wrap" e_id="alloptions" style="background-color: #fff !important;" maxlength="100"  name="topic" >
 					<label id="alloptions" ></label>
 					</div>
 				</div>
 				<div class="control-group ">
 					<div class="controls">
 					<label class="" style="font-size:14px;">Description  <span style="font-size:12px; color:#999;">(Maximum 500 characters.)</span></label>
-					<textarea class="span8 m-wrap" id="textarea" maxlength="500" style="background-color: #fff !important; resize:none; width:100%" name=description onkeyup=limiter()  rows="4"></textarea>
+					<textarea class="span8 m-wrap" e_id="textarea" maxlength="500" style="background-color: #fff !important; resize:none; width:100%" name=description onkeyup=limiter()  rows="4"></textarea>
 					<label id="textarea" ></label>
 					</div>
 				</div>
@@ -62,7 +62,7 @@
 <script>
 $.validator.addMethod('requirecheck1', function (value, element) {
 	 return $('.requirecheck1:checked').size() > 0;
-}, 'Please check at least one role.');
+}, 'Please select at least one role.');
 
 $.validator.addMethod('requirecheck2', function (value, element) {
 	 return $('.requirecheck2:checked').size() > 0;

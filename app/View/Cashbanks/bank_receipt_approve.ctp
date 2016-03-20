@@ -101,10 +101,10 @@ $nnn = 555;
 	}
 		$member_type = $collection['temp_cash_bank']['member_type'];
 		$narration = @$collection['temp_cash_bank']['narration'];
-	if($member_type == 1){
+	if($member_type == "residential"){
 			 $ledger_sub_account_id = (int)$collection['temp_cash_bank']['ledger_sub_account_id'];
 			 $receipt_type = $collection['temp_cash_bank']['receipt_type'];
-		if($receipt_type == 1){
+		if($receipt_type == "maintenance"){
 			$receipt_tppp = "Maintenance";	
 		}
 		else{

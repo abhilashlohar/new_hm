@@ -71,19 +71,17 @@ $date=$collection['help_desk_reply']['date'];
 $time=$collection['help_desk_reply']['time'];
 $reply=$collection['help_desk_reply']['reply'];
 $class=$collection['help_desk_reply']['class'];
-$d_user=$collection['help_desk_reply']['user_id'];
+ $d_user=(int)$collection['help_desk_reply']['user_id'];
 
-$result=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($d_user)));
-foreach($result as $data)
-{
-$profile_pic=$data['user']['profile_pic'];
-$user_name=$data['user']['user_name'];
-$wing=$data['user']['wing'];
-$flat=$data['user']['flat'];
-$profile_pic=$data['user']['profile_pic'];
+$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($d_user)));
+ $user_name=$result_member_info['user_name'];
+$profile_pic= @$result_member_info['profile_pic'];
+$result_wing_flat=$result_member_info['wing_flat'];
+foreach($result_wing_flat as $data){
+
+	$flat=$data;
 }
 
-$flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
 ?>
 
 <div <?php if($d_user==$s_user_id) { ?> class="outt" <?php }  if($d_user!=$s_user_id) { ?> class="inn" <?php } ?>>

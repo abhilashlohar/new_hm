@@ -1,12 +1,6 @@
 <?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
-?>			   
-<script>
-$(document).ready(function() {
-$("#fix<?php echo $id_current_page; ?>").removeClass("blue");
-$("#fix<?php echo $id_current_page; ?>").addClass("red");
-});
-</script>						   
+echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
+?>						   
 
 <div align="center">
 <a href="help_desk_r_open_ticket" rel='tab' class="btn blue"><i class="icon-folder-open"></i> Open Tickets</a>

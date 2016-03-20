@@ -16,17 +16,17 @@
 
 
 <?php
-$result=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($d_user_id)));
-foreach ($result as $data) 
-{
-$user_name=$data["user"]["user_name"];
-$wing=$data["user"]["wing"];
-$flat=$data["user"]["flat"];
-$email=$data["user"]["email"];
-$mobile=$data["user"]["mobile"];
-}
 
-$flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
+$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($d_user_id))); 
+
+	$user_name=$result_member_info["user_name"]; 
+	$wing_flat_result=$result_member_info["wing_flat"]; 
+	$email=$result_member_info["email"]; 
+	$mobile=$result_member_info["mobile"]; 
+	foreach($wing_flat_result as $data){
+		$flat=$data;
+	}
+
 ?>
 <span style="color:#269abc;font-size:16px;">Ticket Raised By:-   <?php echo $user_name; ?> <?php echo $flat; ?></span>
 <hr>
@@ -246,7 +246,7 @@ Ticket has been closed on <?php echo @$help_desk_close_date ;?>
 <div style="padding:10px;overflow:auto;" >
 <div id="reply_post">
 <?php
-$s_user_id=$this->Session->read('user_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 foreach ($result_reply as $collection) 
 {
@@ -256,17 +256,16 @@ $reply=$collection['help_desk_reply']['reply'];
 $class=$collection['help_desk_reply']['class'];
 $d_user=$collection['help_desk_reply']['user_id'];
 
-$result=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($d_user)));
-foreach($result as $data)
-{
-$profile_pic=$data['user']['profile_pic'];
-$user_name=$data['user']['user_name'];
-$wing=$data['user']['wing'];
-$flat=$data['user']['flat'];
-$profile_pic=$data['user']['profile_pic'];
+$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($d_user)));
+ $user_name=$result_member_info['user_name'];
+$profile_pic= @$result_member_info['profile_pic'];
+$result_wing_flat=$result_member_info['wing_flat'];
+foreach($result_wing_flat as $data){
+
+	$flat=$data;
 }
 
-$flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
+
 ?>
 
 <div <?php if($d_user==$s_user_id) { ?> class="outt" <?php }  if($d_user!=$s_user_id) { ?> class="inn" <?php } ?>>

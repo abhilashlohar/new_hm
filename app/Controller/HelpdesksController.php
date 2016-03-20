@@ -28,8 +28,8 @@ if($this->RequestHandler->isAjax()){
 $this->ath();
 $this->check_user_privilages();
 
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 
 $this->loadmodel('help_desk');
@@ -56,8 +56,8 @@ if($this->RequestHandler->isAjax()){
 $this->ath();
 $this->check_user_privilages();
 
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 $this->loadmodel('help_desk');
 $conditions=array("help_desk_status" => 1,"society_id" => $s_society_id,"user_id" => $s_user_id,'help_desk_draft'=>0);
@@ -77,8 +77,8 @@ if($this->RequestHandler->isAjax()){
 $this->ath();
 $this->check_user_privilages();
 
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 $this->loadmodel('help_desk');
 $conditions=array("society_id" => $s_society_id,"user_id" => $s_user_id,'help_desk_draft'=>0);
@@ -98,8 +98,8 @@ if($this->RequestHandler->isAjax()){
 	}
 $this->ath();
 $this->check_user_privilages();	
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $this->loadmodel('help_desk');
 $conditions=array("help_desk_draft" =>1,"user_id" => $s_user_id);
 $order=array('help_desk.help_desk_id'=> 'DESC');
@@ -127,8 +127,8 @@ if($this->RequestHandler->isAjax()){
 	$this->layout='session';
 	}
 $this->ath();
-$s_society_id= $this->Session->read('society_id');
-$s_user_id= $this->Session->read('user_id');
+$s_society_id= $this->Session->read('hm_society_id');
+$s_user_id= $this->Session->read('hm_user_id');
 $id=(int)$id;
 $this->loadmodel('help_desk_category');
 $order=array('help_desk_category.help_desk_category_name'=> 'ASC');					
@@ -145,8 +145,8 @@ foreach($result_help as $data)
 
 if(isset($this->request->data['sub']))
 {
-	
-	$ip=$this->hms_email_ip();
+
+	$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
 	
  $category=(int)$this->request->data['category'];
  $textarea=htmlentities($this->request->data['comment']);
@@ -192,33 +192,15 @@ $to=$collection['user']["email"];
 $mobile=$collection['user']["mobile"];
 }
 
-$this->loadmodel('user');
-$conditions3=array("user_id"=>$s_user_id);
-$result3=$this->user->find('all',array('conditions'=>$conditions3));
-foreach ($result3 as $collection) 
-{
-$user_name=$collection['user']["user_name"];
-$reply=$collection['user']["email"];
-$wing=(int)$collection['user']["wing"];
-$flat=(int)$collection['user']["flat"];
-$da_society_id=(int)$collection['user']['society_id'];
-}
 
-$this->loadmodel('wing');
-$conditions4=array("wing_id"=>$wing);
-$result_wing=$this->wing->find('all',array('conditions'=>$conditions4));
-foreach ($result_wing as $collection) 
-{
-$wing_name=$collection['wing']["wing_name"];
-}
-$this->loadmodel('flat');
-$conditions5=array("flat_id"=>$flat);
-$result_flat=$this->flat->find('all',array('conditions'=>$conditions5));
-foreach ($result_flat as $collection) 
-{
-$flat_name=$collection['flat']["flat_name"];
-}
-@$wing_flat=$wing_name.'-'.$flat_name;
+$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($s_user_id))); 
+
+	$user_name=$result_member_info["user_name"]; 
+	$wing_flat_result=$result_member_info["wing_flat"]; 
+	$reply=$result_member_info["email"]; 
+	foreach($wing_flat_result as $data){
+		$wing_flat=$data;
+	}
 
 if($ticket_priority==1)
 {
@@ -231,12 +213,12 @@ $ticket_priority="Normal";
  $ticket_no=$t;
  $i=$id;
  $category_name=$this->help_desk_category_name($category);
-$r_sms=$this->hms_sms_ip();
+ $r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip'));
   $working_key=$r_sms->working_key;
  $sms_sender=$r_sms->sms_sender; 
  $sms_allow=(int)$r_sms->sms_allow;
 if($sms_allow==1){
- $sms='New Helpdesk ticket '.$ticket_no.' - '.$category_name.' raised+by '.$user_name.' - '.$wing_flat.' Please log into HousingMatters for further action.';
+  $sms='New Helpdesk ticket '.$ticket_no.' - '.$category_name.' raised+by '.$user_name.' - '.$wing_flat.' Please log into HousingMatters for further action.';
 
 $sms1=str_replace(' ', '+', $sms);
 $payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');	
@@ -267,7 +249,7 @@ $payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingk
 <center><p>To view the ticket or post response
 <a href='$ip".$this->webroot."hms' ><button style='width:100px; height:30px;  background-color:#00A0E3;color:white'> Click Here </button></a></p></center><br/>
 HousingMatters (Support Team)<br/>
-www.housingmatters.co.in
+www.housingmatters.in
 </div>
 </div>";
 
@@ -318,7 +300,7 @@ if($user_mail==2)
 $to=$reply;
 $from_name="HousingMatters";
 $reply="donotreply@housingmatters.in";
-$society_name_user=$this->society_name($da_society_id);
+
 
   $message_web="<div>
 <img src='$ip".$this->webroot."/as/hm/hm-logo.png'/><span  style='float:right; margin:2.2%;'>
@@ -394,8 +376,8 @@ function help_desk_genarate_ticket()
 $this->ath();
 $this->check_user_privilages();
 
-$s_society_id= $this->Session->read('society_id');
-$s_user_id= $this->Session->read('user_id');
+$s_society_id= $this->Session->read('hm_society_id');
+$s_user_id= $this->Session->read('hm_user_id');
 
 $this->loadmodel('help_desk_category');
 $order=array('help_desk_category.help_desk_category_name'=> 'ASC');					
@@ -405,7 +387,7 @@ $this->set('result_help_desk_category',$result);
 if(isset($this->request->data['sub']))
 {
 	
-	$ip=$this->hms_email_ip();
+	$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 	
 $category=(int)$this->request->data['category'];
 $textarea=htmlentities($this->request->data['description']);
@@ -432,78 +414,62 @@ $this->help_desk->saveAll(array("help_desk_id" => $i, "ticket_id" => $t, "societ
 //////////////////////////////////////////////////////////////  Mail Functionality starting /////////////////////////////////////////////////////////////////
 //------------------mail functinality  start SM -------------------
 $user_mail=1;
-if($user_mail==1)	
-{
-$this->loadmodel('society');
-$conditions12=array('society_id'=>$s_society_id);
-$result1=$this->society->find('all',array('conditions'=>$conditions12));
+if($user_mail==1){
+	
+	$this->loadmodel('society');
+	$conditions12=array('society_id'=>$s_society_id);
+	$result1=$this->society->find('all',array('conditions'=>$conditions12));
 
-foreach ($result1 as $collection) 
-{
-$user=$collection['society']["user_id"];
-$society_name=$collection['society']["society_name"];
+foreach ($result1 as $collection) {
+		
+	$user=$collection['society']["user_id"];
+	$society_name=$collection['society']["society_name"];
 }
 $this->loadmodel('user');
 $conditions2=array("user_id"=>$user);
 $result_user=$this->user->find('all',array('conditions'=>$conditions2));
-foreach ($result_user as $collection) 
-{
-$to=$collection['user']["email"];
-$mobile=$collection['user']["mobile"];
-}
-$this->loadmodel('user');
-$conditions3=array("user_id"=>$s_user_id);
-$result3=$this->user->find('all',array('conditions'=>$conditions3));
-foreach ($result3 as $collection) 
-{
-$user_name=$collection['user']["user_name"];
-$reply=$collection['user']["email"];
-$wing=(int)$collection['user']["wing"];
-$flat=(int)$collection['user']["flat"];
-$da_society_id=(int)$collection['user']['society_id'];
-}
-$this->loadmodel('wing');
-$conditions4=array("wing_id"=>$wing);
-$result_wing=$this->wing->find('all',array('conditions'=>$conditions4));
-foreach ($result_wing as $collection) 
-{
-$wing_name=$collection['wing']["wing_name"];
-}
-$this->loadmodel('flat');
-$conditions5=array("flat_id"=>$flat);
-$result_flat=$this->flat->find('all',array('conditions'=>$conditions5));
-foreach ($result_flat as $collection) 
-{
-$flat_name=$collection['flat']["flat_name"];
-}
-@$wing_flat=$wing_name.'-'.$flat_name;
-if($ticket_priority==1)
-{
-$ticket_priority="Urgent";
-}
-else
-{
-$ticket_priority="Normal";
+foreach ($result_user as $collection) {
+	
+	$to=$collection['user']["email"];
+	$mobile=$collection['user']["mobile"];
 }
 
-$r_sms=$this->hms_sms_ip();
-$working_key=$r_sms->working_key;
-$sms_sender=$r_sms->sms_sender; 
-$sms_allow=(int)$r_sms->sms_allow;
 
-$ticket_no=$t;
-$category_name=$this->help_desk_category_name($category);
-$sms='New Helpdesk ticket '.$ticket_no.' - '.$category_name.' raised+by '.$user_name.' - '.$wing_flat.' Please log into HousingMatters for further action.';
+	$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($s_user_id))); 
 
-$sms1=str_replace(' ', '+', $sms);
-if($sms_allow==1){
-$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');	
-} 
+	$user_name=$result_member_info["user_name"]; 
+	$wing_flat_result=$result_member_info["wing_flat"]; 
+	$reply=$result_member_info["email"]; 
+	foreach($wing_flat_result as $data){
+		$wing_flat=$data;
+	}
+
+	if($ticket_priority==1){
+		$ticket_priority="Urgent";
+	}
+	else
+	{
+		$ticket_priority="Normal";
+	}
+	
+	$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip'));
+	$working_key=$r_sms->working_key;
+	$sms_sender=$r_sms->sms_sender; 
+	$sms_allow=(int)$r_sms->sms_allow;
+
+	$ticket_no=$t;
+	$category_name=$this->help_desk_category_name($category);
+	$sms='New Helpdesk ticket '.$ticket_no.' - '.$category_name.' raised+by '.$user_name.' - '.$wing_flat.' Please log into HousingMatters for further action.';
+
+	$sms1=str_replace(' ', '+', $sms);
+	if($sms_allow==1){
+		$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');	
+	} 
 
 
 
 
-$message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+ $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
           <tbody>
 			<tr>
                 <td>
@@ -633,7 +599,7 @@ $result5=$this->notification_email->find('all',array('conditions'=>$conditions7)
 $n=sizeof($result5);
 if(1==1)
 {
-		@$subject.= '['. $society_name . ']' . '- New Helpdesk Ticket : ' . '  #   ' .$ticket_no .'';
+		 @$subject.= '['. $society_name . ']' . '- New Helpdesk Ticket : ' . '  #   ' .$ticket_no .'';
 
 $this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
 $subject="";
@@ -648,9 +614,9 @@ $this->recent_activities('icon-barcode',$s_user_id,'lodge a new ticket','help_de
 $this->loadmodel('help_desk_category');
 $conditions=array("help_desk_category_id" => $category);
 $cursor=$this->help_desk_category->find('all',array('conditions'=>$conditions));
-foreach ($cursor as $collection2) 
-{
-$help_desk_category_name=$collection2['help_desk_category']['help_desk_category_name'];
+foreach ($cursor as $collection2){
+	
+	$help_desk_category_name=$collection2['help_desk_category']['help_desk_category_name'];
 }
 
 $user_d[]=$user;
@@ -663,10 +629,10 @@ if($user_mail==2)
 $to=$reply;
 $from_name="HousingMatters";
 $reply="donotreply@housingmatters.in";
-$society_name_user=$this->society_name($da_society_id);
 
 
-$message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+
+ $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
           <tbody>
 			<tr>
                 <td>
@@ -867,8 +833,8 @@ if($this->RequestHandler->isAjax()){
 $this->ath();
 $this->check_user_privilages();
 
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 $this->loadmodel('help_desk');
 $conditions=array("help_desk_status" => 0,"society_id" => $s_society_id,'help_desk_draft'=>0);
@@ -1033,8 +999,8 @@ if($this->RequestHandler->isAjax()){
 $this->ath();
 $this->check_user_privilages();
 
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $this->loadmodel('help_desk');
 $conditions=array("help_desk_status" =>1,"society_id" => $s_society_id,'help_desk_draft'=>0);
 $order=array('help_desk.ticket_id'=> 'DESC');
@@ -1059,8 +1025,8 @@ $this->ath();
 $this->check_user_privilages();
  
 
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 $this->loadmodel('help_desk');
 $conditions=array("society_id" => $s_society_id,'help_desk_draft'=>0);
@@ -1194,8 +1160,8 @@ $this->set('status',$status);
 
 $this->seen_notification(1,$hd_id);
 
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 $this->loadmodel('help_desk');
 $conditions=array("help_desk_id" => $hd_id);
@@ -1243,8 +1209,8 @@ $this->set('hd_id',$hd_id);
 
 $this->set('status',$status);
 
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 $this->seen_notification(1,$hd_id);
 ////////////////////////////////////////////////////////
@@ -1254,8 +1220,7 @@ $this->loadmodel('help_desk');
 $conditions=array("help_desk_id" => $hd_id);
 $result_help_desk=$this->help_desk->find('all',array('conditions'=>$conditions));
 $this->set('result_help_desk',$result_help_desk);
-foreach ($result_help_desk as $collection) 
-{
+foreach ($result_help_desk as $collection) {
 
 $d_user_id=(int)$collection['help_desk']['user_id'];
 $ticket_priority=$collection['help_desk']['ticket_priority'];
@@ -1264,12 +1229,11 @@ $help_generate_date=$collection['help_desk']['help_desk_date'];
 $help_desk_description=$collection['help_desk']['help_desk_description'];
 $da_society_id=(int)$collection['help_desk']['society_id'];
 
-$result_user = $this->profile_picture($d_user_id);
-foreach ($result_user as $collection) 
-{
-$user_name=$collection['user']['user_name'];
-$email=$collection['user']['email'];
-}
+$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($d_user_id))); 
+
+	$user_name=$result_member_info["user_name"]; 
+	$wing_flat_result=$result_member_info["wing_flat"]; 
+	$email=$result_member_info["email"]; 
 }
 if (isset($this->request->data['close'])) 
 {
@@ -1910,7 +1874,7 @@ $r=$this->content_moderation_society($reply);
 
 
 
-$s_user_id=$this->Session->read('user_id');
+$s_user_id=$this->Session->read('hm_user_id');
 date_default_timezone_set('Asia/Kolkata');
 $date=date("d-m-Y");
  $time=date('h:i:a',time());
@@ -1949,8 +1913,8 @@ function service_provider_add()
 $this->ath();
 $this->check_user_privilages();
 
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 $this->loadmodel('help_desk_category');	
 $order=array('help_desk_category.help_desk_category_name'=>'ASC');
@@ -1958,6 +1922,8 @@ $result=$this->help_desk_category->find('all',array('order'=>$order));
 $this->set('result_help_desk_category',$result);
 if($this->request->is('post')) 
 {
+	echo'dsfdsf';
+	exit;
 $file_upload=$this->request['form']['file']['name'];
 $pan_number=$this->request->data['pan_no'];
 $text=htmlentities($this->request->data['name']);	

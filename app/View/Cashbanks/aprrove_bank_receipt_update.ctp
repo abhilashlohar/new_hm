@@ -19,7 +19,7 @@ else
 $cheque_number = $dataaa['temp_cash_bank']['reference_utr'];	
 $cheque_date = $dataaa['temp_cash_bank']['cheque_date'];	
 }	
-$ledger_sub_account_id=(int)$dataaa['temp_cash_bank']['ledger_sub_account_id'];
+$ledger_sub_account_id_via_table=(int)$dataaa['temp_cash_bank']['ledger_sub_account_id'];
 $amount = $dataaa['temp_cash_bank']['amount'];
 $narration = $dataaa['temp_cash_bank']['narration'];
 }
@@ -131,32 +131,15 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 										 
 					<td>
 					
-					<select class="m-wrap span12" disabled="disabled">
-					<option value="" style="display:none;">Select</option>
-					<?php
-					foreach($ledger_sub_account_data as $data)
-					{
-					 $flatt_iddd = "";
-									 
-						
-					$flat_iddd = (int)$data['ledger_sub_account']['flat_id'];	
-					$resident_name = $data['ledger_sub_account']['name'];
-                    $user_id = (int)$data['ledger_sub_account']['user_id'];
-					
-					$wing_detailll = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_iddd)));
-					foreach($wing_detailll as $wing_dataaa)
-					{
-					$wing_idddd = (int)$wing_dataaa['flat']['wing_id'];	
-					}
-					$wing_flat= $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array($wing_idddd,$flat_iddd)));
-					
-					?>
-					<option value="<?php echo $flat_iddd; ?>" <?php if($flat_id == $flat_iddd) { ?> selected="selected"<?php } ?>><?php echo $resident_name; ?> <?php echo $wing_flat; ?></option>
-					<?php
-					
-					}
-					?>
-					</select>
+	<select name="ledger_sub_account[]" class="m-wrap" style="width:200px;" disabled="disabled">
+	<option value="" style="display:none;">--member--</option>
+	<?php foreach($members_for_billing as $ledger_sub_account_id){
+	$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id))); ?>
+	
+	<option value="<?php echo $ledger_sub_account_id; ?>" <?php if($ledger_sub_account_id ==$ledger_sub_account_id_via_table) { ?>selected="selected"<?php } ?>><?php echo $member_info["user_name"]; echo $member_info["wing_name"]; ?>-<?php echo ltrim($member_info["flat_name"],'0'); ?></option>
+	
+	<?php } ?>
+	</select>   
 							
 				</td>
 								 

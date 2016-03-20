@@ -264,7 +264,10 @@ $(document).ready(function() {
                   </a>
                   <ul class="dropdown-menu">
                      <li><a href="<?php echo $webroot_path; ?>Hms/profile" rel='tab'><i class="icon-user"></i> My Profile</a></li>
+					<?php  if($user_type!='hm'){ ?>
                      <li><a href="<?php echo $webroot_path; ?>Hms/change_role_member" rel='tab'><i class="fa fa-exchange"></i> Change Role</a></li>
+					 <?php } ?>
+					 
                      <li><a href="#"><i class="icon-tasks"></i> My Tasks</a></li>
                      <li class="divider"></li>
                      <li><a href="<?php echo $webroot_path; ?>Hms/logout"><i class="icon-key"></i> Log Out</a></li>

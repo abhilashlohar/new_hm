@@ -173,44 +173,31 @@ $creater_name = @$user_detailll['user']['user_name'];
 			$element_id=$element_id;
 	
 	$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array($element_id)));
-	$receipt_source = $result_cash_bank[0]["cash_bank"]["receipt_source"];  
-
-	
+	$receipt_source = $result_cash_bank[0]["cash_bank"]["source"];  
 	if($receipt_source == "bank_receipt")
 	{
 	$source="Receipt";
-	$trans_id = (int)$result_cash_bank[0]["cash_bank"]["transaction_id"]; 
-	$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_id"]; 
-	$flat_id = (int)$result_cash_bank[0]["cash_bank"]["party_name_id"];
+	$trans_id = (int)$result_cash_bank[0]["cash_bank"]["auto_id"]; 
+	$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_number"]; 
+	$ledger_sub_account_id = (int)$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
 	$description = @$result_cash_bank[0]["cash_bank"]["narration"];
-	$current_date = $result_cash_bank[0]['cash_bank']['current_date']; 	
-	$current_datttt = date('d-m-Y',strtotime($current_date));
-    $creater_user_id =(int)@$result_cash_bank[0]['cash_bank']['prepaired_by'];
+	$creater_user_id =(int)@$result_cash_bank[0]['cash_bank']['prepaired_by'];
 	$approved_by = (int)@$result_cash_bank[0]['cash_bank']['approved_by'];
 	$approved_date = @$result_cash_bank[0]['cash_bank']['approved_date'];
 	$description=substrwords($description,200,'...');
 	
-$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($approved_by)));
-foreach ($user_dataaaa as $user_detailll) 
-{
-$approver_name = @$user_detailll['user']['user_name'];
-}	
+	$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($approved_by)));
+	foreach ($user_dataaaa as $user_detailll) {
+	$approver_name = @$user_detailll['user']['user_name'];
+	}	
 	
-	
-$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($creater_user_id)));
-foreach ($user_dataaaa as $user_detailll) 
-{
-$creater_name = $user_detailll['user']['user_name'];
-}	
-	
-
-
-	
-		if($subledger_id != 0)
-		{
+	$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($creater_user_id)));
+	foreach ($user_dataaaa as $user_detailll){
+	$creater_name = $user_detailll['user']['user_name'];
+	}	
+		if($subledger_id != 0){
 			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
-			foreach($subleddger_detaill as $subledger_datttaa)
-			{
+			foreach($subleddger_detaill as $subledger_datttaa){
 			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
 			$ledger_id_forwingflat = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
 			}
@@ -227,19 +214,14 @@ $creater_name = $user_detailll['user']['user_name'];
 
 
 			
-		$result_flat_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
-		foreach($result_flat_info as $flat_info){
-		$wing_id=$flat_info["flat"]["wing_id"];
-		}
-		if(@$ledger_id_forwingflat == 34)
-        {		
-		$user_detail = $this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'fetch_user_info_via_flat_id'), array('pass' => array($wing_id,$flat_id)));		
-		foreach($user_detail as $data){
-		//$user_name = $data['user']['user_name'];
-		$wing_id = $data['user']['wing'];
-		$flat_id = $data['user']['flat'];	
-		$wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'wing_flat'), array('pass' => array($wing_id,$flat_id)));
-		}
+		
+	if(@$ledger_id_forwingflat == 34){
+		$member_info=$this->requestAction(array('controller' => 'Fns','action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+		$wing_id = $member_info['wing_id'];
+		$flat_id = $member_info['flat_id'];
+
+		$wing_flat=$this->requestAction(array('controller'=>'Fns','action' => 'wing_flat_via_wing_id_and_flat_id'), array('pass' => array($wing_id,$flat_id)));
+		
 		}
     }
 	if($receipt_source == "bank_payment")

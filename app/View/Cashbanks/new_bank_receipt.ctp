@@ -88,7 +88,15 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				</select>
 			</div>
 			<div id="non_residential" style="display:none;">
-			hello
+		<select name="non_member_ledger_sub_account[]" class="m-wrap" style="width:200px;">
+		<option value="" style="display:none;">--non member--</option>
+		<?php foreach($non_members as $ledger_sub_account_data){
+		       $ledger_sub_account_id = $ledger_sub_account_data['ledger_sub_account']['auto_id'];
+		       $non_member_name = $ledger_sub_account_data['ledger_sub_account']['name']; ?>
+			   <option value="<?php echo $ledger_sub_account_id; ?>"><?php echo $non_member_name; ?></option>
+		<?php } ?>
+		</select>
+		<input type="text" class="m-wrap" style="width:190px;" name="bill_reference[]" Placeholder="Bill Reference">
 			</div>
 		</td>
 		<td>
@@ -136,6 +144,7 @@ $(document).ready(function(){
 		$('#main tbody tr:last input[name="transaction_date[]"]').datepicker();
 		$('#main tbody tr:last input[name="date[]"]').datepicker();
 		$('#main tbody tr:last select[name="deposited_in[]"]').chosen();
+		$('#main tbody tr:last select[name="non_member_ledger_sub_account[]"]').chosen();
 	}
 	
 	$("form").on("submit",function(e){

@@ -96,7 +96,7 @@ $(document).ready(function(){
                     //place all errors in a <div id="errors"> element
                     errorPlacement: function(error, element) {
                         //error.appendTo("label#errors");
-						error.appendTo('label#' + element.attr('id'));
+						error.appendTo('label#' + element.attr('e_id'));
                     }, 
 	    groups: {
             asdfg: checkbox_names,

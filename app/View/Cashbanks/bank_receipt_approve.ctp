@@ -22,20 +22,12 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <style>
 <?php	
 $nnn=55;
-foreach ($cursor1 as $collection) 
+foreach ($result_temp_cash_bank as $collection) 
 {
 $nnn = 555;
 }
 ?>
-
-
-
-
-
-
-
-
- #bg_color th{
+#bg_color th{
 	font-size: 10px !important;background-color:#C8EFCE;padding:2px;border:solid 1px #55965F;
 }
 #report_tb td{
@@ -78,96 +70,75 @@ $nnn = 555;
 </thead>
 <tbody id="table">
 
-		<?php
-        	$total_credit = 0;
-        	$total_debit = 0;
-       		 $n=0;
-        	foreach ($cursor1 as $collection) 
-        	{
-       	 	$n++;
-        	
-        	$receipt_mode = $collection['my_flat_receipt_update']['receipt_mode'];
-        	$TransactionDate = $collection['my_flat_receipt_update']['receipt_date'];
-			$transaction_id = $collection['my_flat_receipt_update']['auto_id'];
-			$bill_one_time_id = @$collection['my_flat_receipt_update']['bill_one_time_id'];
-			$deposit_status = (int)@$collection['my_flat_receipt_update']['deposit_status']; 			
-            $current_date = $collection['my_flat_receipt_update']['current_date']; 			
-            $current_datttt = date('d-m-Y',strtotime($current_date));
-            $creater_user_id =(int)@$collection['my_flat_receipt_update']['prepaired_by'];
+	<?php
+	$total_credit = 0;
+	$total_debit = 0;
+	$n=0;
+	foreach ($result_temp_cash_bank as $collection) 
+	{
+	$n++;
+	$receipt_mode = $collection['temp_cash_bank']['receipt_mode'];
+	$TransactionDate = $collection['temp_cash_bank']['receipt_date'];
+	$transaction_id = $collection['temp_cash_bank']['auto_id'];
+	$bill_one_time_id = @$collection['temp_cash_bank']['bill_one_time_id'];
+	$deposit_status = (int)@$collection['temp_cash_bank']['deposit_status']; 			
+	$current_date = $collection['temp_cash_bank']['current_date']; 			
+	$current_datttt = date('d-m-Y',strtotime($current_date));
+	$creater_user_id =(int)@$collection['temp_cash_bank']['prepaired_by'];
 			
-$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($creater_user_id)));
-foreach ($user_dataaaa as $user_detailll) 
-{
-$creater_name = $user_detailll['user']['user_name'];
-}	
-			
-			if($receipt_mode == "Cheque")
-					{
-						$reference_utr = $collection['my_flat_receipt_update']['cheque_number'];
-						$cheque_date = $collection['my_flat_receipt_update']['cheque_date'];
-						$drawn_on_which_bank = $collection['my_flat_receipt_update']['drawn_on_which_bank'];
-					}
-					else
-					{
-						$reference_utr = $collection['my_flat_receipt_update']['reference_utr'];
-						$cheque_date = $collection['my_flat_receipt_update']['cheque_date'];
-					}
-						$member_type = $collection['my_flat_receipt_update']['member_type'];
-						$narration = @$collection['my_flat_receipt_update']['narration'];
-				if($member_type == 1)
-   				{
-					$party_name_id = (int)$collection['my_flat_receipt_update']['flat_id'];
-					$receipt_type = $collection['my_flat_receipt_update']['receipt_type'];
-			
-			    if($receipt_type == 1)
-				{
-				$receipt_tppp = "Maintenance";	
-				}
-				else
-				{
-				$receipt_tppp = "Other";	
-				}
-			
-			
-			
-$flatt_datta = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($party_name_id)));
-foreach ($flatt_datta as $fltt_datttaa) 
-{
-$wnngg_idddd = (int)$fltt_datttaa['flat']['wing_id'];
-}			
-		
-$user_fetch = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_user_info_via_flat_id'),array('pass'=>array($wnngg_idddd,$party_name_id)));	
-			foreach($user_fetch as $rrr)
-			{
-				$party_name = $rrr['user']['user_name'];	
-				$wing_id = $rrr['user']['wing'];
-			}
-			
-		$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array($wing_id,$party_name_id)));
+	$result_user = $this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'),array('pass'=>array($creater_user_id)));
+	foreach ($result_user as $user_data) {
+	$creater_name = $user_data['user']['user_name'];
+	}	
+	if($receipt_mode == "Cheque"){
+		 $reference_utr = $collection['temp_cash_bank']['cheque_number'];
+		 $cheque_date = $collection['temp_cash_bank']['cheque_date'];
+		 $drawn_on_which_bank = $collection['temp_cash_bank']['drawn_on_which_bank'];
+	}
+	else{
+		 $reference_utr = $collection['temp_cash_bank']['reference_utr'];
+		 $cheque_date = $collection['temp_cash_bank']['cheque_date'];
+	}
+		$member_type = $collection['temp_cash_bank']['member_type'];
+		$narration = @$collection['temp_cash_bank']['narration'];
+	if($member_type == "residential"){
+			 $ledger_sub_account_id = (int)$collection['temp_cash_bank']['ledger_sub_account_id'];
+			 $receipt_type = $collection['temp_cash_bank']['receipt_type'];
+		if($receipt_type == "maintenance"){
+			$receipt_tppp = "Maintenance";	
 		}
-				else
-				{
-				$receipt_tppp = "Non-Residential";	
-				$wing_flat = "";
-				$party_name_id = (int)$collection['new_cash_bank']['party_name_id'];
+		else{
+			$receipt_tppp = "Other";	
+		}
 				
-$ledger_subaccc = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($party_name_id)));
-foreach ($ledger_subaccc as $dataaa) 
-{
-$party_name = $dataaa['ledger_sub_account']['name'];
-}	
+		$member_info=$this->requestAction(array('controller'=>'Fns','action'=>'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+		$wing_id = $member_info['wing_id'];
+		$flat_id = $member_info['flat_id'];
+		$party_name = $member_info['user_name'];
+			
+		$wing_flat=$this->requestAction(array('controller' => 'Fns', 'action' => 'wing_flat_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+	}
+	else
+	{
+		$receipt_tppp = "Non-Residential";	
+		$wing_flat = "";
+		$party_name_id = (int)$collection['temp_cash_bank']['party_name_id'];
 				
-				
-				$bill_reference = @$collection['my_flat_receipt_update']['bill_reference'];	
-				}
-				$amount=$collection['my_flat_receipt_update']['amount'];
-				$flat_id = $collection['my_flat_receipt_update']['flat_id'];
-				$deposited_bank_id = (int)$collection['my_flat_receipt_update']['deposited_bank_id'];
-				$current_date = $collection['my_flat_receipt_update']['current_date'];
-				if($receipt_mode == "Cheque")
-				{
-				$receipt_mode = $receipt_mode;
-				}
+		$ledger_subaccc = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($party_name_id)));
+		foreach ($ledger_subaccc as $dataaa) 
+		{
+		$party_name = $dataaa['ledger_sub_account']['name'];
+		}	
+		$bill_reference = @$collection['temp_cash_bank']['bill_reference'];	
+	}
+	
+	$amount=$collection['temp_cash_bank']['amount'];
+	$deposited_bank_id = (int)$collection['temp_cash_bank']['deposited_bank_id'];
+	$current_date = $collection['temp_cash_bank']['current_date'];
+	if($receipt_mode == "Cheque")
+	{
+	$receipt_mode = $receipt_mode;
+	}
 			
 			
 			$ledger_sub_account_fetch_result = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($deposited_bank_id)));			
@@ -177,13 +148,11 @@ $party_name = $dataaa['ledger_sub_account']['name'];
 				$bank_account = $rrrr['ledger_sub_account']['bank_account'];
 			}			
 			
-		if($s_role_id == 3)
-		{
-			$TransactionDate = date('d-m-Y',strtotime($TransactionDate));
-			$total_debit =  $total_debit + $amount; 
-		if(empty($reference_utr))
-		{
-			$reference_utr = $reference_utr;
+		
+		$TransactionDate = date('d-m-Y',strtotime($TransactionDate));
+		$total_debit =  $total_debit + $amount; 
+		if(empty($reference_utr)){
+		$reference_utr = $reference_utr;
 		}
 ?>
 <tr <?php if($deposit_status == 1) { ?> style="background-color:#E8EAE8;"  <?php } ?> >
@@ -203,12 +172,12 @@ $amount = number_format($amount);
 }
 echo $amount; ?></td>
 <td class="hide_at_print">
-<a href="bank_receipt_approve?aa=<?php echo $transaction_id; ?>" class="btn mini red">Approve</a>
+<a href="approve_bank_receipt_ajax/<?php echo $transaction_id; ?>" class="btn mini red">Approve</a>
 <a href="aprrove_bank_receipt_update?bb=<?php echo $transaction_id; ?>" class="btn mini blue">Edit</a>
 </td>
 </tr>
 <?php	
-}		 
+	 
 }
 
 ?>

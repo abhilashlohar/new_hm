@@ -11,6 +11,10 @@ public $components = array(
 'Session','Cookie','RequestHandler'
 );
 var $name = 'Hms';
+
+
+
+
 function check_charecter_name($name){
 $dd=explode(' ',$name);
      for($i=0;$i<sizeof($dd);$i++){
@@ -2188,11 +2192,11 @@ return $this->module_type->find('all',array('conditions'=>$conditions));
 
 function new_cash_bank_detail_via_transaction_id($value)
 {
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 
-$this->loadmodel('new_cash_bank');
-$conditions=array("society_id"=>$s_society_id,"transaction_id"=>$value);
-return $this->new_cash_bank->find('all',array('conditions'=>$conditions));
+$this->loadmodel('cash_bank');
+$conditions=array("society_id"=>$s_society_id,"auto_id"=>$value);
+return $this->cash_bank->find('all',array('conditions'=>$conditions));
 }
 
 
@@ -3943,9 +3947,9 @@ return ++$auto2;
 
 function autoincrement_with_receipt_source($table,$field,$source) 
 {
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $this->loadmodel($table);
-$conditions=array("society_id" => $s_society_id,"receipt_source"=>$source,"auto_inc"=>"YES");
+$conditions=array("society_id" => $s_society_id,"source"=>$source);
 $order=array($table.'.'.$field=>'DESC');
 $cursor=$this->$table->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1));
 foreach ($cursor as $collection) 
@@ -5896,28 +5900,73 @@ function submit_login(){
 	));
 	$result_user=$this->user->find('all',array('conditions'=>$conditions));
 	if(sizeof($result_user)==1){
-		$user_id=(int)$result_user[0]["user"]["user_id"];
+		 $user_id=(int)$result_user[0]["user"]["user_id"];
 		$society_id=(int)@$result_user[0]["user"]["society_id"];
 		$user_type=@$result_user[0]["user"]["user_type"];
 		$signup_random=@$result_user[0]["user"]["signup_random"]; 
 		
 		
+		
+		
 		$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));
 		$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
+		$owner=@$user_flat_info[0]["user_flat"]["owner"];
+				
+		if($owner=="yes"){ $type="Owner"; }elseif($owner=="no"){ $type="Tenant"; }
 		
-		$this->Session->write('hm_user_id', $user_id);
-		$this->Session->write('hm_user_flat_id', $user_flat_id);
-		$this->Session->write('hm_society_id', $society_id);
-		
-				if($signup_random==$password){
-					//echo"hello";
-				$de_user_id=$this->encode($user_id,'housingmatters');
-				$random=$de_user_id.'/'.$password;
+			date_default_timezone_set('Asia/kolkata');
+			 $date2=date("d-m-Y");
 
-				echo $output=json_encode(array('url' => $webroot_path.'hms/set_new_password?q='.$random.'','action' => 'redirect','result' => 'success'));
+				$result_society= $this->society_name($society_id);
+				
+				 $access_tenant=@$result_society[0]['society']['access_tenant']; 
+				 $society_user_id=@$result_society[0]['society']['user_id'];
+				if(empty($access_tenant) and !empty($type)){
+					
+					if($access_tenant==0 && $type=="Tenant"){
+						echo $output=json_encode(array('result' => 'error','message' => 'Society Manager is not access to login.'));
+						die();
+					}
+				}
+				
+				
+				if($owner=="no"){
+					
+						$result_tenant=$this->requestAction(array('controller' => 'Fns', 'action' => 'tenancy_agreement_via_user_fetch'), array('pass' => array($society_id,$user_id)));
+						
+					if(!empty($result_tenant)){
+							$t_end_date=$result_tenant[0]['tenant']['t_end_date'];
+						if(strtotime($t_end_date)<strtotime($date2)){
+								echo $output=json_encode(array('result' => 'error','message' => 'your tenancy agreement is finished so you are not allowed login access.'));
+							    die();
+						}
+					}
+				}
+				
+				
+				$this->Session->write('hm_user_id', $user_id);
+				$this->Session->write('hm_user_flat_id', $user_flat_id);
+				$this->Session->write('hm_society_id', $society_id);
+				
+				if($user_type=="hm_child"){
+					
+					echo $output=json_encode(array('url' => $webroot_path.'hms/set_default_hm_child_society','action' => 'redirect','result' => 'success'));
+					die();
+						//$this->redirect(array('action' => 'set_default_hm_child_society'));
+				}
+	
+				
+				
+				
+				if($signup_random==$password){
+					
+						$de_user_id=$this->encode($user_id,'housingmatters');
+						$random=$de_user_id.'/'.$password;
+
+						echo $output=json_encode(array('url' => $webroot_path.'hms/set_new_password?q='.$random.'','action' => 'redirect','result' => 'success'));
 				}else{
 				
-					echo $output=json_encode(array('url' => $webroot_path.'hms/dashboard','action' => 'redirect','result' => 'success'));
+						echo $output=json_encode(array('url' => $webroot_path.'hms/dashboard','action' => 'redirect','result' => 'success'));
 				}
 	}else{
 		echo $output=json_encode(array('result' => 'error','message' => 'Username and password is wrong.'));
@@ -19455,127 +19504,109 @@ New member registered into your society successfully.
 
 
 
-function new_tenant_edit($id=null)
-{
-if($this->RequestHandler->isAjax()){
-$this->layout='blank';
-}else{
-$this->layout='session';
-}
-$id=(int)$id;
-$s_society_id=$this->Session->read('society_id');
-$this->ath();
-$this->loadmodel('tenant');	
+function new_tenant_edit($id=null){
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	$id=(int)$id;
+	$s_society_id=$this->Session->read('hm_society_id');
+	$this->ath();
+	$this->loadmodel('tenant');	
+		
+	$conditions1=array('user_id'=>$id);
+	$result1=$this->tenant->find('all',array('conditions'=>$conditions1));	
+
+	$this->set('result_tenant',$result1);
 	
-$conditions1=array('user_id'=>$id);
-$result1=$this->tenant->find('all',array('conditions'=>$conditions1));	
+if($this->request->is('post')){
+	
+	date_default_timezone_set('Asia/kolkata');
+	$date=date("d-m-Y");
+	$time=date('h:i:a',time());
+	$name_tenant=$this->request->data['name_tenant'];
+	$address=$this->request->data['address'];
+	$start_date=$this->request->data['start_date'];
+	$end_date=$this->request->data['end_date'];
+	$verification=$this->request->data['verification'];
+	$ten_age=(int)@$this->request->data['ten_agr'];
+	$pol_ver=(int)@$this->request->data['pol_ver'];
 
-$this->set('result_tenant',$result1);
-if($this->request->is('post'))
-{
-date_default_timezone_set('Asia/kolkata');
-$date=date("d-m-Y");
-$time=date('h:i:a',time());
-$name_tenant=$this->request->data['name_tenant'];
-$address=$this->request->data['address'];
-$start_date=$this->request->data['start_date'];
-$end_date=$this->request->data['end_date'];
-$verification=$this->request->data['verification'];
-$ten_age=(int)@$this->request->data['ten_agr'];
-$pol_ver=(int)@$this->request->data['pol_ver'];
-
-$this->loadmodel('tenant');
-$this->tenant->updateAll(array("t_start_date"=>$start_date,"t_end_date"=>$end_date,"t_address"=>$address,"verification"=>$verification,'t_agreement'=>$ten_age,'t_police'=>$pol_ver),array("user_id" => $id));
+	$this->loadmodel('tenant');
+	$this->tenant->updateAll(array("t_start_date"=>$start_date,"t_end_date"=>$end_date,"t_address"=>$address,"verification"=>$verification,'t_agreement'=>$ten_age,'t_police'=>$pol_ver),array("user_id" => $id));
 ?>
 
 
-<!----alert-------------->
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body" style="font-size:16px;">
-Successfully Update .
-</div> 
-<div class="modal-footer">
-<a href="<?php  echo $this->webroot_path();?>hms/new_tenant_enrollment_view" class="btn green">OK</a>
-</div>
-</div>
-<!----alert-------------->
-<?php
+	<!----alert-------------->
+	<div class="modal-backdrop fade in"></div>
+	<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+	<div class="modal-body" style="font-size:16px;">
+	Successfully Update.
+	</div> 
+	<div class="modal-footer">
+	<a href="<?php echo $this->webroot; ?>Hms/new_tenant_enrollment_view" class="btn green">OK</a>
+	</div>
+	</div>
+	<!----alert-------------->
+	<?php
 
-//$this->response->header('Location', 'new_tenant_enrollment_view');	
 	
+		
 }
 	
 }
 
 
-function new_tenant_enrollment()
-{
+function new_tenant_enrollment(){
+	
 if($this->RequestHandler->isAjax()){
 		$this->layout='blank';
 	}else{
 		$this->layout='session';
 	}
-$this->ath();
-$this->check_user_privilages();
-$s_society_id=$this->Session->read('hm_society_id');
-$this->loadmodel('user_flat');	
-$conditions1=array('society_id'=>$s_society_id,'owner'=>'no');
-$result1=$this->user_flat->find('all',array('conditions'=>$conditions1));	
-$this->set('result_user_flat',$result1);
-$this->loadmodel('wing');
-$conditions=array('society_id'=>$s_society_id);
-$result=$this->wing->find('all',array('conditions'=>$conditions));
-$this->set('result_wing',$result);
-if($this->request->is('post')) 
-{
-date_default_timezone_set('Asia/kolkata');
-$date=date("d-m-Y");
-$time=date('h:i:a',time());
-$tenant_user_id=(int)$this->request->data['sel'];
-$this->loadmodel('user');	
-$conditions1=array('user_id'=>$tenant_user_id);
-$result1=$this->user->find('all',array('conditions'=>$conditions1));
-foreach($result1 as $data)
-{
-$user_name=$data['user']['user_name'];
-$mobile=@$data['user']['mobile'];
-}
-$ten_age=(int)@$this->request->data['ten_agr'];
-// $user_name=@$this->request->data['name_tenant'];
-// $wing=(int)@$this->request->data['wing'];
-// $flat=(int)@$this->request->data['flat'];
-$pol_ver=(int)@$this->request->data['pol_ver'];
-$address=$this->request->data['address'];
-$start_date=$this->request->data['start_date'];
-$end_date=$this->request->data['end_date'];
-$verification=$this->request->data['verification'];
-//$this->loadmodel('user');
-//$this->user->updateAll(array( "user_name" => $user_name,'wing'=>$wing,'flat'=>$flat),array('user_id'=>$tenant_user_id));
-$this->loadmodel('tenant');	
-$conditions2=array('user_id'=>$tenant_user_id);
-$result2=$this->tenant->find('all',array('conditions'=>$conditions2));
-$n=sizeof($result2);
-if($n==0)
-{
+	
+			$this->ath();
+			$this->check_user_privilages();
+			$s_society_id=$this->Session->read('hm_society_id');
 
-$i=$this->autoincrement('tenant','tenant_id');
-$this->loadmodel('tenant');
-$this->tenant->saveAll((array("tenant_id" => $i, "name" => $user_name , "user_id" => $tenant_user_id,"t_start_date"=>$start_date,"t_end_date"=>$end_date,"society_id"=>$s_society_id,"t_time"=>$time,"t_mobile"=>$mobile,"t_address"=>$address,"verification"=>$verification,'t_agreement'=>$ten_age,'t_police'=>$pol_ver)));
+			$this->loadmodel('user_flat');
+			$conditions=array("society_id"=>$s_society_id, "owner"=>"no");
+			$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions));
+				foreach($result_user_flat as $data){
+					$user_id=(int)$data["user_flat"]["user_id"];
+					$wing=$data["user_flat"]["wing"];
+					$flat=$data["user_flat"]["flat"];
+					$owner=$data["user_flat"]["owner"];
+					
+					$this->loadmodel('wing');
+					$conditions=array("wing_id"=>$wing);
+					$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
+					$wing_name=$wing_info[0]["wing"]["wing_name"];
 
-$this->response->header('Location', 'new_tenant_enrollment_view');
+					$this->loadmodel('flat');
+					$conditions=array("flat_id"=>$flat);
+					$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+					$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
 
+					$flats=$wing_name.' - '.$flat_name;
 
-}
-else
-{
+					$this->loadmodel('user');
+					$conditions=array("user_id"=>$user_id);
+					$result_user=$this->user->find('all',array('conditions'=>$conditions));
 
-$this->loadmodel('tenant');
-$this->tenant->updateAll(array( "name" => $user_name ,"t_start_date"=>$start_date,"t_end_date"=>$end_date,"society_id"=>$s_society_id,"t_time"=>$time,"t_mobile"=>$mobile,"t_address"=>$address,"verification"=>$verification,'t_agreement'=>$ten_age,'t_police'=>$pol_ver),array("user_id" => $tenant_user_id));
-$this->response->header('Location', 'new_tenant_enrollment_view');		
-}
+					$this->loadmodel('tenant');
+					$conditions=array("user_id"=>$user_id);
+					$result_user_tenant=$this->tenant->find('all',array('conditions'=>$conditions));
+					
+					
+					
+					
+					$result_tenant_info[]=array("wing_name"=>$flats,"result_user"=>$result_user,"result_user_tenant"=>$result_user_tenant);
+				}
+		
 
-}
+			$this->set('result_tenant_info',$result_tenant_info);
 
 }
 
@@ -19754,102 +19785,17 @@ $result=$this->tenant->find('all',array('conditions'=>$condition));
 $this->set('user_tenant',$result);
 }
 
-function tenant_excel()
-{
-$this->layout="";
-$s_society_id=$this->Session->read('society_id');
-$result_society=$this->society_name($s_society_id);
-$society_name=$result_society[0]['society']['society_name'];
-$filename=$society_name.'_Tenant_List';
-$filename = str_replace(' ', '_', $filename);
-$filename = str_replace(' ', '-', $filename);
-
-@header("Expires: 0");
-@header("border: 1");
-@header("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
-@header("Cache-Control: no-cache, must-revalidate");
-@header("Pragma: no-cache");
-@header("Content-type: application/vnd.ms-excel");
-@header("Content-Disposition: attachment; filename=".$filename.".xls");
-@header("Content-Description: Generated Report");
-
-$excel="<div align='center'> 
-<span style='font-size:16px;'> $society_name<span>
-<br/>
-<span> Tenant List Report <span>
-</div>
-<table border='1'>
-<tr>
-<td><strong>Name</strong></td>
-<td><strong>Flat</strong></td>
-<td><strong>Mobile</strong></td>
-<td><strong>Email</strong></td>
-<td><strong>Start date</strong></td>
-<td><strong>End date</strong></td>
-<td><strong>Agreement Copy</strong></td>
-<td><strong>Police NOC</strong></td>
-<td><strong>Remarks</strong></td>
-<td><strong>Permanent Address</strong></td>
-</tr>";
-
-$s_society_id=(int)$this->Session->read('society_id');
-$this->loadmodel('tenant');
-$condition=array('society_id'=>$s_society_id);
-$user_tenant=$this->tenant->find('all',array('conditions'=>$condition)); 
-
- foreach($user_tenant as $collection) 
-            {
-			$name=@$collection['tenant']['name'];
-			$d_user_id=(int)@$collection['tenant']['user_id'];
-            $mobile=@$collection['tenant']['t_mobile'];
-            $t_address=@$collection['tenant']['t_address'];
-            $t_agreement=@$collection['tenant']['t_agreement'];
-			$t_police=@$collection['tenant']['t_police'];
-            $verification=@$collection['tenant']['verification'];
-            $t_start_date=@$collection['tenant']['t_start_date'];
-            $t_end_date=@$collection['tenant']['t_end_date'];
-			if($t_agreement==1)
-			{
-				$t_agreement='Yes';
-			}
-			else
-			{
-			$t_agreement='No';
-			
-			}
-			if($t_police==1)
-			{
-				$t_police='Yes';
-			}
-			else
-			{
-			$t_police='No';
-			
-			}
-$result_user = $this->profile_picture($d_user_id);
-foreach($result_user as $data)
-{
-$wing=$data['user']['wing'];
-$flat=$data['user']['flat'];
-$email=$data['user']['email'];
-}
-
-@$wing_flat = $this->wing_flat($wing,$flat);
-@$excel.="<tr>
-<td>$name</td>
-<td>$wing_flat</td>
-<td>$mobile</td>
-<td>$email</td>
-<td>$t_start_date</td>
-<td>$t_end_date</td>
-<td>$t_agreement</td>
-<td>$t_police</td>
-<td>$verification</td>
-<td>$t_address</td>
-</tr>";
-}
-@$excel.="</table>";
-echo @$excel ;
+function tenant_excel(){
+	
+	$this->layout="";
+	$s_society_id=$this->Session->read('hm_society_id');
+	$result_society=$this->society_name($s_society_id);
+	$society_name=$result_society[0]['society']['society_name'];
+	$this->loadmodel('tenant');
+	$condition=array('society_id'=>$s_society_id);
+	$result=$this->tenant->find('all',array('conditions'=>$condition)); 
+	$this->set('user_tenant',$result);
+	$this->set(compact('society_name'));
 }
 
 

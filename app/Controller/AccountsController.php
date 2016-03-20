@@ -18,9 +18,8 @@ function master_ledger_sub_account_ajax()
 			$value = (int)$this->request->query('value');
 			$this->set('value',$value);
 }
-/////////////////////////////End Master Ledger Sub Account Ajax///////////////////////////////
-
-//////////////////////////// Start Opening Balance Import (Accounts)//////////////////////////
+//End Master Ledger Sub Account Ajax//
+//Start Opening Balance Import (Accounts)//
 function opening_balance_import()
 {
 	if($this->RequestHandler->isAjax()){
@@ -5990,7 +5989,7 @@ $this->send_email($admin_email,'accounts@housingmatters.in','HousingMatters',$su
 $current_date = date('d-m-Y');
 $l=$this->autoincrement('temp_cash_bank','auto_id');
 $this->loadmodel('temp_cash_bank');
-$multipleRowData = Array( Array("auto_id"=> $l,"receipt_date" => $transaction_date,"receipt_mode" => $mode,"cheque_number" =>@$cheque_number,"cheque_date" =>@$cheque_date,"drawn_on_which_bank" =>@$drawn_bank_name,"reference_utr" => @$utr_ref,"deposited_bank_id"=>$bank_id,"member_type"=>1,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>1,"amount"=>$amount,
+$multipleRowData = Array( Array("auto_id"=> $l,"receipt_date" => $transaction_date,"receipt_mode" => $mode,"cheque_number" =>@$cheque_number,"cheque_date" =>@$cheque_date,"drawn_on_which_bank" =>@$drawn_bank_name,"reference_utr" => @$utr_ref,"deposited_bank_id"=>$bank_id,"member_type"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>"maintenance","amount"=>$amount,
 "current_date"=>$current_date,"society_id"=>$s_society_id,"narration"=>$narration,"prepaired_by"=>$s_user_id,"bank_branch"=>@$branch));
 $this->temp_cash_bank->saveAll($multipleRowData);
 }

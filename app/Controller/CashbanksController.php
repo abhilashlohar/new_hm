@@ -7965,8 +7965,8 @@ function approve_receipt_update_json()
 {
 $this->layout=null;
 $this->ath();
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $date=date('d-m-Y');
 $time = date(' h:i a', time());
 
@@ -8121,20 +8121,18 @@ $cheque_date = $child[6];
 $amount = $child[8];
 $narration = $child[9];
 $bank_id = (int)$child[10];
-$flat_id = (int)$child[11];
+$ledger_sub_account_id = (int)$child[11];
 $transaction_id = (int)$child[12];
 $current_date = date('d-m-Y');
 
-$this->loadmodel('my_flat_receipt_update');
-$this->my_flat_receipt_update->updateAll(array("receipt_date" => $transaction_date, "receipt_mode" => $mode, 
-"cheque_number" =>@$cheque_number,"cheque_date" =>@$cheque_date,
-"drawn_on_which_bank" =>@$drawn_bank_name,"reference_utr" => @$utr_ref,
-"deposited_bank_id" => $bank_id,"member_type" => 1,
-"party_name_id"=>$flat_id,"receipt_type" => 1,"amount" => $amount,
-"flat_id"=>$flat_id,
-"narration"=>$narration,"bank_branch"=>@$branch),array('society_id'=>$s_society_id,"auto_id"=>$transaction_id));   
+$l=$this->autoincrement('temp_cash_bank','auto_id');
+$this->loadmodel('temp_cash_bank');
+$multipleRowData = Array( Array("auto_id"=> $l,"receipt_date" => $transaction_date,"receipt_mode" => $mode,"cheque_number" =>@$cheque_number,"cheque_date" =>@$cheque_date,"drawn_on_which_bank" =>@$drawn_bank_name,"reference_utr" => @$utr_ref,"deposited_bank_id"=>$bank_id,"member_type"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>"maintenance","amount"=>$amount,
+"current_date"=>$current_date,"society_id"=>$s_society_id,"narration"=>$narration,"prepaired_by"=>$s_user_id,"bank_branch"=>@$branch));
+$this->temp_cash_bank->saveAll($multipleRowData);
+}  
 
-}
+
 $output = json_encode(array('type'=>'success', 'text' => 'Please Fill Numeric Amount '));
 die($output);	
 }

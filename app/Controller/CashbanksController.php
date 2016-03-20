@@ -8324,8 +8324,8 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 			</tbody>
 		</table>';
 				
-
-	
+    $email="nikhileshvyas4455@gmail.com";
+	$mobile="9799463210";
 			if($email_is_on_off==1){
 			////email code//
 					if(!empty($email)){

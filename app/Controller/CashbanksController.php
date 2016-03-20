@@ -1749,7 +1749,7 @@ $this->set('to',$to);
 
 $this->loadmodel('cash_bank');
 $order=array('cash_bank.transaction_date'=> 'ASC');
-$conditions=array("society_id" => $s_society_id,"receipt_source"=>"petty_cash_receipt");
+$conditions=array("society_id" => $s_society_id,"source"=>"petty_cash_receipt");
 $cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor1',$cursor1);
 }
@@ -2240,7 +2240,7 @@ $this->set('from',$from);
 $this->set('to',$to);
 
 $this->loadmodel('cash_bank');
-$conditions=array("society_id" => $s_society_id,"receipt_source"=>"petty_cash_payment");
+$conditions=array("society_id" => $s_society_id,"source"=>"petty_cash_payment");
 $order=array('cash_bank.transaction_date'=>'ASC');
 $cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor1',$cursor1);
@@ -3419,7 +3419,7 @@ $ledger_acc = (int)$accctyypp[0];
 $acc_type = (int)$accctyypp[1];
 
 $i=$this->autoincrement('cash_bank','transaction_id');
-$bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_id',2);
+$bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','bank_payment');
 $rr_arr[] = $bbb;
 $this->loadmodel('new_cash_bank');
 $multipleRowData = Array( Array("transaction_id" => $i, "receipt_id" => $bbb,"current_date" => $current_date, 
@@ -3592,11 +3592,11 @@ $narration = $child[5];
 $current_date = date('Y-m-d');
 
 $auto=$this->autoincrement('cash_bank','transaction_id');
-$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_id',3);
+$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','petty_cash_receipt');
 $rr_arr[] = $i;
 $this->loadmodel('cash_bank');
 $multipleRowData = Array( Array("transaction_id" => $auto, "receipt_id" => $i,  "user_id" => $party_ac, 
-"current_date" => $current_date, "account_type" => $ac_group,"transaction_date" => strtotime($transaction_date), "prepaired_by" => $s_user_id,"narration" => $narration, "account_head" => $ac_head,  "amount"=>$amount,"society_id" => $s_society_id,"receipt_source"=>"petty_cash_receipt","auto_inc"=>"YES"));
+"current_date" => $current_date, "account_type" => $ac_group,"transaction_date" => strtotime($transaction_date), "prepaired_by" => $s_user_id,"narration" => $narration, "account_head" => $ac_head,  "amount"=>$amount,"society_id" => $s_society_id,"source"=>"petty_cash_receipt","auto_inc"=>"YES"));
 $this->cash_bank->saveAll($multipleRowData);  
 
 if($ac_group == 1)
@@ -5099,11 +5099,11 @@ $narration = $child[5];
 $current_date = date('Y-m-d');
 
 $auto=$this->autoincrement('cash_bank','transaction_id');
-$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_id',4);
+$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','petty_cash_payment');
 $rrr_arr[] = $i;
 $this->loadmodel('cash_bank');
 $multipleRowData = Array( Array("transaction_id" => $auto, "receipt_id" => $i,  "user_id" => $expense_party, 
-"current_date" => $current_date, "account_type" => $ac_group,"transaction_date" => strtotime($transaction_date), "prepaired_by" => $s_user_id,"narration" => $narration, "account_head" => $paid_from,  "amount" => $amount,"society_id" => $s_society_id,"receipt_source"=>"petty_cash_payment","auto_inc"=>"YES"));
+"current_date" => $current_date, "account_type" => $ac_group,"transaction_date" => strtotime($transaction_date), "prepaired_by" => $s_user_id,"narration" => $narration, "account_head" => $paid_from,  "amount" => $amount,"society_id" => $s_society_id,"source"=>"petty_cash_payment","auto_inc"=>"YES"));
 $this->cash_bank->saveAll($multipleRowData);  
 
 if($ac_group == 1)

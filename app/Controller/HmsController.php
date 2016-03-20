@@ -3947,9 +3947,9 @@ return ++$auto2;
 
 function autoincrement_with_receipt_source($table,$field,$source) 
 {
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $this->loadmodel($table);
-$conditions=array("society_id" => $s_society_id,"receipt_source"=>$source,"auto_inc"=>"YES");
+$conditions=array("society_id" => $s_society_id,"source"=>$source);
 $order=array($table.'.'.$field=>'DESC');
 $cursor=$this->$table->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1));
 foreach ($cursor as $collection) 

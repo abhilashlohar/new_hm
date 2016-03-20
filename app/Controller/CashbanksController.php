@@ -5638,25 +5638,20 @@ $bank_account = $data['ledger_sub_account']['bank_account'];
 $this->set('bank_account',$bank_account);
 }
 //End show_deposit_slip//
-//start new bank receipt//
-
 function new_cash_receipt_add(){
 	
 $this->layout="blank";
 $count=(int)$this->request->query('q');
 $this->set('count',$count);
 $s_society_id=$this->Session->read('hm_society_id');
-
 $this->loadmodel('ledger_sub_account');
 $conditions=array("ledger_id" => 33,"society_id"=>$s_society_id);
 $result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 $this->set('result_ledger_sub_account',$result_ledger_sub_account);
-	
 }
 
 
-
-
+//Start new_bank_receipt//
 function new_bank_receipt(){
 	
 	if($this->RequestHandler->isAjax())
@@ -5671,6 +5666,12 @@ function new_bank_receipt(){
 
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id = (int)$this->Session->read('hm_user_id');
+	
+	
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("society_id"=>$s_society_id,"ledger_id"=>112);
+	$non_members = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$this->set(compact("non_members"));
 	
 	
 	$this->loadmodel('ledger_sub_account');
@@ -5929,7 +5930,7 @@ function new_bank_receipt(){
 				}
 			}	
 
-			////Sms code//
+			
 				if($sms_is_on_off==1){
 						if(!empty($mobile)){
 								$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
@@ -5949,7 +5950,7 @@ function new_bank_receipt(){
 							}
 						}	
 				}
-				////// End 
+				
 				
 			$i++; }
 				
@@ -7228,8 +7229,8 @@ if(!empty($kendo_array2))
 $this->set('kendo_implode2',@$kendo_implode2);
 
 }
-/////////////////////////////////// End fixed_deposit_add_row ///////////////////////////////////////////////////////
-/////////////////////////////////// Start new_bank_receipt_add_row ///////////////////////////////////////////////////////
+//End fixed_deposit_add_row//
+//Start new_bank_receipt_add_row//
 function new_bank_receipt_add_row()
 {
 $this->layout = 'blank'; 
@@ -7293,8 +7294,8 @@ if(!empty($kendo_array2))
 $this->set('kendo_implode2',@$kendo_implode2);
 
 }
-/////////////////////////////////// End new_bank_receipt_add_row //////////////////////////////////////////
-/////////////////////// Start bill_show_ajax /////////////////////////////////////////////////////////////
+//End new_bank_receipt_add_row//
+//Start bill_show_ajax//
 function bill_show_ajax()
 {
 $this->layout = 'blank'; 
@@ -7308,8 +7309,8 @@ $flat_id = (int)$this->request->query('ff');
 $this->set('flat_id',$flat_id);	
 
 }
-/////////////////////// End bill_show_ajax /////////////////////////////////////////////////////////////
-////////////////////////////// Start non_member_add_ajax ////////////////////////////////////////////////
+//End bill_show_ajax//
+//Start non_member_add_ajax//
 function non_member_add_ajax()
 {
 $this->layout='blank';
@@ -7336,8 +7337,8 @@ $this->set('cursor2',$cursor2);
 
 }
 
-////////////////////////////// End non_member_add_ajax ////////////////////////////////////////////////
-/////////////////////////// Start bank_receipt_member_add_ajax /////////////////////////////////////////
+//End non_member_add_ajax//
+//Start bank_receipt_member_add_ajax//
 function bank_receipt_member_add_ajax()
 {
 $this->layout='blank';
@@ -7367,8 +7368,8 @@ $cursor1=$this->ledger_sub_account->find('all',array('conditions'=>$conditions))
 $this->set('cursor1',$cursor1);
 
 }
-/////////////////////////// End bank_receipt_member_add_ajax /////////////////////////////////////////
-/////////////////////////// Start bank_receipt_type_ajax /////////////////////////////////////////////
+//End bank_receipt_member_add_ajax//
+//Start bank_receipt_type_ajax//
 function bank_receipt_type_ajax()
 {
 $this->layout='blank';

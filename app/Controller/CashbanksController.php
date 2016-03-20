@@ -5976,9 +5976,8 @@ function new_bank_receipt(){
 		}
 	
 }
-/////////////////////////////// End new bank receipt //////////////////////////////////////////////////
-
-///////////////////////////////////// Start bank_receipt_mode_ajax //////////////////////////////////////
+///End new bank receipt//
+//Start bank_receipt_mode_ajax//
 function bank_receipt_amt_ajax()
 {
 $this->layout="blank";
@@ -8120,6 +8119,25 @@ $s_role_id=$this->Session->read('hm_role_id');
 $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');	
 
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
+			$this->loadmodel('society');
+			$conditions=array("society_id" => $s_society_id);
+			$cursor2=$this->society->find('all',array('conditions'=>$conditions));
+			foreach ($cursor2 as $collection){
+					$society_name = $collection['society']['society_name'];
+					$society_reg_no = @$collection['society']['society_reg_num'];
+					$society_address = @$collection['society']['society_address'];
+					$sig_title = @$collection['society']['sig_title'];
+					$email_is_on_off=(int)@$collection["society"]["account_email"];
+					$sms_is_on_off=(int)@$collection["society"]["account_sms"];
+			}
+
+
+
+
+
+
+
 $this->loadmodel('temp_cash_bank');
 $conditions=array("auto_id"=>(int)$temp_cash_bank_id,"society_id"=>$s_society_id);
 $temp_cash_bank_datas=$this->temp_cash_bank->find('all',array('conditions'=>$conditions));
@@ -8161,7 +8179,7 @@ if($receipt_type=="maintenance"){
 					$am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));
 					
 				$date=date("d-m-Y",strtotime($transaction_date));
-				$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($ledger_sub_account_id))); 
+				$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array(($ledger_sub_account_id)))); 
 				
 						 $user_name=$result_member_info["user_name"];
 						 $wing_name=$result_member_info["wing_name"];
@@ -8346,7 +8364,9 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 	$this->temp_cash_bank->deleteAll($conditions);
 
 }
+$this->response->header('Location',''.$this->webroot.'Cashbanks/bank_receipt_approve');
+
 }
-//Start approve_bank_receipt_ajax//
+//End approve_bank_receipt_ajax//
 }
 ?>

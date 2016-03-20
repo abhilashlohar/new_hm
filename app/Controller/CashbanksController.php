@@ -8111,6 +8111,27 @@ $this->my_flat_receipt_update->updateAll(array("receipt_date" => $transaction_da
 $output = json_encode(array('type'=>'success', 'text' => 'Please Fill Numeric Amount '));
 die($output);	
 }
-////////////////////////// End approve_receipt_update_json ////////////////////////////////////////
+//End approve_receipt_update_json//
+//Start approve_bank_receipt_ajax//
+function approve_bank_receipt_ajax($auto_id=null)
+{
+$this->layout='blank';
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');	
+
+
+
+
+
+
+
+
+
+
+
+	
+}
+//Start approve_bank_receipt_ajax//
 }
 ?>

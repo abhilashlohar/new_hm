@@ -12,10 +12,10 @@
 	</tr>
 </table>
 </div>
-<div style="background-color: #FFF; padding: 0px 10px; border: 1px solid rgb(233, 231, 231);margin-top: 2px;">
+<div style="background-color: #FFF; padding: 5px 10px; border: 1px solid rgb(233, 231, 231);margin-top: 2px;">
 	<form  method="post" id="contact-form" name="myform" enctype="multipart/form-data" >
 		<div class="row-fluid">
-			<div class="span6" style="padding: 15px;">
+			<div class="span6">
 				<div class="control-group ">
 					<div class="controls">
 					<label  style="font-size:14px;">Topic Name <span style="font-size:12px; color:#999;">(Maximum 100 characters.)</span></label>
@@ -41,7 +41,7 @@
 						<div>
 							<span class="btn  btn-file" ><span class="fileupload-new" ><i class="icon-camera"></i> Select image</span>
 							<span class="fileupload-exists">Change</span>
-							<input type="file" name="file" id="file" class="default"></span>
+							<input type="file" name="file" e_id="file" class="default"></span>
 							<a href="#" role='button' class="btn  fileupload-exists" data-dismiss="fileupload" >Remove</a>
 							<span>Allowed: jpg,gif</span>
 						</div>
@@ -50,6 +50,7 @@
 				</div>
 			</div>
 			<div class="span6">
+				<label class="" style="font-size:14px;">Discussion should be visible to<span style="color:red;">*</span> <i class=" icon-info-sign tooltips" data-placement="right" data-original-title="Please select any one"> </i></label>
 				<?php
 				echo $sending_options=$this->requestAction(array('controller' => 'Fns', 'action' => 'sending_options'));
 				?>
@@ -66,7 +67,7 @@ $.validator.addMethod('requirecheck1', function (value, element) {
 
 $.validator.addMethod('requirecheck2', function (value, element) {
 	 return $('.requirecheck2:checked').size() > 0;
-}, 'Please check at least one wing.');
+}, 'Please select at least one wing.');
 
 $.validator.addMethod('filesize', function(value, element, param) {
     // param = size (en bytes) 

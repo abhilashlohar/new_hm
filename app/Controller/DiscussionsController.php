@@ -13,22 +13,22 @@ var $name = 'Discussions';
 
 
 
-function index($id=null,$list=null){
+function index($list=null,$id=null){
 	if($this->RequestHandler->isAjax()){
 		$this->layout='blank';
 	}else{
 		$this->layout='session';
 	}
 	$this->ath();
-	$this->set('id',$id);
-	$id=(int)$this->decode($id,'housingmatters');
-	$this->set('list',$list);
-	
 	
 	$s_user_id=$this->Session->read('hm_user_id'); 
 	$s_society_id=$this->Session->read('hm_society_id');
 	
-
+	$this->loadmodel('discussion_post');
+	$conditions=array("society_id"=>$s_society_id,'users_have_access' =>array('$in' => array($s_user_id)));
+	$order=array('discussion_post.discussion_post_id'=> 'DESC');
+	$posts=$this->discussion_post->find('all',array('conditions'=>$conditions,'order'=>$order));
+	$this->set(compact("posts"));
 
 	
 	

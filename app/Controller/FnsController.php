@@ -241,7 +241,7 @@ function calculate_noc_charge($ledger_sub_account_id,$billing_cycle){
 	$conditions=array("flat_type_id" => $flat_type_id,"society_id" => $s_society_id);
 	$result5=$this->noc_rate->find('all',array('conditions'=>$conditions));
 	$rate_type=(int)@$result5[0]["noc_rate"]["rate_type"];
-	$rate=$result5[0]["noc_rate"]["rate"];
+	@$rate=@$result5[0]["noc_rate"]["rate"];
 	if($rate_type==1 or $rate_type==3){
 		return $rate*$billing_cycle;
 	}

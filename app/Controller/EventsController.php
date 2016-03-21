@@ -126,8 +126,6 @@ function event_submit(){
 	$recieve_info=$this->requestAction(array('controller'=>'Fns','action'=>'sending_option_results'), array('pass' => array($visible,$sub_visible)));
 	
 	
-	echo $recieve_info; 
-	exit;
 		
 		
 		

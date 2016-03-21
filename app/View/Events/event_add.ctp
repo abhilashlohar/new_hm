@@ -8,7 +8,6 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 
 
 <form method="post"  enctype="multipart/form-data">
-<!-------------------------------------->
 <div class="row-fluid">
 	<div class="span6">
 		
@@ -238,7 +237,13 @@ $(document).ready(function() {
 		if(send_to=='all_users'){
 			m_data.append( 'sub_visible', 'all_users');
 		} 
-		
+		if(send_to=='role_wise')
+		{
+			var rol_wise=[];
+			$('.v3:checked').each(function() {
+			rol_wise.push($(this).val());
+			});
+		}
 		/*if(visible==3){
 			var allVals = [];
 			$('.v3:checked').each(function() {

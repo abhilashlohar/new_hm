@@ -240,9 +240,10 @@ $(document).ready(function() {
 		if(send_to=='role_wise')
 		{
 			var rol_wise=[];
-			$('.v3:checked').each(function() {
+			$('.requirecheck1:checked').each(function() {
 			rol_wise.push($(this).val());
 			});
+			alert(rol_wise);
 		}
 		/*if(visible==3){
 			var allVals = [];

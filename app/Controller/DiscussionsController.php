@@ -93,6 +93,8 @@ function new_topic(){
 		$users=$this->user->find('all',array('conditions'=>$conditions));
 		foreach($users as $data){
 			$sender_email=$data["user"]["email"];
+			$profile_pic=$data["user"]["profile_pic"];
+			$user_name_post=$data["user"]["user_name"];
 			if(!empty($sender_email)){
 				$reply=$sender_email;
 			}else{
@@ -141,7 +143,7 @@ function new_topic(){
 															<table style="border-collapse:collapse" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding-right:10px;font-size:0px" valign="middle"><a href="#" style="color:#3b5998;text-decoration:none" target="_blank"><img  src="'.$ip.$this->webroot.'profile/'.$profile_pic.'" style="border:0" height="50" width="50"></a></td>
 															<td style="width:100%" valign="middle">
 															<table style="border-collapse:collapse" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="2">
-															<span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:21px;color:#141823">'.$user_name_post.' '.$wing_flat.'</span><br/><span style="color:#ADABAB;font-size: 12px;">'.$newDate1.'&nbsp;&nbsp;'.$time.'</span></td></tr><tr><td style="line-height:10px" colspan="2" height="10">&nbsp;</td></tr><tr><td width="100%"></td></tr></tbody></table>
+															<span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:21px;color:#141823">'.$user_name_post.' '.$wing_flat.'</span><br/><span style="color:#ADABAB;font-size: 12px;">'.date("d-m-Y",strtotime($date)).'&nbsp;&nbsp;'.$time.'</span></td></tr><tr><td style="line-height:10px" colspan="2" height="10">&nbsp;</td></tr><tr><td width="100%"></td></tr></tbody></table>
 															</td>
 															</tr></tbody></table>
 															</td>

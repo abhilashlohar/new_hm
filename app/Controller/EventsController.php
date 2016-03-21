@@ -415,7 +415,7 @@ $this->set('result_event',$this->event->find('all',array('conditions'=>$conditio
 
 function event_info($e_id=null)
 {
-if($this->RequestHandler->isAjax()){
+	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
 	}else{
 	$this->layout='session';
@@ -423,8 +423,8 @@ if($this->RequestHandler->isAjax()){
 	
 $this->ath();
 $this->check_user_privilages();
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $this->set('s_user_id',$s_user_id);
 
 $e_id=(int)$e_id;
@@ -433,14 +433,11 @@ $this->set('e_id',$e_id);
 $this->seen_notification(6,$e_id);
 $this->seen_alert(6,$e_id);
 
-if (isset($this->request->data['sub_update'])) 
-{
-	
-
-$title=htmlentities($this->request->data['title']);
-$title=wordwrap($title, 25, " ", true);
-$title_cat=$this->request->data['title_cat'];
-$title_des=htmlentities($this->request->data['description']);
+if (isset($this->request->data['sub_update'])){
+	$title=htmlentities($this->request->data['title']);
+	$title=wordwrap($title, 25, " ", true);
+	$title_cat=$this->request->data['title_cat'];
+	$title_des=htmlentities($this->request->data['description']);
 
 
 $this->loadmodel('event');
@@ -469,11 +466,8 @@ $this->send_notification('<span class="label" style="background-color:#d43f3a;">
 
 }
 
-if (isset($this->request->data['up_photo'])) 
-{
+if(isset($this->request->data['up_photo'])){
 $file=$this->request->form['file']['name'];
-
-
 $file=$this->request->form['file']['name'];
 if (!file_exists('event_file/event'.$e_id)) 
 {
@@ -502,11 +496,9 @@ $this->event->updateAll(array('photos'=>$photo),array('event.event_id'=>$e_id));
 }
 
 $this->loadmodel('event');
-$conditions=array("event_id" => $e_id,"visible_user_id" => array('$in' => array($s_user_id)));
-$result_event_detail=$this->event->find('all', array('conditions' => $conditions));
+$conditions=array("event_id"=>$e_id,"visible_user_id"=>array('$in'=>array($s_user_id)));
+$result_event_detail=$this->event->find('all',array('conditions'=>$conditions));
 $this->set('result_event_detail',$result_event_detail);
-
-
 
 }
 

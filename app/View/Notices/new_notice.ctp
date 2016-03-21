@@ -185,9 +185,10 @@ $(document).ready(function() {
 				m_data.append( 'sub_visible', allVals);
 			}
 		}
-		if(visible==3){
+		
+		if(visible=="wing_wise"){
 			var allVals = [];
-			$('.v3:checked').each(function() {
+			$('.requirecheck2:checked').each(function() {
 			allVals.push($(this).val());
 			});
 			if(allVals.length==0){
@@ -200,7 +201,7 @@ $(document).ready(function() {
 			m_data.append( 'sub_visible', 0);
 		}
 		//$(".form-actions").hide();
-		
+		alert(allVals);
 		$("#wait").show();
 			
 			$.ajax({

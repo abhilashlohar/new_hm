@@ -180,8 +180,6 @@ $description=$data["event"]["description"];
 </div>
 <?php } ?>
 
-
-
 <script>
 $(document).ready(function() { 
 	 $("#event_yes").live('click',function(){

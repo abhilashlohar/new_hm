@@ -561,21 +561,18 @@ $result_event_detail=$this->event->find('all', array('conditions' => $conditions
 $this->set('result_event_detail',$result_event_detail);
 }
 
-
+//Start save_rsvp// 
 function save_rsvp()
 {
 $this->layout='blank';
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$e=(int)$this->request->query('e');
+	$type=(int)$this->request->query('type');
+	$this->set('e',$e);
+	$this->set('type',$type);
 
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
-
-$e=(int)$this->request->query('e');
-$type=(int)$this->request->query('type');
-$this->set('e',$e);
-$this->set('type',$type);
-
-	if($type==1)
-	{
+	if($type==1){
 	$this->loadmodel('event');
 	$conditions=array("event_id" => $e);
 	$event_result=$this->event->find('all', array('conditions' => $conditions));
@@ -650,6 +647,6 @@ $this->set('type',$type);
 		echo "Thanks for participation.";
 	}
 }
-
+//End save_rsvp// 
 
 } ?>

@@ -1,0 +1,50 @@
+Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Receipt Type,Amount,Narration 
+ 01-01-2015 , SBI, cheque,1111,01-01-2015,Allahabad Bank,Sec-4,Anupam Tagore, A,101,M,1000,1 Receipt for jan
+02-01-2015,SBI, neft,2222,02-01-2015,Allahabad Bank,Sec-5,B L Naik, A,102,O,2000,2 Receipt for jan
+03-01-2015,SBI,pg,3333,03-01-2015,Allahabad Bank,Sec-6,B L Naik,A,103,M,3000,3 Receipt for jan
+04-01-2015,SBI,cheque,4444,04-01-2015,Allahabad Bank,Sec-7,Anupam Tagore,A,104,M,4000,4 Receipt for jan
+05-01-2015,SBI,neft,5555,05-01-2015,Allahabad Bank,Sec-8,B L Naik,A,105,O,5000,5 Receipt for jan
+06-01-2015,SBI,pg,6666,06-01-2015,Allahabad Bank,Sec-9,B L Naik,B,201,M,6000,6 Receipt for jan
+07-01-2015,SBI,cheque,7777,07-01-2015,Allahabad Bank,Sec-10,Anupam Tagore,A,101,M,7000,7 Receipt for jan
+08-01-2015,SBI,neft,8888,08-01-2015,Allahabad Bank,Sec-11,B L Naik,A,102,O,8000,8 Receipt for jan
+09-01-2015,SBI,pg,9999,09-01-2015,Allahabad Bank,Sec-12,B L Naik,A,103,M,9000,9 Receipt for jan
+10-01-2015,SBI,,11110,10-01-2015,Allahabad Bank,Sec-13,Anupam Tagore,A,104,M,10000,10 Receipt for jan
+11-01-2015,SBI,neft,12221,11-01-2015,Allahabad Bank,Sec-14,B L Naik,A,105,,11000,11 Receipt for jan
+12-01-2015,SBI,pg,13332,12-01-2015,Allahabad Bank,Sec-15,B L Naik,,201,M,12000,12 Receipt for jan
+13-01-2015,SBI,cheque,14443,13-01-2015,Allahabad Bank,Sec-16,Anupam Tagore,A,101,M,13000,13 Receipt for jan
+14-01-2015,SBI,neft,15554,14-01-2015,Allahabad Bank,Sec-17,B L Naik,A,102,O,14000,14 Receipt for jan
+15-01-2015,SBI,pg,16665,15-01-2015,Allahabad Bank,Sec-18,B L Naik,A,103,M,15000,15 Receipt for jan
+16-01-2015,SBI,cheque,17776,16-01-2015,Allahabad Bank,Sec-19,Anupam Tagore,A,104,M,16000,16 Receipt for jan
+17-01-2015,SBI,neft,18887,17-01-2015,Allahabad Bank,Sec-20,B L Naik,A,105,O,17000,17 Receipt for jan
+18-01-2015,SBI,pg,19998,18-01-2015,Allahabad Bank,Sec-21,B L Naik,B,201,M,18000,18 Receipt for jan
+19-01-2015,SBI,cheque,21109,19-01-2015,Allahabad Bank,Sec-22,Anupam Tagore,,101,M,,19 Receipt for jan
+20-01-2015,SBI,neft,22220,20-01-2015,Allahabad Bank,Sec-23,B L Naik,A,102,O,20000,20 Receipt for jan
+21-01-2015,SBI,pg,23331,21-01-2015,Allahabad Bank,Sec-24,B L Naik,A,103,M,21000,21 Receipt for jan
+22-01-2015,SBI,cheque,24442,22-01-2015,Allahabad Bank,Sec-25,Anupam Tagore,A,104,M,22000,22 Receipt for jan
+23-01-2015,SBI,neft,25553,23-01-2015,Allahabad Bank,Sec-26,B L Naik,A,105,O,23000,23 Receipt for jan
+24-01-2015,SBI,pg,26664,24-01-2015,Allahabad Bank,Sec-27,B L Naik,B,201,M,24000,24 Receipt for jan
+25-01-2015,SBI,cheque,27775,25-01-2015,Allahabad Bank,Sec-28,Anupam Tagore,A,101,M,25000,25 Receipt for jan
+26-01-2015,SBI,neft,28886,26-01-2015,Allahabad Bank,Sec-29,B L Naik,A,,O,26000,26 Receipt for jan
+27-01-2015,SBI,,29997,27-01-2015,Allahabad Bank,Sec-30,B L Naik,A,103,M,27000,27 Receipt for jan
+28-01-2015,SBI,cheque,31108,28-01-2015,Allahabad Bank,Sec-31,Anupam Tagore,A,104,M,28000,28 Receipt for jan
+29-01-2015,SBI,neft,32219,29-01-2015,Allahabad Bank,Sec-32,B L Naik,A,105,O,29000,29 Receipt for jan
+30-01-2015,SBI,pg,33330,30-01-2015,Allahabad Bank,Sec-33,B L Naik,B,201,M,30000,30 Receipt for jan
+31-01-2015,SBI,cheque,34441,31-01-2015,Allahabad Bank,Sec-34,Anupam Tagore,A,101,M,31000,31 Receipt for jan
+01-02-2015,SBI,neft,35552,01-02-2015,Allahabad Bank,Sec-35,B L Naik,A,102,O,32000,32 Receipt for jan
+02-02-2015,SBI,pg,36663,02-02-2015,Allahabad Bank,Sec-36,B L Naik,A,103,M,33000,33 Receipt for jan
+03-02-2015,SBI,cheque,37774,03-02-2015,Allahabad Bank,Sec-37,Anupam Tagore,A,104,M,34000,34 Receipt for jan
+04-02-2015,SBI,neft,38885,04-02-2015,Allahabad Bank,Sec-38,B L Naik,A,105,O,35000,35 Receipt for jan
+05-02-2015,SBI,pg,39996,05-02-2015,Allahabad Bank,Sec-39,B L Naik,B,201,M,36000,36 Receipt for jan
+06-02-2015,SBI,cheque,41107,06-02-2015,Allahabad Bank,Sec-40,Anupam Tagore,A,101,M,37000,37 Receipt for jan
+07-02-2015,SBI,neft,42218,07-02-2015,Allahabad Bank,Sec-41,B L Naik,A,102,O,38000,38 Receipt for jan
+08-02-2015,SBI,pg,43329,08-02-2015,Allahabad Bank,Sec-42,B L Naik,A,103,M,39000,39 Receipt for jan
+09-02-2015,SBI,cheque,44440,09-02-2015,Allahabad Bank,Sec-43,Anupam Tagore,A,104,M,40000,40 Receipt for jan
+10-02-2015,SBI,neft,45551,10-02-2015,Allahabad Bank,Sec-44,B L Naik,A,105,O,41000,41 Receipt for jan
+11-02-2015,SBI,pg,46662,11-02-2015,Allahabad Bank,Sec-45,B L Naik,B,201,M,42000,42 Receipt for jan
+12-02-2015,SBI,cheque,47773,12-02-2015,Allahabad Bank,Sec-46,Anupam Tagore,A,101,M,43000,43 Receipt for jan
+13-02-2015,SBI,neft,48884,13-02-2015,Allahabad Bank,Sec-47,B L Naik,A,102,O,44000,44 Receipt for jan
+14-02-2015,SBI,pg,49995,14-02-2015,Allahabad Bank,Sec-48,B L Naik,A,103,M,45000,45 Receipt for jan
+15-02-2015,SBI,,51106,15-02-2015,Allahabad Bank,Sec-49,Anupam Tagore,A,104,M,46000,46 Receipt for jan
+16-02-2015,SBI,neft,52217,16-02-2015,Allahabad Bank,Sec-50,B L Naik,A,105,O,47000,47 Receipt for jan
+17-02-2015,SBI,pg,53328,17-02-2015,Allahabad Bank,Sec-51,B L Naik,B,201,M,sfsdf,48 Receipt for jan
+18-02-2015,SBI,cheque,54439,18-02-2015,Allahabad Bank,Sec-52,Anupam Tagore,B,201,M,49000,49 Receipt for jan

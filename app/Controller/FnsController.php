@@ -807,6 +807,7 @@ $(document).ready(function() {
 	
 function sending_option_results($send_to=null,$details=null){
 	$s_society_id=$this->Session->read('hm_society_id');
+	$hm_user_id=$this->Session->read('hm_user_id');
 	$arranged_array=array();
 	if($send_to=="all_users"){
 		$this->loadmodel('user');
@@ -927,6 +928,18 @@ function sending_option_results($send_to=null,$details=null){
 			}
 		}
 	}
+	
+	$this->loadmodel('user');
+	$conditions=array("user_id"=>$s_user_id,"active"=>"yes");
+	$users=$this->user->find('all',array('conditions'=>$conditions));
+	foreach($users as $data){
+		$user_id=$data["user"]["user_id"];
+		$email=$data["user"]["email"];
+		$mobile=$data["user"]["mobile"];
+		$user_name=$data["user"]["user_name"];
+		$arranged_array[$user_id]=array("email"=>$email,"mobile"=>$mobile,"user_name"=>$user_name);
+	}
+		
 	if(sizeof($arranged_array)==0){ $arranged_array=array(); }
 	return $arranged_array;
 }

@@ -1,14 +1,8 @@
 <?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
+echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
 
 
-<script>
-$(document).ready(function() {
-$("#fix<?php echo $id_current_page; ?>").removeClass("blue");
-$("#fix<?php echo $id_current_page; ?>").addClass("red");
-});
-</script>
 <div align="center">
 
 <a href='notice_archive' rel='tab' <?php if(empty($blue_cat)){ ?> class="btn yellow " <?php } else { ?> class="btn  "  <?php } ?>>All</a>

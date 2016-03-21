@@ -1363,8 +1363,8 @@ function new_notice(){
 	}
 	$this->ath();
 	$this->check_user_privilages();
-	$s_society_id=$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$s_role_id=$this->Session->read('role_id'); 
 	$this->loadmodel('master_notice_category');
 	$this->set('result1', $this->master_notice_category->find('all'));

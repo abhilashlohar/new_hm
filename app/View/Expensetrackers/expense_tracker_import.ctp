@@ -18,6 +18,7 @@ $process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
 		<form method="post" id="form1" style="margin: 0px;">
 			<h5>Upload CSV file in given format to import Receipts.</h5>
 			<input name="file" class="default" id="image-file" type="file">
+			<label id="vali"></label>
 			<a href="expense_tracker_export" download="" target="_blank">Download sample format</a><br/><br/>
 			<h5 id="submit_element" >
 			<button type="submit" class="btn blue">IMPORT RECEIPTS</button>
@@ -169,6 +170,20 @@ function final_import_opening_balance(){
 <script>
 $('form#form1').submit( function(ev){
 	ev.preventDefault();
+	
+	var im_name=$("#image-file").val();
+var insert = 1;
+if(im_name==""){
+$("#vali").html("<span style='color:red;'>Please Select a Csv File</span>");	
+return false;
+}
+
+var ext = $('#image-file').val().split('.').pop().toLowerCase();
+if($.inArray(ext, ['csv']) == -1) {
+$("#vali").html("<span style='color:red;'>Please Select a Csv File</span>");
+return false;
+}
+	
 	$("#submit_element").html("<img src='<?php echo $webroot_path; ?>as/loding.gif' /> Please Wait, Csv file is Uploading...");
 	var m_data = new FormData();
 	m_data.append( 'file', $('input[name=file]')[0].files[0]);

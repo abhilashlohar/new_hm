@@ -114,15 +114,20 @@ function event_submit(){
 	}
 	
 	
-	if(sizeof($report)>0){
+	/*if(sizeof($report)>0){
 		$output=json_encode(array('report_type'=>'error','report'=>$report));
 		die($output);
-	}
+	}*/
 	
 	@$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 	
-	$recieve_info=$this->visible_subvisible($visible,$sub_visible);
-		
+	//$recieve_info=$this->visible_subvisible($visible,$sub_visible);
+	
+	$recieve_info=$this->requestAction(array('controller'=>'Fns','action'=>'sending_option_results'), array('pass' => array($visible,$sub_visible)));
+	
+	
+	echo $recieve_info; 
+	exit;
 		
 		
 		

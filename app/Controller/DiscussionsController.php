@@ -77,10 +77,14 @@ function new_topic(){
 			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($send_to,$details)));
 			$sub_visible=$wings;
 		}
+		$users_have_access=array();
+		foreach($receivers as $user_id=>$user_info){
+			$users_have_access[]=$user_id;
+		}
 		
 		$this->loadmodel('discussion_post');
 		$discussion_post_id=$this->autoincrement('discussion_post','discussion_post_id');
-		$this->discussion_post->saveAll(Array( Array("discussion_post_id" => $discussion_post_id, "user_id" => $s_user_id , "society_id" => $s_society_id, "topic" => $topic,"description" => $description, "file" =>$file,"delete" =>"no", "date" =>strtotime($date), "time" => $time, "visible" => $send_to, "sub_visible" => $sub_visible))); 
+		$this->discussion_post->saveAll(Array( Array("discussion_post_id" => $discussion_post_id, "user_id" => $s_user_id , "society_id" => $s_society_id, "topic" => $topic,"description" => $description, "file" =>$file,"delete" =>"no", "date" =>strtotime($date), "time" => $time, "visible" => $send_to, "sub_visible" => $sub_visible,"users_have_access"=>$users_have_access))); 
 		
 		$this->loadmodel('society');
 		$conditions=array("society_id"=>$s_society_id);
@@ -209,6 +213,7 @@ function new_topic(){
 				$this->send_email($email,$from,$from_name,$subject,$message_web,$reply);
 			}
 		}
+		$this->redirect(array('controller' => 'Discussions','action' => 'index'));
 	}
 }
 

@@ -689,12 +689,12 @@ function sending_options(){
 					<tr>
 						<td>
 							<label class="checkbox">
-							<div class="checker"><span><input class="resident requirecheck1" e_id="requirecheck1" value="" type="checkbox" name="roles[]"></span></div> Residents
+							<div class="checker"><span><input class="resident requirecheck1" e_id="requirecheck1" value="resident" type="checkbox" name="roles[]"></span></div> Residents
 							</label>
 						</td>
 						<td class="resident_family" style="display:none;">
 							<label class="checkbox">
-							<div class="checker"><span><input value="" type="checkbox" name="roles[]"></span></div> Family members also
+							<div class="checker"><span><input value="resident_family" type="checkbox" name="roles[]"></span></div> Family members also
 							</label>
 						</td>
 					</tr>
@@ -805,6 +805,131 @@ $(document).ready(function() {
 	<?php
 }
 	
+function sending_option_results($send_to=null,$details=null){
+	$s_society_id=$this->Session->read('hm_society_id');
+	$arranged_array=array();
+	if($send_to=="all_users"){
+		$this->loadmodel('user');
+		$conditions=array("society_id"=>$s_society_id,"active"=>"yes");
+		$order=array('user.user_name'=> 'ASC');
+		$users=$this->user->find('all',array('conditions'=>$conditions,'order'=>$order));
+		foreach($users as $data){
+			$user_id=$data["user"]["user_id"];
+			$email=$data["user"]["email"];
+			$mobile=$data["user"]["mobile"];
+			$user_name=$data["user"]["user_name"];
+			$arranged_array[$user_id]=array("email"=>$email,"mobile"=>$mobile,"user_name"=>$user_name);
+		}
+	}elseif($send_to=="role_wise"){
+		$details=explode(",",$details);
+		
+		$this->loadmodel('user');
+		$conditions=array("society_id"=>$s_society_id,"active"=>"yes");
+		$users=$this->user->find('all',array('conditions'=>$conditions));
+		foreach($users as $data){
+			$user_id=$data["user"]["user_id"];
+			$email=$data["user"]["email"];
+			$mobile=$data["user"]["mobile"];
+			$user_name=$data["user"]["user_name"];
+			foreach($details as $role){
+				if($role!="resident" and $role!="resident_family"){
+					$this->loadmodel('user_role');
+					$conditions=array("user_id"=>$user_id,"role_id"=>(int)$role);
+					$count_role=$this->user_role->find('count',array('conditions'=>$conditions));
+					if($count_role==1){
+						$arranged_array[$user_id]=array("email"=>$email,"mobile"=>$mobile,"user_name"=>$user_name);
+					}
+				}else{
+					if($role=="resident"){
+						$this->loadmodel('user_flat');
+						$conditions=array("user_id"=>$user_id);
+						$user_flats=$this->user_flat->find('all',array('conditions'=>$conditions));
+						foreach($user_flats as $data2){
+							$wing=@$data2["user_flat"]["wing"];
+							$flat=@$data2["user_flat"]["flat"];
+							$owner=@$data2["user_flat"]["owner"];
+							if($owner=="yes" && (!empty($wing) && !empty($flat))){
+								$this->loadmodel('flat');
+								$conditions=array("wing_id"=>$wing,"flat_id"=>$flat);
+								$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+								$noc_status=$flat_info[0]["flat"]["noc_ch_tp"];
+								if($noc_status==1){
+									$arranged_array[$user_id]=array("email"=>$email,"mobile"=>$mobile,"user_name"=>$user_name);
+								}
+							}elseif($owner=="no" && (!empty($wing) && !empty($flat))){
+								$arranged_array[$user_id]=array("email"=>$email,"mobile"=>$mobile,"user_name"=>$user_name);
+							}
+						}
+					}
+					if($role=="resident_family"){
+						$this->loadmodel('user_flat');
+						$conditions=array("user_id"=>$user_id);
+						$user_flats=$this->user_flat->find('all',array('conditions'=>$conditions));
+						foreach($user_flats as $data2){
+							$wing=@$data2["user_flat"]["wing"];
+							$flat=@$data2["user_flat"]["flat"];
+							$owner=@$data2["user_flat"]["owner"];
+							if($owner=="yes"){
+								$this->loadmodel('flat');
+								$conditions=array("wing_id"=>$wing,"flat_id"=>$flat);
+								$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+								$noc_status=$flat_info[0]["flat"]["noc_ch_tp"];
+								if($noc_status==1){
+									$this->loadmodel('user');
+									$conditions=array("family_main_member"=>$user_id,"is_family_member"=>"yes");
+									$family_users=$this->user->find('all',array('conditions'=>$conditions));	
+									foreach($family_users as $data3){
+										$user_id=$data3["user"]["user_id"];
+										$email=$data3["user"]["email"];
+										$mobile=$data3["user"]["mobile"];
+										$user_name=$data3["user"]["user_name"];
+										$arranged_array[$user_id]=array("email"=>$email,"mobile"=>$mobile,"user_name"=>$user_name);
+									}	
+								}
+							}else{
+								$this->loadmodel('user');
+								$conditions=array("family_main_member"=>$user_id,"is_family_member"=>"yes");
+								$family_users=$this->user->find('all',array('conditions'=>$conditions));	
+								foreach($family_users as $data3){
+									$user_id=$data3["user"]["user_id"];
+									$email=$data3["user"]["email"];
+									$mobile=$data3["user"]["mobile"];
+									$user_name=$data3["user"]["user_name"];
+									$arranged_array[$user_id]=array("email"=>$email,"mobile"=>$mobile,"user_name"=>$user_name);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		
+	}elseif($send_to=="wing_wise"){
+		$details=explode(",",$details);
+		$this->loadmodel('user');
+		$conditions=array("society_id"=>$s_society_id,"active"=>"yes");
+		$users=$this->user->find('all',array('conditions'=>$conditions));
+		foreach($users as $data){
+			$user_id=$data["user"]["user_id"];
+			$email=$data["user"]["email"];
+			$mobile=$data["user"]["mobile"];
+			$user_name=$data["user"]["user_name"];
+			
+			$this->loadmodel('user_flat');
+			$conditions=array("user_id"=>$user_id);
+			$user_flats=$this->user_flat->find('all',array('conditions'=>$conditions));
+			foreach($user_flats as $data2){
+				$wing=@$data2["user_flat"]["wing"];
+				if(in_array($wing,$details)){
+					$arranged_array[$user_id]=array("email"=>$email,"mobile"=>$mobile,"user_name"=>$user_name);
+				}
+			}
+		}
+	}
+	if(sizeof($arranged_array)==0){ $arranged_array=array(); }
+	return $arranged_array;
+}
 
 }
 ?>

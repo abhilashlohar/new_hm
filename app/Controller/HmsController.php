@@ -5926,7 +5926,7 @@ function submit_login(){
 				if(empty($access_tenant) and !empty($type)){
 					
 					if($access_tenant==0 && $type=="Tenant"){
-						echo $output=json_encode(array('result' => 'error','message' => 'Society Manager is not access to login.'));
+						echo $output=json_encode(array('result' => 'error','message' => 'Tenant have not login access.'));
 						die();
 					}
 				}
@@ -5939,7 +5939,7 @@ function submit_login(){
 					if(!empty($result_tenant)){
 							$t_end_date=$result_tenant[0]['tenant']['t_end_date'];
 						if(strtotime($t_end_date)<strtotime($date2)){
-								echo $output=json_encode(array('result' => 'error','message' => 'your tenancy agreement is finished so you are not allowed login access.'));
+								echo $output=json_encode(array('result' => 'error','message' => 'Your tenancy agreement is finished so you are not allowed login access.'));
 							    die();
 						}
 					}
@@ -7289,8 +7289,6 @@ function dashboard(){
 	  $s_society_id = $this->Session->read('hm_society_id');
 	  $s_user_id = $this->Session->read('hm_user_id'); 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
-	
-	
 	
 	
 		

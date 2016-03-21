@@ -70,82 +70,74 @@ $.validator.addMethod('requirecheck2', function (value, element) {
 }, 'Please select at least one wing.');
 
 $.validator.addMethod('filesize', function(value, element, param) {
-    // param = size (en bytes) 
-    // element = element to validate (<input>)
-    // value = value of the element (file name)
     return this.optional(element) || (element.files[0].size <= param) 
 });
 
 $(document).ready(function(){
-			var checkboxes = $('.requirecheck1');
-			var checkbox_names = $.map(checkboxes, function(e, i) {
-				return $(e).attr("name")
-			}).join(" ");
-			
-			
-			var checkboxes2 = $('.requirecheck2');
-			var checkbox_names2 = $.map(checkboxes2, function(e, i) {
-				return $(e).attr("name")
-			}).join(" ");
-			
-			
-			
-	
-		$('#contact-form').validate({
-		
-		 errorElement: "label",
-                    //place all errors in a <div id="errors"> element
-                    errorPlacement: function(error, element) {
-                        //error.appendTo("label#errors");
-						error.appendTo('label#' + element.attr('e_id'));
-                    }, 
-	    groups: {
-            asdfg: checkbox_names,
-			qwerty: checkbox_names2
-        },
-		
-		
-		rules: {
-	      topic: {
-	       
-	        required: true,
-			maxlength: 100
-	      },
-		  
-		  description: {
-	        required: true,
-			maxlength: 500,
-	      },
-		  file: {
-			accept: "gif,jpg",
-			filesize: 1048576
-	      },
-		 
-	    },
-		messages: {
-	                topic: {
-	                    maxlength: "Maximum 100 characters only."
-	                },
-					file: {
-						accept: "File extension must be gif or jpg",
-	                    filesize: "File size must be less than 1MB."
-	                },
-					description: {
-	                    maxlength: "Max 500 characters allowed.",
-						remote:"You have enter wrong word."
-	                }
-	            },
-			highlight: function(element) {
-				$(element).closest('.control-group').removeClass('success').addClass('error');
-				
-			},
-			success: function(element) {
-				element
-				.text('OK!').addClass('valid')
-				.closest('.control-group').removeClass('error').addClass('success');
-			}
-		
-	  });
+	var checkboxes = $('.requirecheck1');
+	var checkbox_names = $.map(checkboxes, function(e, i) {
+		return $(e).attr("name")
+	}).join(" ");
 
+
+	var checkboxes2 = $('.requirecheck2');
+	var checkbox_names2 = $.map(checkboxes2, function(e, i) {
+		return $(e).attr("name")
+	}).join(" ");
+			
+	$('#contact-form').validate({
+	 errorElement: "label",
+		//place all errors in a <div id="errors"> element
+		errorPlacement: function(error, element) {
+			//error.appendTo("label#errors");
+			error.appendTo('label#' + element.attr('e_id'));
+		}, 
+	groups: {
+		asdfg: checkbox_names,
+		qwerty: checkbox_names2
+	},
+	
+	
+	rules: {
+	  topic: {
+	   
+		required: true,
+		maxlength: 100
+	  },
+	  
+	  description: {
+		required: true,
+		maxlength: 500,
+	  },
+	  file: {
+		accept: "gif,jpg",
+		filesize: 1048576
+	  },
+	 
+	},
+	messages: {
+				topic: {
+					maxlength: "Maximum 100 characters only."
+				},
+				file: {
+					accept: "File extension must be gif or jpg",
+					filesize: "File size must be less than 1MB."
+				},
+				description: {
+					maxlength: "Max 500 characters allowed.",
+					remote:"You have enter wrong word."
+				}
+			},
+		highlight: function(element) {
+			$(element).closest('.control-group').removeClass('success').addClass('error');
+			
+		},
+		success: function(element) {
+			element
+			.text('OK!').addClass('valid')
+			.closest('.control-group').removeClass('error').addClass('success');
+		}
+	
+  });
 }); 
 </script>

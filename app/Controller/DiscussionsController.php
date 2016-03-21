@@ -45,6 +45,57 @@ function new_topic(){
 	$s_user_id=$this->Session->read('hm_user_id'); 
 	$s_society_id=$this->Session->read('hm_society_id');
 	
+	
+	if(isset($this->request->data['sub'])){
+		$topic=htmlentities($this->request->data['topic']);
+		$topic = wordwrap($topic, 25, " ", true);
+		$description=htmlentities($this->request->data['description']);
+		$description = nl2br(wordwrap($description, 25, " ", true));
+		$description = iconv("utf-8", "utf-8//ignore", $description);
+		$file=$this->request->form['file']['name'];
+		if(!empty($file)){
+			$target = "discussion_file/";
+			$target=@$target.basename( @$this->request->form['file']['name']);
+			$ok=1;
+			move_uploaded_file(@$this->request->form['file']['tmp_name'],@$target);
+		}
+		$date=date("Y-m-d");
+		$time=date('h:i:a',time());
+		$send_to=$this->request->data['send_to'];
+		if($send_to=="all_users"){
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($send_to,null)));
+			$sub_visible=null;
+		}
+		if($send_to=="role_wise"){
+			$roles=$this->request->data['roles'];
+			$details=implode(",",$roles);
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($send_to,$details)));
+			$sub_visible=$roles;
+		}elseif($send_to=="wing_wise"){
+			$wings=$this->request->data['wings'];
+			$details=implode(",",$wings);
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($send_to,$details)));
+			$sub_visible=$wings;
+		}
+		
+		$this->loadmodel('discussion_post');
+		$discussion_post_id=$this->autoincrement('discussion_post','discussion_post_id');
+		$this->discussion_post->saveAll(Array( Array("discussion_post_id" => $discussion_post_id, "user_id" => $s_user_id , "society_id" => $s_society_id, "topic" => $topic,"description" => $description, "file" =>$file,"delete" =>"no", "date" =>strtotime($date), "time" => $time, "visible" => $send_to, "sub_visible" => $sub_visible))); 
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+}
+
+function submit_topic(){
+	pr($this->request->form);
+	exit;
+	
 }
 
 

@@ -170,14 +170,14 @@ $(document).ready(function() {
 		m_data.append( 'code', $('#summernote').code());
 		m_data.append( 'file', $('input[name=file]')[0].files[0]);
 		m_data.append( 'post_type', post_type);
-		var visible=$('input:radio[name=visible]:checked').val();
+		var visible=$('input:radio[name=send_to]:checked').val();
 		m_data.append( 'visible', visible);
 		m_data.append( 'allowed', $('input:checkbox[name=allowed]:checked').val());
-		
-		if(visible==2){
+		alert(visible);
+		if(visible=="role_wise"){
 			var allVals = [];
-			$('.v2:checked').each(function() {
-			allVals.push($(this).val());
+			$('.requirecheck1:checked').each(function() {
+				allVals.push($(this).val());
 			});
 			if(allVals.length==0){
 				m_data.append( 'sub_visible', 0);
@@ -196,10 +196,10 @@ $(document).ready(function() {
 				m_data.append( 'sub_visible', allVals);
 			}
 		}
-		if(visible==1 || visible==4 || visible==5){
+		if(visible=="all_users"){
 			m_data.append( 'sub_visible', 0);
 		}
-		$(".form-actions").hide();
+		//$(".form-actions").hide();
 		
 		$("#wait").show();
 			
@@ -209,9 +209,9 @@ $(document).ready(function() {
 			processData: false,
 			contentType: false,
 			type: 'POST',
-			dataType:'json',
+			//dataType:'json',
 			}).done(function(response) {
-				
+				alert(response);
 			//$("#output").html(response);
 			if(response.type=='approve'){
 				$(".portlet").remove();

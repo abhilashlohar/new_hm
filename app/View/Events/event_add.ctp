@@ -243,7 +243,6 @@ $(document).ready(function() {
 			$('.requirecheck1:checked').each(function(){
 			rol_wise.push($(this).val());
 			});
-			
 			if(rol_wise.length==0){
 				m_data.append( 'sub_visible', 0);
 			}else{
@@ -273,9 +272,9 @@ $(document).ready(function() {
 			processData: false,
 			contentType: false,
 			type: 'POST',
-			dataType:'json',
+			//dataType:'json',
 			}).done(function(response) {
-			//alert(response);
+			alert(response);
 				if(response.report_type=='error'){
 					$(".remove_report").html('');
 						jQuery.each(response.report, function(i, val) {

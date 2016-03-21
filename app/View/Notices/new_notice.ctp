@@ -66,72 +66,13 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 			<label class="" style="font-size:14px;">Notice should be visible to<span style="color:red;">*</span>   <i class=" icon-info-sign tooltips" data-placement="right" data-original-title="Please select any one"> </i></label>
 			</div>
 			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio" checked name="visible" value="1" id="v1"></span></div>All Users
-			</label>
-			</div>
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio"  name="visible" value="4" id="v1"></span></div>All Owners  
-			</label>
-			</div>
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio"  name="visible" value="5" id="v1"></span></div>All Tenant
-			</label>
-			</div>
-			
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio" ><span><input type="radio"  name="visible" value="2" id="v2" ></span></div>Role Wise
-			</label>
-			</div>
-			<div id="show_2" style="display:none; margin-left:5%;">
-			<div class="controls">
 			<?php
-			foreach ($role_result as $collection) 
-			{
-			$role_id=$collection["role"]["role_id"];
-			$role_name=$collection["role"]["role_name"];
+				echo $sending_options=$this->requestAction(array('controller' => 'Fns', 'action' => 'sending_options'));
 			?>
-			<label class="checkbox">
-			<div class="checker"><span><input type="checkbox"  value="<?php echo $role_id; ?>" name="role<?php echo $role_id; ?>" class="v2 requirecheck1" id="requirecheck123"></span></div> <?php echo $role_name; ?>
-			</label>
-			<?php } ?>
-			<label  id="requirecheck123"></label>
-			</div>
 			
-			</div>
-
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio" name="visible" value="3" id="v3" ></span></div>Wing Wise
-			</label> 
-			</div>
-			<div id="show_3" style="display:none; margin-left:5%;">
-			<div class="controls">
-			<?php
-			foreach ($wing_result as $collection) 
-			{
-			$wing_id=$collection["wing"]["wing_id"];
-			$wing_name=$collection["wing"]["wing_name"];
-			?>
-			<div style="float:left; padding-left:15px;">
-			<label class="checkbox" >
-			<div class="checker"><span><input type="checkbox"  value="<?php echo $wing_id; ?>" name="wing<?php echo $wing_id; ?>" class="v3 requirecheck2" id="requirecheck2" ></span></div> <?php echo $wing_name; ?>
-			</label>
-			</div>
-			<?php } ?>
-			<br/><label id="requirecheck2"></label>
-			</div><br/>
-			
-			</div>
-		<!---------------end visible-------------------------------->
 		</div>
+		<!---------------end visible-------------------------------->
+		
 		<div class="span6">
 			<div class="control-group">
 			<label class="checkbox">

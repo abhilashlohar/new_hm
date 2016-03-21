@@ -207,7 +207,7 @@ $(document).ready(function() {
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn" id="import_close">Cancel</button>
-			<button type="submit" class="btn blue import_btn">Import</button>
+			<button type="submit" class="btn blue import_btn" id="imppp">Import</button>
 		</div>
 		
 	</div>
@@ -219,6 +219,20 @@ $(document).ready(function() {
 
 <script>
 $(document).ready(function(){
+$("#imppp").live('click',function(){
+	var im_name=$("#image-file").val();
+	var insert = 1;
+	if(im_name==""){
+	$("#vali").html("<span style='color:red;'>Please Select a Csv File</span>");	
+	return false;
+	}
+
+	var ext = $('#image-file').val().split('.').pop().toLowerCase();
+	if($.inArray(ext, ['csv']) == -1) {
+	$("#vali").html("<span style='color:red;'>Please Select a Csv File</span>");
+	return false;
+	}
+});
 
 $(".delete").live('click',function(){
 var id = $(this).attr("del");
@@ -241,22 +255,10 @@ $("#myModal3").show();
 	
 	$('form#form1').submit( function(ev){
 		ev.preventDefault();
-		var im_name=$("#image-file").val();
-		var insert = 1;
-		if(im_name==""){
-		$("#vali").html("<span style='color:red;'>Please Select a Csv File</span>");	
-		return false;
-		}
 		
-		var ext = $('#image-file').val().split('.').pop().toLowerCase();
-		if($.inArray(ext, ['csv']) == -1) {
-		$("#vali").html("<span style='color:red;'>Please Select a Csv File</span>");
-		return false;
-		}
 		
 		$(".import_btn").text("Importing...");
 		var sub=$("#stype").val();
-		alert();
 		if(sub==1){
 		
 			var m_data = new FormData();
@@ -318,9 +320,8 @@ $("#myModal3").show();
 		$.ajax({
 			url: "save_import_flat?q="+myJsonString,
 			type: 'POST',
-			//dataType:'json',
+			dataType:'json',
 		}).done(function(response){
-			alert(response);
 			if(response.report_type=='error'){
 				jQuery.each(response.report, function(i, val) {
 					$("#flats_main tr:nth-child("+val.tr+") td:nth-child("+val.td+")").append('<span class="report" style="color:red;">'+val.text+'</span>');
@@ -329,12 +330,12 @@ $("#myModal3").show();
 			}
 			if(response.report_type=='already')
 			{
-				alert();
+				
 			$("#ovrlp").html('<h5 style="color:red;"><b>'+response.text+'</b></h5>');	
 			}
 			if(response.report_type=='repeat')
 			{
-				alert();
+				
 			$("#ovrlp").html('<h5 style="color:red;"><b>'+response.text+'</b></h5>');	
 			}
 			if(response.report_type=='done')

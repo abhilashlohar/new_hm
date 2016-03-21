@@ -244,7 +244,7 @@ $(document).ready(function() {
 			}else{
 				m_data.append( 'sub_visible', allVals);
 			}
-		}
+		} 
 		if(visible==3){
 			var allVals = [];
 			$('.v3:checked').each(function() {
@@ -260,7 +260,7 @@ $(document).ready(function() {
 			m_data.append( 'sub_visible', 0);
 		} */
 		
-		m_data.append( 'ask_no_of_member', $('input:checkbox[name=ask_no_of_member]:checked').val());
+		//m_data.append( 'ask_no_of_member', $('input:checkbox[name=ask_no_of_member]:checked').val());
 		$(".form_post").addClass("disabled");
 		$("#wait").show();
 			
@@ -270,9 +270,9 @@ $(document).ready(function() {
 			processData: false,
 			contentType: false,
 			type: 'POST',
-			dataType:'json',
+			//dataType:'json',
 			}).done(function(response) {
-			//$("#wait").html(response);
+			alert(response);
 				if(response.report_type=='error'){
 					$(".remove_report").html('');
 						jQuery.each(response.report, function(i, val) {

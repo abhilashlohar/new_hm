@@ -60,7 +60,7 @@ function event_submit(){
 	}
 	
 	
-	$ask_no_of_member=(int)$post_data["ask_no_of_member"];
+	//$ask_no_of_member=(int)$post_data["ask_no_of_member"];
 	
 	$report=array();
 	$e_name=htmlentities($post_data["e_name"]);
@@ -100,7 +100,7 @@ function event_submit(){
 		$report[]=array('label'=>'location', 'text' => 'Please select location');
 	}
 	
-	$visible=$post_data['visible'];
+	/*$visible=$post_data['visible'];
 	$sub_visible=$post_data['sub_visible'];
 	if($visible==0){
 		$report[]=array('label'=>'visible', 'text' => 'Please select visible');
@@ -110,8 +110,9 @@ function event_submit(){
 	}elseif($visible==3 and $sub_visible==0){
 		$report[]=array('label'=>'visible_wing', 'text' => 'Please select wing.');
 		$sub_visible=explode(",",$sub_visible);
-	}
-	
+	}*/
+	echo "dsgdsgsadgaf";
+	exit;
 	
 	if(sizeof($report)>0){
 		$output=json_encode(array('report_type'=>'error','report'=>$report));

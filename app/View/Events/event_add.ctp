@@ -232,20 +232,14 @@ $(document).ready(function() {
 		m_data.append( 'e_time', $('input[name=e_time]').val());
 		m_data.append( 'location', $('textarea[name=location]').val());
 		
-	   /* var visible=$('input:radio[name=visible]:checked').val();
-		m_data.append( 'visible', visible);
-		if(visible==2){
-			var allVals = [];
-			$('.v2:checked').each(function() {
-			allVals.push($(this).val());
-			});
-			if(allVals.length==0){
-				m_data.append( 'sub_visible', 0);
-			}else{
-				m_data.append( 'sub_visible', allVals);
-			}
+	    var send_to=$('input:radio[name=send_to]:checked').val();
+		m_data.append( 'send_to',send_to);
+		
+		if(send_to=='all_users'){
+			m_data.append( 'sub_visible', 'all_users');
 		} 
-		if(visible==3){
+		
+		/*if(visible==3){
 			var allVals = [];
 			$('.v3:checked').each(function() {
 			allVals.push($(this).val());

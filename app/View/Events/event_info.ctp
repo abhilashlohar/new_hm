@@ -58,19 +58,20 @@ $description=$data["event"]["description"];
 }
 
 
-$result_user_info=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($d_user_id)));
-foreach($result_user_info as $collection2)
-{
-$user_name=$collection2["user"]["user_name"];
-$profile_pic=$collection2["user"]["profile_pic"];
-$wing=$collection2["user"]["wing"];
-$flat=$collection2["user"]["flat"];
+	$result_user_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'), array('pass'=>array((int)$d_user_id)));
+	foreach($result_user_info as $collection2){
+	$user_name=$collection2["user"]["user_name"];
+	@$profile_pic=@$collection2["user"]["profile_pic"];
+	}
+	$result_user_flat_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_flat_info_via_user_id'), array('pass' => array((int)$d_user_id)));
+	foreach($result_user_flat_info as $data){
+	@$wing=@$data["user_flat"]["wing"];
+	@$flat=@$data["user_flat"]["flat"];
+	}
+		
 
-}
-
-$flat_info=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
+@$wing_flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'), array('pass' => array(@$wing,@$flat)));
 ?>
-
 
 <div style="width:80%; margin-left:10%;margin-top:4px;">
 <a href="<?php echo $webroot_path; ?>Events/event_info/<?php echo $e_id; ?>" class="event_tab tab_active" rel='tab'> Event Details</a>
@@ -89,7 +90,7 @@ $flat_info=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_f
 				</td>
 				<td width="30%" valign="top" align="right"  >
 				<span style="font-weight: 100;">Created on: </span><span><?php echo $date_created; ?></span><br/>
-				<span style="font-weight: 100;">Created by: </span><span><?php echo $user_name.' '.$flat_info; ?></span>
+				<span style="font-weight: 100;">Created by: </span><span><?php echo $user_name.' '.$wing_flat; ?></span>
 				</td>
 			</tr>
 			

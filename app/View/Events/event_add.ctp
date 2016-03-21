@@ -95,6 +95,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<?php
 	$sending_options=$this->requestAction(array('controller' => 'Fns', 'action' => 'sending_options'));
 	?>
+	<label report="visible_role" class="remove_report"></label>
+	<label report="visible_wing" class="remove_report"></label>
 	<!--<div class="controls">
 	<label class="radio line">
 	<div class="radio"><span><input type="radio" checked name="visible" value="1" id="v1"></span></div>All Users

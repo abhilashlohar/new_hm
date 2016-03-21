@@ -113,7 +113,7 @@ function event_submit(){
 		$sub_visible=explode(",",$sub_visible);
 	}
 	
-	
+
 	if(sizeof($report)>0){
 		$output=json_encode(array('report_type'=>'error','report'=>$report));
 		die($output);

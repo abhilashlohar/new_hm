@@ -5298,18 +5298,15 @@ $this->set('sucess','Csv Imported successfully.');
 }
 
 
-
-function society_name($d_society_id)
-{
-	
+//Start society_name//
+function society_name($d_society_id){
 $this->loadmodel('society');
-$conditions=array("society_id"=>$d_society_id);
+$conditions=array("society_id"=>(int)$d_society_id);
 return $this->society->find('all',array('conditions'=>$conditions));
 } 
+//End society_name//
 
-function cron_email() 
-{
-
+function cron_email() {
 /*
 $this->layout='blank';
 

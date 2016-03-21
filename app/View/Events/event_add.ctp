@@ -232,7 +232,7 @@ $(document).ready(function() {
 		m_data.append( 'e_time', $('input[name=e_time]').val());
 		m_data.append( 'location', $('textarea[name=location]').val());
 		
-		var visible=$('input:radio[name=visible]:checked').val();
+	   /* var visible=$('input:radio[name=visible]:checked').val();
 		m_data.append( 'visible', visible);
 		if(visible==2){
 			var allVals = [];
@@ -258,7 +258,7 @@ $(document).ready(function() {
 		}
 		if(visible==1 || visible==4 || visible==5){
 			m_data.append( 'sub_visible', 0);
-		}
+		} */
 		
 		m_data.append( 'ask_no_of_member', $('input:checkbox[name=ask_no_of_member]:checked').val());
 		$(".form_post").addClass("disabled");

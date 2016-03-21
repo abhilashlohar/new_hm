@@ -42,17 +42,18 @@ function event_add()
 
 }
 //End Eveny Add//
-
+//Start event_submit// 
 function event_submit(){
-$this->layout=null;
+	$this->layout=null;
 	$post_data=$this->request->data;
-	
 	$this->ath();
-	$s_society_id=$this->Session->read('society_id');
-	$s_role_id=$this->Session->read('role_id'); 
-	$s_user_id=$this->Session->read('user_id');
+	
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_role_id=$this->Session->read('hm_role_id'); 
+	$s_user_id=$this->Session->read('hm_user_id');
 	$date=date('d-m-Y');
 	$time = date(' h:i a', time());
+	
 	$result_society=$this->society_name($s_society_id);
 	foreach($result_society as $child)	{
 		@$notice=$child['society']['notice'];
@@ -117,7 +118,7 @@ $this->layout=null;
 		die($output);
 	}
 	
-	@$ip=$this->hms_email_ip();
+	 @$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 	$recieve_info=$this->visible_subvisible($visible,$sub_visible);
 		
 	$event_id=$this->autoincrement('event','event_id');
@@ -157,46 +158,7 @@ $this->layout=null;
 	$result_user=$this->profile_picture($user_id);
 	$user_name=$result_user[0]['user']['user_name'];
 
-	/* $message_web="<div>
-	<img src='$ip".$this->webroot."/as/hm/hm-logo.png'/><span  style='float:right; margin:2.2%;'>
-	<span class='test' style='margin-left:5px;'><a href='https://www.facebook.com/HousingMatters.co.in' target='_blank' ><img src='$ip".$this->webroot."/as/hm/fb.png'/></a></span>
-	<a href='#' target='_blank'><img src='$ip".$this->webroot."/as/hm/tw.png'/></a><a href'#'><img src='$ip".$this->webroot."/as/hm/ln.png'/ class='test' style='margin-left:5px;'></a></span>
-	</br><p>Hello $user_name </p>
-	<p>A new event has been created.</p>
-	<br>
-	<div style='border:solid 1px;padding:5px;'>
-	<table width='100%' border='0'>
-			<tbody><tr>
-				<td width='60%' valign='top' align='left'>
-				<span style='font-size:22px;'>$e_name</span><br>
-				<span>$date_email</span><br>
-				<span>Time:- $e_time</span>
-				</td>
-				<td width='30%' valign='top' align='right'>
-				<span style='font-weight: 100;'>Created by: </span><span>$user_name $flat_info</span>
-				</td>
-			</tr>
-			
-			<tr>
-				<td colspan='2'>
-				<br>
-				<h4>Location:- $location</h4>
-				<p>Description:- $description</p>						
-							
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	</div>
-	<div>
-	<br/>
-	<br/>
-	Thank you.<br/>
-	HousingMatters (Support Team)<br/><br/>
-	www.housingmatters.co.in
-	</div>
-	</div>";
-	*/
+	
 		
    $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
           <tbody>
@@ -342,11 +304,6 @@ $this->layout=null;
 
         </tbody>
 </table>';
-
-	
-	
-	
-	
 		
 	@$subject.= '['. $society_name . ']' .'  - New event:  '.' '.$e_name.'';
 	$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
@@ -358,7 +315,7 @@ $this->layout=null;
 	die($output);
 	
 }
-
+//End event_submit//
 
 function calendar()
 {

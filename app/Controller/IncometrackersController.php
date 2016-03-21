@@ -560,8 +560,6 @@ function generate_bills(){
 			}
 		}
 		
-		/// start email and sms code//
-		
 				 $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 
 				$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($ledger_sub_account_id))); 
@@ -7398,7 +7396,7 @@ function account_statement(){
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');	
 
-$this->loadmodel('ledger_sub_account');
+	$this->loadmodel('ledger_sub_account');
 	$condition=array('society_id'=>$s_society_id,'ledger_id'=>34);
 	$members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
 	foreach($members as $data3){

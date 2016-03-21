@@ -1,12 +1,6 @@
 <?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
+echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
-<script>
-$(document).ready(function() {
-$("#fix<?php echo @$id_current_page; ?>").removeClass("blue");
-$("#fix<?php echo @$id_current_page; ?>").addClass("red");
-});
-</script>
 
 <div id="success_div2">
 <div style="border-bottom:solid 2px #44b6ae; color:white; background-color: #44b6ae; padding:4px; font-size:20px;"><i class="icon-calendar"></i> Create New Event</div>
@@ -99,7 +93,10 @@ $("#fix<?php echo @$id_current_page; ?>").addClass("red");
 	<!---------------start visible-------------------------------->
 	<label class="" style="font-size:14px;">Event should be visible to<span style="color:red;">*</span>   <i class=" icon-info-sign tooltips" data-placement="right" data-original-title="Please select any one"> </i></label>
 
-	<div class="controls">
+	<?php
+	$sending_options=$this->requestAction(array('controller' => 'Fns', 'action' => 'sending_options'));
+	?>
+	<!--<div class="controls">
 	<label class="radio line">
 	<div class="radio"><span><input type="radio" checked name="visible" value="1" id="v1"></span></div>All Users
 	</label>
@@ -162,7 +159,7 @@ $("#fix<?php echo @$id_current_page; ?>").addClass("red");
 	<?php } ?>
 	</div>
 	
-	</div>	
+	</div>	-->
 	<!---------------end visible-------------------------------->
 	
 	</div>

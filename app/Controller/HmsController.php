@@ -4527,24 +4527,30 @@ function user_deactive_ajax()
 		
 }
 
-function all_user_deactive()
-{
-	$s_society_id=$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	function all_user_deactive(){
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$this->loadmodel('user');
-	$conditions=array('society_id'=>$s_society_id,'deactive'=>0);
+	$conditions=array('society_id'=>$s_society_id,'active'=>'yes');
 	return $result_user=$this->user->find('all',array('conditions'=>$conditions));
-}
+	}
 
 
-function all_owner_deactive()
-{
-	$s_society_id=$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
-	$this->loadmodel('user');
-	$conditions=array('society_id'=>$s_society_id,'tenant'=>1,'deactive'=>0);
-	return $result_user=$this->user->find('all',array('conditions'=>$conditions));
-}
+	function all_owner_deactive(){
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+		$this->loadmodel('user');
+		$conditions=array('society_id'=>$s_society_id,'active'=>'yes');
+		$result_users=$this->user->find('all',array('conditions'=>$conditions));
+		foreach($result_users as $result_user){
+			$user_id=(int)$result_user['user']['user_id'];	
+		}
+	
+	
+	
+	
+	
+	}
 
 
 function all_tenant_deactive()

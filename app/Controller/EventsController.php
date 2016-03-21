@@ -6,107 +6,86 @@ public $components = array(
 'Paginator',
 'Session','Cookie','RequestHandler'
 );
-
-
 var $name = 'Events';
-
-
 
 function event_add()
 {
-if($this->RequestHandler->isAjax()){
-		$this->layout='blank';
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
 	}else{
-		$this->layout='session';
+	$this->layout='session';
 	}
-$this->ath();
-$this->check_user_privilages();
+	$this->ath();
+	$this->check_user_privilages();
 
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
-$s_result= $this->society_name($s_society_id);
-foreach($s_result as $data)
-{
-	
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$s_result= $this->society_name($s_society_id);
+
+	foreach($s_result as $data){
 	$society_name=$data['society']['society_name'];
-	
-}
-$date = new MongoDate(strtotime(date('Y-m-d')));
+	}
+	$date = new MongoDate(strtotime(date('Y-m-d')));
 
+	$this->loadmodel('role');
+	$conditions=array("society_id" => $s_society_id);
+	$role_result=$this->role->find('all',array('conditions'=>$conditions));
+	$this->set('role_result',$role_result);
 
+	$this->loadmodel('wing');
+	$wing_result=$this->wing->find('all');
+	$this->set('wing_result',$wing_result);
 
-$this->loadmodel('role');
-$conditions=array("society_id" => $s_society_id);
-$role_result=$this->role->find('all',array('conditions'=>$conditions));
-$this->set('role_result',$role_result);
+	$this->loadmodel('user');
+	$conditions=array("society_id"=>$s_society_id,'active'=>'yes');
+	$this->set('result_users',$this->user->find('all',array('conditions'=>$conditions))); 
 
-$this->loadmodel('wing');
-$wing_result=$this->wing->find('all');
-$this->set('wing_result',$wing_result);
-
-$this->loadmodel('user');
-$conditions=array("society_id"=>$s_society_id,'deactive'=>0);
-$this->set('result_users',$this->user->find('all',array('conditions'=>$conditions))); 
-
-if (isset($this->request->data['create_event'])) 
-{
-	
-	
+if(isset($this->request->data['create_event'])){
 $e_name=htmlentities($this->request->data['e_name']);
 $e_time=htmlentities($this->request->data['e_time']);
-
 $day_type=(int)$this->request->data['day_type'];
-$ip=$this->hms_email_ip();
-if($day_type==2)
-{
-$date_from1=$this->request->data['date_from'];
-$date_from=date("Y-m-d",strtotime($date_from1));
-$date_from = new MongoDate(strtotime($date_from));
-$date_to1=$this->request->data['date_to'];
-$date_to=date("Y-m-d",strtotime($date_to1));
-$date_to = new MongoDate(strtotime($date_to));
-$date_email="from $date_from1 to $date_to1";
-}
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
+	if($day_type==2){
+	$date_from1=$this->request->data['date_from'];
+	$date_from=date("Y-m-d",strtotime($date_from1));
+	$date_from = new MongoDate(strtotime($date_from));
+	$date_to1=$this->request->data['date_to'];
+	$date_to=date("Y-m-d",strtotime($date_to1));
+	$date_to = new MongoDate(strtotime($date_to));
+	$date_email="from $date_from1 to $date_to1";
+	}
 
-if($day_type==1)
-{
-$date_from1=$this->request->data['date_single'];
-$date_from=date("Y-m-d",strtotime($date_from1));
-$date_from = new MongoDate(strtotime($date_from));
+	if($day_type==1){
+	$date_from1=$this->request->data['date_single'];
+	$date_from=date("Y-m-d",strtotime($date_from1));
+	$date_from = new MongoDate(strtotime($date_from));
+	$date_to1=$this->request->data['date_single'];
+	$date_to=date("Y-m-d",strtotime($date_to1));
+	$date_to = new MongoDate(strtotime($date_to));
+	$date_email="on $date_to1";
+	}
 
-$date_to1=$this->request->data['date_single'];
-$date_to=date("Y-m-d",strtotime($date_to1));
-$date_to = new MongoDate(strtotime($date_to));
-$date_email="on $date_to1";
-}
+	$location=htmlentities($this->request->data['location']);
+	$description=htmlentities($this->request->data['description']);
+	$visible=(int)$this->request->data['visible'];
 
-
-
-
-$location=htmlentities($this->request->data['location']);
-$description=htmlentities($this->request->data['description']);
-$visible=(int)$this->request->data['visible'];
-
-if($visible==1)
-{	
+if($visible==1){	
 $visible=1;
 $sub_visible[]=0;
-/////////////////////////////////////////// All user ////////////////////////////
-$result_user=$this->all_user_deactive();
-foreach($result_user as $data)
-{
-$visible_user_id[]=$data['user']['user_id'];
-$da_to[]=$data['user']['email'];
-$da_user_name[]=$data['user']['user_name'];
-}
-/////////////////////////////////////////// All user ////////////////////////////
+		//Start All user//
+	$result_user=$this->all_user_deactive();
+	foreach($result_user as $data){
+	$visible_user_id[]=$data['user']['user_id'];
+	$da_to[]=$data['user']['email'];
+	$da_user_name[]=$data['user']['user_name'];
+	}
+		//End All user//
 }
 
-if($visible==4)
-{	
+if($visible==4){	
 $visible=4;
 $sub_visible[]=0;
-/////////////////////////////////////////// All Owners ////////////////////////////
+		//All Owners//
 $result_user=$this->all_owner_deactive();
 foreach($result_user as $data)
 {
@@ -114,7 +93,7 @@ $visible_user_id[]=$data['user']['user_id'];
 $da_to[]=$data['user']['email'];
 $da_user_name[]=$data['user']['user_name'];
 }
-/////////////////////////////////////////// All Owners ////////////////////////////
+		//All Owners//
 }
 
 if($visible==5)

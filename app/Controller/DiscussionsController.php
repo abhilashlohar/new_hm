@@ -92,16 +92,22 @@ function new_topic(){
 		$conditions=array("user_id"=>$s_user_id,"active"=>"yes");
 		$users=$this->user->find('all',array('conditions'=>$conditions));
 		foreach($users as $data){
+			$user_id=$data["user"]["user_id"];
 			$sender_email=$data["user"]["email"];
-			$profile_pic=$data["user"]["profile_pic"];
+			$profile_pic=@$data["user"]["profile_pic"];
 			$user_name_post=$data["user"]["user_name"];
 			if(!empty($sender_email)){
 				$reply=$sender_email;
 			}else{
 				$reply="donotreply@housingmatters.in";
 			}
+			$result_user=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($user_id))); 
+			$wing_flat=$result_user["wing_flat"];
+			foreach($wing_flat as $data){
+				$wing_flat=$data;
+			}
 		}
-					
+		$en_discussion_post_id=$this->requestAction(array('controller' => 'hms', 'action' => 'encode'), array('pass' => array($discussion_post_id,'housingmatters'))); 			
 		foreach($receivers as $user_id=>$user_info){
 			$email=$user_info["email"];
 			$user_name=$user_info["user_name"];
@@ -199,7 +205,7 @@ function new_topic(){
 					
 	
 					$from_name="HousingMatters";
-				$subject.= 'Discussion: ['. $society_name . ']' .'  -   '.'New Discussion: '.$topic.'';
+				$subject= 'Discussion: ['. $society_name . ']' .'  -   '.'New Discussion: '.$topic.'';
 				$this->send_email($email,$from,$from_name,$subject,$message_web,$reply);
 			}
 		}

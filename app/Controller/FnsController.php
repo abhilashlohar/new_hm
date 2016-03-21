@@ -807,7 +807,7 @@ $(document).ready(function() {
 	
 function sending_option_results($send_to=null,$details=null){
 	$s_society_id=$this->Session->read('hm_society_id');
-	$hm_user_id=$this->Session->read('hm_user_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$arranged_array=array();
 	if($send_to=="all_users"){
 		$this->loadmodel('user');

@@ -25,6 +25,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 		<form method="post" id="form1" style="margin: 0px;">
 			<h5>Upload CSV file in given format to import Receipts.</h5>
 			<input name="file" class="default" id="image-file" type="file">
+			<label id="vali"></label>
 			<a href="open_excel" download="" target="_blank">Download sample format</a><br/><br/>
 			<div id="vali"></div>
 			<br>

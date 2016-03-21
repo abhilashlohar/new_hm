@@ -660,7 +660,7 @@ function sending_options(){
 		Role wise
 		</label>
 			<div style="padding-left:5%;display:none;" id="role_wise">
-				<div class="controls" style="background-color: rgb(252, 250, 250); padding: 2px; border: 1px solid rgba(204, 204, 204, 0.3);">
+				<div class="" style="background-color: rgb(252, 250, 250); padding: 2px; border: 1px solid rgba(204, 204, 204, 0.3);">
 					<table width="100%">
 					<tr>
 						<td>

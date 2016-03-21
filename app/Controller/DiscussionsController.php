@@ -89,14 +89,9 @@ function new_topic(){
 	
 	
 	
-	
 }
 
-function submit_topic(){
-	pr($this->request->form);
-	exit;
-	
-}
+
 
 
 
@@ -173,30 +168,6 @@ $this->discussion_comment->saveAll($multipleRowData);
 
 	
 }
-
-
- //////////////// Moderation content check start ///////////////////////////
-/*
-$this->loadmodel('society');
-$conditions=array('society_id'=>$s_society_id);
-$result1=$this->society->find('all',array('conditions'=>$conditions));
-foreach($result1 as $data)
-{
-  $content=$data['society']['content_moderation'];
-
-}
-
-
-foreach($c_mod as $c_moda)
-{
-if(in_array($c_moda,$content))
-{
-echo $word='You have enter wrong word  <br/> ';
-exit;
-}
-}
-*/
-//////////////////color///////////////////
 
 
 

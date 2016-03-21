@@ -34,7 +34,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 
 <!----- import functioality start --------->
 
-<a href="<?php echo $webroot_path; ?>Expensetrackers/expense_tracker_import" class="btn purple" role="button" rel="tab">Import</a>
+<a href="<?php echo $webroot_path; ?>Expensetrackers/expense_tracker_import" class="btn purple" role="button" rel="tab"><i class="fa fa-database"></i> Import csv</a>
 <div id="myModal3" class="modal hide fade in" style="display: none;">
 <div class="modal-backdrop fade in"></div>
 	<form id="form1" method="post">

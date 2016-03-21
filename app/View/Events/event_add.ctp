@@ -232,7 +232,7 @@ $(document).ready(function() {
 		m_data.append( 'location', $('textarea[name=location]').val());
 		
 	    var send_to=$('input:radio[name=send_to]:checked').val();
-		m_data.append( 'send_to',send_to);
+		m_data.append( 'visible', send_to);
 		
 		if(send_to=='all_users'){
 			m_data.append( 'sub_visible', 'all_users');
@@ -240,27 +240,30 @@ $(document).ready(function() {
 		if(send_to=='role_wise')
 		{
 			var rol_wise=[];
-			$('.requirecheck1:checked').each(function() {
+			$('.requirecheck1:checked').each(function(){
 			rol_wise.push($(this).val());
 			});
-			alert(rol_wise);
-		}
-		/*if(visible==3){
-			var allVals = [];
-			$('.v3:checked').each(function() {
-			allVals.push($(this).val());
-			});
-			if(allVals.length==0){
+			
+			if(rol_wise.length==0){
 				m_data.append( 'sub_visible', 0);
 			}else{
-				m_data.append( 'sub_visible', allVals);
+				m_data.append( 'sub_visible', rol_wise);
 			}
 		}
-		if(visible==1 || visible==4 || visible==5){
-			m_data.append( 'sub_visible', 0);
-		} */
+		if(send_to=='wing_wise')
+		{
+		var wing_wise=[];
+			$('.requirecheck2:checked').each(function(){
+			wing_wise.push($(this).val());
+			});	
+			if(wing_wise.length==0){
+				m_data.append( 'sub_visible', 0);
+			}else{
+				m_data.append( 'sub_visible', wing_wise);
+			}
+		}
 		
-		//m_data.append( 'ask_no_of_member', $('input:checkbox[name=ask_no_of_member]:checked').val());
+		m_data.append( 'ask_no_of_member', $('input:checkbox[name=ask_no_of_member]:checked').val());
 		$(".form_post").addClass("disabled");
 		$("#wait").show();
 			
@@ -270,9 +273,9 @@ $(document).ready(function() {
 			processData: false,
 			contentType: false,
 			type: 'POST',
-			//dataType:'json',
+			dataType:'json',
 			}).done(function(response) {
-			alert(response);
+			//alert(response);
 				if(response.report_type=='error'){
 					$(".remove_report").html('');
 						jQuery.each(response.report, function(i, val) {

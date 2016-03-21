@@ -23473,7 +23473,7 @@ $this->set('cursor2',$cursor2);
 
 }
 
-/////////////////////////// Start Flat Import ////////////////////////////////////////////// 
+//Start Flat Import//
 function save_import_flat(){
 	$this->layout=null ;
 	$s_society_id = (int)$this->Session->read('hm_society_id');
@@ -23493,16 +23493,11 @@ function save_import_flat(){
 		$report[]=array('tr'=>$c,'td'=>2, 'text' => 'Required');
 		}
 		
-		
-		
-		
-		
-		
 if(sizeof($report) == 0)
 {		
 $wing = (int)$child[0];
-$flat_name = $child[1];	   
-//////////////////////////////////////////
+$flat_name = $child[1];	
+$flat_name = str_pad($flat_name,10,"0",STR_PAD_LEFT);   
 $nnn = 555;
 $this->loadmodel('flat');
 $conditions=array("society_id"=>$s_society_id);
@@ -23534,13 +23529,11 @@ die($output);
 }
 $array1[] = array($wing,$flat_name);
 
-///////////////////////////////////////////////
 }
 }
 if(sizeof($report)>0){
 $output=json_encode(array('report_type'=>'error','report'=>$report));
 die($output);
-	
 }
 	
 if($child[2]=="yes")

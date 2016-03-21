@@ -42,5 +42,5 @@
 </div>
 <div class="modal-footer">
 	<button type="button" class="btn" id="import_close">Cancel</button>
-	<button type="submit" class="btn blue ">Import</button>
+	<button type="submit" class="btn blue import_btn">Import</button>
 </div>

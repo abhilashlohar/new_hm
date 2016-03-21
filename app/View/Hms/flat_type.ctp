@@ -2,7 +2,6 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
-
 </div>	
 
 <div style="background-color:#EFEFEF; border-top:1px solid #e6e6e6; border-bottom:1px solid #e6e6e6; padding:10px; box-shadow:5px; font-size:16px; color:#006;">
@@ -19,7 +18,7 @@ Society Setup
 </ul>
 <div class="tab-content" style="min-height:500px;">
 <div class="tab-pane active" id="succ">
-<a href="#"role="button" class="btn blue" id="import_btn">Import csv</a>
+<a href="#"role="button" class="btn purple" id="import_btn"><i class="fa fa-database"></i> Import csv</a>
 <div id="error_msg"></div>
 <div id="don"></div>
 
@@ -195,8 +194,8 @@ $(document).ready(function() {
 			<h4 id="myModalLabel1">Import csv</h4>
 		</div>
 		<div class="modal-body">
-			<input type="file" name="file" class="default">
-			
+			<input type="file" name="file" class="default" id="image-file">
+			<label id="vali"></label>
 			<strong><a href="<?php echo $this->webroot; ?>csv_file/demo/unit_import.csv" download>Click here for sample format</a></strong>
 			<br/>
 			<h4>Instruction set to import users</h4>
@@ -208,7 +207,7 @@ $(document).ready(function() {
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn" id="import_close">Cancel</button>
-			<button type="submit" class="btn blue import_btn">Import</button>
+			<button type="submit" class="btn blue import_btn" id="imppp">Import</button>
 		</div>
 		
 	</div>
@@ -220,6 +219,20 @@ $(document).ready(function() {
 
 <script>
 $(document).ready(function(){
+$("#imppp").live('click',function(){
+	var im_name=$("#image-file").val();
+	var insert = 1;
+	if(im_name==""){
+	$("#vali").html("<span style='color:red;'>Please Select a Csv File</span>");	
+	return false;
+	}
+
+	var ext = $('#image-file').val().split('.').pop().toLowerCase();
+	if($.inArray(ext, ['csv']) == -1) {
+	$("#vali").html("<span style='color:red;'>Please Select a Csv File</span>");
+	return false;
+	}
+});
 
 $(".delete").live('click',function(){
 var id = $(this).attr("del");
@@ -242,9 +255,10 @@ $("#myModal3").show();
 	
 	$('form#form1').submit( function(ev){
 		ev.preventDefault();
+		
+		
 		$(".import_btn").text("Importing...");
 		var sub=$("#stype").val();
-		
 		if(sub==1){
 		
 			var m_data = new FormData();
@@ -277,14 +291,13 @@ $("#myModal3").show();
 			type: 'POST',
 			dataType:'json',
 		}).done(function(response) {
-			
-			if(response.report_type=='error'){
+				if(response.report_type=='error'){
 				jQuery.each(response.report, function(i, val) {
 					$("#flats_main tr:nth-child("+val.tr+") td:nth-child("+val.td+")").append('<br><span class="report" style="color:red;">'+val.text+'</span>');
 					$("#flats_main tr:nth-child("+val.tr+") td:nth-child("+val.td+")").css("background-color", "#f2dede");
 				});
 			}
-			
+					
 		});
 			});
 		}
@@ -308,7 +321,7 @@ $("#myModal3").show();
 			url: "save_import_flat?q="+myJsonString,
 			type: 'POST',
 			dataType:'json',
-		}).done(function(response) {
+		}).done(function(response){
 			if(response.report_type=='error'){
 				jQuery.each(response.report, function(i, val) {
 					$("#flats_main tr:nth-child("+val.tr+") td:nth-child("+val.td+")").append('<span class="report" style="color:red;">'+val.text+'</span>');
@@ -317,10 +330,12 @@ $("#myModal3").show();
 			}
 			if(response.report_type=='already')
 			{
+				
 			$("#ovrlp").html('<h5 style="color:red;"><b>'+response.text+'</b></h5>');	
 			}
 			if(response.report_type=='repeat')
 			{
+				
 			$("#ovrlp").html('<h5 style="color:red;"><b>'+response.text+'</b></h5>');	
 			}
 			if(response.report_type=='done')

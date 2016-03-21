@@ -273,20 +273,20 @@ function member_info_via_ledger_sub_account_id($ledger_sub_account_id){
 	$conditions=array("user_flat_id" => $user_flat_id);
 	$result2=$this->user_flat->find('all',array('conditions'=>$conditions));
 	@$user_id=@$result2[0]["user_flat"]["user_id"];
-	$wing=$result2[0]["user_flat"]["wing"];
-	$flat=$result2[0]["user_flat"]["flat"];
+	@$wing=@$result2[0]["user_flat"]["wing"];
+	@$flat=@$result2[0]["user_flat"]["flat"];
 	
 	$this->loadmodel('user');
 	$conditions=array("user_id" => $user_id);
 	$result3=$this->user->find('all',array('conditions'=>$conditions));
-	$user_name=$result3[0]["user"]["user_name"];
-	$mobile=$result3[0]["user"]["mobile"];
-	$email=$result3[0]["user"]["email"];
+	@$user_name=@$result3[0]["user"]["user_name"];
+	@$mobile=@$result3[0]["user"]["mobile"];
+	@$email=@$result3[0]["user"]["email"];
 	
 	$this->loadmodel('wing');
 	$conditions=array("wing_id" => $wing);
 	$result4=$this->wing->find('all',array('conditions'=>$conditions));
-	$wing_name=$result4[0]["wing"]["wing_name"];
+	@$wing_name=@$result4[0]["wing"]["wing_name"];
 	
 	$this->loadmodel('flat');
 	$conditions=array("flat_id" => $flat);
@@ -337,7 +337,7 @@ function income_head_name_via_id($income_head_id){
 	$this->loadmodel('ledger_account');
 	$conditions=array("auto_id" => $income_head_id);
 	$result=$this->ledger_account->find('all',array('conditions'=>$conditions));
-	return $result[0]["ledger_account"]["ledger_name"];
+	return @$result[0]["ledger_account"]["ledger_name"];
 }
 
 function fetch_ledger_sub_account_info_via_ledger_sub_account_id($ledger_sub_account_id){

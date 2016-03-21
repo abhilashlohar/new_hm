@@ -7761,9 +7761,8 @@ $this->loadmodel('society');
 $this->society->updateAll(array('terms_conditions'=>$terms_arr),array("society_id" => $s_society_id));
 }
 }
-//////////////////////// End Edit Terms ////////////////////////////////////////////////////////////////
-
-///////////////////////////////// Start Approve Bill //////////////////////////////////////
+//End Edit Terms//
+//Start Approve Bill//
 function aprrove_bill(){
 	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
@@ -7798,8 +7797,8 @@ function aprrove_bill(){
 	$approved_bills=$this->regular_bill_temp->find('count',array('conditions'=>$conditions));
 	$this->set(compact("approved_bills"));
 }
-//////////////////////////////////// End Approve Bill /////////////////////////////////////////////////////////////////
-////////////////////////////////////////// Start NEFT Add //////////////////////////////////////////////////////////////
+//End Approve Bill//
+//Start NEFT Add//
 function neft_add()
 {
 if($this->RequestHandler->isAjax()){

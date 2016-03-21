@@ -201,7 +201,7 @@ $(document).ready(function() {
 			m_data.append( 'sub_visible', 0);
 		}
 		//$(".form-actions").hide();
-		alert(allVals);
+		
 		$("#wait").show();
 			
 			$.ajax({

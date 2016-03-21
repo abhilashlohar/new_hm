@@ -1417,12 +1417,11 @@ function submit_notice(){
 	$this->layout=null;
 	$post_data=$this->request->data;
 	
-	pr($post_data);
-	exit;
+	
 	$this->ath();
-	$s_society_id=$this->Session->read('society_id');
+	$s_society_id=$this->Session->read('hm_society_id');
 	$s_role_id=$this->Session->read('role_id'); 
-	$s_user_id=$this->Session->read('user_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$date=date('d-m-Y');
 	$time = date(' h:i a', time());
 	$result_society=$this->society_name($s_society_id);
@@ -1461,13 +1460,13 @@ function submit_notice(){
 		$output = json_encode(array('type'=>'error', 'text' => 'Please create notice.'));
 		die($output);
 	}
-	if($post_data['visible']==0){
+	if(empty($post_data['visible'])){
 		$output = json_encode(array('type'=>'error', 'text' => 'Please select visible.'));
 		die($output);
-	}elseif($post_data['visible']==2 and $post_data['sub_visible']==0){
+	}elseif($post_data['visible']=="role_wise" and empty($post_data['sub_visible'])){
 		$output = json_encode(array('type'=>'error', 'text' => 'Please select role.'));
 		die($output);
-	}elseif($post_data['visible']==3 and $post_data['sub_visible']==0){
+	}elseif($post_data['visible']=="wing_wise" and empty($post_data['sub_visible'])){
 		$output = json_encode(array('type'=>'error', 'text' => 'Please select wing.'));
 		die($output);
 	}
@@ -1479,38 +1478,39 @@ function submit_notice(){
 	
 	$notice_expire_date = new MongoDate(strtotime(date("Y-m-d", strtotime($post_data['notice_expire_date']))));
 	$code=$post_data['code'];
-	$visible=(int)$post_data['visible'];
+	echo $visible=$post_data['visible'];
 	$sub_visible=$post_data['sub_visible'];
-	$sub_visible=explode(",",$sub_visible);
+	//$sub_visible=explode(",",$sub_visible);
 	$allowed=(int)$post_data['allowed'];
 
-
 if($post_data['post_type']==1){
-	if($notice==1 && $s_role_id!=3){
+	
 		
-		if(isset($_FILES['file'])){
-		$target = "notice_file/";
-		$file_name=@$_FILES['file']['name'];
-		$file_tmp_name =$_FILES['file']['tmp_name'];
-		$target=@$target.basename($file_name);
-		move_uploaded_file($file_tmp_name,@$target);
+		pr($sub_visible); 
+		$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
+		
+		
+		
+		if($visible=="all_users"){
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,null)));
+			$sub_visible=null;
+		}
+		if($visible=="role_wise"){
+			
+			$details=implode(",",$sub_visible);
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$details)));
+			$sub_visible=$sub_visible;
+		}elseif($visible=="wing_wise"){
+			
+			$details=implode(",",$sub_visible);
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$details)));
+			$sub_visible=$sub_visible;
 		}
 		
-		$notice_id=$this->autoincrement('notice','notice_id');
-		$this->loadmodel('notice');
-		$this->notice->save(array('notice_id' => $notice_id, 'user_id' => $s_user_id, 'society_id' => $s_society_id, 'n_category_id' => $category_id ,'n_subject' => $notice_subject , 'n_expire_date' => $notice_expire_date, 'n_attachment' => @$file_name , 'n_message' => $code,'n_date' => $date, 'n_time' => $time, 'n_delete_id' => 0,'n_draft_id' => 4,'visible' => $visible,'sub_visible' => $sub_visible,'allowed' => $allowed));
 		
-		$this->send_notification('<span class="label label-info" ><i class="icon-bullhorn"></i></span>','Approval request for notice published - <b>'.$notice_subject.'</b> by',2,$notice_id,$this->webroot.'Hms/notice_approval',$s_user_id,$s_duser_id);
-						
-		$output = json_encode(array('type'=>'approve', 'text' =>'Your notice has created and sent for approval to your society Admin/Committee.'));
-		die($output);
-	}else{
+		exit;
 		
-		 
-		@$ip=$this->hms_email_ip();
-		
-		
-		$recieve_info=$this->visible_subvisible($visible,$sub_visible);
+		//$recieve_info=$this->visible_subvisible($visible,$sub_visible);
 		
 		 
 		if(isset($_FILES['file'])){
@@ -1783,7 +1783,7 @@ if($post_data['post_type']==1){
 
 		$output = json_encode(array('type'=>'created', 'text' =>'Your notice has been created and sent via email to all users selected by you.'));
 		die($output);
-	}
+	
 }
 if($post_data['post_type']==2){
 	$file_name="";

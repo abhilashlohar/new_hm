@@ -1497,13 +1497,13 @@ if($post_data['post_type']==1){
 		}
 		if($visible=="role_wise"){
 			
-			$details=implode(",",$sub_visible);
-			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$details)));
+			//$details=implode(",",$sub_visible);
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
 			$sub_visible=$sub_visible;
 		}elseif($visible=="wing_wise"){
 			
-			$details=implode(",",$sub_visible);
-			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$details)));
+			//$details=implode(",",$sub_visible);
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
 			$sub_visible=$sub_visible;
 		}
 		

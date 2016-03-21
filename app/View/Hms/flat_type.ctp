@@ -2,7 +2,6 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
-
 </div>	
 
 <div style="background-color:#EFEFEF; border-top:1px solid #e6e6e6; border-bottom:1px solid #e6e6e6; padding:10px; box-shadow:5px; font-size:16px; color:#006;">
@@ -257,7 +256,7 @@ $("#myModal3").show();
 		
 		$(".import_btn").text("Importing...");
 		var sub=$("#stype").val();
-		
+		alert();
 		if(sub==1){
 		
 			var m_data = new FormData();
@@ -290,14 +289,13 @@ $("#myModal3").show();
 			type: 'POST',
 			dataType:'json',
 		}).done(function(response) {
-			
-			if(response.report_type=='error'){
+				if(response.report_type=='error'){
 				jQuery.each(response.report, function(i, val) {
 					$("#flats_main tr:nth-child("+val.tr+") td:nth-child("+val.td+")").append('<br><span class="report" style="color:red;">'+val.text+'</span>');
 					$("#flats_main tr:nth-child("+val.tr+") td:nth-child("+val.td+")").css("background-color", "#f2dede");
 				});
 			}
-			
+					
 		});
 			});
 		}
@@ -320,8 +318,9 @@ $("#myModal3").show();
 		$.ajax({
 			url: "save_import_flat?q="+myJsonString,
 			type: 'POST',
-			dataType:'json',
-		}).done(function(response) {
+			//dataType:'json',
+		}).done(function(response){
+			alert(response);
 			if(response.report_type=='error'){
 				jQuery.each(response.report, function(i, val) {
 					$("#flats_main tr:nth-child("+val.tr+") td:nth-child("+val.td+")").append('<span class="report" style="color:red;">'+val.text+'</span>');
@@ -330,10 +329,12 @@ $("#myModal3").show();
 			}
 			if(response.report_type=='already')
 			{
+				alert();
 			$("#ovrlp").html('<h5 style="color:red;"><b>'+response.text+'</b></h5>');	
 			}
 			if(response.report_type=='repeat')
 			{
+				alert();
 			$("#ovrlp").html('<h5 style="color:red;"><b>'+response.text+'</b></h5>');	
 			}
 			if(response.report_type=='done')

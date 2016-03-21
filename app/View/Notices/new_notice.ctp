@@ -213,7 +213,7 @@ $(document).ready(function() {
 			//dataType:'json',
 			}).done(function(response) {
 				alert(response);
-			//$("#output").html(response);
+			$("#output").html(response);
 			if(response.type=='approve'){
 				$(".portlet").remove();
 				$(".alert-success").show().append("<p>"+response.text+"</p><p><a class='btn green' href='<?php echo $webroot_path; ?>Notices/new_notice' rel='tab' >ok</a></p>");

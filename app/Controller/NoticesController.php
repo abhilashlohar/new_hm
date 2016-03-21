@@ -1478,9 +1478,9 @@ function submit_notice(){
 	
 	$notice_expire_date = new MongoDate(strtotime(date("Y-m-d", strtotime($post_data['notice_expire_date']))));
 	$code=$post_data['code'];
-	echo $visible=$post_data['visible'];
+	 $visible=$post_data['visible'];
 	$sub_visible=$post_data['sub_visible'];
-	//$sub_visible=explode(",",$sub_visible);
+	
 	$allowed=(int)$post_data['allowed'];
 
 if($post_data['post_type']==1){
@@ -1496,42 +1496,15 @@ if($post_data['post_type']==1){
 			$sub_visible=null;
 		}
 		if($visible=="role_wise"){
-			
-			//$details=implode(",",$sub_visible);
+					
 			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
-			$sub_visible=$sub_visible;
+			
 		}elseif($visible=="wing_wise"){
-			
-			//$details=implode(",",$sub_visible);
+		
 			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
-			$sub_visible=$sub_visible;
+			
 		}
-		
-		
-		exit;
-		
-		//$recieve_info=$this->visible_subvisible($visible,$sub_visible);
-		
-		 
-		if(isset($_FILES['file'])){
-		$target = "notice_file/";
-		$file_name=@$_FILES['file']['name'];
-		$file_tmp_name =$_FILES['file']['tmp_name'];
-		$target=@$target.basename($file_name);
-		move_uploaded_file($file_tmp_name,@$target);
-		}
-		if(!empty($file_name))
-				{
-				//@$file_att='<br/><a href="'.$ip.'/'.$this->webroot.'notice_file/'.$file_name.'" download>Download attachment</a><br/><br/>';
-				}
-
-		
-		
-		
 		$notice_id=$this->autoincrement('notice','notice_id');
-		$this->loadmodel('notice');
-		$this->notice->save(array('notice_id' => $notice_id, 'user_id' => $s_user_id, 'society_id' => $s_society_id, 'n_category_id' => $category_id ,'n_subject' => $notice_subject , 'n_expire_date' => $notice_expire_date, 'n_attachment' => @$file_name, 'n_message' => $code,'n_date' => $date, 'n_time' => $time, 'n_delete_id' => 0,'n_draft_id' => 0,'visible' => $visible,'sub_visible' => $sub_visible,'visible_user_id' => $recieve_info[2],'allowed' => $allowed));
-		
 		
 		
 		
@@ -1552,122 +1525,19 @@ if($post_data['post_type']==1){
 		}
 
 		
-		foreach($recieve_info[0] as $user_id=>$email)
-		{
-		$to = @$email;
-		$d_user_id = @$user_id;	
-		$da_user_id[]=$d_user_id;		
-		$result_user=$this->profile_picture($user_id);
-		$user_name=$result_user[0]['user']['user_name'];
+foreach($receivers as $user_id=>$data){
+	
+	$to=$data['email'];
+	$user_name=$data['user_name'];
+	$recieve_info[]=(int)$user_id;
+	$d_user_id = @$user_id;	
+	$da_user_id[]=$d_user_id;		
+		
 
 		
 		
-		/*$message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
-          <tbody>
-			<tr>
-                <td>
-                    <table width="100%" cellpadding="0" cellspacing="0">
-                        <tbody>
-						
-								<tr>
-									<td width="40%" style="padding: 10px 0px 0px 10px;"><img src="'.$ip.$this->webroot.'as/hm/hm-logo.png" style="max-height: 60px; " height="50px" width="150" /></td>
-									<td width="60%" align="right" valign="middle"  style="padding: 7px 10px 0px 0px;">
-									<a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img src="'.$ip.$this->webroot.'as/hm/fb.png"></a>
-									<a href="#" target="_blank"><img src="'.$ip.$this->webroot.'as/hm/tw.png"></a>
-									<a href=""><img src="'.$ip.$this->webroot.'as/hm/ln.png" class="test" style="margin-left:5px;"></a>
-									</td>
-								</tr>
-								
-									
-								
-						</tbody>
-					</table>
-					
-                    <table width="100%" cellpadding="0" cellspacing="0">
-                        <tbody>
-						
-								<tr>
-										<td style="padding:5px;" width="100%" align="left">
-										<span style="color:rgb(100,100,99)" align="justify"> Dear  '.$user_name.' </span> <br>
-										</td>
-								
-								
-								</tr>
-								
-								<tr>
-									<td style="padding:5px;" width="100%" align="left">
-											<span style="color:rgb(100,100,99)"> A new notice has been posted on your society Notice Board. </span>
-									</td>
-																
-								</tr>
-								
-								
-								<tr>
-									<td>
-									
-										<table  cellpadding="5" cellspacing="0" width="100%;"border="1" style="border:1px solid #e5e5e5;">
-						
-										<tr>
-										<td align="center" style="background-color:#00A0E3;color:white;" >Date</td>
-										<td align="left" style="background-color:#f8f8f8;font-size:12px;" >'.$date.'</td>
-										</tr>
-										
-										<tr>
-										<td align="center" style="background-color:#00A0E3;color:white;" >Subject</td>
-										<td align="left" style="background-color:#f8f8f8;font-size:12px;" >'.$notice_subject.'</td>
-										</tr>
-										
-										
-										<tr>
-										<td align="center" style="background-color:#00A0E3;color:white;" >Category</td>
-										<td align="left" style="background-color:#f8f8f8;font-size:12px;" >'.$category_name.'</td>
-										</tr>
-										
-										<tr>
-										<td align="center" style="background-color:#00A0E3;color:white;" >Sent to</td>
-										<td align="left" style="background-color:#f8f8f8;font-size:12px;" >'.$recieve_info[3].'</td>
-										</tr>
-									
-										</table> 
-									
-									</td>
-								
-								
-								
-								</tr>
-								
-								<tr>
-										<td style="padding:5px;" width="100%" align="left">
-										<p style="font-size:16px;"> <strong>Notice Description:</strong></p>
-										<p align="justify">'.$code.'</p>
-										</td>
-								</tr>
-					
-								<tr>
-										<td style="padding:5px;" width="100%" align="center">
-										<span style="color:rgb(100,100,99)">To view / respond <a href="'.$ip.$this->webroot.'" style="width:100px; height:30px;"><span style="background-color:#00A0E3;color:white;"><button style="width:100px; height:30px;  background-color:#00A0E3;color:white" id="bg_color_m"> Click Here </button> </span></a> </span>
-										</td>
-								</tr>
-					
 
-								<tr>
-								<td style="font-size:12px;" width="100%" align="left">
-								<P align="justify">For any software related queries, please contact <span style="color:#00A0E3;"> support@housingmatters.in </span></p>
-								<p align="justify">	www.housingmatters.co.in </p>
-								</td>
-								</tr>
-
-					
-					
-					</table>
-					
-				</td>
-			</tr>
-
-        </tbody>
-</table>';*/
-
-		 $message_web='<div style="margin:0;padding:0" dir="ltr" bgcolor="#ffffff"><div class="adM">
+$message_web='<div style="margin:0;padding:0" dir="ltr" bgcolor="#ffffff"><div class="adM">
 	</div><table style="border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%;">
 		<tbody>
 			<tr>
@@ -1709,7 +1579,7 @@ if($post_data['post_type']==1){
 										</td>
 										<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
 										<td>
-										<span style="color:#adabab;font-size:12px">Sent to : '.$recieve_info[3].'  </span>
+										<span style="color:#adabab;font-size:12px">Sent to : '.$visible.'  </span>
 										</td>
 										<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
 										<td>
@@ -1775,8 +1645,32 @@ if($post_data['post_type']==1){
 		$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
 		$subject="";
 		}	
+ }
+		
+		
+		
+		//$recieve_info=$this->visible_subvisible($visible,$sub_visible);
+		
+		 $sub_visible=explode(",",$sub_visible);
+		if(isset($_FILES['file'])){
+			$target = "notice_file/";
+			$file_name=@$_FILES['file']['name'];
+			$file_tmp_name =$_FILES['file']['tmp_name'];
+			$target=@$target.basename($file_name);
+			move_uploaded_file($file_tmp_name,@$target);
 		}
+	if(!empty($file_name))
+				{
+				//@$file_att='<br/><a href="'.$ip.'/'.$this->webroot.'notice_file/'.$file_name.'" download>Download attachment</a><br/><br/>';
+				}
 
+		
+		
+		
+		
+		$this->loadmodel('notice');
+		$this->notice->save(array('notice_id' => $notice_id, 'user_id' => $s_user_id, 'society_id' => $s_society_id, 'n_category_id' => $category_id ,'n_subject' => $notice_subject , 'n_expire_date' => $notice_expire_date, 'n_attachment' => @$file_name, 'n_message' => $code,'n_date' => $date, 'n_time' => $time, 'n_delete_id' => 0,'n_draft_id' => 0,'visible' => $visible,'sub_visible' => $sub_visible,'visible_user_id' => $recieve_info,'allowed' => $allowed));
+		
 
 		//$da_user_id[]=$d_user_id;
 		$this->send_notification('<span class="label label-info" ><i class="icon-bullhorn"></i></span>','New Notice published - <b>'.$notice_subject.'</b> by',2,$notice_id,$this->webroot.'Notices/notice_publish_view/'.$notice_id,$s_user_id,$da_user_id);

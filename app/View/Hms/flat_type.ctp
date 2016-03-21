@@ -19,7 +19,7 @@ Society Setup
 </ul>
 <div class="tab-content" style="min-height:500px;">
 <div class="tab-pane active" id="succ">
-<a href="#"role="button" class="btn blue" id="import_btn">Import csv</a>
+<a href="#"role="button" class="btn purple" id="import_btn"><i class="fa fa-database"></i> Import csv</a>
 <div id="error_msg"></div>
 <div id="don"></div>
 
@@ -195,8 +195,8 @@ $(document).ready(function() {
 			<h4 id="myModalLabel1">Import csv</h4>
 		</div>
 		<div class="modal-body">
-			<input type="file" name="file" class="default">
-			
+			<input type="file" name="file" class="default" id="image-file">
+			<label id="vali"></label>
 			<strong><a href="<?php echo $this->webroot; ?>csv_file/demo/unit_import.csv" download>Click here for sample format</a></strong>
 			<br/>
 			<h4>Instruction set to import users</h4>
@@ -242,6 +242,19 @@ $("#myModal3").show();
 	
 	$('form#form1').submit( function(ev){
 		ev.preventDefault();
+		var im_name=$("#image-file").val();
+		var insert = 1;
+		if(im_name==""){
+		$("#vali").html("<span style='color:red;'>Please Select a Csv File</span>");	
+		return false;
+		}
+		
+		var ext = $('#image-file').val().split('.').pop().toLowerCase();
+		if($.inArray(ext, ['csv']) == -1) {
+		$("#vali").html("<span style='color:red;'>Please Select a Csv File</span>");
+		return false;
+		}
+		
 		$(".import_btn").text("Importing...");
 		var sub=$("#stype").val();
 		

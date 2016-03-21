@@ -28,7 +28,7 @@ Society Setup
 <div class="tab-pane active" id="tab_1_1">
 Every change you make is automatically saved.<br>
 
-<a href="<?php echo @$webroot_path; ?>Hms/unit_configuration_import" class="btn purple" style="float:right; margin-right:8px;">Bulk Import</a>
+<a href="<?php echo @$webroot_path; ?>Hms/unit_configuration_import" class="btn purple" style="float:right; margin-right:8px;"><i class="fa fa-database"></i> Import csv</a>
 <a href="<?php echo @$webroot_path; ?>Hms/unit_configuration_excel" class="btn blue" style="float:right; margin-right:8px;">Excel</a>
 <p id="msg" style="height:20px;"></p>
 

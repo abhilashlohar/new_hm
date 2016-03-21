@@ -103,7 +103,7 @@ function event_submit(){
 	$visible=$post_data['visible'];
 	$sub_visible=$post_data['sub_visible'];
 	
-	if($visible==0){
+	if($visible=='0'){
 		$report[]=array('label'=>'visible', 'text' => 'Please select visible');
 	}elseif($visible=='role_wise' and $sub_visible==0){
 		$report[]=array('label'=>'visible_role', 'text' => 'Please select role.');
@@ -114,60 +114,55 @@ function event_submit(){
 	}
 	
 	
-	/*if(sizeof($report)>0){
+	if(sizeof($report)>0){
 		$output=json_encode(array('report_type'=>'error','report'=>$report));
 		die($output);
-	}*/
+	}
 	
 	@$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
-	
-	//$recieve_info=$this->visible_subvisible($visible,$sub_visible);
-	
+	$user_id_array=array();
 	$recieve_info=$this->requestAction(array('controller'=>'Fns','action'=>'sending_option_results'), array('pass' => array($visible,$sub_visible)));
-	
-	
-		
-		
-		
-		
+	foreach($recieve_info as $user_id=>$data){
+	$user_id_array[]=$user_id;	
+	}
 		
 	$event_id=$this->autoincrement('event','event_id');
 	$this->loadmodel('event');
-	$this->event->saveAll(array('event_id' => $event_id,'e_name' => $e_name, 'user_id' => $s_user_id, 'society_id' => $s_society_id, 'date_from' => $date_from , 'date_to' => $date_to, 'day_type' => $day_type, 'location' => $location,'description' => $description,'visible' => $visible,'sub_visible' => $sub_visible,'visible_user_id' => $recieve_info[2],'date' => $date,'time'=>$e_time,'ask_no_of_member'=>$ask_no_of_member,'no_of_member'=>0));
+	$this->event->saveAll(array('event_id' => $event_id,'e_name' => $e_name, 'user_id' => $s_user_id, 'society_id' => $s_society_id, 'date_from' => $date_from , 'date_to' => $date_to, 'day_type' => $day_type, 'location' => $location,'description' => $description,'visible' => $visible,'sub_visible' => $sub_visible,'visible_user_id' =>$user_id_array,'date' => $date,'time'=>$e_time,'ask_no_of_member'=>$ask_no_of_member,'no_of_member'=>0));
 
-
+		$result_user_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'), array('pass' => array($s_user_id)));
+		foreach($result_user_info as $collection2){
+		$user_name_created=$collection2["user"]["user_name"];
+		@$profile_pic=@$collection2["user"]["profile_pic"];
+		}
+		$result_user_flat_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_flat_info_via_user_id'), array('pass' => array($s_user_id)));
+		foreach($result_user_flat_info as $data){
+		@$wing=@$data["user_flat"]["wing"];
+		@$flat=@$data["user_flat"]["flat"];
+		}
+		
+		
+		
 	
-	$result_user_info=$this->profile_picture($s_user_id);
-	foreach($result_user_info as $collection2)
-	{
-	$user_name_created=$collection2["user"]["user_name"];
-	$profile_pic=$collection2["user"]["profile_pic"];
-	$wing=$collection2["user"]["wing"];
-	$flat=$collection2["user"]["flat"];
-	}
+	@$wing_flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'), array('pass' => array(@$wing,@$flat)));
 
-	$flat_info=$this->wing_flat($wing,$flat);
-
-
+$from="Support@housingmatters.in";
+$reply="Support@housingmatters.in";
+$from_name="HousingMatters";
 	
-	$from="Support@housingmatters.in";
-	$reply="Support@housingmatters.in";
-	$from_name="HousingMatters";
 	$society_result=$this->society_name($s_society_id);
-	foreach($society_result as $data)
-	{
-	$society_name=$data['society']['society_name'];
+	foreach($society_result as $data){
+	@$society_name=@$data['society']['society_name'];
 	}
 		
 		
-	foreach($recieve_info[0] as $user_id=>$email)
-	{
-	$to = @$email;
-	$d_user_id = @$user_id;	
-	$da_user_id[]=$d_user_id;		
-	$result_user=$this->profile_picture($user_id);
-	$user_name=$result_user[0]['user']['user_name'];
-
+	foreach($recieve_info as $user_id=>$data){
+	$to = @$data['email'];
+	@$d_user_id = @$user_id;	
+	$da_user_id[]=@$d_user_id;		
+	@$user_name=@$data['user_name'];
+	
+	
 	
 		
    $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -239,7 +234,7 @@ function event_submit(){
 									<td align="right">
 									
 										<span style="font-weight: 100;">Created by: </span><span>
-										'.$user_name_created.'  '.$flat_info.'</span>
+										'.$user_name_created.'  '.$wing_flat.'</span>
 									
 										</td>
 									</tr>
@@ -316,7 +311,7 @@ function event_submit(){
 </table>';
 		
 	@$subject.= '['. $society_name . ']' .'  - New event:  '.' '.$e_name.'';
-	$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+	$this->send_email(@$to,$from,$from_name,@$subject,$message_web,$reply);
 	$subject="";
 		
 	}

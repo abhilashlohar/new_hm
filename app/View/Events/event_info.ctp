@@ -128,19 +128,20 @@ $description=$data["event"]["description"];
 			<!-------content----------->
 			<?php foreach($rsvp as $data1)
 			{
-				$result_user_info=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($data1)));
-				foreach($result_user_info as $collection2)
-				{
-				$user_name=$collection2["user"]["user_name"];
-				$profile_pic=$collection2["user"]["profile_pic"];
-				$wing=$collection2["user"]["wing"];
-				$flat=$collection2["user"]["flat"];
+	$result_user_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'), array('pass'=>array((int)$data1)));
+	foreach($result_user_info as $collection2){
+	$user_name=$collection2["user"]["user_name"];
+	@$profile_pic=@$collection2["user"]["profile_pic"];
+	}
+	$result_user_flat_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_flat_info_via_user_id'), array('pass' => array((int)$data1)));
+	foreach($result_user_flat_info as $data){
+	@$wing=@$data["user_flat"]["wing"];
+	@$flat=@$data["user_flat"]["flat"];
+	}
 
-				}
-
-				$flat_info=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
+@$wing_flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'), array('pass' => array(@$wing,@$flat)));
 				?>
-				<span><?php echo $user_name.' '.$flat_info; ?><br/></span>
+				<span><?php echo $user_name.' '.@$wing_flat; ?><br/></span>
 				<?php
 			}
 			?>
@@ -153,19 +154,20 @@ $description=$data["event"]["description"];
 			<!-------content----------->
 			<?php foreach($not_in_rsvp as $data2)
 			{
-				$result_user_info=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($data2)));
-				foreach($result_user_info as $collection2)
-				{
-				$user_name=$collection2["user"]["user_name"];
-				$profile_pic=$collection2["user"]["profile_pic"];
-				$wing=$collection2["user"]["wing"];
-				$flat=$collection2["user"]["flat"];
+	$result_user_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'), array('pass'=>array((int)$data2)));
+	foreach($result_user_info as $collection2){
+	$user_name=$collection2["user"]["user_name"];
+	@$profile_pic=@$collection2["user"]["profile_pic"];
+	}
+	$result_user_flat_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_flat_info_via_user_id'), array('pass' => array((int)$data2)));
+	foreach($result_user_flat_info as $data){
+	@$wing=@$data["user_flat"]["wing"];
+	@$flat=@$data["user_flat"]["flat"];
+	}
 
-				}
-
-				$flat_info=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
+@$wing_flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'), array('pass' => array(@$wing,@$flat)));
 				?>
-				<span><?php echo $user_name.' '.$flat_info; ?><br/></span>
+				<span><?php echo $user_name.' '.@$wing_flat; ?><br/></span>
 				<?php
 			}
 			?>

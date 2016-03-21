@@ -3299,12 +3299,11 @@ return $result_bill=$this->regular_bill->find('all',array('conditions'=>$conditi
 }
 
 
-function fetch_service_provider_info_via_vendor_id($vendor_id)
-{
-$s_society_id=$this->Session->read('society_id');
-$this->loadmodel('service_provider');
-$conditions=array("sp_id" => $vendor_id,"society_id" => $s_society_id);
-return $this->service_provider->find('all',array('conditions'=>$conditions));
+function fetch_service_provider_info_via_vendor_id($vendor_id){
+	$s_society_id=$this->Session->read('hm_society_id');
+	$this->loadmodel('service_provider');
+	$conditions=array("sp_id" => $vendor_id,"society_id" => $s_society_id);
+	return $this->service_provider->find('all',array('conditions'=>$conditions));
 }
 
 ////////////////////// end help desk function /////////////////////////////////////////
@@ -5947,6 +5946,12 @@ function submit_login(){
 							    die();
 						}
 					}
+				}
+				
+				if($user_type=="third_party" or $user_type=="member" or $user_type=="family_member"){
+					
+					 $role_id=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id'), array('pass' => array($user_id)));
+					$this->Session->write('role_id', $role_id);
 				}
 				
 				

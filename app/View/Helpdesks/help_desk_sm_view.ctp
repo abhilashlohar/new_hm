@@ -95,13 +95,14 @@ Ticket has been closed on <?php echo @$help_desk_close_date ;?>
 		<?php
 		foreach ($result_vendor as $collection)
 		{
-		$vendor_id = (int)$collection['vendor']['vendor_id'];
+		 $vendor_id = (int)$collection['vendor']['vendor_id'];
 
 		$result_sp=$this->requestAction(array('controller' => 'hms', 'action' => 'fetch_service_provider_info_via_vendor_id'), array('pass' => array($vendor_id)));
+		
 		foreach ($result_sp as $collection2)
 		{
 		  $sp_id=(int)$collection2['service_provider']['sp_id'];
-		 $sp_name=$collection2['service_provider']['sp_name'];
+		  $sp_name=$collection2['service_provider']['sp_name'];
 		  $sp_email=$collection2['service_provider']['sp_email'];
 		 $sp_mobile=$collection2['service_provider']['sp_mobile'];
 		  $sp_society_id=(int)$collection2['service_provider']['society_id'];

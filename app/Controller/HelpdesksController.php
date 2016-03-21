@@ -1235,56 +1235,22 @@ $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' =
 	$wing_flat_result=$result_member_info["wing_flat"]; 
 	$email=$result_member_info["email"]; 
 }
-if (isset($this->request->data['close'])) 
-{
+if (isset($this->request->data['close'])) {
 	
-	$ip=$this->hms_email_ip();
+	$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 	$close_date=date("d-m-Y");
 	$massage_close=htmlspecialchars($_POST['close_msg']);
 	$to= $email;
 
-if($ticket_priority==1)
-{
-$ticket_priority="Urgent";
-}
-else
-{
-$ticket_priority="Normal";
-}
-/* $message_web="<div>
-<img src='$ip".$this->webroot."/as/hm/hm-logo.png'/><span  style='float:right; margin:2.2%;'>
-<span class='test' style='margin-left:5px;'><a href='https://www.facebook.com/HousingMatters.co.in' target='_blank' ><img src='$ip".$this->webroot."/as/hm/fb.png'/></a></span>
-<a href='#' target='_blank'><img src='$ip".$this->webroot."/as/hm/tw.png'/></a><a href'#'><img src='$ip".$this->webroot."/as/hm/ln.png'/ class='test' style='margin-left:5px;'></a></span>
-</br><p>Dear $user_name,</p><br/>
-<p>Your helpdesk ticket has been resolved & closed.</p>
-<table  cellpadding='10' width='100%;' border='1' bordercolor='#e1e1e1'  >
-<tr class='tr_heading' style='background-color:#00A0E3;color:white;'>
-<td>HelpDesk Ticket</td>
-<td>Priority </td>
-<td>Ticket Date</td>
-<td>Closure Date</td>
-</tr>
-<tr class='tr_content' style=background-color:#E9E9E9;'>
-<td>$ticket_id</td>
-<td>$ticket_priority</td>
-<td>$help_generate_date</td>
-<td>$close_date</td>
-</tr>
-</table>
-<div>
-<p style='font-size:16px;'> <strong>Ticket Description:</strong></p>
-<p style='font-size:15px;'>$help_desk_description</p> <br/>
-<p style='font-size:16px;'> <strong>Ticket Description by user:</strong></p>
-<p style='font-size:15px;'>$massage_close</p>
-<br/>
-Thank you.<br/>
-HousingMatters (Support Team)<br/><br/>
-www.housingmatters.co.in
-</div>
-</div>";
-*/
+	if($ticket_priority==1){
+		$ticket_priority="Urgent";
+	}
+	else{
+		$ticket_priority="Normal";
+	}
 
-  $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+
+   $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
           <tbody>
 			<tr>
                 <td>
@@ -1499,7 +1465,7 @@ $result_vendor=$this->vendor->find('all',array('conditions'=>$conditions));
 $this->set('result_vendor',$result_vendor);
 foreach ($result_vendor as $collection)
 {
-    $vendor_id = (int)$collection['vendor']['vendor_id'];
+     $vendor_id = (int)$collection['vendor']['vendor_id'];
 }
 
 $result_sp2=$this->fetch_service_provider_info_via_vendor_id(@$hd_sp_id);
@@ -1615,13 +1581,14 @@ function assign_ticket_to_sp_sms()
 	$msg=$this->request->query('msg'); 
 	$hd_id=(int)$this->request->query('hd_id');
 	$date=date("d-m-Y");
-	$r_sms=$this->hms_sms_ip();
+	
+	$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip'));
 	$working_key=$r_sms->working_key;
 	$sms_sender=$r_sms->sms_sender; 
 	$sms_allow=(int)$r_sms->sms_allow;
 
-	$s_society_id=$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	
 	$this->loadmodel('help_desk');
 	$conditions=array("help_desk_id" => $hd_id);
@@ -1655,10 +1622,13 @@ $sp_id=(int)$this->request->query('sp_id');
  $msg=$this->request->query('msg');
  $hd_id=(int)$this->request->query('hd_id');
 
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
-$result_user=$this->profile_picture($s_user_id);
-$email=$result_user[0]['user']['email'];
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
+
+
+$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($s_user_id)));
+$email=$result_member_info["email"]; 
+
 $date=date("d-m-Y");
 $this->loadmodel('help_desk');
 $conditions=array("help_desk_id" => $hd_id);
@@ -1701,9 +1671,9 @@ $society_name=$collection3['society']['society_name'];
 $society_user_id=(int)$collection3['society']['user_id'];
 }
 
-$ip=$this->hms_email_ip();
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 
-$r_sms=$this->hms_sms_ip();
+$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip'));
 $working_key=$r_sms->working_key;
 $sms_sender=$r_sms->sms_sender; 
 $sms_allow=(int)$r_sms->sms_allow;
@@ -1725,7 +1695,7 @@ $n=sizeof($result5);
 if($n>0)
 {
 	if($sms_allow==1){
-$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms.'');
+		$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms.'');
 	}
 }
 
@@ -1922,8 +1892,7 @@ $result=$this->help_desk_category->find('all',array('order'=>$order));
 $this->set('result_help_desk_category',$result);
 if($this->request->is('post')) 
 {
-	echo'dsfdsf';
-	exit;
+	
 $file_upload=$this->request['form']['file']['name'];
 $pan_number=$this->request->data['pan_no'];
 $text=htmlentities($this->request->data['name']);	
@@ -2019,7 +1988,7 @@ if($this->RequestHandler->isAjax()){
 $this->ath();
 $this->check_user_privilages();
 
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $this->set('role_id',$s_role_id=$this->Session->read('role_id'));
 $this->loadmodel('service_provider');
 $condition=array("sp_delete"=>0,"society_id"=>$s_society_id);
@@ -2031,7 +2000,7 @@ function service_provider_excel(){
 	
 $this->layout=null;	
 $this->ath();	
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $result_society=$this->society_name($s_society_id);
 $this->set('society_name',$result_society[0]['society']['society_name']);
 $this->set('role_id',$s_role_id=$this->Session->read('role_id'));
@@ -2058,15 +2027,15 @@ function service_provider_mail()
 {
 
 $this->layout='blank';
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $society_result= $this->society_name($s_society_id);
 foreach($society_result as $data)
 {
 	$society_name=$data['society']['society_name'];
 }
 $subject="[$society_name]";
-$ip=$this->hms_email_ip();
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 $text=htmlentities($this->request->query('con2'));
 $message = wordwrap($text, 25, " ", true);
 $to=$this->request->query('con3');
@@ -2094,8 +2063,9 @@ www.housingmatters.in
 $from_name="HousingMatters";
 $from="support@housingmatters.in";
 $reply=$email;
-$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
-
+	if(!empty($to)){
+		$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+	}
 }
 
 function service_provider_edit($id=null)
@@ -2176,7 +2146,7 @@ foreach ($result as $collection)
 { 
 $id2=$collection['help_desk_category']['help_desk_category_id'];
 $servies=$collection['help_desk_category']['help_desk_category_name'];
-echo @$check_id=(int)$this->request->data[$id2];
+ @$check_id=(int)$this->request->data[$id2];
 if(!empty($check_id))
 {
 $this->loadmodel('vendor');

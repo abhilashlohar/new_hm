@@ -78,7 +78,7 @@ table th { font-size:12px !important ; }
 									<th>Contract to</th>
                                     <th>PAN Number</th>
 									<th class="hide_at_print"><span style="font-size:14px;"><i class="icon-paper-clip"></i></span></th>
-                                    <?php if($role_id==3)
+                                    <?php if($role_id==1)
 									{ 
 									?>
 									<th class="hide_at_print"></th><?php }?>
@@ -176,7 +176,7 @@ table th { font-size:12px !important ; }
                             } ?>
 						
                              </td>
-                            <?php if($role_id==3){ ?>                    
+                            <?php if($role_id==1){ ?>                    
                             <td class="hide_at_print">
                 
                 <!---- action popup ----->

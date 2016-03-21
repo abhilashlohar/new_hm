@@ -375,7 +375,7 @@ $this->set('month_name',$month_name);
 $this->set('year',$y);
 
 }
-
+//Start check_event//
 function check_event($e_date)
 {
 $this->layout='blank';
@@ -386,31 +386,31 @@ $s_user_id=$this->Session->read('user_id');
 $this->loadmodel('event');
 $conditions=array("date_from" =>$e_date);
 $result_event_info=$this->event->find('all');
-
 return $result_event_info;
 }
-
+//End check_event//
+//Start Events//
 function events()
 {
-if($this->RequestHandler->isAjax()){
+	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
 	}else{
 	$this->layout='session';
 	}
 	
-$this->ath();
-$this->check_user_privilages();
+	$this->ath();
+	$this->check_user_privilages();
 
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 
 
 $this->loadmodel('event');
-$conditions=array("society_id" => $s_society_id,"visible_user_id" =>array('$in' => array($s_user_id)));
+$conditions=array("society_id"=>(int)$s_society_id,"visible_user_id"=>array('$in'=>array((int)$s_user_id)));
 $order=array('event.event_id'=>'DESC');
-$this->set('result_event',$this->event->find('all', array('conditions' => $conditions,'order' => $order)));
+$this->set('result_event',$this->event->find('all',array('conditions'=>$conditions,'order'=>$order)));
 }
-
+//End Events//
 
 
 function event_info($e_id=null)

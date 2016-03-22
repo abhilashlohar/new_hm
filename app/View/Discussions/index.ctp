@@ -14,7 +14,7 @@
 </div>
 <div style="background-color: #FFF; padding: 0px 10px; border: 1px solid rgb(233, 231, 231);margin-top: 2px;">
 	<div class="row-fluid">
-		<div class="span6">
+		<div class="span6" id="topic_detail">
 			<?php 
 			$discussion_post_id=$posts[0]["discussion_post"]["discussion_post_id"];
 			$topic=$posts[0]["discussion_post"]["topic"];
@@ -45,11 +45,14 @@
 				<?php echo $description; ?>
 			</div>
 			<div class="chat-form hide_at_print" style="margin-left: 5px;width: 94%;">
-				<textarea class="span12 m-wrap animated" type="text" id="posttext" placeholder="Type a message here..." style="background-color:#FFF !important; resize:none;"></textarea>
-				<div align="right">
-				<div class="pull-left" id="save_comment"></div>
-				<button type="button" id="post_comment" style="margin-top:-10px;" onclick="comment(5)" class="btn blue icn-only tooltips" data-placement="bottom" data-original-title="Tab + Enter for post comment">POST</button>
-				</div>
+				<form method="post" id="idForm">
+					<input type="hidden" value="<?php echo $discussion_post_id; ?>" name="post_id"/>
+					<textarea class="span12 m-wrap" type="text" name="comment_box" placeholder="Type a message here..." style="background-color:#FFF !important; resize:none;"></textarea>
+					<div align="right">
+					<div class="pull-left" id="save_comment"></div>
+					<button type="submit"  style="margin-top:-10px;" class="btn blue icn-only tooltips" data-placement="bottom" data-original-title="Tab + Enter for post comment">POST</button>
+					</div>
+				</form>
 			</div>
 		</div>
 		<div class="span6" id="topic_list">
@@ -67,6 +70,46 @@
 		</div>
 	</div>
 </div>
+<script>
+$("#idForm").on("submit",function(e){
+	$.ajax({
+	   type: "POST",
+	   url: "<?php echo $webroot_path; ?>Discussions/submit_comment",
+	   data: $("#idForm").serialize(), // serializes the form's elements.
+	   success: function(data){
+		   $("textarea[name=comment_box]").val("");
+		   $("#save_comment").html(data); // show response from the php script.
+	   }
+    });
+
+    e.preventDefault(); 
+});
+$(".topic").die().live("click",function(){
+	$('.topic').each(function(i, obj) {
+		$(this).removeClass("run");
+	});
+	$(this).addClass("run");
+	var post_id=$(this).attr("post_id");
+	$.ajax({
+	   url: "<?php echo $webroot_path; ?>Discussions/topic_detail/"+post_id,
+	   success: function(data) {
+		   $("#topic_detail").html(data);
+		   $("html, body").animate({
+				scrollTop:0
+			},"slow");
+	   }
+    });
+});
+	var $rows = $('#topic_list');
+	 $('#search').keyup(function() {
+		var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+		
+		$rows.show().filter(function() {
+			var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+			return !~text.indexOf(val);
+		}).hide();
+	});
+</script>
 <style>
 .topic{
 	margin: auto auto 2px; width: 80%; border: 1px solid rgb(204, 204, 204); padding: 5px; cursor: pointer;

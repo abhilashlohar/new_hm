@@ -29,9 +29,48 @@ function index($list=null,$id=null){
 	$order=array('discussion_post.discussion_post_id'=> 'DESC');
 	$posts=$this->discussion_post->find('all',array('conditions'=>$conditions,'order'=>$order));
 	$this->set(compact("posts"));
+}
 
-	
-	
+function submit_comment(){
+	$s_user_id=$this->Session->read('hm_user_id');
+	$s_society_id=$this->Session->read('hm_society_id');
+	$post_id=(int)$this->request->data['post_id'];
+	$comment=htmlentities($this->request->data['comment_box']);
+	if(empty($comment)){
+		exit;
+	}
+	$comment_box = nl2br(wordwrap($comment, 25, " ", true));
+	$date=date("Y-m-d");
+	$time=date('h:i:a',time());
+	$r=$this->content_moderation_society($comment);
+	if($r==0){
+		echo $word='You have entered banned words. <br/> ';
+		exit;
+	}else{
+		$this->loadmodel('discussion_comment');
+		$conditions=array("delete"=>"no");
+		$order=array('discussion_comment.discussion_comment_id'=>'DESC');
+		$cursor_last_color=$this->discussion_comment->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1));
+		foreach ($cursor_last_color as $collection_color) 
+		{
+		$last_color=$collection_color["discussion_comment"]["color"];
+		}
+		if(sizeof($cursor_last_color)==0) {  $last_color='blue'; }
+
+			$color_in=$this->rendom_color($last_color);
+		//////////////////end color///////////////////
+
+		$discussion_comment_id=$this->autoincrement('discussion_comment','discussion_comment_id');
+		$this->loadmodel('discussion_comment');
+		$this->discussion_comment->saveAll(Array( Array("discussion_comment_id" => $discussion_comment_id, "user_id" => $s_user_id , "society_id" => $s_society_id, "comment" => $comment_box,"discussion_post_id" => $post_id, "delete_id" =>0, "date" =>$date, "time" => $time, "color" => $color_in))); 
+	}
+}
+
+function topic_detail($post_id=null){
+	$this->loadmodel('discussion_post');
+	$conditions=array("discussion_post_id"=>(int)$post_id);
+	$posts=$this->discussion_post->find('all',array('conditions'=>$conditions));
+	$this->set(compact("posts"));
 }
 
 function new_topic(){

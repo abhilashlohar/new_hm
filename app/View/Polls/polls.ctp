@@ -15,15 +15,13 @@ $d_user_id=$data["poll"]["user_id"];
 $created=$data["poll"]["created"];
 
 //////////////////////////user info////////////////
-$result_user=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($d_user_id)));
-foreach($result_user as $data_user)
-{
-$user_name=$data_user['user']['user_name'];
-$wing=$data_user['user']['wing'];
-$flat=$data_user['user']['flat'];
+$result_user=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($d_user_id)));
+$user_name=$result_user["user_name"];
+$flat_info=$result_user["wing_flat"];
+foreach($flat_info as $wing_flat){
+	$flat_info=$wing_flat;
 }
 
-$flat_info=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array(@$wing,@$flat)));
 //////////////////////////user info////////////////
 $question=$data["poll"]["question"];
 $des=$data["poll"]["des"];

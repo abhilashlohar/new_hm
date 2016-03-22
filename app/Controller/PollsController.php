@@ -13,34 +13,26 @@ var $name = 'Polls';
 
 
 
-function polls()
-{
-if($this->RequestHandler->isAjax()){
+function polls(){
+	if($this->RequestHandler->isAjax()){
 		$this->layout='blank';
 	}else{
 		$this->layout='session';
 	}
-$this->ath();
-$this->check_user_privilages();
-//$this->seen_notification(1,$hd_id);
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
-$this->set('s_user_id',$s_user_id);
+	$this->ath();
+	$this->check_user_privilages();
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$this->set('s_user_id',$s_user_id);
 
-$current_date=date("Y-m-d");
-$current_date = new MongoDate(strtotime($current_date));
+	$current_date=date("Y-m-d");
+	$current_date = new MongoDate(strtotime($current_date));
 
-$this->loadmodel('poll');
-$conditions=array("society_id" => $s_society_id,"visible_user_id" =>array('$in' => array($s_user_id)),"deleted" => 0,'close_date' => array('$gt' => $current_date));
-$order=array('poll.poll_id'=>'DESC');
-$result_poll=$this->poll->find('all', array('conditions' => $conditions,'order' => $order));
-$this->set('result_poll',$result_poll);
-
-	foreach($result_poll as $poll)
-	{
-		$this->seen_notification(7,$poll["poll"]["poll_id"]);
-		$this->seen_alert(7,$poll["poll"]["poll_id"]);
-	}
+	$this->loadmodel('poll');
+	$conditions=array("society_id" => $s_society_id,"visible_user_id" =>array('$in' => array($s_user_id)),"deleted" => 0,'close_date' => array('$gt' => $current_date));
+	$order=array('poll.poll_id'=>'DESC');
+	$result_poll=$this->poll->find('all', array('conditions' => $conditions,'order' => $order));
+	$this->set('result_poll',$result_poll);
 }
 
 function poll_save_vote(){
@@ -50,7 +42,7 @@ $type=(int)$this->request->query('type');
 $poll_id=(int)$this->request->query('poll_id');
 $c_id=$this->request->query('c_id');
 
-$s_user_id=$this->Session->read('user_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $this->set('s_user_id',$s_user_id);
 
 if($type==1)
@@ -111,7 +103,7 @@ $type=(int)$this->request->query('type');
 $poll_id=(int)$this->request->query('poll_id');
 $c_id=(int)$this->request->query('c_id');
 
-$s_user_id=$this->Session->read('user_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $this->set('s_user_id',$s_user_id);
 
 $this->loadmodel('poll');
@@ -128,158 +120,18 @@ function poll_add(){
 	}
 	$this->ath();
 	$this->check_user_privilages();
-	$s_society_id=$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
-	$s_role_id=$this->Session->read('role_id');
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 
-	$this->loadmodel('master_notice_category');
-	$this->set('result1', $this->master_notice_category->find('all'));
-
-
-	$this->loadmodel('role');
-	$conditions=array("society_id" => $s_society_id);
-	$role_result=$this->role->find('all',array('conditions'=>$conditions));
-	$this->set('role_result',$role_result);
-
-	$this->loadmodel('wing');
-	$wing_result=$this->wing->find('all');
-	$this->set('wing_result',$wing_result);
-
-	$this->loadmodel('user');
-	$conditions=array("society_id"=>$s_society_id);
-	$this->set('result_users',$this->user->find('all',array('conditions'=>$conditions))); 
-
-	$result_so=$this->society_name($s_society_id); 
-	foreach($result_so as $data)
-	{
-	  @$poll_society=$data['society']['poll'];
-	  @$s_duser_id[]=$data['society']['user_id'];
-	}
-	if(@$poll_society==1 && $s_role_id!=3 )
-	{
-		
-		if (isset($this->request->data['create_poll'])) 
-		{
+	
+	if (isset($this->request->data['create_poll'])){
+		$ip= $this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
 			
-			$question=htmlentities($this->request->data['question']);
-			$question=wordwrap($question, 25, " ", true);
-			$description=htmlentities($this->request->data['description']);
-			$description=wordwrap($description, 25, " ", true);
-			$poll_close_date=$this->request->data['poll_close_date'];
-			
-			$type=(int)$this->request->data['type'];
-			$private=(int)@$this->request->data['private']; 
-			if(empty($private)) { $private=0; }
-			$choice_text_box=(int)$this->request->data['choice_text_box'];
-			for($z=1;$z<=$choice_text_box;$z++)
-			{
-			$color=$this->rendom_color_new();
-			$choice[]=array(htmlentities($this->request->data['choice'.$z]),$color);
-
-			}
-			$current_date = date('Y-m-d');
-			$current_date = new MongoDate(strtotime($current_date));
-
-
-			if(empty($poll_close_date)) 
-			{ 
-			$current_date_add=date('Y-m-d', strtotime(date('Y-m-d'). ' + 15 days'));
-			$poll_close_date=$current_date_add;
-
-			}
-			$poll_close_date=date('Y-m-d', strtotime(date('Y-m-d'). ' + '.$poll_close_date.' days'));
-			//$poll_close_date = date("Y-m-d", strtotime($poll_close_date));
-			$close_date = new MongoDate(strtotime($poll_close_date));
-			
-			$file=$this->request->form['file']['name'];
-
-			$target = "polls_file/";
-			$target=@$target.basename( @$this->request->form['file']['name']);
-			$ok=1;
-			move_uploaded_file(@$this->request->form['file']['tmp_name'],@$target); 
-
-
-			$visible=(int)$this->request->data['visible'];
-			
-			if($visible==1)
-			{	
-			$visible=1;
-			$sub_visible[]=0;
-			}
-
-			if($visible==4)
-			{	
-			$visible=4;
-			$sub_visible=0;
-			}
-
-			if($visible==5)
-			{
-			$visible=5;
-			$sub_visible=0;
-			}
-			if($visible==2)
-					{	
-						$visible=2;
-						foreach ($role_result as $collection) 
-						{
-							$role_id=$collection["role"]["role_id"];
-
-							$role_id=@(int)$this->request->data['role'.$role_id];
-							if(!empty($role_id))
-							{
-							$sub_visible[]=(int)$role_id;
-							}
-						}
-					}
-					
-					
-					if($visible==3)
-					{	
-					 $visible=3;
-						foreach ($wing_result as $collection) 
-						{
-							$wing_id=(int)$collection["wing"]["wing_id"];
-
-							$wing=@(int)$this->request->data['wing'.$wing_id];
-							if(!empty($wing))
-							{
-								$sub_visible[]=(int)$wing;
-							}
-						}
-					}
-					
-					
-					$poll_id=$this->autoincrement('poll','poll_id');
-					$this->loadmodel('poll');
-					$this->poll->saveAll(array('poll_id' => $poll_id,'question' => $question , 'des' => $description, 'type' => $type, 'choice' => $choice,'visible' => $visible,'sub_visible' => $sub_visible,'date' => $current_date,'close_date' => $close_date,'file' => $file,'society_id' => $s_society_id,'user_id' => $s_user_id,"deleted" => 4,"private" => $private));
-					
-					
-		$poll_id=$this->send_notification('<span class="label" style="background-color:#46b8da;"><i class="icon-question-sign"></i></span>','Approval request for Poll <b>'.$question.'</b> created by',7,$poll_id,$this->webroot.'Hms/poll_approve',$s_user_id,$s_duser_id);
-			
-		$this->Session->write('poll_status1',2);
-		$this->response->header('Location', $this->webroot.'Polls/polls');	
-
-			
-				
-
-				
-				
-				
-		}
-	}
-	else
-	{
-		
-		if (isset($this->request->data['create_poll'])) 
-		{
-			
-			$ip=$this->hms_email_ip();
 		$question=htmlentities($this->request->data['question']);
 		$question=wordwrap($question, 25, " ", true);
 		$description=htmlentities($this->request->data['description']);
 		$description=wordwrap($description, 25, " ", true);
-		 $poll_close_date=$this->request->data['poll_close_date']; 
+		$poll_close_date=$this->request->data['poll_close_date']; 
 		$type=(int)$this->request->data['type'];
 		$private=(int)@$this->request->data['private']; 
 		if(empty($private)) { $private=0; }
@@ -314,141 +166,31 @@ function poll_add(){
 		move_uploaded_file(@$this->request->form['file']['tmp_name'],@$target); 
 
 
-		$visible=(int)$this->request->data['visible'];
-
-		if($visible==1)
-		{	
-		$visible=1;
-		$sub_visible[]=0;
-		/////////////////////////////////////////// All user ////////////////////////////
-		$result_user=$this->all_user_deactive();
-		foreach($result_user as $data)
-		{
-		$visible_user_id[]=$data['user']['user_id'];
-		$visible_mobile[]=$data['user']['mobile'];
-		$visible_email[]=$data['user']['email'];
+		$send_to=$this->request->data['send_to'];
+		if($send_to=="all_users"){
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($send_to,null)));
+			$sub_visible=null;
 		}
-		/////////////////////////////////////////// All user ////////////////////////////
+		if($send_to=="role_wise"){
+			$roles=$this->request->data['roles'];
+			$details=implode(",",$roles);
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($send_to,$details)));
+			$sub_visible=$roles;
+		}elseif($send_to=="wing_wise"){
+			$wings=$this->request->data['wings'];
+			$details=implode(",",$wings);
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($send_to,$details)));
+			$sub_visible=$wings;
 		}
-
-		if($visible==4)
-		{	
-		$visible=4;
-		$sub_visible[]=0;
-		/////////////////////////////////////////// All Owners ////////////////////////////
-		$result_user=$this->all_owner_deactive();
-		foreach($result_user as $data)
-		{
-		$visible_user_id[]=$data['user']['user_id'];
-		$visible_mobile[]=$data['user']['mobile'];
-		$visible_email[]=$data['user']['email'];
+		$visible_user_id=array();
+		foreach($receivers as $user_id=>$user_info){
+			$visible_user_id[]=$user_id;
 		}
-		/////////////////////////////////////////// All Owners ////////////////////////////
-		}
-
-		if($visible==5)
-		{
-		$visible=5;
-		$sub_visible[]=0;
-		/////////////////////////////////////////// All Tenant ////////////////////////////
-		$result_user=$this->all_tenant_deactive();
-		foreach($result_user as $data)
-		{
-		$visible_user_id[]=$data['user']['user_id'];
-		$visible_mobile[]=$data['user']['mobile'];
-		$visible_email[]=$data['user']['email'];
-		}
-		/////////////////////////////////////////// All Tenant ////////////////////////////
-		}
-
-
-		if($visible==2)
-		{
-		$visible=2;
-		foreach ($role_result as $collection) 
-		{
-		$role_id=$collection["role"]["role_id"];
-
-		$role_id=@(int)$this->request->data['role'.$role_id];
-		if(!empty($role_id))
-		{
-		$sub_visible[]=(int)$role_id;
-
-		/////////////////////////////////////////// Role Wise ////////////////////////////
 		
-		$result_user=$this->all_role_wise_deactive($role_id);
-		foreach($result_user as $data)
-		{
-		$visible_user_id[]=$data['user']['user_id'];
-		$visible_mobile[]=$data['user']['mobile'];
-		$visible_email[]=$data['user']['email'];
-		}
-		/////////////////////////////////////////// Role Wise ////////////////////////////
-		}
-		}
-
-		}
-
-		if($visible==3)
-		{	
-		$visible=3;
-		foreach ($wing_result as $collection) 
-		{
-		$wing_id=$collection["wing"]["wing_id"];
-
-		$wing=@(int)$this->request->data['wing'.$wing_id];
-		if(!empty($wing))
-		{
-		$sub_visible[]=(int)$wing;
-
-		/////////////////////////////////////////// Wing Wise ////////////////////////////
-		$result_user=$this->all_wing_wise_deactive($wing);
-		foreach($result_user as $data)
-		{
-		$visible_user_id[]=$data['user']['user_id'];
-		$visible_mobile[]=$data['user']['mobile'];
-		$visible_email[]=$data['user']['email'];
-		}
-		/////////////////////////////////////////// Wing Wise ////////////////////////////
-		}
-		}
-
-		}
-
-
-					///////// creator send email code //////////////////
-
-					$result_user=$this->profile_picture($s_user_id);
-					
-					foreach($result_user as $data)
-					{
-					  $c_email=$data['user']['email'];
-					
-					}
-					$visible_email[]=@$c_email;
-					
-					/////////////////////////  end code ////////////////////////////////
-
-
-		$visible_mobile = array_unique($visible_mobile);
-		$visible_email = array_unique($visible_email);
-
-		$visible_user_id = array_unique($visible_user_id);
-
-		ksort($visible_user_id);
-		foreach($visible_user_id as $x=>$x_value)
-		{
-		$visible_user_id_new[]=$x_value;
-		}
-
-
 		
 		$poll_id=$this->autoincrement('poll','poll_id');
 		$this->loadmodel('poll');
-		$this->poll->saveAll(array('poll_id' => $poll_id,'question' => $question , 'des' => $description, 'type' => $type, 'choice' => $choice,'visible' => $visible,'sub_visible' => $sub_visible,'visible_user_id' => $visible_user_id_new,'date' => $current_date,'close_date' => $close_date,'file' => $file,'society_id' => $s_society_id,'user_id' => $s_user_id,"deleted" => 0,"private" => $private));
-
-	
-		$poll_id=$this->send_notification('<span class="label" style="background-color:#46b8da;"><i class="icon-question-sign"></i></span>','New Poll <b>'.$question.'</b> started by',7,$poll_id,$this->webroot.'Polls/polls',$s_user_id,$visible_user_id_new);
+		$this->poll->saveAll(array('poll_id' => $poll_id,'question' => $question , 'des' => $description, 'type' => $type, 'choice' => $choice,'visible' => $send_to,'sub_visible' => $sub_visible,'visible_user_id' => $visible_user_id,'date' => $current_date,'close_date' => $close_date,'file' => $file,'society_id' => $s_society_id,'user_id' => $s_user_id,"deleted" => 0,"private" => $private));
 
 		$this->loadmodel('society');
 		$conditions12=array('society_id'=>$s_society_id);
@@ -562,34 +304,17 @@ function poll_add(){
 		$from=$collection['email']['from'];
 		}
 
-		foreach($visible_email as $to)
-		{
-		  $this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+		foreach($receivers as $user_id=>$user_info){
+			$email=$user_info["email"];
+			$user_name=$user_info["user_name"];
+			if(!empty($email)){
+				$this->send_email($email,$from,$from_name,$subject,$message_web,$reply);
+			}
 		}
 		
 		$this->Session->write('poll_status',1);
 		$this->response->header('Location', $this->webroot.'Polls/polls');	
-		
-		?>
-		<!----alert--------------
-		<div id="submit_success">
-		<div class="modal-backdrop fade in"></div>
-		<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-		<div class="modal-body" style="font-size:16px;">
-		<?php echo $s_message; ?>
-		</div> 
-		<div class="modal-footer">
-		<a href="<?php echo $this->webroot; ?>Polls/polls" class="btn green" rel='tab' role="hide_submit_success">OK</a>
-		</div>
-		</div>
-		</div>
-		<!----alert-------------->
-		<?php
-
-
 		}
-		
-	}
 }
 
 
@@ -602,8 +327,8 @@ function my_polls(){
 	$this->ath();
 	$this->check_user_privilages();
 
-	$s_society_id=$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$this->set('s_user_id',$s_user_id);
 
 	if (isset($this->request->data['edit_save'])){
@@ -691,8 +416,8 @@ function closed_polls(){
 	$this->ath();
 	$this->check_user_privilages();
 
-	$s_society_id=$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$this->set('s_user_id',$s_user_id);
 
 	$current_date=date("Y-m-d");

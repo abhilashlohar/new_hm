@@ -1,14 +1,6 @@
 <?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
+echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
-<script>
-$(document).ready(function() {
-$("#fix<?php echo @$id_current_page; ?>").removeClass("blue");
-$("#fix<?php echo @$id_current_page; ?>").addClass("red");
-});
-</script>
-
-
 <form method="post" id="contact-form" enctype="multipart/form-data">
 <div style="border:solid 2px #4cae4c; width:90%; margin:auto;">
 <div style="border-bottom:solid 2px #4cae4c; color:white; background-color: #5cb85c; padding:4px; font-size:20px;"><i class="icon-question-sign"></i> Create New Poll</div>
@@ -21,13 +13,10 @@ $("#fix<?php echo @$id_current_page; ?>").addClass("red");
 
 <div class="row-fluid">
 	<div class="span6">
-		
-		
-		
 		<div class="control-group">
 		  <label class="control-label">Question</label>
 		  <div class="controls">
-			 <input type="text" class="span12 m-wrap" name="question" id="question" placeholder="Type a question here..." >
+			 <input type="text" class="span12 m-wrap" name="question" e_id="question" placeholder="Type a question here..." >
 			<label id="question"></label>
 		  </div>
 		</div>
@@ -36,7 +25,7 @@ $("#fix<?php echo @$id_current_page; ?>").addClass("red");
 		<div class="control-group">
 		  <label class="control-label">Description</label>
 		  <div class="controls">
-			 <textarea class="span12 m-wrap" name="description" id="description" rows="5" placeholder="Type description here..." style="resize:none;"></textarea>
+			 <textarea class="span12 m-wrap" name="description" e_id="description" rows="5" placeholder="Type description here..." style="resize:none;"></textarea>
 				<label id="description"></label>
 		  </div>
 		</div>
@@ -53,15 +42,13 @@ $("#fix<?php echo @$id_current_page; ?>").addClass("red");
 			<div class="controls">
 			<label class="" style="font-size:14px;">Poll will be close after<span style="color:red;">*</span> <i class=" icon-info-sign tooltips" data-placement="right" data-original-title="Your poll will expire by this date and Archived"> </i></label>
 			
-			<select class="span3 m-wrap " name="poll_close_date" tabindex="1" id="poll_close_date">
+			<select class="span3 m-wrap " name="poll_close_date" tabindex="1" e_id="poll_close_date">
 				<option value="">--select--</option>
 				<option value="7">7 days</option>
 				<option value="15">15 days</option>
 				<option value="30">30 days</option>
 				<option value="60">60 days</option>
 			</select>
-			
-			<!--<input type="text" class="span4 m-wrap  m-ctrl-medium date-picker" data-date-format="dd-mm-yyyy" placeholder="Please select date"  name="poll_close_date" id="poll_close_date" > -->
 			<label id="poll_close_date"></label>
 			</div>
 		</div>
@@ -112,11 +99,11 @@ $("#fix<?php echo @$id_current_page; ?>").addClass("red");
 		  <label class="control-label">Choices</label>
 			<div id="choice_div">
 			  <div class="controls">
-				<input type="text" name="choice1" class="span10 m-wrap" placeholder="1." id="choice1" >
+				<input type="text" name="choice1" class="span10 m-wrap" placeholder="1." e_id="choice1" >
 				<label id="choice1"></label>
 			  </div>
 			  <div class="controls">
-				<input type="text" name="choice2" class="span10 m-wrap" placeholder="2." id="choice2" >
+				<input type="text" name="choice2" class="span10 m-wrap" placeholder="2." e_id="choice2" >
 				<label id="choice2"></label>
 			  </div>
 			</div>
@@ -139,69 +126,9 @@ $("#fix<?php echo @$id_current_page; ?>").addClass("red");
 		<!-------CONTENT--------->
 			<!---------------start visible-------------------------------->
 			<label class="" style="font-size:14px;">Who can participate in the poll? <span style="color:red;">*</span>   <i class=" icon-info-sign tooltips" data-placement="right" data-original-title="Please select any one"> </i></label>
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio" checked name="visible" value="1" id="v1"></span></div>All Users
-			</label>
-			</div>
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio"  name="visible" value="4" id="v1"></span></div>All Owners  
-			</label>
-			</div>
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio"  name="visible" value="5" id="v1"></span></div>All Tenant
-			</label>
-			</div>
-			
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio" ><span><input type="radio"  name="visible" value="2" id="v2" ></span></div>Role Wise
-			</label>
-			</div>
-			<div id="show_2" style="display:none; margin-left:5%;">
-			<div class="controls">
 			<?php
-			foreach ($role_result as $collection) 
-			{
-			$role_id=$collection["role"]["role_id"];
-			$role_name=$collection["role"]["role_name"];
+			echo $sending_options=$this->requestAction(array('controller' => 'Fns', 'action' => 'sending_options'));
 			?>
-			<label class="checkbox">
-			<div class="checker"><span><input type="checkbox"  value="<?php echo $role_id; ?>" name="role<?php echo $role_id; ?>" class="v2 requirecheck1" id="requirecheck1"></span></div> <?php echo $role_name; ?>
-			</label>
-			<?php } ?>
-			</div>
-			<label  id="requirecheck1"></label>
-			</div>
-
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio" name="visible" value="3" id="v3" ></span></div>Wing Wise
-			</label> 
-			</div>
-			<div id="show_3" style="display:none; margin-left:5%;">
-			<div class="controls">
-			<?php
-			foreach ($wing_result as $collection) 
-			{
-			$wing_id=$collection["wing"]["wing_id"];
-			$wing_name=$collection["wing"]["wing_name"];
-			?>
-			<div style="float:left; padding-left:15px;">
-			<label class="checkbox" >
-			<div class="checker"><span><input type="checkbox"  value="<?php echo $wing_id; ?>" name="wing<?php echo $wing_id; ?>" class="v3 requirecheck2" id="requirecheck2" ></span></div> <?php echo $wing_name; ?>
-			</label>
-			</div>
-			<?php } ?>
-			</div><br/><br/>
-			<label id="requirecheck2"></label>
-			</div>
 			<!---------------end visible-------------------------------->
 		<!-------CONTENT END--------->
 		</div>
@@ -274,7 +201,7 @@ $(document).ready(function() {
 	
 		inc++;
 		$("#choice_text_box1").val(inc);
-		$("#choice_div").append('<div class="controls" id=tax'+inc+'><input name=choice'+inc+' type="text" class="span10 m-wrap" placeholder='+inc+'></div>');
+		$("#choice_div").append('<div class="controls" e_id=tax'+inc+'><input name=choice'+inc+' type="text" class="span10 m-wrap" placeholder='+inc+'></div>');
 	 });
 	 
 	 $("#remove1").bind('click',function(){
@@ -345,7 +272,7 @@ $(document).ready(function(){
                     //place all errors in a <div id="errors"> element
                     errorPlacement: function(error, element) {
                         //error.appendTo("label#errors");
-						error.appendTo('label#' + element.attr('id'));
+						error.appendTo('label#' + element.attr('e_id'));
                     }, 
 	    groups: {
             asdfg: checkbox_names,
@@ -359,6 +286,9 @@ $(document).ready(function(){
 	        required: true
 			
 	      },
+		  poll_close_date: {
+			  required: true
+		  },
 		  
 		  description: {
 	        required: true,

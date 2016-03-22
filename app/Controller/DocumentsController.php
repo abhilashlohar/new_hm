@@ -41,12 +41,11 @@ function resource_add()
 	@$document=$data['society']['document'];
 	@$s_duser_id[]=$data['society']['user_id'];
 	}
-	if($document==1 && $s_role_id!=3 )
-	{		
-
+	if($document==1 && $s_role_id!=3 ){		
+		if($this->request->is('post')){
 				
-			if($this->request->is('post'))
-			{
+				echo "afasfasf";
+				exit;
 				$resource_title= $this->request->data['title'];
 				$resource_cat= (int)$this->request->data['sel'];
 				$resource_att=$this->request->form['file']['name'];
@@ -126,8 +125,9 @@ $this->send_notification('<span class="label label-warning" ><i class="icon-fold
 	
 if($this->request->is('post'))
 {
-	
-	$ip=$this->hms_email_ip();
+echo "asfsafsafa";
+exit;	
+	//$ip=$this->hms_email_ip();
 $resource_title= $this->request->data['title'];
 $resource_cat= (int)$this->request->data['sel'];
 $resource_att=$this->request->form['file']['name'];

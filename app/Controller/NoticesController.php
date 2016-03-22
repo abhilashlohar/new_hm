@@ -1595,10 +1595,11 @@ if($post_data['post_type']==1){
 		$result5=$this->notification_email->find('all',array('conditions'=>$conditions7));
 		$n=sizeof($result5);
 		if($n>0){
-			
-			@$subject.= '['. $society_name . ']  - '.' New Notice : '.'     '.''.$sub.'';
-			$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
-			$subject="";
+			if(!empty($to)){
+				@$subject.= '['. $society_name . ']  - '.' New Notice : '.'     '.''.$sub.'';
+				$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+				$subject="";
+			}
 		}	
  }
 	
@@ -1839,10 +1840,11 @@ foreach($receivers as $user_id=>$data){
 		$result5=$this->notification_email->find('all',array('conditions'=>$conditions7));
 		$n=sizeof($result5);
 			if($n>0){
-				
-				@$subject.= '['. $society_name . ']  - '.' New Notice : '.'     '.''.$sub.'';
-				$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
-				$subject="";
+				if(!empty($to)){
+					@$subject.= '['. $society_name . ']  - '.' New Notice : '.'     '.''.$sub.'';
+					$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+					$subject="";
+				}
 			}	
 }
 			

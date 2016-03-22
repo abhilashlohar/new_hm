@@ -58,8 +58,7 @@ function event_submit(){
 	foreach($result_society as $child)	{
 		@$notice=$child['society']['notice'];
 	}
-	
-	
+		
 	$ask_no_of_member=(int)$post_data["ask_no_of_member"];
 	
 	$report=array();
@@ -140,28 +139,23 @@ function event_submit(){
 		@$wing=@$data["user_flat"]["wing"];
 		@$flat=@$data["user_flat"]["flat"];
 		}
-		
-		
-		
-	
+
 	@$wing_flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'), array('pass' => array(@$wing,@$flat)));
 
-$from="Support@housingmatters.in";
-$reply="Support@housingmatters.in";
-$from_name="HousingMatters";
+	$from="Support@housingmatters.in";
+	$reply="Support@housingmatters.in";
+	$from_name="HousingMatters";
 	
 	$society_result=$this->society_name($s_society_id);
 	foreach($society_result as $data){
 	@$society_name=@$data['society']['society_name'];
 	}
-		
-		
+			
 	foreach($recieve_info as $user_id=>$data){
 	$to = @$data['email'];
 	@$d_user_id = @$user_id;	
 	$da_user_id[]=@$d_user_id;		
 	@$user_name=@$data['user_name'];
-	
 	
 	
 		
@@ -190,50 +184,32 @@ $from_name="HousingMatters";
 										</table>
 									</td>
 								</tr>
-								
-									
-								
 						</tbody>
 					</table>
-					
-                    <table width="100%" cellpadding="0" cellspacing="0">
+			        <table width="100%" cellpadding="0" cellspacing="0">
                         <tbody>
-						
 								<tr>
 										<td style="padding:5px;" width="100%" align="left">
 										<span style="color:rgb(100,100,99)" align="justify"> Hello '.$user_name.', </span> <br>
 										</td>
-								
-								
 								</tr>
-								
 								<tr>
 									<td style="padding:5px;" width="100%" align="left">
 											<span style="color:rgb(100,100,99)"> A new event has been created. </span>
 									</td>
-																
 								</tr>
-								
-								
 								<tr>
 									<td style="border:1px solid;">
 									<table width="100%" cellpadding="5" cellspacing="0"  >
 									<tbody>
-
 									<tr>
-									
-										<td>
-									
+									<td>
 										<span style="font-size:20px;">  '.$e_name.'  </span>
-									
 										</td>
-										
 									</tr>
-									
 									<tr>
 									<td align="right">
-									
-										<span style="font-weight: 100;">Created by: </span><span>
+									<span style="font-weight: 100;">Created by: </span><span>
 										'.$user_name_created.'  '.$wing_flat.'</span>
 									
 										</td>
@@ -321,59 +297,50 @@ $from_name="HousingMatters";
 	
 }
 //End event_submit//
-
 function calendar()
 {
-$this->layout='blank';
+	$this->layout='blank';
 
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+	$s_society_id=$this->Session->read('society_id');
+	$s_user_id=$this->Session->read('user_id');
 
-$m_y=@$this->request->query('m_y');
-if(empty($m_y))
-{ 
-$m_y = date('m-Y');
-}
+	$m_y=@$this->request->query('m_y');
+	if(empty($m_y)){ 
+	$m_y = date('m-Y');
+	}
 
+	$m_y_ex=explode('-',$m_y);
+	$m=$m_y_ex[0];
+	$y=$m_y_ex[1];
 
-$m_y_ex=explode('-',$m_y);
-$m=$m_y_ex[0];
-$y=$m_y_ex[1];
+	$start='1-'.$m_y;
+	$start = date("Y-m-d", strtotime($start));
+	$start = new MongoDate(strtotime($start));
 
-/////////////////
-$start='1-'.$m_y;
-$start = date("Y-m-d", strtotime($start));
-$start = new MongoDate(strtotime($start));
+	$days_in_month = cal_days_in_month(CAL_GREGORIAN, $m, $y);
 
-$days_in_month = cal_days_in_month(CAL_GREGORIAN, $m, $y);
+	$end=$days_in_month.'-'.$m_y;
+	$end = date("Y-m-d", strtotime($end));
+	$end = new MongoDate(strtotime($end));
 
-$end=$days_in_month.'-'.$m_y;
-$end = date("Y-m-d", strtotime($end));
-$end = new MongoDate(strtotime($end));
+	$event_info=array();
+	$this->loadmodel('event');
+	$conditions=array('date_from' => array('$gte'=>$start,'$lte'=>$end));
+	$result_event_info=$this->event->find('all',array('conditions'=>$conditions));
+	foreach($result_event_info as $data){
+	$date_from = date("Y-m-d", $data['event']['date_from']->sec);
+	$date_to = date("Y-m-d", $data['event']['date_to']->sec);
+	$event_info[]=array($data['event']['event_id'],$data['event']['e_name'],$date_from,$date_to);
+	}
+	if(sizeof($event_info)==0) { $event_info=array(); }
+	$this->set('event_info',$event_info);
 
-$event_info=array();
-$this->loadmodel('event');
-$conditions=array('date_from' => array('$gte'=>$start,'$lte'=>$end));
-$result_event_info=$this->event->find('all',array('conditions'=>$conditions));
-foreach($result_event_info as $data)
-{
-$date_from = date("Y-m-d", $data['event']['date_from']->sec);
-$date_to = date("Y-m-d", $data['event']['date_to']->sec);
-$event_info[]=array($data['event']['event_id'],$data['event']['e_name'],$date_from,$date_to);
-}
-if(sizeof($event_info)==0) { $event_info=array(); }
-$this->set('event_info',$event_info);
-/////////////////
+	$dateObj   = DateTime::createFromFormat('!m', $m);
+	$month_name = $dateObj->format('F'); // March
 
-
-
-$dateObj   = DateTime::createFromFormat('!m', $m);
-$month_name = $dateObj->format('F'); // March
-
-$this->set('month',$m);
-$this->set('month_name',$month_name);
-$this->set('year',$y);
-
+	$this->set('month',$m);
+	$this->set('month_name',$month_name);
+	$this->set('year',$y);
 }
 //Start check_event//
 function check_event($e_date)
@@ -411,8 +378,7 @@ $order=array('event.event_id'=>'DESC');
 $this->set('result_event',$this->event->find('all',array('conditions'=>$conditions,'order'=>$order)));
 }
 //End Events//
-
-
+//Start event_info// 
 function event_info($e_id=null)
 {
 	if($this->RequestHandler->isAjax()){
@@ -499,68 +465,65 @@ $this->loadmodel('event');
 $conditions=array("event_id"=>$e_id,"visible_user_id"=>array('$in'=>array($s_user_id)));
 $result_event_detail=$this->event->find('all',array('conditions'=>$conditions));
 $this->set('result_event_detail',$result_event_detail);
-
 }
-
-
+//End event_info// 
+//Start updates// 
 function updates($e_id=null){
-if($this->RequestHandler->isAjax()){
-$this->layout='blank';
-}else{
-$this->layout='session';
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	$this->ath();
+	//$this->check_user_privilages();
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$this->set('s_user_id',$s_user_id);
+
+	$e_id=(int)$e_id;
+	$this->set('e_id',$e_id);
+
+	$this->seen_notification(6,$e_id);
+	$this->seen_alert(6,$e_id);
+
+	$this->loadmodel('event');
+	$conditions=array("event_id" => $e_id,"visible_user_id" => array('$in' => array($s_user_id)));
+	$result_event_detail=$this->event->find('all', array('conditions' => $conditions));
+	$this->set('result_event_detail',$result_event_detail);
 }
-$this->ath();
-//$this->check_user_privilages();
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
-$this->set('s_user_id',$s_user_id);
-
-	
-
-
-$e_id=(int)$e_id;
-$this->set('e_id',$e_id);
-
-$this->seen_notification(6,$e_id);
-$this->seen_alert(6,$e_id);
-
-$this->loadmodel('event');
-$conditions=array("event_id" => $e_id,"visible_user_id" => array('$in' => array($s_user_id)));
-$result_event_detail=$this->event->find('all', array('conditions' => $conditions));
-$this->set('result_event_detail',$result_event_detail);
-}
-
+//End updates//
+//Start save_data//  
 function save_data(){
 	echo "hello";
-	
 }
-
+//End save_data//
+//Start gallery// 
 function gallery($e_id=null)
 {
-if($this->RequestHandler->isAjax()){
+	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
 	}else{
 	$this->layout='session';
 	}
 	
-$this->ath();
-//$this->check_user_privilages();
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
-$this->set('s_user_id',$s_user_id);
+	$this->ath();
+	//$this->check_user_privilages();
+	$s_society_id=$this->Session->read('society_id');
+	$s_user_id=$this->Session->read('user_id');
+	$this->set('s_user_id',$s_user_id);
 
-$e_id=(int)$e_id;
-$this->set('e_id',$e_id);
+	$e_id=(int)$e_id;
+	$this->set('e_id',$e_id);
 
-$this->seen_notification(6,$e_id);
-$this->seen_alert(6,$e_id);
+	$this->seen_notification(6,$e_id);
+	$this->seen_alert(6,$e_id);
 
-$this->loadmodel('event');
-$conditions=array("event_id" => $e_id,"visible_user_id" => array('$in' => array($s_user_id)));
-$result_event_detail=$this->event->find('all', array('conditions' => $conditions));
-$this->set('result_event_detail',$result_event_detail);
+	$this->loadmodel('event');
+	$conditions=array("event_id" => $e_id,"visible_user_id" => array('$in' => array($s_user_id)));
+	$result_event_detail=$this->event->find('all', array('conditions' => $conditions));
+	$this->set('result_event_detail',$result_event_detail);
 }
-
+//End gallery// 
 //Start save_rsvp// 
 function save_rsvp()
 {

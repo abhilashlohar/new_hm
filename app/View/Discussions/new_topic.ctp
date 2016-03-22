@@ -3,11 +3,11 @@
 	<tr>
 		<td style="white-space: nowrap;"><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-comments"></i> Discussion Forum</span></td>
 		<td align="right">
-			<a href="<?php echo $webroot_path; ?>Discussions/index/0" role="button" rel="tab" class="btn" style="margin-top: 5px; margin-bottom: 5px;"><i class="icon-cloud"></i> All Topics</a>
-			<a href="<?php echo $webroot_path; ?>Discussions/index/1" role="button" rel="tab" class="btn" style="margin-top: 5px; margin-bottom: 5px;"><i class="icon-heart"></i> My Topics</a>
-			<a href="<?php echo $webroot_path; ?>Discussions/new_topic" role="button" rel="tab" class="btn" style="margin-top: 5px; margin-bottom: 5px;"><i class=" icon-plus-sign"></i> Start Topic</a>
+			<a href="<?php echo $webroot_path; ?>Discussions/index/all" role="button" rel="tab" class="btn btn_menu" style="margin-top: 5px; margin-bottom: 5px;"><i class="icon-cloud"></i> All Topics</a>
+			<a href="<?php echo $webroot_path; ?>Discussions/index/my" role="button" rel="tab" class="btn btn_menu" style="margin-top: 5px; margin-bottom: 5px;"><i class="icon-heart"></i> My Topics</a>
+			<a href="<?php echo $webroot_path; ?>Discussions/new_topic" role="button" rel="tab" class="btn btn_menu btn_active" style="margin-top: 5px; margin-bottom: 5px;"><i class=" icon-plus-sign"></i> Start Topic</a>
 			<input class="m-wrap medium" placeholder="Search" id="search" style="margin-top: 5px; margin-bottom: 5px;" type="text">
-			<a href="<?php echo $webroot_path; ?>Discussions/index/2" role="button" rel="tab" class="btn" style="margin-top: 5px; margin-bottom: 5px;"><i class="icon-trash"></i> Archives</a>
+			<a href="<?php echo $webroot_path; ?>Discussions/index/archives" role="button" rel="tab" class="btn btn_menu" style="margin-top: 5px; margin-bottom: 5px;"><i class="icon-trash"></i> Archives</a>
 		</td>
 	</tr>
 </table>
@@ -141,3 +141,12 @@ $(document).ready(function(){
   });
 }); 
 </script>
+<style>
+.btn_menu{
+	background-color: transparent;
+	color: #535151 !important;
+}
+.btn_active{
+	font-weight: bold;
+}
+</style>

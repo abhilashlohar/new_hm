@@ -115,7 +115,7 @@ $(".topic").die().live("click",function(){
 	margin: auto auto 2px; width: 80%; border: 1px solid rgb(204, 204, 204); padding: 5px; cursor: pointer;
 }
 .topic:hover{
-	border: 1px solid rgb(80, 80, 80);
+	border: 1px solid rgba(80, 80, 80, 0.78);
 }
 .run{
 	background-color: rgba(204, 204, 204, 0.29);

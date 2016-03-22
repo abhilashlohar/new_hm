@@ -22,6 +22,7 @@ function resource_add()
 	$s_society_id=$this->Session->read('hm_society_id');
 	$s_role_id=$this->Session->read('hm_role_id');
 	$s_user_id=$this->Session->read('hm_user_id');
+	
 	$this->set('role_id',$s_role_id=$this->Session->read('role_id')); 
 	$this->loadmodel('resource_category');
 	$this->set('result_resource_category',$this->resource_category->find('all'));  
@@ -101,7 +102,7 @@ function resource_add()
 							}
 						}
 					}
-					
+				
 							
 				$date=date("d-m-Y");
 				$time=date('h:i:a',time());

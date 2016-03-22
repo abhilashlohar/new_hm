@@ -52,7 +52,13 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
                            <div class="control-group ">
                               <div class="controls">
                               <label class="" style="font-size:14px;">Attachment  <span style="font-size:12px; color:#999; margin:2%">(Limit 2MB)</span></label>
-                                 <div class="fileupload fileupload-new" data-provides="fileupload"><input type="hidden">
+                                
+                               <input name="file" class="default" type="file" multiple id='att'>
+                              <label id="att"></label>
+
+
+<!--
+								<div class="fileupload fileupload-new" data-provides="fileupload"><input type="hidden">
                                     <div class="input-append">
                                        <div class="uneditable-input">
                                           <i class="icon-file fileupload-exists"></i> 
@@ -66,7 +72,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
 									   <label id="att"></label>
                                     </div>
-                                 </div>
+                                 </div>-->
                               </div>
                            </div>
                            <?php

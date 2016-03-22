@@ -200,7 +200,7 @@ $(document).ready(function() {
 		if(visible=="all_users"){
 			m_data.append( 'sub_visible', 0);
 		}
-		//$(".form-actions").hide();
+		$(".form-actions").hide();
 		
 		$("#wait").show();
 			

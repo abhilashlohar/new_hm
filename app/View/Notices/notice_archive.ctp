@@ -47,54 +47,44 @@ $visible=$data['notice']['visible'];
 $sub_visible=$data['notice']['sub_visible'];
 
 $visible_detail='';
-if($visible==1) 
-{
-	$visible_show="All Users";
-	$visible_detail="All Users";
-}
-if($visible==4) 
-{
-	$visible_show="All Owners";
-	$visible_detail="All Owners";
-}
-if($visible==5) 
-{
-	$visible_show="All Tenants";
-	$visible_detail="All Tenants";
-}
-if($visible==2) 
-{
-
-	unset($role_name); 
-	$visible_show="Role wise";
-	foreach ($sub_visible as $role_id) 
+	if($visible=="all_users") 
 	{
-	
-	$role_name1=$this->requestAction(array('controller' => 'hms', 'action' => 'fetch_rolename_via_roleid'), array('pass' => array((int)$role_id)));
-		if(!empty($role_name1))
-		{
-		$role_name[]=$role_name1;
-		}
+		$visible_show="All Users";
+		$visible_detail="All Users";
 	}
-	
-	$visible_detail=implode(" , ",$role_name);
-}
 
-if($visible==3) 
-{
-	unset($wing_name);
-	$visible_show="Wing wise";
-	foreach ($sub_visible as $wing_id) 
+	if($visible=="role_wise") 
 	{
-	$wing_name1="wing-".$this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wingname_via_wingid'), array('pass' => array($wing_id)));
-		if(!empty($wing_name1))
+		unset($role_name); 
+		$visible_show="Role wise";
+		foreach ($sub_visible as $role_id) 
 		{
-		$wing_name[]=$wing_name1;
+		if($role_id!="resident_family" and $role_id!="resident" ){
+			$role_name1=$this->requestAction(array('controller' => 'Fns', 'action' => 'role_name_via_role_id'), array('pass' => array($role_id)));
+				if(!empty($role_name1))
+				{
+				$role_name[]=$role_name1;
+				}
+			}
 		}
+		$visible_detail=implode(" , ",$role_name);
 	}
-	$visible_detail=implode(" , ",$wing_name);
-}
 
+	if($visible=="wing_wise"){
+		
+		unset($wing_name);
+		$visible_show="Wing wise";
+		foreach ($sub_visible as $wing_id) {
+			
+			$wing_id=(int)$wing_id;
+			$wing_name1="wing-".$this->requestAction(array('controller' => 'Fns', 'action' => 'wing_name_via_wing_id'), array('pass' => array($wing_id)));
+				if(!empty($wing_name1)){
+					
+					$wing_name[]=$wing_name1;
+				}
+			}
+		$visible_detail=implode(" , ",$wing_name);
+	}
 
 
 

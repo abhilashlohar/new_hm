@@ -5,15 +5,14 @@
 <?php
 
 
-foreach($result_view as $data)
-{
-$n_draft_id=$data['notice']['n_draft_id'];
-$n_subject=$data['notice']['n_subject'];
-$n_message=$data['notice']['n_message'];
-$n_attachment=$data['notice']['n_attachment'];
-$n_date=$data['notice']['n_date'];
-$n_time=$data['notice']['n_time'];
-@$allowed=@$data['notice']['allowed'];
+foreach($result_view as $data){
+	$n_draft_id=$data['notice']['n_draft_id'];
+	$n_subject=$data['notice']['n_subject'];
+	$n_message=$data['notice']['n_message'];
+	$n_attachment=$data['notice']['n_attachment'];
+	$n_date=$data['notice']['n_date'];
+	$n_time=$data['notice']['n_time'];
+	@$allowed=@$data['notice']['allowed'];
 }
 ?>
 
@@ -42,7 +41,7 @@ $n_time=$data['notice']['n_time'];
 <div style="padding:10px;overflow: auto;">
 <div id="reply_post">
 <?php
-$s_user_id=$this->Session->read('user_id');
+ $s_user_id=$this->Session->read('hm_user_id');
 
 foreach ($result_reply as $collection) 
 {
@@ -50,18 +49,18 @@ $date=$collection['notice_board_reply']['date'];
 $time=$collection['notice_board_reply']['time'];
 $reply=$collection['notice_board_reply']['reply'];
 $class=$collection['notice_board_reply']['class'];
-$d_user=$collection['notice_board_reply']['user_id'];
+$d_user=(int)$collection['notice_board_reply']['user_id'];
 
-$result=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($d_user)));
-foreach($result as $data)
-{
-$profile_pic=$data['user']['profile_pic'];
-$user_name=$data['user']['user_name'];
-$wing=$data['user']['wing'];
-$flat=$data['user']['flat'];
-}
+$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($d_user))); 
 
-$flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
+	$user_name=$result_member_info["user_name"]; 
+	$profile_pic= @$result_member_info['profile_pic'];
+	$wing_flat_result=$result_member_info["wing_flat"]; 
+	
+	foreach($wing_flat_result as $data){
+		$flat=$data;
+	}
+
 ?>
 
 <div <?php if($d_user==$s_user_id) { ?> class="outt" <?php }  if($d_user!=$s_user_id) { ?> class="inn" <?php } ?>>

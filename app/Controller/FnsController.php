@@ -27,6 +27,9 @@ function user_info_via_user_id($user_id){
 	return $this->user->find('all',array('conditions'=>$conditions));
 }
 
+
+
+
 function hms_sms_ip(){
 	$this->loadmodel('assistant');
 	$conditions=array('auto_id'=>2);
@@ -137,6 +140,15 @@ function role_name_via_role_id($role_id){
 	$conditions=array('role_id'=>(int)$role_id,'society_id'=>$s_society_id);
 	$result=$this->role->find('all',array('conditions'=>$conditions));
 	return $result[0]["role"]["role_name"];
+}
+
+function wing_name_via_wing_id($wing){
+	$s_society_id=$this->Session->read('hm_society_id');
+		$this->loadmodel('wing');
+		$conditions=array("wing_id"=>$wing,'society_id'=>$s_society_id);
+		$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
+		return $wing_name=$wing_info[0]["wing"]["wing_name"];
+	
 }
 
 function all_flats_of_wing_id($wing_id){
@@ -870,7 +882,7 @@ function sending_option_results($send_to=null,$details=null){
 							$wing=@$data2["user_flat"]["wing"];
 							$flat=@$data2["user_flat"]["flat"];
 							$owner=@$data2["user_flat"]["owner"];
-							if($owner=="yes"){
+							if($owner=="yes" && (!empty($wing) && !empty($flat))){
 								$this->loadmodel('flat');
 								$conditions=array("wing_id"=>$wing,"flat_id"=>$flat);
 								$flat_info=$this->flat->find('all',array('conditions'=>$conditions));

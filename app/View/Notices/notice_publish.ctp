@@ -35,85 +35,76 @@ $category_name=$data['master_notice_category']['category_name'];
 
 $i=0;
 $current_date=date("d-m-Y");
-foreach($result_notice_publish as $data)
-{
-$notice_id=$data['notice']['notice_id'];
-$n_subject=$data['notice']['n_subject'];
-$n_message=$data['notice']['n_message'];
-$n_date=$data['notice']['n_date'];
- $n_expire_date=$data['notice']['n_expire_date'];
- $n_expire_date= date('d-m-Y',$n_expire_date->sec);
-$visible=$data['notice']['visible'];
-$sub_visible=$data['notice']['sub_visible'];
+foreach($result_notice_publish as $data){
+		
+	$notice_id=$data['notice']['notice_id'];
+	$n_subject=$data['notice']['n_subject'];
+	$n_message=$data['notice']['n_message'];
+	$n_date=$data['notice']['n_date'];
+	 $n_expire_date=$data['notice']['n_expire_date'];
+	 $n_expire_date= date('d-m-Y',$n_expire_date->sec);
+	$visible=$data['notice']['visible'];
+	$sub_visible=$data['notice']['sub_visible'];
 
-$visible_detail='';
-if($visible==1) 
-{
-	$visible_show="All Users";
-	$visible_detail="All Users";
-}
-if($visible==4) 
-{
-	$visible_show="All Owners";
-	$visible_detail="All Owners";
-}
-if($visible==5) 
-{
-	$visible_show="All Tenants";
-	$visible_detail="All Tenants";
-}
-if($visible==2) 
-{
-	unset($role_name); 
-	$visible_show="Role wise";
-	foreach ($sub_visible as $role_id) 
+	$visible_detail='';
+	if($visible=="all_users") 
 	{
-	$role_id=(int)$role_id;
-	$role_name1=$this->requestAction(array('controller' => 'hms', 'action' => 'fetch_rolename_via_roleid'), array('pass' => array($role_id)));
-		if(!empty($role_name1))
-		{
-		$role_name[]=$role_name1;
-		}
+		$visible_show="All Users";
+		$visible_detail="All Users";
 	}
-	
-	$visible_detail=implode(" , ",$role_name);
-}
 
-if($visible==3) 
-{
-	unset($wing_name);
-	$visible_show="Wing wise";
-	foreach ($sub_visible as $wing_id) 
+	if($visible=="role_wise") 
 	{
-	$wing_name1="wing-".$this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wingname_via_wingid'), array('pass' => array($wing_id)));
-		if(!empty($wing_name1))
+		unset($role_name); 
+		$visible_show="Role wise";
+		foreach ($sub_visible as $role_id) 
 		{
-		$wing_name[]=$wing_name1;
+		if($role_id!="resident_family" and $role_id!="resident" ){
+			$role_name1=$this->requestAction(array('controller' => 'Fns', 'action' => 'role_name_via_role_id'), array('pass' => array($role_id)));
+				if(!empty($role_name1))
+				{
+				$role_name[]=$role_name1;
+				}
+			}
 		}
+		$visible_detail=implode(" , ",$role_name);
 	}
-	$visible_detail=implode(" , ",$wing_name);
-}
 
-if(strtotime($n_expire_date) >= strtotime($current_date))
-{
+	if($visible=="wing_wise"){
+		
+		unset($wing_name);
+		$visible_show="Wing wise";
+		foreach ($sub_visible as $wing_id) {
+			
+			$wing_id=(int)$wing_id;
+			$wing_name1="wing-".$this->requestAction(array('controller' => 'Fns', 'action' => 'wing_name_via_wing_id'), array('pass' => array($wing_id)));
+				if(!empty($wing_name1)){
+					
+					$wing_name[]=$wing_name1;
+				}
+			}
+		$visible_detail=implode(" , ",$wing_name);
+	}
 
-$i++;
-?>
-<tr class="odd gradeX">
-    <td><?php echo $i; ?></td>
-    <td><?php echo $n_subject; ?></td>
-    <td><?php echo $n_date; ?></td>
-	 <td><?php echo $n_expire_date; ?></td>
-	 <td><a class="tooltips" style="cursor: default;" data-placement="bottom" data-original-title="<?php echo @$visible_detail; ?>"><?php echo $visible_show; ?></a></td>
-    <td><a href="<?php echo $webroot_path; ?>Notices/notice_publish_view/<?php echo $notice_id; ?>" rel='tab' class="btn mini yellow tooltips" ><i class="icon-search"></i> View Notice</a>
-	<?php if($s_role_id==1)
-	{ ?>
-	<a href='notice_move_archive/<?php echo $notice_id; ?>' class='btn mini tooltips' data-placement="bottom" data-original-title="Send to Archives " style='background-color:#FFA500;' > <i class=' icon-move'></i></a>
-<?php } ?>
-	</td>
-	
-	
-</tr>
+	if(strtotime($n_expire_date) >= strtotime($current_date)){
+
+			$i++;
+			?>
+			<tr class="odd gradeX">
+				<td><?php echo $i; ?></td>
+				<td><?php echo $n_subject; ?></td>
+				<td><?php echo $n_date; ?></td>
+				 <td><?php echo $n_expire_date; ?></td>
+				 <td><a class="tooltips" style="cursor: default;" data-placement="bottom" data-original-title="<?php echo @$visible_detail; ?>"><?php echo $visible_show; ?></a></td>
+				<td><a href="<?php echo $webroot_path; ?>Notices/notice_publish_view/<?php echo $notice_id; ?>" rel='tab' class="btn mini yellow tooltips" ><i class="icon-search"></i> View Notice</a>
+				<?php if($s_role_id==1)
+				{ ?>
+				<a href='notice_move_archive/<?php echo $notice_id; ?>' class='btn mini tooltips' data-placement="bottom" data-original-title="Send to Archives " style='background-color:#FFA500;' > <i class=' icon-move'></i></a>
+			<?php } ?>
+				</td>
+				
+				
+			</tr>
 <?php } }  ?> 
 </tbody>
 </table> 

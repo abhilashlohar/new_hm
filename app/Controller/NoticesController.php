@@ -887,7 +887,7 @@ function notice_save_reply()
 
 $n_id=(int)$this->request->query('n_id');
 
-$s_user_id=$this->Session->read('user_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 
 $date=date("d-m-Y");
@@ -927,7 +927,7 @@ if($this->RequestHandler->isAjax()){
 $this->check_user_privilages();
 $cat=$this->decode($q,'housingmatters');
 $this->set('blue_cat',$cat);
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $this->loadmodel('master_notice_category');
 $this->set('result1', $this->master_notice_category->find('all'));
 $this->loadmodel('notice');
@@ -950,7 +950,7 @@ function notice_edit($id=null)
 {
 $this->layout='session';
 $this->ath();
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $notice_id=(int)$id;
 $this->set('notice_id',$notice_id);
 $this->loadmodel('notice');
@@ -1235,7 +1235,7 @@ if($this->RequestHandler->isAjax()){
 $this->check_user_privilages();
 $this->ath();
 	
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $tenant=$this->Session->read('tenant');
 $role_id=$this->Session->read('role_id');
 $wing=$this->Session->read('wing');
@@ -1271,86 +1271,72 @@ function notice_move_archive($id=null)
 }
 
 
-function notice_publish() 
-{
-if($this->RequestHandler->isAjax()){
-	$this->layout='blank';
-	}else{
-	$this->layout='session';
-	}
-$this->ath();
-$this->check_user_privilages();
-$q=$this->request->query('con');
-$cat=$this->decode($q,'housingmatters');
-$this->set('blue_cat',$cat);
-$s_society_id=$this->Session->read('hm_society_id');
-$tenant=$this->Session->read('tenant');
-$role_id=$this->Session->read('role_id');
-$this->set('s_role_id',$role_id);
-$wing=$this->Session->read('wing');
-$current_date = new MongoDate(strtotime(date("Y-m-d")));
-$this->loadmodel('master_notice_category');
-$this->set('result1', $this->master_notice_category->find('all'));
-if($role_id==1)
-{
-$this->loadmodel('notice');
-$conditions=array("n_draft_id" => 0, "n_delete_id" => 0,"society_id"=> $s_society_id);
-$order=array('notice_id'=>'DESC');
-$res_notice=$this->notice->find('all',array('conditions'=>$conditions,'order'=>$order));
-$this->set('result_notice_publish',$res_notice);
-$current_date=date("d-m-Y");
-
-foreach($res_notice as $data)
-{
-$notice_id=$data['notice']['notice_id'];
-$n_expire_date=$data['notice']['n_expire_date'];
-$n_expire_date= date('d-m-Y', $n_expire_date->sec);
-	if(strtotime($n_expire_date) < strtotime($current_date))
-	{
-		$this->loadmodel('notice');
-		$this->notice->updateAll(array('n_draft_id'=>2),array('notice_id'=>$notice_id));
-	}
+function notice_publish(){
 	
-}
+		if($this->RequestHandler->isAjax()){
+			$this->layout='blank';
+			}else{
+			$this->layout='session';
+			}
+		$this->ath();
+		$this->check_user_privilages();
+		$q=$this->request->query('con');
+		$cat=$this->decode($q,'housingmatters');
+		$this->set('blue_cat',$cat);
+		$s_society_id=$this->Session->read('hm_society_id');
+		$s_user_id=$this->Session->read('hm_user_id');
+		$role_id=(int)$this->Session->read('role_id'); 
+		$this->set('s_role_id',$role_id);
+		//$wing=$this->Session->read('wing');
+		$current_date = new MongoDate(strtotime(date("Y-m-d")));
+		$this->loadmodel('master_notice_category');
+		$this->set('result1', $this->master_notice_category->find('all'));
+	if($role_id==1){
+	
+		$this->loadmodel('notice');
+		$conditions=array("n_draft_id" => 0, "n_delete_id" => 0,"society_id"=> $s_society_id);
+		$order=array('notice_id'=>'DESC');
+		$res_notice=$this->notice->find('all',array('conditions'=>$conditions,'order'=>$order));
+		$this->set('result_notice_publish',$res_notice);
+		$current_date=date("d-m-Y");
+
+			foreach($res_notice as $data){
+				
+				$notice_id=$data['notice']['notice_id'];
+				$n_expire_date=$data['notice']['n_expire_date'];
+				$n_expire_date= date('d-m-Y', $n_expire_date->sec);
+					if(strtotime($n_expire_date) < strtotime($current_date)){
+						$this->loadmodel('notice');
+						$this->notice->updateAll(array('n_draft_id'=>2),array('notice_id'=>$notice_id));
+					}
+					
+			}
 
 
 
-if(!empty($cat))
-{
-$this->set('red_cat',$cat);	
-$conditions=array("n_draft_id" => 0, "n_delete_id" => 0,"society_id"=> $s_society_id,'n_category_id'=>(int)$cat);
-$order=array('notice.notice_id'=>'DESC');
-$this->set('result_notice_publish',$this->notice->find('all',array('conditions'=>$conditions,'order'=>$order)));
-}
-}
-else
-{
-$this->loadmodel('notice');
-$conditions =array( '$or' => array( 
-array('n_draft_id' => 0,'society_id' =>$s_society_id,'visible' =>1,'n_expire_date' => array('$gte'=>$current_date)),
-array('n_draft_id' => 0,'society_id' =>$s_society_id,'visible' =>2,'sub_visible' =>array('$in' => array($role_id)),'n_expire_date' => array('$gte'=>$current_date)),
-array('n_draft_id' => 0,'society_id' =>$s_society_id,'visible' =>3,'sub_visible' =>array('$in' => array($wing)),'n_expire_date' => array('$gte'=>$current_date)),
-array('n_draft_id' => 0,'society_id' =>$s_society_id,'visible' =>4,'sub_visible' =>$tenant,'n_expire_date' => array('$gte'=>$current_date)),
-array('n_draft_id' => 0,'society_id' =>$s_society_id,'visible' =>5,'sub_visible' =>$tenant,'n_expire_date' => array('$gte'=>$current_date))
-));
-$order=array('notice.notice_id'=>'DESC');
-$this->set('result_notice_publish',$this->notice->find('all', array('conditions' => $conditions,'order' => $order)));
-if(!empty($cat))
-{
-$this->set('red_cat',$cat);
-$this->loadmodel('notice');
-$conditions =array( '$or' => array( 
-array('society_id' =>$s_society_id,'n_category_id'=>(int)$cat,'visible' =>1,'n_expire_date' => array('$gte'=>$current_date)),
-array('society_id' =>$s_society_id,'n_category_id'=>(int)$cat,'visible' =>2,'sub_visible' =>array('$in' => array($role_id)),'n_expire_date' => array('$gte'=>$current_date)),
-array('society_id' =>$s_society_id,'n_category_id'=>(int)$cat,'visible' =>3,'sub_visible' =>array('$in' => array($wing)),'n_expire_date' => array('$gte'=>$current_date)),
-array('society_id' =>$s_society_id,'n_category_id'=>(int)$cat,'visible' =>4,'sub_visible' =>$tenant,'n_expire_date' => array('$gte'=>$current_date)),
-array('society_id' =>$s_society_id,'n_category_id'=>(int)$cat,'visible' =>5,'sub_visible' =>$tenant,'n_expire_date' => array('$gte'=>$current_date))
-));
-$order=array('notice.notice_id'=>'DESC');
-$this->set('result_notice_publish',$this->notice->find('all', array('conditions' => $conditions,'order' => $order)));
-}
+			if(!empty($cat)){
+			
+				$this->set('red_cat',$cat);	
+				$conditions=array("n_draft_id" => 0, "n_delete_id" => 0,"society_id"=> $s_society_id,'n_category_id'=>(int)$cat);
+				$order=array('notice.notice_id'=>'DESC');
+				$this->set('result_notice_publish',$this->notice->find('all',array('conditions'=>$conditions,'order'=>$order)));
+			}
+	}else{
+			$this->loadmodel('notice');
+			$conditions =array('n_draft_id' => 0,'society_id' =>$s_society_id,'visible_user_id'=>array('$in' => array($s_user_id)),'n_expire_date' => array('$gte'=>$current_date));
 
-}
+			$order=array('notice.notice_id'=>'DESC');
+			$this->set('result_notice_publish',$this->notice->find('all', array('conditions' => $conditions,'order' => $order)));
+			if(!empty($cat)){
+				
+					$this->set('red_cat',$cat);
+					$this->loadmodel('notice');
+					$conditions =array('n_draft_id' => 0,'society_id' =>$s_society_id,'n_category_id'=>(int)$cat,'visible_user_id'=>array('$in' => array($s_user_id)),'n_expire_date' => array('$gte'=>$current_date));
+					$order=array('notice.notice_id'=>'DESC');
+					$this->set('result_notice_publish',$this->notice->find('all', array('conditions' => $conditions,'order' => $order)));
+			}
+
+	}
 
 }
 ///////////////////////////////// End Notice board ////////////////////////////////
@@ -1389,8 +1375,8 @@ function edit_notice($id=null){
 	}
 	$this->ath();
 	//$this->check_user_privilages();
-	$s_society_id=$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$s_role_id=$this->Session->read('role_id'); 
 	$this->loadmodel('master_notice_category');
 	$this->set('result1', $this->master_notice_category->find('all'));
@@ -1428,6 +1414,7 @@ function submit_notice(){
 	foreach($result_society as $child)	{
 		@$notice=$child['society']['notice'];
 		 @$s_duser_id[]=$child['society']['user_id'];
+		 $society_name=$child['society']['society_name'];
 	}
 	
 	
@@ -1489,8 +1476,6 @@ if($post_data['post_type']==1){
 	
 		$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 		
-		
-		
 		if($visible=="all_users"){
 			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,null)));
 			$sub_visible=null;
@@ -1504,165 +1489,151 @@ if($post_data['post_type']==1){
 			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
 			
 		}
-		$notice_id=$this->autoincrement('notice','notice_id');
+			$notice_id=$this->autoincrement('notice','notice_id');
 		
 		
 		
-		$this->loadmodel('email');
-		$conditions=array('auto_id'=>2);
-		$result_email=$this->email->find('all',array('conditions'=>$conditions));
-		foreach ($result_email as $collection) 
-		{
-		$from=$collection['email']['from'];
-		}
-		$from_name="HousingMatters";
-		$reply="donotreply@housingmatters.in";
-		$category_name=$this->notice_category_name($category_id);
-		$society_result=$this->society_name($s_society_id);
-		foreach($society_result as $data)
-		{
-		$society_name=$data['society']['society_name'];
-		}
+			$this->loadmodel('email');
+			$conditions=array('auto_id'=>2);
+			$result_email=$this->email->find('all',array('conditions'=>$conditions));
+			foreach ($result_email as $collection){
+				
+				$from=$collection['email']['from'];
+			}
+			$from_name="HousingMatters";
+			$reply="donotreply@housingmatters.in";
+			$category_name=$this->notice_category_name($category_id);
+			
 
 		
-foreach($receivers as $user_id=>$data){
+	foreach($receivers as $user_id=>$data){
 	
-	$to=$data['email'];
-	$user_name=$data['user_name'];
-	$recieve_info[]=(int)$user_id;
-	$d_user_id = @$user_id;	
-	$da_user_id[]=$d_user_id;		
-		
+		$to=$data['email'];
+		$user_name=$data['user_name'];
+		$recieve_info[]=(int)$user_id;
+		$d_user_id = @$user_id;	
+		$da_user_id[]=$d_user_id;		
 
-		
-		
-
-$message_web='<div style="margin:0;padding:0" dir="ltr" bgcolor="#ffffff"><div class="adM">
-	</div><table style="border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%;">
-		<tbody>
-			<tr>
-				<td style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;background:#ffffff">
-					<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+				$message_web='<div style="margin:0;padding:0" dir="ltr" bgcolor="#ffffff"><div class="adM">
+					</div><table style="border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%;">
 						<tbody>
 							<tr>
-								<td style="line-height:20px" colspan="3" height="20">&nbsp;</td>
-							</tr>
-							<tr>
-								<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-								<td>
-								<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
-								<tbody>
-								<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
-								<tr>
-								<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#150cd117ec15fdb9_" style="color:#3b5998;text-decoration:none"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
-								<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-								<td width="100%"><a href="#150cd117ec15fdb9_" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px"><span style="color:#00a0e3">Housing</span><span style="color:#777776">Matters</span></a></td>
-								<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
-									
-								</td>
-								</tr>
-								<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
-								</tbody>
-								</table>
-								</td>
-								<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-							</tr>
-							<tr>
-								<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-								<td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="line-height:28px" height="28">&nbsp;</td></tr><tr><td><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:21px;color:#141823">Hello  '.$user_name.'<br>A new notice has been posted on your society Notice Board.</span></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr><tr><td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="font-size:11px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;border:solid 1px #e5e5e5;border-radius:2px;display:block"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="padding:5px 10px;background:#269abc;border-top:#cccccc 1px solid;border-bottom:#cccccc 1px solid"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:19px;color:#fff">'.$notice_subject.'</span></td></tr><tr>
-								<td style="padding:5px">
-								
-								<table style="border-collapse:collapse" cellpadding="0" cellspacing="0">
-									<tr>
+								<td style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;background:#ffffff">
+									<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+										<tbody>
+											<tr>
+												<td style="line-height:20px" colspan="3" height="20">&nbsp;</td>
+											</tr>
+											<tr>
+												<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+												<td>
+												<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+												<tbody>
+												<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+												<tr>
+												<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#150cd117ec15fdb9_" style="color:#3b5998;text-decoration:none"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
+												<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+												<td width="100%"><a href="#150cd117ec15fdb9_" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px"><span style="color:#00a0e3">Housing</span><span style="color:#777776">Matters</span></a></td>
+												<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
+													
+												</td>
+												</tr>
+												<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+												</tbody>
+												</table>
+												</td>
+												<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+											</tr>
+											<tr>
+												<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+												<td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="line-height:28px" height="28">&nbsp;</td></tr><tr><td><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:21px;color:#141823">Hello  '.$user_name.'<br>A new notice has been posted on your society Notice Board.</span></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr><tr><td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="font-size:11px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;border:solid 1px #e5e5e5;border-radius:2px;display:block"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="padding:5px 10px;background:#269abc;border-top:#cccccc 1px solid;border-bottom:#cccccc 1px solid"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:19px;color:#fff">'.$notice_subject.'</span></td></tr><tr>
+												<td style="padding:5px">
+												
+												<table style="border-collapse:collapse" cellpadding="0" cellspacing="0">
+													<tr>
+														<td>
+														<span style="color:#adabab;font-size:12px">Category : '.$category_name.'  </span>
+														</td>
+														<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
+														<td>
+														<span style="color:#adabab;font-size:12px">Sent to : '.$visible.'  </span>
+														</td>
+														<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
+														<td>
+														<span style="color:#adabab;font-size:12px">Date :'.$date.'</span>
+														</td>
+														<td></td>
+													</tr>
+												</table>
+												</td>
+											</tr>
+											<tr>
+												<td style="padding:5px" height="10">'.$code.'</td>
+											</tr>
+										</tbody>
+									</table></td></tr></tbody></table></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr></tbody></table></td>
+												<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+				</tr>						<tr>
+												<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+												<td>
+													<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="line-height:2px" colspan="3" height="2">&nbsp;</td></tr><tr><td><a href="#150cd117ec15fdb9_" style="color:#3b5998;text-decoration:none"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-collapse:collapse;border-radius:2px;text-align:center;display:block;border:1px solid #026a9e;background:#008ed5;padding:7px 16px 11px 16px"><a href="'.$ip.$this->webroot.'Notices/notice_publish_view/'.$notice_id.'" style="color:#3b5998;text-decoration:none;display:block" target="_blank"><center><font size="3"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;white-space:nowrap;font-weight:bold;vertical-align:middle;color:#ffffff;font-size:14px;line-height:14px">View on HousingMatters</span></font></center></a></td></tr></tbody></table></a></td><td style="display:block;width:10px" width="10">&nbsp;&nbsp;&nbsp;</td><td><a href="#150cd117ec15fdb9_" style="color:#3b5998;text-decoration:none"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr></tr></tbody></table></a></td><td width="100%"></td></tr><tr><td style="line-height:32px" colspan="3" height="32">&nbsp;</td></tr></tbody></table>
+												</td>
+												<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+											</tr>
+											
+											<tr>
+												<td  width="15">&nbsp;&nbsp;&nbsp;</td>
 										<td>
-										<span style="color:#adabab;font-size:12px">Category : '.$category_name.'  </span>
+										<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+											<tbody>
+												
+												<tr>
+												<td  align="left" valign="middle" width="">
+												Thank you <br/>HousingMatters (Support Team)<br/>www.housingmatters.in
+												
+												</td>
+												<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+												
+												
+												</tr>
+												
+												</tbody>
+										</table>
 										</td>
-										<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
-										<td>
-										<span style="color:#adabab;font-size:12px">Sent to : '.$visible.'  </span>
-										</td>
-										<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
-										<td>
-										<span style="color:#adabab;font-size:12px">Date :'.$date.'</span>
-										</td>
-										<td></td>
+												
 									</tr>
-								</table>
+											
+										</tbody>
+									</table>
 								</td>
-							</tr>
-							<tr>
-								<td style="padding:5px" height="10">'.$code.'</td>
 							</tr>
 						</tbody>
-					</table></td></tr></tbody></table></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr></tbody></table></td>
-								<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-</tr>						<tr>
-								<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-								<td>
-									<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="line-height:2px" colspan="3" height="2">&nbsp;</td></tr><tr><td><a href="#150cd117ec15fdb9_" style="color:#3b5998;text-decoration:none"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-collapse:collapse;border-radius:2px;text-align:center;display:block;border:1px solid #026a9e;background:#008ed5;padding:7px 16px 11px 16px"><a href="'.$ip.$this->webroot.'Notices/notice_publish_view/'.$notice_id.'" style="color:#3b5998;text-decoration:none;display:block" target="_blank"><center><font size="3"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;white-space:nowrap;font-weight:bold;vertical-align:middle;color:#ffffff;font-size:14px;line-height:14px">View on HousingMatters</span></font></center></a></td></tr></tbody></table></a></td><td style="display:block;width:10px" width="10">&nbsp;&nbsp;&nbsp;</td><td><a href="#150cd117ec15fdb9_" style="color:#3b5998;text-decoration:none"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr></tr></tbody></table></a></td><td width="100%"></td></tr><tr><td style="line-height:32px" colspan="3" height="32">&nbsp;</td></tr></tbody></table>
-								</td>
-								<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-							</tr>
-							
-							<tr>
-								<td  width="15">&nbsp;&nbsp;&nbsp;</td>
-						<td>
-						<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
-							<tbody>
-								
-								<tr>
-								<td  align="left" valign="middle" width="">
-								Thank you <br/>HousingMatters (Support Team)<br/>www.housingmatters.in
-								
-								</td>
-								<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-								
-								
-								</tr>
-								
-								</tbody>
-						</table>
-						</td>
-								
-					</tr>
-							
-						</tbody>
-					</table>
-				</td>
-			</tr>
-		</tbody>
-	</table><div class="yj6qo"></div><div class="adL">
-</div></div>';
+					</table><div class="yj6qo"></div><div class="adL">
+				</div></div>';
 
 		$this->loadmodel('notification_email');
 		$conditions7=array("module_id" =>1,"user_id"=>$d_user_id,'chk_status'=>0);
 		$result5=$this->notification_email->find('all',array('conditions'=>$conditions7));
 		$n=sizeof($result5);
-		if($n>0)
-		{
+		if($n>0){
 			
-		@$subject.= '['. $society_name . ']  - '.' New Notice : '.'     '.''.$sub.'';
-		$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
-		$subject="";
+			@$subject.= '['. $society_name . ']  - '.' New Notice : '.'     '.''.$sub.'';
+			$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+			$subject="";
 		}	
  }
-		
-		
-		
-		//$recieve_info=$this->visible_subvisible($visible,$sub_visible);
-		
-		 $sub_visible=explode(",",$sub_visible);
+	
+	$sub_visible=explode(",",$sub_visible);
 		if(isset($_FILES['file'])){
-			$target = "notice_file/";
-			$file_name=@$_FILES['file']['name'];
-			$file_tmp_name =$_FILES['file']['tmp_name'];
-			$target=@$target.basename($file_name);
-			move_uploaded_file($file_tmp_name,@$target);
-		}
-	if(!empty($file_name))
-				{
-				//@$file_att='<br/><a href="'.$ip.'/'.$this->webroot.'notice_file/'.$file_name.'" download>Download attachment</a><br/><br/>';
-				}
+				$target = "notice_file/";
+				$file_name=@$_FILES['file']['name'];
+				$file_tmp_name =$_FILES['file']['tmp_name'];
+				$target=@$target.basename($file_name);
+				move_uploaded_file($file_tmp_name,@$target);
+			}
+			if(!empty($file_name)){
+					//@$file_att='<br/><a href="'.$ip.'/'.$this->webroot.'notice_file/'.$file_name.'" download>Download attachment</a><br/><br/>';
+			}
 
 		
 		
@@ -1671,34 +1642,26 @@ $message_web='<div style="margin:0;padding:0" dir="ltr" bgcolor="#ffffff"><div c
 		$this->loadmodel('notice');
 		$this->notice->save(array('notice_id' => $notice_id, 'user_id' => $s_user_id, 'society_id' => $s_society_id, 'n_category_id' => $category_id ,'n_subject' => $notice_subject , 'n_expire_date' => $notice_expire_date, 'n_attachment' => @$file_name, 'n_message' => $code,'n_date' => $date, 'n_time' => $time, 'n_delete_id' => 0,'n_draft_id' => 0,'visible' => $visible,'sub_visible' => $sub_visible,'visible_user_id' => $recieve_info,'allowed' => $allowed));
 		
-
-		//$da_user_id[]=$d_user_id;
-		$this->send_notification('<span class="label label-info" ><i class="icon-bullhorn"></i></span>','New Notice published - <b>'.$notice_subject.'</b> by',2,$notice_id,$this->webroot.'Notices/notice_publish_view/'.$notice_id,$s_user_id,$da_user_id);
-
 		$output = json_encode(array('type'=>'created', 'text' =>'Your notice has been created and sent via email to all users selected by you.'));
 		die($output);
 	
-}
-if($post_data['post_type']==2){
-	$file_name="";
-	if(isset($_FILES['file'])){
-		$target = "notice_file/";
-		$file_name=$_FILES['file']['name'];
-		$file_tmp_name =$_FILES['file']['tmp_name'];
-		$target=@$target.basename($file_name);
-		move_uploaded_file($file_tmp_name,@$target);
-		}
-	
-	$notice_id=$this->autoincrement('notice','notice_id');	
-	$this->loadmodel('notice');
-	$this->notice->save(array('notice_id' => $notice_id, 'user_id' => $s_user_id, 'society_id' => $s_society_id, 'n_category_id' => $category_id ,'n_subject' => $notice_subject , 'n_expire_date' => $notice_expire_date, 'n_attachment' => $file_name , 'n_message' => $code,'n_date' => $date, 'n_time' => $time, 'n_delete_id' => 0,'n_draft_id' => 1,'visible' => $visible,'sub_visible' => $sub_visible ,'allowed' => $allowed));
-	$output = json_encode(array('type'=>'draft', 'text' =>'Your notice has been saved in Draft box. You can edit/post later.'));
-	die($output);
-}	
-	
-		
-	
-	
+ }
+		if($post_data['post_type']==2){
+			$file_name="";
+			if(isset($_FILES['file'])){
+					$target = "notice_file/";
+					$file_name=$_FILES['file']['name'];
+					$file_tmp_name =$_FILES['file']['tmp_name'];
+					$target=@$target.basename($file_name);
+					move_uploaded_file($file_tmp_name,@$target);
+				}
+					$sub_visible=explode(",",$sub_visible);
+					$notice_id=$this->autoincrement('notice','notice_id');	
+					$this->loadmodel('notice');
+					$this->notice->save(array('notice_id' => $notice_id, 'user_id' => $s_user_id, 'society_id' => $s_society_id, 'n_category_id' => $category_id ,'n_subject' => $notice_subject , 'n_expire_date' => $notice_expire_date, 'n_attachment' => $file_name , 'n_message' => $code,'n_date' => $date, 'n_time' => $time, 'n_delete_id' => 0,'n_draft_id' => 1,'visible' => $visible,'sub_visible' => $sub_visible ,'allowed' => $allowed));
+					$output = json_encode(array('type'=>'draft', 'text' =>'Your notice has been saved in Draft box. You can edit/post later.'));
+					die($output);
+		}	
 	
 }
 
@@ -1710,14 +1673,15 @@ function submit_notice_edit($id=null){
 	$this->layout=null;
 	$post_data=$this->request->data;
 	$this->ath();
-	$s_society_id=$this->Session->read('society_id');
+	$s_society_id=$this->Session->read('hm_society_id');
 	$s_role_id=$this->Session->read('role_id'); 
-	$s_user_id=$this->Session->read('user_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$date=date('d-m-Y');
 	$time = date(' h:i a', time());
 	$result_society=$this->society_name($s_society_id);
 	foreach($result_society as $child)	{
 		@$notice=$child['society']['notice'];
+		$society_name=$child['society']['society_name'];
 	}
 	
 	if(empty($post_data['notice_subject'])){
@@ -1751,290 +1715,167 @@ function submit_notice_edit($id=null){
 	$sub=$notice_subject;
 	$notice_expire_date = new MongoDate(strtotime(date("Y-m-d", strtotime($post_data['notice_expire_date']))));
 	$code=$post_data['code'];
-	$visible=(int)$result5[0]['notice']['visible'];
+	$visible=$result5[0]['notice']['visible'];
 	$sub_visible=$result5[0]['notice']['sub_visible'];
+	$sub_new=implode(',',$sub_visible);
+
+		@$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
+		
+		if($visible=="all_users"){
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,null)));
+			$sub_visible=null;
+		}
+		if($visible=="role_wise"){
+					
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_new)));
+			
+		}elseif($visible=="wing_wise"){
+		
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_new)));
+			
+		}
 	
-
-
-
-	if($notice==1 && $s_role_id!=3){
-		$notice_id=$this->autoincrement('notice','notice_id');
-		$this->loadmodel('notice');
-		$this->notice->updateAll(array('notice_id' => $notice_id, 'user_id' => $s_user_id, 'society_id' => $s_society_id, 'n_category_id' => $category_id ,'n_subject' => $notice_subject , 'n_expire_date' => $notice_expire_date, 'n_attachment' => "" , 'n_message' => $code,'n_date' => $date, 'n_time' => $time, 'n_delete_id' => 0,'n_draft_id' => 4,'visible' => $visible,'sub_visible' => $sub_visible),array('notice_id'=>$notice_id_q));
 		
-		$output = json_encode(array('type'=>'approve', 'text' =>'Your notice has created and sent for approval to your society Admin/Committee.'));
-		die($output);
-	}else{
-		
-		 
-		@$ip=$this->hms_email_ip();
-		
-		
-		$recieve_info=$this->visible_subvisible($visible,$sub_visible);
-		
-		$notice_id=$this->autoincrement('notice','notice_id');
-		$this->loadmodel('notice');
-		$this->notice->updateAll(array('notice_id' => $notice_id, 'user_id' => $s_user_id, 'society_id' => $s_society_id, 'n_category_id' => $category_id ,'n_subject' => $notice_subject , 'n_expire_date' => $notice_expire_date, 'n_attachment' => "" , 'n_message' => $code,'n_date' => $date, 'n_time' => $time, 'n_delete_id' => 0,'n_draft_id' => 0,'visible' => $visible,'sub_visible' => $sub_visible,'visible_user_id' => $recieve_info[2] ),array('notice_id'=>$notice_id_q));
-		
-		
-		
+		//$notice_id=$this->autoincrement('notice','notice_id');
 		
 		$this->loadmodel('email');
 		$conditions=array('auto_id'=>2);
 		$result_email=$this->email->find('all',array('conditions'=>$conditions));
-		foreach ($result_email as $collection) 
-		{
-		$from=$collection['email']['from'];
-		}
-		$from_name="HousingMatters";
-		$reply="donotreply@housingmatters.in";
-		$category_name=$this->notice_category_name($category_id);
-		$society_result=$this->society_name($s_society_id);
-		foreach($society_result as $data)
-		{
-		$society_name=$data['society']['society_name'];
-		}
+			foreach ($result_email as $collection){
+				
+				$from=$collection['email']['from'];
+			}
+			$from_name="HousingMatters";
+			$reply="donotreply@housingmatters.in";
+			$category_name=$this->notice_category_name($category_id);
+			
 
-		
-		foreach($recieve_info[0] as $user_id=>$email)
-		{
-		$to = @$email;
-		$d_user_id = @$user_id;	 
-		$result_user=$this->profile_picture($user_id);
-		$user_name=$result_user[0]['user']['user_name'];
-
-		
-		/*  $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
-          <tbody>
-			<tr>
-                <td>
-                    <table width="100%" cellpadding="0" cellspacing="0">
-                        <tbody>
-						
-								<tr>
-									<td width="40%" style="padding: 10px 0px 0px 10px;"><img src="'.$ip.$this->webroot.'as/hm/hm-logo.png" style="max-height: 60px; " height="50px" width="150" /></td>
-									<td width="60%" align="right" valign="middle"  style="padding: 7px 10px 0px 0px;">
-									<a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img src="'.$ip.$this->webroot.'as/hm/fb.png"></a>
-									<a href="#" target="_blank"><img src="'.$ip.$this->webroot.'as/hm/tw.png"></a>
-									<a href=""><img src="'.$ip.$this->webroot.'as/hm/ln.png" class="test" style="margin-left:5px;"></a>
-									</td>
-								</tr>
-								
-									
-								
-						</tbody>
-					</table>
-					
-                    <table width="100%" cellpadding="0" cellspacing="0">
-                        <tbody>
-						
-								<tr>
-										<td style="padding:5px;" width="100%" align="left">
-										<span style="color:rgb(100,100,99)" align="justify"> Dear  '.$user_name.' </span> <br>
-										</td>
-								
-								
-								</tr>
-								
-								<tr>
-									<td style="padding:5px;" width="100%" align="left">
-											<span style="color:rgb(100,100,99)"> A new notice has been posted on your society Notice Board. </span>
-									</td>
-																
-								</tr>
-								
-								
-								<tr>
-									<td>
-									
-										<table  cellpadding="5" cellspacing="0" width="100%;"border="1" style="border:1px solid #e5e5e5;">
-						
-										<tr>
-										<td align="center" style="background-color:#00A0E3;color:white;" >Date</td>
-										<td align="left" style="background-color:#f8f8f8;font-size:12px;" >'.$date.'</td>
-										</tr>
-										
-										<tr>
-										<td align="center" style="background-color:#00A0E3;color:white;" >Subject</td>
-										<td align="left" style="background-color:#f8f8f8;font-size:12px;" >'.$notice_subject.'</td>
-										</tr>
-										
-										
-										<tr>
-										<td align="center" style="background-color:#00A0E3;color:white;" >Category</td>
-										<td align="left" style="background-color:#f8f8f8;font-size:12px;" >'.$category_name.'</td>
-										</tr>
-										
-										<tr>
-										<td align="center" style="background-color:#00A0E3;color:white;" >Sent to</td>
-										<td align="left" style="background-color:#f8f8f8;font-size:12px;" >'.$recieve_info[3].'</td>
-										</tr>
-									
-										</table> 
-									
-									</td>
-								
-								
-								
-								</tr>
-								
-								<tr>
-										<td style="padding:5px;" width="100%" align="left">
-										<p style="font-size:16px;"> <strong>Notice Description:</strong></p>
-										<p align="justify">'.$code.'</p>
-										</td>
-								</tr>
-					
-								<tr>
-										<td style="padding:5px;" width="100%" align="center">
-										<span style="color:rgb(100,100,99)">To view / respond <a href="'.$ip.$this->webroot.'" style="width:100px; height:30px;"><span style="background-color:#00A0E3;color:white;"><button style="width:100px; height:30px;  background-color:#00A0E3;color:white" id="bg_color_m"> Click Here </button> </span></a> </span>
-										</td>
-								</tr>
-					
-
-								<tr>
-								<td style="font-size:12px;" width="100%" align="left">
-								<P align="justify">For any software related queries, please contact <span style="color:#00A0E3;"> support@housingmatters.in </span></p>
-								<p align="justify">	www.housingmatters.co.in </p>
-								</td>
-								</tr>
-
-					
-					
-					</table>
-					
-				</td>
-			</tr>
-
-        </tbody>
-</table>';
-*/
+foreach($receivers as $user_id=>$data){
+	
+	$to=$data['email'];
+	$user_name=$data['user_name'];
+	$recieve_info[]=(int)$user_id;
+	$d_user_id = @$user_id;	
 
 
-
-
-	 $message_web='<div style="margin:0;padding:0" dir="ltr" bgcolor="#ffffff"><div class="adM">
-	</div><table style="border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%;">
-		<tbody>
-			<tr>
-				<td style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;background:#ffffff">
+			 $message_web='<div style="margin:0;padding:0" dir="ltr" bgcolor="#ffffff"><div class="adM">
+					</div><table style="border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%;">
+					<tbody>
+					<tr>
+					<td style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;background:#ffffff">
 					<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
-						<tbody>
-							<tr>
-								<td style="line-height:20px" colspan="3" height="20">&nbsp;</td>
-							</tr>
-							<tr>
-								<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-								<td>
-								<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
-								<tbody>
-								<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
-								<tr>
-								<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#150cd117ec15fdb9_" style="color:#3b5998;text-decoration:none"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
-								<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-								<td width="100%"><a href="#150cd117ec15fdb9_" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px"><span style="color:#00a0e3">Housing</span><span style="color:#777776">Matters</span></a></td>
-								<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
-									
-								</td>
-								</tr>
-								<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
-								</tbody>
-								</table>
-								</td>
-								<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-							</tr>
-							<tr>
-								<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-								<td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="line-height:28px" height="28">&nbsp;</td></tr><tr><td><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:21px;color:#141823">Hello  '.$user_name.'<br>A new notice has been posted on your society Notice Board.</span></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr><tr><td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="font-size:11px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;border:solid 1px #e5e5e5;border-radius:2px;display:block"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="padding:5px 10px;background:#269abc;border-top:#cccccc 1px solid;border-bottom:#cccccc 1px solid"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:19px;color:#fff">'.$notice_subject.'</span></td></tr><tr>
-								<td style="padding:5px">
-								
-								<table style="border-collapse:collapse" cellpadding="0" cellspacing="0">
-									<tr>
-										<td>
-										<span style="color:#adabab;font-size:12px">Category : '.$category_name.'  </span>
-										</td>
-										<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
-										<td>
-										<span style="color:#adabab;font-size:12px">Sent to : '.$recieve_info[3].'  </span>
-										</td>
-										<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
-										<td>
-										<span style="color:#adabab;font-size:12px">Date :'.$date.'</span>
-										</td>
-										<td></td>
-									</tr>
-								</table>
-								</td>
-							</tr>
-							<tr>
-								<td style="padding:5px" height="10">'.$code.'</td>
-							</tr>
-						</tbody>
-					</table></td></tr></tbody></table></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr></tbody></table></td>
-								<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-</tr>						<tr>
-								<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-								<td>
-									<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="line-height:2px" colspan="3" height="2">&nbsp;</td></tr><tr><td><a href="#150cd117ec15fdb9_" style="color:#3b5998;text-decoration:none"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-collapse:collapse;border-radius:2px;text-align:center;display:block;border:1px solid #026a9e;background:#008ed5;padding:7px 16px 11px 16px"><a href="'.$ip.$this->webroot.'Notices/notice_publish_view/'.$notice_id.'" style="color:#3b5998;text-decoration:none;display:block" target="_blank"><center><font size="3"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;white-space:nowrap;font-weight:bold;vertical-align:middle;color:#ffffff;font-size:14px;line-height:14px">View on HousingMatters</span></font></center></a></td></tr></tbody></table></a></td><td style="display:block;width:10px" width="10">&nbsp;&nbsp;&nbsp;</td><td><a href="#150cd117ec15fdb9_" style="color:#3b5998;text-decoration:none"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr></tr></tbody></table></a></td><td width="100%"></td></tr><tr><td style="line-height:32px" colspan="3" height="32">&nbsp;</td></tr></tbody></table>
-								</td>
-								<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-							</tr>
-							
-<tr>
-	<td  width="15">&nbsp;&nbsp;&nbsp;</td>
-	<td>
-	<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
-		<tbody>
-			
-			<tr>
-			<td  align="left" valign="middle" width="">
-			Thank you <br/>HousingMatters (Support Team)<br/>www.housingmatters.in
-			
-			</td>
-			<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-			
-			
-			</tr>
-			
-			</tbody>
-	</table>
-	</td>
-			
-</tr>
-							
-						</tbody>
+					<tbody>
+					<tr>
+					<td style="line-height:20px" colspan="3" height="20">&nbsp;</td>
+					</tr>
+					<tr>
+					<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+					<td>
+					<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+					<tbody>
+					<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+					<tr>
+					<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#150cd117ec15fdb9_" style="color:#3b5998;text-decoration:none"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
+					<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+					<td width="100%"><a href="#150cd117ec15fdb9_" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px"><span style="color:#00a0e3">Housing</span><span style="color:#777776">Matters</span></a></td>
+					<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
+
+					</td>
+					</tr>
+					<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+					</tbody>
 					</table>
-				</td>
-			</tr>
-		</tbody>
-	</table><div class="yj6qo"></div><div class="adL">
-</div></div>';
+					</td>
+					<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+					</tr>
+					<tr>
+					<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+					<td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="line-height:28px" height="28">&nbsp;</td></tr><tr><td><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:21px;color:#141823">Hello  '.$user_name.'<br>A new notice has been posted on your society Notice Board.</span></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr><tr><td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="font-size:11px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;border:solid 1px #e5e5e5;border-radius:2px;display:block"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="padding:5px 10px;background:#269abc;border-top:#cccccc 1px solid;border-bottom:#cccccc 1px solid"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:19px;color:#fff">'.$notice_subject.'</span></td></tr><tr>
+					<td style="padding:5px">
+
+					<table style="border-collapse:collapse" cellpadding="0" cellspacing="0">
+					<tr>
+					<td>
+					<span style="color:#adabab;font-size:12px">Category : '.$category_name.'  </span>
+					</td>
+					<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
+					<td>
+					<span style="color:#adabab;font-size:12px">Sent to : '.$visible.'  </span>
+					</td>
+					<td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
+					<td>
+					<span style="color:#adabab;font-size:12px">Date :'.$date.'</span>
+					</td>
+					<td></td>
+					</tr>
+					</table>
+					</td>
+					</tr>
+					<tr>
+					<td style="padding:5px" height="10">'.$code.'</td>
+					</tr>
+					</tbody>
+					</table></td></tr></tbody></table></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr></tbody></table></td>
+					<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+					</tr>						<tr>
+					<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+					<td>
+					<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="line-height:2px" colspan="3" height="2">&nbsp;</td></tr><tr><td><a href="#150cd117ec15fdb9_" style="color:#3b5998;text-decoration:none"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-collapse:collapse;border-radius:2px;text-align:center;display:block;border:1px solid #026a9e;background:#008ed5;padding:7px 16px 11px 16px"><a href="'.$ip.$this->webroot.'Notices/notice_publish_view/'.$notice_id_q.'" style="color:#3b5998;text-decoration:none;display:block" target="_blank"><center><font size="3"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;white-space:nowrap;font-weight:bold;vertical-align:middle;color:#ffffff;font-size:14px;line-height:14px">View on HousingMatters</span></font></center></a></td></tr></tbody></table></a></td><td style="display:block;width:10px" width="10">&nbsp;&nbsp;&nbsp;</td><td><a href="#150cd117ec15fdb9_" style="color:#3b5998;text-decoration:none"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr></tr></tbody></table></a></td><td width="100%"></td></tr><tr><td style="line-height:32px" colspan="3" height="32">&nbsp;</td></tr></tbody></table>
+					</td>
+					<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+					</tr>
+
+					<tr>
+					<td  width="15">&nbsp;&nbsp;&nbsp;</td>
+					<td>
+					<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+					<tbody>
+
+					<tr>
+					<td  align="left" valign="middle" width="">
+					Thank you <br/>HousingMatters (Support Team)<br/>www.housingmatters.in
+
+					</td>
+					<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+
+
+					</tr>
+
+					</tbody>
+					</table>
+					</td>
+
+					</tr>
+
+					</tbody>
+					</table>
+					</td>
+					</tr>
+					</tbody>
+					</table><div class="yj6qo"></div><div class="adL">
+					</div></div>';
 	
 		$this->loadmodel('notification_email');
 		$conditions7=array("module_id" =>1,"user_id"=>$d_user_id,'chk_status'=>0);
 		$result5=$this->notification_email->find('all',array('conditions'=>$conditions7));
 		$n=sizeof($result5);
-		if($n>0)
-		{
-			@$subject.= '['. $society_name . ']  - '.' New Notice : '.'     '.''.$sub.'';
-			$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
-			$subject="";
-		}	
-		}
-
-
-		$da_user_id[]=$d_user_id;
-		$this->send_notification('<span class="label label-info" ><i class="icon-bullhorn"></i></span>','New Notice published - <b>'.$notice_subject.'</b> by',2,$notice_id,'notice_publish_view?con='.$notice_id,$s_user_id,$da_user_id);
+			if($n>0){
+				
+				@$subject.= '['. $society_name . ']  - '.' New Notice : '.'     '.''.$sub.'';
+				$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+				$subject="";
+			}	
+}
+			
+		$this->loadmodel('notice');
+		$this->notice->updateAll(array('user_id' => $s_user_id, 'society_id' => $s_society_id, 'n_category_id' => $category_id ,'n_subject' => $notice_subject , 'n_expire_date' => $notice_expire_date, 'n_attachment' => "" , 'n_message' => $code,'n_date' => $date, 'n_time' => $time, 'n_delete_id' => 0,'n_draft_id' => 0,'visible' => $visible,'sub_visible' => $sub_visible,'visible_user_id' => $recieve_info),array('notice_id'=>$notice_id_q));
+		
+		//$da_user_id[]=$d_user_id;
+		//$this->send_notification('<span class="label label-info" ><i class="icon-bullhorn"></i></span>','New Notice published - <b>'.$notice_subject.'</b> by',2,$notice_id,'notice_publish_view?con='.$notice_id,$s_user_id,$da_user_id);
 
 		$output = json_encode(array('type'=>'created', 'text' =>'Your notice has been created and sent via email to all users selected by you.'));
 		die($output);
-	}
 
-	
-	
-		
-	
-	
 	
 }
 

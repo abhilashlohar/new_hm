@@ -1283,7 +1283,7 @@ $this->check_user_privilages();
 $q=$this->request->query('con');
 $cat=$this->decode($q,'housingmatters');
 $this->set('blue_cat',$cat);
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $tenant=$this->Session->read('tenant');
 $role_id=$this->Session->read('role_id');
 $this->set('s_role_id',$role_id);
@@ -1291,7 +1291,7 @@ $wing=$this->Session->read('wing');
 $current_date = new MongoDate(strtotime(date("Y-m-d")));
 $this->loadmodel('master_notice_category');
 $this->set('result1', $this->master_notice_category->find('all'));
-if($role_id==3)
+if($role_id==1)
 {
 $this->loadmodel('notice');
 $conditions=array("n_draft_id" => 0, "n_delete_id" => 0,"society_id"=> $s_society_id);
@@ -1486,7 +1486,7 @@ function submit_notice(){
 if($post_data['post_type']==1){
 	
 		
-		pr($sub_visible); 
+	
 		$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 		
 		

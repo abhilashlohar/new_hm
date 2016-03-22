@@ -173,7 +173,7 @@ $(document).ready(function() {
 		var visible=$('input:radio[name=send_to]:checked').val();
 		m_data.append( 'visible', visible);
 		m_data.append( 'allowed', $('input:checkbox[name=allowed]:checked').val());
-		alert(visible);
+		
 		if(visible=="role_wise"){
 			var allVals = [];
 			$('.requirecheck1:checked').each(function() {
@@ -210,9 +210,9 @@ $(document).ready(function() {
 			processData: false,
 			contentType: false,
 			type: 'POST',
-			//dataType:'json',
+			dataType:'json',
 			}).done(function(response) {
-				alert(response);
+				
 			$("#output").html(response);
 			if(response.type=='approve'){
 				$(".portlet").remove();

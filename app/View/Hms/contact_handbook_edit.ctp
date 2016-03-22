@@ -10,15 +10,12 @@ foreach ($result_contact_handbook as $collection){
 				$service=$collection['contact_handbook']["c_h_service"];
 
 			}
-@$result_user=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($user_id)));			  
-		foreach($result_user as $data)
-		{
-			 $user_name=$data['user']['user_name'];
-			 $wing=(int)$data['user']['wing'];
-			 $flat=(int)$data['user']['flat'];
-
-		}	
-$wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'),array('pass'=>array($wing,$flat)));			
+$result_user=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($user_id)));
+$user_name=$result_user["user_name"];
+$flat_info=$result_user["wing_flat"];
+foreach($flat_info as $wing_flat){
+	$wing_flat=$wing_flat;
+}		
 ?>
 
 

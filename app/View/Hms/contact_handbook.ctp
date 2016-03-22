@@ -1,20 +1,16 @@
-<div style="background-color:#EFEFEF; border-top:1px solid #e6e6e6; border-bottom:1px solid #e6e6e6; padding:2px; box-shadow:5px; font-size:16px; color:#006;">
-     
-                <table width="100%">
-                <tbody><tr>
-                <td width="58%" style="color:#A96363; font-size:24px; padding-left:10px;"><i class="icon-th-list" style='font-size:20px;'></i> Contact Handbook 
-				<span class=" tooltips" data-placement="right" data-original-title="This list is maintained by your society members"><i class=" icon-info-sign"></i></span>
-				 <span style="float:right;"><a href='contact_handbook_export'class=' green  btn' download='download'><i class='icon-download-alt'></i> </a></span>
-				</td>
-             
-             <td width="" valign="bottom" style="padding-top:10px;padding-right: 2%;" align="right">
-			 <div class="controls">
-		
-			 <a  onclick="blank_value();" href="javascript:ShowContactForm()" class=" btn blue" style="margin-bottom: 2%;" ><i class='icon-plus-sign'></i> Add New Contact </a>
-			 <input type="text" placeholder="Search " class="span8" style="" id="get_search" onkeyup="search_record()"></div></td>
-                </tr>
-                </tbody></table>
-                 </div>
+<div style="background-color: #FFF; padding: 0px 10px; border: 1px solid rgb(233, 231, 231);">
+<table cellpadding="0" cellspacing="0" width="100%">
+	<tr>
+		<td style="white-space: nowrap;"><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-th-list"></i> Contact Handbook </span><span class=" tooltips" data-placement="bottom" data-original-title="This list is maintained by your society members"><i class=" icon-info-sign"></i></span></td>
+		<td align="right">
+			<span style="margin-top: 5px; margin-bottom: 5px;"><a href='contact_handbook_export'class='btn' download='download'><i class="fa fa-file-excel-o"></i></a></span>
+			<input class="m-wrap medium" placeholder="Search" id="search" style="margin-top: 5px; margin-bottom: 5px;" type="text">
+			<a  onclick="blank_value();" href="javascript:ShowContactForm()" class=" btn blue" style="margin-top: 5px; margin-bottom: 5px;"><i class='icon-plus-sign'></i> Add New Contact </a>
+		</td>
+	</tr>
+</table>
+</div>
+
 
 <div style="float:left; width:68%;">
 
@@ -107,15 +103,13 @@ background-color:rgb(218, 236, 240);
 				$service_name=implode(',',$result_contact_handbook_service);
 				}
 				}
-	@$result_user=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($user_id)));			  
-		foreach($result_user as $data)
-		{
-			 $user_name=$data['user']['user_name'];
-			 $wing=(int)$data['user']['wing'];
-			 $flat=(int)$data['user']['flat'];
-
-		}	
-$wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'),array('pass'=>array($wing,$flat)));			
+		
+$result_user=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($user_id)));
+$user_name=$result_user["user_name"];
+$flat_info=$result_user["wing_flat"];
+foreach($flat_info as $wing_flat){
+	$wing_flat=$wing_flat;
+}		
 			
 ?>
 
@@ -484,3 +478,14 @@ $(document).ready(function() {
 }
 	  
 </script>
+<script type="text/javascript">
+		 var $rows = $('#view_search .r_d');
+		 $('#search').keyup(function() {
+			var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+			
+			$rows.show().filter(function() {
+				var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+				return !~text.indexOf(val);
+			}).hide();
+		});
+ </script>

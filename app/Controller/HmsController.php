@@ -17516,7 +17516,7 @@ function contact_handbook_export()
 {
 	
 $this->layout="";
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $result_society=$this->society_name($s_society_id);
 $society_name=$result_society[0]['society']['society_name'];
 $filename=$society_name.'_contact_handbook_';
@@ -17627,17 +17627,13 @@ if($this->RequestHandler->isAjax()){
 	}else{
 		$this->layout='session';
 	}
-$s_user_id=$this->Session->read('user_id'); 
-$s_society_id=$this->Session->read('society_id'); 	
-$this->set('role_id',$s_role_id=$this->Session->read('role_id'));
+$s_user_id=$this->Session->read('hm_user_id'); 
+$s_society_id=$this->Session->read('hm_society_id'); 	
 $this->set('s_user_id',$s_user_id);
 $this->loadmodel('contact_handbook');
 $conditions=array('society_id'=>$s_society_id,'c_h_delete'=>0);
 $result=$this->contact_handbook->find('all',array('conditions'=>$conditions));
-foreach($result as $data){
-	$c_h_id=$data["contact_handbook"]["c_h_id"];
-	$this->seen_notification(21,$c_h_id);
-}
+
 
 $this->loadmodel('contact_handbook_service');
 $result_contact_handbook_service=$this->contact_handbook_service->find('all');	

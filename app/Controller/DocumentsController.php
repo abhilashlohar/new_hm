@@ -7,14 +7,8 @@ public $components = array(
 'Paginator',
 'Session','Cookie','RequestHandler'
 );
-
-
 var $name = 'Documents';
-
-
-
-/////////////////////////////////////////////////////////// Resource Start ////////////////////////////////////////////////////////////	
-
+//Resource Start//	
 function resource_add()
 {
 
@@ -25,9 +19,9 @@ function resource_add()
 	}
 	$this->ath();
 	$this->check_user_privilages();
-	$s_society_id=$this->Session->read('society_id');
-	$s_role_id=$this->Session->read('role_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_role_id=$this->Session->read('hm_role_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$this->set('role_id',$s_role_id=$this->Session->read('role_id')); 
 	$this->loadmodel('resource_category');
 	$this->set('result_resource_category',$this->resource_category->find('all'));  

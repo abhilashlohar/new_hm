@@ -15772,13 +15772,10 @@ $da_to=array_unique($da_to);
 $da_user_name=array_unique($da_user_name);
 $da_user_id=array_unique($da_user_id);
 
-/////////////////////////  end code ////////////////////////////////
-
-
+//end code//
 $this->loadmodel('resource');
 $this->resource->saveAll(array("resource_id" => $i, "resource_attachment" => $resource_att , "resource_title" => $resource_title,"resource_date"=>$date,"resource_category"=>$resource_cat,"user_id"=>$s_user_id,"society_id"=>$s_society_id,"resource_time"=>$time,"resource_delete"=>0,"visible"=>$visible,"sub_visible"=>$sub_visible));	
-////////////////////////////////////////////// Email Code Start ////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Email Code Start//
 
 $this->loadmodel('email');
 $conditions=array('auto_id'=>6);
@@ -15892,13 +15889,11 @@ Resources are published
 
 
 
-function resource_category_name($category_id)
-{
+function resource_category_name($category_id){
 $this->loadmodel('resource_category');
-$conditions=array("resource_cat_id" => $category_id);
+$conditions=array("resource_cat_id" =>(int)$category_id);
 $result_category=$this->resource_category->find('all',array('conditions'=>$conditions));
-foreach ($result_category as $collection) 
-{
+foreach ($result_category as $collection){
 return $resource_cat_name=$collection['resource_category']['resource_cat_name'];
 }
 }

@@ -69,11 +69,13 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
                                  </div>
                               </div>
                            </div>
-                            
+                           <?php
+	$sending_options=$this->requestAction(array('controller' => 'Fns', 'action' => 'sending_options'));
+	?> 
               
 			
 			<!---------------start visible-------------------------------->
-			<div class="controls">
+			<!--<div class="controls">
 			<label class="" style="font-size:14px;">Document should be visible to<span style="color:red;">*</span>   <i class=" icon-info-sign tooltips" data-placement="right" data-original-title="Please select any one"> </i></label>
 			</div>
 			

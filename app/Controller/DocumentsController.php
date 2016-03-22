@@ -20,7 +20,7 @@ function resource_add()
 	$this->ath();
 	$this->check_user_privilages();
 	$s_society_id=$this->Session->read('hm_society_id');
-	$s_role_id=$this->Session->read('hm_role_id');
+	$s_role_id=$this->Session->read('role_id');
 	$s_user_id=$this->Session->read('hm_user_id');
 	
 	$this->set('role_id',$s_role_id=$this->Session->read('role_id')); 
@@ -41,66 +41,26 @@ function resource_add()
 	@$document=$data['society']['document'];
 	@$s_duser_id[]=$data['society']['user_id'];
 	}
-	if($document==1 && $s_role_id!=3 ){		
+	
+	if($document==1 && $s_role_id != 1){
 		if($this->request->is('post')){
 				
-				echo "afasfasf";
-				exit;
+				
 				$resource_title= $this->request->data['title'];
 				$resource_cat= (int)$this->request->data['sel'];
 				$resource_att=$this->request->form['file']['name'];
 				$i=$this->autoincrement('resource','resource_id');
-				$visible=(int)$this->request->data['visible'];
-				
-				
-					if($visible==1)
-					{	
-					$visible=1;
-					$sub_visible[]=0;
-					}
-					
-					if($visible==4)
-					{	
-					$visible=4;
-					$sub_visible=1;
-					}
-					
-					if($visible==5)
-					{
-					$visible=5;
-					$sub_visible=2;
-					}
-					
-					if($visible==2)
-					{	
-						$visible=2;
-						foreach ($role_result as $collection) 
-						{
-							$role_id=$collection["role"]["role_id"];
-
-							$role_id=@(int)$this->request->data['role'.$role_id];
-							if(!empty($role_id))
-							{
-							$sub_visible[]=(int)$role_id;
-							}
-						}
-					}
-					
+				$visible=$this->request->data['send_to'];
 						
-					if($visible==3)
-					{	
-					 $visible=3;
-						foreach ($wing_result as $collection) 
-						{
-							$wing_id=(int)$collection["wing"]["wing_id"];
-
-							$wing=@(int)$this->request->data['wing'.$wing_id];
-							if(!empty($wing))
-							{
-								$sub_visible[]=(int)$wing;
-							}
-						}
-					}
+			if($visible=='all_users'){	
+			$sub_visible=0;
+			}
+			if($visible=='role_wise'){	
+			$sub_visible=$this->request->data['roles'];
+			}
+			if($visible=='wing_wise'){
+			$sub_visible=$this->request->data['wings'];
+			}
 				
 							
 				$date=date("d-m-Y");
@@ -110,11 +70,13 @@ function resource_add()
 				$ok=1;
 				move_uploaded_file(@$this->request->form['file']['tmp_name'],@$target); 
 					
+				$user_id_array[]=$s_user_id;	
+					
 				$this->loadmodel('resource');
-				$this->resource->saveAll(array("resource_id" => $i, "resource_attachment" => $resource_att , "resource_title" => $resource_title,"resource_date"=>$date,"resource_category"=>$resource_cat,"user_id"=>$s_user_id,"society_id"=>$s_society_id,"resource_time"=>$time,"resource_delete"=>4,"visible"=>$visible,"sub_visible"=>$sub_visible));	
+				$this->resource->saveAll(array("resource_id" => $i,"resource_attachment"=>$resource_att ,"resource_title"=>$resource_title,"resource_date"=>$date,"resource_category"=>$resource_cat,"user_id"=>$s_user_id,"society_id"=>$s_society_id,"resource_time"=>$time,"resource_delete"=>4,"visible"=>$visible,"sub_visible"=>$sub_visible,'user_access'=>$user_id_array));	
 				
 				
-$this->send_notification('<span class="label label-warning" ><i class="icon-folder-open"></i></span>','Approval request for  document <b>'.$resource_title.'</b> created by',4,$i,$this->webroot.'Hms/resource_approval',$s_user_id,$s_duser_id);
+
 			$this->Session->write('document_status1', 2);
 			$this->response->header('Location', $this->webroot.'Documents/resource_view');	
 			}
@@ -125,14 +87,14 @@ $this->send_notification('<span class="label label-warning" ><i class="icon-fold
 	
 if($this->request->is('post'))
 {
-echo "asfsafsafa";
-exit;	
-	//$ip=$this->hms_email_ip();
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
 $resource_title= $this->request->data['title'];
 $resource_cat= (int)$this->request->data['sel'];
 $resource_att=$this->request->form['file']['name'];
 $i=$this->autoincrement('resource','resource_id');
-$visible=(int)$this->request->data['visible'];	
+$visible=$this->request->data['send_to'];
+
+
 $date=date("d-m-Y");
 $time=date('h:i:a',time());
 $target = "resource_file/";
@@ -140,188 +102,67 @@ $target=@$target.basename( @$this->request->form['file']['name']);
 $ok=1;
 move_uploaded_file(@$this->request->form['file']['tmp_name'],@$target); 
 
-if($visible==1)
-{	
-$visible=1;
-$sub_visible[]=0;
-/////////////////////////////////////////// All user ////////////////////////////
-//$this->loadmodel('user');
-//$conditions=array('society_id'=>$s_society_id);
-//$result_user=$this->user->find('all',array('conditions'=>$conditions));
-$result_user= $this->all_user_deactive();
-foreach($result_user as $data)
-{
-$da_to[]=$data['user']['email'];
-$da_user_name[]=$data['user']['user_name'];
-$da_user_id[]=$data['user']['user_id'];
+if($visible=='all_users'){	
+$sub_visible=0;
 }
-/////////////////////////////////////////// All user ////////////////////////////
+if($visible=='role_wise'){	
+$sub_visible=$this->request->data['roles'];
+}
+if($visible=='wing_wise'){
+$sub_visible=$this->request->data['wings'];
+}
+$result_user=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'),array('pass'=>array((int)$s_user_id)));
+foreach($result_user as $data){
+	  @$c_email=@$data['user']['email'];
+	  @$c_user_id=@$data['user']['user_id'];
+	  @$c_user_name=@$data['user']['user_name'];
 }
 
+$sub_visible_implode=implode(',',$sub_visible);
+$recieve_info=$this->requestAction(array('controller'=>'Fns','action'=>'sending_option_results'), array('pass' => array($visible,$sub_visible_implode)));
 
-if($visible==4)
-{	
-$visible=4;
-$sub_visible=1;
-/////////////////////////////////////////// All Owners ////////////////////////////
-$result_user=$this->all_owner_deactive();
-foreach($result_user as $data)
-{
-$da_to[]=$data['user']['email'];
-$da_user_name[]=$data['user']['user_name'];
-$da_user_id[]=$data['user']['user_id'];
+$user_id_array=array();
+foreach($recieve_info as $user_id=>$data){
+$user_id_array[]=$user_id;	
 }
-/////////////////////////////////////////// All Owners ////////////////////////////
-}
-
-if($visible==5)
-{
-$visible=5;
-$sub_visible=2;
-/////////////////////////////////////////// All Tenant ////////////////////////////
-$result_user=$this->all_tenant_deactive();
-foreach($result_user as $data)
-{
-$da_to[]=$data['user']['email'];
-$da_user_name[]=$data['user']['user_name'];
-$da_user_id[]=$data['user']['user_id'];
-}
-/////////////////////////////////////////// All Tenant ////////////////////////////
-}
-
-
-if($visible==2)
-{	
-$visible=2;
-foreach ($role_result as $collection) 
-{
-$role_id=$collection["role"]["role_id"];
-
-$role_id=@(int)$this->request->data['role'.$role_id];
-if(!empty($role_id))
-{
-$sub_visible[]=(int)$role_id;
-
-/////////////////////////////////////////// All role  functionality  conditions /////////////////////////////////////////////
-$result_user=$this->all_role_wise_deactive($role_id);
-foreach($result_user as $data)
-{
-$da_to[]=$data['user']['email'];
-$da_user_name[]=$data['user']['user_name'];
-$da_user_id[]=$data['user']['user_id'];
-}
-
-//////////////////////////////// end mail ////////////////////////////////////////////////////////	
-
-
-}
-}
-$da_to=array_unique($da_to);
-}
-
-if($visible==3)
-{	
-$visible=3;
-foreach ($wing_result as $collection) 
-{
-$wing_id=(int)$collection["wing"]["wing_id"];
-
-$wing=@(int)$this->request->data['wing'.$wing_id];
-if(!empty($wing))
-{
-$sub_visible[]=(int)$wing;
-
-
-/////////////////////////////////////////// All wing wise  functionality conditions //////////////////////////////////////////////////////
-$result_user=$this->all_wing_wise_deactive($wing_id);
-foreach($result_user as $data)
-{
-$da_to[]=$data['user']['email'];
-$da_user_name[]=$data['user']['user_name'];
-$da_user_id[]=$data['user']['user_id'];
-}
-
-//////////////////////////////// end mail ////////////////////////////////////////////////////////	
-
-
-
-}
-}
-
-}
-
-
-///////// creator send email code //////////////////
-
-$result_user=$this->profile_picture($s_user_id);
-foreach($result_user as $data)
-{
-	 $c_email=$data['user']['email'];
-	 $c_user_id=$data['user']['user_id'];
-	 $c_user_name=$data['user']['user_name'];
-	
-}
-$da_to[]=$c_email;
-$da_user_name[]=$c_user_name;
-$da_user_id[]=$c_user_id;
-
-$da_to=array_unique($da_to);
-$da_user_name=array_unique($da_user_name);
-$da_user_id=array_unique($da_user_id);
-
-/////////////////////////  end code ////////////////////////////////
-
 $this->loadmodel('resource');
-$this->resource->saveAll(array("resource_id" => $i, "resource_attachment" => $resource_att , "resource_title" => $resource_title,"resource_date"=>$date,"resource_category"=>$resource_cat,"user_id"=>$s_user_id,"society_id"=>$s_society_id,"resource_time"=>$time,"resource_delete"=>0,"visible"=>$visible,"sub_visible"=>$sub_visible));	
-////////////////////////////////////////////// Email Code Start ////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+$this->resource->saveAll(array("resource_id"=>$i,"resource_attachment"=>$resource_att,"resource_title" =>$resource_title,"resource_date"=>$date,"resource_category"=>$resource_cat,"user_id"=>$s_user_id,"society_id"=>$s_society_id,"resource_time"=>$time,"resource_delete"=>0,"visible"=>$visible,"sub_visible"=>$sub_visible,'user_access'=>$user_id_array));	
 
 $this->loadmodel('email');
 $conditions=array('auto_id'=>6);
 $result_email=$this->email->find('all',array('conditions'=>$conditions));
-foreach ($result_email as $collection) 
-{
+foreach ($result_email as $collection){
 $from=$collection['email']['from'];
 }
+
 $from_name="HousingMatters";
 $reply="donotreply@housingmatters.in";
 $category_name=$this->resource_category_name($resource_cat);
+
 $society_result=$this->society_name($s_society_id);
-foreach($society_result as $data)
-{
+foreach($society_result as $data){
 $society_name=$data['society']['society_name'];
 }
-if($visible==1)
+
+if($visible=='all_users')
 {
 $send='All Users'; 
 }
-if($visible==2)
+if($visible=='role_wise')
 {
 $send='Roll Wise'; 
 }
-if($visible==3)
+if($visible=='wing_wise')
 {
 $send='Wing Wise'; 
 }
 
-if($visible==4)
-{
-$send='All Owners'; 
-}
 
-if($visible==5)
-{
-$send='All Tenants'; 
-}
-if(sizeof(@$da_to)==0) { $da_to=array(); }
-for($k=0;$k<sizeof($da_to);$k++)
-{
-	
-$to = @$da_to[$k];
-$d_user_id = @$da_user_id[$k];	 
-$user_name = @$da_user_name[$k];
-
-
+foreach($recieve_info as $user_id=>$data){
+	@$to = @$data['email'];
+	@$d_user_id = @$user_id;	
+	@$da_user_id[]=@$d_user_id;		
+	@$user_name=@$data['user_name'];
 
 $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
           <tbody>
@@ -449,31 +290,11 @@ $subject="";
 }	
 }
 
-
-
-$this->send_notification('<span class="label label-warning" ><i class="icon-folder-open"></i></span>','New document <b>'.$resource_title.'</b> submitted by',4,$i,$this->webroot.'Documents/resource_view',$s_user_id,$da_user_id);
-
 $this->Session->write('document_status', 1);
 $this->response->header('Location', $this->webroot.'Documents/resource_view');
-	
-?>
-<!----alert--------------
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body" style="font-size:16px;">
-Resources are published
-</div> 
-<div class="modal-footer">
-<a href="resource_view" class="btn green">OK</a>
-</div>
-</div>
-<!----alert-------------->
-<?php
 
 }
-
 }
-
 }
 
 
@@ -724,7 +545,7 @@ $this->loadmodel('resource');
 $this->resource->updateAll(array('resource_delete'=>0),array('resource_id'=>$id));	
 echo"<td colspan='8'>Documents have published</td>";	
 }
-
+//Start resource_view//
 function resource_view()
 {
 if($this->RequestHandler->isAjax()){
@@ -734,31 +555,17 @@ if($this->RequestHandler->isAjax()){
 	}
 $this->ath();
 $this->check_user_privilages();
-$s_society_id=$this->Session->read('society_id');
-$tenant=$this->Session->read('tenant');
+$s_society_id=$this->Session->read('hm_society_id');
 $role_id=$this->Session->read('role_id');
-$wing=$this->Session->read('wing');
-$s_user_id=$this->Session->read('user_id');
-$this->set('role_id',$role_id); 
+$this->set('role_id',$role_id);
+$s_user_id=$this->Session->read('hm_user_id');
 $this->loadmodel('resource');
-//$conditions=array('society_id'=>$s_society_id);
-$conditions =array( '$or' => array( 
-array('society_id' =>$s_society_id,'visible' =>1,'resource_delete'=>0),
-array('society_id' =>$s_society_id,'resource_delete'=>0,'visible' =>2,'sub_visible' =>array('$in' => array($role_id))),
-array('society_id' =>$s_society_id,'resource_delete'=>0,'visible' =>3,'sub_visible' =>array('$in' => array($wing))),
-array('society_id' =>$s_society_id,'resource_delete'=>0,'visible' =>4,'sub_visible' =>$tenant),
-array('society_id' =>$s_society_id,'visible' =>5,'sub_visible' =>$tenant,'resource_delete'=>0)
-));
+$conditions =array('society_id' =>$s_society_id,'user_access'=>array('$in'=>array((int)$s_user_id)));
 $order=array('resource.resource_id'=>'DESC');
 $result=$this->resource->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('result_resource',$result);
-
-	foreach($result as $resource)
-	{
-		$this->seen_notification(4,$resource["resource"]["resource_id"]);
-	}
 }
-
+//End resource_view//
 
 function index()
 {

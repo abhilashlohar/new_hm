@@ -13,16 +13,15 @@ var $name = 'Notices';
 
 
 //////////////////// Start notice Board ///////////////////////////////
-function notice_category_name($category_id)
-{
+function notice_category_name($category_id){
 
-$this->loadmodel('master_notice_category');
-$conditions=array("category_id" => $category_id);
-$result_category=$this->master_notice_category->find('all',array('conditions'=>$conditions));
-foreach ($result_category as $collection) 
-{
-return $notice_category_name=$collection['master_notice_category']['category_name'];
-}
+	$this->loadmodel('master_notice_category');
+	$conditions=array("category_id" => $category_id);
+	$result_category=$this->master_notice_category->find('all',array('conditions'=>$conditions));
+	foreach ($result_category as $collection){
+		
+		return $notice_category_name=$collection['master_notice_category']['category_name'];
+	}
 
 }
 
@@ -826,28 +825,7 @@ $conditions=array("notice_id" => $notice_id,"n_draft_id" => 0);
 return $result=$this->notice->find('all',array('conditions'=>$conditions));
 }
 
-function notice_board_view() 
-{
-if($this->RequestHandler->isAjax()){
-	$this->layout='blank';
-	}else{
-	$this->layout='session';
-	}
-$this->ath();
 
-$n_id=(int)$this->request->query['con'];
-$this->set('n_id',$n_id);
-
-$this->seen_notification(2,$n_id);
-
-$this->loadmodel('notice');
-$conditions=array("notice_id" => $n_id);
-$this->set('result_view', $this->notice->find('all',array('conditions'=>$conditions)));
-
-$this->loadmodel('notice_board_reply');
-$conditions=array("notice_id" => $n_id);
-$this->set('result_reply',$this->notice_board_reply->find('all',array('conditions'=>$conditions)));
-}
 
 function notice_publish_view($n_id=null) 
 {
@@ -1509,6 +1487,7 @@ if($post_data['post_type']==1){
 	foreach($receivers as $user_id=>$data){
 	
 		$to=$data['email'];
+		
 		$user_name=$data['user_name'];
 		$recieve_info[]=(int)$user_id;
 		$d_user_id = @$user_id;	
@@ -1758,7 +1737,7 @@ foreach($receivers as $user_id=>$data){
 	$d_user_id = @$user_id;	
 
 
-			 $message_web='<div style="margin:0;padding:0" dir="ltr" bgcolor="#ffffff"><div class="adM">
+		$message_web='<div style="margin:0;padding:0" dir="ltr" bgcolor="#ffffff"><div class="adM">
 					</div><table style="border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%;">
 					<tbody>
 					<tr>

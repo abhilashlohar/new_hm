@@ -228,7 +228,6 @@ $(document).ready(function() {
 			$.ajax({
 				url: "<?php echo $webroot_path; ?>Cashbanks/allow_import_bank_receipt",
 			}).done(function(response){
-				alert(response);
 				if(response=="not_validate"){
 					$("#submit_sec").find(".alert-error").remove();
 					$("#final_import").before('<div class="alert alert-error" style="width: 50%;">There are errors on other pages.</div>');

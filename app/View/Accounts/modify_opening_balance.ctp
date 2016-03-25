@@ -1,6 +1,10 @@
+<input type="hidden" id="fi" value="<?php echo $datef1; ?>" />
+<input type="hidden" id="ti" value="<?php echo $datet1; ?>" />
+<input type="hidden" id="cn" value="<?php echo $count; ?>" />
+
 <input type="text" class="date-picker m-wrap span4" data-date-format="dd-mm-yyyy" 
 value="<?php echo $tra_date; ?>" 
-style="background-color:white !important; margin-top:2.5px;" field="transaction_date" record_id="1" placeholder="Date">
+style="background-color:white !important; margin-top:2.5px;" field="transaction_date" record_id="1" placeholder="Date" id="date">
 <br>
  <br>
 <div style="background-color: #FFF;"> 
@@ -104,7 +108,7 @@ value="<?php echo @$penalty; ?>" field="penalty" record_id="<?php echo $csv_id; 
 <th colspan="2"><input type="text" class="m-wrap small" id="grand_total_credit" value="<?php echo $grand_total_credit; ?>"><br><b>Total Credit</b></th>
 </table>
 </div>
-
+<div id="validat" style="color:red;"></div>
 
 
 <br/>
@@ -201,7 +205,52 @@ $( document ).ready(function() {
 
 <script>			  
 $(document).ready(function() {
-$( "#final_import" ).click(function() {
+$("#final_import" ).click(function() {
+var total_credit = $('#grand_total_credit').val();
+var total_debit = $('#grand_total_debit').val();	
+if(total_credit != total_debit)
+{
+$("#validat").html('Total Debit Shold be Equal to Total Credit');	
+return false;	
+}	
+
+var fi = document.getElementById("fi").value;
+var ti = document.getElementById("ti").value;
+var cn = document.getElementById("cn").value;
+var fe = fi.split(",");
+var te = ti.split(",");
+var date1 = document.getElementById("date").value;
+var date = date1.split("-").reverse().join("-");
+				
+var nnn = 55;
+for(var i=0; i<cn; i++)
+{
+var fd = fe[i];
+var td = te[i]
+	if(date == "")
+	{
+	$("#validat").html('Please Select Date');	
+	return false;
+	}
+	else if(Date.parse(fd) <= Date.parse(date))
+	{
+		if(Date.parse(td) >= Date.parse(date))
+		{
+		nnn = 5;
+		break;
+		}
+		else
+		{
+		}
+	} 
+}
+
+if(nnn == 55)
+{	
+$("#validat").html('Date Should be in Open Financial Year');	
+return false;		
+}	
+	
 $("#check_validation_result").html('<img src="<?php echo $webroot_path; ?>as/loding.gif" /><span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Importing Receipts.</span>');
 
 $.ajax({

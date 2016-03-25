@@ -354,13 +354,7 @@ $this->layout=null;
 	$this->ath();
 	$s_society_id = $this->Session->read('hm_society_id');
 	$record_id=(int)$record_id; 
-	if(is_numeric($value))
-	{ 
-	}
-	else
-	{
-	$value = 0;
-	}	
+	
 	
 	if($field=="transaction_date")
 	{

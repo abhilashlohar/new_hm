@@ -7,7 +7,7 @@ public $components = array(
 'Session','Cookie','RequestHandler'
 );
 var $name = 'Accounts';
-////////////////// Start Master Ledger Sub Account Ajax ///////////////////////
+//Start Master Ledger Sub Account Ajax//
 function master_ledger_sub_account_ajax()
 {
 		$this->layout='blank';
@@ -63,9 +63,8 @@ $this->ath();
 	$process_status= @$step1+@$step2+@$step3+@$step4;			
 				
 }
-//////////////////// End Opening Balance Import (Accounts)/////////////////////////////////////
-
-/////////////////// Start upload_opening_balance_csv_file ///////////////////////////////
+//End Opening Balance Import (Accounts)//
+//Start upload_opening_balance_csv_file//
 function upload_opening_balance_csv_file()
 {
 	$s_society_id = $this->Session->read('hm_society_id');
@@ -127,8 +126,8 @@ $this->loadmodel('import_ob_record');
 $this->import_ob_record->updateAll(array("step2" => 1),array("society_id" => $s_society_id, "module_name" => "OB"));
 die(json_encode("READ"));	
 }
-///////////////////// End read_csv_file_ob //////////////////////////////////////////
-///////////////////// Start convert_imported_data_ob ///////////////////////////////
+//End read_csv_file_ob//
+//Start convert_imported_data_ob//
 function convert_imported_data_ob()
 {
 $this->layout=null;
@@ -326,8 +325,8 @@ $this->loadmodel('accounts_group');
 $cursor3 = $this->accounts_group->find('all');
 $this->set('cursor3',$cursor3);
 }
-///////////////////////// End modify_opening_balance ////////////////////////////////////
-//////////////////////// Start auto_save_opening_balance_date ////////////////////////////
+//End modify_opening_balance//
+//Start auto_save_opening_balance_date//
 function auto_save_opening_balance_date($record_id=null,$field=null,$value=null)
 {
 $this->layout=null;
@@ -345,8 +344,8 @@ $this->layout=null;
 	}
 
 }
-/////////////////////// End auto_save_opening_balance_date ///////////////////////////
-//////////////////////// Start auto_save_opening_balance ////////////////////////////////
+//End auto_save_opening_balance_date//
+//Start auto_save_opening_balance//
 function auto_save_opening_balance($record_id=null,$field=null,$value=null)
 {
 $this->layout=null;
@@ -398,8 +397,8 @@ $this->layout=null;
 
 	
 }
-///////////////////////////// End auto_save_opening_balance ///////////////////////////
-////////////////////////// Start modify_opening_balance_ajax /////////////////////////
+//End auto_save_opening_balance//
+//Start modify_opening_balance_ajax//
 function modify_opening_balance_ajax()
 {
 $this->layout='blank';
@@ -572,8 +571,8 @@ if(!empty($credit))
 	
 	
 }
-//////////////////////// End allow_import_opening_balance //////////////////////////////
-//////////////////////// Start final_import_opening_balance ////////////////////////////
+//End allow_import_opening_balance//
+//Start final_import_opening_balance//
 function final_import_opening_balance()
 {
 
@@ -690,8 +689,8 @@ function final_import_opening_balance()
 	
 	
 }
-//////////////////////// End final_import_opening_balance ///////////////////////////
-/////////////////////////////////// Start Master Period Status (Accounts)//////////////////////
+//End final_import_opening_balance//
+//Start Master Period Status (Accounts)//
 function master_financial_period_status()
 {
 		if($this->RequestHandler->isAjax()){
@@ -749,9 +748,8 @@ The Financial Year Updated Successfully
 		$cursor1 = $this->financial_year->find('all',array('conditions'=>$conditions,'order' =>$order));
 		$this->set('cursor1',$cursor1);
 }
-///////////////////////////// End Master Period Status (Accounts)//////////////////////////////
-
-/////////////////// Start master Financial Year (Accounts)//////////////////////////////////////
+//End Master Period Status (Accounts)//
+//Start master Financial Year (Accounts)//
 function master_financial_year()
 {
 	if($this->RequestHandler->isAjax()){
@@ -818,9 +816,8 @@ The Financial Year Created Successfully
 			$this->set('td1',$t_d1);
 		}
 }
-////////////////// End Master Financial Year(Accounts)////////////////////////////////////////
-
-/////////////////////Start Financial Vali Ajax(Accounts)//////////////////////////////////////
+//End Master Financial Year(Accounts)//
+//Start Financial Vali Ajax(Accounts)//
 function financial_vali_ajax()
 {
 	$this->layout='blank';
@@ -831,9 +828,8 @@ function financial_vali_ajax()
 	$cc = (int)$this->request->query('ss');
 	$this->set('cc',$cc);
 }
-/////////////////////End Financial Vali Ajax(Accounts)/////////////////////////////////////////
-
-////////////////////////Start Master Ledger Accounts COA(Accounts)/////////////////////////////
+//End Financial Vali Ajax(Accounts)//
+//Start Master Ledger Accounts COA(Accounts)//
 function master_ledger_account_coa()
 {
 	if($this->RequestHandler->isAjax()){
@@ -989,9 +985,8 @@ $this->Session->write('ledd_accc', 1);
 			$cursor3=$this->accounts_group->find('all',array('conditions'=>$conditions));
 			$this->set('cursor3',$cursor3);
 }
-///////////////////////////End Master Ledger Accounts COA (Accounts)///////////////////////////
-
-///////////////////////// Start Master Ledger Accounts Ajax COA (Accounts)///////////////////////
+//End Master Ledger Accounts COA (Accounts)//
+//Start Master Ledger Accounts Ajax COA (Accounts)//
 function master_ledger_account_ajax()
 {
 		$this->layout='blank';
@@ -1002,9 +997,8 @@ function master_ledger_account_ajax()
 		$value = $this->request->query('value');
 		$this->set('value',$value);
 }
-/////////////////////// End Master Ledger Accounts Ajax COA (Accounts)////////////////////////////
-
-//////////////////// Start Master Ledger Sub Accounts COA (Accounts) /////////////////////////////
+//End Master Ledger Accounts Ajax COA (Accounts)//
+//Start Master Ledger Sub Accounts COA (Accounts)//
 function master_ledger_sub_accounts_coa()
 {
 		if($this->RequestHandler->isAjax()){
@@ -1357,9 +1351,8 @@ $this->layout = 'blank';
 
 	
 }
-//////////////////////////////////////////// End OverDue Excel///////////////////////////////////////////
-
-/////////////////////////////// Start Account Statement (Accounts)////////////////////////////////////////
+//End OverDue Excel//
+//Start Account Statement (Accounts)//
 function account_statement()
 {
 		if($this->RequestHandler->isAjax()){
@@ -1381,9 +1374,8 @@ function account_statement()
 				$cursor2 = $this->user->find('all',array('conditions'=>$conditions));
 				$this->set('cursor2',$cursor2);
 }
-/////////////////////////// End Account Statement (Accounts)/////////////////////////////////////
-
-////////////////////////// Start account statement show ajax(Accounts)///////////////////////////
+//End Account Statement (Accounts)//
+//Start account statement show ajax(Accounts)//
 function account_statement_show_ajax()
 {
 		$this->layout='blank';
@@ -1407,9 +1399,8 @@ function account_statement_show_ajax()
 				$this->set('from',$from);
 				$this->set('to',$to);
 }
-/////////////////////////////////// End account statement show ajax(Accounts)////////////////////////////
-
-//////////////////////////////// Start Account Statement Excel//////////////////////////////////////////
+//End account statement show ajax(Accounts)//
+//Start Account Statement Excel//
 function account_statement_excel()
 {
 		$this->layout="";
@@ -1513,9 +1504,8 @@ function account_statement_excel()
 
 			echo $excel;
 }
-/////////////////////// End Account Statement Excel/////////////////////////////////////////////////
-
-/////////////////////////// Start ac statement Bill View/////////////////////////////////////////////
+//End Account Statement Excel//
+//Start ac statement Bill View//
 function ac_statement_bill_view($receipt_id=null)
 {
 	$this->layout='blank';
@@ -1644,6 +1634,7 @@ $result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'
 $this->set('result_ledger',$result_ledger);
 }
 //End My Flat Bill Ajax//
+//Start my_flat_bill_excel_export// 
 function my_flat_bill_excel_export($from=null,$to=null,$flat_id=null)
 {
 $this->layout=null;
@@ -1729,9 +1720,8 @@ $sss_namm = str_replace(' ','-',$society_name);
 	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
 	$this->set('result_ledger',$result_ledger);
 }
-/////////////////////////// End my_flat_bill_ajax (Accounts) /////////////////////////////////////
-
-/////////////////////////// Start Bank Receipt Pdf (Accounts)//////////////////////////////////////
+//End my_flat_bill_excel_export// 
+//Start Bank Receipt Pdf (Accounts)//
 function bank_receipt_pdf()
 {
 	$this->layout = 'pdf'; //this will use the pdf.ctp layout 
@@ -1754,9 +1744,8 @@ $conditions=array("society_id" => $s_society_id);
 $cursor2=$this->society->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
 }
-/////////////////////////////////// End Bank Receipt Pdf (Accounts)////////////////////////////////////
-
-/////////////////////////////// Start my flat Bill Excel ////////////////////////////////////////////
+//End Bank Receipt Pdf (Accounts)//
+//Start my flat Bill Excel//
 function my_flat_bill_excel()
 {
 	$this->layout="";
@@ -2049,9 +2038,8 @@ if($account_type == 2)
 
 	echo $excel;
 }
-//////////////////////// End my flat Bill Excel///////////////////////////////////////
-
-///////////////////////Start my flat receipt(Accounts)/////////////////////////////////
+//End my flat Bill Excel//
+//Start my flat receipt(Accounts)//
 function my_flat_receipt()
 {
 	if($this->RequestHandler->isAjax()){
@@ -2067,9 +2055,8 @@ function my_flat_receipt()
 		$s_society_id = (int)$this->Session->read('society_id');
 		$s_user_id=$this->Session->read('user_id');	
 }
-///////////////////////End my flat receipt(Accounts)/////////////////////////////////////
-
-////////////////// Start My Flat receipt Excel//////////////////////////////////////////
+//End my flat receipt(Accounts)//
+//Start My Flat receipt Excel//
 function my_flat_receipt_excel()
 {
 	$this->layout="";
@@ -2207,9 +2194,8 @@ $wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing
 
 echo $excel;
 }
-////////////////// End My Flat receipt Excel/////////////////////////////////////////
-
-//////////////////////Start my flat receipt show (Accounts)////////////////////////
+//End My Flat receipt Excel//
+//Start my flat receipt show (Accounts)//
 function my_flat_receipt_show()
 {
 	$this->layout='blank';
@@ -2249,9 +2235,8 @@ function my_flat_receipt_show()
 			$cursor1 = $this->cash_bank->find('all',array('conditions'=>$conditions));
 			$this->set('cursor1',$cursor1);
 }
-//////////////////////End my flat receipt show (Accounts)/////////////////////////////////////
-
-//////////////////// Start Trial Balance Excel/////////////////////////////////////////////////
+//End my flat receipt show (Accounts)//
+//Start Trial Balance Excel//
 function trial_balance_excel()
 {
 		$this->layout="";
@@ -3386,11 +3371,8 @@ $excel.="$total_opening_balance2</th>
 			}
 echo $excel;
 }
-//////////////////////////// End Trial Balance Excel/////////////////////////////////////////////
-
-
-//////////////////////// Start Balance Shit //////////////////////////////
-
+//End Trial Balance Excel//
+//Start Balance Shit//
 function balance_sheet(){
 				if($this->RequestHandler->isAjax()){
 				$this->layout='blank';
@@ -3400,7 +3382,8 @@ function balance_sheet(){
 				$this->ath();
 				$this->check_user_privilages();
 		}
-
+//End Balance Sheet//
+//Start income_expenditure//
 		function income_expenditure(){
 				if($this->RequestHandler->isAjax()){
 				$this->layout='blank';
@@ -3410,41 +3393,32 @@ function balance_sheet(){
 				$this->ath();
 				$this->check_user_privilages();
 		}
-
-
+//End income_expenditure//
+//Start balance_sheet_ajax// 
 function balance_sheet_ajax($from=null){
-	
-		
 	$this->layout='blank';
 	$this->ath();
-	
-	//$s_role_id=$this->Session->read('role_id');
-	 $s_society_id = (int)$this->Session->read('hm_society_id');
+		
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$this->set('s_society_id',$s_society_id);
 	$s_user_id=$this->Session->read('hm_user_id');	
 	
 	if(empty($from)){
 		echo "<center style='color:red;'>Fill above fields.</center>"; exit;
 	}
-		$this->set('from',$from);
-		$this->loadmodel('accounts_group');
-		$conditions2=array("accounts_id" => 1);
-		$result_accounts_group=$this->accounts_group->find('all',array('conditions'=>$conditions2));
-		$this->set('result_accounts_group',$result_accounts_group);
-		
-		
-		$this->loadmodel('accounts_group');
-		$conditions3=array("accounts_id" => 2);
-		$result_accounts_group1=$this->accounts_group->find('all',array('conditions'=>$conditions3));
-		$this->set('result_accounts_group1',$result_accounts_group1);	
-	
-		
-	
-	
+	$this->set('from',$from);
+	$this->loadmodel('accounts_group');
+	$conditions2=array("accounts_id" => 1);
+	$result_accounts_group=$this->accounts_group->find('all',array('conditions'=>$conditions2));
+	$this->set('result_accounts_group',$result_accounts_group);
+
+	$this->loadmodel('accounts_group');
+	$conditions3=array("accounts_id" => 2);
+	$result_accounts_group1=$this->accounts_group->find('all',array('conditions'=>$conditions3));
+	$this->set('result_accounts_group1',$result_accounts_group1);	
 }
-
-
-
+//End balance_sheet_ajax// 
+//Start income_expenditure_ajax//
 function income_expenditure_ajax($from=null,$to=null){
 			
 	$this->layout='blank';
@@ -3473,7 +3447,8 @@ function income_expenditure_ajax($from=null,$to=null){
 	
 	
 }
-
+//End income_expenditure_ajax//
+//Start balance_sheet_excel// 
 function balance_sheet_excel(){
 		$this->layout=null;
 		$this->ath();
@@ -3491,12 +3466,9 @@ function balance_sheet_excel(){
 		$conditions3=array("accounts_id" => 2);
 		$result_accounts_group1=$this->accounts_group->find('all',array('conditions'=>$conditions3));
 		$this->set('result_accounts_group1',$result_accounts_group1);	
-	
-		
-	
 }
-
-
+//End balance_sheet_excel// 
+//Start income_expenditure_excel//
 function income_expenditure_excel(){
 		$this->layout='blank';
 		$this->ath();
@@ -3517,9 +3489,9 @@ function income_expenditure_excel(){
 		$conditions5=array("accounts_id" => 4);
 		$result_accounts_group3=$this->accounts_group->find('all',array('conditions'=>$conditions5));
 		$this->set('result_accounts_group3',$result_accounts_group3);	
-	
-	 
 }
+//Start income_expenditure_excel//
+//Start balance_sheet_income_expenditure// 
 function balance_sheet_income_expenditure($from){
 	$this->layout='blank';
 	$this->ath();
@@ -3565,17 +3537,14 @@ function balance_sheet_income_expenditure($from){
 				}else{ return $total_surplus=$total_balace_expenditure-$total_balace; }
 			
 }
-
-
+//End balance_sheet_income_expenditure// 
+//Start calculate_balance_sheet_credit// 
 function calculate_balance_sheet_credit($from,$ledger_account_id,$to){
 	
-	//$s_role_id=$this->Session->read('role_id');
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$to=date('Y-m-d',strtotime($to));
 	$from=date('Y-m-d',strtotime($from));
 	$this->loadmodel('ledger');
-	//$conditions=array('society_id'=>$s_society_id,'ledger_account_id'=>$ledger_account_id,'transaction_date'=>array('$lt'=>strtotime($from)));
-	
 	$conditions=array('society_id'=>$s_society_id,'ledger_account_id'=>$ledger_account_id,'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
 	
 	$ledger_result_b=$this->ledger->find('all',array('conditions'=>$conditions));
@@ -3586,12 +3555,11 @@ function calculate_balance_sheet_credit($from,$ledger_account_id,$to){
 	}
 	return $difference_b=$credit_b-$debit_b;
 }
-
+//End calculate_balance_sheet_credit// 
+//Start calculate_balance_sheet_credit_new//
 function calculate_balance_sheet_credit_new($from,$ledger_account_id){
 	
-	//$s_role_id=$this->Session->read('role_id');
 	$s_society_id = (int)$this->Session->read('hm_society_id');
-	
 	$from=date('Y-m-d',strtotime($from));
 	$this->loadmodel('ledger');
 	$conditions=array('society_id'=>$s_society_id,'ledger_account_id'=>$ledger_account_id,'transaction_date'=>array('$lt'=>strtotime($from)));
@@ -3605,7 +3573,8 @@ function calculate_balance_sheet_credit_new($from,$ledger_account_id){
 	}
 	return $difference_b=$credit_b-$debit_b;
 }
-
+//End calculate_balance_sheet_credit_new//
+//Start calculate_balance_sheet_debit// 
 function calculate_balance_sheet_debit($from,$ledger_account_id,$to){
 	
 	//$s_role_id=$this->Session->read('role_id');
@@ -3624,7 +3593,8 @@ function calculate_balance_sheet_debit($from,$ledger_account_id,$to){
 	}
 	return $difference_b=$debit_b-$credit_b;
 }
-
+//End calculate_balance_sheet_debit// 
+//Start calculate_balance_sheet_debit_new//
 function calculate_balance_sheet_debit_new($from,$ledger_account_id){
 	
 	$s_role_id=$this->Session->read('role_id');
@@ -3644,13 +3614,8 @@ function calculate_balance_sheet_debit_new($from,$ledger_account_id){
 	}
 	return $difference_b=$debit_b-$credit_b;
 }
-
-
-
-
-////////////////////// End Balance Shit //////////////////////////////////////
-
-/////////////////////////////// Start Trial Balance (Accounts) //////////////////////////////////
+//End calculate_balance_sheet_debit_new//
+//Start Trial Balance (Accounts)//
 function trial_balance()
 {
 	if($this->RequestHandler->isAjax()){
@@ -3669,20 +3634,13 @@ function trial_balance()
 	
 	
 }
-////////////////////////// End Trial Balance (Accounts) /////////////////////////////////////////////////
-
-//////////////////////////////// Start Trial Balance Ajax Show (Accounts) //////////////////////////////
+//End Trial Balance (Accounts)//
+//Start Trial Balance Ajax Show (Accounts)//
 function trial_balance_ajax_show($from=null,$to=null,$wise=null)
 {
-	
 	$this->layout='blank';
 	$this->ath();
-	
-	
 
-
-
-	
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$this->set('s_society_id',$s_society_id);
 	$s_user_id=$this->Session->read('hm_user_id');	
@@ -3730,9 +3688,8 @@ function trial_balance_ajax_show($from=null,$to=null,$wise=null)
 	
 	$this->set('result_ledger_account',$result_ledger_account);	
 }
-
-
-
+//End Trial Balance Ajax Show (Accounts)//
+//Start trial_balance_ajax_show_excel// 
 function trial_balance_ajax_show_excel($from=null,$to=null,$wise=null)
 {
 	
@@ -3801,8 +3758,8 @@ header ("Content-Description: Generated Report" );
 
 	$this->set('result_ledger_account',$result_ledger_account);	
 }
-
-
+//End trial_balance_ajax_show_excel// 
+//Start trial_balance_ajax_show_sub_ledger//
 function trial_balance_ajax_show_sub_ledger($from=null,$to=null,$wise=null)
 {
 	
@@ -3905,8 +3862,8 @@ $this->set('new_flats_for_bill',$new_flats_for_bill);
 	$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions,'order' =>$order));
 	$this->set('result_ledger_sub_account',$result_ledger_sub_account);	
 }
-
-
+//End trial_balance_ajax_show_sub_ledger//
+//Start trial_balance_ajax_show_sub_ledger_excel// 
 function trial_balance_ajax_show_sub_ledger_excel($from=null,$to=null,$wise=null)
 {
 	
@@ -4019,7 +3976,8 @@ $this->set('new_flats_for_bill',$new_flats_for_bill);
 	$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 	$this->set('result_ledger_sub_account',$result_ledger_sub_account);	
 }
-/////////////////////////////// Start trial_balance_ajax_show_with_sub_ledger //////////////////////////////////
+//End trial_balance_ajax_show_sub_ledger_excel// 
+//Start trial_balance_ajax_show_with_sub_ledger//
 function trial_balance_ajax_show_with_sub_ledger($from=null,$to=null,$wise=null)
 {
 $this->layout='blank';
@@ -4081,8 +4039,8 @@ if(empty($from) || empty($to) || empty($wise)){
 	$this->set('result_ledger_account',$result_ledger_account);
 	
 }
-/////////////////////////////// End trial_balance_ajax_show_with_sub_ledger //////////////////////////////////
-
+//End trial_balance_ajax_show_with_sub_ledger//
+//Start calculate_opening_balance_for_trail_balance//
 function calculate_opening_balance_for_trail_balance($from=null,$to=null,$ledger_account_id=null){
 	$this->ath();
 	$s_role_id=$this->Session->read('role_id');
@@ -4145,9 +4103,8 @@ function calculate_opening_balance_for_trail_balance($from=null,$to=null,$ledger
 	return $trail_balance; 
 	
 }
-
-
-
+//End calculate_opening_balance_for_trail_balance//
+//Start calculate_opening_balance_for_trail_balance_for_sub_account// 
 function calculate_opening_balance_for_trail_balance_for_sub_account($from=null,$to=null,$ledger_account_id=null,$ledger_sub_account_id=null){
 	$this->ath();
 	$s_role_id=$this->Session->read('role_id');
@@ -4214,17 +4171,16 @@ function calculate_opening_balance_for_trail_balance_for_sub_account($from=null,
 	return $trail_balance; 
 	
 }
-
-
+//End calculate_opening_balance_for_trail_balance_for_sub_account// 
+//Start fetch_sub_accounts_from_ledger_account_id//
 function fetch_sub_accounts_from_ledger_account_id($ledger_account_id){
 	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('ledger_sub_account');
 	$conditions=array("ledger_id" => (int)$ledger_account_id);
 	return $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 }
-////////////////////// End Trial Balance Ajax Show (Accounts) //////////////////////////////////////////
-
-///////////////////// Start Regular Bill View (Accounts)//////////////////////////////////////////////////////////////
+//End fetch_sub_accounts_from_ledger_account_id//
+//Start Regular Bill View (Accounts)//
 	function regular_bill_view($auto_id=null)
 	{
 		$this->layout='session';
@@ -4243,9 +4199,8 @@ function fetch_sub_accounts_from_ledger_account_id($ledger_account_id){
 				}
 		$this->set('bill_html',@$bill_html);
 	}
-////////////////////////////////// End Regular Bill View (Accounts)//////////////////////////////////////////
-
-///////////////////////////////////// Start Master Ledger Sub Account View/////////////////////////////////////////////
+//End Regular Bill View (Accounts)//
+//Start Master Ledger Sub Account View//
 	function master_ledger_sub_account_view()
 	{
 		if($this->RequestHandler->isAjax()){
@@ -4342,17 +4297,15 @@ $this->set('cursor2',$cursor2);
 		$this->ledger_account->updateAll(array('ledger_name'=>$ledger_name),array('auto_id'=>$auto_id));
 	}
 }
-////////////////////////////// End ledger Edit ///////////////////////////////////////////////////////////////////
-
-/////////////////////////////// Start SubLedgerEdit ////////////////////////////////////////////////////
+//End ledger Edit//
+//Start SubLedgerEdit//
 function subledger_edit()
 {
 	$this->layout='blank';
 	$s_society_id = (int)$this->Session->read('society_id');
 }
-/////////////////////////////// End SubLedgerEdit ////////////////////////////////////////////////////
-
-///////////////////////////////////// Start Opening Balance Import Ajax //////////////////////////////////////////
+//End SubLedgerEdit//
+//Start Opening Balance Import Ajax//
 function opening_balance_import_ajax()
 {
 	$this->layout="blank";
@@ -4515,9 +4468,8 @@ $this->set('table',$table);
 	$cursor3 = $this->accounts_group->find('all');
 	$this->set('cursor3',$cursor3);
 }
-///////////////////////////////////// End Opening Balance Import Ajax //////////////////////////////////////////
-
-//////////////////////////// Start Save Open Bal //////////////////////////////////////////////////////////
+//End Opening Balance Import Ajax//
+//Start Save Open Bal//
 function save_open_bal()
 {
 	$this->layout='blank';
@@ -4683,9 +4635,8 @@ $this->Session->write('opnn_bll',1);
 			$output=json_encode(array('report_type'=>'done','text'=>'Total Debit must be Equal to Total Credit'));
 			die($output);
 	}
-//////////////////////////// End Save Open Bal //////////////////////////////////////////////////////////
-
-///////////////////////////////// Start pay Bill ////////////////////////////////////////////////////////
+//End Save Open Bal//
+//Start pay Bill//
 function pay_bill()
 {
 		if($this->RequestHandler->isAjax()){
@@ -4750,7 +4701,7 @@ function pay_bill()
 	}
 }
 //End pay Bill//
-//Start Opening Balance  Excel Export//
+//Start open_excel//
 function open_excel()
 {
 	$this->layout="";
@@ -4893,8 +4844,8 @@ $ledger_name = $collection['ledger_account']['ledger_name'];
 
 echo $excel;
 }
-////////////////////// End Opening Balance  Excel Export /////////////////////////////////////
-/////////////////////////// Start fixed_deposit_reminder /////////////////////////////////////
+//End open_excel//
+//Start reminder_settings//
 function reminder_settings()
 {
 if($this->RequestHandler->isAjax()){
@@ -4906,8 +4857,8 @@ $this->layout='session';
 $this->ath();
 $this->check_user_privilages();
 
-$s_society_id=(int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=(int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 
 if(isset($this->request->data['sub']))
@@ -5011,10 +4962,9 @@ $this->loadmodel('society');
 $conditions=array("society_id" => $s_society_id);
 $cursor2=$this->society->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
-
 }
-/////////////////////////// End fixed_deposit_reminder //////////////////////////////////////
-///////////////////////////////// Start auto_reminder ////////////////////////////////////// 
+//End reminder_settings//
+//Start auto_reminder// 
 function auto_reminder()
 {
 		if($this->RequestHandler->isAjax()){
@@ -5287,7 +5237,7 @@ function tds_payment_report()
 		$this->ath();
 		$this->check_user_privilages();	
 }
-//Start  tds_payment_report//
+//End tds_payment_report//
 //Start tds_payment_report_view_ajax//
 function tds_payment_report_view_ajax()
 {
@@ -5328,7 +5278,7 @@ function tds_payment_report_view_ajax()
 	}
 	$this->set("tds_arr",$tds_arr);		
 }
-//Start tds_payment_report_view_ajax//
+//End tds_payment_report_view_ajax//
 //Start tds_report_excel//
 function tds_report_excel()
 {
@@ -5380,8 +5330,8 @@ $tds_arr = $collection['reference']['reference'];
 }
 $this->set("tds_arr",$tds_arr);	
 }
-//////////////////////////////// End tds_report_excel /////////////////////////////////////////////
-////////////////////////////// Start Cash Book Report /////////////////////////////////////////////
+//End tds_report_excel//
+//Start Cash Book Report//
 function cash_book_report()
 {
 		if($this->RequestHandler->isAjax())
@@ -5397,9 +5347,6 @@ function cash_book_report()
 $s_role_id=$this->Session->read('role_id');
 $s_society_id = $this->Session->read('society_id');
 $s_user_id=$this->Session->read('user_id');
-
-
-	
 }
 //End Cash Book Report//
 //Start cash_book_report_show_ajax// 
@@ -5506,7 +5453,7 @@ $cursor2=$this->cash_bank->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
 }
 //End bank_book_report_view_ajax//
-//Start bank_book_report_view_ajax//
+//Start bank_book_report_excel//
 function bank_book_report_excel()
 {
 $this->layout="";
@@ -5556,8 +5503,8 @@ array('society_id'=>$s_society_id,"receipt_source"=>2,"account_head"=>$bank_id,
 $cursor2=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);	
 }
-//////////////////////////// End bank_book_report_view_ajax ////////////////////////////////////////
-///////////////////////////// Start cash_book_report_excel //////////////////////////////////////////
+//End bank_book_report_excel//
+//Start cash_book_report_excel//
 function cash_book_report_excel()
 {
 $this->layout="";
@@ -5604,8 +5551,8 @@ $cursor2=$this->new_cash_bank->find('all',array('conditions'=>$conditions,'order
 $this->set('cursor2',$cursor2);	
 
 }
-///////////////////////////// End cash_book_report_excel //////////////////////////////////////////
-//////////////////////////// Start trial_balance_ajax_show_excel_with_sub_ledger /////////////////
+//End cash_book_report_excel//
+//Start trial_balance_ajax_show_excel_with_sub_ledger//
 function trial_balance_ajax_show_excel_with_sub_ledger($from=null,$to=null,$wise=null)
 {
 $this->layout='blank';
@@ -5737,11 +5684,9 @@ $this->loadmodel('ledger_sub_account');
 $conditions=array("ledger_id" => 33,"society_id"=>$s_society_id);
 $bank_detail=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 $this->set('bank_detail',$bank_detail);
-	
 }
-
-//////////////////////End my_flat_receipt_update /////////////////////////////////////////////////
-/////////////////////// Start my_flat_receipt_update_ajax ///////////////////////////////////
+//End my_flat_receipt_update//
+//Start my_flat_receipt_update_ajax//
 function my_flat_receipt_update_ajax($from=null,$to=null)
 {
 $this->layout='blank';
@@ -5765,8 +5710,8 @@ $bank_receipt_detail=$this->new_cash_bank->find('all',array('conditions'=>$condi
 $this->set('bank_receipt_detail',$bank_receipt_detail);
 	
 }
-////////////////////End my_flat_receipt_update_ajax //////////////////////////////////////////////
-/////////////////////// Start my_flat_receipt_update_form //////////////////////////////////////
+//End my_flat_receipt_update_ajax//
+//Start my_flat_receipt_update_form//
 function my_flat_receipt_update_form($auto_id = null)
 {
 if($this->RequestHandler->isAjax()){
@@ -5797,11 +5742,7 @@ $this->loadmodel('ledger_sub_account');
 $conditions=array("ledger_id" => 33,"society_id"=>$s_society_id);
 $bank_detail=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 $this->set('bank_detail',$bank_detail);
-
-
-
 }
-
 //End my_flat_receipt_update_form//
 //Start my_flat_receipt_update_json//
 function my_flat_receipt_update_json()
@@ -6273,6 +6214,6 @@ $ledger_account_id2=(int)$ledger_sub_accounts_data['ledger_sub_account']['ledger
 } */
 	
 }
-/////////////////////// End opening_balance_new //////////////////////////////////////
+//End opening_balance_new//
 }
 ?>

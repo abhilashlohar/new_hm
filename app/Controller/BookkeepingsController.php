@@ -8,7 +8,7 @@ public $components = array(
 );
 var $name = 'Bookkeepings';
 
-////////////////////////// Start Detail fetch function//////////////////////////////////// 
+
 	function regular_bill_info_via_auto_id($auto_id){
 		$auto_id=(int)$auto_id;
 		$this->loadmodel('regular_bill');
@@ -49,11 +49,7 @@ function adhoc_info_via_auto_id($auto_id){
 	return $this->ledger_account->find('all',array('conditions'=>$conditions)); 
 	}
 
-
-
-////////////////////////// End Detail fetch function//////////////////////////////////// 
-
-/////////////////// Start Cash Bank Vali (Accounts) ////////////////////////////////////
+//Start Cash Bank Vali (Accounts)//
 function cash_bank_vali()
 {
 $this->layout='blank';
@@ -64,10 +60,8 @@ $s_user_id=$this->Session->read('user_id');
 $cc = (int)$this->request->query('ss');
 $this->set('cc',$cc);
 }
-/////////////////// End Cash Bank Vali (Accounts) ////////////////////////////////////////
-
-
-/////////////////////////////// Start Journal Add (Accounts)///////////////////
+//End Cash Bank Vali (Accounts)//
+//Start Journal Add (Accounts)//
 function journal_add(){
 if($this->RequestHandler->isAjax()){
 $this->layout='blank';
@@ -132,13 +126,9 @@ $this->loadmodel('ledger_sub_account');
 $conditions=array("society_id" => $s_society_id);
 $cursor2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
-
-
 }
-
-///////////////////////////// End Journal Add (Accounts)////////////////////////////
-
-////////////////////////////// Start Journal Excel /////////////////////////////////
+//End Journal Add (Accounts)//
+//Start Journal Excel//
 function journal_excel(){
 
 $this->layout=null;
@@ -174,23 +164,16 @@ $s_user_id=$this->Session->read('hm_user_id');
 		$order=array('journal.transaction_date'=> 'ASC');
 		$result_journal=$this->journal->find('all',array('conditions'=>$conditions,'order'=>$order));
 		$this->set('result_journal',$result_journal);
-
-
-
-
-
-
 }
-//////////////////////////// End Journal Excel ///////////////////////////////////
-
-//////////////////////////////////////////////// Start Journal View (Accounts) //////////////////////////////////////////////////////////////////////////
+//End Journal Excel//
+//Start Journal View (Accounts)//
 function journal_view()
 {
-if($this->RequestHandler->isAjax()){
-$this->layout='blank';
-}else{
-$this->layout='session';
-}
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
 
 $this->ath();
 $this->check_user_privilages();
@@ -213,10 +196,8 @@ $s_user_id=$this->Session->read('hm_user_id');
 		$this->set('result_journal',$new_sort_voucher);
 		}
 }
-
 //End Journal View (Accounts)//
 //Start Journal View Ajax(Accounts)//
-
 function journal_view_ajax($page=null,$from=null,$to=null){
 if($this->RequestHandler->isAjax()){
 		$this->layout='blank';
@@ -265,8 +246,6 @@ if($this->RequestHandler->isAjax()){
 		}
 		
 		$this->set('count_bank_receipt_converted',$count_bank_receipt_converted);
-		
-
 }
 
 

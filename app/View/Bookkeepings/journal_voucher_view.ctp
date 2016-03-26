@@ -70,13 +70,20 @@ if($ledger_account_id == 34){
 
 
 
-$result_user=$this->requestAction(array('controller' => 'Hms', 'action' => 'profile_picture'),array('pass'=>array($user_id)));
 
+$result_user=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'),array('pass'=>array($user_id)));
 $prepared_by=$result_user[0]['user']['user_name'];
-$flat=@$result_user[0]['user']['flat'];
-$wing=@$result_user[0]['user']['wing'];
 
-$wing_flat_prepared=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'), array('pass' => array($wing,$flat))); 
+$result_user_flat=$this->requestAction(array('controller'=>'Fns','action'=>'user_flat_info_via_user_id'),array('pass'=>array((int)$user_id)));
+foreach($result_user_flat as $data)
+{
+@$wing=@$data['user_flat']['wing'];
+@$flat=@$data['user_flat']['flat'];
+}
+
+
+
+@$wing_flat_prepared=$this->requestAction(array('controller' =>'Fns', 'action' => 'wing_flat_via_wing_id_and_flat_id'), array('pass' => array(@$wing,@$flat))); 
 
 ?>
 <tr>

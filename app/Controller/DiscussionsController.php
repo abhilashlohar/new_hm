@@ -68,6 +68,7 @@ function submit_comment(){
 }
 
 function topic_detail($post_id=null){
+	$this->ath();
 	$s_user_id=$this->Session->read('hm_user_id');
 	$s_society_id=$this->Session->read('hm_society_id');
 	if(!empty($post_id)){
@@ -82,7 +83,18 @@ function topic_detail($post_id=null){
 		$posts=$this->discussion_post->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1));
 		$this->set(compact("posts"));
 	}
+}
+
+function comments($post_id=null){
+	$this->ath();
+	$s_user_id=$this->Session->read('hm_user_id');
+	$s_society_id=$this->Session->read('hm_society_id');
 	
+	$this->loadmodel('discussion_comment');
+	$conditions=array("discussion_post_id"=>(int)$post_id);
+	$order=array('discussion_comment.discussion_comment_id'=> 'ASC');
+	$comments=$this->discussion_comment->find('all',array('conditions'=>$conditions,'order'=>$order));
+	$this->set(compact("comments"));
 }
 
 function new_topic(){

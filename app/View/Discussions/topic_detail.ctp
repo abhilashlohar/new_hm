@@ -27,6 +27,9 @@ foreach($wing_flat as $data){
 <div>
 	<?php echo $description; ?>
 </div>
+<div id="comments">
+	Loading comments...
+</div>
 <div class="chat-form hide_at_print" style="margin-left: 5px;width: 94%;">
 	<form method="post" id="idForm">
 		<input type="hidden" value="<?php echo $discussion_post_id; ?>" name="post_id"/>
@@ -37,3 +40,13 @@ foreach($wing_flat as $data){
 		</div>
 	</form>
 </div>
+<script>
+$(document).ready(function(){
+	$.ajax({
+		url: "<?php echo $webroot_path; ?>Discussions/comments/"+"<?php echo $discussion_post_id; ?>",
+		success: function(data) {
+		   $("#comments").html(data);
+		}
+	});
+});
+</script>

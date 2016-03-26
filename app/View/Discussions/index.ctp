@@ -43,19 +43,7 @@ $.ajax({
 		},"slow");
    }
 });
-$("#idForm").on("submit",function(e){
-	$.ajax({
-	   type: "POST",
-	   url: "<?php echo $webroot_path; ?>Discussions/submit_comment",
-	   data: $("#idForm").serialize(), // serializes the form's elements.
-	   success: function(data){
-		   $("textarea[name=comment_box]").val("");
-		   $("#save_comment").html(data); // show response from the php script.
-	   }
-    });
 
-    e.preventDefault(); 
-});
 $(".topic").die().live("click",function(){
 	$('.topic').each(function(i, obj) {
 		$(this).removeClass("run");

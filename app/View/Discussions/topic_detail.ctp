@@ -24,7 +24,7 @@ foreach($wing_flat as $data){
 		</td>
 	</tr>
 </table>
-<div>
+<div style="text-align: justify;">
 	<?php echo $description; ?>
 </div>
 <div id="comments">
@@ -47,6 +47,18 @@ $(document).ready(function(){
 		success: function(data) {
 		   $("#comments").html(data);
 		}
+	});
+	$("#idForm").on("submit",function(e){
+		$.ajax({
+		   type: "POST",
+		   url: "<?php echo $webroot_path; ?>Discussions/submit_comment",
+		   data: $("#idForm").serialize(), // serializes the form's elements.
+		   success: function(data){
+			   $("textarea[name=comment_box]").val("");
+			   $("#save_comment").html(data); // show response from the php script.
+		   }
+		});
+		e.preventDefault(); 
 	});
 });
 </script>

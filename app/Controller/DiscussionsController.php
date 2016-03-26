@@ -21,6 +21,7 @@ function index($list=null,$id=null){
 	}
 	$this->ath();
 	
+	$this->set(compact("id"));
 	$s_user_id=$this->Session->read('hm_user_id'); 
 	$s_society_id=$this->Session->read('hm_society_id');
 	
@@ -67,10 +68,21 @@ function submit_comment(){
 }
 
 function topic_detail($post_id=null){
-	$this->loadmodel('discussion_post');
-	$conditions=array("discussion_post_id"=>(int)$post_id);
-	$posts=$this->discussion_post->find('all',array('conditions'=>$conditions));
-	$this->set(compact("posts"));
+	$s_user_id=$this->Session->read('hm_user_id');
+	$s_society_id=$this->Session->read('hm_society_id');
+	if(!empty($post_id)){
+		$this->loadmodel('discussion_post');
+		$conditions=array("discussion_post_id"=>(int)$post_id);
+		$posts=$this->discussion_post->find('all',array('conditions'=>$conditions));
+		$this->set(compact("posts"));
+	}else{
+		$this->loadmodel('discussion_post');
+		$conditions=array("society_id"=>$s_society_id,'users_have_access' =>array('$in' => array($s_user_id)));
+		$order=array('discussion_post.discussion_post_id'=> 'DESC');
+		$posts=$this->discussion_post->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1));
+		$this->set(compact("posts"));
+	}
+	
 }
 
 function new_topic(){

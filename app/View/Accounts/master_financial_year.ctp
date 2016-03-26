@@ -35,11 +35,11 @@ $tooo = date('31-3-'.$yyy.'');
 <tr>
 
 <td><label style="font-size:22px;"><b>From</b></label></td>
-<td><input type="text" name="from" class="m-wrap medium date-picker" data-date-format="dd-mm-yyyy" style="background-color:white !important;" id="from" placeholder="Select Start Date" value="<?php echo $fromm; ?>">
+<td><input type="text" name="from" class="m-wrap medium date-picker" data-date-format="dd-mm-yyyy" style="background-color:white !important;" id="from" placeholder="Select Start Date" value="">
 
 </td>
 <td><label style="font-size:22px;"><b>To</b></label></td>
-<td><input type="text" name="to" class="m-wrap medium date-picker" data-date-format="dd-mm-yyyy" style="background-color:white !important;" id="to" placeholder="Select End Date" value="<?php echo $tooo; ?>"></td>
+<td><input type="text" name="to" class="m-wrap medium date-picker" data-date-format="dd-mm-yyyy" style="background-color:white !important;" id="to" placeholder="Select End Date" value=""></td>
 
 </tr>
 <tr>

@@ -48,6 +48,9 @@ $(document).ready(function(){
 		   $("#comments").html(data);
 		}
 	});
+	window.setInterval(function(){
+		alert();
+	}, 1000);
 	$("#idForm").on("submit",function(e){
 		$.ajax({
 		   type: "POST",

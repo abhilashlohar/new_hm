@@ -187,9 +187,11 @@ $('#hid').val(c);
 			 @$blood_group=$result_user_profile[0]['user_profile']['blood_group']; 
 			 
 				$result_member_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($user_id)));
-				pr($result_member_info);
-				$wing_flat= $result_member_info['wing_flat'][$user_id];
-					  
+				
+				$wing_flat_result= $result_member_info['wing_flat'];
+					foreach($wing_flat_result as $data){
+						$$wing_flat=$data;
+					}					
 				if($blood_group==1){ $b_group="A+"; }
 				if($blood_group==2){ $b_group="B+"; }
 				if($blood_group==3){ $b_group="AB+"; }

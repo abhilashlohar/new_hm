@@ -51,7 +51,6 @@ foreach($wing_flat as $data){
 </div>
 <script>
 $(document).ready(function(){
-	refresh();
 	$("#idForm").on("submit",function(e){
 		$.ajax({
 		   type: "POST",

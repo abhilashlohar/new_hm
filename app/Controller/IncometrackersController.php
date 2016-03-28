@@ -303,7 +303,7 @@ $flats=$this->flat->find('all',array('conditions'=>$conditions));
 foreach($flats as $flat){
 $flat_type_ids[]=@$flat["flat"]["flat_type_id"];
 }
-$flat_type_ids=array_unique($flat_type_ids);
+@$flat_type_ids=array_unique(@$flat_type_ids);
 $this->set(compact("flat_type_ids"));
 
 

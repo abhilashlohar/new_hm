@@ -80,7 +80,7 @@ function fetch_default_role_via_user_id($user_id){
 	$this->loadmodel('user_role');
 	$conditions=array('user_id'=>$user_id,'default'=>'yes');
 	$role_info=$this->user_role->find('all',array('conditions'=>$conditions));
-	return $role_info[0]["user_role"]["role_id"];
+	return @$role_info[0]["user_role"]["role_id"];
 }
 
 function fetch_default_role_via_user_id_hm($user_id){

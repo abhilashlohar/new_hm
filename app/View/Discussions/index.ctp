@@ -58,9 +58,9 @@ $(document).ready(function(){
 	$.ajax({
 	   url: "<?php echo $webroot_path; ?>Discussions/topic_detail/"+"<?php echo $id; ?>",
 	   success: function(data) {
+		   refresh();
 		   $("#topic_detail").html(data);
 		   $("html, body").animate({
-			    refresh();
 				scrollTop:0
 			},"slow");
 	   }

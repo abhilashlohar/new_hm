@@ -46,7 +46,7 @@ $default_date_to = date('d-m-Y')
 							$name2=$result_member['user_name'];
 							$wing_name=$result_member['wing_name'];
 							$flat_name=$result_member['flat_name'];
-							$wing_flat=$wing_name.'-'.$flat_name;
+							$wing_flat=$wing_name.' - '.$flat_name;
 						}
 						if($ledger_id == 33){
 $account_number = $collection['ledger_sub_account']['bank_account'];  	

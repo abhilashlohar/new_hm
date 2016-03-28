@@ -19,7 +19,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 		<tr>
 			<th>Flat type</th>
 			<?php if(!empty($income_heads)){ foreach($income_heads as $income_head):
-				$income_head_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'income_head_name_via_income_head_id'), array('pass' => array($income_head)));?>
+				$income_head_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'income_head_name_via_income_head_id'),array('pass' => array(@$income_head)));?>
 			<th><?php echo $income_head_name; ?></th>
 			<?php endforeach; } ?>
 		</tr>

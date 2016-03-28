@@ -1,4 +1,5 @@
 <?php 
+if(sizeof($posts)==0){ echo "No any topic created."; exit; }
 $discussion_post_id=$posts[0]["discussion_post"]["discussion_post_id"];
 $topic=$posts[0]["discussion_post"]["topic"];
 $description=$posts[0]["discussion_post"]["description"];

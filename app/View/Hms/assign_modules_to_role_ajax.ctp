@@ -53,7 +53,7 @@ color: rgb(111, 111, 111);
 </div>
 <script>
 $(document).ready(function(){
-	$(".qwe").on("click",function(){
+	$(".qwe").die().on("click",function(){
 		var module_type_id=$(this).attr("module_type_id");
 		$('.qwe').each(function(i, obj) {
 			$(this).removeClass("on");
@@ -67,7 +67,7 @@ $(document).ready(function(){
 			$("#sub_modules").html("");
 		});
 	})
-	$(".asd").live("click",function(){
+	$(".asd").die().live("click",function(){
 		var module_id=$(this).attr("module_id");
 		$('.asd').each(function(i, obj) {
 			$(this).removeClass("on");

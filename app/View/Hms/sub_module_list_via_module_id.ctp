@@ -1,4 +1,3 @@
-
 <script>
 $("input:checkbox").bind("click",function(){
 	$("body").find("#success_msg").html("saving changes...");

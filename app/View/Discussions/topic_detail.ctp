@@ -10,6 +10,7 @@ $time=$posts[0]["discussion_post"]["time"];
 $result_user=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($creator_user_id)));
 $user_name=$result_user["user_name"];			
 $wing_flat=$result_user["wing_flat"];
+$profile_pic=$result_user["profile_pic"];
 foreach($wing_flat as $data){
 	$wing_flat=$data;
 }?>
@@ -18,7 +19,7 @@ foreach($wing_flat as $data){
 </div>
 <table>
 	<tr>
-		<td width="15%"><img src="http://app.housingmatters.co.in//profile/blank.jpg" style="height:50px; width:50px;"></td>
+		<td width="15%"><img src="<?php echo $webroot_path; ?>profile/<?php echo $profile_pic; ?>" style="height:50px; width:50px;"></td>
 		<td style="padding-left:5px;" valign="top" width="85%">
 			<span style="font-size:16px;"><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $wing_flat; ?></span>
 			<br>
@@ -31,7 +32,7 @@ foreach($wing_flat as $data){
 </div>
 <?php if(!empty($file)){ ?>
 <div style="text-align: justify;">
-	<img src="<?php echo $webroot_path; ?>discussion_file/<?php echo $file; ?>" style="width:100%; height:350px;">
+	<img src="<?php echo $webroot_path; ?>discussion_file/<?php echo $file; ?>" style="width:100%; ">
 </div>
 <?php } ?>
 

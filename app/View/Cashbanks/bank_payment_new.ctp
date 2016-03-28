@@ -31,13 +31,14 @@
 	     <td>
 			<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy" 
 			value="<?php echo $default_date; ?>" 
-			style="background-color:white !important; margin-top:2.5px;">
+			style="background-color:white !important; margin-top:2.5px;" name="transaction_date[]">
 		 
 			<input type="text" class="m-wrap span12" 
-			style="background-color:white !important; margin-top:2.5px;" Placeholder="Invoice Reference">
+			style="background-color:white !important; margin-top:2.5px;" Placeholder="Invoice Reference"
+			name="invoice_reference[]">
 		 </td>
 		 <td>
-					<select class="m-wrap span12">
+					<select class="m-wrap span12" name="ledger_account[]">
 					<option value="">--SELECT--</option>
 					<?php foreach($cursor11 as $collection){
 					$auto_id = $collection['ledger_sub_account']['auto_id'];
@@ -68,20 +69,20 @@
 					</select>
 					
 			<input type="text" class="m-wrap span12" 
-			style="text-align:right; background-color:white !important; margin-top:2.5px;" Placeholder="Instrument/UTR">
+			style="text-align:right; background-color:white !important; margin-top:2.5px;" Placeholder="Instrument/UTR" name="instrument[]">
 		 </td>
 		 <td>
-			<select class="m-wrap span12">
+			<select class="m-wrap span12" name="payment_mode[]">
 			<option value="">Select</option>
 			<option value="Cheque">Cheque</option>
 			<option value="NEFT">NEFT</option>
 			<option value="PG">PG</option>
 			</select>
 		 
-		 <input type="text" class="m-wrap span12" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="10" Placeholder="Amount">
+		 <input type="text" class="m-wrap span12" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="10" Placeholder="Amount" name="amount[]">
 		 </td>
 		 <td>
-			<select class="m-wrap span12">
+			<select class="m-wrap span12" name="tds[]">
 			<option value="" style="display:none;">Select</option>
 			<?php for($k=0; $k<sizeof($tds_arr); $k++){
 			$tds_sub_arr = $tds_arr[$k];	
@@ -92,10 +93,11 @@
 			<?php } ?>                           
 			</select>
 		    <input type="text"  class="m-wrap span12" 
-			readonly="readonly" style="background-color:white !important; margin-top:2.5px;" Placeholder="Net Amount">
+			readonly="readonly" style="background-color:white !important; margin-top:2.5px;" Placeholder="Net Amount" name="net_amount[]">
 		 </td>
 		 <td>
-				<select class="m-wrap span12">
+		 <a style="margin-top: -4px; margin-right: -5px;" role="button" class="btn mini pull-right remove_row" href="#"><i class="icon-trash"></i></a>
+				<select class="m-wrap span10" name="bank_account[]">
 				<option value="" style="display:none;">Select</option>    
 				<?php
 				foreach($cursor2 as $db){
@@ -107,7 +109,7 @@
 				<option value="<?php echo $sub_account_id; ?>"><?php echo $sub_account_name; ?>&nbsp;&nbsp;<?php echo $bank_acccc; ?></option>
 				<?php } ?>
 				</select>
-				<input type="text" class="m-wrap span12" style="background-color:white !important; margin-top:2.5px;" Placeholder="Narration">
+				<input type="text" class="m-wrap span10" style="background-color:white !important; margin-top:2.5px;" Placeholder="Narration" name="narration[]">
 		 </td>
 	</tr>
 	</tbody>
@@ -121,11 +123,11 @@ $(document).ready(function(){
 	function add_row(){
 	var new_line=$("#sample tbody").html();
 	$("#main tbody").append(new_line);
-	//$('#main tbody tr:last select[name="account_group[]"]').chosen();
-	//$('#main tbody tr:last select[name="account_head[]"]').chosen();
-	//$('#main tbody tr:last select[name="other_income[]"]').chosen();
-	//$('#main tbody tr:last select[name="ledger_sub_account[]"]').chosen();
-	//$('#main tbody tr:last input[name="transaction_date[]"]').datepicker();
+	$('#main tbody tr:last select[name="ledger_account[]"]').chosen();
+	$('#main tbody tr:last select[name="payment_mode[]"]').chosen();
+	$('#main tbody tr:last select[name="tds[]"]').chosen();
+	$('#main tbody tr:last select[name="bank_account[]"]').chosen();
+	$('#main tbody tr:last input[name="transaction_date[]"]').datepicker();
 	}
 	
 	$("#add_row").on("click",function(){

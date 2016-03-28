@@ -11985,8 +11985,9 @@ $this->set(compact("sub_modules"));
 	$conditions=array("module_id" =>(int)$module_id,"sub_module_id" =>$sub_module_id,"role_id" =>(int)$role_id,"society_id" =>$s_society_id);
 	$count=$this->role_privilege->find('count',array('conditions'=>$conditions));
 	if($count==1){$check="checked";}else{$check="";}?>
-	<li class="pqr">
-	<label><input type="checkbox" <?php echo $check; ?> module_id="<?php echo $module_id; ?>" sub_module_id="<?php echo $sub_module_id; ?>"/><?php echo $sub_module_name; ?></label></li>
+
+	<li class="pqr" >
+	<label><input type="checkbox" <?php echo $check; ?> module_id="<?php echo $module_id; ?>" sub_module_id="<?php echo $sub_module_id; ?>" /><?php echo $sub_module_name; ?></label></li>
 <?php }
 }
 
@@ -25197,8 +25198,8 @@ foreach($myArray as $child){
 	if(!empty($child[2])) {
 		
 		$this->loadmodel('user_flat');
-		$conditions=array("flat" => (int)$child[2],"owner"=>array('$ne'=>null));
-		 $result4 = $this->user_flat->find('all',array('conditions'=>$conditions));
+		$conditions=array("flat" => (int)$child[2]);
+		$result4 = $this->user_flat->find('all',array('conditions'=>$conditions));
 		
 		$this->loadmodel('flat');
 		$conditions=array("flat_id" => (int)$child[2]);
@@ -25219,7 +25220,7 @@ foreach($myArray as $child){
 		
 		
 		
-		$n4 = sizeof($result4); 
+		$n4 = sizeof($result4);
 		if($n4==1){
 			
 			$tenant=$result4[0]['user_flat']['owner'];
@@ -25245,9 +25246,7 @@ foreach($myArray as $child){
 			
 			
 		}
-			if($n4>=2){
-			
-			
+			if($n4==2){	
 			$report[]=array('tr'=>$c,'td'=>3, 'text' => 'already exist');
 			
 			}

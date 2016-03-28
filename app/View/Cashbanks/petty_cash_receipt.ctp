@@ -7,18 +7,18 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </center>
 <!---------------- Start Petty Cash Receipt Form ------------------------->
 <?php $default_date = date('d-m-Y'); ?>
-<?php /*
+
 <div class="portlet box">
 <div class="portlet-body">
 	<form method="post">
 		<table class="table table-condensed table-bordered" id="main">
 			<thead>
 				<tr>
-					<th>Transaction Date</th>
-					<th>A/c Group</th>
-					<th>Income/Party A/c</th>
-					<th width="200px">Account Head</th>
-					<th>Amount</th>
+					<th width="120px">Transaction Date</th>
+					<th width="200px">A/c Group</th>
+					<th width="200px">Income/Party A/c</th>
+					<th width="130px">Account Head</th>
+					<th width="100px">Amount</th>
 					<th>Narration</th>
 				</tr>
 			</thead>
@@ -36,31 +36,57 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <tbody>
 <tr>
 	<td>
-	<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy" name="date" id="date" data-date-start-date="+0d" style="background-color:white !important; margin-top:2.5px;" value="<?php echo $default_date; ?>">
+	<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy"  data-date-start-date="+0d" style="background-color:white !important; margin-top:2.5px;" value="<?php echo $default_date; ?>" name="transaction_date[]">
 	</td>
+	
 	<td>
-	<select class="m-wrap chosen span12" onchange="petty_cash_receipt_account_group_type(this.value,1)">
+	<select class="m-wrap span12" name="account_group[]">
     <option value="" style="display:none;">Select</option>
-    <option value="1">Sundry Debtors Control A/c</option>
+    <option value="1">Members Control A/c</option>
     <option value="2">Other Income</option>
     </select>
 	</td>
+	
 	<td>
-	<select class="m-wrap chosen span12">
-    <option value="">Select</option>
-    </select> 
+	<div id="default_select_box">
+	<select class="m-wrap span12">
+    <option value="" style="display:none;">Select</option>
+    </select>
+    </div>
+			<div id="members_select_box" class="hide">
+			<select name="ledger_sub_account[]" class="m-wrap medium">
+			<option value="" style="display:none;">Select</option>
+			<?php foreach($members_for_billing as $ledger_sub_account_id){
+			$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+			echo '<option value='.$ledger_sub_account_id.'>'.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
+			} ?>
+			</select> 
+			</div>
+		<div id="other_income_select_box" class="hide">
+		<select name="other_income[]" class="m-wrap medium">
+		<option value="" style="display:none;">Select</option>
+		<?php
+		foreach ($cursor2 as $collection){
+		$auto_id = (int)$collection['ledger_account']['auto_id'];
+		$name = $collection['ledger_account']['ledger_name'];
+		?>
+		<option value="<?php echo $auto_id; ?>"><?php echo $name; ?></option>
+		<?php } ?>
+		</select>
+		</div>
 	</td>
 	<td>
-	<select class="m-wrap span12 chosen">
+	<select class="m-wrap span12" name="account_head[]">
     <option value="" style="display:none;">Select</option>
     <option value="32" selected="selected">Cash-in-hand</option>
     </select>
 	</td>
 	<td>
-	<input type="text" class="m-wrap span12"  id="amttt1" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="5" onkeyup="numeric_vali(this.value,1)">
+	<input type="text" class="m-wrap span12" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="5" name="amount[]">
 	</td>
 	<td>
-	<input type="text" class="m-wrap span12"  name="narration" id="narr" style="background-color:white !important; margin-top:2.5px;">
+	<a style="margin-top: -4px; margin-right: -5px;" role="button" class="btn mini pull-right remove_row" href="#"><i class="icon-trash"></i></a>
+	<input type="text" class="m-wrap span10"  name="narration[]" style="background-color:white !important; margin-top:2.5px;">
 	</td>
 </tr>
 </tbody>
@@ -72,13 +98,51 @@ $(document).ready(function(){
 	function add_row(){
 	var new_line=$("#sample tbody").html();
 	$("#main tbody").append(new_line);
+	$('#main tbody tr:last select[name="account_group[]"]').chosen();
+	$('#main tbody tr:last select[name="account_head[]"]').chosen();
+	$('#main tbody tr:last select[name="other_income[]"]').chosen();
 	$('#main tbody tr:last select[name="ledger_sub_account[]"]').chosen();
-	$('#main tbody tr:last select[name="deposited_in[]"]').chosen();
+	$('#main tbody tr:last input[name="transaction_date[]"]').datepicker();
 	}
+	
+	$("#add_row").on("click",function(){
+		add_row();
+	})
+	$(".remove_row").die().live("click",function(){
+		$(this).closest("tr").remove();
+	})
+
 });
 </script>
-*/ ?>
+
+<script>
+$('select[name="account_group[]"]').die().live("change",function(){
+		var account_group=$(this).val();
+		if(account_group=='1'){
+			$(this).parent().next('td').find("#default_select_box").hide();
+			$(this).parent().next('td').find("#other_income_select_box").hide();
+			$(this).parent().next('td').find("#members_select_box").show();
+		}else{
+			$(this).parent().next('td').find("#default_select_box").hide();
+			$(this).parent().next('td').find("#other_income_select_box").show();
+			$(this).parent().next('td').find("#members_select_box").hide();
+		}
+});
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
 <?php $default_date = date('d-m-Y'); ?>
+<?php /*
 <form method="post">
 <div class="portlet box blue">
 <div class="portlet-title">
@@ -231,4 +295,4 @@ $(document).ready(function() {
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_receipt_view" class="btn red" rel='tab'>OK</a>
 </div>
 </div>
-</div> 
+</div>  */ ?>

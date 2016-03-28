@@ -1,45 +1,35 @@
 <?php 
-foreach ($cursor1 as $collection) 
-{
-$receipt_no = (int)$collection['new_cash_bank']['receipt_id'];
-$d_date = $collection['new_cash_bank']['transaction_date'];
-$today = date("d-M-Y");
-$amount = $collection['new_cash_bank']['amount'];
-$society_id = (int)$collection['new_cash_bank']['society_id'];
-$narration = @$collection['new_cash_bank']['narration'];
-$user_id = (int)@$collection['new_cash_bank']['user_id'];
-$account_type = (int)@$collection['new_cash_bank']['account_type'];
-$sub_account = (int)$collection['new_cash_bank']['account_head'];
+foreach($cursor1 as $collection){
+	$receipt_no = (int)$collection['cash_bank']['receipt_id'];
+	$d_date = $collection['cash_bank']['transaction_date'];
+	$today = date("d-M-Y");
+	$amount = $collection['cash_bank']['amount'];
+	$society_id = (int)$collection['cash_bank']['society_id'];
+	$narration = @$collection['cash_bank']['narration'];
+	$user_id = (int)@$collection['cash_bank']['user_id'];
+	$account_type = (int)@$collection['cash_bank']['account_type'];
+	$sub_account = (int)$collection['cash_bank']['account_head'];
 }
-$amount = str_replace( ',', '', $amount );
-$am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));
-foreach ($cursor2 as $collection) 
-{
+	$amount = str_replace( ',', '', $amount );
+	$am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));
+foreach($cursor2 as $collection){
 $society_name = $collection['society']['society_name'];
 $society_reg_no = $collection['society']['society_reg_num'];
 $society_address = $collection['society']['society_address'];
 $sig_title = $collection['society']['sig_title'];
 }
-if($account_type == 1)
-{
-$subleddger_result = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_subLedger_detail_via_flat_id'),array('pass'=>array($user_id)));
-foreach ($subleddger_result as $dddd) 
-{
-$user_name = $dddd['ledger_sub_account']['name'];
-$flat_id = (int)$dddd['ledger_sub_account']['flat_id'];	  
-}
-
-$result_flat_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
-foreach($result_flat_info as $flat_info){
-$wing=$flat_info["flat"]["wing_id"];
-} 
-
-$wing_flat = $this->requestAction(array('controller' => 'hms', 'action'=>'wing_flat'),array('pass'=>array($wing,$flat_id)));
-
-
-
-
-
+if($account_type == 1){
+	$result_ledger_sub_account=$this->requestAction(array('controller'=>'Fns','action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array((int)$user_id)));
+	foreach ($result_ledger_sub_account as $data){
+	$user_name = $data['ledger_sub_account']['name'];
+	$user_flat_id = (int)$data['ledger_sub_account']['user_flat_id'];	  
+	}
+	$result_user_flat=$this->requestAction(array('controller'=>'Fns','action'=>'user_flat_info_via_user_flat_id'),array('pass'=>array($user_flat_id)));
+	foreach($result_user_flat as $data){
+	@$wing=(int)@$data["user_flat"]["wing"];
+	@$flat=(int)@$data['user_flat']['flat'];
+	} 
+	$wing_flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'),array('pass'=>array(@$wing,@$flat)));
 }
 else
 {

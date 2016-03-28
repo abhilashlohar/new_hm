@@ -19588,9 +19588,9 @@ if($this->RequestHandler->isAjax()){
 					$result_tenant_info[]=array("wing_name"=>$flats,"result_user"=>$result_user,"result_user_tenant"=>$result_user_tenant);
 				}
 		
-
-			$this->set('result_tenant_info',$result_tenant_info);
-
+			if(!empty($result_tenant_info)){
+				$this->set('result_tenant_info',$result_tenant_info);
+			}
 }
 
 function new_tenant_enrollment_ajax()

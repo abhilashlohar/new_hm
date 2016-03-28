@@ -25,7 +25,7 @@ table th {font-size: 12px !important; }
 		</thead>
 		<tbody>
 		<?php 
-		
+		if(!empty($result_tenant_info)){ 
 		foreach($result_tenant_info as $collection){
 					$wing_name=$collection['wing_name'];
 					$result_user=$collection['result_user'];
@@ -88,12 +88,15 @@ table th {font-size: 12px !important; }
 					  </div>
 				</td>
 			</tr>			
-		<?php }  ?>		
+		<?php } } ?>	
+
 		</tbody>
+		
 	</table>
 	
 </div>
 </form>
+<?php  ?>
 
 <script>
 $(document).ready(function(){

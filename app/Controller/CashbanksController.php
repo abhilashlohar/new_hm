@@ -993,16 +993,10 @@ $excel.="<tr>
 $total_debit = number_format($total_debit);
 $excel.="$total_debit</b></td>
 </tr></table>";   
- 
 echo $excel; 
-  
-  
-
-
 }
-////////////////// End Bank receipt Excel (Accounts)/////////////////////////////
-
-////////////////////////////////Start Bank Payment (Accounts)//////////////////////////
+//End Bank receipt Excel (Accounts)//
+//Start Bank Payment (Accounts)//
 function bank_payment()
 {
 if($this->RequestHandler->isAjax()){
@@ -1265,9 +1259,8 @@ $this->set('cursor13',$cursor13);
 
 }
 
-/////////////////////////End Bank Payment(Accounts)///////////////////////////////////
-
-//////////////////////// Start Bank Payment View (Accounts) ////////////////////////
+//End Bank Payment(Accounts)//
+//Start Bank Payment View (Accounts)//
 function bank_payment_view()
 {
 if($this->RequestHandler->isAjax()){
@@ -6783,9 +6776,8 @@ $cursor1=$this->fix_deposit->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
 
 }
-//////////////////////////////////// End fixed_deposit_bar_chart_ajax //////////////////////////////////////////
-
-/////////////////////////////////// Start matured_deposit_add //////////////////////////////////////////
+//End fixed_deposit_bar_chart_ajax//
+//Start matured_deposit_add //
 function matured_deposit_add()
 {
 		if($this->RequestHandler->isAjax()){
@@ -8114,7 +8106,7 @@ die($output);
 function approve_bank_receipt_ajax($temp_cash_bank_id=null)
 {
 $this->layout='blank';
-$s_role_id=$this->Session->read('hm_role_id');
+$s_role_id=$this->Session->read('role_id');
 $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');	
 
@@ -8366,5 +8358,34 @@ $this->response->header('Location',''.$this->webroot.'Cashbanks/bank_receipt_app
 
 }
 //End approve_bank_receipt_ajax//
+//Start bank_payment_new//
+function bank_payment_new()
+{
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}	
+	$s_role_id=$this->Session->read('role_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');	
+
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("ledger_id" => 15,"society_id"=>$s_society_id);
+	$cursor11=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$this->set('cursor11',$cursor11);
+
+	$this->loadmodel('accounts_group');
+	$conditions=array("accounts_id" => 1);
+	$cursor12=$this->accounts_group->find('all',array('conditions'=>$conditions));
+	$this->set('cursor12',$cursor12);
+
+	$this->loadmodel('accounts_group');
+	$conditions=array("accounts_id" => 4);
+	$cursor13=$this->accounts_group->find('all',array('conditions'=>$conditions));
+	$this->set('cursor13',$cursor13);
+
+}
+//End bank_payment_new//
 }
 ?>

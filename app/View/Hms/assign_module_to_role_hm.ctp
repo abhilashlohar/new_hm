@@ -3,7 +3,7 @@
 <a href="<?php echo $webroot_path; ?>Hms/hm_create_role" class="btn blue">Create Role</a>
 <a href="<?php echo $webroot_path; ?>Hms/assign_module_to_role_hm" class="btn red">Assign Module to Role</a>
 <a href="<?php echo $webroot_path; ?>Hms/asign_role_to_user" class="btn blue">Assign Role to Users</a>
-<center>
+</center>
 <br>
 
 <form method="post">

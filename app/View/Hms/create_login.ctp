@@ -3,7 +3,7 @@
 <a href="<?php echo $webroot_path; ?>Hms/hm_create_role" class="btn blue">Create Role</a>
 <a href="<?php echo $webroot_path; ?>Hms/assign_module_to_role_hm" class="btn blue">Assign Module to Role</a>
 <a href="<?php echo $webroot_path; ?>Hms/asign_role_to_user" class="btn blue">Assign Role to Users</a>
-<center>
+</center>
 <br>
 <form method="post" id="contact-form">          
 <div class="portlet box blue">
@@ -12,42 +12,67 @@
 </div>
 <div class="portlet-body form">
 
-<label style="font-size:14px;">Name<span style="color:red;">*</span></label>
-<div class="controls">
-<input type="text" class="m-wrap span4" name="name" id="name"><br>
-<span id="nam" style="color:red;"></span>
-</div>
-<br>
+<table class="table table-condensed table-bordered">
+	<tr>
+		<th width="20%">Name</th>
+		<th width="30%">Email</th>
+		<th width="20%">Mobile</th>
+		<th width="20%">Password</th>
+		<th width="20%"></th>
+	</tr>
+    <tr>
+		<th><input type="text" class="m-wrap span12" name="name" id="name"><br>
+		<span id="nam" style="color:red;"></span>
+		</th>
+		<th>
+		<input type="text" class="m-wrap span12 email_mobile" name="email" id="email"><br>
+		<span id="mail" style="color:red;"></span>
+		</th>
+		<th>
+		<input type="text" class="m-wrap span12 email_mobile" name="mobile" id="mobile" maxlength="10"><br>
+		<span id="mob" style="color:red;"></span>
+		</th>
+		<th>
+		<input type="text" class="m-wrap span12" name="password" id="password"><br>
+		<span id="pass" style="color:red;"></span>
+		</th>
+		<th>
+		<button type="submit" class="btn blue" id="submit" name="sub">Submit</button>
+		</th>
+	</tr>
+	</table>
+	<br>
+	
+	<table class="table table-condensed table-bordered">
+	<tr>
+	   <th>Sr.No.</th>
+	   <th width="20%">Name</th>
+	   <th width="30%">Email</th>
+	   <th width="20%">Mobile</th>
+	   <th width="20%">Password</th>
+	</tr>
+	<?php $n=0; foreach($result_user as $data){ $n++;
+		$user_name = $data['user']['user_name'];
+		@$email = @$data['user']['email'];
+		@$mobile = @$data['user']['mobile'];
+		$password = $data['user']['password']; ?>
+	<tr>
+	    <td><?php echo $n; ?></td>
+		<td><?php echo $user_name; ?></td>
+		<td><?php echo @$email; ?></td>
+		<td><?php echo @$mobile; ?></td>
+		<td><?php echo $password; ?></td>
+	</tr>
+		
+		<?php } ?>
+	
+	
+	
+	
+	
+	</table>
+	
 
-
-
-<label style="font-size:14px;">Email<span style="color:red;">*</span></label>
-<div class="controls">
-<input type="text" class="m-wrap span4 email_mobile" name="email" id="email"><br>
-<span id="mail" style="color:red;"></span>
-</div>
-<br>
-
-
-<label style="font-size:14px;">Mobile<span style="color:red;">*</span></label>
-<div class="controls">
-<input type="text" class="m-wrap span4 email_mobile" name="mobile" id="mobile" maxlength="10"><br>
-<span id="mob" style="color:red;"></span>
-</div>
-<br>
-
-<label style="font-size:14px;">Password<span style="color:red;">*</span></label>
-<div class="controls">
-<input type="text" class="m-wrap span4" name="password" id="password"><br>
-<span id="pass" style="color:red;"></span>
-</div>
-<br>
-
-
-<div class="form-actions">
-<button type="submit" class="btn blue" id="submit" name="sub">Submit</button>
-<button type="button" class="btn">Cancel</button>
-</div>
 </div>
 </div>
 </form>

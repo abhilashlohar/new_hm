@@ -3,7 +3,7 @@
 <a href="<?php echo $webroot_path; ?>Hms/hm_create_role" class="btn blue">Create Role</a>
 <a href="<?php echo $webroot_path; ?>Hms/assign_module_to_role_hm" class="btn blue">Assign Module to Role</a>
 <a href="<?php echo $webroot_path; ?>Hms/asign_role_to_user" class="btn red">Assign Role to Users</a>
-<center>
+</center>
 <br>
 
 <form method="post" id="contact-form">
@@ -12,6 +12,16 @@
 <h4 class="block"><i class="icon-reorder"></i>Assign role to user</h4>
 </div>
 <div class="portlet-body form">
+
+<table 
+
+
+
+
+
+
+
+
 
 <label style="font-size:14px;">Select Society</label>
 <div class="controls">

@@ -27321,21 +27321,19 @@ function update_default_sub_module_by_hm_ajax($sub_module_id,$role,$status){
 	
 	
 }
-/////////////////////// Start create_login ////////////////////////////////////////
+//Start create_login//
 function create_login()
 {
-if($this->RequestHandler->isAjax()){
-$this->layout='blank';
-}else{
-$this->layout='session';
-}
-$this->ath();
-$s_society_id = $this->Session->read('hm_society_id');
-$s_user_id=$this->Session->read('user_id');	
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('user_id');	
 
-if(isset($this->request->data['sub']))
-{
-	
+if(isset($this->request->data['sub'])){
 $name = $this->request->data['name'];
 $email = @$this->request->data['email'];
 $mobile = @$this->request->data['mobile'];
@@ -27344,16 +27342,21 @@ $password = $this->request->data['password'];
 
 $this->loadmodel('user');
 $i=$this->autoincrement('user','user_id');
-$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email' => $email, 'mobile' => $mobile,'society_id' =>null,'signup_random'=>"",'active'=>'yes',"user_type"=>"hm_child","password"=>$password));
+$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email'=>$email,'mobile'=>$mobile,'society_id' =>null,'signup_random'=>"",'active'=>'yes',"user_type"=>"hm_child","password"=>$password));
 
 $this->loadmodel('user_flat');
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>null,'exited'=>'no'));
 }
+
+	$this->loadmodel('user');
+	$conditions=array('active'=>'yes',"user_type"=>"hm_child");
+	$result_user=$this->user->find('all',array('conditions'=>$conditions));
+	$this->set('result_user',$result_user);
 	
 }
-////////////////////// End create_login ////////////////////////////////////////	
-/////////////////// Start hm_create_role ///////////////////////////////////
+//End create_login//
+//Start hm_create_role//
 function hm_create_role()
 {
 	if($this->RequestHandler->isAjax()){

@@ -11976,7 +11976,7 @@ $order=array('sub_module.sub_module_name'=>'ASC');
 $sub_modules=$this->sub_module->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set(compact("sub_modules"));
 ?>
-<span style="font-weight: bold; color: rgb(92, 92, 92);">Sub-Modules</span><span style="font-weight: bold; color: rgb(92, 92, 92); margin-left:10px;">Select All <input type="checkbox" module_id="<?php echo $module_id; ?>" id="select_all"/></span><br/>
+<span style="font-weight: bold; color: rgb(92, 92, 92);">Sub-Modules</span><br/>
 <?php foreach($sub_modules as $data){
 	$sub_module_id=(int)$data["sub_module"]["auto_id"];
 	$sub_module_name=$data["sub_module"]["sub_module_name"];
@@ -11986,7 +11986,7 @@ $this->set(compact("sub_modules"));
 	$count=$this->role_privilege->find('count',array('conditions'=>$conditions));
 	if($count==1){$check="checked";}else{$check="";}?>
 	<li class="pqr" >
-	<label><input type="checkbox" <?php echo $check; ?> module_id="<?php echo $module_id; ?>" sub_module_id="<?php echo $sub_module_id; ?>" class="sub_module_checkbox"/><?php echo $sub_module_name; ?></label></li>
+	<label><input type="checkbox" <?php echo $check; ?> module_id="<?php echo $module_id; ?>" sub_module_id="<?php echo $sub_module_id; ?>" /><?php echo $sub_module_name; ?></label></li>
 <?php }
 }
 
@@ -25197,8 +25197,8 @@ foreach($myArray as $child){
 	if(!empty($child[2])) {
 		
 		$this->loadmodel('user_flat');
-		$conditions=array("flat" => (int)$child[2],"owner"=>array('$ne'=>null));
-		 $result4 = $this->user_flat->find('all',array('conditions'=>$conditions));
+		$conditions=array("flat" => (int)$child[2]);
+		$result4 = $this->user_flat->find('all',array('conditions'=>$conditions));
 		
 		$this->loadmodel('flat');
 		$conditions=array("flat_id" => (int)$child[2]);
@@ -25219,7 +25219,7 @@ foreach($myArray as $child){
 		
 		
 		
-		$n4 = sizeof($result4); 
+		$n4 = sizeof($result4);
 		if($n4==1){
 			
 			$tenant=$result4[0]['user_flat']['owner'];
@@ -25245,9 +25245,7 @@ foreach($myArray as $child){
 			
 			
 		}
-			if($n4>=2){
-			
-			
+			if($n4==2){	
 			$report[]=array('tr'=>$c,'td'=>3, 'text' => 'already exist');
 			
 			}

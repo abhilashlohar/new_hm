@@ -52,7 +52,7 @@ color: rgb(111, 111, 111);
 	<div class="span5" id="sub_modules"></div>
 </div>
 <script>
-$(document).ready(function() {
+$(document).ready(function(){
 	$(".qwe").on("click",function(){
 		var module_type_id=$(this).attr("module_type_id");
 		$('.qwe').each(function(i, obj) {

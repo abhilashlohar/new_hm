@@ -169,7 +169,7 @@ function income_head_name_via_income_head_id($income_head_id){
 	$this->loadmodel('ledger_account');
 	$conditions=array("auto_id" => $income_head_id);
 	$result=$this->ledger_account->find('all',array('conditions'=>$conditions));
-	return $result[0]["ledger_account"]["ledger_name"];
+	return @$result[0]["ledger_account"]["ledger_name"];
 }
 
 function get_rates_via_flat_type_id_and_income_head_id($flat_type_id,$income_head_id){

@@ -23012,7 +23012,7 @@ return $this->regular_bill->find('all',array('conditions'=>$conditions));
 function ledger_account_fetch2($auto_id) 
 {
 $this->loadmodel('ledger_account');
-$conditions=array("auto_id" =>$auto_id);
+$conditions=array("auto_id"=>$auto_id);
 return $this->ledger_account->find('all',array('conditions'=>$conditions));
 }
 //End Ledger Account Fetch(Accounts)//

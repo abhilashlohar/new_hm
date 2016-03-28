@@ -117,15 +117,14 @@ for($i=0; $i<sizeof(@$income_head_arr); $i++)
 {
 $m++;
 $income_head_id = (int)$income_head_arr[$i];	
-$result1 = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch2'),array('pass'=>array($income_head_id)));	
-foreach($result1 as $collection)
-{
+$result1 = $this->requestAction(array('controller' => 'hms','action'=>'ledger_account_fetch2'),array('pass'=>array($income_head_id)));
+foreach($result1 as $collection){
 $income_head_name = $collection['ledger_account']['ledger_name'];	
 }
 ?>
 <tr>
 <td><?php echo $m; ?></td>
-<td><?php echo $income_head_name; ?>
+<td><?php echo @$income_head_name; ?>
 <input type="hidden" id="delinc" value="<?php echo $income_head_id; ?>" />
 </td>
 <td>

@@ -41,7 +41,7 @@ if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type) 
 ?>
 <br>
 <center>
-<div style="border:solid; background-color:white; width:80%;">
+<div style="width:100%;">
 <br>
 	<ul>
 	    <?php if(empty($select_income_head_array)){ ?>

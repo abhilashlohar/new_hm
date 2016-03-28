@@ -35,7 +35,11 @@
 </div>
 
 <script>
-$(document).ready(function () {
+
+	
+	
+
+$(document).ready(function(){
 	var interval = 1000;
 	var refresh = function() {
 		var post_id=$("#topic_detail div[post_id]").attr("post_id");
@@ -51,9 +55,6 @@ $(document).ready(function () {
 			}
 		});
 	};
-	
-});
-$(document).ready(function(){
 	
 	$.ajax({
 	   url: "<?php echo $webroot_path; ?>Discussions/topic_detail/"+"<?php echo $id; ?>",

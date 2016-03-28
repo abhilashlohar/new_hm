@@ -170,14 +170,14 @@ $('#hid').val(c);
 												</thead>
 <tbody>
 
-												<?php
-												$i=0;
-											
+	<?php
+	$i=0;
+
 	foreach($result_user as $data){
 
 			$i++;
 			$user_name=$data['user']['user_name'];
-			$user_id=$data['user']['user_id'];
+			echo $user_id=$data['user']['user_id'];
 			$mobile=$data['user']['mobile'];
 			$email=$data['user']['email'];
 			$relation=$data['user']['relationship'];
@@ -187,6 +187,7 @@ $('#hid').val(c);
 			 @$blood_group=$result_user_profile[0]['user_profile']['blood_group']; 
 			 
 				$result_member_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($user_id)));
+				pr($result_member_info);
 				$wing_flat= $result_member_info['wing_flat'][$user_id];
 					  
 				if($blood_group==1){ $b_group="A+"; }

@@ -29,7 +29,21 @@ function role_fetch_privilages(role_id)
 </script>
 
 
-
+<script>
+$(document).ready(function(){
+$('#select_all').live("click",function(){
+	if($(this).is(":checked")==true){
+		//$('.sub_module_checkbox').attr( 'checked', 'checked');
+		$('.sub_module_checkbox').prop('checked', true);   
+	}
+	else{
+		$('.sub_module_checkbox').prop('checked', false);
+		
+		//$('.sub_module_checkbox').attr( 'checked', '');
+	}
+});
+});
+</script>
 
 
 

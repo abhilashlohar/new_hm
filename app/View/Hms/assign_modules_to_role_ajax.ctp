@@ -83,21 +83,7 @@ $(document).ready(function() {
 });
 </script>
 
-<script>
-$(document).ready(function(){
-$('#select_all').live("click",function(){
-if($(this).is(":checked")){
-       
-     
-    }
-   else
-   {
-	
-	   
-   }
-});
-});
-</script>
+
 
 
 

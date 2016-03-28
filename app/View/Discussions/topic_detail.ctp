@@ -4,6 +4,7 @@ $discussion_post_id=$posts[0]["discussion_post"]["discussion_post_id"];
 $topic=$posts[0]["discussion_post"]["topic"];
 $description=$posts[0]["discussion_post"]["description"];
 $creator_user_id=$posts[0]["discussion_post"]["user_id"];
+$file=$posts[0]["discussion_post"]["file"];
 $date=$posts[0]["discussion_post"]["date"];
 $time=$posts[0]["discussion_post"]["time"];
 $result_user=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($creator_user_id)));
@@ -28,6 +29,12 @@ foreach($wing_flat as $data){
 <div style="text-align: justify;">
 	<?php echo $description; ?>
 </div>
+<?php if(!empty($file)){ ?>
+<div style="text-align: justify;">
+	<img src="<?php echo $webroot_path; ?>discussion_file/<?php echo $file; ?>" style="width:100%; height:350px;">
+</div>
+<?php } ?>
+
 <div id="comments">
 	
 </div>

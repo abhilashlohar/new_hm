@@ -26,7 +26,7 @@ table th {font-size: 12px !important; }
 		<tbody>
 		<?php 
 		if(!empty($result_tenant_info)){ 
-		foreach($result_tenant_info as $collection){
+			foreach($result_tenant_info as $collection){
 					$wing_name=$collection['wing_name'];
 					$result_user=$collection['result_user'];
 					$result_user_tenant=$collection['result_user_tenant'];

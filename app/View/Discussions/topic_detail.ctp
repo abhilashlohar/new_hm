@@ -45,18 +45,20 @@ foreach($wing_flat as $data){
 		<textarea class="span12 m-wrap" type="text" name="comment_box" placeholder="Type a message here..." style="background-color:#FFF !important; resize:none;"></textarea>
 		<div align="right">
 		<div class="pull-left" id="save_comment"></div>
-		<button type="submit"  style="margin-top:-10px;" class="btn blue icn-only tooltips" data-placement="bottom" data-original-title="Tab + Enter for post comment">POST</button>
+		<button type="submit" id="sub" style="margin-top:-10px;" class="btn blue icn-only tooltips" data-placement="bottom" data-original-title="Tab + Enter for post comment">POST</button>
 		</div>
 	</form>
 </div>
 <script>
 $(document).ready(function(){
 	$("#idForm").on("submit",function(e){
+		$('#sub').attr('disabled','disabled');
 		$.ajax({
 		   type: "POST",
 		   url: "<?php echo $webroot_path; ?>Discussions/submit_comment",
 		   data: $("#idForm").serialize(), // serializes the form's elements.
 		   success: function(data){
+			   $('#sub').removeAttr('disabled');
 			   $("textarea[name=comment_box]").val("");
 			   $("#save_comment").html(data); // show response from the php script.
 		   }

@@ -65,29 +65,49 @@
 					?>
 					<option value="<?php echo $auto_id; ?>,2" ><?php echo $name; ?></option>
 					<?php }} ?>
-					
-					
-					
-					
-					
 					</select>
 					
-					
-					
-					
-		 
+			<input type="text" class="m-wrap span12" 
+			style="text-align:right; background-color:white !important; margin-top:2.5px;" Placeholder="Instrument/UTR">
 		 </td>
 		 <td>
+			<select class="m-wrap span12">
+			<option value="">Select</option>
+			<option value="Cheque">Cheque</option>
+			<option value="NEFT">NEFT</option>
+			<option value="PG">PG</option>
+			</select>
 		 
-		 
+		 <input type="text" class="m-wrap span12" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="10" Placeholder="Amount">
 		 </td>
 		 <td>
-		 
-		 
+			<select class="m-wrap span12">
+			<option value="" style="display:none;">Select</option>
+			<?php for($k=0; $k<sizeof($tds_arr); $k++){
+			$tds_sub_arr = $tds_arr[$k];	
+			$tds_id = (int)$tds_sub_arr[1];
+			$tds_tax = $tds_sub_arr[0];	
+			?>
+			<option value= "<?php echo $tds_id; ?>"><?php echo $tds_tax; ?></option>
+			<?php } ?>                           
+			</select>
+		    <input type="text"  class="m-wrap span12" 
+			readonly="readonly" style="background-color:white !important; margin-top:2.5px;" Placeholder="Net Amount">
 		 </td>
 		 <td>
-		 
-		 
+				<select class="m-wrap span12">
+				<option value="" style="display:none;">Select</option>    
+				<?php
+				foreach($cursor2 as $db){
+				$sub_account_id =(int)$db['ledger_sub_account']['auto_id'];
+				$sub_account_name =$db['ledger_sub_account']['name'];
+				$ac_number = $db['ledger_sub_account']['bank_account']; 
+				$bank_acccc = substr($ac_number,-4);  
+				?>
+				<option value="<?php echo $sub_account_id; ?>"><?php echo $sub_account_name; ?>&nbsp;&nbsp;<?php echo $bank_acccc; ?></option>
+				<?php } ?>
+				</select>
+				<input type="text" class="m-wrap span12" style="background-color:white !important; margin-top:2.5px;" Placeholder="Narration">
 		 </td>
 	</tr>
 	</tbody>

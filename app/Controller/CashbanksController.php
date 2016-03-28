@@ -8384,6 +8384,14 @@ function bank_payment_new()
 	$conditions=array("accounts_id" => 4);
 	$cursor13=$this->accounts_group->find('all',array('conditions'=>$conditions));
 	$this->set('cursor13',$cursor13);
+	
+	$this->loadmodel('reference');
+	$conditions=array("auto_id"=>3);
+	$cursor = $this->reference->find('all',array('conditions'=>$conditions));
+	foreach($cursor as $collection){
+	$tds_arr = @$collection['reference']['reference'];
+	}
+	$this->set("tds_arr",@$tds_arr);
 
 }
 //End bank_payment_new//

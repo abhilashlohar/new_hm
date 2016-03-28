@@ -18,3 +18,5 @@ $("input:checkbox").bind("click",function(){
 	}
 })
 </script>
+
+

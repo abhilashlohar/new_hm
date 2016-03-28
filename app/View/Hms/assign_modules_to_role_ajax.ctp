@@ -80,7 +80,24 @@ $(document).ready(function() {
 			$("#sub_modules").html(response);
 		});
 	})
-	
-	
 });
 </script>
+
+<script>
+$(document).ready(function(){
+$('#select_all').live("click",function(){
+if($(this).attr("checked")){
+       
+   alert();    
+    }
+   else
+   {
+	alert();   
+	   
+   }
+});
+});
+</script>
+
+
+

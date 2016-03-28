@@ -86,13 +86,13 @@ $(document).ready(function() {
 <script>
 $(document).ready(function(){
 $('#select_all').live("click",function(){
-if($(this).attr("checked")){
+if($(this).is(":checked")){
        
-   alert();    
+     
     }
    else
    {
-	alert();   
+	
 	   
    }
 });

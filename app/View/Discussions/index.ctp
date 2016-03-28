@@ -51,7 +51,7 @@ $(document).ready(function () {
 			}
 		});
 	};
-	refresh();
+	
 });
 $(document).ready(function(){
 	
@@ -60,6 +60,7 @@ $(document).ready(function(){
 	   success: function(data) {
 		   $("#topic_detail").html(data);
 		   $("html, body").animate({
+			    refresh();
 				scrollTop:0
 			},"slow");
 	   }

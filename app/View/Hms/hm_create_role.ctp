@@ -13,41 +13,30 @@
 <h4 class="block">Create Role</h4>
 </div>
 <div class="portlet-body form">
-<div class="row-fluid">
-<div class="span6">
-
-<label style="font-size:14px;">Role Name<span style="color:red;">*</span></label>
-<div class="controls">
-<input type="text" name="role" id="role" class="m-wrap span9"><br>
-<span id="rol" style="color:red; margin-left:5px;"></span>
-</div>
-
-</div>
-<div class="span6">
-<table class="table table-bordered table-stripped ">
-<tr>
-<th> #</th>
-<th>Role Name</th>
-</tr>
-<?php
-$ii = 0;
-foreach($result_hms_role as $data)
-{
+<center>
+<table class="table table-hover table-bordered" style="width:60%;">
+        <tr>
+        <th>Sr.no.</th>
+        <th>Role Name</th>
+        </tr>
+		<?php $ii=0;
+foreach($result_hms_role as $data){
 $ii++;
 $role_name = $data['hms_role']['role_name'];	
 ?>
-<tr>
-<td><?php echo $ii; ?></td>
-<td><?php echo $role_name; ?></td>
-</tr>
-<?php } ?>
-</table>
-</div>
-</div>
-<div class="form-actions">
-<button type="submit" class="btn blue" id="submit" name="sub">Submit</button>
-<button type="button" class="btn">Cancel</button>
-</div>
+		<tr>
+        <th><?php echo $ii; ?></th>
+        <td><?php echo $role_name; ?></td>
+        </tr>
+		<?php } ?>
+        </table>
+       
+                            
+		<input type="text" name="role" id="role" class="m-wrap span4" placeholder="Role name"><button type="submit" class="btn blue" id="submit" name="sub">Submit</button><br>
+       <span id="rol" style="color:red; margin-left:5px;"></span>
+       <center>
+
+
 </div>
 </div>
 </form>

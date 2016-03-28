@@ -30,7 +30,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
         <form method="post">
         <div class="input-append" style="margin-left:23%;">                      
         <input class="m-wrap" size="16" type="text" placeholder="Role name" id="role_name" name="role_name">
-        <button class="btn blue" type="submit" name="add_role" >Add New Role</button>
+        <button class="btn blue" type="submit" name="add_role">Add New Role</button>
         </div>
         </form>
         

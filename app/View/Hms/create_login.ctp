@@ -14,26 +14,19 @@
 
 <table class="table table-condensed table-bordered">
 	<tr>
-		<th width="20%">Name</th>
-		<th width="30%">Email</th>
-		<th width="20%">Mobile</th>
-		<th width="20%">Password</th>
-		<th width="20%"></th>
-	</tr>
-    <tr>
-		<th><input type="text" class="m-wrap span12" name="name" id="name"><br>
+		<th><input type="text" class="m-wrap span12" name="name" id="name" Placeholder="Name"><br>
 		<span id="nam" style="color:red;"></span>
 		</th>
 		<th>
-		<input type="text" class="m-wrap span12 email_mobile" name="email" id="email"><br>
+		<input type="text" class="m-wrap span12 email_mobile" name="email" id="email" Placeholder="E-mail"><br>
 		<span id="mail" style="color:red;"></span>
 		</th>
 		<th>
-		<input type="text" class="m-wrap span12 email_mobile" name="mobile" id="mobile" maxlength="10"><br>
+		<input type="text" class="m-wrap span12 email_mobile" name="mobile" id="mobile" maxlength="10"  Placeholder="Mobile"><br>
 		<span id="mob" style="color:red;"></span>
 		</th>
 		<th>
-		<input type="text" class="m-wrap span12" name="password" id="password"><br>
+		<input type="text" class="m-wrap span12" name="password" id="password" Placeholder="Password"><br>
 		<span id="pass" style="color:red;"></span>
 		</th>
 		<th>

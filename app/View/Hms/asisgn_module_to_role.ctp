@@ -16,7 +16,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 	<?php } ?>
 </select>
 </center>
-<div id="ajax_contant"></div>
+<div id="ajax_contant" style="background-color:#FFF; padding: 5px;"></div>
 </form>
 
 <script>

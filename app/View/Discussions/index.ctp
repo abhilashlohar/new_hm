@@ -33,33 +33,54 @@
 		</div>
 	</div>
 </div>
-<script>
-$.ajax({
-   url: "<?php echo $webroot_path; ?>Discussions/topic_detail/"+"<?php echo $id; ?>",
-   success: function(data) {
-	   $("#topic_detail").html(data);
-	   $("html, body").animate({
-			scrollTop:0
-		},"slow");
-   }
-});
 
-$(".topic").die().live("click",function(){
-	$('.topic').each(function(i, obj) {
-		$(this).removeClass("run");
-	});
-	$(this).addClass("run");
-	var post_id=$(this).attr("post_id");
+<script>
+$(document).ready(function () {
+	var interval = 1000;
+	var refresh = function() {
+		var post_id=$("#topic_detail div[post_id]").attr("post_id");
+		var comment_id=$("#comments div[comment_id]:last").attr("comment_id");
+		$.ajax({
+			url: "<?php echo $webroot_path; ?>Discussions/comments/"+post_id+"/"+comment_id,
+			cache: false,
+			success: function(html) {
+				$("#comments").append(html);
+				setTimeout(function() {
+					refresh();
+				}, interval);
+			}
+		});
+	};
+	refresh();
+});
+$(document).ready(function(){
+	
 	$.ajax({
-	   url: "<?php echo $webroot_path; ?>Discussions/topic_detail/"+post_id,
+	   url: "<?php echo $webroot_path; ?>Discussions/topic_detail/"+"<?php echo $id; ?>",
 	   success: function(data) {
 		   $("#topic_detail").html(data);
 		   $("html, body").animate({
 				scrollTop:0
 			},"slow");
 	   }
-    });
-});
+	});
+
+	$(".topic").die().live("click",function(){
+		$('.topic').each(function(i, obj) {
+			$(this).removeClass("run");
+		});
+		$(this).addClass("run");
+		var post_id=$(this).attr("post_id");
+		$.ajax({
+		   url: "<?php echo $webroot_path; ?>Discussions/topic_detail/"+post_id,
+		   success: function(data) {
+			   $("#topic_detail").html(data);
+			   $("html, body").animate({
+					scrollTop:0
+				},"slow");
+		   }
+		});
+	});
 	var $rows = $('#topic_list');
 	 $('#search').keyup(function() {
 		var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
@@ -69,6 +90,7 @@ $(".topic").die().live("click",function(){
 			return !~text.indexOf(val);
 		}).hide();
 	});
+});
 </script>
 <style>
 .topic{

@@ -11,7 +11,7 @@ $wing_flat=$result_user["wing_flat"];
 foreach($wing_flat as $data){
 	$wing_flat=$data;
 }?>
-<div style="text-align:center;  font-size:16px; font-weight:bold; padding:5px;">
+<div style="text-align:center;  font-size:16px; font-weight:bold; padding:5px;" post_id="<?php echo $discussion_post_id; ?>">
 <?php echo $topic; ?>
 </div>
 <table>
@@ -28,7 +28,7 @@ foreach($wing_flat as $data){
 	<?php echo $description; ?>
 </div>
 <div id="comments">
-	Loading comments...
+	
 </div>
 <div class="chat-form hide_at_print" style="margin-left: 5px;width: 94%;">
 	<form method="post" id="idForm">
@@ -42,15 +42,6 @@ foreach($wing_flat as $data){
 </div>
 <script>
 $(document).ready(function(){
-	$.ajax({
-		url: "<?php echo $webroot_path; ?>Discussions/comments/"+"<?php echo $discussion_post_id; ?>",
-		success: function(data) {
-		   $("#comments").html(data);
-		}
-	});
-	window.setInterval(function(){
-		alert();
-	}, 1000);
 	$("#idForm").on("submit",function(e){
 		$.ajax({
 		   type: "POST",

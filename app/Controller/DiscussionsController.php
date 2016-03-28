@@ -20,8 +20,8 @@ function index($list=null,$id=null){
 		$this->layout='session';
 	}
 	$this->ath();
-	
-	$this->set(compact("id"));
+	$this->set("list",$list);
+	$this->set("id",$id);
 	$s_user_id=$this->Session->read('hm_user_id'); 
 	$s_society_id=$this->Session->read('hm_society_id');
 	
@@ -85,16 +85,25 @@ function topic_detail($post_id=null){
 	}
 }
 
-function comments($post_id=null){
+function comments($post_id=null,$comment_id=null){
 	$this->ath();
 	$s_user_id=$this->Session->read('hm_user_id');
 	$s_society_id=$this->Session->read('hm_society_id');
 	
-	$this->loadmodel('discussion_comment');
-	$conditions=array("discussion_post_id"=>(int)$post_id);
-	$order=array('discussion_comment.discussion_comment_id'=> 'ASC');
-	$comments=$this->discussion_comment->find('all',array('conditions'=>$conditions,'order'=>$order));
-	$this->set(compact("comments"));
+	if(empty($comment_id)){
+		$this->loadmodel('discussion_comment');
+		$conditions=array("discussion_post_id"=>(int)$post_id);
+		$order=array('discussion_comment.discussion_comment_id'=> 'ASC');
+		$comments=$this->discussion_comment->find('all',array('conditions'=>$conditions,'order'=>$order));
+		$this->set(compact("comments"));
+	}else{
+		$this->loadmodel('discussion_comment');
+		$conditions=array("discussion_post_id"=>(int)$post_id,"discussion_comment_id"=>array('$gt'=>(int)$comment_id));
+		$order=array('discussion_comment.discussion_comment_id'=> 'ASC');
+		$comments=$this->discussion_comment->find('all',array('conditions'=>$conditions,'order'=>$order));
+		$this->set(compact("comments"));
+	}
+	
 }
 
 function new_topic(){

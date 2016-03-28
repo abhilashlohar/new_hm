@@ -7026,23 +7026,24 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 $this->set('webroot_path',$webroot_path);
 if ($this->request->is('POST')) 
 {
-$ip=$this->hms_email_ip();
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
 $to=$this->request->data['email'];
+
 $this->loadmodel('user');
 $conditions=array("email" => $to);
 $result3 = $this->user->find('all',array('conditions'=>$conditions));
 foreach($result3 as $collection)
 {
 $username=$collection['user']['user_name'];
-
-$wing_id=$collection['user']['wing'];
-$flat_id=$collection['user']['flat'];
+$user_id=$collection['user']['user_id'];
+$user_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($user_id)));
+$wing_flat=$user_info["wing_flat"][$user_id];
 
 $society_id=$collection['user']['society_id'];
 }
 $result_society=$this->society_name($society_id);
 $society_name=$result_society[0]['society']['society_name'];
-$wing_flat=$this->wing_flat($wing_id,$flat_id);
+
 $n = sizeof($result3);
 if($n>0)
 { 
@@ -7051,25 +7052,6 @@ $this->loadmodel('user');
 $this->user->updateAll(array('password'=>$random),array('user.email'=>$to));
 $from_name="HousingMatters Support Team";
  $subject="[".$society_name."] OTP for password reset";
-
-/* $message_web="<div>
-<img src='$ip".$this->webroot."/as/hm/hm-logo.png'/><span  style='float:right; margin:2.2%;'>
-<span class='test' style='margin-left:5px;'><a href='https://www.facebook.com/HousingMatters.co.in' target='_blank' ><img src='$ip".$this->webroot."/as/hm/fb.png'/></a></span>
-<a href='#' target='_blank'><img src='$ip".$this->webroot."/as/hm/tw.png'/></a><a href'#'><img src='$ip".$this->webroot."/as/hm/ln.png'/ class='test' style='margin-left:5px;'></a></span>
-<br/>
-<p>Hello $username,<br/>
-It seems that you or someone requested a new password for you.
-</p>
-<p>We have generated a new password, as per requested:</p>
-<br/><b> Username: </b> = $to<br/>
-<b>Your new password:</b> = $random <br/><br/>
-Thank you.<br/>
-HousingMatters (Support Team)<br/><br/>
-www.housingmatters.co.in
-</div >
-
-</div>"; */
-
 
 
 
@@ -7186,9 +7168,10 @@ $this->set('wrong','This Email is not exist');
 function verification() 
 {
 $this->layout='without_session';
-$this->set('webroot_path',$this->webroot_path());
+$webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'webroot_path'));
+$this->set(compact('webroot_path'));
 $emil=$this->request->query['con'];
-$this->set('webroot_path',$this->webroot_path());
+
 if ($this->request->is('POST')) 
 {
 $verification=(int)$this->request->data['email'];
@@ -7217,7 +7200,8 @@ function change_password()
 {
 $this->layout='without_session';
 $emil=$this->request->query['con'];
-$this->set('webroot_path',$this->webroot_path());
+$webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'webroot_path'));
+$this->set(compact('webroot_path'));
 if ($this->request->is('POST')) 
 {
 $pass=$this->request->data['pass'];
@@ -7232,12 +7216,15 @@ foreach ($result_user as $collection)
 $user_id=$collection['user']["user_id"];
 $society_id=$collection['user']["society_id"];
 $user_name=$collection['user']["user_name"];
-$role_id=$collection['user']["default_role_id"];
+ $role_id=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id'), array('pass' => array($user_id)));
 }
-$this->Session->write('user_id', $user_id);
+$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));
+		$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
+		
+$this->Session->write('hm_user_id', $user_id);
 $this->Session->write('role_id', $role_id);
-$this->Session->write('society_id', $society_id);
-$this->Session->write('user_name', $user_name);
+$this->Session->write('hm_society_id', $society_id);
+$this->Session->write('hm_user_flat_id', $user_flat_id);
 $this->loadmodel('user');
 $this->user->updateAll(array('password'=>$pass),array('user.email'=>$emil));
 $this->redirect(array('action' => 'dashboard'));

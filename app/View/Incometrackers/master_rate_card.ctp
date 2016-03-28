@@ -37,7 +37,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 				<select class="m-wrap small" flat_type_id="<?php echo $flat_type_id; ?>" income_head_id="<?php echo $income_head; ?>">
 					<option value="" style="display:none;">Select</option>
 					<option value="1" <?php if($rate_type==1){ echo "selected"; } ?>>Lump Sum</option>
-					<option value="2" <?php if($rate_type==2){ echo "selected"; } ?>>Per Square Feet</option>
+					<option value="2" <?php if($rate_type==2){ echo "selected"; } ?>><?php if($area_type==0){ ?>Per Square Feet <?php }else{ ?> Per Square Meter <?php } ?></option>
 					<option value="3"<?php if($rate_type==3){ echo "selected"; } ?>>Flat Type</option>
 				</select>
 				<input class="m-wrap small" style="text-align:right;" maxlength="10" type="text" value="<?php echo $rate; ?>" flat_type_id="<?php echo $flat_type_id; ?>" income_head_id="<?php echo $income_head; ?>">

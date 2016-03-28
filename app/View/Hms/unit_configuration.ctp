@@ -1,12 +1,8 @@
 <?php
-foreach($cursor11 as $dataaaa)
-{
+foreach($cursor11 as $dataaaa){
 $vallll = (int)@$dataaaa['society']['area_scale'];
 }
 ?>
-
-
-
 <style>
 input,select{
 	    margin-bottom: 0 !important;
@@ -37,7 +33,7 @@ Every change you make is automatically saved.<br>
 		<th>Wing </th>
 		<th>Unit </th>
 		<th>Flat Type</th>
-		<th>Flat Area  <a onclick="area_type()" class="btn mini blue">Area Type</a></th>
+		<th>Flat Area <?php if($vallll==0){ ?> (Sq. Ft.) <?php }else{ ?> (Sq. Mtr.) <?php } ?> <a onclick="area_type()" class="btn mini blue">Area Type</a></th>
 	</tr>
 <?php $c=0;
 foreach($cursor2 as $collection)
@@ -131,10 +127,21 @@ $("#pppupp").hide();
 }
 </script>
 
+
+
+
+
+
+
+
+
+
+
+
+<form method="post">
 <div id="pppupp" class="hide">
 <div class="modal-backdrop fade in"></div>
 <div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<form method="post">
 <div class="modal-body">
 <center>
 <select name="arra_typpp" class="m-wrap medium">
@@ -143,14 +150,13 @@ $("#pppupp").hide();
 </select>
 </center>
 </div>
-<div class="modal-footer">
+<div class="modal-footer" style="margin-bottom:0px;">
 <a class="btn" onclick="area_type2()">Cancel</a>
 <button type="submit" class="btn green" name="sssbbb">Submit</button>
-</form>
 </div>
 </div>
 </div> 
-
+</form>
 
 
 

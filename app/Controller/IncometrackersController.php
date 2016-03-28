@@ -5494,6 +5494,17 @@ function master_rate_card(){
 	$society_info=$this->society->find('all',array('conditions'=>$conditions));
 	$income_heads=@$society_info[0]["society"]["income_head"];
 	$this->set(compact("income_heads"));
+	
+	$this->loadmodel('society');
+	$conditions=array('society_id'=>$s_society_id);
+	$result_society=$this->society->find('all',array('conditions'=>$conditions));
+	foreach($result_society as $data){
+	$area_type=(int)$data['society']['area_scale'];	
+	}
+	$this->set('area_type',$area_type);
+	
+	
+	
 }
 //End Master rate Card(Accounts)//
 //Start auto_save_rate_card//
@@ -5540,9 +5551,8 @@ $this->layout=null;
 	
 	
 }
-/////////////////////// End auto_save_noc_rate ///////////////////////////////////
-
-/////////////////////////// Start master rate card view (Accounts)/////////////////
+//End auto_save_noc_rate//
+//Start master rate card view (Accounts)//
 function master_rate_card_view()
 {
 if($this->RequestHandler->isAjax()){
@@ -5756,6 +5766,18 @@ $this->loadmodel('society');
 $conditions=array("society_id"=>$s_society_id);
 $cursor3 = $this->society->find('all',array('conditions'=>$conditions));
 $this->set('cursor3',$cursor3);
+
+$this->loadmodel('society');
+$conditions=array('society_id'=>$s_society_id);
+$result_society=$this->society->find('all',array('conditions'=>$conditions));
+foreach($result_society as $data){
+$area_type=(int)$data['society']['area_scale'];	
+}
+$this->set('area_type',$area_type);
+
+
+
+
 }
 
 function master_noc_status_update_ajax($update=null,$flat_id=null){

@@ -637,8 +637,8 @@ function governance_invite()
 	}
 	$this->ath();
 	$this->check_user_privilages();
-	 $s_society_id=$this->Session->read('society_id');
-	 $s_user_id=$this->Session->read('user_id');	
+	 $s_society_id=$this->Session->read('hm_society_id');
+	 $s_user_id=$this->Session->read('hm_user_id');	
 	
 $this->loadmodel('user');
 $conditions1=array("society_id"=>$s_society_id,'user.email'=> array('$ne' => ""),'deactive'=>0);
@@ -648,11 +648,6 @@ $this->loadmodel('group');
 $conditions=array("society_id"=>$s_society_id,'group_show_id'=>0);
 $result_group=$this->group->find('all',array('conditions'=>$conditions)); 
 $this->set('result_group',$result_group); 
-
-$this->loadmodel('user');
-$conditions2=array("society_id"=>$s_society_id,'role_id'=>1);
-$this->set('result_users_com',$this->user->find('all',array('conditions'=>$conditions2))); 
-
 
 $this->loadmodel('user');
 $conditions2=array("society_id"=>$s_society_id,'role_id'=>array('$ne'=>1));

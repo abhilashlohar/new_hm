@@ -24790,7 +24790,7 @@ $this->user_role->saveAll(array('auto_id'=>$auto_role_id,'user_id'=>$i,'role_id'
 			////////////////////// End user table ///////////////////////////////////////////////////
 $this->loadmodel('user_flat');
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
-$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$s_society_id,'exited'=>'no'));
+$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$s_society_id,'exited'=>'no','wing'=>$wing,'flat'=>$flat));
 
 if(!empty($email) && !empty($mobile))
 		{

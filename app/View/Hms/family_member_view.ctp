@@ -173,72 +173,72 @@ $('#hid').val(c);
 												<?php
 												$i=0;
 											
-											foreach($result_user as $data)
-											{
-												
-												$i++;
-												$user_name=$data['user']['user_name'];
-												$user_id=$data['user']['user_id'];
-												$mobile=$data['user']['mobile'];
-												$email=$data['user']['email'];
-												$relation=$data['user']['relationship'];
-												$result_user_profile = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_profile_info_via_user_id'),array('pass'=>array($user_id)));
-												 $dob=$result_user_profile[0]['user_profile']['age'];
-												
-												 @$blood_group=$result_user_profile[0]['user_profile']['blood_group']; 
-												//$wing=(int)$data['user']['wing'];
-												///$flat = (int)$data['user']['flat'];
-												//$flat_wing = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'),array('pass'=>array($wing,$flat)));				  
-													if($blood_group==1){ $b_group="A+"; }
-													if($blood_group==2){ $b_group="B+"; }
-													if($blood_group==3){ $b_group="AB+"; }
-													if($blood_group==4){ $b_group="O+"; }
-													if($blood_group==5){ $b_group="A-"; }
-													if($blood_group==6){ $b_group="B-"; }
-													if($blood_group==7){ $b_group="AB-"; }
-													if($blood_group==8){ $b_group="O-"; }
-													if($dob==1){ $dob_group="18-24"; }
-													if($dob==2){ $dob_group="25-34";}
-													if($dob==3){ $dob_group="35-44"; }
-													if($dob==4){ $dob_group="45-54"; }
-													if($dob==5){ $dob_group="55-64";}
-													if($dob==6){ $dob_group="65+";}
+	foreach($result_user as $data){
+
+			$i++;
+			$user_name=$data['user']['user_name'];
+			$user_id=$data['user']['user_id'];
+			$mobile=$data['user']['mobile'];
+			$email=$data['user']['email'];
+			$relation=$data['user']['relationship'];
+			$result_user_profile = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_profile_info_via_user_id'),array('pass'=>array($user_id)));
+			 $dob=$result_user_profile[0]['user_profile']['age'];
+
+			 @$blood_group=$result_user_profile[0]['user_profile']['blood_group']; 
+			 
+				$result_member_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($user_id)));
+				$wing_flat= $result_member_info['wing_flat'][$user_id];
+					  
+				if($blood_group==1){ $b_group="A+"; }
+				if($blood_group==2){ $b_group="B+"; }
+				if($blood_group==3){ $b_group="AB+"; }
+				if($blood_group==4){ $b_group="O+"; }
+				if($blood_group==5){ $b_group="A-"; }
+				if($blood_group==6){ $b_group="B-"; }
+				if($blood_group==7){ $b_group="AB-"; }
+				if($blood_group==8){ $b_group="O-"; }
+				if($dob==1){ $dob_group="18-24"; }
+				if($dob==2){ $dob_group="25-34";}
+				if($dob==3){ $dob_group="35-44"; }
+				if($dob==4){ $dob_group="45-54"; }
+				if($dob==5){ $dob_group="55-64";}
+				if($dob==6){ $dob_group="65+";}
 												?>
-												<tr>
-												
-												<td><?php echo $i ; ?></td>
-												<td><?php echo $user_name ; ?></td>
-												<td><?php echo @$flat_wing ; ?></td>
-												<td><?php echo $mobile ; ?></td>
-												<td><?php echo $email ; ?></td>
-												<td><?php echo $relation; ?></td>
-												<td><?php echo $dob_group; ?></td>
-												<td><?php echo @$b_group; ?></td>
-                                <td>
-								
+						<tr>
 
-										<div class="btn-group">
-										<a class="btn mini blue" href="#" data-toggle="dropdown">
-										Action
+							<td><?php echo $i ; ?></td>
+							<td><?php echo $user_name ; ?></td>
+							<td><?php echo @$wing_flat ; ?></td>
+							<td><?php echo $mobile ; ?></td>
+							<td><?php echo $email ; ?></td>
+							<td><?php echo $relation; ?></td>
+							<td><?php echo $dob_group; ?></td>
+							<td><?php echo @$b_group; ?></td>
+							<td>
 
-										</a>
-										<ul class="dropdown-menu">
-										<li><a href="family_member_add_ajax?con=<?php echo $user_id ; ?>" ><i class="icon-pencil"></i> Edit</a></li>
 
-										<!--<li><a href="#1" role="button" class="dec" atid="<?php echo $user_id ; ?>" ><i class="icon-trash"></i> Deactive</a></li>-->
-										</ul>
-										</div>
+							<div class="btn-group">
+							<a class="btn mini blue" href="#" data-toggle="dropdown">
+							Action
 
-								
-								</td>
-												</tr>
-									  <?php } ?>
-												</tbody>
-												</table>
-												</div>
-										<br><br>
-										</div>
-										</div>
+							</a>
+							<ul class="dropdown-menu">
+							<li><a href="family_member_add_ajax?con=<?php echo $user_id ; ?>" ><i class="icon-pencil"></i> Edit</a></li>
+
+							<!--<li><a href="#1" role="button" class="dec" atid="<?php echo $user_id ; ?>" ><i class="icon-trash"></i> Deactive</a></li>-->
+							</ul>
+							</div>
+
+
+							</td>
+						</tr>
+  <?php } ?>
+		</tbody>
+	</table>
+	</div>
+	<br><br>
+  </div>
+</div>
 
 										
 										
@@ -277,7 +277,7 @@ $(document).ready(function() {
 			url: "family_member_valid?q="+myJsonString,
 			dataType:'json',
 			}).done(function(response) {
-			
+			///alert(response);
 				if(response.type == 'error'){  
 					output = '<div class="alert alert-error">'+response.text+'</div>';
 					$("#submit").removeClass("disabled").text("submit");

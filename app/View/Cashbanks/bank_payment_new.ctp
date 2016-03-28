@@ -39,7 +39,7 @@
 		 </td>
 		 <td>
 					<select class="m-wrap span12" name="ledger_account[]">
-					<option value="" style="display:none;">--SELECT--</option>
+					<option value="" style="display:none;">Select</option>
 					<?php foreach($cursor11 as $collection){
 					$auto_id = $collection['ledger_sub_account']['auto_id'];
 					$name = $collection['ledger_sub_account']['name'];

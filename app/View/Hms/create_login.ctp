@@ -1,3 +1,10 @@
+<center>
+<a href="<?php echo $webroot_path; ?>Hms/create_login" class="btn red">Create Login</a>
+<a href="<?php echo $webroot_path; ?>Hms/hm_create_role" class="btn blue">Create Role</a>
+<a href="<?php echo $webroot_path; ?>Hms/assign_module_to_role_hm" class="btn blue">Assign Module to Role</a>
+<a href="<?php echo $webroot_path; ?>Hms/asign_role_to_user" class="btn blue">Assign Role to Users</a>
+<center>
+<br>
 <form method="post" id="contact-form">          
 <div class="portlet box blue">
 <div class="portlet-title">

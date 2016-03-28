@@ -27117,29 +27117,9 @@ function menus_as_per_user_rights(){
 		</li>
 		<li>
 			<a href="<?php echo $webroot_path; ?>Hms/create_login">
-			<i class="icon-home"></i>Create Login
+			<i class="icon-home"></i>Logins
 			</a>					
 		</li>
-		
-		<li>
-			<a href="<?php echo $webroot_path; ?>Hms/hm_create_role">
-			<i class="icon-home"></i>Create Role
-			</a>					
-		</li>
-		
-		<li>
-			<a href="<?php echo $webroot_path; ?>Hms/assign_module_to_role_hm">
-			<i class="icon-home"></i>Assign Module to Role
-			</a>					
-		</li>
-		
-		
-		<li>
-			<a href="<?php echo $webroot_path; ?>Hms/asign_role_to_user">
-			<i class="icon-home"></i>Assign Role to Users
-			</a>					
-		</li>
-
 		
 		<?php
 	}

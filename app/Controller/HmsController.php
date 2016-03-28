@@ -25227,7 +25227,7 @@ foreach($myArray as $child){
 			if($tenant=='yes'){
 				if($tenant==$tenant2){
 					
-				 $report[]=array('tr'=>$c,'td'=>3, 'text' => 'already exist owner');	
+					$report[]=array('tr'=>$c,'td'=>3, 'text' => 'already exist owner');	
 					
 				}
 				
@@ -25236,7 +25236,7 @@ foreach($myArray as $child){
 				
 				if($tenant==$tenant2){
 					
-				 $report[]=array('tr'=>$c,'td'=>3, 'text' => 'already exist tenant');	
+					$report[]=array('tr'=>$c,'td'=>3, 'text' => 'already exist tenant');	
 					
 				}
 				
@@ -25247,7 +25247,7 @@ foreach($myArray as $child){
 			
 		}
 			if($n4==2){	
-			$report[]=array('tr'=>$c,'td'=>3, 'text' => 'already exist');
+				$report[]=array('tr'=>$c,'td'=>3, 'text' => 'already exist');
 			
 			}
 		

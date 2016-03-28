@@ -190,7 +190,7 @@ $('#hid').val(c);
 				
 				$wing_flat_result= $result_member_info['wing_flat'];
 					foreach($wing_flat_result as $data){
-						$$wing_flat=$data;
+						$wing_flat=$data;
 					}					
 				if($blood_group==1){ $b_group="A+"; }
 				if($blood_group==2){ $b_group="B+"; }

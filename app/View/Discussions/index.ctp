@@ -42,6 +42,7 @@
 $(document).ready(function(){
 	var interval = 1000;
 	var refresh = function() {
+		$("html, body").die('setTimeout');
 		var post_id=$("#topic_detail div[post_id]").attr("post_id");
 		var comment_id=$("#comments div[comment_id]:last").attr("comment_id");
 		$.ajax({

@@ -185,7 +185,6 @@ $(document).ready(function(){
 			type: 'POST',
 			dataType:'json',
 		}).done(function(response) {
-			
 			if(response.report_type=='error'){
 				jQuery.each(response.report, function(i, val) {
 					$("#url_main table tr:nth-child("+val.tr+") td:nth-child("+val.td+")").append('<span class="report" style="color:red;">'+val.text+'</span>');

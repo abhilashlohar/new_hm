@@ -40,28 +40,12 @@
 	
 
 $(document).ready(function(){
-	var interval = 1000;
-	var refresh = function() {
-		$("html, body").die('setTimeout');
-		var post_id=$("#topic_detail div[post_id]").attr("post_id");
-		var comment_id=$("#comments div[comment_id]:last").attr("comment_id");
-		$.ajax({
-			url: "<?php echo $webroot_path; ?>Discussions/comments/"+post_id+"/"+comment_id,
-			cache: false,
-			success: function(html) {
-				$("#comments").append(html);
-				setTimeout(function() {
-					refresh();
-				}, interval);
-			}
-		});
-	};
+	
 	
 	$.ajax({
 	   url: "<?php echo $webroot_path; ?>Discussions/topic_detail/"+"<?php echo $id; ?>",
 	   success: function(data) {
 		   $("#topic_detail").html(data);
-		   refresh();
 		   $("html, body").animate({
 				scrollTop:0
 			},"slow");

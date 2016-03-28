@@ -21,7 +21,7 @@
 		</table>
 		<button type="submit" class="btn blue pull-right" name="submit">Create Receipt</button>
 	</form>
-		<a href="#" role="button" id="add_row">Add Row</a>
+		<a href="#" role="button" id="add_row" class="btn"><i class="icon-plus"></i> Add Row</a>
 </div>
 </div>	
 
@@ -39,7 +39,7 @@
 		 </td>
 		 <td>
 					<select class="m-wrap span12" name="ledger_account[]">
-					<option value="">--SELECT--</option>
+					<option value="" style="display:none;">--SELECT--</option>
 					<?php foreach($cursor11 as $collection){
 					$auto_id = $collection['ledger_sub_account']['auto_id'];
 					$name = $collection['ledger_sub_account']['name'];
@@ -73,7 +73,7 @@
 		 </td>
 		 <td>
 			<select class="m-wrap span12" name="payment_mode[]">
-			<option value="">Select</option>
+			<option value="" style="display:none;">Select</option>
 			<option value="Cheque">Cheque</option>
 			<option value="NEFT">NEFT</option>
 			<option value="PG">PG</option>

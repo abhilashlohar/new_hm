@@ -8392,7 +8392,11 @@ function bank_payment_new()
 	$tds_arr = @$collection['reference']['reference'];
 	}
 	$this->set("tds_arr",@$tds_arr);
-
+	
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("society_id" => $s_society_id, "ledger_id" => 33);
+	$cursor2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$this->set('cursor2',$cursor2);
 }
 //End bank_payment_new//
 }

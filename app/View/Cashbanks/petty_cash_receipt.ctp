@@ -29,7 +29,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		</table>
 		<button type="submit" class="btn blue pull-right" name="submit">Create Receipt</button>
 	</form>
-		<a href="#" role="button" id="add_row">Add Row</a>
+		<a href="#" role="button" id="add_row" class="btn"><i class="icon-plus"></i> Add Row</a>
 </div>
 </div>
 <table id="sample" style="display:none;">

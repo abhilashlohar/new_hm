@@ -25197,9 +25197,6 @@ foreach($myArray as $child){
 	
 	if(!empty($child[2])) {
 		
-		$this->loadmodel('user_flat');
-		$conditions=array("flat" => (int)$child[2]);
-		$result4 = $this->user_flat->find('all',array('conditions'=>$conditions));
 		
 		$this->loadmodel('flat');
 		$conditions=array("flat_id" => (int)$child[2]);
@@ -25218,9 +25215,12 @@ foreach($myArray as $child){
 			
 		}
 		
+		$this->loadmodel('user_flat');
+		$conditions=array("flat" => (int)$child[2],"owner"=>array('$ne'=>null));
+		$result4 = $this->user_flat->find('all',array('conditions'=>$conditions));
 		
 		
-		$n4 = sizeof($result4);
+		$n4 = sizeof($result4); 
 		if($n4==1){
 			
 			$tenant=$result4[0]['user_flat']['owner'];

@@ -12,7 +12,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 </div>
 <br/>
 <?php if($count == 0){ ?>
-<div id="output">Every change you make is automatically saved.</div>
+<div id="output"><span class="label label-important">NOTE</span><span> No need to save this form. The system will automatically save updated data. </span></div>
 <div style="background-color: rgb(255, 255, 255);padding: 5px;overflow-x: auto;">
 <table class="table table-condensed table-bordered">
 	<thead>
@@ -62,7 +62,7 @@ $(document).ready(function(){
 			$.ajax({
 				url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_rate_card/"+flat_type_id+"/"+income_head_id+"/"+rate_type+"/"+rate,
 			}).done(function(response){
-				$("#output").html("Every change you make is automatically saved.");
+				$("#output").html("<span class='label label-important'>NOTE</span><span> No need to save this form. The system will automatically save updated data. </span>");
 			});
 		}
 		
@@ -80,7 +80,7 @@ $(document).ready(function(){
 			$.ajax({
 				url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_rate_card/"+flat_type_id+"/"+income_head_id+"/"+rate_type+"/"+rate,
 			}).done(function(response){
-				$("#output").html("Every change you make is automatically saved.");
+				$("#output").html("<span class='label label-important'>NOTE</span><span> No need to save this form. The system will automatically save updated data. </span>");
 			});
 		}
 		

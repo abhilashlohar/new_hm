@@ -22,7 +22,7 @@ Society Setup
 
 <div class="tab-content" style="min-height:300px;">
 <div class="tab-pane active" id="tab_1_1">
-Every change you make is automatically saved.<br>
+<span class="label label-important">NOTE</span><span> No need to save this form. The system will automatically save updated data. </span>
 
 <a href="<?php echo @$webroot_path; ?>Hms/unit_configuration_import" class="btn purple" style="float:right; margin-right:8px;"><i class="fa fa-database"></i> Import csv</a>
 <a href="<?php echo @$webroot_path; ?>Hms/unit_configuration_excel" class="btn blue" style="float:right; margin-right:8px;">Excel</a>

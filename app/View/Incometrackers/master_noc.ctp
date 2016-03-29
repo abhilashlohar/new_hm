@@ -54,7 +54,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			<div class="portlet-body form">
 			<div id="error_msg" style="width:80%;"></div>
  
-<div id="output">Every change you make is automatically saved.</div>
+<div id="output"><span class="label label-important">NOTE</span><span> No need to save this form. The system will automatically save updated data. </span></div>
 
  
 		<table class="table table-bordered" style="width:100%; background-color:white;">
@@ -165,7 +165,7 @@ $("#output").html("Saving changes...");
 $.ajax({
 url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_noc_rate/"+vvv+"/"+type+"/"+head+"/"+amt,
 }).done(function(response){
-$("#output").html("Every change you make is automatically saved.");
+$("#output").html("<span class='label label-important'>NOTE</span><span> No need to save this form. The system will automatically save updated data. </span>");
 });
 
 }

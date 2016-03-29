@@ -44,7 +44,7 @@ $z=0;$j=0;
 
 <div style="background-color: #fff;">
 <br/>
- <span>Every change you make is automatically saved.</span>
+ <span><span class="label label-important">NOTE</span><span> No need to save this form. The system will automatically save updated data. </span></span>
 <table class="table table-striped table-bordered dataTable" id="" aria-describedby="sample_1_info" >
 <thead>
 <tr>

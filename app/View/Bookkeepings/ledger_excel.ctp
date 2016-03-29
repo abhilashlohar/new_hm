@@ -82,7 +82,7 @@ $user_id = (int)$result_income_head2[0]['ledger_sub_account']['user_id'];
 	</tr>
 	</table>
 
-<table width="100%" class="table table-bordered table-striped">
+<table width="100%" border="1">
 	<thead>
 		<tr>
 			<th>Transaction Date</th>
@@ -92,7 +92,7 @@ $user_id = (int)$result_income_head2[0]['ledger_sub_account']['user_id'];
             <th>Reference</th>
 			<th>Debit</th>
 			<th>Credit</th>
-			<th class="hide_at_print"></th>
+			
 		</tr>
 	</thead>
 	<tbody id="table">
@@ -670,19 +670,11 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			<td><?php echo $source; ?></td>
           	<td><?php
            if($receipt_source == "bank_payment") { 
-		   echo '<a href="'.$this->webroot.'Cashbanks/bank_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } ?>
+		   echo $refrence_no; } ?>
            </td>
             <td style="text-align:right;"><?php echo $amttt; ?></td>
 			<td style="text-align:right;"><?php echo $credit; ?></td>
-			<td class="hide_at_print">
-			<?php if(!empty($creater_name))
-			{ ?>
-			<i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: 
-			<?php echo $creater_name; ?> on: <?php echo $current_datttt; if(!empty($approver_name)) { ?>, Approved by: <?php echo $approver_name; ?> on: <?php echo $approved_date; }?>"></i>
-			<?php } ?>
-			
-			</td>
-           </tr>
+			</tr>
 			<?php
 		  } 		  
 		}
@@ -697,20 +689,20 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			<td><?php echo $source; ?></td>
             <td>
 			<?php if($table_name=="new_regular_bill"){
-				echo '<a href="'.$this->webroot.'Incometrackers/regular_bill_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
+				echo $refrence_no;
 			}
 			if($table_name=="cash_bank"){
 				if($receipt_source == "bank_receipt")
 				{
-				echo '<a href="'.$this->webroot.'Cashbanks/bank_receipt_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>';
-			}else if($receipt_source == "bank_payment") { echo '<a href="'.$this->webroot.'Cashbanks/bank_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } else if($receipt_source == "petty_cash_payment") { echo '<a href="'.$this->webroot.'Cashbanks/petty_cash_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; }else if($receipt_source == "petty_cash_receipt"){
-				 echo '<a href="'.$this->webroot.'Cashbanks/petty_cash_receipt_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } } ?>
+				echo $refrence_no;
+			}else if($receipt_source == "bank_payment") { echo $refrence_no; } else if($receipt_source =="petty_cash_payment") { echo $refrence_no; }else if($receipt_source == "petty_cash_receipt"){
+				 echo $refrence_no; } } ?>
 				 
 			<?php if($table_name=="journal"){
-				echo '<a href="'.$this->webroot.'Bookkeepings/journal_voucher_view/'.$journal_voucher_id.'" target="_blank">'.$journal_voucher_id.'</a>';
+				echo $journal_voucher_id;
 			}?>
 				<?php if($table_name=="supplimentry_bill"){
-				echo '<a href="'.$this->webroot.'Incometrackers/supplimentry_view/'.$adhoc_id.'" target="_blank">'.$supplimentry_receipt.'</a>';
+				echo $supplimentry_receipt;
 			}?> 
 			
 			<?php if($table_name=="expense_tracker"){
@@ -725,20 +717,12 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			</td>
 			<td style="text-align:right;"><?php echo $debit; ?></td>
 			<td style="text-align:right;"><?php echo $credit; ?></td>
-			<td class="hide_at_print">
-			<?php if(!empty($creater_name))
-			{ ?>
-			<i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: 
-			<?php echo $creater_name; ?> on: <?php echo $current_datttt; if(!empty($approver_name)) { ?>, Approved by: <?php echo $approver_name; ?> on: <?php echo $approved_date; }?>"></i>
-			<?php } ?>
-			</td>
 		</tr>
 	<?php }}} ?>
 		<tr>
 			<td colspan="5" align="right"><b>Total</b></td>
 			<td style="text-align:right;"><b><?php echo $total_debit; ?></b></td>
 			<td style="text-align:right;"><b><?php echo $total_credit; ?></b></td>
-			<td class="hide_at_print"></td>
 		</tr>
 	</tbody>
 </table>

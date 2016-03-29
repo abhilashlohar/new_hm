@@ -1,5 +1,6 @@
 <?php
-$filename="".$socc_namm."_Ledger_Report_".$fdddd."_".$tdddd."-".$account_name."";
+$account_name2=str_replace(' ', '-', $account_name);
+$filename="".$socc_namm."_Ledger_Report_".$fdddd."_".$tdddd."-".$account_name2."";
 header ("Expires: 0");
 header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
 header ("Cache-Control: no-cache, must-revalidate");

@@ -33,14 +33,14 @@ function message()
 		$conditions=array("society_id"=>$s_society_id);
 		$result_group=$this->group->find('all',array('conditions'=>$conditions)); 
 		$this->set('result_group',$result_group); */
-
-$this->loadmodel('role');
-$conditions=array("society_id" => $s_society_id);
-$role_result=$this->role->find('all',array('conditions'=>$conditions));
-$this->set('role_result',$role_result);
-$this->loadmodel('wing');
-$wing_result=$this->wing->find('all');
-$this->set('wing_result',$wing_result);
+		/*
+		$this->loadmodel('role');
+		$conditions=array("society_id" => $s_society_id);
+		$role_result=$this->role->find('all',array('conditions'=>$conditions));
+		$this->set('role_result',$role_result);
+		$this->loadmodel('wing');
+		$wing_result=$this->wing->find('all');
+		$this->set('wing_result',$wing_result);*/
 
 
 $this->loadmodel('template');
@@ -71,17 +71,16 @@ $this->loadmodel('template');
 $conditions=array("cat"=>7);
 $this->set('result_template7',$this->template->find('all',array('conditions'=>$conditions))); 
 
-if (isset($this->request->data['send'])) 
+if(isset($this->request->data['send'])) 
 {
 $radio=$this->request->data['radio'];
 $s_date=$this->request->data['date'];
-$d = explode("-", $s_date);
+$d=explode("-", $s_date);
 $s_date_ex0=$d[0];
 $s_date_ex1=$d[1];
 $s_date_ex2=$d[2];
 $time_h=$this->request->data['time_h'];
 $time_m=$this->request->data['time_m'];
-//$time_m=30;
 
 $date=date("d-m-y");
 $time=date('h:i:a',time());
@@ -89,7 +88,7 @@ $time=date('h:i:a',time());
 $massage=$this->request->data['massage'];
 $massage_str=str_replace(' ', '+', $massage);
 
-$result_user_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'), array('pass'=>array($s_user_id)));
+$result_user_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'), array('pass'=>array((int)$s_user_id)));
 foreach ($result_user_info as $collection2){
 $name=$collection2["user"]["user_name"];
 $sender_email=$collection2["user"]["email"];
@@ -102,43 +101,35 @@ $wing=$data["user_flat"]["wing"];
 $flat=$data["user_flat"]["flat"];	
 }
 
-
-
-
-$r_sms=$this->hms_sms_ip();
-  $working_key=$r_sms->working_key;
- $sms_sender=$r_sms->sms_sender; 
+$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
+$working_key=$r_sms->working_key;
+$sms_sender=$r_sms->sms_sender; 
 $sms_allow=(int)$r_sms->sms_allow;
+		if($radio==1){
+		$multi=$this->request->data['multi'];
+		$multi[]="$s_user_id,$sender_mobile";
 
-if($radio==1)
-{
-$multi=$this->request->data['multi'];
-$multi[]="$s_user_id,$sender_mobile";
+		$multi=array_unique($multi);
 
-$multi=array_unique($multi);
-
-for($i=0; $i<sizeof($multi); $i++)
-{
-$multi_new=$multi[$i];
-$ex = explode(",", $multi_new);
-$mobile[]=$ex[1];
-$user[]=$ex[0];
-}
-$mobile_im=implode(",", $mobile);
-//$user=implode(",", $user); 
-
-$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m;
-if($sms_allow==1){
-$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m);
-
-}	
-
-
-$sms_id=$this->autoincrement('sms','sms_id');
-$this->loadmodel('sms');
-$multipleRowData = Array( Array("sms_id" => $sms_id,"text"=>$massage,"user_id"=>$user,"date"=>$date,"time"=>$time,"society_id"=>$s_society_id,"type"=>1,"deleted"=>0));
-$this->sms->saveAll($multipleRowData);
-}
+		for($i=0; $i<sizeof($multi); $i++)
+		{
+		$multi_new=$multi[$i];
+		$ex = explode(",", $multi_new);
+		$mobile[]=$ex[1];
+		$user[]=$ex[0];
+		}
+		$mobile_im=implode(",", $mobile);
+		$my_mobile="9799463210";
+		$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m;
+		if($sms_allow==1){
+		$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$my_mobile.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m);
+		}	
+		
+		$sms_id=$this->autoincrement('sms','sms_id');
+		$this->loadmodel('sms');
+		$multipleRowData=Array( Array("sms_id"=>$sms_id,"text"=>$massage,"user_id"=>$user,"date"=>$date,"time"=>$time,"society_id"=>$s_society_id,"type"=>1,"deleted"=>0));
+		$this->sms->saveAll($multipleRowData);
+		}
 
 if($radio==2)
 {

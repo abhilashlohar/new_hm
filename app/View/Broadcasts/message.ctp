@@ -11,158 +11,97 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <div style="border:solid 2px #4cae4c; width:80%; margin-left:10%;">
 <div style="border-bottom:solid 2px #4cae4c; color:white; background-color: #5cb85c; padding:4px; font-size:20px;" ><i class="icon-envelope-alt"></i> Send SMS</div>
 <div style="padding:10px;background-color:#FFF;">
-<!----------------------------------------------->
 <form method="post" id="contact-form">
-<div class="controls">
- <label class="radio">
- <div class="radio" id="uniform-undefined"><input type="radio"  id="r1" checked name="radio" value="1" style="opacity: 0;"></div>
- <span style="font-size:16px;" >Send SMS to Individual</span>
- </label>
- <label class="radio">
- <div class="radio" id="uniform-undefined"><input type="radio"  id="r3"  name="radio" value="3" style="opacity: 0;"></div>
- <span style="font-size:16px;" >Send SMS to Default Groups</span>
- </label>
- 
-</div>
-<label style="font-size:14px; font-weight:bold;">To <i class=" icon-info-sign tooltips" data-placement="right" data-original-title="SMS will be sent to only those users whose valid mobile numbers are registered with HousingMatters"> </i></label>
-<!------------------------->
-<div class="control-group" id="d1" >
-  <div class="controls">
-   
-	 <select data-placeholder="Type or select name"  name="multi[]" id="multi" class="chosen span9" multiple="multiple" tabindex="6">
-<?php
-foreach ($result_users as $collection) 
-{
-$user_id=$collection["user"]["user_id"];
-$user_name=$collection["user"]["user_name"];
-$mobile=$collection["user"]["mobile"];
-$wing=$collection["user"]["wing"];
-$flat=$collection["user"]["flat"];
 
-$flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
+		<div class="controls">
+			<label class="radio">
+				<div class="radio" id="uniform-undefined"><input type="radio"  id="r1" checked name="radio" value="1" style="opacity: 0;"></div>
+				<span style="font-size:16px;" >Send SMS to Individual</span>
+			</label>
+			<label class="radio">
+				<div class="radio" id="uniform-undefined"><input type="radio"  id="r3"  name="radio" value="3" style="opacity: 0;"></div>
+				<span style="font-size:16px;" >Send SMS to Default Groups</span>
+			</label>
+		</div>
 
-?>
-<option value="<?php echo $user_id; ?>,<?php echo $mobile; ?>"><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $flat; ?>,<?php echo $mobile; ?></option>
-<?php } ?>           
-		  
-	 </select>
-	 <label id="multi"></label>
-  </div>
-</div>
-<!------------------------->
 
-<!-------------------------->
 
+	<label style="font-size:14px; font-weight:bold;">To <i class=" icon-info-sign tooltips" data-placement="right" data-original-title="SMS will be sent to only those users whose valid mobile numbers are registered with HousingMatters"> </i></label>
+
+
+	<div class="control-group" id="d1">
+	<div class="controls">
+		<select data-placeholder="Type or select name"  name="multi[]" id="multi" class="chosen span9" multiple="multiple" tabindex="6">
+		<?php foreach ($result_users as $collection){
+				$user_id=$collection["user"]["user_id"];
+				$user_name=$collection["user"]["user_name"];
+				$mobile=$collection["user"]["mobile"];
+					$result_user_flat=$this->requestAction(array('controller'=>'Fns','action'=>'user_flat_info_via_user_id'),array('pass'=>array((int)$user_id)));
+					foreach($result_user_flat as $data){
+					@$wing=(int)@$data["user_flat"]["wing"];
+					@$flat=(int)@$data["user_flat"]["flat"];	
+					}		
+					@$wing_flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'),array('pass'=> array(@$wing,@$flat)));
+		?>
+		<option value="<?php echo $user_id; ?>,<?php echo $mobile; ?>"><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $wing_flat; ?>,<?php echo $mobile; ?></option>
+		<?php } ?>           
+		</select>
+		<label id="multi"></label>
+	</div>
+	</div>
+
+<!--
 <div style="display:none; padding:5px;" id="d2" >
 <?php
-foreach ($result_group as $collection) 
-{
-$group_name=$collection["group"]["group_name"];
-$group_id=$collection["group"]["group_id"];
+//foreach ($result_group as $collection) 
+//{
+//$group_name=$collection["group"]["group_name"];
+//$group_id=$collection["group"]["group_id"];
 ?>
 <label class="checkbox">
-<input type="checkbox" name="grp<?php echo $group_id; ?>" value="<?php echo $group_id; ?>" class="requirecheck3 ignore" id="group_check"> <?php echo $group_name; ?>
+<input type="checkbox" name="grp<?php //echo $group_id; ?>" value="<?php //echo $group_id; ?>" class="requirecheck3 ignore" id="group_check"> <?php //echo $group_name; ?>
 </label>
-<?php } ?> 
+<?php //} ?> 
 <label id="group_check"></label>
+</div>-->
+
+<div style="display:none; padding:5px;" id="d3">
+	<?php
+	$this->requestAction(array('controller'=>'Fns','action'=>'sending_options'));
+	?>	
 </div>
-<!--------------------------->
 
-
-<!-------------------------->
-
-<div style="display:none; padding:5px;" id="d3" >
-<!---------------start visible-------------------------------->
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio" checked name="visible" value="1" id="v1"></span></div>All Users
-			</label>
-			</div>
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio"  name="visible" value="4" id="v1"></span></div>All Owners  
-			</label>
-			</div>
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio"  name="visible" value="5" id="v1"></span></div>All Tenant
-			</label>
-			</div>
-			
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio" ><span><input type="radio"  name="visible" value="2" id="v2" ></span></div>Role Wise
-			</label>
-			</div>
-			<div id="show_2" style="display:none; margin-left:5%;">
-			<div class="controls">
-			<?php
-			foreach ($role_result as $collection) 
-			{
-			$role_id=$collection["role"]["role_id"];
-			$role_name=$collection["role"]["role_name"];
-			?>
-			<label class="checkbox">
-			<div class="checker"><span><input type="checkbox"  value="<?php echo $role_id; ?>" name="role<?php echo $role_id; ?>" class="v2 requirecheck1 ignore" id="requirecheck1"></span></div> <?php echo $role_name; ?>
-			</label>
-			<?php } ?>
-			</div>
-			<label  id="requirecheck1"></label>
-			</div>
-
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio" name="visible" value="3" id="v3" ></span></div>Wing Wise
-			</label> 
-			</div>
-			<div id="show_3" style="display:none; margin-left:5%;">
-			<div class="controls">
-			<?php
-			foreach ($wing_result as $collection) 
-			{
-			$wing_id=$collection["wing"]["wing_id"];
-			$wing_name=$collection["wing"]["wing_name"];
-			?>
-			<div style="float:left; padding-left:15px;">
-			<label class="checkbox" >
-			<div class="checker"><span><input type="checkbox"  value="<?php echo $wing_id; ?>" name="wing<?php echo $wing_id; ?>" class="v3 requirecheck2 ignore" id="requirecheck2" ></span></div> <?php echo $wing_name; ?>
-			</label>
-			</div>
-			<?php } ?>
-			</div><br/>
-			<label id="requirecheck2"></label>
-			</div>
-			<!---------------end visible-------------------------------->
-</div>
-<!--------------------------->
 
 <div class="control-group">                    
 <div class="controls">
-<table  width="100%">
-<tr>
-<td><label style="font-size:14px; font-weight:bold;">Message</label></td>
-<td><div  style="float:right;">
-<span style="background-color:#d84a38; color:white; padding:2px;">Note</span>: Please restrict your message length to 459 characters in one message.
-</div></td>
-</tr>
-</table>
- <textarea  style="resize:none;font-size: 18px;" class="m-wrap span12"  onKeyUp="count_msg()" id="massage" name="massage" rows="7"></textarea>
- <label id="massage"></label>
+	<table  width="100%">
+		<tr>
+			<td>
+				<label style="font-size:14px; font-weight:bold;">Message</label>
+			</td>
+			<td>
+				<div  style="float:right;">
+				<span style="background-color:#d84a38; color:white; padding:2px;">Note</span>: Please restrict your message length to 459 characters in one message.
+				</div>
+			</td>
+		</tr>
+	</table>
+	
+	<textarea  style="resize:none;font-size: 18px;" class="m-wrap span12"  onKeyUp="count_msg()" id="massage" name="massage" rows="7"></textarea>
+	<label id="massage"></label>
+ 
  <table width="100%">
  <tr>
  <td>
- <div id="count_result"><span style="font-size:14px; color:#666; font-weight:bold;">No. of Messages</span><input type="text" style="width:80px; background-color:#008000; color:#FFF;" value="0 / 1 SMS" readonly ></div></td>
+ <div id="count_result"><span style="font-size:14px; color:#666; font-weight:bold;">No. of Messages</span><input type="text" style="width:80px; background-color:#008000; color:#FFF;" value="0 / 1 SMS" readonly ></div>
+ </td>
  <td>
- <a href="#myModal3" role="button" class="btn blue pull-right" data-toggle="modal">Templates</a>
- <div id="myModal3" style="margin-top:-5%;" class="modal hide " tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-		<h3 id="myModalLabel3">Select Template</h3>
-	</div>
+	<a href="#myModal3" role="button" class="btn blue pull-right" data-toggle="modal">Templates</a>
+	<div id="myModal3" style="margin-top:-5%;" class="modal hide " tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+			<h3 id="myModalLabel3">Select Template</h3>
+		</div>
 	
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#tab_1_1" data-toggle="tab">Events</a></li>
@@ -174,18 +113,16 @@ $group_id=$collection["group"]["group_id"];
 			<li class=""><a href="#tab_1_7" data-toggle="tab">Vendors</a></li>
 		</ul>
 		<div class="scroller" data-height="400px">
-		<!---------content---------------------->
 		<div class="tab-content">
 			<div class="tab-pane active" id="tab_1_1">
-			<?php
-			foreach ($result_template1 as $cat1) 
-			{
-			$template=$cat1["template"]["template"];
-			?>                                 
-			<div class="tmplt t_hov" onClick="templt('<?php echo $template; ?>')" data-dismiss="modal">
-			<?php echo $template; ?>
-			</div>
-			<?php } ?>
+				<?php
+				foreach ($result_template1 as $cat1){
+				$template=$cat1["template"]["template"];
+				?>                                 
+				<div class="tmplt t_hov" onClick="templt('<?php echo $template; ?>')" data-dismiss="modal">
+				<?php echo $template; ?>
+				</div>
+				<?php } ?>
 			</div>
 			
 			<div class="tab-pane" id="tab_1_2">
@@ -260,7 +197,6 @@ $group_id=$collection["group"]["group_id"];
 			<?php } ?>
 			</div>
 		</div>
-		<!---------content---------------------->								
 		</div>
 
 
@@ -268,15 +204,11 @@ $group_id=$collection["group"]["group_id"];
 		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
 	</div>
 </div>
- </td>
- </tr>
- </table>
+</td>
+</tr>
+</table>
 </div>
-
 </div>
-<!----------------------------------------------->
-
-<!---------------------------------------------->
 <?php
 date_default_timezone_set('Asia/Kolkata');
 $date=date("d-m-Y");
@@ -288,68 +220,41 @@ $r=$time_m%15;
 $add=15-$r;
 $m =$time_m+$add;
 ?>
-
-
-
-
-
-
 <div class="row-fluid">
 	<div class="span4">
-		
-		
-	<div class="control-group">
-	<label style="font-size:14px; font-weight:bold;">Date</label>
-	<div class="controls">
-	 <input class="m-wrap m-ctrl-medium date-picker" readonly name="date" size="16" data-date-format="dd-mm-yyyy" type="text" value="<?php echo $date; ?>">
+		<div class="control-group">
+			<label style="font-size:14px; font-weight:bold;">Date</label>
+			<div class="controls">
+			<input class="m-wrap m-ctrl-medium date-picker" readonly name="date" size="16" data-date-format="dd-mm-yyyy" type="text" value="<?php echo $date; ?>">
+			</div>
+		</div>
 	</div>
-	</div>
-		
-		
-	</div>
-	<div class="span6">
-		
+<div class="span6">
 <div class="control-group">		
-<label style="font-size:14px; font-weight:bold;">Time</label>
-<select class="span2 m-wrap" name="time_h">
-<?php for($w=1;$w<=24;$w++) { ?>
-<option value="<?php echo $w; ?>" <?php if($w==$time_h) { ?> selected <?php } ?>><?php echo $w; ?></option>
-<?php } ?>
+		<label style="font-size:14px; font-weight:bold;">Time</label>
+		<select class="span2 m-wrap" name="time_h">
+		<?php for($w=1;$w<=24;$w++) { ?>
+		<option value="<?php echo $w; ?>" <?php if($w==$time_h) { ?> selected <?php } ?>><?php echo $w; ?></option>
+		<?php } ?>
+		</select>
 
-</select>
-
-<select class="span2 m-wrap" name="time_m">
-<option value="00" <?php if($m==00) { ?> selected <?php } ?>>00</option>
-<option value="15" <?php if($m==15) { ?> selected <?php } ?>>15</option>
-<option value="30" <?php if($m==30) { ?> selected <?php } ?>>30</option>
- <option value="45" <?php if($m==45) { ?> selected <?php } ?>>45</option>
-</select>
+		<select class="span2 m-wrap" name="time_m">
+		<option value="00" <?php if($m==00) { ?> selected <?php } ?>>00</option>
+		<option value="15" <?php if($m==15) { ?> selected <?php } ?>>15</option>
+		<option value="30" <?php if($m==30) { ?> selected <?php } ?>>30</option>
+		 <option value="45" <?php if($m==45) { ?> selected <?php } ?>>45</option>
+		</select>
 </div>		
 		
-	</div>
 </div>
-<!----------------------->
-
-
-
-
-
-
-
-
-
+</div>
 
 <div class="form-actions" style="margin-bottom:0px !important;">
-	<button type="submit" name="send" class="btn blue"><i class=" icon-share-alt"></i> Send</button>
+<button type="submit" name="send" class="btn blue"><i class=" icon-share-alt"></i> Send</button>
 </div>
 </form>
 </div>
-
 </div>
-
-
-
-
 <!------------------------------------------->
 <script>
 function count_msg()

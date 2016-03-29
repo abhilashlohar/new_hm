@@ -27,9 +27,6 @@ function user_info_via_user_id($user_id){
 	return $this->user->find('all',array('conditions'=>$conditions));
 }
 
-
-
-
 function hms_sms_ip(){
 	$this->loadmodel('assistant');
 	$conditions=array('auto_id'=>2);
@@ -552,6 +549,15 @@ function society_info_via_society_id($society_id){
 	$conditions=array('society_id'=>$society_id);
 	return $this->society->find('all',array('conditions'=>$conditions));
 }
+
+function hms_role_info_via_role_id($role_id){
+	$this->loadmodel('hms_role');
+	$conditions=array('auto_id'=>$role_id);
+	return $this->hms_role->find('all',array('conditions'=>$conditions));
+}
+
+
+
 
 function wing_flat_via_wing_id_and_flat_id($wing_id,$flat_id){
 	$this->loadmodel('wing');

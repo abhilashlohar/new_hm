@@ -80,6 +80,52 @@ $role_name = $data['hms_role']['role_name'];
 <label id="role"></label>
 </div>
 <br>
+
+<table class="table table-condensed table-bordered">
+	<tr>
+		<th>User Name</th>
+		<th>Society Name</th>
+		<th>Role Name</th>
+		<th></th>
+	</tr>
+<?php foreach($hms_rights_result as $data){
+$user_id = (int)$data['hms_right']['user_id'];
+$role_id = (int)$data['hms_right']['role_id'];
+$society_id = (int)$data['hms_right']['society_id'];
+
+	$result_user = $this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'),array('pass'=>array($user_id)));
+	foreach($result_user as $data){
+	$user_name = $data['user']['user_name'];	
+	}
+	$result_society = $this->requestAction(array('controller'=>'Fns','action'=>'society_info_via_society_id'),array('pass'=>array($society_id)));
+	foreach($result_society as $data){
+	$society_name = $data['society']['society_name'];	
+	}
+	$result_hms_role=$this->requestAction(array('controller'=>'Fns','action'=>'hms_role_info_via_role_id'),array('pass'=>array($role_id)));
+	foreach($result_hms_role as $data){
+	$role_name = $data['hms_role']['role_name'];	
+	}
+	
+
+
+?>	
+	<tr>
+		<td><?php echo $user_name; ?></td>
+		<td><?php echo $society_name; ?></td>
+		<td><?php echo $role_name; ?></td>
+		<td></td>
+	</tr>	
+<?php } ?>
+
+</table>
+
+
+
+
+
+
+
+
                           
 <div class="form-actions">
 <button type="submit" class="btn blue" name="sub">Submit</button>

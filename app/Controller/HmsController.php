@@ -27464,9 +27464,9 @@ $order=array('module_type.module_type_name'=>'ASC');
 $this->set('result_module_type',$this->module_type->find('all',array('order'=>$order)));
 	
 }
-//////////////////// End assign_modules_to_role_ajax_hm ////////////////////////
-//////////////////// Start asign_role_to_user //////////////////////////////////
-function asign_role_to_user()
+//End assign_modules_to_role_ajax_hm //
+//Start asign_role_to_user//
+function asign_role_to_user($user_id=null)
 {
 if($this->RequestHandler->isAjax()){
 $this->layout='blank';
@@ -27476,7 +27476,7 @@ $this->layout='session';
 	$this->ath();
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=(int)$this->Session->read('user_id');	
-	
+	$user_id_via_query=(int)$user_id;
 	
 if(isset($this->request->data['sub']))
 {
@@ -27488,21 +27488,26 @@ $this->loadmodel('hms_rights');
 $conditions=array("user_id"=>$user_id);
 $n=$this->hms_rights->find('count',array('conditions'=>$conditions));
 
-if($n>0){
-$this->loadmodel('hms_rights');
-$auto_id=$this->autoincrement('hms_rights','auto_id');
-$data_row=Array(Array("auto_id"=>$auto_id,"user_id"=>$user_id,"society_id"=>$society_id,'role_id'=>$role_id));
-$this->hms_rights->saveAll($data_row);	
+	if($n>0){
+		$this->loadmodel('hms_rights');
+		$auto_id=$this->autoincrement('hms_rights','auto_id');
+		$data_row=Array(Array("auto_id"=>$auto_id,"user_id"=>$user_id,"society_id"=>$society_id,'role_id'=>$role_id));
+		$this->hms_rights->saveAll($data_row);	
+	}
+	else
+	{
+		$this->loadmodel('hms_rights');
+		$auto_id=$this->autoincrement('hms_rights','auto_id');
+		$data_row=Array(Array("auto_id"=>$auto_id,"user_id"=>$user_id,"society_id"=>$society_id,'role_id'=>$role_id,"default"=>"yes"));
+		$this->hms_rights->saveAll($data_row);	
+	}
 }
-else
-{
-$this->loadmodel('hms_rights');
-$auto_id=$this->autoincrement('hms_rights','auto_id');
-$data_row=Array(Array("auto_id"=>$auto_id,"user_id"=>$user_id,"society_id"=>$society_id,'role_id'=>$role_id,"default"=>"yes"));
-$this->hms_rights->saveAll($data_row);	
-}
-}	
 
+$this->loadmodel('hms_right');
+$conditions=array("user_id"=>$user_id_via_query);
+$hms_rights_result=$this->hms_right->find('all',array('conditions'=>$conditions));
+$this->set('hms_rights_result',$hms_rights_result);
+	
 $this->loadmodel('society');
 $result_society=$this->society->find('all');
 $this->set('result_society',$result_society);
@@ -27517,8 +27522,8 @@ $conditions=array("user_type" => "hm_child");
 $result_user=$this->user->find('all',array('conditions'=>$conditions));
 $this->set('result_user',$result_user);
 }
-//////////////////// End asign_role_to_user //////////////////////////////////
-//////////////////// Start auto_save_unit_config ///////////////////////////////
+//End asign_role_to_user//
+//Start auto_save_unit_config//
 function auto_save_unit_config($record_id=null,$field=null,$value=null)
 {
 $this->layout=null;

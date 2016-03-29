@@ -16986,16 +16986,31 @@ $this->user->updateAll(array('profile_status'=>2),array('user_id'=>$s_user_id));
 $this->redirect(array('action' => 'profile'));
 }
 
+	
+
 $result_user_profile = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_profile_info_via_user_id'),array('pass'=>array($s_user_id)));
 $profile=@$result_user_profile[0]['user_profile']['profile_pic'];
 
+			$this->loadmodel('user_flat');
+			$conditions=array('user_id'=>$s_user_id);
+			$result=$this->user_flat->find('all',array('conditions'=>$conditions));
+			foreach($result as $data){
+				$tenant=@$data['user_flat']['owner'];
+			}
 
-$result_society=$this->society_name($s_society_id);
-foreach($result_society as $data)
-{
-	 $society_name2=$data['society']['society_name'];
-}
+		$result_member_type= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'),array('pass'=>array($s_user_id)));
+		$this->set('owner',$tenant);
+		$this->set('member_type',$result_member_type);
 
+	$result_society=$this->society_name($s_society_id);
+		foreach($result_society as $data){
+			$society_name2=$data['society']['society_name'];
+			@$family_member=$data['society']['family_member'];
+			@$family_member_tenant=$data['society']['family_member_tenant'];
+		}
+		$this->set('family_member',$family_member);
+		$this->set('family_member_tenant',$family_member_tenant);	
+		
 $this->loadmodel('hobbies_category');
 $this->set('hobbies_category',$this->hobbies_category->find('all'));
 
@@ -18037,7 +18052,9 @@ function family_member_view()
 	
 
 	}
-	$this->set('tenant',$tenant);
+	$result_member_type= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'),array('pass'=>array($s_user_id)));
+	$this->set('owner',$tenant);
+	$this->set('member_type',$result_member_type);
 	$result_society=$this->society_name($s_society_id);	
 	foreach($result_society as $data)
 	{

@@ -29,6 +29,8 @@ $('#hid').val(c);
 
 
 </script>
+<?php 
+if(($owner=="yes" and $family_member==1 and $member_type=="member") or ($owner=="no" and $family_member_tenant==1 and $member_type=="member")){	?>
 <div class="container-fluid">
 				<!-- BEGIN PAGE HEADER-->
 				<div class="row-fluid">
@@ -41,10 +43,8 @@ $('#hid').val(c);
 
 <div class="tabbable tabbable-custom">
 										<ul class="nav nav-tabs">
-											
-											<?php 
-
-?><li class=""><a href="profile" rel='tab' >Basic</a></li>
+										
+<li class=""><a href="profile" rel='tab' >Basic</a></li>
 <li class="active"><a href="family_member_view" rel='tab' >Family Members</a></li> 
 										</ul>
 										<div class="tab-content">
@@ -248,7 +248,7 @@ $('#hid').val(c);
 </div>	
 
 
-
+<?php } ?>
 
 
 <script>

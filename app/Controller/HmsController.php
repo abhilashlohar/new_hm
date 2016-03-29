@@ -27111,12 +27111,12 @@ function menus_as_per_user_rights(){
 		</li>	
 		<li>
 			<a href="<?php echo $webroot_path; ?>Hms/master_accounts_category_hm">
-			<i class="icon-home"></i>Master Charts Of Account HM
+			<i class="icon-home"></i>Charts Of Account
 			</a>					
 		</li>
 		<li>
 			<a href="<?php echo $webroot_path; ?>Hms/update_default_package">
-			<i class="icon-home"></i>Update default package of modules
+			<i class="icon-home"></i>Default package of modules
 			</a>					
 		</li>
 		<li>

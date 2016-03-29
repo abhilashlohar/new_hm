@@ -166,6 +166,12 @@ $(document).ready(function() {
 		window.history.pushState({path:pageurl},'',pageurl);
 	});
 	
+	window.onpopstate = function(s) {
+		pageurl = location.pathname;
+		$('.page-content').load(pageurl+'?rel=tab');
+		
+	};
+	
 	$("a[role='button']").live('click',function(e){
 		e.preventDefault();
 	});

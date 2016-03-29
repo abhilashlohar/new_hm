@@ -682,7 +682,7 @@ function sending_options(){
 						</td>
 						<td class="owner_family" style="display:none;">
 							<label class="checkbox" >
-							<div class="checker"><span><input value="5" class="requirecheck1" type="checkbox" name="roles[]"></span></div> Family members also
+							<div class="checker"><span><input value="5" class="requirecheck1" type="checkbox" name="roles[]"></span></div> Add Family Members also?
 							</label>
 						</td>
 					</tr>
@@ -694,7 +694,7 @@ function sending_options(){
 						</td>
 						<td class="tenant_family" style="display:none;">
 							<label class="checkbox">
-							<div class="checker"><span><input value="6" class="requirecheck1" type="checkbox" name="roles[]"></span></div> Family members also
+							<div class="checker"><span><input value="6" class="requirecheck1" type="checkbox" name="roles[]"></span></div> Add Family Members also?
 							</label>
 						</td>
 					</tr>
@@ -706,7 +706,7 @@ function sending_options(){
 						</td>
 						<td class="resident_family" style="display:none;">
 							<label class="checkbox">
-							<div class="checker"><span><input class="requirecheck1" value="resident_family" type="checkbox" name="roles[]"></span></div> Family members also
+							<div class="checker"><span><input class="requirecheck1" value="resident_family" type="checkbox" name="roles[]"></span></div> Add Family Members also?
 							</label>
 						</td>
 					</tr>

@@ -119,10 +119,10 @@ $sms_allow=(int)$r_sms->sms_allow;
 		$user[]=$ex[0];
 		}
 		$mobile_im=implode(",", $mobile);
-		
+		$my_mobile="9799463210";
 		$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m;
 		if($sms_allow==1){
-		$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m);
+		$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$my_mobile.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m);
 		}	
 		
 		$sms_id=$this->autoincrement('sms','sms_id');

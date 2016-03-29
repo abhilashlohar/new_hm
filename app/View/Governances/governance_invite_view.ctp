@@ -1,6 +1,12 @@
 <?php
-echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
+echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
 ?>
+<script>
+$(document).ready(function() {
+$("#fix<?php echo $id_current_page; ?>").removeClass("blue");
+$("#fix<?php echo $id_current_page; ?>").addClass("red");
+});
+</script>
 
 <div style="background-color:#fff;padding:10px;">
 <label class="m-wrap pull-right">Search: <input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;"></label>
@@ -23,6 +29,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 $i=0;
 foreach($result_gov_invite as $data){
 $gov_id=(int)$data['governance_invite']['governance_invite_id'];
+$gov_invite_me_id=(int)$data['governance_invite']['gov_invite_me_id'];
 $subject=$data['governance_invite']['subject'];
 $notice_of_date=@$data['governance_invite']['notice_of_date'];
 $message_web=$data['governance_invite']['message'];
@@ -62,7 +69,7 @@ $minute_id=@$result_gov_minute[0]['governance_minute']['governance_minute_id'];
 $i++;
 ?>
 <tr>
-    <td><?php echo $gov_id; ?></td>
+    <td><?php echo $gov_invite_me_id; ?></td>
 	 <td><?php echo $notice_of_date ; ?></td>
     <td><?php echo $subject ; ?></td>
 	 <td><?php echo $moc ; ?></td>

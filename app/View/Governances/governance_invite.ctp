@@ -1,6 +1,12 @@
 <?php
-echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
+echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
 ?>
+<script>
+$(document).ready(function() {
+$("#fix<?php echo $id_current_page; ?>").removeClass("blue");
+$("#fix<?php echo $id_current_page; ?>").addClass("red");
+});
+</script>
 <style>
 a.tip {
     //border-bottom: 1px dashed;
@@ -578,7 +584,7 @@ $('form#contact-form').submit( function(ev){
 			dataType:'json',
 			}).done(function(response) { 
 	
-			//$("#output").html(response);
+			$("#output").html(response);
 				if(response.type=='created'){
 					$(".portal").remove();
 				$(".alert-success").show().append("<p>"+response.text+"</p><p><a class='btn green' href='<?php echo $webroot_path; ?>Governances/governance_invite_view' rel='tab' >ok</a></p>");

@@ -11976,7 +11976,7 @@ $order=array('sub_module.sub_module_name'=>'ASC');
 $sub_modules=$this->sub_module->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set(compact("sub_modules"));
 ?>
-<span style="font-weight: bold; color: rgb(92, 92, 92);">Sub-Modules</span> <input type="checkbox" /><br/>
+<span style="font-weight: bold; color: rgb(92, 92, 92);">Sub-Modules</span>  <a href="#" role="button" id="select_all" >assign all</a> | <a href="#" role="button" id="deselect_all" >deassign all</a><br/>
 <?php foreach($sub_modules as $data){
 	$sub_module_id=(int)$data["sub_module"]["auto_id"];
 	$sub_module_name=$data["sub_module"]["sub_module_name"];

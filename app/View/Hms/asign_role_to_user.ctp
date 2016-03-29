@@ -13,7 +13,6 @@
 </div>
 <div class="portlet-body form">
 
-<table 
 
 
 

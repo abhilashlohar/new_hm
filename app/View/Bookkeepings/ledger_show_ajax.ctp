@@ -228,7 +228,7 @@ $creater_name = @$user_detailll['user']['user_name'];
 	{
 		$tds_array_for_bank_payment = array();
 		
-		$source="Bank_payment";
+		$source="Bank payment";
 		$trans_id = (int)$result_cash_bank[0]["cash_bank"]["transaction_id"];  
 		$description = @$result_cash_bank[0]["cash_bank"]["narration"];
 		$description=substrwords($description,200,'...');

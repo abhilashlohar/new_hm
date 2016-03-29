@@ -27116,7 +27116,7 @@ function menus_as_per_user_rights(){
 		</li>
 		<li>
 			<a href="<?php echo $webroot_path; ?>Hms/update_default_package">
-			<i class="icon-home"></i>Default package of modules
+			<i class="icon-home"></i>Package of modules
 			</a>					
 		</li>
 		<li>

@@ -27477,7 +27477,7 @@ $this->layout='session';
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=(int)$this->Session->read('user_id');	
 	$user_id_via_query=(int)$user_id;
-	
+	$this->set('user_id_via_query',$user_id_via_query);
 if(isset($this->request->data['sub']))
 {
 $user_id = (int)$this->request->data['user'];

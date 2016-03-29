@@ -67,7 +67,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 
 <div style="display:none; padding:5px;" id="d3">
 	<?php
-	//$this->requestAction(array('controller'=>'Fns','action'=>'sending_options'));
+	$this->requestAction(array('controller'=>'Fns','action'=>'sending_options'));
 	?>	
 </div>
 
@@ -365,7 +365,7 @@ background-color:rgba(207, 202, 255, 0.32);
 
 <script>
 
-
+/*
 $.validator.addMethod('requirecheck1', function (value, element) {
 	 return $('.requirecheck1:checked').size() > 0;
 }, 'Please check at least one role.');
@@ -463,5 +463,5 @@ messages: {
 	
 });
 
-}); 
+}); */
 </script>

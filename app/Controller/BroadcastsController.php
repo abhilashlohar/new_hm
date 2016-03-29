@@ -119,10 +119,10 @@ $sms_allow=(int)$r_sms->sms_allow;
 		$user[]=$ex[0];
 		}
 		$mobile_im=implode(",", $mobile);
-		$my_mobile="9799463210";
+		
 		$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m;
 		if($sms_allow==1){
-		$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$my_mobile.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m);
+		$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m);
 		}	
 		
 		$sms_id=$this->autoincrement('sms','sms_id');
@@ -131,165 +131,25 @@ $sms_allow=(int)$r_sms->sms_allow;
 		$this->sms->saveAll($multipleRowData);
 		}
 
-if($radio==2)
-{
-$user_new = array(); 
-foreach ($result_group as $collection) 
-{
-$group_id=$collection["group"]["group_id"];
-
-$g_id=@$this->request->data['grp'.$group_id];
-if(!empty($g_id))
-{
-$groups_id[]=(int)$g_id;
-$users=$collection["group"]["users"];
-$user_new=array_merge($user_new,$users);
-}
-}
-$result_user_unique = array_unique($user_new);
-
-
-foreach ($result_user_unique as $data) 
-{
-$data=(int)$data;
-$result_user_info=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($data)));
-foreach ($result_user_info as $collection2) 
-{
-$mobile[]=$collection2["user"]["mobile"];
-}
-}
-$mobile_im=implode(",", $mobile);
-
-$r_sms=$this->hms_sms_ip();
-  $working_key=$r_sms->working_key;
- $sms_sender=$r_sms->sms_sender; 
-$sms_allow=(int)$r_sms->sms_allow;
-if($sms_allow==1){
-$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m);
-}
-$sms_id=$this->autoincrement('sms','sms_id');
-$this->loadmodel('sms');
-$multipleRowData = Array( Array("sms_id" => $sms_id,"text"=>$massage,"user_id"=>$result_user_unique,"date"=>$date,"time"=>$timd,"type"=>2,"society_id"=>$s_society_id,"deleted"=>0));	
-$this->sms->saveAll($multipleRowData);
-}
-
-
-
 if($radio==3)
 {
-$visible=(int)$this->request->data['visible'];
-	if($visible==1)
-	{	
-	$visible=1;
-	$sub_visible[]=0;
-	/////////////////////////////////////////// All user ////////////////////////////
-	$this->loadmodel('user');
-	$conditions=array('society_id'=>$s_society_id,'deactive'=>0);
-	$result_user=$this->user->find('all',array('conditions'=>$conditions));
-	foreach($result_user as $data)
-	{
-	$da_to[]=$data['user']['mobile'];
-	$da_user_name[]=$data['user']['user_name'];
-	$da_user_id[]=$data['user']['user_id'];
-	}
-	/////////////////////////////////////////// All user ////////////////////////////
-	}
-	
-	if($visible==4)
-	{	
-	$visible=4;
-	$sub_visible[]=0;
-	/////////////////////////////////////////// All Owners ////////////////////////////
-	$this->loadmodel('user');
-	$conditions=array('tenant'=>1,'society_id'=>$s_society_id,'deactive'=>0);
-	$result_user=$this->user->find('all',array('conditions'=>$conditions));
-	foreach($result_user as $data)
-	{
-	$da_to[]=$data['user']['mobile'];
-	$da_user_name[]=$data['user']['user_name'];
-	$da_user_id[]=$data['user']['user_id'];
-	}
-	/////////////////////////////////////////// All Owners ////////////////////////////
-	}
-	
-	if($visible==5)
-	{
-	$visible=5;
-	$sub_visible[]=0;
-	/////////////////////////////////////////// All Tenant ////////////////////////////
-	$this->loadmodel('user');
-	$conditions=array('tenant'=>2,'society_id'=>$s_society_id,'deactive'=>0);
-	$result_user=$this->user->find('all',array('conditions'=>$conditions));
-	foreach($result_user as $data)
-	{
-	$da_to[]=$data['user']['mobile'];
-	$da_user_name[]=$data['user']['user_name'];
-	$da_user_id[]=$data['user']['user_id'];
-	}
-	/////////////////////////////////////////// All Tenant ////////////////////////////
-	}
-	
-	if($visible==2)
-	{	
-	$visible=2;
-	foreach ($role_result as $collection) 
-	{
-	$role_id=$collection["role"]["role_id"];
+$visible=$this->request->data['send_to'];
 
-	$role_id=@(int)$this->request->data['role'.$role_id];
-	if(!empty($role_id))
-	{
-	$sub_visible[]=(int)$role_id;
+if($visible=='all_users'){
 
-	/////////////////////////////////////////// All role  functionality  conditions /////////////////////////////////////////////
-	$this->loadmodel('user');
-	$conditions=array('role_id'=>$role_id,'society_id'=>$s_society_id,'deactive'=>0);
-	$result_user=$this->user->find('all',array('conditions'=>$conditions));
-	foreach($result_user as $data)
-	{
-	$da_to[]=$data['user']['mobile'];
-	$da_user_name[]=$data['user']['user_name'];
-	$da_user_id[]=$data['user']['user_id'];
-	}
+}
+if($visible=='role_wise'){
+$sub_visible=$this->request->data['roles'];	
+$sub_visible=implode(',',$sub_visible);
+}
 
-	//////////////////////////////// end mail ////////////////////////////////////////////////////////	
+if($visible=='wing_wise'){
+$sub_visible=$this->request->data['wings'];	
+$sub_visible=implode(',',$sub_visible);
+}
 
 
-	}
-	}
-	$da_user_id=array_unique($da_user_id);
-	}
-	
-	if($visible==3)
-	{	
-	$visible=3;
-	foreach ($wing_result as $collection) 
-	{
-	$wing_id=$collection["wing"]["wing_id"];
-
-	$wing=@(int)$this->request->data['wing'.$wing_id];
-	if(!empty($wing))
-	{
-	$sub_visible[]=(int)$wing;
-
-
-
-	$this->loadmodel('user');
-	$conditions=array('wing'=>$wing_id,'society_id'=>$s_society_id,'deactive'=>0);
-	$result_user=$this->user->find('all',array('conditions'=>$conditions));
-	foreach($result_user as $data)
-	{
-		if(!empty($data['user']['mobile']))
-		{
-			$da_to[]=$data['user']['mobile'];
-			$da_user_name[]=$data['user']['user_name'];
-			$da_user_id[]=$data['user']['user_id'];
-		}
-	
-	}
-	}
-	}
-	}
+/*
 $da_to[]=$sender_email;
 $da_user_id=array_unique($da_user_id);	
 $da_to=array_unique($da_to);	
@@ -309,9 +169,9 @@ $multipleRowData = Array( Array("sms_id" => $sms_id,"text"=>$massage,"user_id"=>
 
 
 $this->sms->saveAll($multipleRowData);
-
+*/
 }
-
+exit;
 ?>
 <!----alert-------------->
 <div class="modal-backdrop fade in"></div>

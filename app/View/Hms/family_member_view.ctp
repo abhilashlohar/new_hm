@@ -177,7 +177,7 @@ $('#hid').val(c);
 
 			$i++;
 			$user_name=$data['user']['user_name'];
-			echo $user_id=$data['user']['user_id'];
+			$user_id=$data['user']['user_id'];
 			$mobile=$data['user']['mobile'];
 			$email=$data['user']['email'];
 			$relation=$data['user']['relationship'];

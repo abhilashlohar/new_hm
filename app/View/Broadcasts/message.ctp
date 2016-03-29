@@ -67,7 +67,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 
 <div style="display:none; padding:5px;" id="d3">
 	<?php
-	$this->requestAction(array('controller'=>'Fns','action'=>'sending_options'));
+	//$this->requestAction(array('controller'=>'Fns','action'=>'sending_options'));
 	?>	
 </div>
 

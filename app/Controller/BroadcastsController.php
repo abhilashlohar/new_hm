@@ -97,8 +97,8 @@ $sender_mobile=$collection2["user"]["mobile"];
 $result_user_flat=$this->requestAction(array('controller'=>'Fns','action'=>'user_flat_info_via_user_id'),array('pass'=>array($s_user_id)));
 foreach($result_user_flat as $data)
 {
-$wing=$data["user_flat"]["wing"];
-$flat=$data["user_flat"]["flat"];	
+@$wing=@$data["user_flat"]["wing"];
+@$flat=@$data["user_flat"]["flat"];	
 }
 
 $r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 

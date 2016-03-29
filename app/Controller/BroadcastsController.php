@@ -12,30 +12,27 @@ var $name = 'Broadcasts';
 
 
 
-////////////////////////////////////////////////////////////////////////////////////////	
-/////////////////////////////////////////////////////start Message//////////////////////
-////////////////////////////////////////////////////////////////////////////////////////	
+//start Message//
 function message()
 {
-if($this->RequestHandler->isAjax()){
+		if($this->RequestHandler->isAjax()){
 		$this->layout='blank';
-	}else{
+		}else{
 		$this->layout='session';
-	}
-$this->ath();
-$this->check_user_privilages();
+		}
+		$this->ath();
+		$this->check_user_privilages();
+		$s_user_id=$this->Session->read('hm_user_id'); 
+		$s_society_id=$this->Session->read('hm_society_id'); 	
 
-$s_user_id=$this->Session->read('user_id'); 
-$s_society_id=$this->Session->read('society_id'); 
+		$this->loadmodel('user');
+		$conditions=array("society_id"=>$s_society_id,'user.mobile'=>array('$ne'=>""));
+		$this->set('result_users',$this->user->find('all',array('conditions'=>$conditions))); 
 
-$this->loadmodel('user');
-$conditions=array("society_id"=>$s_society_id,'user.mobile'=> array('$ne' => ""));
-$this->set('result_users',$this->user->find('all',array('conditions'=>$conditions))); 
-
-$this->loadmodel('group');
-$conditions=array("society_id"=>$s_society_id);
-$result_group=$this->group->find('all',array('conditions'=>$conditions)); 
-$this->set('result_group',$result_group); 
+		/*$this->loadmodel('group');
+		$conditions=array("society_id"=>$s_society_id);
+		$result_group=$this->group->find('all',array('conditions'=>$conditions)); 
+		$this->set('result_group',$result_group); */
 
 $this->loadmodel('role');
 $conditions=array("society_id" => $s_society_id);
@@ -92,15 +89,19 @@ $time=date('h:i:a',time());
 $massage=$this->request->data['massage'];
 $massage_str=str_replace(' ', '+', $massage);
 
-$result_user_info=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($s_user_id)));
-foreach ($result_user_info as $collection2) 
-{
+$result_user_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'), array('pass'=>array($s_user_id)));
+foreach ($result_user_info as $collection2){
 $name=$collection2["user"]["user_name"];
-$wing=$collection2["user"]["wing"];
-$flat=$collection2["user"]["flat"];
 $sender_email=$collection2["user"]["email"];
 $sender_mobile=$collection2["user"]["mobile"];
 }
+$result_user_flat=$this->requestAction(array('controller'=>'Fns','action'=>'user_flat_info_via_user_id'),array('pass'=>array($s_user_id)));
+foreach($result_user_flat as $data)
+{
+$wing=$data["user_flat"]["wing"];
+$flat=$data["user_flat"]["flat"];	
+}
+
 
 
 
@@ -281,7 +282,7 @@ $visible=(int)$this->request->data['visible'];
 	$sub_visible[]=(int)$wing;
 
 
-	/////////////////////////////////////////// All wing wise  functionality conditions //////////////////////////////////////////////////////
+
 	$this->loadmodel('user');
 	$conditions=array('wing'=>$wing_id,'society_id'=>$s_society_id,'deactive'=>0);
 	$result_user=$this->user->find('all',array('conditions'=>$conditions));
@@ -351,8 +352,8 @@ if($this->RequestHandler->isAjax()){
 }
 $this->ath();
 $this->check_user_privilages();
-$s_user_id=$this->Session->read('user_id'); 
-$s_society_id=$this->Session->read('society_id'); 
+$s_user_id=$this->Session->read('hm_user_id'); 
+$s_society_id=$this->Session->read('hm_society_id'); 
 
 $this->loadmodel('sms');
 $conditions=array("society_id"=>$s_society_id,"deleted"=>0);
@@ -374,21 +375,19 @@ $this->set('result_smsview',$this->sms->find('all',array('conditions'=>$conditio
 
 }
 
-//////////////////////////////////////////////////////////////////////////////
-///////////////////////////EMAIL///////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
+//Start EMAIL//
 function email()
 {
-if($this->RequestHandler->isAjax()){
-		$this->layout='blank';
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
 	}else{
-		$this->layout='session';
+	$this->layout='session';
 	}
 $this->ath();
 $this->check_user_privilages();
 
-$s_user_id=$this->Session->read('user_id'); 
-$s_society_id=$this->Session->read('society_id'); 
+$s_user_id=$this->Session->read('hm_user_id'); 
+$s_society_id=$this->Session->read('hm_society_id'); 
 
 
 $this->loadmodel('user');
@@ -759,8 +758,8 @@ Your Email has been sent.
 
 }
 }
-
-
+//End Email//
+//Start email_view// 
 function email_view()
 {
 if($this->RequestHandler->isAjax()){
@@ -770,15 +769,15 @@ if($this->RequestHandler->isAjax()){
 	}
 $this->ath();
 $this->check_user_privilages();
-$s_user_id=$this->Session->read('user_id'); 
-$s_society_id=$this->Session->read('society_id'); 
+$s_user_id=$this->Session->read('hm_user_id'); 
+$s_society_id=$this->Session->read('hm_society_id'); 
 
 $this->loadmodel('email_communication');
 $conditions=array("society_id"=>$s_society_id,"deleted"=>0);
 $order=array('email_communication.email_id'=>'DESC');
 $this->set('result_email',$this->email_communication->find('all',array('conditions'=>$conditions,'order'=>$order))); 
 }
-
+//End email_view//
 
 
 function email_view_ajax()

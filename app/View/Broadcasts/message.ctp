@@ -1,13 +1,6 @@
 <?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
+echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>
-<script>
-$(document).ready(function() {
-$("#fix<?php echo $id_current_page; ?>").removeClass("blue");
-$("#fix<?php echo $id_current_page; ?>").addClass("red");
-});
-</script>
-
 
 <div style="padding:5px;" align="center">
 <a href="message_view" class="btn blue" rel='tab'>SMS History</a>
@@ -29,10 +22,7 @@ $("#fix<?php echo $id_current_page; ?>").addClass("red");
  <div class="radio" id="uniform-undefined"><input type="radio"  id="r3"  name="radio" value="3" style="opacity: 0;"></div>
  <span style="font-size:16px;" >Send SMS to Default Groups</span>
  </label>
- <label class="radio">
- <div class="radio" id="uniform-undefined"><input type="radio" id="r2" name="radio" value="2"  style="opacity: 0;"></div>
- <span style="font-size:16px;" >Send SMS to Custom Groups</span>
- </label>  
+ 
 </div>
 <label style="font-size:14px; font-weight:bold;">To <i class=" icon-info-sign tooltips" data-placement="right" data-original-title="SMS will be sent to only those users whose valid mobile numbers are registered with HousingMatters"> </i></label>
 <!------------------------->

@@ -1,8 +1,8 @@
 <style>
-table th{
+#tb th{
    background-color:#FFF;padding:3px 5px 3px 5px !important;
 }
-table td{
+#tb td{
    background-color:#FFF;padding:3px 5px 3px 5px !important;
 }
 </style>
@@ -28,7 +28,7 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 {
  ?>
 <div style="background-color:#FFF;">
-<table class="table table-bordered table-striped table-hover" width="100%">
+<table id="tb" class="table table-bordered table-striped table-hover" width="100%">
 	<thead>
 		<tr><?php if($ledger_account_id == 34) { ?>
 			<th></th>

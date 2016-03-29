@@ -80,13 +80,13 @@ $html.='<div  align="" style="padding: 2px;">
 <span style="font-size:12px;"> <b>Invitees : </b> </span>';
 if($type==1){
 foreach($user as $id){
-	$result_user=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array((int)$id)));
-	foreach($result_user as $data){
-		$to=$data['user']['user_name'];
-		
-		$wing=$data['user']['wing'];
-		$flat=$data['user']['flat'];
-		$flat_n=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
+	$result_user=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array((int)$id)));
+	$to=$result_user['user_name'];
+	$wing_flat=$result_user['wing_flat'];
+		foreach($wing_flat as $flat_n){
+
+		}
+	
 		if(!empty($flat_n)){
 			$flat_name=" (".$flat_n.")";
 		}
@@ -99,7 +99,7 @@ foreach($user as $id){
 		$html.='<span>'.$to.'</span>';
 		
 		
-	}
+	
  }
 }
 
@@ -116,20 +116,14 @@ if($type==2){
 if($type==3){
 		$visible=$data['governance_invite']['visible'];
 		$sub_visible=$data['governance_invite']['sub_visible'];
-		if($visible==1){
+		if($visible=="all_users"){
 			$show_visible="All Users";
 		}
-		if($visible==2){
+		if($visible=="role_wise"){
 			$show_visible="Role Wise";
 		}
-		if($visible==3){
+		if($visible=="wing_wise"){
 			$show_visible="Wing Wise";
-		}
-		if($visible==4){
-			$show_visible="All Owners";
-		}
-		if($visible==5){
-			$show_visible="All Tenant";
 		}
 		
 		$html.='<span>'.$show_visible.'</span>';

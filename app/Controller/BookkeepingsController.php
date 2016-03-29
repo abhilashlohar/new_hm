@@ -405,16 +405,15 @@ $cursor1=$this->ledger_sub_account->find('all',array('conditions'=>$conditions))
 $this->set('cursor1',$cursor1);
 
 }
-////////////////////////////// End Ledger Ajax (Accounts) ////////////////////////////////////////////////////////
-
-//////////////////////////// Start Ledger Excel (Accounts)//////////////////////////////////////////////////////
+//End Ledger Ajax (Accounts)//
+//Start Ledger Excel (Accounts)//
 function ledger_excel()
 {
 $this->layout=null;
 $this->ath();
 $s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 $this->loadmodel('society');
 $conditions=array("society_id" => $s_society_id);
@@ -487,13 +486,12 @@ $tds_arr = $collection['reference']['reference'];
 $this->set("tds_arr",$tds_arr);	
 	
 }
-//////////////////////////// End Ledger Excel (Accounts)/////////////////////////////
-
-////////////////////////////////////////////// Start Ledger Show Ajax (Accounts)////////////////////////////////////////////////////////////////////////
+// End Ledger Excel (Accounts)//
+//Start Ledger Show Ajax (Accounts)//
 function ledger_show_ajax($page=null,$ledger_account_id=null,$from=null,$to=null){
 	$this->layout='blank';
 	$this->ath();
-	$s_role_id=$this->Session->read('hm_role_id');
+	$s_role_id=$this->Session->read('role_id');
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');
 	$this->set('s_role_id',$s_role_id);

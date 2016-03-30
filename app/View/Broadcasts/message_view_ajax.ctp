@@ -51,8 +51,8 @@ foreach($user_id as $user)
 	}
 	$result_user_flat=$this->requestAction(array('controller'=>'Fns','action'=>'user_flat_info_via_user_id'),array('pass'=>array($user)));
 	foreach($result_user_flat as $data){
-	$wing=(int)@$data["user_flat"]["wing"];
-	$flat=(int)@$data['user_flat']['flat'];
+	@$wing=(int)@$data["user_flat"]["wing"];
+	@$flat=(int)@$data['user_flat']['flat'];
 	}
 
 	@$flat_info=$this->requestAction(array('controller'=>'Fns','action'=> 'wing_flat_via_wing_id_and_flat_id'),array('pass'=>array(@$wing,@$flat)));

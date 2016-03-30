@@ -153,7 +153,7 @@ $recieve_info=$this->requestAction(array('controller'=>'Fns','action'=>'sending_
 $mobile_array=array();	
 $user_id_array=array();
 foreach($recieve_info as $user_id=>$data){
-$mobile_array[]=@$data[$user_id]['mobile'];	
+$mobile_array[]=@$data['mobile'];	
 $user_id_array[]=$user_id;
 }
 $user_id_array=array_unique($user_id_array);	

@@ -11,6 +11,89 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <?php
 $default_date = date('d-m-Y');
 ?>
+
+<!-------------------------- START NEW CODE--------------------------->
+<div class="portlet box">
+<div class="portlet-body">
+	<form method="post">
+		<table class="table table-condensed table-bordered" id="main">
+			<thead>
+				<tr>
+					<th width="120px">Transaction Date</th>
+					<th width="200px">A/c Group</th>
+					<th width="200px">Expense/Party A/c</th>
+					<th width="130px">Paid From</th>
+					<th width="100px">Amount</th>
+					<th>Narration</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				
+			</tbody>
+		</table>
+		<button type="submit" class="btn blue pull-right" name="submit">Create Receipt</button>
+	</form>
+		<a href="#" role="button" id="add_row" class="btn"><i class="icon-plus"></i> Add Row</a>
+</div>
+</div>
+
+<table id="sample" style="display:none;">
+	<tbody>
+		<tr>
+			<td><input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy" name="date" id="date" style="background-color:white !important; margin-top:2.5px;" value="<?php echo $default_date; ?>"></td>
+			
+			<td><select name="type" class="m-wrap span12" onchange="type_ajjxx(this.value,1)" style="background-color:white !important;">
+			<option value="" style="display:none;">Select</option>
+			<option value="1">Sundry Creditors Control A/c</option>
+			<option value="2">All Expenditure A/cs</option>
+			</select></td>
+
+			<td><select   name="user_id" class="m-wrap span12" style="background-color:white !important;">
+			<option value="" style="display:none;">Select</option>
+			</select></td>
+
+			<td><select name="account_head" class="m-wrap span12" style="background-color:white !important;">
+			<option value="" style="display:none;">Select</option>
+			<option value="32" selected="selected">Cash-in-hand</option>
+			</select></td>
+
+			<td><input type="text" class="m-wrap span12" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="5">
+			</td>
+			
+			<td><input type="text" class="m-wrap span10" style="background-color:white !important; margin-top:2.5px;"><a style="margin-top: -4px; margin-right: -5px;" role="button" class="btn mini pull-right remove_row" href="#"><i class="icon-trash"></i></a></td>
+		</tr>
+	</tbody>
+</table>
+
+<script>
+$(document).ready(function(){
+	add_row();
+	function add_row(){
+	var new_line=$("#sample tbody").html();
+	$("#main tbody").append(new_line);
+	//$('#main tbody tr:last select[name="account_group[]"]').chosen();
+	//$('#main tbody tr:last select[name="account_head[]"]').chosen();
+	//$('#main tbody tr:last select[name="other_income[]"]').chosen();
+	//$('#main tbody tr:last select[name="ledger_sub_account[]"]').chosen();
+	//$('#main tbody tr:last input[name="transaction_date[]"]').datepicker();
+	}
+	
+	$("#add_row").on("click",function(){
+		add_row();
+	})
+	$(".remove_row").die().live("click",function(){
+		$(this).closest("tr").remove();
+	})
+
+});
+</script>
+
+
+
+<!---------------------------END NEW CODE---------------------------->
+
+<?php /*
 <form method="post">
 <div class="portlet box blue">
 <div class="portlet-title">
@@ -230,7 +313,7 @@ $("#vali").bind('click',function(){
 </script>		
 		   
 		   
-		   
+	*/ ?>	   
 		   
 		   
 		   

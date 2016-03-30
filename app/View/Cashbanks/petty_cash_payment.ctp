@@ -49,9 +49,19 @@ $default_date = date('d-m-Y');
 			<option value="2">All Expenditure A/cs</option>
 			</select></td>
 
-			<td><select class="m-wrap span12">
+			<td>
+			<div id="default_select_box">
+			<select class="m-wrap span12">
 			<option value="" style="display:none;">Select</option>
-			</select></td>
+			</select>
+			</div>
+			<div class="hide" id="sundry_creditors_select_box">
+			Creditors
+			</div>
+			<div class="hide" id="expenditure_select_box">
+			Expense
+			</div>
+			</td>
 
 			<td><select name="paid_from[]" class="m-wrap span12">
 			<option value="" style="display:none;">Select</option>
@@ -89,7 +99,21 @@ $(document).ready(function(){
 });
 </script>
 
+<script>
+$('select[name="account_group[]"]').die().live("change",function(){
+		var account_group=$(this).val();
+		if(account_group=='1'){
+			$(this).parent().next('td').find("#default_select_box").hide();
+			$(this).parent().next('td').find("#expenditure_select_box").hide();
+			$(this).parent().next('td').find("#sundry_creditors_select_box").show();
+		}else{
+			$(this).parent().next('td').find("#default_select_box").hide();
+			$(this).parent().next('td').find("#expenditure_select_box").show();
+			$(this).parent().next('td').find("#sundry_creditors_select_box").hide();
+		}
+});
 
+</script>
 
 <!---------------------------END NEW CODE---------------------------->
 

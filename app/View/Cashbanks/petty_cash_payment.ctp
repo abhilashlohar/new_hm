@@ -41,27 +41,27 @@ $default_date = date('d-m-Y');
 <table id="sample" style="display:none;">
 	<tbody>
 		<tr>
-			<td><input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy" name="date" id="date" style="background-color:white !important; margin-top:2.5px;" value="<?php echo $default_date; ?>"></td>
+			<td><input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy"  value="<?php echo $default_date; ?>" name="transaction_date[]"></td>
 			
-			<td><select name="type" class="m-wrap span12" onchange="type_ajjxx(this.value,1)" style="background-color:white !important;">
+			<td><select class="m-wrap span12" name="account_group[]">
 			<option value="" style="display:none;">Select</option>
 			<option value="1">Sundry Creditors Control A/c</option>
 			<option value="2">All Expenditure A/cs</option>
 			</select></td>
 
-			<td><select   name="user_id" class="m-wrap span12" style="background-color:white !important;">
+			<td><select class="m-wrap span12">
 			<option value="" style="display:none;">Select</option>
 			</select></td>
 
-			<td><select name="account_head" class="m-wrap span12" style="background-color:white !important;">
+			<td><select name="paid_from[]" class="m-wrap span12">
 			<option value="" style="display:none;">Select</option>
 			<option value="32" selected="selected">Cash-in-hand</option>
 			</select></td>
 
-			<td><input type="text" class="m-wrap span12" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="5">
+			<td><input type="text" class="m-wrap span12" maxlength="5" name="amount[]">
 			</td>
 			
-			<td><input type="text" class="m-wrap span10" style="background-color:white !important; margin-top:2.5px;"><a style="margin-top: -4px; margin-right: -5px;" role="button" class="btn mini pull-right remove_row" href="#"><i class="icon-trash"></i></a></td>
+			<td><input type="text" class="m-wrap span10" name="narration[]"><a style="margin-top: -4px; margin-right: -5px;" role="button" class="btn mini pull-right remove_row" href="#"><i class="icon-trash"></i></a></td>
 		</tr>
 	</tbody>
 </table>
@@ -72,11 +72,11 @@ $(document).ready(function(){
 	function add_row(){
 	var new_line=$("#sample tbody").html();
 	$("#main tbody").append(new_line);
-	//$('#main tbody tr:last select[name="account_group[]"]').chosen();
-	//$('#main tbody tr:last select[name="account_head[]"]').chosen();
+	$('#main tbody tr:last select[name="account_group[]"]').chosen();
+	$('#main tbody tr:last select[name="paid_from[]"]').chosen();
 	//$('#main tbody tr:last select[name="other_income[]"]').chosen();
 	//$('#main tbody tr:last select[name="ledger_sub_account[]"]').chosen();
-	//$('#main tbody tr:last input[name="transaction_date[]"]').datepicker();
+	$('#main tbody tr:last input[name="transaction_date[]"]').datepicker();
 	}
 	
 	$("#add_row").on("click",function(){

@@ -56,7 +56,7 @@ $default_date = date('d-m-Y');
 			</select>
 			</div>
 			<div class="hide" id="sundry_creditors_select_box">
-				<select class="m-wrap medium">
+				<select class="m-wrap medium" name="sundry_creditor[]">
 				<option value="" style="display:none;">Select</option>
 				<?php foreach ($cursor1 as $collection){
 				$auto_id=(int)$collection['ledger_sub_account']['auto_id'];
@@ -67,7 +67,7 @@ $default_date = date('d-m-Y');
 				</select>
 			</div>
 			<div class="hide" id="expenditure_select_box">
-				<select class="m-wrap medium">
+				<select class="m-wrap medium" name="expenditure[]">
 				<option value="" style="display:none;">Select</option>
 				<?php
 				foreach($cursor2 as $collection)
@@ -80,7 +80,7 @@ $default_date = date('d-m-Y');
 				$name = $collection2['ledger_account']['ledger_name'];
 				?>
 				<option value="<?php echo $sub_id; ?>"><?php echo $name; ?></option>
-				<?php } } ?>
+				<?php }} ?>
 				</select>
 			</div>
 			</td>
@@ -106,8 +106,8 @@ $(document).ready(function(){
 	$("#main tbody").append(new_line);
 	$('#main tbody tr:last select[name="account_group[]"]').chosen();
 	$('#main tbody tr:last select[name="paid_from[]"]').chosen();
-	//$('#main tbody tr:last select[name="other_income[]"]').chosen();
-	//$('#main tbody tr:last select[name="ledger_sub_account[]"]').chosen();
+	$('#main tbody tr:last select[name="sundry_creditor[]"]').chosen();
+	$('#main tbody tr:last select[name="expenditure[]"]').chosen();
 	$('#main tbody tr:last input[name="transaction_date[]"]').datepicker();
 	}
 	

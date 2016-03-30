@@ -135,18 +135,17 @@ if($radio==3)
 {
 $visible=$this->request->data['send_to'];
 
-if($visible=='all_users'){
-
-}
-if($visible=='role_wise'){
-$sub_visible=$this->request->data['roles'];	
-$sub_visible=implode(',',$sub_visible);
-}
-
-if($visible=='wing_wise'){
-$sub_visible=$this->request->data['wings'];	
-$sub_visible=implode(',',$sub_visible);
-}
+	if($visible=='all_users'){
+	 $sub_visible="";
+	}
+	if($visible=='role_wise'){
+	$sub_visible=$this->request->data['roles'];	
+	$sub_visible=implode(',',$sub_visible);
+	}
+	if($visible=='wing_wise'){
+	$sub_visible=$this->request->data['wings'];	
+	$sub_visible=implode(',',$sub_visible);
+	}
 
 
 /*

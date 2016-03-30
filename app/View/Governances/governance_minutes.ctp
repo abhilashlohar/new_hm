@@ -222,71 +222,12 @@ $group_id=$collection["group"]["group_id"];
 
 <div style="display:none; padding:5px;" id="d3" >
 <!---------------start visible-------------------------------->
+<?php
+		echo $sending_options=$this->requestAction(array('controller' => 'Fns', 'action' => 'sending_options'));
+?>
 
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio" checked name="visible" value="1" id="v1"></span></div>All Users
-			</label>
-			</div>
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio"  name="visible" value="4" id="v1"></span></div>All Owners  
-			</label>
-			</div>
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio"  name="visible" value="5" id="v1"></span></div>All Tenant
-			</label>
-			</div>
-			
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio" ><span><input type="radio"  name="visible" value="2" id="v2" ></span></div>Role Wise
-			</label>
-			</div>
-			<div id="show_2" style="display:none; margin-left:5%;">
-			<div class="controls">
-			<?php
-			foreach ($role_result as $collection) 
-			{
-			$role_id=$collection["role"]["role_id"];
-			$role_name=$collection["role"]["role_name"];
-			?>
-			<label class="checkbox">
-			<div class="checker"><span><input type="checkbox"  value="<?php echo $role_id; ?>" name="role<?php echo $role_id; ?>" class="v2 requirecheck1 ignore" id="requirecheck1"></span></div> <?php echo $role_name; ?>
-			</label>
-			<?php } ?>
-			</div>
-			<label report="role_check" class="remove_report"></label>
-
-			</div>
-
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio" name="visible" value="3" id="v3" ></span></div>Wing Wise
-			</label> 
-			</div>
-			<div id="show_3" style="display:none; margin-left:5%;">
-			<div class="controls">
-			<?php
-			foreach ($wing_result as $collection) 
-			{
-			$wing_id=$collection["wing"]["wing_id"];
-			$wing_name=$collection["wing"]["wing_name"];
-			?>
-			<div style="float:left; padding-left:15px;">
-			<label class="checkbox" >
-			<div class="checker"><span><input type="checkbox"  value="<?php echo $wing_id; ?>" name="wing<?php echo $wing_id; ?>" class="v3 requirecheck2 ignore" id="requirecheck2" ></span></div> <?php echo $wing_name; ?>
-			</label>
-			</div>
-			<?php } ?>
-			</div><br/>
-			<p><label report="wing_check" class="remove_report"></label></p>
-			</div>
-			<!---------------end visible-------------------------------->
+<label report="wing_check" class="remove_report"></label>			
+<!---------------end visible-------------------------------->
 </div>
 <!--------------------------->
 <!-------------------------->
@@ -490,12 +431,12 @@ $('form#contact-form').submit( function(ev){
 	
 	if(Invitations==3)
 	{
-		var visible=$('input:radio[name=visible]:checked').val();
+		var visible=$('input:radio[name=send_to]:checked').val();
 		m_data.append( 'visible',visible );
 	
-		if(visible==2){
+		if(visible=="role_wise"){
 			var allVals = [];
-			$('.v2:checked').each(function() {
+			$('.requirecheck1:checked').each(function() {
 			allVals.push($(this).val());
 			});
 			
@@ -506,9 +447,9 @@ $('form#contact-form').submit( function(ev){
 			}
 			
 		}
-		if(visible==3){
+		if(visible=="wing_wise"){
 			var allVals = [];
-			$('.v3:checked').each(function() {
+			$('.requirecheck2:checked').each(function() {
 			allVals.push($(this).val());
 			});
 			if(allVals.length==0){
@@ -518,7 +459,7 @@ $('form#contact-form').submit( function(ev){
 			}
 			
 		}
-		if(visible==1 || visible==4 || visible==5){
+		if(visible=="all_users"){
 			m_data.append( 'sub_visible', 0);
 		}
 		
@@ -531,9 +472,9 @@ $('form#contact-form').submit( function(ev){
 			processData: false,
 			contentType: false,
 			type: 'POST',
-			dataType:'json',
+			//dataType:'json',
 			}).done(function(response) { 
-			
+			 alert(response);
 			$("#output").html(response);
 				if(response.type=='created'){
 					$(".portal").remove();

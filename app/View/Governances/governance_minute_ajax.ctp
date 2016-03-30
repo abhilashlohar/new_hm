@@ -16,18 +16,16 @@ $user=$data['governance_invite']['user'];
 <select data-placeholder="Select attendees user"  name="multi" id="multi" class="chosen span9" multiple="multiple" tabindex="6">
 <?php
 foreach ($user as $collection){
-$result_user=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($collection)));
-$user_id=$result_user[0]["user"]["user_id"];
-$user_name=$result_user[0]["user"]["user_name"];
-$email=$result_user[0]["user"]["email"];
-$wing=$result_user[0]["user"]["wing"];
-$flat=$result_user[0]["user"]["flat"];
+$result_user=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($collection)));
 
-
-$flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
+$user_name=$result_user["user_name"];
+$wing_flat=$result_user["wing_flat"];
+	foreach($wing_flat as $flat){
+			
+	}
 
 ?>
-<option value="<?php echo $user_id; ?>" selected><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $flat; ?></option>
+<option value="<?php echo $collection; ?>" selected><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $flat; ?></option>
 <?php } ?>           
 		  
 	 </select>

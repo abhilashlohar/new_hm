@@ -1032,10 +1032,10 @@ function governance_invite_submit_draft(){
  $this->layout=null;	
  $post_data=$this->request->data;
 
- $s_society_id=$this->Session->read('society_id');
- $s_user_id=$this->Session->read('user_id');
+ $s_society_id=$this->Session->read('hm_society_id');
+ $s_user_id=$this->Session->read('hm_user_id');
  $current_date=date("d-m-Y");
- $ip=$this->hms_email_ip();
+ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
  $id=(int)$post_data['id'];
  $type_mettings=$post_data['type_mettings'];
  $date=$post_data['date'];
@@ -1119,60 +1119,154 @@ function governance_invite_submit_draft(){
 			foreach($invite_user as $data){
 				$result_user=$this->profile_picture($data);
 				$to=$result_user[0]['user']['email'];
-				@$message_web="<div>
-						<img src='$ip".$this->webroot."/as/hm/hm-logo.png'/><span  style='float:right; margin:2.2%;'>
-						<span class='test' style='margin-left:5px;'><a href='https://www.facebook.com/HousingMatters.co.in' target='_blank' ><img src='$ip".$this->webroot."/as/hm/fb.png'/></a></span>
-						<a href='#' target='_blank'><img src='$ip".$this->webroot."/as/hm/tw.png'/></a><a href'#'><img src='$ip".$this->webroot."/as/hm/ln.png'/ class='test' style='margin-left:5px;'></a></span>
-						<br/><br/>
-						<p><center><b>[$society_name]</b></center></p>
-						<p><b>Meeting Type:</b> [ $moc Meeting ] </p>
-						<p><b>Meeting Title:</b>  $subject  </p>
-						<p><b>Date of Notice:</b>  $current_date  </p>
-						<table  cellpadding='10' width='100%;' border='1' bordercolor='#e1e1e1'  >
-						<tr class='tr_heading' style='background-color:#00A0E3;color:white;'>
-						<td width='10%'>Meeting ID</td>
-						<td width='20%'>Date of Meeting</td>
-						<td width='10%'>Time</td>
-						<td width='60%'>Location</td>
-						</tr>
-						<tr class='tr_content' style=background-color:#E9E9E9;'>
-						<td>$id</td>
-						<td>$date</td>
-						<td>$time</td>
-						<td>$location</td>
+					
+	$message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tbody>
+			<tr>
+                <td>
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                        <tbody>
 						
-						</tr>
-						</table>
-						<div>
-						<p><b>Covering Note:</b><br/>
-						<p>$covering_note</p>
-						<p> <b>	Agenda to be discussed: </b></p>
-						<table  cellpadding='10' width='100%;' border='1' bordercolor='#e1e1e1'  >
-						<tr class='tr_heading' style='background-color:#00A0E3;color:white;'>
-						<td>Time</td>
-						<td>Meeting Agenda</td>
+								<tr>
+									<td colspan="2">
+										<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+										<tbody>
+										<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+										<tr>
+										<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
+										<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+										<td width="100%"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px"><span style="color:#00a0e3">Housing</span><span style="color:#777776">Matters</span></a></td>
+										<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
+											
+										</td>
+										</tr>
+										<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+										</tbody>
+										</table>
+									</td>
+								</tr>
+								
+									
+								
+						</tbody>
+					</table>
+					
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                        <tbody>
 						
-						</tr>";
-						$jj=0;
-						foreach($message as $ddd)
-						{	$jj++;
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										<span style="color:rgb(100,100,99)" align="justify"><p><center><b>'.$society_name.'</b></center></p> </span> 
+										</td>
+																
+								</tr>
+								
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										<span style="color:rgb(100,100,99)" align="justify"><b>Meeting Type:</b> [ '.$moc .' Meeting ]  </span> 
+										</td>
+																
+								</tr>
+								
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										<span style="color:rgb(100,100,99)" align="justify"><b>Meeting Title:</b> '.$subject .' </span> 
+										</td>
+																
+								</tr>
+								
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										<span style="color:rgb(100,100,99)" align="justify"><b>Date of Notice:</b> '.$current_date.'  </span> 
+										</td>
+																
+								</tr>
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										 
+												<table  cellpadding="10" width="100%;" border="1" bordercolor="#e1e1e1"  >
+												<tr class="tr_heading" style="background-color:#00A0E3;color:white;">
+												<td width="10%">Meeting ID</td>
+												<td width="20%">Date of Meeting</td>
+												<td width="10%">Time</td>
+												<td width="60%">Location</td>
+												</tr>
+												<tr class="tr_content" style="background-color:#E9E9E9;">
+												<td>'.$id.'</td>
+												<td>'.$date.'</td>
+												<td>'.$time.'</td>
+												<td>'.$location.'</td>
 
-						$message_web.="<tr>
-						<td width='10%'>".urldecode($ddd[2])."</td>
-						<td>".$jj.". ".urldecode($ddd[0]). " <br/> ".urldecode($ddd[1])."</td>
-						</tr>";	
-						}
-						$message_web.="</table><br/>
-						<p><b>Any Other Note:</b><br/>
-						<p>$any_other_note</p>
-						</div>
-						<br/>
-						For [ $society_name ].<br/>
-						$user_name<br/>
-						$file_att <br/>
-						</div>";
+												</tr>
+												</table>
+										
+										</td>
+																
+								</tr>
+								
+								
+								
+								
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+												<p><b>Covering Note:</b><br/>
+												<p>'.$covering_note.'</p>
+										</td>
+																
+								</tr>
+								
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+												<p> <b>	Agenda to be discussed: </b></p><br/>
+														<table  cellpadding="10" width="100%;" border="1" bordercolor="#e1e1e1"  >
+														<tr style="background-color:#00A0E3;color:white;">
+														<td>Time</td>
+														<td>Meeting Agenda</td>
+
+														</tr>';
+														 $jj=0;
+														foreach($message as $ddd)
+														{	$jj++;
+
+														$message_web.='<tr>
+														<td width="10%">'.urldecode($ddd[2]).'</td>
+														<td>'.$jj.'. '.urldecode($ddd[0]). ' <br/> '.urldecode($ddd[1]).'</td>
+														</tr>';	
+														 } 
+														 $message_web.='</table><br/>
+										</td>
+																
+								</tr>
+								
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+												<p><b>Any other Note:</b><br/>
+												<p>'.$any_other_note.'</p>	
+										</td>
+																
+								</tr>
+								
+								
+								<tr>
+									<td style="padding:5px;" width="100%" align="left">
+											<span > 
+													For  '.$society_name.' .<br/>
+													'.$user_name.'<br/>
+													
+											</span>
+									</td>
+																
+								</tr>
+					
+					</table>
+					
+				</td>
+			</tr>
+
+        </tbody>
+</table>';
 						
-					@$title.= '['. $society_name . ']  - '.'Notice of '.$moc.' Meeting scheduled'.'  on   '.''.$date.'';	
+			 @$title.= '['. $society_name . ']  - '.'Notice of '.$moc.' Meeting scheduled'.'  on   '.''.$date.'';	
 					$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,'donotreply@housingmatters.in');
 					$title="";
 }
@@ -1181,7 +1275,7 @@ function governance_invite_submit_draft(){
 		
 		
 		
-		$this->send_notification('<span class="label label-info" ><i class="icon-bullhorn"></i></span>','New Meeting Invitation published - <b>'.$subject.'</b> by',40,$id,$this->webroot.'Governances/governance_invite_view/',$s_user_id,$invite_user);
+		//$this->send_notification('<span class="label label-info" ><i class="icon-bullhorn"></i></span>','New Meeting Invitation published - <b>'.$subject.'</b> by',40,$id,$this->webroot.'Governances/governance_invite_view/',$s_user_id,$invite_user);
 		$output = json_encode(array('type'=>'created', 'text' =>'Invitation successfully submitted'));
 		die($output);		
 }
@@ -1239,26 +1333,17 @@ function governance_minutes()
 	}
 	$this->ath();
 	$this->check_user_privilages();
-	$s_society_id=$this->Session->read('society_id');
+	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('user');
-	$conditions1=array("society_id"=>$s_society_id,'deactive'=>0);
+	$conditions1=array("society_id"=>$s_society_id,'active'=>'yes');
 	$this->set('result_users',$this->user->find('all',array('conditions'=>$conditions1))); 
 	
 
 	$this->loadmodel('user');
-	$conditions1=array("society_id"=>$s_society_id,'user.email'=> array('$ne' => ""));
+	$conditions1=array("society_id"=>$s_society_id,'user.email'=> array('$ne' => ""),'active'=>'yes');
 	$this->set('result_users_new',$this->user->find('all',array('conditions'=>$conditions1))); 
 	
 	
-	$this->loadmodel('role');
-	$conditions=array("society_id" => $s_society_id);
-	$role_result=$this->role->find('all',array('conditions'=>$conditions));
-	$this->set('role_result',$role_result);
-	$this->loadmodel('wing');
-	$conditions=array("society_id" => $s_society_id);
-	$wing_result=$this->wing->find('all',array('conditions'=>$conditions));
-	$this->set('wing_result',$wing_result);
-
 	$this->loadmodel('group');
 	$conditions=array("society_id"=>$s_society_id,'group_show_id'=>0,'delete_id'=>0);
 	$result_group=$this->group->find('all',array('conditions'=>$conditions)); 
@@ -1690,10 +1775,11 @@ function governance_minute_submit()
 	$this->layout=null;
 	$post_data=$this->request->data;
 	$this->ath();
-	$s_society_id=$this->Session->read('society_id');
+	$s_society_id=$this->Session->read('hm_society_id');
 	$s_role_id=$this->Session->read('role_id'); 
-	$s_user_id=$this->Session->read('user_id');
-	$ip=$this->hms_email_ip();	
+	$s_user_id=$this->Session->read('hm_user_id');
+	pr($post_data); 
+	$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 	$present_user1=$post_data['present_user'];
 	$meeting_id=(int)$post_data['meeting_id'];
 	$any_other=$post_data['any_other'];
@@ -1763,16 +1849,16 @@ function governance_minute_submit()
 			if($Invitations_type==3){
 					$visible=(int)$post_data['visible'];
 					$sub_visible=$post_data['sub_visible'];
-					$sub_visible=explode(",",$sub_visible);
+					
 
 			//////////////////// validation //////////////
 
-			if($visible==2){
+			if($visible=="role_wise"){
 			if($post_data['sub_visible']==0){
-				$report[]=array('label'=>'role_check', 'text' => 'Please select at-least one');
+				$report[]=array('label'=>'wing_check', 'text' => 'Please select at-least one');
 				}
 			}
-			if($visible==3){
+			if($visible=="wing_wise"){
 			if($post_data['sub_visible']==0){
 					$report[]=array('label'=>'wing_check', 'text' => 'Please select at-least one');
 			  }
@@ -1782,14 +1868,28 @@ function governance_minute_submit()
 			die($output);
 			}
 
-			///////////////  end /////////////////////////
+			/////////////// end /////////////////////////
 
+				if($visible=="all_users"){
+				$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,null)));
+				$sub_visible=null;
+				}
+				if($visible=="role_wise"){
+
+				$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
+
+				}elseif($visible=="wing_wise"){
+
+				$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
+
+				}
+				
 					
-					
-					$recieve_info=$this->visible_subvisible($visible,$sub_visible);
-					foreach($recieve_info[2] as $data){
+					foreach($receivers as $data=>$key){
 					$user_minute[]=(int)$data;
 					}
+					
+					
 			}
 		if(sizeof($report)>0){
 			$output=json_encode(array('report_type'=>'error','report'=>$report));
@@ -1842,7 +1942,7 @@ function governance_minute_submit()
 				//$user=array_values($user);
 				
 				
-							
+				$sub_visible=explode(",",$sub_visible);			
 				
 				$date=date("d-m-y");
 				$minut_id=$this->autoincrement('governance_minute','governance_minute_id');

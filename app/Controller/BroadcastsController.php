@@ -448,7 +448,7 @@ $this->send_email($email,'support@housingmatters.in','HousingMatters',$subject,$
 $email_id=$this->autoincrement('email_communication','email_id');
 $this->loadmodel('email_communication');
 $multipleRowData=Array( Array("email_id"=>$email_id,"message_web"=>$message_web,"user_id"=>$user_id_array,"date"=>$date,"time"=>$time,"society_id"=>$s_society_id,"subject"=>$subject,"type"=>1,"file"=>$file,"deleted"=>0));
-$this->email_communication->saveAll($multipleRowData); */
+$this->email_communication->saveAll($multipleRowData); 
 } 
 ?>
 <!----alert-------------->

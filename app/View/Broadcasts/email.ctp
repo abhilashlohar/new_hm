@@ -15,144 +15,69 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <form method="post" id="contact-form" name="myform" enctype="multipart/form-data" >
 
 <div class="controls">
- <label class="radio">
- <div class="radio" id="uniform-undefined"><input type="radio"  id="r1" checked name="radio" value="1" style="opacity: 0;"></div>
- <span style="font-size:16px;" >Send Email to Individual</span>
- </label>
- <label class="radio">
- <div class="radio" id="uniform-undefined"><input type="radio"  id="r3"  name="radio" value="3" style="opacity: 0;"></div>
- <span style="font-size:16px;" >Send Email to Default Groups</span>
- </label>
- <label class="radio">
- <div class="radio" id="uniform-undefined"><input type="radio" id="r2" name="radio" value="2"  style="opacity: 0;"></div>
- <span style="font-size:16px;" >Send Email to Custom Groups</span>
- </label>  
+	<label class="radio">
+		<div class="radio" id="uniform-undefined"><input type="radio"  id="r1" checked name="radio" value="1" style="opacity: 0;"></div>
+		<span style="font-size:16px;" >Send Email to Individual</span>
+	</label>
+	<label class="radio">
+		<div class="radio" id="uniform-undefined"><input type="radio"  id="r3"  name="radio" value="3" style="opacity: 0;"></div>
+		<span style="font-size:16px;" >Send Email to Default Groups</span>
+	</label>
 </div>
-<label style="font-size:14px; font-weight:bold;">To <i class=" icon-info-sign tooltips" data-placement="right" data-original-title="email will be sent to only those users whose valid emails are registered with HousingMatters"> </i></label>
+
+<label style="font-size:14px; font-weight:bold;">To <i class="icon-info-sign tooltips" data-placement="right" data-original-title="email will be sent to only those users whose valid emails are registered with HousingMatters"> </i></label>
 
 <!------------------------->
 <div class="control-group" id="d1" >
-  <div class="controls">
+<div class="controls">
    
-	 <select data-placeholder="Type or select name"  name="multi[]" id="multi" class="chosen span9" multiple="multiple" tabindex="6">
-<?php
-foreach ($result_users as $collection) 
-{
-$user_id=$collection["user"]["user_id"];
-$user_name=$collection["user"]["user_name"];
-$email=$collection["user"]["email"];
-$wing=$collection["user"]["wing"];
-$flat=$collection["user"]["flat"];
-
-
-$flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
-
-?>
-<option value="<?php echo $user_id; ?>,<?php echo $email; ?>"><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $flat; ?>,<?php echo $email; ?></option>
-<?php } ?>           
-		  
-	 </select>
-	 <label id="multi"></label>
-  </div>
+	<select data-placeholder="Type or select name"  name="multi[]" id="multi" class="chosen span9" multiple="multiple" tabindex="6">
+		<?php foreach ($result_users as $collection){
+		$user_id=$collection["user"]["user_id"];
+		$user_name=$collection["user"]["user_name"];
+		$email=$collection["user"]["email"];
+			$result_user_flat=$this->requestAction(array('controller'=>'Fns','action'=>'user_flat_info_via_user_id'),array('pass'=>array((int)$user_id)));
+			foreach($result_user_flat as $data){
+			@$wing=(int)@$data["user_flat"]["wing"];
+			@$flat=(int)@$data["user_flat"]["flat"];	
+			}		
+			@$wing_flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'),array('pass'=> array(@$wing,@$flat)));
+		?>
+		<option value="<?php echo $user_id; ?>,<?php echo $email; ?>"><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $wing_flat; ?>,<?php echo $email; ?></option>
+		<?php } ?>           
+	</select>
+	<label id="multi"></label>
 </div>
-<!------------------------->
+</div>
 
-<!-------------------------->
-
+<!--
 <div style="display:none; padding:5px;" id="d2" >
-<?php
-foreach ($result_group as $collection) 
-{
-$group_name=$collection["group"]["group_name"];
-$group_id=$collection["group"]["group_id"];
-?>
-<label class="checkbox">
-<input type="checkbox" class="requirecheck3 ignore" id="requirecheck1234" name="grp<?php echo $group_id; ?>" value="<?php echo $group_id; ?>"> <?php echo $group_name; ?>
-</label>
-<?php } ?> 
-<label id="requirecheck1234"></label>
-</div>
-<!--------------------------->
+	<?php
+	//foreach ($result_group as $collection){
+	//$group_name=$collection["group"]["group_name"];
+	//$group_id=$collection["group"]["group_id"];
+	?>
+	<label class="checkbox">
+	<input type="checkbox" class="requirecheck3 ignore" id="requirecheck1234" name="grp<?php //echo $group_id; ?>" value="<?php //echo $group_id; ?>"> <?php //echo $group_name; ?>
+	</label>
+	<?php //} ?> 
+	<label id="requirecheck1234"></label>
+</div>-->
 
-<!-------------------------->
 
 <div style="display:none; padding:5px;" id="d3" >
-<!---------------start visible-------------------------------->
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio" checked name="visible" value="1" id="v1"></span></div>All Users
-			</label>
-			</div>
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio"  name="visible" value="4" id="v1"></span></div>All Owners  
-			</label>
-			</div>
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio"  name="visible" value="5" id="v1"></span></div>All Tenant
-			</label>
-			</div>
-			
-			
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio" ><span><input type="radio"  name="visible" value="2" id="v2" ></span></div>Role Wise
-			</label>
-			</div>
-			<div id="show_2" style="display:none; margin-left:5%;">
-			<div class="controls">
-			<?php
-			foreach ($role_result as $collection) 
-			{
-			$role_id=$collection["role"]["role_id"];
-			$role_name=$collection["role"]["role_name"];
-			?>
-			<label class="checkbox">
-			<div class="checker"><span><input type="checkbox"  value="<?php echo $role_id; ?>" name="role<?php echo $role_id; ?>" class="v2 requirecheck1 ignore" id="requirecheck1"></span></div> <?php echo $role_name; ?>
-			</label>
-			<?php } ?>
-			</div>
-			<label  id="requirecheck1"></label>
-			</div>
-
-			<div class="controls">
-			<label class="radio line">
-			<div class="radio"><span><input type="radio" name="visible" value="3" id="v3" ></span></div>Wing Wise
-			</label> 
-			</div>
-			<div id="show_3" style="display:none; margin-left:5%;">
-			<div class="controls">
-			<?php
-			foreach ($wing_result as $collection) 
-			{
-			$wing_id=$collection["wing"]["wing_id"];
-			$wing_name=$collection["wing"]["wing_name"];
-			?>
-			<div style="float:left; padding-left:15px;">
-			<label class="checkbox" >
-			<div class="checker"><span><input type="checkbox"  value="<?php echo $wing_id; ?>" name="wing<?php echo $wing_id; ?>" class="v3 requirecheck2 ignore" id="requirecheck2" ></span></div> <?php echo $wing_name; ?>
-			</label>
-			</div>
-			<?php } ?>
-			</div><br/>
-			<label id="requirecheck2"></label>
-			</div>
-			<!---------------end visible-------------------------------->
+<?php
+	$this->requestAction(array('controller'=>'Fns','action'=>'sending_options'));
+	?>	
 </div>
-<!--------------------------->
-<!-------------------------->
-<label style="font-size:14px; font-weight:bold;">Subject</label>
-<div class="controls">
- <input type="text" name="subject" id="subject" class="span9 m-wrap">
- <label id="subject"></label>
-</div>
-<!-------------------------->
 
-<!-------------------------->
+
+	<label style="font-size:14px; font-weight:bold;">Subject</label>
+	<div class="controls">
+	<input type="text" name="subject" id="subject" class="span9 m-wrap">
+	<label id="subject"></label>
+	</div>
+
 <label style="font-size:14px; font-weight:bold;">Email</label>
 <div class="control-group">
   <div class="controls">
@@ -160,7 +85,6 @@ $group_id=$collection["group"]["group_id"];
   </div>
 </div>
 <label id="email"></label>
-<!-------------------------->
 <a href="#myModal3" role="button" class="btn blue pull-right" data-toggle="modal" style="">  Templates</a>
 
 
@@ -301,7 +225,6 @@ Note: File size must be less than 2 MB and only jpg,png extension are allowed.
 			<?php } ?>
 			</div>
 		</div>
-		<!---------content---------------------->								
 		</div>
 
 

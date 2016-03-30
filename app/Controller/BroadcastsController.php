@@ -136,7 +136,7 @@ if($radio==3)
 $visible=$this->request->data['send_to'];
 
 	if($visible=='all_users'){
-	 $sub_visible="";
+	 $sub_visible=0;
 	}
 	if($visible=='role_wise'){
 	$sub_visible=$this->request->data['roles'];	
@@ -148,29 +148,32 @@ $visible=$this->request->data['send_to'];
 	}
 
 
-/*
-$da_to[]=$sender_email;
-$da_user_id=array_unique($da_user_id);	
-$da_to=array_unique($da_to);	
-$da_to=array_filter($da_to);
-$mobile_im=implode(',',$da_to);
+$recieve_info=$this->requestAction(array('controller'=>'Fns','action'=>'sending_option_results'), array('pass'=>array($visible,$sub_visible)));
+	
+$mobile_array=array();	
+$user_id_array=array();
+foreach($recieve_info as $user_id=>$data){
+$mobile_array[]=@$data[$user_id]['mobile'];	
+$user_id_array[]=$user_id;
+}
+$user_id_array=array_unique($user_id_array);	
+$mobile_array=array_unique($mobile_array);	
+$mobile_array_implode = implode(',',$mobile_array);
 
-	$r_sms=$this->hms_sms_ip();
+
+
+	$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip'));
 	$working_key=$r_sms->working_key;
 	$sms_sender=$r_sms->sms_sender; 
 	$sms_allow=(int)$r_sms->sms_allow;
 	if($sms_allow==1){
-	$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m);
+	$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_array_implode.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m);
 	}
 $sms_id=$this->autoincrement('sms','sms_id');
 $this->loadmodel('sms');
-$multipleRowData = Array( Array("sms_id" => $sms_id,"text"=>$massage,"user_id"=>$da_user_id,"date"=>$date,"time"=>$time,"type"=>1,"society_id"=>$s_society_id,"deleted"=>0));	
-
-
+$multipleRowData = Array( Array("sms_id" => $sms_id,"text"=>$massage,"user_id"=>$user_id_array,"date"=>$date,"time"=>$time,"type"=>1,"society_id"=>$s_society_id,"deleted"=>0));	
 $this->sms->saveAll($multipleRowData);
-*/
 }
-exit;
 ?>
 <!----alert-------------->
 <div class="modal-backdrop fade in"></div>

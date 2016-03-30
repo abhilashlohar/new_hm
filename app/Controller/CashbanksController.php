@@ -1936,8 +1936,8 @@ $this->ath();
 $this->check_user_privilages();	
 	
 $s_role_id=$this->Session->read('role_id');
-$s_society_id = $this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 $this->set('s_role_id',$s_role_id);
 
@@ -1974,134 +1974,17 @@ $this->set('datef1',@$datef1);
 $this->set('datet1',@$datet1);
 $this->set('count',$count);
 
-
-$this->loadmodel('cash_bank');
-$conditions=array("society_id" => $s_society_id,"module_id"=>4);
-$order=array('cash_bank.receipt_id'=> 'DESC');
-$cursor=$this->cash_bank->find('all',array('conditions'=>$conditions,'order' =>$order,'limit'=>1));
-foreach ($cursor as $collection) 
-{
-$last=$collection['cash_bank']['receipt_id'];
-}
-if(empty($last))
-{
-$zz=0;
-}	
-else
-{	
-$zz=$last;
-}
-$this->set('zz',$zz);
-
-
-
-$this->loadmodel('master_tds');
-$cursor1=$this->master_tds->find('all');
+$this->loadmodel('ledger_sub_account');
+$conditions=array("ledger_id"=>15,"society_id"=>$s_society_id);
+$cursor1=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
 
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
-if(isset($this->request->data['ptp_add']))
-{
-
-$date = $this->request->data['date'];
-$date = date("Y-m-d", strtotime($date));
-//$date = new MongoDate(strtotime($date));
-$user_id = (int)$this->request->data['user_id'];
-$narration = $this->request->data['narration']; 
-$account_head = (int)$this->request->data['account_head'];
-$amount = $this->request->data['ammount'];
-$current_date = date("d-m-Y");
-//$tds_id = (int)$this->request->data['tds_pp'];
-$account_type = (int)$this->request->data['type'];
-
-$current_date = date("Y-m-d", strtotime($current_date));
-$current_date = new MongoDate(strtotime($current_date));
+$this->loadmodel('accounts_group');
+$conditions=array("accounts_id"=>4);
+$cursor2=$this->accounts_group->find('all',array('conditions'=>$conditions));
+$this->set('cursor2',$cursor2);
 
 
-
-$this->loadmodel('new_cash_bank');
-$conditions=array("society_id" => $s_society_id,"receipt_source"=>4);
-$order=array('new_cash_bank.transaction_id'=> 'DESC');
-$cursor=$this->new_cash_bank->find('all',array('conditions'=>$conditions,'order' =>$order,'limit'=>1));
-foreach ($cursor as $collection) 
-{
-$last11 = $collection['new_cash_bank']['transaction_id'];
-$last12 = $collection['new_cash_bank']['receipt_id'];
-}
-if(empty($last11))
-{
-$auto=0;
-$i = 1000;
-}	
-else
-{	
-$auto=$last11;
-$i = $last12;
-}
-$auto++; 
-$i++;
-$this->loadmodel('new_cash_bank');
-$multipleRowData = Array( Array("transaction_id" => $auto, "receipt_id" => $i,  "user_id" => $user_id, 
-"current_date" => $current_date, "account_type" => $account_type,"transaction_date" => strtotime($date), "prepaired_by" => $s_user_id,"narration" => $narration, "account_head" => $account_head,  "amount" => $amount,"society_id" => $s_society_id,"receipt_source"=>4));
-$this->new_cash_bank->saveAll($multipleRowData);  
-
-/* $this->loadmodel('master_tds');
-$conditions=array("auto_id" => $tds_id);
-$cursor2=$this->master_tds->find('all',array('conditions'=>$conditions));
-foreach($cursor2 as $collection)
-{
-$tds_rate = (int)$collection['master_tds']['charge'];
-}
-$tds_amount = (int)(round(($tds_rate/100)*$amount));
-$total_tds_amount = (int)($amount - $tds_amount);
-*/
-if($account_type == 1)
-{
-$l=$this->autoincrement('ledger','auto_id');
-$this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($date), "debit" => $amount, "credit" =>null,"ledger_account_id" => 15, "ledger_sub_account_id" =>$user_id, "table_name" =>"new_cash_bank","element_id" => $auto, "society_id" => $s_society_id));
-$this->ledger->saveAll($multipleRowData);
-}
-else
-{
-$l=$this->autoincrement('ledger','auto_id');
-$this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($date), "debit" => $amount, "credit" =>null,"ledger_account_id" =>$user_id, "ledger_sub_account_id" =>null,"table_name" =>"new_cash_bank","element_id" => $auto, "society_id" => $s_society_id));
-$this->ledger->saveAll($multipleRowData);
-}
-
-$sub_account_id_a =  (int)$account_head;
-
-$l=$this->autoincrement('ledger','auto_id');
-$this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($date), "debit" => null, "credit" =>$amount,"ledger_account_id" =>$sub_account_id_a,"ledger_sub_account_id" =>null,"table_name" =>"new_cash_bank","element_id" => $auto, "society_id" => $s_society_id));
-$this->ledger->saveAll($multipleRowData);
-
-
-$this->loadmodel('new_cash_bank');
-$conditions=array("society_id" => $s_society_id,"receipt_source"=>4);
-$order=array('new_cash_bank.receipt_id'=> 'ASC');
-$cursor3=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
-foreach($cursor3 as $collection)
-{
-$d_receipt_id = (int)$collection['new_cash_bank']['receipt_id'];		
-}
-?>
-
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body">
-
-<p style="font-size:15px; font-weight:600;">Petty Cash Voucher <?php echo $d_receipt_id; ?> is  generated successfully</p>
-</div>
-<div class="modal-footer">
-<a href="petty_cash_payment_view" class="btn green">OK</a>
-</div>
-</div>
-
-<?php
-}
 }
 //End Petty cash Payment (Accounts)//
 //Start Petty cash Payment View (Accounts)//

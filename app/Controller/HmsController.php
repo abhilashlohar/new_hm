@@ -25704,27 +25704,25 @@ die($output);
 
 
 }
-///////////////////////////////// End Check Email Already Exist ////////////////////////////////////////////// 
-
-/////////////////////Start Function expense Tracker Add Fetch2 (Accounts)//////////////
+//End Check Email Already Exist// 
+//Start Function expense Tracker Add Fetch2 (Accounts)//
 function expense_tracker_fetch2($auto_id) 
 {
 $this->loadmodel('ledger_account');
-$conditions=array("group_id" => $auto_id);
+$conditions =array('$or'=>array(array("group_id"=>$auto_id,'society_id' =>$s_society_id),array("society_id" => 0,"group_id"=>$auto_id)));
 return $this->ledger_account->find('all',array('conditions'=>$conditions));
 }
-////////////////End Function Fetch expense Tracker Add Fetch2 (Accounts)//////////////
-
-///////////////////////////////////////// Start Expense Tracker View History Expense Head (Accounts) /////////
+//End Function Fetch expense Tracker Add Fetch2 (Accounts)//
+//Start Expense Tracker View History Expense Head (Accounts)//
 function expense_tracker_fetch($auto_id)
 {
 $this->loadmodel('expense_tracker');
 $conditions=array("auto_id" => $auto_id);
 return $this->expense_tracker->find('all',array('conditions'=>$conditions));
 }
-///////////////////////// End Expense Tracker View History Expense Head Fetch (Accounts) //////////////////////////////
+//End Expense Tracker View History Expense Head Fetch (Accounts)//
 
-////////////////////////////// Start Flat type Validation //////////////////////////////////////////////////////////
+//Start Flat type Validation//
 function flat_type_validation()
 {
 	$this->layout='blank';

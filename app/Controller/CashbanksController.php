@@ -1926,53 +1926,37 @@ $this->set('cursor2',$cursor2);
 //Start Petty Cash Payment (Accounts)//
 function petty_cash_payment()
 {
-if($this->RequestHandler->isAjax()){
-$this->layout='blank';
-}else{
-$this->layout='session';
-}
-	
-$this->ath();
-$this->check_user_privilages();	
-	
-$s_role_id=$this->Session->read('role_id');
-$s_society_id=$this->Session->read('hm_society_id');
-$s_user_id=$this->Session->read('hm_user_id');
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	$this->ath();
+	$this->check_user_privilages();	
+	$s_role_id=$this->Session->read('role_id');
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$this->set('s_role_id',$s_role_id);
 
-$this->set('s_role_id',$s_role_id);
-
-$this->loadmodel('user');
-$conditions=array("society_id" => $s_society_id,"user_id" => $s_user_id);
-$cursor=$this->user->find('all',array('conditions'=>$conditions));
-foreach ($cursor as $collection) 
-{
-$tenant_c = (int)@$collection['user']['tenant'];
-}
-$this->set('tenant_c',@$tenant_c);
-
-$this->loadmodel('financial_year');
-$conditions=array("society_id" => $s_society_id, "status"=>1);
-$cursor=$this->financial_year->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
-$date_from = @$collection['financial_year']['from'];
-$date_to = @$collection['financial_year']['to'];
-
-$date_from1 = date('Y-m-d',$date_from->sec);
-$date_to1 = date('Y-m-d',$date_to->sec);
-
-$datef[] = $date_from1;
-$datet[] = $date_to1;
-}
-if(!empty($datef))
-{
-$datef1 = implode(',',$datef);
-$datet1 = implode(',',$datet);
-}
-$count = sizeof(@$datef);
-$this->set('datef1',@$datef1);
-$this->set('datet1',@$datet1);
-$this->set('count',$count);
+	$this->loadmodel('financial_year');
+	$conditions=array("society_id" => $s_society_id, "status"=>1);
+	$cursor=$this->financial_year->find('all',array('conditions'=>$conditions));
+	foreach($cursor as $collection){
+		$date_from = @$collection['financial_year']['from'];
+		$date_to = @$collection['financial_year']['to'];
+		$date_from1 = date('Y-m-d',$date_from->sec);
+		$date_to1 = date('Y-m-d',$date_to->sec);
+		$datef[] = $date_from1;
+		$datet[] = $date_to1;
+		}
+		if(!empty($datef)){
+		$datef1 = implode(',',$datef);
+		$datet1 = implode(',',$datet);
+		}
+	$count = sizeof(@$datef);
+	$this->set('datef1',@$datef1);
+	$this->set('datet1',@$datet1);
+	$this->set('count',$count);
 
 $this->loadmodel('ledger_sub_account');
 $conditions=array("ledger_id"=>15,"society_id"=>$s_society_id);
@@ -1983,6 +1967,12 @@ $this->loadmodel('accounts_group');
 $conditions=array("accounts_id"=>4);
 $cursor2=$this->accounts_group->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
+
+	if(isset($this->request->data['submit'])){
+	echo "sdgdsgsdgds";
+    exit;	
+	}
+
 
 
 }

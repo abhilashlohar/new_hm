@@ -3896,7 +3896,7 @@ $supplimentry_bill_type_for_view="Non-Residential";
 }
 }
 
-$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
+$ip=$this->requestAction(array('controller'=>'Fns','action'=>'hms_email_ip')); 
 
 
 $html='<div style="margin: 0px;">

@@ -236,29 +236,27 @@ function email()
 	}else{
 	$this->layout='session';
 	}
-$this->ath();
-$this->check_user_privilages();
+	$this->ath();
+	$this->check_user_privilages();
+	$s_user_id=$this->Session->read('hm_user_id'); 
+	$s_society_id=$this->Session->read('hm_society_id'); 
 
-$s_user_id=$this->Session->read('hm_user_id'); 
-$s_society_id=$this->Session->read('hm_society_id'); 
-
-
-$this->loadmodel('user');
-$conditions=array("society_id"=>$s_society_id,'user.email'=> array('$ne' => ""));
-$this->set('result_users',$this->user->find('all',array('conditions'=>$conditions))); 
-
-$this->loadmodel('group');
-$conditions=array("society_id"=>$s_society_id,"group_show_id"=>1);
-$result_group=$this->group->find('all',array('conditions'=>$conditions)); 
-$this->set('result_group',$result_group); 
-
-$this->loadmodel('role');
-$conditions=array("society_id" => $s_society_id);
-$role_result=$this->role->find('all',array('conditions'=>$conditions));
-$this->set('role_result',$role_result);
-$this->loadmodel('wing');
-$wing_result=$this->wing->find('all');
-$this->set('wing_result',$wing_result);
+	$this->loadmodel('user');
+	$conditions=array("society_id"=>$s_society_id,'user.email'=> array('$ne'=>""));
+	$this->set('result_users',$this->user->find('all',array('conditions'=>$conditions))); 
+	/*
+	$this->loadmodel('group');
+	$conditions=array("society_id"=>$s_society_id,"group_show_id"=>1);
+	$result_group=$this->group->find('all',array('conditions'=>$conditions)); 
+	$this->set('result_group',$result_group); */
+/*
+	$this->loadmodel('role');
+	$conditions=array("society_id" => $s_society_id);
+	$role_result=$this->role->find('all',array('conditions'=>$conditions));
+	$this->set('role_result',$role_result);
+	$this->loadmodel('wing');
+	$wing_result=$this->wing->find('all');
+	$this->set('wing_result',$wing_result);*/
 
 
 $this->loadmodel('template');
@@ -289,38 +287,39 @@ $this->loadmodel('template');
 $conditions=array("cat"=>7);
 $this->set('result_template7',$this->template->find('all',array('conditions'=>$conditions))); 
 
-if (isset($this->request->data['send'])) 
+if(isset($this->request->data['send'])) 
 {
-	$ip=$this->hms_email_ip();
- $radio=$this->request->data['radio'];
-$message_db=$this->request->data['email'];
-$file=$this->request->form['file']['name'];
+	$ip=$this->requestAction(array('controller'=>'Fns','action'=>'hms_email_ip'));
+	$radio=$this->request->data['radio'];
+	$message_db=$this->request->data['email'];
+	$file=$this->request->form['file']['name'];
 
+	$this->loadmodel('society');
+	$conditions12=array('society_id'=>$s_society_id);
+	$result12=$this->society->find('all',array('conditions'=>$conditions12));
+	foreach($result12 as $data){
+	$s_name=$data['society']['society_name'];
+	}
 
-$this->loadmodel('society');
-$conditions12=array('society_id'=>$s_society_id);
-$result12=$this->society->find('all',array('conditions'=>$conditions12));
-foreach($result12 as $data)
-{
-$s_name=$data['society']['society_name'];
-}
+	$result_user_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'),array('pass'=>array((int)$s_user_id)));
+	foreach ($result_user_info as $collection2) 
+	{
+	$name=$collection2["user"]["user_name"];
+	$sender_email=$collection2["user"]["email"];
 
-
-$result_user_info=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($s_user_id)));
-foreach ($result_user_info as $collection2) 
-{
-$name=$collection2["user"]["user_name"];
-$wing=$collection2["user"]["wing"];
-$flat=$collection2["user"]["flat"];
-$sender_email=$collection2["user"]["email"];
-
-}
-$wing_flat=$this->wing_flat($wing,$flat);
-$result_society_info= $this->society_name($s_society_id);
-foreach($result_society_info as $data_info)
-{
+	$result_user_flat=$this->requestAction(array('controller'=>'Fns','action'=>'user_flat_info_via_user_id'),array('pass'=>array((int)$s_user_id)));
+	foreach($result_user_flat as $data){
+		@$wing=(int)@$data["user_flat"]["wing"];
+		@$flat=(int)@$data["user_flat"]["flat"];
+	}
+	}
+	
+	@$wing_flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'),array('pass'=>array(@$wing,@$flat)));
+	
+	$result_society_info=$this->society_name((int)$s_society_id);
+	foreach($result_society_info as $data_info){
 	$society_name=$data_info['society']['society_name'];
-}
+	}
 
 $message_web='<div>
 <table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
@@ -389,7 +388,7 @@ $message_web.='<br/><table>
 </tr>
 </table>';
 $subject="[".$s_name."]-";
-$subject.=htmlentities($this->request->data['subject']);
+echo $subject.=htmlentities($this->request->data['subject']);
 
 $target = "email_file/";
 $target=@$target.basename( @$this->request->form['file']['name']);
@@ -399,60 +398,19 @@ move_uploaded_file(@$this->request->form['file']['tmp_name'],@$target);
 $date=date("d-m-y");
 $time=date('h:i:a',time());
 
-if($radio==1)
-{
-$multi=$this->request->data['multi'];
-$multi[]="$s_user_id,$sender_email";
-$multi=array_unique($multi);
-foreach($multi as $data)
-{
-$ex = explode(",", $data);
-$user[]=$ex[0];
-$to=$ex[1];
-//echo $email[$i];
-$this->send_email($to,'support@housingmatters.in','HousingMatters',$subject,$message_web,'donotreply@housingmatters.in');
-}
+if($radio==1){
+	$multi=$this->request->data['multi'];
+	$multi[]="$s_user_id,$sender_email";
+	$multi=array_unique($multi);
+		foreach($multi as $data){
+		$ex = explode(",", $data);
+		$user[]=$ex[0];
+		$to=$ex[1];
+		$this->send_email($to,'support@housingmatters.in','HousingMatters',$subject,$message_web,'donotreply@housingmatters.in');
+		}
 $email_id=$this->autoincrement('email_communication','email_id');
 $this->loadmodel('email_communication');
-$multipleRowData = Array( Array("email_id" => $email_id,"message_web"=>$message_web,"user_id"=>$user,"date"=>$date,"time"=>$time,"society_id"=>$s_society_id,"subject"=>$subject,"type"=>1,"file"=>$file,"deleted"=>0));
-$this->email_communication->saveAll($multipleRowData); 
-
-}
-
-if($radio==2)
-{
-$user_new = array(); 
-foreach ($result_group as $collection) 
-{
-$group_id=$collection["group"]["group_id"];
-
-$g_id=@$this->request->data['grp'.$group_id];
-if(!empty($g_id))
-{
-$groups_id[]=(int)$g_id;
-$users=$collection["group"]["users"];
-$user_new=array_merge($user_new,$users);
-}
-}
-$result_user_unique = array_unique($user_new);
-
-foreach ($result_user_unique as $data) 
-{
-$data=(int)$data;
-$result_user_info=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($data)));
-foreach ($result_user_info as $collection2) 
-{
-$to=$collection2["user"]["email"];
-$this->send_email($to,'support@housingmatters.in','HousingMatters',$subject,$message_web,'donotreply@housingmatters.in');
-}
-}
-
-
-
-
-$email_id=$this->autoincrement('email_communication','email_id');
-$this->loadmodel('email_communication');
-$multipleRowData = Array( Array("email_id" => $email_id,"message_web"=>$message_web,"user_id"=>$result_user_unique,"date"=>$date,"time"=>$time,"society_id"=>$s_society_id,"subject"=>$subject,"groups_id"=>$groups_id,"type"=>2,"file"=>$file,"deleted"=>0));
+$multipleRowData = Array( Array("email_id"=>$email_id,"message_web"=>$message_web,"user_id"=>$user,"date"=>$date,"time"=>$time,"society_id"=>$s_society_id,"subject"=>$subject,"type"=>1,"file"=>$file,"deleted"=>0));
 $this->email_communication->saveAll($multipleRowData); 
 }
 
@@ -591,9 +549,7 @@ $email_id=$this->autoincrement('email_communication','email_id');
 $this->loadmodel('email_communication');
 $multipleRowData = Array( Array("email_id" => $email_id,"message_web"=>$message_web,"user_id"=>$da_user_id,"date"=>$date,"time"=>$time,"society_id"=>$s_society_id,"subject"=>$subject,"type"=>1,"file"=>$file,"deleted"=>0));
 $this->email_communication->saveAll($multipleRowData); 
-
 }
-
 
 ?>
 <!----alert-------------->

@@ -234,7 +234,7 @@ Note: File size must be less than 2 MB and only jpg,png extension are allowed.
 </div>
 <script>
 
-
+/*
 $.validator.addMethod('requirecheck1', function (value, element) {
 	 return $('.requirecheck1:checked').size() > 0;
 }, 'Please check at least one role.');
@@ -334,7 +334,7 @@ messages: {
 	
 });
 
-}); 
+});  */
 </script>
 
 

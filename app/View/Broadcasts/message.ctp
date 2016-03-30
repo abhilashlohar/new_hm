@@ -291,27 +291,21 @@ $(document).ready(function(){
     $("#d1").show();
 	$("#d3").hide();
 	$(".chosen").removeClass("ignore");
-	$(".requirecheck2").addClass("ignore");
-	$(".requirecheck1").addClass("ignore");
-	$(".requirecheck3").addClass("ignore");
+	
   });
   $("#r2").click(function(){
     $("#d1").hide();
     $("#d2").show();
 	$("#d3").hide();
 	$(".chosen").addClass("ignore");
-	$(".requirecheck2").addClass("ignore");
-	$(".requirecheck1").addClass("ignore");
-	$(".requirecheck3").removeClass("ignore");
+	
   });
   $("#r3").click(function(){
     $("#d1").hide();
     $("#d3").show();
 	$("#d2").hide();
 	$(".chosen").addClass("ignore");
-	$(".requirecheck2").addClass("ignore");
-	$(".requirecheck1").addClass("ignore");
-	$(".requirecheck3").addClass("ignore");
+	
   });
 });
 </script>
@@ -323,16 +317,14 @@ $(document).ready(function() {
 		$("#show_3").slideDown('fast');
 		$("#show_2").slideUp('fast');
 		$("#show_1").slideUp('fast');
-		$(".requirecheck2").removeClass("ignore");
-		$(".requirecheck1").addClass("ignore");
+		
 	 });
 	 
 	 $("#v2").live('click',function(){
 		$("#show_2").slideDown('fast');
 		$("#show_3").slideUp('fast');
 		$("#show_1").slideUp('fast');
-		$(".requirecheck1").removeClass("ignore");
-		$(".requirecheck2").addClass("ignore");
+		
 	 });
 	 
 	 $("#v1").live('click',function(){
@@ -365,18 +357,14 @@ background-color:rgba(207, 202, 255, 0.32);
 
 <script>
 
-/*
+
 $.validator.addMethod('requirecheck1', function (value, element) {
 	 return $('.requirecheck1:checked').size() > 0;
-}, 'Please check at least one role.');
+}, 'Please select at least one role.');
 
 $.validator.addMethod('requirecheck2', function (value, element) {
 	 return $('.requirecheck2:checked').size() > 0;
-}, 'Please check at least one wing.');
-
-$.validator.addMethod('requirecheck3', function (value, element) {
-	 return $('.requirecheck3:checked').size() > 0;
-}, 'Please check at least one group.');
+}, 'Please select at least one wing.');
 
 $.validator.addMethod('filesize', function(value, element, param) {
     // param = size (en bytes) 
@@ -463,5 +451,5 @@ messages: {
 	
 });
 
-}); */
+}); 
 </script>

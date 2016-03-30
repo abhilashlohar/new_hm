@@ -440,7 +440,7 @@ $user_id_array[]=$user_id;
 
 $user_id_array=array_unique($user_id_array);	
 $email_array=array_unique($email_array);
-$email_array=array_filter($email_array);
+
 echo implode(',',$email_array);
 /*
 foreach($email_array as $email){

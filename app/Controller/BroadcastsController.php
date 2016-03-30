@@ -388,7 +388,7 @@ $message_web.='<br/><table>
 </tr>
 </table>';
 $subject="[".$s_name."]-";
-echo $subject.=htmlentities($this->request->data['subject']);
+$subject.=htmlentities($this->request->data['subject']);
 
 $target = "email_file/";
 $target=@$target.basename( @$this->request->form['file']['name']);
@@ -416,141 +416,40 @@ $this->email_communication->saveAll($multipleRowData);
 
 if($radio==3)
 {
-$visible=(int)$this->request->data['visible'];
-	if($visible==1)
-	{	
-	$visible=1;
-	$sub_visible[]=0;
-	/////////////////////////////////////////// All user ////////////////////////////
-	$this->loadmodel('user');
-	$conditions=array('society_id'=>$s_society_id,'deactive'=>0);
-	$result_user=$this->user->find('all',array('conditions'=>$conditions));
-	foreach($result_user as $data)
-	{
-	$da_to[]=$data['user']['email'];
-	$da_user_name[]=$data['user']['user_name'];
-	$da_user_id[]=$data['user']['user_id'];
-	}
-	/////////////////////////////////////////// All user ////////////////////////////
-	}
-	
-	if($visible==4)
-	{	
-	$visible=4;
-	$sub_visible[]=0;
-	/////////////////////////////////////////// All Owners ////////////////////////////
-	$this->loadmodel('user');
-	$conditions=array('tenant'=>1,'society_id'=>$s_society_id,'deactive'=>0);
-	$result_user=$this->user->find('all',array('conditions'=>$conditions));
-	foreach($result_user as $data)
-	{
-	$da_to[]=$data['user']['email'];
-	$da_user_name[]=$data['user']['user_name'];
-	$da_user_id[]=$data['user']['user_id'];
-	}
-	/////////////////////////////////////////// All Owners ////////////////////////////
-	}
-	
-	if($visible==5)
-	{
-	$visible=5;
-	$sub_visible[]=0;
-	/////////////////////////////////////////// All Tenant ////////////////////////////
-	$this->loadmodel('user');
-	$conditions=array('tenant'=>2,'society_id'=>$s_society_id,'deactive'=>0);
-	$result_user=$this->user->find('all',array('conditions'=>$conditions));
-	foreach($result_user as $data)
-	{
-	$da_to[]=$data['user']['email'];
-	$da_user_name[]=$data['user']['user_name'];
-	$da_user_id[]=$data['user']['user_id'];
-	}
-	/////////////////////////////////////////// All Tenant ////////////////////////////
-	}
-	
-	if($visible==2)
-	{	
-	$visible=2;
-	foreach ($role_result as $collection) 
-	{
-	$role_id=$collection["role"]["role_id"];
-
-	$role_id=@(int)$this->request->data['role'.$role_id];
-	if(!empty($role_id))
-	{
-	$sub_visible[]=(int)$role_id;
-
-	/////////////////////////////////////////// All role  functionality  conditions /////////////////////////////////////////////
-	$this->loadmodel('user');
-	$conditions=array('role_id'=>$role_id,'society_id'=>$s_society_id,'deactive'=>0);
-	$result_user=$this->user->find('all',array('conditions'=>$conditions));
-	foreach($result_user as $data)
-	{
-	$da_to[]=$data['user']['email'];
-	$da_user_name[]=$data['user']['user_name'];
-	$da_user_id[]=$data['user']['user_id'];
-	}
-
-	//////////////////////////////// end mail ////////////////////////////////////////////////////////	
-
-
-	}
-	}
-	$da_user_id=array_unique($da_user_id);
-	}
-	
-	if($visible==3)
-	{	
-	$visible=3;
-	foreach ($wing_result as $collection) 
-	{
-	$wing_id=$collection["wing"]["wing_id"];
-
-	$wing=@(int)$this->request->data['wing'.$wing_id];
-	if(!empty($wing))
-	{
-	$sub_visible[]=(int)$wing;
-
-
-	/////////////////////////////////////////// All wing wise  functionality conditions //////////////////////////////////////////////////////
-	$this->loadmodel('user');
-	$conditions=array('wing'=>$wing_id,'society_id'=>$s_society_id,'deactive'=>0);
-	$result_user=$this->user->find('all',array('conditions'=>$conditions));
-	foreach($result_user as $data)
-	{
-	$da_to[]=$data['user']['email'];
-	$da_user_name[]=$data['user']['user_name'];
-	$da_user_id[]=$data['user']['user_id'];
-	}
-	}
-	}
-	}
-$da_to[]=$sender_email;
-$da_user_id=array_unique($da_user_id);	
-$da_to=array_unique($da_to);
-$da_to=array_filter($da_to);
-
-
-foreach($da_to as $data)
-{
-
-$ex = explode(",", $data);
-if(!empty($ex[0])) { $to=$ex[0]; }
-
-
-//echo $email[$i];
-$this->send_email($to,'support@housingmatters.in','HousingMatters',$subject,$message_web,'donotreply@housingmatters.in');
+$visible=$this->request->data['send_to'];
+if($visible=="all_users"){
+$sub_visible=0;	
+}	
+if($visible=="role_wise"){
+$sub_visible=$this->request->data['roles'];	
+$sub_visible=implode(',',$sub_visible);
+}	
+if($visible=="wing_wise"){
+$sub_visible=$this->request->data['wings'];
+$sub_visible=implode(',',$sub_visible);	
 }
 
+$recieve_info=$this->requestAction(array('controller'=>'Fns','action'=>'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
+	
+$email_array=array();	
+$user_id_array=array();
+foreach($recieve_info as $user_id=>$data){
+$email_array[]=@$data[$user_id]['email'];	
+$user_id_array[]=$user_id;
+}	
 
-
+$user_id_array=array_unique($user_id_array);	
+$email_array=array_unique($email_array);
+$email_array=array_filter($email_array);
+foreach($email_array as $email){
+$this->send_email($email,'support@housingmatters.in','HousingMatters',$subject,$message_web,'donotreply@housingmatters.in');
+}
 
 $email_id=$this->autoincrement('email_communication','email_id');
 $this->loadmodel('email_communication');
-$multipleRowData = Array( Array("email_id" => $email_id,"message_web"=>$message_web,"user_id"=>$da_user_id,"date"=>$date,"time"=>$time,"society_id"=>$s_society_id,"subject"=>$subject,"type"=>1,"file"=>$file,"deleted"=>0));
-$this->email_communication->saveAll($multipleRowData); 
-}
-
+$multipleRowData=Array( Array("email_id"=>$email_id,"message_web"=>$message_web,"user_id"=>$user_id_array,"date"=>$date,"time"=>$time,"society_id"=>$s_society_id,"subject"=>$subject,"type"=>1,"file"=>$file,"deleted"=>0));
+$this->email_communication->saveAll($multipleRowData); */
+} 
 ?>
 <!----alert-------------->
 <div class="modal-backdrop fade in"></div>
@@ -564,7 +463,6 @@ Your Email has been sent.
 </div>
 <!----alert-------------->
 <?php	
-
 }
 }
 //End Email//

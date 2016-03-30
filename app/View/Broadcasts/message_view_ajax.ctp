@@ -10,7 +10,7 @@
 </table>
 	
 <?php
-foreach ($result_smsview as $collection) 
+foreach($result_smsview as $collection) 
 {
 $sms_id=$collection["sms"]["sms_id"];
 $user_id=$collection["sms"]["user_id"];
@@ -44,17 +44,18 @@ if($type==1)
 <?php
 foreach($user_id as $user)
 {
-
 	$user=(int)$user;
-	$result_user = $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($user)));
-	foreach($result_user as $data2)
-	{
+	$result_user=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'),array('pass'=>array($user)));
+	foreach($result_user as $data2){
 	$user_name=$data2["user"]["user_name"];
-	$wing=$data2["user"]["wing"];
-	$flat=$data2["user"]["flat"];
 	}
-	
-	$flat_info = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'),array('pass'=>array($wing,$flat)));
+	$result_user_flat=$this->requestAction(array('controller'=>'Fns','action'=>'user_flat_info_via_user_id'),array('pass'=>array($user)));
+	foreach($result_user_flat as $data){
+	$wing=(int)@$data["user_flat"]["wing"];
+	$flat=(int)@$data['user_flat']['flat'];
+	}
+
+	@$flat_info=$this->requestAction(array('controller'=>'Fns','action'=> 'wing_flat_via_wing_id_and_flat_id'),array('pass'=>array(@$wing,@$flat)));
 	?>
 	<tr><td><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $flat_info; ?></td></tr>
 <?php } ?>

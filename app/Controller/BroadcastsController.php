@@ -430,18 +430,17 @@ $sub_visible=implode(',',$sub_visible);
 }
 
 $recieve_info=$this->requestAction(array('controller'=>'Fns','action'=>'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
-pr($recieve_info);	
 $email_array=array();	
 $user_id_array=array();
 foreach($recieve_info as $user_id=>$data){
-$email_array[]=@$data[$user_id]['email'];	
+$email_array[]=@$data['email'];	
 $user_id_array[]=$user_id;
 }	
 
 $user_id_array=array_unique($user_id_array);	
 $email_array=array_unique($email_array);
 
-//echo implode(',',$email_array);
+echo implode(',',$email_array);
 /*
 foreach($email_array as $email){
 $this->send_email($email,'support@housingmatters.in','HousingMatters',$subject,$message_web,'donotreply@housingmatters.in');

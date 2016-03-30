@@ -74,22 +74,21 @@ $html.='<div style="padding: 5px;">
 $c=0;
 foreach($present_user as $data7){
 $c++;
-$result_user=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($data7)));
-foreach($result_user as $data2){
-	$user_name=$data2['user']['user_name'];
-	$wing=(int)$data2['user']['wing'];
-	$flat=(int)$data2['user']['flat'];
-	$designation_id=(int)@$data2['user']['designation_id'];
-}
-$flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
+$result_user=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($data7)));
 
-$designation_name=$this->requestAction(array('controller' => 'governances', 'action' => 'designation_find_by_user'), array('pass' => array($designation_id)));
+	$user_name=$result_user['user_name'];
+	$wing_flat=$result_user['wing_flat'];
+	foreach($wing_flat as $flat){
+		
+	}
+
+//$designation_name=$this->requestAction(array('controller' => 'governances', 'action' => 'designation_find_by_user'), array('pass' => array($designation_id)));
 $flat_name='';
 if(!empty($flat))
 {
 	$flat_name='('.$flat.')';
 }
-$to=$user_name.' '.$flat_name.' '.$designation_name.',';
+$to=$user_name.' '.$flat_name.' ,';
 $html.='<span style="font-size:12px;"> '.$to.' </span>';
 }
 $html.='</div>';

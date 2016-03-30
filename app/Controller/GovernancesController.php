@@ -1401,7 +1401,7 @@ function minute_view()
 	}
 	$this->ath();
 	$this->check_user_privilages();
-	$s_society_id=$this->Session->read('society_id');
+	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('governance_minute');
 	$conditions=array('society_id'=>$s_society_id);
     $order=array('governance_minute.governance_minute_id'=> 'DESC');
@@ -1442,7 +1442,7 @@ function governance_minute_view1($idd){
 	}
 	$this->ath();
 	$this->set('governance_minute_id',$idd);
-	 $s_society_id=$this->Session->read('society_id');
+	 $s_society_id=$this->Session->read('hm_society_id');
 		$result_society=$this->society_name($s_society_id);
 		
 		foreach($result_society as $data){
@@ -1467,32 +1467,31 @@ function governance_minute_drft_submit_new()
 {
 	$post_data=$this->request->data;
 	$this->ath();
-	$ip=$this->hms_email_ip();
-	
-	$s_society_id=$this->Session->read('society_id');
+	$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
+	$s_society_id=$this->Session->read('hm_society_id');
 	$s_role_id=$this->Session->read('role_id'); 
-	$s_user_id=$this->Session->read('user_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$minute_id=(int)$post_data['minute_id'];
 	$present_user1=$post_data['present_user'];
 	$present_user1=explode(',',$present_user1);
 	foreach($present_user1 as $data2){
 		$present_user[]=(int)$data2;
 	}
-	
+	$present_member='';
 	foreach($present_user as $data){
-			$result_user=$this->profile_picture($data);
-			foreach($result_user as $sas){
-				$user_name=$sas['user']['user_name'];
-				$wing=(int)@$sas['user']['wing'];
-				$flat=(int)@$sas['user']['flat'];
-				$wing_flat_name=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
-					$flat_name='';
-					if(!empty($wing_flat_name)){
-					 $flat_name='('.$wing_flat_name.')';
-					}
-					$present_member=$user_name.' '.$flat_name.' ,';
-					
-			}}
+						$result_member=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($data)));
+						$user_name=$result_member['user_name'];
+						$email=$result_member['email'];
+						$wing_flat=$result_member['wing_flat'];
+						foreach($wing_flat as $wing_flat_name){
+
+						}
+						if(!empty($wing_flat_name)){
+								 $flat_name='('.$wing_flat_name.')';
+								}
+								$present_member.=$user_name.' '.$flat_name.' ,';
+
+		}
 											
 	$result_society=$this->society_name($s_society_id);
 	$society_name=$result_society[0]['society']['society_name'];
@@ -1719,16 +1718,17 @@ foreach($user as $id){
         </tbody>
 </table>';
 
-@$title.= '['. $society_name . ']  - '.'Minutes of Agenda';
-$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,'donotreply@housingmatters.in');		
-$title="";
+
+	@$title.= '['. $society_name . ']  - '.'Minutes of Agenda'; 
+	$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,'donotreply@housingmatters.in');		
+	$title="";
 }
 
 //// end code 
 
 $output = json_encode(array('type'=>'created', 'text' =>'Minutes successfully submitted'));
 die($output);
-echo 'hello'; exit;		
+	
 }
 
 function governance_minute_draft($idd=null)
@@ -1740,14 +1740,14 @@ function governance_minute_draft($idd=null)
 	}
 	$this->ath();
 	//$this->set('governance_minute_id',$idd);
-	 $s_society_id=$this->Session->read('society_id');
+	 $s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('governance_minute');
 	$conditions=array('governance_minute_id'=>(int)$idd);
 	$result_gov_inv=$this->governance_minute->find('all',array('conditions'=>$conditions));
 	$this->set('result_gov_minute',$result_gov_inv);
 	
 	$this->loadmodel('user');
-	$conditions1=array("society_id"=>$s_society_id,'deactive'=>0);
+	$conditions1=array("society_id"=>$s_society_id,'active'=>'yes');
 	$this->set('result_users',$this->user->find('all',array('conditions'=>$conditions1))); 
 	
 }
@@ -1755,7 +1755,7 @@ function governance_minute_draft($idd=null)
 function governace_minute_pdf(){
 	$this->layout=null;	
 	$governance_minute_id=$this->request->query('con');
-	 $s_society_id=$this->Session->read('society_id');
+	 $s_society_id=$this->Session->read('hm_society_id');
 		$result_society=$this->society_name($s_society_id);
 		
 		foreach($result_society as $data){
@@ -1778,7 +1778,7 @@ function governance_minute_submit()
 	$s_society_id=$this->Session->read('hm_society_id');
 	$s_role_id=$this->Session->read('role_id'); 
 	$s_user_id=$this->Session->read('hm_user_id');
-	pr($post_data); 
+	
 	$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 	$present_user1=$post_data['present_user'];
 	$meeting_id=(int)$post_data['meeting_id'];
@@ -1847,7 +1847,7 @@ function governance_minute_submit()
 				
 			}
 			if($Invitations_type==3){
-					$visible=(int)$post_data['visible'];
+					$visible=$post_data['visible'];
 					$sub_visible=$post_data['sub_visible'];
 					
 
@@ -1888,7 +1888,7 @@ function governance_minute_submit()
 					foreach($receivers as $data=>$key){
 					$user_minute[]=(int)$data;
 					}
-					
+				$sub_visible=explode(",",$sub_visible);		
 					
 			}
 		if(sizeof($report)>0){
@@ -1942,7 +1942,7 @@ function governance_minute_submit()
 				//$user=array_values($user);
 				
 				
-				$sub_visible=explode(",",$sub_visible);			
+						
 				
 				$date=date("d-m-y");
 				$minut_id=$this->autoincrement('governance_minute','governance_minute_id');

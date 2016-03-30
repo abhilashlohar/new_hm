@@ -64,13 +64,13 @@ foreach($result_gov_minute as $data){
 foreach ($result_users as $collection) 
 {
 $user_id=$collection["user"]["user_id"];
-$user_name=$collection["user"]["user_name"];
-$email=$collection["user"]["email"];
-$wing=$collection["user"]["wing"];
-$flat=$collection["user"]["flat"];
-
-
-$flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
+$result_member=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($user_id)));
+		$user_name=$result_member['user_name'];
+		$email=$result_member['email'];
+		$wing_flat=$result_member['wing_flat'];
+		foreach($wing_flat as $flat){
+			
+		}
 
 ?>
 <option value="<?php echo $user_id; ?>" <?php if(in_array($user_id,$present_user)){ ?> selected <?php } ?> ><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $flat; ?></option>
@@ -358,7 +358,7 @@ $('form#contact-form').submit( function(ev){
 			dataType:'json',
 			}).done(function(response) { 
 			
-			$("#output").html(response);
+			//$("#output").html(response);
 				if(response.type=='created'){
 					$(".portal").remove();
 				$(".alert-success").show().append("<p>"+response.text+"</p><p><a class='btn green' href='<?php echo $webroot_path; ?>Governances/minute_view' rel='tab' >ok</a></p>");

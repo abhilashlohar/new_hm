@@ -546,9 +546,8 @@ $this->ath();
 $con=(int)$this->request->query('con');
 $this->set('con',$con);
 
-$s_user_id=$this->Session->read('user_id'); 
-$s_society_id=$this->Session->read('society_id'); 
-
+$s_user_id=$this->Session->read('hm_user_id'); 
+$s_society_id=$this->Session->read('hm_society_id'); 
 
 $this->loadmodel('email_communication');
 $conditions=array("email_id"=>$con);

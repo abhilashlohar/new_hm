@@ -1,7 +1,8 @@
 <?php 
 foreach ($cursor1 as $collection) 
 {
-$receipt_no = (int)$collection['cash_bank']['receipt_id'];
+$transaction_id=(int)$collection['cash_bank']['transaction_id'];	
+$receipt_no = $collection['cash_bank']['receipt_id'];
 $d_date = $collection['cash_bank']['transaction_date'];
 $today = date("d-M-Y");
 $amount = $collection['cash_bank']['amount'];
@@ -23,6 +24,8 @@ $transaction_date = date('d-m-Y');
 
 <div class="row-fluid">
 <div class="span6">
+<input type="hidden" name="element_id" value="<?php echo $transaction_id; ?>">
+<input type="hidden" name="receipt_no" value="<?php echo $receipt_no; ?>">
 
 	<label style="font-size:14px;">Transaction Date<span style="color:red;">*</span></label>
 	<input type="text" class="date-picker m-wrap span6" data-date-format="dd-mm-yyyy" value="<?php echo $transaction_date; ?>" name="transaction_date">
@@ -100,8 +103,8 @@ $transaction_date = date('d-m-Y');
 </div>
 </div>
 <div class="form-actions">
-<button type="submit" class="btn blue">Save</button>
-<button type="button" class="btn">Cancel</button>
+<a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_payment_view" class="btn green"><i class="icon-arrow-left"></i> Back</a>
+<button type="submit" class="btn blue" name="submit">Update</button>
 </div>
 </div>
 </div>

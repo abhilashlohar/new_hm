@@ -2026,7 +2026,7 @@ $this->set('cursor2',$cursor2);
 	Petty Cash Payment <?php echo $receipt_array_for_view; ?> generated successfully
 	</div>
 	<div class="modal-footer">
-	<a class="btn red" href="petty_cash_receipt_view">OK</a>
+	<a class="btn red" href="petty_cash_payment_view">OK</a>
 	</div>
 	</div>
 	<?php

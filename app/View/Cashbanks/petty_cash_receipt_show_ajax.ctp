@@ -1,8 +1,8 @@
 <style>
-table th{
+#table th{
    background-color:#FFF;padding:3px 5px 3px 5px !important;
 }
-table td{
+#table td{
    background-color:#FFF;padding:3px 5px 3px 5px !important;
 }
 </style>
@@ -30,7 +30,7 @@ $nnn = 555;
 <div style="width:100%; overflow:auto;" class="hide_at_print">
 <label class="m-wrap pull-right"><input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;" placeholder="Search"></label>	
 </div>
-<table  width="100%" style=" background-color:white;" class="table table-bordered table-striped">
+<table  width="100%" style=" background-color:white;" class="table table-bordered table-striped" id="table">
 <thead>
 <tr>
 <th colspan="6" style="text-align:center;"><?php echo $society_name; ?> Petty Cash Receipt Register From : <?php echo $from; ?> &nbsp;&nbsp; To : <?php echo $to; ?></th>

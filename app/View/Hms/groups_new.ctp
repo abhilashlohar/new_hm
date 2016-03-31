@@ -45,7 +45,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 							<td>
 							<a href="groupview/<?php echo $group_id; ?>" rel="tab" class="btn mini yellow" >View</a>
 							
-							<a  role="button" class="btn red mini delete_group" group="<?php echo $group_id; ?>" ><i class=" icon-remove-sign"></i></a>
+							<a  role="button" class="btn red mini delete_group" group="<?php echo $group_id; ?>" ><i class=" icon-trash"></i></a>
 							</td>
 						</tr>
 					<?php } ?>

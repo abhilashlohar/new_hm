@@ -3731,60 +3731,56 @@ foreach($user_detail as $dataa)
 {
  $user_type = $dataa['user']['user_type'];	
 }
-if($user_type == "hm_child")
-{
+if($user_type == "hm_child"){
+	$default_role= $this->requestAction(array('controller' => 'Fns', 'action'=> 'fetch_default_role_via_user_id_hm'),array('pass'=>array($s_user_id)));
+	$page_namr_url=pathinfo($_SERVER[ 'REQUEST_URI'],PATHINFO_FILENAME);
+	$url = parse_url($page_namr_url) ;
+	$page_namr_url=  $url['path'];
 	
-$default_role= $this->requestAction(array('controller' => 'Fns', 'action'=> 'fetch_default_role_via_user_id_hm'),array('pass'=>array($s_user_id)));
-$page_namr_url=pathinfo($_SERVER[ 'REQUEST_URI'],PATHINFO_FILENAME);
-$url = parse_url($page_namr_url) ;
-$page_namr_url=  $url['path'];
-	
-		$this->loadmodel('page');
-		$conditions=array("page_name" => $page_namr_url);
-		$cursor=$this->page->find('all',array('conditions'=>$conditions));
-		foreach ($cursor as $collection){
+	$this->loadmodel('page');
+	$conditions=array("page_name" => $page_namr_url);
+	$cursor=$this->page->find('all',array('conditions'=>$conditions));
+	foreach ($cursor as $collection){
 		$module_id=$collection["page"]["module_id"];
 		$sub_module_id_page=$collection["page"]["sub_module_id"];
+	}
+
+	$this->loadmodel('role_privilege_hm');
+	$conditions=array("module_id" => @$module_id,"role_id" => $default_role);
+	$cursor=$this->role_privilege_hm->find('all',array('conditions'=>$conditions));
+	sort($cursor);
+	if(sizeof($cursor)>1){
+		foreach ($cursor as $collection){
+			$sub_module_id=$collection["role_privilege_hm"]["sub_module_id"];
+
+			$this->loadmodel('page');
+			$conditions=array("sub_module_id" => $sub_module_id);
+			$cursor_page=$this->page->find('all',array('conditions'=>$conditions,'limit'=>1));
+			foreach ($cursor_page as $collection){			
+				$page_name=$collection["page"]["page_name"];
+				$controller=$collection['page']['controller'];
+			}
+			$this->loadmodel('sub_module');
+			$conditions=array("auto_id" => $sub_module_id);
+			$cursor_sub_module=$this->sub_module->find('all',array('conditions'=>$conditions,'limit'=>1));
+			foreach ($cursor_sub_module as $collection){					
+				$sub_module_name=$collection["sub_module"]["sub_module_name"];
+			}
+
+			$sub_module_id_fix="fix".$sub_module_id;
+			if($sub_module_id_page==$sub_module_id){
+				echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn red allsubmenu" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
+			}else{
+				echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn blue allsubmenu" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
+			}
 		}
-
-$this->loadmodel('role_privilege_hm');
-$conditions=array("module_id" => @$module_id,"role_id" => $default_role);
-$cursor=$this->role_privilege_hm->find('all',array('conditions'=>$conditions));
-sort($cursor);
-if(sizeof($cursor)>1){
-foreach ($cursor as $collection){
-$sub_module_id=$collection["role_privilege_hm"]["sub_module_id"];
-
-$this->loadmodel('page');
-$conditions=array("sub_module_id" => $sub_module_id);
-$cursor_page=$this->page->find('all',array('conditions'=>$conditions,'limit'=>1));
-foreach ($cursor_page as $collection){			
-$page_name=$collection["page"]["page_name"];
-$controller=$collection['page']['controller'];
+	}	
 }
-$this->loadmodel('sub_module');
-$conditions=array("auto_id" => $sub_module_id);
-$cursor_sub_module=$this->sub_module->find('all',array('conditions'=>$conditions,'limit'=>1));
-foreach ($cursor_sub_module as $collection) 
-{					
-$sub_module_name=$collection["sub_module"]["sub_module_name"];
-}
-
-$sub_module_id_fix="fix".$sub_module_id;
-if($sub_module_id_page==$sub_module_id){
-echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn red allsubmenu" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
-}else{
-echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn blue allsubmenu" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
-}
-}
-}	
-}
-else
-{	
-$default_role= $this->requestAction(array('controller' => 'Fns', 'action'=> 'fetch_default_role_via_user_id'),array('pass'=>array($s_user_id)));
-$page_namr_url=pathinfo($_SERVER[ 'REQUEST_URI'],PATHINFO_FILENAME);
-$url = parse_url($page_namr_url) ;
-$page_namr_url=  $url['path'];
+else{	
+	$default_role= $this->requestAction(array('controller' => 'Fns', 'action'=> 'fetch_default_role_via_user_id'),array('pass'=>array($s_user_id)));
+	$page_namr_url=pathinfo($_SERVER[ 'REQUEST_URI'],PATHINFO_FILENAME);
+	$url = parse_url($page_namr_url) ;
+	$page_namr_url=  $url['path'];
 	
 		$this->loadmodel('page');
 		$conditions=array("page_name" => $page_namr_url);

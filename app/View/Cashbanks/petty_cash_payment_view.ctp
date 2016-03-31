@@ -30,9 +30,9 @@ $b_date = date('1-m-Y');
             <table>
             <tbody><tr>
            
-            <td><input type="text" id="date1" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="from" placeholder="From" style="background-color:white !important;"  value="<?php echo $b_date; ?>"></td>
+            <td><input type="text" id="date1" class="date-picker m-wrap small" data-date-format="dd-mm-yyyy" name="from" placeholder="From" style="background-color:white !important;"  value="<?php echo $b_date; ?>"></td>
             
-            <td><input type="text" id="date2" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="to" placeholder="To" style="background-color:white !important;"  value="<?php echo $c_date; ?>"></td>
+            <td><input type="text" id="date2" class="date-picker m-wrap small" data-date-format="dd-mm-yyyy" name="to" placeholder="To" style="background-color:white !important;"  value="<?php echo $c_date; ?>"></td>
             <td valign="top"><button type="button" name="sub" class="btn yellow" id="go">Go</button></td>
             </tr>
             </tbody></table>

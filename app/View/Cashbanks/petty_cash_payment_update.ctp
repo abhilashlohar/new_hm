@@ -93,7 +93,7 @@ $transaction_date = date('d-m-Y');
 
 
 
-<label style="font-size:14px;">Narration<span style="color:red;">*</span></label>
+<label style="font-size:14px;">Narration</label>
 <input type="text" name="narration" class="m-wrap span10" value="<?php echo $narration; ?>">
 
 <br>

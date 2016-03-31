@@ -4813,21 +4813,19 @@ function petty_cash_payment_update($auto_id=null)
 	$this->layout='session';
 	}
 	$s_role_id = (int)$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id = (int)$this->Session->read('user_id');	
-
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id = (int)$this->Session->read('hm_user_id');	
 	$auto_id=(int)$auto_id;
 	$this->ath();
-	//$this->check_user_privilages();
-	
+		
 	$this->loadmodel('ledger_sub_account');
-	$conditions=array("ledger_id" => 33,"society_id"=>$s_society_id);
+	$conditions=array("ledger_id"=>33,"society_id"=>$s_society_id);
 	$cursor3=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 	$this->set('cursor3',$cursor3);
 
-	$this->loadmodel('new_cash_bank');
-	$conditions=array("transaction_id"=>$auto_id,"receipt_source"=>4,"society_id"=>$s_society_id);
-	$cursor1=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
+	$this->loadmodel('cash_bank');
+	$conditions=array("transaction_id"=>$auto_id,"source"=>"petty_cash_payment","society_id"=>$s_society_id);
+	$cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions));
 	$this->set('cursor1',$cursor1);
 
 }
@@ -4869,9 +4867,8 @@ $tds_arr = $collection['reference']['reference'];
 $this->set("tds_arr",$tds_arr);		
 		
 }
-///////////////////////////// End petty_cash_Payment_Update /////////////////////////////////////////////
-
-///////////////////////////// Start petty_cash_Payment_Update /////////////////////////////////////////////
+//End petty_cash_Payment_Update//
+//Start petty_cash_Payment_Update//
 function bank_pyment_update($auto_id=null)
 {
 		if($this->RequestHandler->isAjax()){

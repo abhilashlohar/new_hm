@@ -4614,7 +4614,7 @@ function bank_receipt_deposit_slip()
 
 if(isset($this->request->data['dep_slip']))
 {
-	$arr = array();
+	 $arr = array();
 		$this->loadmodel('cash_bank');
 		$conditions=array('society_id'=>$s_society_id,"source"=>"bank_receipt");
 		$cursor2=$this->cash_bank->find('all',array('conditions'=>$conditions));
@@ -4625,6 +4625,10 @@ if(isset($this->request->data['dep_slip']))
 		$value = @$this->request->data['dd'.$trns_id];
 			if(!empty($value)){
 			$arr[] = $value;
+			
+			$this->loadmodel('cash_bank');
+			$this->cash_bank->updateAll(array("deposit_status"=>1),array('society_id'=>$s_society_id,"auto_id"=>$trns_id));	
+			
 			}
 		}
 	$arrr =implode(",",$arr);

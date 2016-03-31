@@ -1743,6 +1743,11 @@ function griter_notification($id)
 	
 //////////////////// end ///////////////////////////
 
+if($id=="group_create")
+	{
+		$this->Session->delete('group_status');
+	}
+
 ////////////////// Start document /////////////////////////
 
 	if($id==4)
@@ -13491,106 +13496,6 @@ $s_society_id=$this->Session->read('society_id');
 $this->loadmodel('sms');
 $conditions=array("sms_id"=>$con);
 $this->set('result_smsview',$this->sms->find('all',array('conditions'=>$conditions))); 
-}
-
-////////////////////////////////////////////////////////////////////////////////////////	
-/////////////////////////////////////////////////////start groups//////////////////////
-////////////////////////////////////////////////////////////////////////////////////////
-function groups()
-{
-if($this->RequestHandler->isAjax()){
-	$this->layout='blank';
-	}else{
-	$this->layout='session';
-	}
-$this->ath();
-$this->check_user_privilages();
-$s_user_id=$this->Session->read('user_id'); 
-$s_society_id=$this->Session->read('society_id'); 
-
-if (isset($this->request->data['add'])) 
-{
-	$group_name=$this->request->data['group_name'];
-
-	$this->loadmodel('group');
-	$conditions=array("society_id"=>$s_society_id,"group_name"=>$group_name);
-	$group_duplicate=$this->group->find('count',array('conditions'=>$conditions));
-
-	
-	if(!empty($group_name) and ($group_duplicate==0))
-	{
-	$group_id=$this->autoincrement('group','group_id');
-	$this->loadmodel('group');
-	$multipleRowData = Array( Array("group_id" => $group_id,"group_name"=>$group_name,"society_id"=>$s_society_id,"users"=>array()));
-	$this->group->saveAll($multipleRowData); 
-	$this->response->header('Location', 'groupview?gid='.$group_id);
-	}
-	else{
-		$this->set('error_addgroup','Group name should not be duplicate.');
-	}
-}
-
-$this->loadmodel('group');
-$conditions=array("society_id"=>$s_society_id);
-$order=array('group.group_id'=>'DESC');
-$this->set('result_group',$this->group->find('all',array('conditions'=>$conditions,'order'=>$order))); 
-}
-
-function groupview() 
-{
-	if($this->RequestHandler->isAjax()){
-	$this->layout='blank';
-	}else{
-	$this->layout='session';
-	}
-	
-	$this->ath();
-	//$this->check_user_privilages();
-	$s_user_id=$this->Session->read('user_id'); 
-	$s_society_id=$this->Session->read('society_id'); 
-	$gid=(int)$this->request->query('gid');
-	$this->set('gid',$gid);
-	$group_name=$this->fetch_group_name_from_gruop_id($gid);
-	$this->set('group_name',$group_name);
-	
-	if (isset($this->request->data['update_members'])) 
-	{
-		$all_users=$this->all_user_deactive();
-		$members=array();
-		foreach($all_users as $user)
-		{
-		
-			$value=@$this->request->data['user'.$user['user']['user_id']];
-			if(!empty($value)) { $members[]=$user['user']['user_id']; }
-		}
-		
-		$this->loadmodel('group');
-		$this->group->updateAll(array("users" =>$members),array("group_id" => $gid));
-	}
-	
-	$this->loadmodel('group');
-	$conditions=array("group_id" => $gid);
-	$result_group_info=$this->group->find('all',array('conditions'=>$conditions));
-	
-	$result_group_info=$result_group_info[0]['group']['users'];
-
-	$this->set('result_group_info',$result_group_info);
-	$this->set('all_users',$this->all_user_deactive());
-}
-
-
-function fetch_group_name_from_gruop_id($group_id)
-{
-
-
-$this->loadmodel('group');
-$conditions=array("group_id" => $group_id);
-$result_group_name=$this->group->find('all',array('conditions'=>$conditions));
-
-foreach ($result_group_name as $collection) 
-{
-return $group_name=$collection['group']['group_name'];
-}
 }
 
 //////////////////////////// Discussion fourm Approval /////////////////////////////
@@ -27614,6 +27519,135 @@ function exit_user($user_flat_id=null){
 	}
 	
 }
+
+
+///// Group Start
+
+function groups_new()
+{
+if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+$this->ath();
+$this->check_user_privilages();
+$s_user_id=$this->Session->read('hm_user_id'); 
+$s_society_id=$this->Session->read('hm_society_id'); 
+
+if (isset($this->request->data['add'])) 
+{
+	$group_name=$this->request->data['group_name'];
+
+	$this->loadmodel('group');
+	$conditions=array("society_id"=>$s_society_id,"group_name"=>$group_name);
+	$group_duplicate=$this->group->find('count',array('conditions'=>$conditions));
+
+	
+	if(!empty($group_name) and ($group_duplicate==0))
+	{
+	$group_id=$this->autoincrement('group','group_id');
+	$this->loadmodel('group');
+	$multipleRowData = Array( Array("group_id" => $group_id,"group_name"=>$group_name,"society_id"=>$s_society_id,'group_show_id'=>0,"users"=>array(),'delete_id'=>0));
+	$this->group->saveAll($multipleRowData); 
+	$this->response->header('Location', 'groupview/'.$group_id);
+	
+	$this->Session->write('group_status', 1);
+	}
+	else{
+		$this->set('error_addgroup','Group name should not be duplicate.');
+	}
+}
+
+$this->loadmodel('group');
+$conditions=array("society_id"=>$s_society_id,'group_show_id'=>0,'delete_id'=>0);
+$order=array('group.group_id'=>'DESC');
+$this->set('result_group',$this->group->find('all',array('conditions'=>$conditions,'order'=>$order))); 
+}
+
+
+function groupview($gid=null) 
+{
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	
+	$this->ath();
+	//$this->check_user_privilages();
+	$s_user_id=$this->Session->read('hm_user_id'); 
+	$s_society_id=$this->Session->read('hm_society_id'); 
+	$gid=(int)$gid;
+	$this->set('gid',$gid);
+	$group_name=$this->fetch_group_name_from_gruop_id($gid);
+	$this->set('group_name',$group_name);
+	
+	if (isset($this->request->data['update_members'])) 
+	{
+		$this->loadmodel('user');
+		$conditions=array("society_id"=>$s_society_id,"active"=>"yes");
+		$order=array('user.user_name'=> 'ASC');
+		$all_users=$this->user->find('all',array('conditions'=>$conditions,'order'=>$order));
+		
+		$members=array();
+		foreach($all_users as $user)
+		{
+		
+			$value=@$this->request->data['user'.$user['user']['user_id']];
+			if(!empty($value)) { $members[]=$user['user']['user_id']; }
+		}
+		
+		$this->loadmodel('group');
+		$this->group->updateAll(array("users" =>$members),array("group_id" => $gid));
+	}
+	
+	$this->loadmodel('group');
+	$conditions=array("group_id" => $gid);
+	$result_group_info=$this->group->find('all',array('conditions'=>$conditions));
+	
+	$result_group_info=$result_group_info[0]['group']['users'];
+	$this->loadmodel('user');
+	$conditions=array("society_id"=>$s_society_id,"active"=>"yes");
+	$order=array('user.user_name'=> 'ASC');
+	$users=$this->user->find('all',array('conditions'=>$conditions,'order'=>$order));
+	$this->set('result_group_info',$result_group_info);
+	$this->set('all_users',$users);
+}
+
+function group_delete(){
+	
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	$id=$this->request->query('con'); 
+	$this->ath();
+	$s_user_id=$this->Session->read('hm_user_id'); 
+	$s_society_id=$this->Session->read('hm_society_id'); 
+	$this->loadmodel('group');
+	$this->group->updateAll(array("delete_id" =>1),array("group_id" => (int)$id));
+	$this->response->header('Location', 'groups_new');
+	
+}
+
+function fetch_group_name_from_gruop_id($group_id)
+{
+
+
+$this->loadmodel('group');
+$conditions=array("group_id" => $group_id);
+$result_group_name=$this->group->find('all',array('conditions'=>$conditions));
+
+foreach ($result_group_name as $collection) 
+{
+return $group_name=$collection['group']['group_name'];
+}
+}
+
+//End group
+
 
 }
 ?>

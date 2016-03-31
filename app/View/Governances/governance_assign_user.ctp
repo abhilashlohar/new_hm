@@ -1,12 +1,6 @@
 <?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
+echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
-<script>
-$(document).ready(function() {
-$("#fix<?php echo $id_current_page; ?>").removeClass("blue");
-$("#fix<?php echo $id_current_page; ?>").addClass("red");
-});
-</script>
 
 <div align="center">
 <a href="governance_designation" rel="tab" class="btn blue">Add Designation</a>
@@ -22,16 +16,14 @@ $("#fix<?php echo $id_current_page; ?>").addClass("red");
 </tr>
 
 <?php
+
 foreach ($result_users_com as $collection) 
 {
-$user_id=$collection["user"]["user_id"];
-$user_name=$collection["user"]["user_name"];
-$email=$collection["user"]["email"];
-$wing=$collection["user"]["wing"];
-$flat=$collection["user"]["flat"];
-$designation_id=(int)@$collection["user"]["designation_id"];
+$user_id=$collection["user_id"];
+$user_name=$collection["user_name"];
+$flat=$collection["wing_flat"];
 
-$flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
+$designation_id=(int)@$collection["designation_id"];
 
 ?>
 <tr>

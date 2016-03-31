@@ -23,8 +23,8 @@ $this->layout='session';
 }
 $this->ath();
 $this->check_user_privilages();
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $this->loadmodel('governance_designation');
 $condition=array('society_id'=>$s_society_id);
 $result=$this->governance_designation->find('all',array('conditions'=>$condition)); 
@@ -2014,42 +2014,64 @@ function governance_assign_user()
 	}
 	$this->ath();
 	$this->check_user_privilages();
-	$s_society_id=$this->Session->read('society_id');
+	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('user');
-	$conditions2=array("society_id"=>$s_society_id,'role_id'=>1);
+	$conditions2=array("society_id"=>$s_society_id,'active'=>'yes');
 	$result_user=$this->user->find('all',array('conditions'=>$conditions2));
-	$this->set('result_users_com',$result_user); 
+	//pr($result_user);
+	foreach($result_user as $data){
+				$user_id=$data['user']['user_id'];
+				$user_name=$data['user']['user_name'];
+				$designation_id=@$data['user']['designation_id'];
+				$this->loadmodel('user_flat');
+				$conditions1=array("user_id"=>$user_id);
+				$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions1));
+				foreach($result_user_flat as $data){
+							$user_flat_id=$data["user_flat"]["user_flat_id"];
+							$wing=@$data["user_flat"]["wing"];
+							$flat=@$data["user_flat"]["flat"];
+
+							$this->loadmodel('wing');
+							$conditions=array("wing_id"=>$wing);
+							$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
+							@$wing_name=$wing_info[0]["wing"]["wing_name"];
+
+							$this->loadmodel('flat');
+							$conditions=array("flat_id"=>$flat);
+							$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+							@$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
+							$flats=$wing_name.' - '.$flat_name;
+					}
+				
+				$this->loadmodel('user_role');
+				$conditions3=array("user_id"=>$user_id,'role_id'=>2);
+				$result_user_role=$this->user_role->find('all',array('conditions'=>$conditions3));
+				if(!empty($result_user_role)){
+					$result_users_com[]=array('user_name'=>$user_name,'wing_flat'=>$flats,'user_id'=>$user_id,'user_flat_id'=>$user_flat_id,'designation_id'=>$designation_id);
+				}
+				
+	}
+
+	$this->set('result_users_com',$result_users_com); 
 	$this->loadmodel('governance_designation');
 	$conditions=array("society_id" => $s_society_id);
 	$gov_result=$this->governance_designation->find('all',array('conditions'=>$conditions));
 	$this->set('governance_designation_result',$gov_result);
 	if(isset($this->request->data['send'])) {
 
-		/*
-			$multi=$this->request->data['multi1'];
-			$designation=(int)$this->request->data['designation'];
-			foreach($multi as $data)
-			{
-				$id=(int)$data;
-			$this->loadmodel('user');
-			$this->user->updateAll(array('designation_id'=>$designation),array('user_id'=>$id));
-			}
-			
-			*/
-			foreach ($result_user as $collection) 
-			{
-			$user_id=$collection["user"]["user_id"];
-			$designation=(int)$this->request->data['designation'.$user_id];	
-			if($designation!=0)
-			{
-				$this->loadmodel('user');
-				$this->user->updateAll(array('designation_id'=>$designation),array('user_id'=>$user_id));
-			}
-			else{
-				$this->loadmodel('user');
-				$this->user->updateAll(array('designation_id'=>$designation),array('user_id'=>$user_id));
+			foreach ($result_users_com as $collection){
+				
+				$user_id=$collection["user_id"];
+				$designation=(int)$this->request->data['designation'.$user_id];	
+					if($designation!=0){
+						$this->loadmodel('user');
+						$this->user->updateAll(array('designation_id'=>$designation),array('user_id'=>$user_id));
+					}
+					else{
+						$this->loadmodel('user');
+						$this->user->updateAll(array('designation_id'=>$designation),array('user_id'=>$user_id));
 
-			}	
+					}	
 			}
 			
 			
@@ -2100,8 +2122,8 @@ function governance_designation_ajax()
 {
 	$this->layout=null;	
 	$post_data=$this->request->data;
-	$s_society_id=$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$date=date('d-m-Y');
 	$time = date(' h:i a', time());	
 	$designation = htmlentities($post_data['designation']);
@@ -2128,7 +2150,9 @@ die($output);
 //////////////////////////  end deginations ////////////////////////////////////////////
 
 
-////////////////////////////////////////////////////////////////////////////////////////	
+////////////////////////////////////////////////////////////////////////////////////////
+
+	
 /////////////////////////////////////////////////////start groups//////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 function groups_new()
@@ -2140,8 +2164,8 @@ if($this->RequestHandler->isAjax()){
 	}
 $this->ath();
 $this->check_user_privilages();
-$s_user_id=$this->Session->read('user_id'); 
-$s_society_id=$this->Session->read('society_id'); 
+$s_user_id=$this->Session->read('hm_user_id'); 
+$s_society_id=$this->Session->read('hm_society_id'); 
 
 if (isset($this->request->data['add'])) 
 {
@@ -2183,8 +2207,8 @@ function groupview($gid=null)
 	
 	$this->ath();
 	//$this->check_user_privilages();
-	$s_user_id=$this->Session->read('user_id'); 
-	$s_society_id=$this->Session->read('society_id'); 
+	$s_user_id=$this->Session->read('hm_user_id'); 
+	$s_society_id=$this->Session->read('hm_society_id'); 
 	$gid=(int)$gid;
 	$this->set('gid',$gid);
 	$group_name=$this->fetch_group_name_from_gruop_id($gid);
@@ -2192,7 +2216,11 @@ function groupview($gid=null)
 	
 	if (isset($this->request->data['update_members'])) 
 	{
-		$all_users=$this->all_user_deactive();
+		$this->loadmodel('user');
+		$conditions=array("society_id"=>$s_society_id,"active"=>"yes");
+		$order=array('user.user_name'=> 'ASC');
+		$all_users=$this->user->find('all',array('conditions'=>$conditions,'order'=>$order));
+		
 		$members=array();
 		foreach($all_users as $user)
 		{
@@ -2210,9 +2238,12 @@ function groupview($gid=null)
 	$result_group_info=$this->group->find('all',array('conditions'=>$conditions));
 	
 	$result_group_info=$result_group_info[0]['group']['users'];
-
+	$this->loadmodel('user');
+	$conditions=array("society_id"=>$s_society_id,"active"=>"yes");
+	$order=array('user.user_name'=> 'ASC');
+	$users=$this->user->find('all',array('conditions'=>$conditions,'order'=>$order));
 	$this->set('result_group_info',$result_group_info);
-	$this->set('all_users',$this->all_user_deactive());
+	$this->set('all_users',$users);
 }
 
 function group_delete(){
@@ -2224,8 +2255,8 @@ function group_delete(){
 	}
 	$id=$this->request->query('con'); 
 	$this->ath();
-	$s_user_id=$this->Session->read('user_id'); 
-	$s_society_id=$this->Session->read('society_id'); 
+	$s_user_id=$this->Session->read('hm_user_id'); 
+	$s_society_id=$this->Session->read('hm_society_id'); 
 	$this->loadmodel('group');
 	$this->group->updateAll(array("delete_id" =>1),array("group_id" => (int)$id));
 	$this->response->header('Location', 'groups_new');

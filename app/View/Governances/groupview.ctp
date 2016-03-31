@@ -17,15 +17,15 @@
 				<h3 id="myModalLabel1">Add or Remove Members</h3>
 			</div>
 			<div class="modal-body">
-				
-				<?php foreach($all_users as $user) { 
-				$user_id=$user['user']['user_id'];
-				$name=$user['user']['user_name'];
-				$profile_pic=$user['user']['profile_pic'];
-				$wing=$user['user']['wing'];
-				
-				$flat=$user['user']['flat'];
-$flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'),array('pass'=>array($wing,$flat)));
+		
+		<?php foreach($all_users as $user) { 
+							$user_id=$user['user']['user_id'];
+							$name=$user['user']['user_name'];
+							$profile_pic=@$user['user']['profile_pic'];
+							if(empty($profile_pic)){ $profile_pic="blank.jpg"; }
+							$result_member = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($user_id)));
+							$wing_flat=$result_member['wing_flat'];
+							foreach($wing_flat as $flat){ }
 				?>
 				
 					<div  style="width:49%;float:left;">
@@ -73,11 +73,12 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 				foreach($result_user_info as $collection2)
 				{
 				$user_name=$collection2["user"]["user_name"];
-				$profile_pic=$collection2["user"]["profile_pic"];
-				$wing=$collection2["user"]["wing"];
-				$flat=$collection2["user"]["flat"];
+				$profile_pic=@$collection2["user"]["profile_pic"];
 				}
-				$flat_info=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
+				if(empty($profile_pic)){ $profile_pic="blank.jpg"; }
+				$result_member = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($user_id)));
+				$wing_flat=$result_member['wing_flat'];
+				foreach($wing_flat as $flat_info){ }
 				?>
 					<tr>
 						<td width="50px"><img src="<?php echo $this->webroot; ?>profile/<?php echo $profile_pic; ?>" style="width: 35px;height: 35px;"/></td>

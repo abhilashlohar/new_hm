@@ -11,7 +11,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <?php
 $default_date = date('d-m-Y');
 ?>
-<?php /*
+
 <!-------------------------- START NEW CODE--------------------------->
 <div class="portlet box">
 <div class="portlet-body">
@@ -135,11 +135,11 @@ $('select[name="account_group[]"]').die().live("change",function(){
 		}
 });
 
-</script> */ ?>
+</script> 
 
 <!---------------------------END NEW CODE---------------------------->
 
-
+<?php /*
 <form method="post">
 <div class="portlet box blue">
 <div class="portlet-title">
@@ -359,7 +359,7 @@ $("#vali").bind('click',function(){
 </script>		
 		   	   
 		   
-		   
+	*/ ?>	   
 		   
 		   
 		   

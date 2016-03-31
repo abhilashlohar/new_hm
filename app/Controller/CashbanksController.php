@@ -1969,8 +1969,45 @@ $cursor2=$this->accounts_group->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
 
 	if(isset($this->request->data['submit'])){
-	echo "sdgdsgsdgds";
-    exit;	
+		$transaction_dates=$this->request->data['transaction_date'];
+		$account_groups=$this->request->data['account_group'];
+		$sundry_creditors=$this->request->data['sundry_creditor'];
+		$expenditures=$this->request->data['expenditure'];
+		$paid_froms=$this->request->data['paid_from'];
+		$amounts=$this->request->data['amount'];
+		$narrations=$this->request->data['narration']; 
+			$n=0;
+			foreach($transaction_dates as $transaction_date){
+			  $transaction_date=date('Y-m-d',strtotime($transaction_date));
+			  $account_group_id=(int)$account_groups[$n];
+				  if($account_group_id==1){
+					 $sundry_creditor_id=(int)$sundry_creditors[$n];
+				  }else{
+					 $expenditure_id=(int)$expenditures[$n]; 
+				  }
+			   $paid_from_id=(int)$paid_froms[$n];
+			   $amount=$amounts[$n];
+			   $narration=$narrations[$n];
+			$n++;	
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			}
+
+
+
+
+
+	exit;
 	}
 
 

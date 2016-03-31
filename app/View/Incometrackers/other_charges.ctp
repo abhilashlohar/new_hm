@@ -22,6 +22,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </td>
 <td><a href="<?php echo $webroot_path; ?>Incometrackers/other_charges" class="btn yellow" rel='tab'>Other Charges</a>
 </td>
+<td><a href="<?php echo $webroot_path; ?>Incometrackers/map_other_members" class="btn" rel='tab'>Advance</a>
+</td>
 </tr>
 </table>
 

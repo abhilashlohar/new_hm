@@ -486,8 +486,10 @@ function generate_bills(){
 		$credit_stock=$regular_bill["regular_bill_temp"]["credit_stock"];
 		$due_for_payment=$regular_bill["regular_bill_temp"]["due_for_payment"];
 		$ledger_sub_account_id=$regular_bill["regular_bill_temp"]["ledger_sub_account_id"];
-		 $start_date=$regular_bill["regular_bill_temp"]["start_date"];
-		 $end_date=$regular_bill["regular_bill_temp"]["end_date"];
+		$representative=@$regular_bill["regular_bill_temp"]["representative"];
+		$representator=@$regular_bill["regular_bill_temp"]["representator"];
+		$start_date=$regular_bill["regular_bill_temp"]["start_date"];
+		$end_date=$regular_bill["regular_bill_temp"]["end_date"];
 		$due_date=$regular_bill["regular_bill_temp"]["due_date"];
 		$description=$regular_bill["regular_bill_temp"]["description"];
 		$created_by=$regular_bill["regular_bill_temp"]["created_by"];
@@ -563,6 +565,10 @@ function generate_bills(){
 				 $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 
 				$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($ledger_sub_account_id))); 
+				if($representative=="yes"){
+					$representator_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($representator)));
+					$representator_email=$representator_info["email"];
+				}
 				
 						 $user_name=$result_member_info["user_name"];
 						 $wing_name=$result_member_info["wing_name"];
@@ -848,10 +854,13 @@ function generate_bills(){
 		if($email_is_on_off==1){
 					
 					if(!empty($email)){
-							
-
-							 $subject="[".$society_name."]- Maintenance e-bill, ".date('d-M',$start_date)." to ".date('d-M-Y',$end_date)."";
+						if($representative=="yes"){
+							$subject="[".$society_name."]- Maintenance e-bill, ".date('d-M',$start_date)." to ".date('d-M-Y',$end_date)."";
+							$this->send_email($representator_email,'accounts@housingmatters.in','HousingMatters',$subject,$bill_html,'donotreply@housingmatters.in');
+						}else{
+							$subject="[".$society_name."]- Maintenance e-bill, ".date('d-M',$start_date)." to ".date('d-M-Y',$end_date)."";
 							$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$bill_html,'donotreply@housingmatters.in');
+						}
 					}
 				}
 ////SMS CODE//
@@ -5212,16 +5221,6 @@ $this->other_charge->deleteAll($conditions);
 	$conditions=array('ledger_sub_account_id'=>$ledger_sub_account_id,'income_head_id'=>$inc_head_id);
 	$this->other_charge->deleteAll($conditions);
 
-/*
-$this->loadmodel('flat');
-$result_flat=$this->flat->find('all',array('conditions'=>array('flat_id'=>$flat_id)));
-$charges=$result_flat[0]['flat']['other_charges'];
-foreach($charges as $key=>$value){
-if($key==$inc_head_id){
-unset($charges[$key]);
-}
-}*/
-//$this->flat->updateAll(array('other_charges'=>$charges),array('flat_id'=>$flat_id));
 }
 	
 	$this->response->header('location:other_charges');
@@ -5312,6 +5311,48 @@ function other_charges(){
 <?php
 	}
 
+}
+
+function map_other_members(){
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	
+	$this->ath();
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("society_id"=>$s_society_id,"exited"=>"no");
+	$ledger_sub_accounts = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$arranged_accounts=array();
+	foreach($ledger_sub_accounts as $ledger_sub_account){
+		$ledger_sub_account_id=$ledger_sub_account["ledger_sub_account"]["auto_id"];
+		$member_detail=$this->requestAction(array('controller'=>'Fns','action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+		$user_name = $member_detail['user_name'];
+		$wing_name = $member_detail['wing_name'];
+		$flat_name = $member_detail['flat_name'];
+		$wing_flat=$wing_name.' - '.$flat_name;
+		$arranged_accounts[$ledger_sub_account_id]=array("user_name"=>$user_name,"wing_flat"=>$wing_flat);
+	}
+	$this->set('arranged_accounts',$arranged_accounts);
+	
+	if(isset($this->request->data['sub'])){
+		$first = (int)$this->request->data['first'];
+		$second = (int)$this->request->data['second'];
+		if($first!=$second){
+			$this->loadmodel('ledger_sub_account');
+			$this->ledger_sub_account->updateAll(array('representative'=>'yes','representator'=>$second),array('auto_id'=>$first));
+		}
+		
+	}
+	
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("society_id" => $s_society_id,"representative" => "yes");
+	$ledger_sub_accounts=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$this->set(compact("ledger_sub_accounts"));
 }
 
 function fetch_other_charges_via_ledger_sub_account_id($ledger_sub_account_id){

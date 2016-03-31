@@ -4818,6 +4818,18 @@ function petty_cash_payment_update($auto_id=null)
 	$auto_id=(int)$auto_id;
 	$this->ath();
 		
+		
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("ledger_id"=>15,"society_id"=>$s_society_id);
+	$cursor4=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$this->set('cursor4',$cursor4);
+
+	$this->loadmodel('accounts_group');
+	$conditions=array("accounts_id"=>4);
+	$cursor2=$this->accounts_group->find('all',array('conditions'=>$conditions));
+	$this->set('cursor2',$cursor2);
+		
+		
 	$this->loadmodel('ledger_sub_account');
 	$conditions=array("ledger_id"=>33,"society_id"=>$s_society_id);
 	$cursor3=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
@@ -4867,9 +4879,9 @@ $tds_arr = $collection['reference']['reference'];
 $this->set("tds_arr",$tds_arr);		
 		
 }
-//End petty_cash_Payment_Update//
-//Start petty_cash_Payment_Update//
-function bank_pyment_update($auto_id=null)
+
+//Start bank_payment_update//
+function bank_payment_update($auto_id=null)
 {
 		if($this->RequestHandler->isAjax()){
 		$this->layout='blank';
@@ -4895,6 +4907,11 @@ function bank_pyment_update($auto_id=null)
 	$this->ath();
 	//$this->check_user_privilages();
 
+	
+	
+	
+	
+	
 		$this->loadmodel('new_cash_bank');
 		$conditions=array("transaction_id" => $auto_id,"receipt_source"=>2,"society_id"=>$s_society_id);
 		$cursor1=$this->new_cash_bank->find('all',array('conditions'=>$conditions));

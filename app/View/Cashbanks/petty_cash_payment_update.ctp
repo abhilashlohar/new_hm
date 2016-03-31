@@ -40,15 +40,36 @@ $transaction_date = date('d-m-Y');
 
 <br />
 
+		<label style="font-size:14px;">Expense/Party A/c<span style="color:red;">*</span></label>	
+		<div <?php if($account_type==2){ ?> class="hide" <?php } ?> id="sundry_creditors_select_box">
+			<select class="m-wrap medium chosen" name="sundry_creditor">
+			<option value="" style="display:none;">Select</option>
+			<?php foreach ($cursor4 as $collection){
+			$auto_id=(int)$collection['ledger_sub_account']['auto_id'];
+			$name=$collection['ledger_sub_account']['name'];
+			?>
+			<option value="<?php echo $auto_id; ?>" <?php if($account_type==1 && $auto_id==$user_id){ ?> selected="selected" <?php } ?>><?php echo $name; ?></option>
+			<?php } ?>
+			</select>
+		</div>
 	
-
-	<div class="hide" id="sundry_creditors_select_box">
-	Creditors
-    </div>
-	
-	<div class="hide" id="expenditure_select_box">
-	Expenditure
-	</div>
+		<div <?php if($account_type==1){ ?> class="hide" <?php } ?> id="expenditure_select_box">
+			<select class="m-wrap medium chosen" name="expenditure">
+			<option value="" style="display:none;">Select</option>
+			<?php
+			foreach($cursor2 as $collection)
+			{
+			$auto_id1 = (int)$collection['accounts_group']['auto_id'];
+			$result_ledger_account = $this->requestAction(array('controller' => 'hms', 'action' => 'expense_tracker_fetch2'),array('pass'=>array($auto_id1)));
+			foreach($result_ledger_account as $collection2)
+			{
+			$sub_id = (int)$collection2['ledger_account']['auto_id'];
+			$name = $collection2['ledger_account']['ledger_name'];
+			?>
+			<option value="<?php echo $sub_id; ?>" <?php if($account_type==2 && $sub_id==$user_id){ ?> selected="selected" <?php } ?>><?php echo $name; ?></option>
+			<?php }} ?>
+			</select>
+		</div>
 
 <br>
 

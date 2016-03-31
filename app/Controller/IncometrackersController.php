@@ -486,8 +486,7 @@ function generate_bills(){
 		$credit_stock=$regular_bill["regular_bill_temp"]["credit_stock"];
 		$due_for_payment=$regular_bill["regular_bill_temp"]["due_for_payment"];
 		$ledger_sub_account_id=$regular_bill["regular_bill_temp"]["ledger_sub_account_id"];
-		$representative=@$regular_bill["regular_bill_temp"]["representative"];
-		$representator=@$regular_bill["regular_bill_temp"]["representator"];
+		
 		$start_date=$regular_bill["regular_bill_temp"]["start_date"];
 		$end_date=$regular_bill["regular_bill_temp"]["end_date"];
 		$due_date=$regular_bill["regular_bill_temp"]["due_date"];
@@ -565,10 +564,7 @@ function generate_bills(){
 				 $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 
 				$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($ledger_sub_account_id))); 
-				if($representative=="yes"){
-					$representator_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($representator)));
-					$representator_email=$representator_info["email"];
-				}
+				
 				
 						 $user_name=$result_member_info["user_name"];
 						 $wing_name=$result_member_info["wing_name"];
@@ -577,6 +573,12 @@ function generate_bills(){
 						 $email=$result_member_info["email"];
 						 $mobile=$result_member_info["mobile"];
 						 $wing_id=$result_member_info["wing_id"];
+						 $representative=$result_member_info["representative"];
+						 $representator=$result_member_info["representator"];
+						 if($representative=="yes"){
+							$representator_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($representator)));
+							$representator_email=$representator_info["email"];
+						}
 						
 					$result_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'flat_info_via_ledger_sub_account_id'), array('pass' => array($ledger_sub_account_id))); 
 					$flat_area=$result_flat_info[0]['flat']['flat_area'];

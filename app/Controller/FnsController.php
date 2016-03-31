@@ -277,6 +277,8 @@ function member_info_via_ledger_sub_account_id($ledger_sub_account_id){
 	$conditions=array("auto_id" => $ledger_sub_account_id);
 	$result=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 	$user_flat_id=(int)@$result[0]["ledger_sub_account"]["user_flat_id"];
+	$representative=@$result[0]["ledger_sub_account"]["representative"];
+	$representator=(int)@$result[0]["ledger_sub_account"]["representator"];
 	
 	$this->loadmodel('user_flat');
 	$conditions=array("user_flat_id" => $user_flat_id);
@@ -303,7 +305,7 @@ function member_info_via_ledger_sub_account_id($ledger_sub_account_id){
 	@$flat_name=ltrim(@$result5[0]["flat"]["flat_name"],'0');
 	$flat_area=@$result5[0]["flat"]["flat_area"];
 	
-	return array("user_name"=>$user_name,"wing_name"=>$wing_name,"flat_name"=>$flat_name,"email"=>$email,"mobile"=>$mobile,"wing_id"=>$wing,"flat_id"=>$flat,"flat_area"=>$flat_area,"user_id"=>$user_id);
+	return array("user_name"=>$user_name,"wing_name"=>$wing_name,"flat_name"=>$flat_name,"email"=>$email,"mobile"=>$mobile,"wing_id"=>$wing,"flat_id"=>$flat,"flat_area"=>$flat_area,"user_id"=>$user_id,"representative"=>$representative,"representator"=>$representator);
 }
 
 function flat_info_via_ledger_sub_account_id($ledger_sub_account_id){

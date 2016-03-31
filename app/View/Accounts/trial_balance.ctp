@@ -11,18 +11,18 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </div>
 
 <div align="center">
-	<select class="m-wrap chosen" id="wise"> 
+	<select class="m-wrap chosen large" id="wise"> 
 		<option value="" style="display:none;">Select Option</option>
-		<option value="1">Sundry Creditors Control A/c</option>
-		<option value="2">Members Control Accounts</option>
-		<option value="3">Bank Accounts</option>
-		<option value="4">Detailed trial balance (w/o subledgers)</option>
-		<option value="5">Detailed trial balance (with subledger)</option>
-		<option value="6">Sundry Debtors Control A/c</option>
+		<option value="4" style="text-align:left">1) Summarized Trial balance (w/o subledgers)</option>
+		<option value="5" style="text-align:left">2) Detailed Trial balance (with subledger)</option>
+		<option value="2" style="text-align:left">3) Members Control Accounts</option>
+		<option value="6" style="text-align:left">4) Sundry Debtors Control A/c</option>
+		<option value="3" style="text-align:left">5) Bank Accounts</option>
+		<option value="1" style="text-align:left">6) Sundry Creditors Control A/c</option>
 	</select> 
-	<input type="text" id="from" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="from" placeholder="From"  value="<?php echo $default_from; ?>" style="background-color:#FFF !important;">
-	<input type="text" id="to" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="to" placeholder="To"  value="<?php echo $default_to; ?>" style="background-color:#FFF !important;">
-	<a href="#" style="margin-bottom: 35px;" role="button" class="btn blue icn-only" id="go"><i class="m-icon-swapright m-icon-white"></i></a>
+	<input type="text" id="from" class="date-picker m-wrap small" data-date-format="dd-mm-yyyy" name="from" placeholder="From"  value="<?php echo $default_from; ?>" style="background-color:#FFF !important; margin-top:3px;">
+	<input type="text" id="to" class="date-picker m-wrap small" data-date-format="dd-mm-yyyy" name="to" placeholder="To"  value="<?php echo $default_to; ?>" style="background-color:#FFF !important; margin-top:3px;">
+	<a href="#" style="margin-bottom: 27px;" role="button" class="btn blue icn-only" id="go"><i class="m-icon-swapright m-icon-white"></i></a>
 </div>
 
 

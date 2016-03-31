@@ -1,7 +1,9 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
 ?>
-			   
+<select>
+
+<option style="text-align:left;"			   
 <script>
 $(document).ready(function() {
 $("#fix<?php echo $id_current_page; ?>").removeClass("blue");

@@ -373,36 +373,32 @@ $.validator.addMethod('filesize', function(value, element, param) {
     return this.optional(element) || (element.files[0].size <= param) 
 });
 
-
-
-
-
 $(document).ready(function(){
 
-			var checkboxes = $('.requirecheck1');
-			var checkbox_names = $.map(checkboxes, function(e, i) {
-				return $(e).attr("name")
-			}).join(" ");
-			
-			
-			var checkboxes2 = $('.requirecheck2');
-			var checkbox_names2 = $.map(checkboxes2, function(e, i) {
-				return $(e).attr("name")
-			}).join(" ");
-			
-			var checkboxes3 = $('.requirecheck3');
-			var checkbox_names3 = $.map(checkboxes3, function(e, i) {
-				return $(e).attr("name")
-			}).join(" ");
+var checkboxes = $('.requirecheck1');
+var checkbox_names = $.map(checkboxes, function(e, i) {
+return $(e).attr("name")
+}).join(" ");
 
-$.validator.setDefaults({ ignore: ":hidden:not(select)" });
+var checkboxes2 = $('.requirecheck2');
+var checkbox_names2 = $.map(checkboxes2, function(e, i) {
+return $(e).attr("name")
+}).join(" ");
+			
+var checkboxes3 = $('.requirecheck3');
+var checkbox_names3 = $.map(checkboxes3, function(e, i) {
+return $(e).attr("name")
+}).join(" ");
+
+//$.validator.setDefaults({ ignore: ":hidden:not(select)" });
 $('#contact-form').validate({
-ignore: ".ignore",
+//ignore: ".ignore",
 			errorElement: "label",
                     //place all errors in a <div id="errors"> element
                     errorPlacement: function(error, element) {
                         //error.appendTo("label#errors");
 						error.appendTo('label#' + element.attr('id'));
+						error.appendTo('label#' + element.attr('e_id'));
                     }, 
 	    groups: {
             asdfg: checkbox_names,

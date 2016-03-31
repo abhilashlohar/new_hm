@@ -1976,42 +1976,61 @@ $this->set('cursor2',$cursor2);
 		$paid_froms=$this->request->data['paid_from'];
 		$amounts=$this->request->data['amount'];
 		$narrations=$this->request->data['narration']; 
-			$n=0;
+			$n=0; $receipt_array=array();
 			foreach($transaction_dates as $transaction_date){
 			  $transaction_date=date('Y-m-d',strtotime($transaction_date));
 			  $account_group_id=(int)$account_groups[$n];
 				  if($account_group_id==1){
 					 $sundry_creditor_id=(int)$sundry_creditors[$n];
+					 $expense_party=(int)$sundry_creditor_id;
 				  }else{
 					 $expenditure_id=(int)$expenditures[$n]; 
+					 $expense_party=(int)$expenditure_id;
 				  }
 			   $paid_from_id=(int)$paid_froms[$n];
 			   $amount=$amounts[$n];
 			   $narration=$narrations[$n];
-			$n++;	
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			}
+			$current_date = date('Y-m-d');
 
-
-
-
-
-	exit;
+		$auto=$this->autoincrement('cash_bank','transaction_id');
+		$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','petty_cash_payment');
+		$this->loadmodel('cash_bank');
+		$multipleRowData=Array(Array("transaction_id"=>$auto,"receipt_id"=>$i,"user_id"=>$expense_party,"current_date"=>$current_date,"account_type"=>$account_group_id,"transaction_date"=>strtotime($transaction_date),"prepaired_by"=>$s_user_id,"narration"=>$narration,"account_head"=>$paid_from_id,"amount"=>$amount,"society_id"=>$s_society_id,"source"=>"petty_cash_payment","auto_inc"=>"YES"));
+		$this->cash_bank->saveAll($multipleRowData);  
+        $receipt_array[]=$i;
+	if($account_group_id == 1){
+	$l=$this->autoincrement('ledger','auto_id');
+	$this->loadmodel('ledger');
+	$multipleRowData = Array( Array("auto_id"=>$l,"transaction_date"=>strtotime($transaction_date), "debit"=>$amount,"credit" =>null,"ledger_account_id"=>15,"ledger_sub_account_id"=>$expense_party, "table_name"=>"cash_bank","element_id"=>$auto,"society_id" => $s_society_id));
+	$this->ledger->saveAll($multipleRowData);
+	}else{
+	$l=$this->autoincrement('ledger','auto_id');
+	$this->loadmodel('ledger');
+	$multipleRowData = Array( Array("auto_id"=>$l,"transaction_date"=>strtotime($transaction_date), "debit"=>$amount,"credit"=>null,"ledger_account_id"=>$expense_party,"ledger_sub_account_id" =>null,"table_name"=>"cash_bank","element_id"=>$auto,"society_id"=>$s_society_id));
+	$this->ledger->saveAll($multipleRowData);
 	}
 
-
-
+	$l=$this->autoincrement('ledger','auto_id');
+	$this->loadmodel('ledger');
+	$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => null,"credit" =>$amount,"ledger_account_id"=>$paid_from_id,"ledger_sub_account_id"=>null,"table_name"=>"cash_bank","element_id"=>$auto,"society_id"=>$s_society_id));
+	$this->ledger->saveAll($multipleRowData);			
+	$n++;		
+	}
+	$receipt_array_for_view=implode(',',$receipt_array);
+	?>
+	<div class="modal-backdrop fade in"></div>
+	<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+	<div class="modal-body">
+	<h4><b>Thank You!</b></h4>
+	Petty Cash Payment <?php echo $receipt_array_for_view; ?> generated successfully
+	</div>
+	<div class="modal-footer">
+	<a class="btn red" href="petty_cash_receipt_view">OK</a>
+	</div>
+	</div>
+	<?php
+	}
 }
 //End Petty cash Payment (Accounts)//
 //Start Petty cash Payment View (Accounts)//

@@ -83,7 +83,7 @@ if(sizeof($other_charge_ih_ids)>0){
 
 
 ?>
-<a href="#" style="float: left;" id="send_for_approval">SEND FOR APPROVAL</a> &nbsp|   <a href="#" style="" id="cancel_bill">Cancel this bills</a>
+<a href="#" style="float: left;" id="send_for_approval">SEND FOR APPROVAL</a> &nbsp|   <a href="#" style="" id="cancel_bill">Cancel bills</a>
 
 
 <div align="right" id="save_result" style="height:20px;"></div>

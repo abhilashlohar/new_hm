@@ -245,31 +245,36 @@ function calculate_noc_charge($ledger_sub_account_id,$billing_cycle){
 	$result4=$this->flat->find('all',array('conditions'=>$conditions));
 	$flat_type_id=(int)@$result4[0]["flat"]["flat_type_id"];
 	$flat_area=(int)@$result4[0]["flat"]["flat_area"];
-	
-	$this->loadmodel('noc_rate');
-	$conditions=array("flat_type_id" => $flat_type_id,"society_id" => $s_society_id);
-	$result5=$this->noc_rate->find('all',array('conditions'=>$conditions));
-	$rate_type=(int)@$result5[0]["noc_rate"]["rate_type"];
-	@$rate=@$result5[0]["noc_rate"]["rate"];
-	if($rate_type==1 or $rate_type==3){
-		return $rate*$billing_cycle;
-	}
-	if($rate_type==2){
-		return $rate*$flat_area*$billing_cycle;
-	}
-	if($rate_type==4){
-		$income_heads=$result5[0]["noc_rate"]["income_heads"];
-		$income_heads=explode(',',$income_heads);
-		$ih_amount=0;
-		foreach($income_heads as $income_head_id){
-			$income_head_id=(int)$income_head_id;
-			$ih_amount+= round($this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_income_head_amount'),array('pass'=>array($ledger_sub_account_id,$income_head_id,$billing_cycle))));
+	$noc_ch_tp=(int)@$result4[0]["flat"]["noc_ch_tp"];
+	if($noc_ch_tp==2){
+		$this->loadmodel('noc_rate');
+		$conditions=array("flat_type_id" => $flat_type_id,"society_id" => $s_society_id);
+		$result5=$this->noc_rate->find('all',array('conditions'=>$conditions));
+		$rate_type=(int)@$result5[0]["noc_rate"]["rate_type"];
+		@$rate=@$result5[0]["noc_rate"]["rate"];
+		if($rate_type==1 or $rate_type==3){
+			return $rate*$billing_cycle;
 		}
-		return $ih_amount*0.1;
-	}
-	if($rate_type==5){
+		if($rate_type==2){
+			return $rate*$flat_area*$billing_cycle;
+		}
+		if($rate_type==4){
+			$income_heads=$result5[0]["noc_rate"]["income_heads"];
+			$income_heads=explode(',',$income_heads);
+			$ih_amount=0;
+			foreach($income_heads as $income_head_id){
+				$income_head_id=(int)$income_head_id;
+				$ih_amount+= round($this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_income_head_amount'),array('pass'=>array($ledger_sub_account_id,$income_head_id,$billing_cycle))));
+			}
+			return $ih_amount*0.1;
+		}
+		if($rate_type==5){
+			return 0;
+		}
+	}else{
 		return 0;
 	}
+	
 }
 
 function member_info_via_ledger_sub_account_id($ledger_sub_account_id){

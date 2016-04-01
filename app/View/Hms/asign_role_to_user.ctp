@@ -11,6 +11,19 @@
 <form method="post" id="contact-form">
 <table class="table table-condensed table-bordered">
 	<tr>
+		<td width="30%"><select class="m-wrap span12 chosen" data-placeholder="Choose A Role" name="role" id="role">
+		<option value="" style="display:none;">Select Role</option>
+		<?php foreach($result_hm_role as $data){
+		$role_id = (int)$data['hms_role']['auto_id'];		
+		$role_name = $data['hms_role']['role_name'];	
+		?>
+		<option value="<?php echo $role_id; ?>"><?php echo $role_name; ?></option>
+		<?php } ?>
+		</select>
+		<label id="role"></label>
+		
+		</th>
+		
 		<td width="30%"><select class="m-wrap span12 chosen" data-placeholder="Choose A Role" name="society" id="society">
 		<option value="" style="display:none;">Select Society</option>
 		<?php 
@@ -22,32 +35,11 @@
 		<?php } ?>
 		</select>
 		<label id="society"></label>
-		</th>
-		<td width="30%"><select class="m-wrap span12" data-placeholder="Choose A Role" name="user" id="user" disabled="disabled">
-		<option value="" style="display:none;">Select User</option>
-		<?php foreach($result_user as $data){
-		$user_id = (int)$data['user']['user_id'];		
-		$user_name = $data['user']['user_name'];	
-		?>
-		<option value="<?php echo $user_id; ?>" <?php if($user_id_via_query == $user_id){?> selected="selected" <?php } ?>><?php echo $user_name; ?></option>
-		<?php } ?>
-		</select>
-		<label id="user"></label>
-		</td>
-		<td width="30%"><select class="m-wrap span12 chosen" data-placeholder="Choose A Role" name="role" id="role">
-		<option value="" style="display:none;">Select Role</option>
-		<?php foreach($result_hm_role as $data){
-		$role_id = (int)$data['hms_role']['auto_id'];		
-		$role_name = $data['hms_role']['role_name'];	
-		?>
-		<option value="<?php echo $role_id; ?>"><?php echo $role_name; ?></option>
-		<?php } ?>
-		</select>
-		<label id="role"></label>
 		</td>
 		<td width="10%"><button type="submit" class="btn blue" name="sub">Submit</button></td>
 	</tr>
 </table>
+<input type="hidden" value="<?php echo $user_id_via_query; ?>" name="user_id_name">
 </form>
 <br><br>
 <?php 

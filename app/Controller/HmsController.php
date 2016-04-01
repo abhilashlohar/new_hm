@@ -27390,7 +27390,7 @@ $this->layout='session';
 	$this->set('user_id_via_query',$user_id_via_query);
 if(isset($this->request->data['sub']))
 {
-$user_id = (int)$this->request->data['user'];
+$user_id = (int)$this->request->data['user_id_name'];
 $society_id = (int)$this->request->data['society'];
 $role_id = (int)$this->request->data['role'];
 

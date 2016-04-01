@@ -30,7 +30,7 @@ $default_date = date('d-m-Y');
 				
 			</tbody>
 		</table>
-		<button type="submit" class="btn blue pull-right" name="submit">Create Receipt</button>
+		<button type="submit" class="btn blue pull-right" name="submit">Create Voucher</button>
 	</form>
 		<a href="#" role="button" id="add_row" class="btn"><i class="icon-plus"></i> Add Row</a>
 </div>

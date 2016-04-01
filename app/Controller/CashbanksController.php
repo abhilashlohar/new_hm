@@ -1057,8 +1057,21 @@ $this->layout='session';
 		}
 		$this->set("tds_arr",@$tds_arr);
 
-if(isset($this->request->data['bank_payment_add']))
+if(isset($this->request->data['submit']))
 {
+
+echo "dsgdgsdgdsgds";
+exit;
+
+
+
+
+
+
+
+
+
+
 
 
 

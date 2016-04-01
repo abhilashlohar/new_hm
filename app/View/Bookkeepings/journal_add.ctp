@@ -400,7 +400,7 @@ $(document).ready(function() {
 			url: "journal_validation?q="+myJsonString+"&b="+date2,
 			dataType:'json',
 			}).done(function(response) {
-			//alert(response);
+			
 				$("#output").html(response);
 				
 				if(response.type == 'error'){  

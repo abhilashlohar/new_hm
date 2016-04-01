@@ -3,9 +3,10 @@
 </div> -->
 <div align="right" class="hide_at_print">
 <a  class="btn green mini" onclick="window.print()" ><i class="icon-print"></i>  </a>
+<a  class="btn green mini create_pdf"  ><i class="icon-print"></i>  </a>
 </div>
 <br/>
-<div style="background-color:#fff; border:solid 1px;" class="print_margin" >
+<div style="background-color:#fff; border:solid 1px;" class="print_margin make_pdf" >
 <div class="bg_co" align="center" style="background-color: rgb(0, 141, 210);padding: 5px;font-size: 16px;font-weight: bold;color: #fff;"> <?php echo $society_name; ?> </div>
 
 <div align="center" style="padding: 2px;">
@@ -110,4 +111,8 @@ foreach($result_user_flat as $data)
 </div>
 
 </div>
-
+<script>
+$(document).ready(function() {
+	
+});	
+</script>

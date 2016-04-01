@@ -104,7 +104,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			$tds_id = (int)$tds_sub_arr[1];
 			$tds_tax = $tds_sub_arr[0];	
 			?>
-			<option value= "<?php echo $tds_id; ?>"><?php echo $tds_tax; ?></option>
+			<option value= "<?php echo $tds_id; ?>" charge="<?php echo $tds_tax; ?>"><?php echo $tds_tax; ?></option>
 			<?php } ?>                           
 			</select>
 		    <input type="text"  class="m-wrap span12" 
@@ -155,9 +155,28 @@ $(document).ready(function(){
 });
 </script>
 
+<script>
+$('select[name="tds[]"]').die().live("change",function(){
+		var tds=parseInt($(this).val());
+			var amount=parseFloat($(this).closest("tr").find('input[name="amount[]"]').val());
+				var charge=parseInt($('option:selected',this).attr('charge'));
+					var tds_charge=parseFloat((charge/100)*amount);
+						var total_amount=Math.round(amount-tds_charge);	
+	if($.isNumeric(total_amount)==false){ total_amount=0; }						
+		$(this).closest("tr").find('input[name="net_amount[]"]').val(total_amount);
+});
+</script>
 
-
-
+<script>
+$('input[name="amount[]"]').die().live("blur",function(){
+	var charge=parseInt($(this).closest("tr").find('select[name="tds[]"] option:selected').attr('charge'));
+		var amount=parseFloat($(this).val());
+			var tds_charge=parseFloat((charge/100)*amount);
+					var total_amount=Math.round(amount-tds_charge);	
+	if($.isNumeric(total_amount)==false){ total_amount=0; }						
+		$(this).closest("tr").find('input[name="net_amount[]"]').val(total_amount);
+});
+</script>
 
 
 

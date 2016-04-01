@@ -5550,7 +5550,7 @@ function new_bank_receipt(){
 				
 			$i++; }
 				
-			
+			$this->Session->write('bank_receipt', 1);
 		}
 	
 }

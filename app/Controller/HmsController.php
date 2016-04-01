@@ -1736,6 +1736,10 @@ function griter_notification($id)
 
 ////////////////// Start bill update /////////////////////////
 
+if($id=="bank_receipt"){
+	$this->Session->delete('bank_receipt');
+}
+
 	if($id=="bill_update")
 	{
 		$this->Session->delete('bill_update_status');

@@ -12,7 +12,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <?php $current_date= date('d-m-Y'); ?>
 <div class="portlet box">
 	<div class="portlet-body" >
-	<form method="post">
+	<form method="post" id="myForm">
 		<table class="table table-condensed table-bordered" id="main">
 			<thead>
 				<tr>
@@ -277,6 +277,24 @@ $(document).ready(function(){
 	
 });
 </script>
+<script>
+$(document).ready(function() {
+	<?php	
+	$bank_receipt=(int)$this->Session->read('bank_receipt');
+	if($bank_receipt==1)
+	{
+	?>
+	$.gritter.add({
+	title: 'Success',
+	text: '<p>Receipts generated sucessfully.</p>',
+	sticky: false,
+	time: '10000',
+	});
+	<?php
+	$this->requestAction(array('controller' => 'hms', 'action' => 'griter_notification'), array('pass' => array('bank_receipt')));
+	} ?>
+	});
+</script> 
 <style>
 .er{
 color: rgb(198, 4, 4);

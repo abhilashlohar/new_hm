@@ -860,13 +860,13 @@ function master_ledger_account_coa()
 			$ledger_name = $this->request->data['cat'];
 
 			$this->loadmodel('ledger_account');
-			$this->ledger_account->updateAll(array("ledger_name" => $ledger_name,"group_id"=>$group_id),array("auto_id" => $auto_id));	
+			$this->ledger_account->updateAll(array("ledger_name" =>trim($ledger_name),"group_id"=>(int)$group_id),array("auto_id" => $auto_id));	
 			}
 			
 			if(isset($this->request->data['sub2'.$auto_id]))
 			{
 			$this->loadmodel('ledger_account');
-			$this->ledger_account->updateAll(array("delete_id" => 1),array("auto_id" => $auto_id));	
+			$this->ledger_account->updateAll(array("delete_id" =>1),array("auto_id" => $auto_id));	
 			}
 	}
 
@@ -895,7 +895,7 @@ function master_ledger_account_coa()
 				}
 				$i++;
 				$this->loadmodel('ledger_account');
-				$multipleRowData = Array( Array("auto_id" => $i, "group_id" => $main_id, "ledger_name" => $name, "rate" => $rate,"society_id"=> $s_society_id,"edit_user_id"=>$s_user_id,"delete_id" => 0));
+				$multipleRowData = Array( Array("auto_id"=>(int)$i,"group_id" =>(int)$main_id,"ledger_name" =>trim($name),"society_id"=>(int)$s_society_id,"edit_user_id"=>(int)$s_user_id,"delete_id"=>0));
 				$this->ledger_account->saveAll($multipleRowData);
 		}
 		else if($main_id == 7 || $main_id == 8)
@@ -917,7 +917,7 @@ function master_ledger_account_coa()
 			}
 			$i++;
 			$this->loadmodel('ledger_account');
-			$multipleRowData = Array( Array("auto_id" => $i, "group_id" => $main_id, "ledger_name" => $name, "society_id"=> $s_society_id,"edit_user_id"=>$s_user_id,"delete_id" => 0));
+			$multipleRowData = Array( Array("auto_id"=>(int)$i,"group_id" =>(int)$main_id,"ledger_name" =>trim($name),"society_id"=>(int)$s_society_id,"edit_user_id"=>(int)$s_user_id,"delete_id" =>0));
 			$this->ledger_account->saveAll($multipleRowData);	
 		}
 		else
@@ -939,7 +939,7 @@ function master_ledger_account_coa()
 			}
 			$i++;
 			$this->loadmodel('ledger_account');
-			$multipleRowData = Array( Array("auto_id" => $i, "group_id" => $main_id, "ledger_name" => $name,"society_id"=> $s_society_id,"edit_user_id"=>$s_user_id,"delete_id" => 0));
+			$multipleRowData = Array( Array("auto_id" =>(int)$i,"group_id"=>(int)$main_id,"ledger_name" =>trim($name),"society_id"=>(int)$s_society_id,"edit_user_id"=>(int)$s_user_id,"delete_id" =>0));
 			$this->ledger_account->saveAll($multipleRowData);	
 		}
 
@@ -1041,8 +1041,8 @@ function master_ledger_sub_accounts_coa()
 			$main_id = (int)$this->request->data['main_id'];
 			$name = $this->request->data['cat_name'];
 
-	if($main_id == 34)
-	{
+		if($main_id == 34)
+		{
 		$user_id = (int)$this->request->data['user_id'];
 
 			$this->loadmodel('ledger_sub_account');
@@ -1062,7 +1062,7 @@ function master_ledger_sub_accounts_coa()
 			}
 			$i++;
 		$this->loadmodel('ledger_sub_account');
-		$multipleRowData = Array( Array("auto_id" => $i, "ledger_id" => $main_id, "name" => $name, "society_id" => $s_society_id, "user_id" => $user_id,"delete_id"=>0,"deactive"=>0));
+		$multipleRowData = Array( Array("auto_id" =>(int)$i,"ledger_id"=>(int)$main_id,"name"=>trim($name),"society_id"=>(int)$s_society_id,"user_id"=>(int)$user_id));
 		$this->ledger_sub_account->saveAll($multipleRowData);	
 	}
 	else if($main_id == 15)
@@ -1081,7 +1081,7 @@ function master_ledger_sub_accounts_coa()
 		
 		$this->loadmodel('ledger_sub_account');
 		$i=$this->autoincrement('ledger_sub_account','auto_id');
-		$multipleRowData = Array( Array("auto_id"=>$i,"ledger_id"=>$main_id,"name"=>$name,"society_id" => $s_society_id,"delete_id"=>0,"sp_id"=>$sp_id2));
+		$multipleRowData = Array( Array("auto_id"=>(int)$i,"ledger_id"=>(int)$main_id,"name"=>trim($name),"society_id"=>(int)$s_society_id,"sp_id"=>(int)$sp_id2));
 		$this->ledger_sub_account->saveAll($multipleRowData);	
 		
 		
@@ -1107,7 +1107,7 @@ function master_ledger_sub_accounts_coa()
 			}
 			$i++;
 				$this->loadmodel('ledger_sub_account');
-				$multipleRowData = Array( Array("auto_id" => $i, "ledger_id" => $main_id, "name" => $name, "society_id" => $s_society_id, "bank_account" => $bank_ac,"delete_id"=>0));
+				$multipleRowData = Array( Array("auto_id"=>(int)$i,"ledger_id"=>(int)$main_id,"name"=>trim($name),"society_id"=>(int)$s_society_id,"bank_account"=>$bank_ac));
 				$this->ledger_sub_account->saveAll($multipleRowData);	
 	}
 	else if($main_id == 35)
@@ -1130,7 +1130,7 @@ function master_ledger_sub_accounts_coa()
 			$i++;
 			
 				$this->loadmodel('ledger_sub_account');
-				$multipleRowData = Array( Array("auto_id" => $i, "ledger_id" => $main_id, "name" => $name, "society_id" => $s_society_id,"delete_id"=>0));
+				$multipleRowData = Array( Array("auto_id" =>(int)$i,"ledger_id"=>(int)$main_id,"name" =>trim($name),"society_id"=>(int)$s_society_id));
 				$this->ledger_sub_account->saveAll($multipleRowData);
 	}
 	else
@@ -1152,7 +1152,7 @@ function master_ledger_sub_accounts_coa()
 			}
 			$i++;
 				$this->loadmodel('ledger_sub_account');
-				$multipleRowData = Array( Array("auto_id" => $i, "ledger_id" => $main_id, "name" => $name, "society_id" => $s_society_id,"delete_id"=>0));
+				$multipleRowData = Array( Array("auto_id"=>(int)$i,"ledger_id"=>(int)$main_id,"name"=>trim($name),"society_id"=>(int)$s_society_id));
 				$this->ledger_sub_account->saveAll($multipleRowData);	
 	}
 ?>

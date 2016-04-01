@@ -63,6 +63,17 @@ if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type) 
 </div>
 </center>
 <?php } ?>
+
+<?php 
+
+if(sizeof($result_regular_bill_temp)>0){
+	echo"";
+	exit;
+}
+
+
+?>
+
 <?php if(!empty($select_income_head_array) && !empty($penalty_tax) && !empty($neft_type) && $nn==55 && $nnn==55){ ?>
 
 <div class="portlet box blue">

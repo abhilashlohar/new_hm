@@ -83,7 +83,8 @@ if(sizeof($other_charge_ih_ids)>0){
 
 
 ?>
-<a href="#" style="float: left;" id="send_for_approval">SEND FOR APPROVAL</a>
+<a href="#" style="float: left;" id="send_for_approval">SEND FOR APPROVAL</a> 
+
 
 <div align="right" id="save_result" style="height:20px;"></div>
 <table id="fixed_hdr1">
@@ -101,11 +102,11 @@ if(sizeof($other_charge_ih_ids)>0){
 			<th><?php echo $income_head_name; ?></th>
 			<?php } ?>
 			<th>Total</th>
-			<th>arrear_maintenance</th>
-			<th>arrear_intrest</th>
-			<th>intrest_on_arrears</th>
-			<th>credit_stock</th>
-			<th>due_for_payment</th>
+			<th>Arrear maintenance</th>
+			<th>Arrear intrest</th>
+			<th>Intrest on arrears</th>
+			<th>Credit stock</th>
+			<th>Due for payment</th>
 		</tr>
 	</thead>
 	<tbody>

@@ -54,6 +54,10 @@ function it_regular_bill(){
 	$result_wing=$this->wing->find('all',array('conditions'=>$condition));
 	$this->set(compact("result_wing"));
 	
+	$this->loadmodel('regular_bill_temp');
+	$condition=array('society_id'=>$s_society_id);
+	$result_regular_bill_temp=$this->regular_bill_temp->find('all',array('conditions'=>$condition));
+	$this->set(compact("result_regular_bill_temp"));
 	
 	if(isset($this->request->data['preview'])){
 		$billing_cycle=$this->data["billing_cycle"];

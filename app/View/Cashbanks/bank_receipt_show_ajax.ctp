@@ -52,6 +52,11 @@
 				
 				
 				}
+				$created_by = $receipt['cash_bank']['created_by'];
+				$created_on = @$receipt['cash_bank']['created_on'];
+				$creator_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($created_by)));
+				$creator_name=$creator_info["user_name"];
+				
 				$deposited_in=$receipt["cash_bank"]["deposited_in"];
 				$deposited_in_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($deposited_in)));
 				
@@ -85,6 +90,7 @@
 							<li><a href="bank_receipt_html_view/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i>View</a></li>
 							</ul>
 						</div>
+						<i class="icon-info-sign tooltips " data-placement="left" data-original-title="Created by: <?php echo $creator_name; ?> On: <?php echo $created_on; ?>" style="cursor: default;"></i>
 					</td>
 				</tr>
 			<?php } ?>

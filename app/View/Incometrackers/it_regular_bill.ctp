@@ -71,7 +71,7 @@ if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type) 
 <?php 
 
 if(sizeof($result_regular_bill_temp)>0){
-	echo'<center><h4><b>Your bills are already under process </b></h4> <a href="preview_regular_bill" class="btn blue" role="btn" >Preview bills </a> </center>';
+	echo'<center><h5><b>Your bills are already under process </b></h5> <a href="preview_regular_bill" class="btn blue" role="btn" >Preview bills </a> </center>';
 	goto a;
 }
 

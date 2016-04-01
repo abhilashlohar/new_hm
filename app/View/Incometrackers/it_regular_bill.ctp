@@ -3,12 +3,11 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 ?>
 
 <?php 
-foreach($result_society as $data)
-      {
-	  $select_income_head_array = @$data['society']['income_head'];
-      $penalty_tax = @$data['society']['tax'];
-	  $neft_type = @$data['society']['neft_type'];
-	  }
+foreach($result_society as $data){
+  $select_income_head_array = @$data['society']['income_head'];
+  $penalty_tax = @$data['society']['tax'];
+  $neft_type = @$data['society']['neft_type'];
+}
 	$nn=55; 
 	if(!empty($select_income_head_array)){
 	foreach($select_income_head_array as $income_head){  
@@ -136,13 +135,13 @@ if(sizeof($result_regular_bill_temp)>0){
 					<label class="radio">
 					<input type="radio" value="all" name="bill_for" checked> All Units 
 					</label>
-					<label class="radio" style="display: none;">
+					<label class="radio">
 					<input type="radio" value="wing_wise" name="bill_for"> Wing Wise
 					</label>
 				  </div>
 				</div>
 				
-				<div class="control-group" style="display: none;">
+				<div class="control-group" style="display: none;" id="wing_box">
 				  <div class="controls">
 				  <?php foreach($result_wing as $wings){
 					$wing_id=$wings["wing"]["wing_id"];
@@ -170,3 +169,16 @@ if(sizeof($result_regular_bill_temp)>0){
 </div>
 
 <?php } a: ; ?>
+
+<script>
+$(document).ready(function(){
+	$("input[name=bill_for]").on("click",function(){
+		var bill_for=$(this).val();
+		if(bill_for=="wing_wise"){
+			$("#wing_box").show();
+		}else{
+			$("#wing_box").hide();
+		}
+	});
+});
+</script>

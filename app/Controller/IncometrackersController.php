@@ -72,7 +72,7 @@ function it_regular_bill(){
 		$due_date=date("Y-m-d",strtotime($due_date)); 
 		$panalty=$this->data["panalty"];
 		$bill_for=$this->data["bill_for"];
-		if($bill_for=="wing_wise"){ $wings=$this->data["wings"]; }
+		if($bill_for=="wing_wise"){ $wing_ids=$this->data["wings"]; }
 		$description=htmlentities($this->data["description"]);
 		
 		$this->loadmodel('ledger_sub_account');
@@ -89,21 +89,23 @@ function it_regular_bill(){
 		$wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
 		foreach($wings as $data){
 			$wing_id=$data["wing"]["wing_id"];
-			$this->loadmodel('flat');
-			$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
-			$order=array('flat.flat_name'=>'ASC');
-			$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
-			foreach($flats as $data2){
-				$flat_id=$data2["flat"]["flat_id"];
-				$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
-				if(!empty($ledger_sub_account_id)){
-					if (in_array($ledger_sub_account_id, $ledger_sub_account_ids)){
-						$members_for_billing[]=$ledger_sub_account_id;
+			if (in_array($wing_id, $wing_ids)){
+				$this->loadmodel('flat');
+				$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+				$order=array('flat.flat_name'=>'ASC');
+				$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+				foreach($flats as $data2){
+					$flat_id=$data2["flat"]["flat_id"];
+					$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+					if(!empty($ledger_sub_account_id)){
+						if (in_array($ledger_sub_account_id, $ledger_sub_account_ids)){
+							$members_for_billing[]=$ledger_sub_account_id;
+						}
 					}
 				}
-				
 			}
 		}
+		
 		
 		$this->loadmodel('society');
 		$condition=array('society_id'=>$s_society_id);

@@ -8,6 +8,34 @@ public $components = array(
 );
 var $name = 'Cashbanks';
 
+function validate_transaction_date($transaction_date=null){
+	$transaction_date=date("Y-m-d",strtotime($transaction_date));
+	$transaction_date=strtotime($transaction_date);
+	$this->ath();
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$this->loadmodel('financial_year');
+	$conditions=array("society_id" => $s_society_id,"status"=>1);
+	$financial_years=$this->financial_year->find('all',array('conditions'=>$conditions));
+	
+	if(!empty($transaction_date)){
+		//$output=0;
+		foreach($financial_years as $financial_year){
+			$from=$financial_year["financial_year"]["from"];
+			$to=$financial_year["financial_year"]["to"];
+			if($transaction_date>=$from && $transaction_date<=$to){
+				$output='true'; break;
+			}else{
+				$output='false';
+			}
+			
+		} echo $output; exit;
+		
+	}else{
+		echo 'false';
+	}
+	
+}
+
 function import_bank_receipts_csv(){
 	if($this->RequestHandler->isAjax()){
 		$this->layout='blank';

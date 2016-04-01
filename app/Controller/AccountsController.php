@@ -771,34 +771,17 @@ function master_financial_year()
 			$to = $this->request->data['to'];	
 
 			$m_from = date("Y-m-d", strtotime($from));
-			$m_from = new MongoDate(strtotime($m_from));
 
 			$m_to = date("Y-m-d", strtotime($to));
-			$m_to = new MongoDate(strtotime($m_to));
-
-			$from1 = date('d-M-Y',strtotime($from));
-			$to1 = date('d-M-Y',strtotime($to));
 
 	$a=$this->autoincrement('financial_year','auto_id');
 	$this->loadmodel('financial_year');
-	$multipleRowData = Array( Array("auto_id" => $a, "from" => $m_from, "to" => $m_to,"user_id"=>$s_user_id, "status"=> 1, "society_id" => $s_society_id));
+	$multipleRowData = Array( Array("auto_id" => $a, "from" => strtotime($m_from), "to" => strtotime($m_to),"user_id"=>$s_user_id, "status"=> 1, "society_id" => $s_society_id));
 	$this->financial_year->saveAll($multipleRowData); 
 
     $this->Session->write('ffyyyy', 1);
 	
-?>
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body">
-<h4><b>Thank You!</b></h4>
-The Financial Year Created Successfully
-</div>
-<div class="modal-footer">
-<a href="master_financial_period_status" class="btn red">OK</a>
-</div>
-</div>
-			
-<?php
+	$this->redirect(array('action' => 'master_financial_period_status'));
 	 }
 		$this->loadmodel('financial_year');
 		$conditions=array("society_id" => $s_society_id);

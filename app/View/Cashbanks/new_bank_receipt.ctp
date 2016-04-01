@@ -149,7 +149,22 @@ $(document).ready(function(){
 	
 	$("form").on("submit",function(e){
 		var allow="yes";
-		$('#main tbody tr select[name="deposited_in[]"]').each(function(i, obj) {
+		$('#main tbody tr input[name="transaction_date[]"]').each(function(i, obj){
+			var transaction_date=$(this).val();
+			$.ajax({
+				url: "<?php echo $webroot_path; ?>Cashbanks/validate_transaction_date/"+transaction_date,
+			}).done(function(response){
+				if(response=='false'){
+					$('#main tbody tr:eq('+i+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
+					$('#main tbody tr:eq('+i+') input[name="transaction_date[]"]').closest('td').append('<p class="er">Not in financial year</p>');
+					allow="no";
+				}else{
+					$('#main tbody tr:eq('+i+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
+				}
+			});
+		});
+		
+		$('#main tbody tr select[name="deposited_in[]"]').each(function(i, obj){
 			var deposited_in=$(this).val();
 			if(deposited_in==""){
 				$(this).closest('td').find(".er").remove();
@@ -196,6 +211,8 @@ $(document).ready(function(){
 			e.preventDefault();
 		}
 	});
+	
+	
 	
 	$('select[name="deposited_in[]"]').die().live("change",function(){
 		var deposited_in=$(this).val();

@@ -29,8 +29,8 @@ $n++;
 $auto_id = (int)$collection['financial_year']['auto_id'];
 $from = $collection['financial_year']['from'];
 $to = $collection['financial_year']['to'];
-$fromm = date('d-M-Y',$from->sec);
-$tom = date('d-M-Y',$to->sec);
+$fromm=date("d-m-Y",$from);
+$tom=date("d-m-Y",$to);
 $status = (int)$collection['financial_year']['status'];
 $society_id = (int)$collection['financial_year']['society_id'];
 ?>

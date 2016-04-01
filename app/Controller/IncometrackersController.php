@@ -351,6 +351,14 @@ function preview_regular_bill(){
 	
 }
 
+function cancel_bill(){
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$this->loadmodel('regular_bill_temp');	
+	$this->regular_bill_temp->deleteAll(array('society_id'=>$s_society_id));	
+	echo "ok";	
+}
+
+
 function send_bills_for_approval(){
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$this->loadmodel('regular_bill_temp');

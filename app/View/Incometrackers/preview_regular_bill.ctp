@@ -83,7 +83,7 @@ if(sizeof($other_charge_ih_ids)>0){
 
 
 ?>
-<a href="#" style="float: left;" id="send_for_approval">SEND FOR APPROVAL</a> 
+<a href="#" style="float: left;" id="send_for_approval">SEND FOR APPROVAL</a> &nbsp|   <a href="#" style="" id="cancel_bill">Cancel this bills</a>
 
 
 <div align="right" id="save_result" style="height:20px;"></div>
@@ -343,5 +343,23 @@ $(document).ready(function(){
 			});
 		}
 	})
+	
+	$("#cancel_bill").on("click",function(e){
+		e.preventDefault();
+		var answer = confirm ("Confirm, Are you want to cancel this bills ? .")
+		if(answer){
+			$.ajax({
+			url: "<?php echo $webroot_path; ?>Incometrackers/cancel_bill",
+			}).done(function(response){
+				if(response=="ok"){
+					window.location.href="<?php echo $webroot_path; ?>Incometrackers/it_regular_bill";
+				}
+			});
+			
+		}
+	})
+	
+	
+	
 });
 </script>

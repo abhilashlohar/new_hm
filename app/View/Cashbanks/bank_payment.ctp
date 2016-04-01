@@ -13,7 +13,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <a href="#" class="btn purple" role="button" id="import" style="float:right; margin-right:8px;"><i class="fa fa-database"></i> Import csv</a>
 </center>
 <!-------------------START NEW CODE---------------->
-<br><br>
+
 <?php $default_date = date('d-m-Y'); ?>
 <!------Start Form Code---------->
 <div class="portlet box">

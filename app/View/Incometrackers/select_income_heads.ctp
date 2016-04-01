@@ -23,18 +23,19 @@ if(!empty($income_head_selected_arr))
 }
 else
 {
-$income_head_arr2 = $income_head_arr1;	
+$income_head_arr2 = @$income_head_arr1;	
 }
 if(!empty($income_head_other_charges))
 {
 $income_head_arr2=array_diff($income_head_arr2,$income_head_other_charges);
 }
-
+if(!empty($income_head_arr2))
+{
 foreach($income_head_arr2 as $data)
 {
 $income_arrr[] = $data;
 }
-
+}
 
 
 ?>

@@ -72,7 +72,7 @@ function it_regular_bill(){
 		$due_date=date("Y-m-d",strtotime($due_date)); 
 		$panalty=$this->data["panalty"];
 		$bill_for=$this->data["bill_for"];
-		if($bill_for=="wing_wise"){ $wing_ids=$this->data["wings"]; }
+		if($bill_for=="wing_wise"){ $wing_ids=$this->data["wings"]; }else{ $wing_ids=array(); }
 		$description=htmlentities($this->data["description"]);
 		
 		$this->loadmodel('ledger_sub_account');

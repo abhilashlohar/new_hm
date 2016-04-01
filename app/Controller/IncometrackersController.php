@@ -55,7 +55,7 @@ function it_regular_bill(){
 	$this->set(compact("result_wing"));
 	
 	$this->loadmodel('regular_bill_temp');
-	$condition=array('society_id'=>$s_society_id);
+	$condition=array('society_id'=>$s_society_id,'sent_for_approval'=>'no');
 	$result_regular_bill_temp=$this->regular_bill_temp->find('all',array('conditions'=>$condition));
 	$this->set(compact("result_regular_bill_temp"));
 	

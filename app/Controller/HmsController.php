@@ -27541,13 +27541,13 @@ if (isset($this->request->data['add']))
 	
 	if(!empty($group_name) and ($group_duplicate==0))
 	{
-	$group_id=$this->autoincrement('group','group_id');
-	$this->loadmodel('group');
-	$multipleRowData = Array( Array("group_id" => $group_id,"group_name"=>$group_name,"society_id"=>$s_society_id,'group_show_id'=>0,"users"=>array(),'delete_id'=>0));
-	$this->group->saveAll($multipleRowData); 
-	$this->response->header('Location', 'groupview/'.$group_id);
-	
-	$this->Session->write('group_status', 1);
+		$group_id=$this->autoincrement('group','group_id');
+		$this->loadmodel('group');
+		$multipleRowData = Array( Array("group_id" => $group_id,"group_name"=>$group_name,"society_id"=>$s_society_id,"users"=>array()));
+		$this->group->saveAll($multipleRowData); 
+		$this->response->header('Location', 'groupview/'.$group_id);
+		
+		$this->Session->write('group_status', 1);
 	}
 	else{
 		$this->set('error_addgroup','Group name should not be duplicate.');
@@ -27555,7 +27555,7 @@ if (isset($this->request->data['add']))
 }
 
 $this->loadmodel('group');
-$conditions=array("society_id"=>$s_society_id,'group_show_id'=>0,'delete_id'=>0);
+$conditions=array("society_id"=>$s_society_id);
 $order=array('group.group_id'=>'DESC');
 $this->set('result_group',$this->group->find('all',array('conditions'=>$conditions,'order'=>$order))); 
 }
@@ -27622,7 +27622,7 @@ function group_delete(){
 	$s_user_id=$this->Session->read('hm_user_id'); 
 	$s_society_id=$this->Session->read('hm_society_id'); 
 	$this->loadmodel('group');
-	$this->group->updateAll(array("delete_id" =>1),array("group_id" => (int)$id));
+	$this->group->deleteAll(array("group_id" => (int)$id));
 	$this->response->header('Location', 'groups_new');
 	
 }

@@ -101,6 +101,14 @@ foreach($result_wing as $data){
 
 <script>
 $(document).ready(function(){
+	var x='';
+	$.ajax({
+			url: "<?php echo $webroot_path; ?>Incometrackers/master_noc_status_update_ajax_all/"+x,
+		     }).done(function(response){
+			$('#new_update').html(response);
+		});	
+	
+	
 	$('input[type="radio"].noc_updat').click(function() {
 		var value=$(this).val();
 		var flat_id=$(this).attr('update');	

@@ -104,8 +104,7 @@ $amount = number_format($amount);
 <ul class="dropdown-menu" style="min-width:80px !important;">
 <li><a href="petty_cash_payment_html_view/<?php echo $transaction_id; ?>" target="_blank"><i class="icon-search"></i>View</a></li>
 <li><a href="petty_cash_payment_update/<?php echo $transaction_id; ?>"><i class="icon-edit"></i>Edit</a> </li>
-<li><a href="" target="_blank"><i class="icon-file"></i>Pdf</a>
-</li>
+
 </ul>
 </div>
 <i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: <?php echo $prepaired_by_name; ?> on: <?php echo $creation_date; ?>">

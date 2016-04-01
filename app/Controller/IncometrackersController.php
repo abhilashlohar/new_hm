@@ -5542,9 +5542,9 @@ function master_rate_card(){
 	$conditions=array('society_id'=>$s_society_id);
 	$result_society=$this->society->find('all',array('conditions'=>$conditions));
 	foreach($result_society as $data){
-	$area_type=(int)$data['society']['area_scale'];	
+	@$area_type=(int)@$data['society']['area_scale'];	
 	}
-	$this->set('area_type',$area_type);
+	$this->set('area_type',@$area_type);
 	
 	
 	
@@ -5814,9 +5814,9 @@ $this->loadmodel('society');
 $conditions=array('society_id'=>$s_society_id);
 $result_society=$this->society->find('all',array('conditions'=>$conditions));
 foreach($result_society as $data){
-$area_type=(int)$data['society']['area_scale'];	
+@$area_type=(int)@$data['society']['area_scale'];	
 }
-$this->set('area_type',$area_type);
+$this->set('area_type',@$area_type);
 
 
 
@@ -5843,20 +5843,36 @@ function master_noc_status_update_ajax($update=null,$flat_id=null){
 }
 
 function master_noc_status_update_ajax_all($update=null){
+	
 				$s_society_id = (int)$this->Session->read('hm_society_id');
-				$this->loadmodel('flat');
-				$this->flat->updateAll(array('noc_ch_tp'=>(int)$update),array('society_id'=>(int)$s_society_id));
-				
-				$this->loadmodel('flat');
-				$conditions=array("society_id"=>$s_society_id,'noc_ch_tp'=>1);
-				$result_count_flat_self = $this->flat->find('count',array('conditions'=>$conditions));
-				
-				$this->loadmodel('flat');
-				$conditions1=array("society_id"=>$s_society_id,'noc_ch_tp'=>2);
-				$result_count_flat_les = $this->flat->find('count',array('conditions'=>$conditions1));
-				
-				echo '<span class="label label-info"> Number of Self Occupied flats <span style="font-size:15px;">'.$result_count_flat_self.'</span> </span> 
-				<span class="label label-info"> Number of Leased flats <span style="font-size:15px;">'.$result_count_flat_les.'</span></span>';
+				if(!empty($update)){
+						
+						$this->loadmodel('flat');
+						$this->flat->updateAll(array('noc_ch_tp'=>(int)$update),array('society_id'=>(int)$s_society_id));
+						
+						$this->loadmodel('flat');
+						$conditions=array("society_id"=>$s_society_id,'noc_ch_tp'=>1);
+						$result_count_flat_self = $this->flat->find('count',array('conditions'=>$conditions));
+						
+						$this->loadmodel('flat');
+						$conditions1=array("society_id"=>$s_society_id,'noc_ch_tp'=>2);
+						$result_count_flat_les = $this->flat->find('count',array('conditions'=>$conditions1));
+						
+						echo '<span class="label label-info"> Number of Self Occupied flats <span style="font-size:15px;">'.$result_count_flat_self.'</span> </span> 
+						<span class="label label-info"> Number of Leased flats <span style="font-size:15px;">'.$result_count_flat_les.'</span></span>';
+				}else{
+						$this->loadmodel('flat');
+						$conditions=array("society_id"=>$s_society_id,'noc_ch_tp'=>1);
+						$result_count_flat_self = $this->flat->find('count',array('conditions'=>$conditions));
+						
+						$this->loadmodel('flat');
+						$conditions1=array("society_id"=>$s_society_id,'noc_ch_tp'=>2);
+						$result_count_flat_les = $this->flat->find('count',array('conditions'=>$conditions1));
+						
+						echo '<span class="label label-info"> Number of Self Occupied flats <span style="font-size:15px;">'.$result_count_flat_self.'</span> </span> 
+						<span class="label label-info"> Number of Leased flats <span style="font-size:15px;">'.$result_count_flat_les.'</span></span>';
+					
+				}
 }
 
 

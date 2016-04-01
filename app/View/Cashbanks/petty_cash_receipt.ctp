@@ -82,7 +82,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
     </select>
 	</td>
 	<td>
-	<input type="text" class="m-wrap span12" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="5" name="amount[]">
+	<input type="text" class="m-wrap span12" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="5" name="amount[]" id="amount">
 	</td>
 	<td>
 	<a style="margin-top: -4px; margin-right: -5px;" role="button" class="btn mini pull-right remove_row" href="#"><i class="icon-trash"></i></a>
@@ -131,16 +131,113 @@ $('select[name="account_group[]"]').die().live("change",function(){
 
 </script>
 
+<script>
+$('input[name="amount[]"]').die().live("keyup",function(){
+		var amount=$(this).val();
+		if($.isNumeric(amount))
+		{
+		}else{
+		$(this).closest("td").find("#amount").val('');	
+		}
+});
+
+</script>
+
+<script>
+$("form").on("submit",function(e){
+		var allow="yes";
+		$('#main tbody tr select[name="account_group[]"]').each(function(i, obj){
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+			if(deposited_in==1){
+				
+				var ledger_sub_account=$(this).closest("tr").find('select[name="ledger_sub_account[]"]').val();
+			if(ledger_sub_account==""){
+				$(this).parent().next('td').find(".er").remove();
+				$(this).parent().next('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).parent().next('td').find(".er").remove();
+			}
+			}
+			else
+			{
+				
+			var other_income=$(this).closest("tr").find('select[name="other_income[]"]').val();
+			
+			if(other_income==""){
+				$(this).parent().next('td').find(".er").remove();
+				$(this).parent().next('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).parent().next('td').find(".er").remove();
+			}	
+				
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+		});	
+
+	
+$('#main tbody tr select[name="account_head[]"]').each(function(i, obj) {
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+
+
+$('#main tbody tr input[name="amount[]"]').each(function(i, obj) {
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		
+		
+		
+
+	
+	if(allow=="no"){
+			e.preventDefault();
+		}
+});
 
 
 
 
 
 
-
-
-
-
+</script>
+<style>
+input,select{
+	margin:0 !important;
+}
+.er{
+color: rgb(198, 4, 4);
+font-size: 11px;
+}
+</style>
 <?php $default_date = date('d-m-Y'); ?>
 <?php /*
 <form method="post">

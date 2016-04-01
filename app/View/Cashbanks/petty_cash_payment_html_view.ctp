@@ -1,16 +1,16 @@
 <?php 
 foreach ($cursor1 as $collection) 
 {
-$receipt_no = (int)$collection['new_cash_bank']['receipt_id'];
-$d_date = $collection['new_cash_bank']['transaction_date'];
+$receipt_no = (int)$collection['cash_bank']['receipt_id'];
+$d_date = $collection['cash_bank']['transaction_date'];
 $today = date("d-M-Y");
-$amount = $collection['new_cash_bank']['amount'];
-$society_id = (int)$collection['new_cash_bank']['society_id'];
-$narration = @$collection['new_cash_bank']['narration'];
-$user_id = (int)@$collection['new_cash_bank']['user_id'];
-$account_type = (int)@$collection['new_cash_bank']['account_type'];
-$sub_account = (int)$collection['new_cash_bank']['account_head'];
-$prepaired_by = (int)$collection['new_cash_bank']['prepaired_by'];
+$amount = $collection['cash_bank']['amount'];
+$society_id = (int)$collection['cash_bank']['society_id'];
+$narration = @$collection['cash_bank']['narration'];
+$user_id = (int)@$collection['cash_bank']['user_id'];
+$account_type = (int)@$collection['cash_bank']['account_type'];
+$sub_account = (int)$collection['cash_bank']['account_head'];
+$prepaired_by = (int)$collection['cash_bank']['prepaired_by'];
 }
 $amount = str_replace( ',', '', $amount );
 $am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));

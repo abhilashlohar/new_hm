@@ -23,20 +23,22 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </tr>
 <?php 
 $n = 0;
-foreach($cursor1 as $collection)
-{
-$n++;
-$auto_id = (int)$collection['financial_year']['auto_id'];
-$from = $collection['financial_year']['from'];
-$to = $collection['financial_year']['to'];
-$fromm=date("d-m-Y",$from);
-$tom=date("d-m-Y",$to);
-$status = (int)$collection['financial_year']['status'];
-$society_id = (int)$collection['financial_year']['society_id'];
+
+foreach($cursor1 as $collection){
+	$n++;
+	$auto_id = (int)$collection['financial_year']['auto_id'];
+	$from = $collection['financial_year']['from'];
+	$to = $collection['financial_year']['to'];
+	$from_date=date('Y-m-d',($from));
+	$to_date=date('Y-m-d',($to));
+	$from_date_for_view=date('d-m-Y',strtotime($from_date));
+	$to_date_for_view=date('d-m-Y',strtotime($to_date));
+	$status = (int)$collection['financial_year']['status'];
+	$society_id = (int)$collection['financial_year']['society_id'];
 ?>
 <tr>
 <td style="text-align:center;"><p style="font-size:18px;"><?php echo $n; ?></p></td>
-<td style="text-align:center;"><p style="font-size:18px;"><?php echo $fromm; ?> - <?php echo $tom; ?></p></td>
+<td style="text-align:center;"><p style="font-size:18px;"><?php echo $from_date_for_view; ?> - <?php echo $to_date_for_view; ?></p></td>
 <td style="text-align:center;"> <?php if($status == 2) { ?>
 <span class="label label-important">Closed</span>
 <?php } else { ?>

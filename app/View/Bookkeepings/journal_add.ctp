@@ -28,15 +28,10 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 }
 </style>
 
-
-<input type="hidden" id="fi" value="<?php echo $datef1; ?>" />
-<input type="hidden" id="ti" value="<?php echo $datet1; ?>" />
-<input type="hidden" id="cn" value="<?php echo $count; ?>" />
 <?php
 $default_date = date('d-m-Y');
-
 ?>
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
+
 <center>
 <a href="<?php echo $webroot_path; ?>Bookkeepings/journal_add" class="btn yellow" rel='tab'>Create</a>
 <a href="<?php echo $webroot_path; ?>Bookkeepings/journal_view" class="btn" rel='tab'>View</a>

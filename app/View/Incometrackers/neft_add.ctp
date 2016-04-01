@@ -152,7 +152,7 @@ $wing_id = (int)$data['wing']['wing_id'];
 
 <label style="font-size:14px;">IFSC Code<span style="color:red;">*</span></label>
 <div class="controls">
-<input type="text" class="m-wrap span9" name="ifsc" id="cdd" value="<?php echo $ifsc_code; ?>"/>
+<input type="text" class="m-wrap span9" placeholder="eg. Asdf0asd456" name="ifsc" id="cdd" value="<?php echo $ifsc_code; ?>"/>
 <label id="cdd"></label>
 </div>
 <br />
@@ -178,6 +178,11 @@ $wing_id = (int)$data['wing']['wing_id'];
 
 <script>
 $(document).ready(function(){
+
+jQuery.validator.addMethod("ifc", function(value, element) {
+return this.optional(element) || /^([a-zA-Z]){4}([0]){1}([a-zA-Z0-9]){6}?$/.test( value );
+	},"First four alphabetic, fifth zero, rest alphanumeric");
+
 
 jQuery.validator.addMethod("notEqual", function(value, element, param) {
 return this.optional(element) || value !== param;
@@ -217,7 +222,8 @@ required: true
 
 ifsc: {
 required: true,
-maxlength: 11
+//maxlength: 11,
+ifc:true
 },
 
 },

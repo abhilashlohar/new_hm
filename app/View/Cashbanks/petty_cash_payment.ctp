@@ -1,9 +1,7 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
-<input type="hidden" id="fi" value="<?php echo $datef1; ?>" />
-<input type="hidden" id="ti" value="<?php echo $datet1; ?>" />
-<input type="hidden" id="cn" value="<?php echo $count; ?>" />
+
 <center>
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_payment" class="btn yellow" rel='tab'>Create</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_payment_view" class="btn" rel='tab'>View</a>
@@ -90,7 +88,7 @@ $default_date = date('d-m-Y');
 			<option value="32" selected="selected">Cash-in-hand</option>
 			</select></td>
 
-			<td><input type="text" class="m-wrap span12" maxlength="5" name="amount[]">
+			<td><input type="text" class="m-wrap span12" maxlength="5" name="amount[]" style="text-align:right;" id="amount">
 			</td>
 			
 			<td><input type="text" class="m-wrap span10" name="narration[]"><a style="margin-top: -4px; margin-right: -5px;" role="button" class="btn mini pull-right remove_row" href="#"><i class="icon-trash"></i></a></td>
@@ -137,6 +135,109 @@ $('select[name="account_group[]"]').die().live("change",function(){
 
 </script> 
 
+<script>
+$('input[name="amount[]"]').die().live("keyup",function(){
+		var amount=$(this).val();
+		if($.isNumeric(amount))
+		{
+		}else{
+		$(this).closest("td").find("#amount").val('');	
+		}
+});
+</script>
+
+
+
+
+
+
+
+
+<script>
+$("form").on("submit",function(e){
+var allow="yes";
+		$('#main tbody tr select[name="account_group[]"]').each(function(i, obj) {
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+			if(deposited_in==1){
+				
+				var ledger_sub_account=$(this).closest("tr").find('select[name="sundry_creditor[]"]').val();
+			if(ledger_sub_account==""){
+				$(this).parent().next('td').find(".er").remove();
+				$(this).parent().next('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).parent().next('td').find(".er").remove();
+			}
+			}
+			else
+			{
+				
+			var other_income=$(this).closest("tr").find('select[name="expenditure[]"]').val();
+			
+			if(other_income==""){
+				$(this).parent().next('td').find(".er").remove();
+				$(this).parent().next('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).parent().next('td').find(".er").remove();
+			}	
+				
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		});	
+
+		
+	$('#main tbody tr select[name="paid_from[]"]').each(function(i, obj) {
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});		
+		
+		$('#main tbody tr input[name="amount[]"]').each(function(i, obj) {
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		
+     if(allow=="no"){
+			e.preventDefault();
+		}
+});
+</script>
+<style>
+input,select{
+	margin:0 !important;
+}
+.er{
+color: rgb(198, 4, 4);
+font-size: 11px;
+}
+</style>
 <!---------------------------END NEW CODE---------------------------->
 
 <?php /*

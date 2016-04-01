@@ -4418,24 +4418,21 @@ function petty_cash_payment_html_view($auto_id=null)
 	}else{
 	$this->layout='session';
 	}
+	$s_role_id=$this->Session->read('role_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id = (int)$this->Session->read('hm_user_id');
+	$this->ath();
+	$auto_id = (int)$auto_id;
 
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id = (int)$this->Session->read('user_id');
+	$this->loadmodel('cash_bank');
+	$conditions=array("transaction_id"=>$auto_id,"source"=>"petty_cash_payment","society_id"=>$s_society_id);
+	$cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions));
+	$this->set('cursor1',$cursor1);
 
-$this->ath();
-$auto_id = (int)$auto_id;
-
-
-$this->loadmodel('new_cash_bank');
-$conditions=array("transaction_id" => $auto_id,"receipt_source"=>4,"society_id"=>$s_society_id);
-$cursor1=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
-$this->set('cursor1',$cursor1);
-
-$this->loadmodel('society');
-$conditions=array("society_id" => $s_society_id);
-$cursor2=$this->society->find('all',array('conditions'=>$conditions));
-$this->set('cursor2',$cursor2);
+	$this->loadmodel('society');
+	$conditions=array("society_id" => $s_society_id);
+	$cursor2=$this->society->find('all',array('conditions'=>$conditions));
+	$this->set('cursor2',$cursor2);
 
 }
 //End petty_cash_payment_html_view//

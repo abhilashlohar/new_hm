@@ -1,9 +1,7 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
 ?>
-<select>
-
-<option style="text-align:left;"			   
+<td style="background-color:"			   
 <script>
 $(document).ready(function() {
 $("#fix<?php echo $id_current_page; ?>").removeClass("blue");
@@ -35,10 +33,9 @@ echo date('d-m-Y',$financial_year_from);
 echo date('d-m-Y',$financial_year_to);
 ?>
 
-var d=new Date("October 13, 1975 11:13:00");
-document.write(d.getTime() + " milliseconds since 1970/01/01");
+
 <!---- Start Import Code -->
-    <?php /*    <div id='suces'>
+        <div id='suces'>
         <div id="error_msg"></div>
         <div id="myModal3" class="modal hide fade in" style="display:none;">
         <div class="modal-backdrop fade in"></div>
@@ -686,7 +683,7 @@ $("#amttt"+ dd).val("");
 return false;		
 }
 }
-</script>  */ ?>
+</script>  
 
 
 

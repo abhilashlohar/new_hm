@@ -165,6 +165,40 @@ var allow="yes";
 			}else{
 				$(this).closest('td').find(".er").remove();
 			}
+			if(deposited_in==1){
+				
+				var ledger_sub_account=$(this).closest("tr").find('select[name="sundry_creditor[]"]').val();
+			if(ledger_sub_account==""){
+				$(this).parent().next('td').find(".er").remove();
+				$(this).parent().next('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).parent().next('td').find(".er").remove();
+			}
+			}
+			else
+			{
+				
+			var other_income=$(this).closest("tr").find('select[name="expenditure[]"]').val();
+			
+			if(other_income==""){
+				$(this).parent().next('td').find(".er").remove();
+				$(this).parent().next('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).parent().next('td').find(".er").remove();
+			}	
+				
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		});	
 
 		

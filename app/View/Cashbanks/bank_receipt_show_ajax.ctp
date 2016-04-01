@@ -3,11 +3,14 @@
 	<?php
 	$society_name=$society_info[0]["society"]["society_name"];
 	?>
-		<div align="center"><?php echo strtoupper($society_name); ?> Bank Receipt Register From : <?php echo date("d-m-Y",$from);?> To : <?php echo date("d-m-Y",$to);?></div>
-		<table class="table table-condensed table-bordered">
+		<div align="center"><?php echo strtoupper($society_name); ?> Bank Receipt Register From : <?php echo date("d-m-Y",$from);?> To : <?php echo date("d-m-Y",$to);?>
+		<input class="m-wrap medium pull-right" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
+		</div>
+		
+		<table class="table table-condensed table-bordered" id="receiptmain">
 			<thead>
 				<tr>
-					<th>Number</th>
+					<th>Receipt No.</th>
 					<th>Transaction date</th>
 					<th>Receipt Type</th>
 					<th>Party Name</th>
@@ -86,6 +89,39 @@
 				</tr>
 			<?php } ?>
 			</tbody>
+			<tfoot style="font-weight: 600;">
+				<tr>
+				</tr>
+			</tfoot>
 		</table>
 	</div>
 </div>
+<script>
+$(document).ready(function(){
+	var tr=1; 
+	$('#receiptmain thead tr th').each(function(i, obj) {
+		var total=0;
+		$('#receiptmain tbody tr td:nth-child('+tr+')').each(function(i, obj) {
+			var value=parseInt($(this).text());
+			if($.isNumeric(value)){ }else{ value=0; }
+			total=total+value;
+		});
+		$('#receiptmain tfoot tr').append('<td style="text-align: right;">'+total+'</td>');
+		tr++;
+	});
+	$('#receiptmain tfoot tr td:lt(7)').remove();
+	$('#receiptmain tfoot tr td:first').attr("colspan",8).html('<b>Total</b>');
+	$('#receiptmain tfoot tr td:last').html("");
+	
+	
+	var $rows = $('#receiptmain tbody tr');
+	$('#search').keyup(function() {
+		var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+
+		$rows.show().filter(function() {
+			var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+			return !~text.indexOf(val);
+		}).hide();
+	});
+});
+</script>

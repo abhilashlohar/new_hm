@@ -35,11 +35,13 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 $(document).ready(function(){
 	$("#go").on("click",function(){
 		var period=$("#period option:selected").val();
-		$.ajax({
-			url: "<?php echo $webroot_path; ?>Incometrackers/regular_bill_report/"+period,
-		}).done(function(response){
-			$("#ajax_result").html(response);
-		});
+		if(period!=""){
+			$.ajax({
+				url: "<?php echo $webroot_path; ?>Incometrackers/regular_bill_report/"+period,
+			}).done(function(response){
+				$("#ajax_result").html(response);
+			});
+		}
 	});
 });
 </script>

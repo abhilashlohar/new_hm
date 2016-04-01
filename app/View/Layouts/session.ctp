@@ -193,7 +193,7 @@ $(document).ready(function() {
 <!-- BEGIN BODY -->
 <body class="fixed-top">
    <!-- BEGIN HEADER -->
-   <div class="header navbar navbar-inverse navbar-fixed-top">
+   <div class="header navbar navbar-inverse navbar-fixed-top hide_at_print">
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="navbar-inner">
          <div class="container-fluid">
@@ -331,7 +331,7 @@ $(document).ready(function() {
    </div>
    <!-- END CONTAINER -->
    <!-- BEGIN FOOTER -->
-   <div class="footer">
+   <div class="footer hide_at_print">
       HousingMatters
       <div class="span pull-right">
          <span class="go-top"><i class="icon-angle-up"></i></span>

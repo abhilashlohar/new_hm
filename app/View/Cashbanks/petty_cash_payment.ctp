@@ -1,9 +1,7 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
-<input type="hidden" id="fi" value="<?php echo $datef1; ?>" />
-<input type="hidden" id="ti" value="<?php echo $datet1; ?>" />
-<input type="hidden" id="cn" value="<?php echo $count; ?>" />
+
 <center>
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_payment" class="btn yellow" rel='tab'>Create</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_payment_view" class="btn" rel='tab'>View</a>
@@ -90,7 +88,7 @@ $default_date = date('d-m-Y');
 			<option value="32" selected="selected">Cash-in-hand</option>
 			</select></td>
 
-			<td><input type="text" class="m-wrap span12" maxlength="5" name="amount[]" style="text-align:right;">
+			<td><input type="text" class="m-wrap span12" maxlength="5" name="amount[]" style="text-align:right;" id="amount">
 			</td>
 			
 			<td><input type="text" class="m-wrap span10" name="narration[]"><a style="margin-top: -4px; margin-right: -5px;" role="button" class="btn mini pull-right remove_row" href="#"><i class="icon-trash"></i></a></td>
@@ -136,6 +134,25 @@ $('select[name="account_group[]"]').die().live("change",function(){
 });
 
 </script> 
+
+<script>
+$('input[name="amount[]"]').die().live("keyup",function(){
+		var amount=$(this).val();
+		if($.isNumeric(amount))
+		{
+		}else{
+		$(this).closest("td").find("#amount").val('');	
+		}
+});
+</script>
+
+
+
+
+
+
+
+
 <script>
 $("form").on("submit",function(e){
 var allow="yes";

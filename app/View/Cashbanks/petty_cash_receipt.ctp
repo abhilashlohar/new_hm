@@ -82,7 +82,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
     </select>
 	</td>
 	<td>
-	<input type="text" class="m-wrap span12" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="5" name="amount[]">
+	<input type="text" class="m-wrap span12" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="5" name="amount[]" id="amount">
 	</td>
 	<td>
 	<a style="margin-top: -4px; margin-right: -5px;" role="button" class="btn mini pull-right remove_row" href="#"><i class="icon-trash"></i></a>
@@ -131,6 +131,17 @@ $('select[name="account_group[]"]').die().live("change",function(){
 
 </script>
 
+<script>
+$('input[name="amount[]"]').die().live("keyup",function(){
+		var amount=$(this).val();
+		if($.isNumeric(amount))
+		{
+		}else{
+		$(this).closest("td").find("#amount").val('');	
+		}
+});
+
+</script>
 
 <script>
 $("form").on("submit",function(e){

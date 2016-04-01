@@ -401,9 +401,6 @@ $("#show_amount").html('Loading...').load("bank_receipt_reference_ajax?type="+va
 });
 </script>		
 
- <?php ////////////////////////////////////// ?>
-
-
 <script>
 $(document).ready(function(){
 	

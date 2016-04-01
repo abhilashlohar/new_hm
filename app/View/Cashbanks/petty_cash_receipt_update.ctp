@@ -14,7 +14,7 @@ foreach($cursor1 as $data){
 
 $trnsaction_date = date('d-m-Y',$d_date);
 ?>
-<form method="post" id="contact-form">
+<form method="post">
 <input type="hidden" value="<?php echo $receipt_no; ?>" name="receipt_no">
 <input type="hidden" value="<?php echo $auto_id; ?>" name="element_id">
 <div class="portlet box blue">

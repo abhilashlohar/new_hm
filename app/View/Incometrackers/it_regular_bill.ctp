@@ -2,7 +2,8 @@
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>
 
-<?php foreach($result_society as $data)
+<?php 
+foreach($result_society as $data)
       {
 	  $select_income_head_array = @$data['society']['income_head'];
       $penalty_tax = @$data['society']['tax'];
@@ -57,6 +58,9 @@ if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type) 
 		<?php } ?>
 		<?php if($nnn==555){?>
 		<li style="text-align:left;"><p style="font-size:18px;">Please Fill NOC Charges</p></li>
+		<?php } ?>
+		<?php if($ledger_sub_account_data == 0){ ?>
+		<li style="text-align:left;"><p style="font-size:18px;">There is no any member for billing</p></li>	
 		<?php } ?>
 	</ul>
 <br>

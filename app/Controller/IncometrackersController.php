@@ -300,6 +300,11 @@ $condition=array('society_id'=>$s_society_id);
 $result_society=$this->society->find('all',array('conditions'=>$condition));
 $this->set(compact("result_society"));	
 
+$this->loadmodel('ledger_sub_account');
+$condition=array('society_id'=>$s_society_id,"ledger_id"=>34);
+$ledger_sub_account_data=$this->ledger_sub_account->find('count',array('conditions'=>$condition));
+$this->set(compact("ledger_sub_account_data"));
+
 
 $this->loadmodel('flat');
 $conditions=array('society_id'=>$s_society_id);

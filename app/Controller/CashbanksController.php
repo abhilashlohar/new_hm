@@ -1057,11 +1057,33 @@ $this->layout='session';
 		}
 		$this->set("tds_arr",@$tds_arr);
 
-if(isset($this->request->data['submit']))
-{
+	if(isset($this->request->data['submit'])){
+			$transaction_dates=$this->request->data['transaction_date'];
+			  $invoice_references=$this->request->data['invoice_reference'];
+			    $ledger_accounts=$this->request->data['ledger_account'];
+			      $instruments=$this->request->data['instrument'];
+			        $modes=$this->request->data['payment_mode'];
+			          $amounts=$this->request->data['amount'];
+			            $tdss=$this->request->data['tds'];
+			              $net_amounts=$this->request->data['net_amount'];
+			                $bank_accounts=$this->request->data['bank_account'];
+			                  $narrations=$this->request->data['narration'];
+		$n=0;	
+		foreach($transaction_dates as $transaction_date){
+			$transaction_date=date('Y-m-d',strtotime($transaction_date));
+			  $invoice_reference=$invoice_references[$n];
+			    $ledger_account=$ledger_accounts[$n];
+			      $instrument=$instruments[$n];
+			        $mode=$modes[$n];
+			          $amount=$amounts[$n];
+						$tds=$tdss[$n];
+						  $net_amount=$net_amounts[$n];
+							$bank_account=$bank_accounts[$n];
+						      $narration=$narrations[$n];
+			
+		$n++;	
+		}		
 
-echo "dsgdgsdgdsgds";
-exit;
 
 
 
@@ -1074,9 +1096,8 @@ exit;
 
 
 
-
-
-}
+    exit;
+	}
 
 $this->loadmodel('ledger_sub_account');
 $conditions=array("ledger_id" => 15,"society_id"=>$s_society_id);

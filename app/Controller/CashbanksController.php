@@ -4596,32 +4596,31 @@ function bank_payment_html_view($auto_id=null)
 		}
 	
 	$s_role_id = (int)$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id = (int)$this->Session->read('user_id');	
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id = (int)$this->Session->read('hm_user_id');	
 
 	$auto_id=(int)$auto_id;
 	$this->ath();
-	//$this->check_user_privilages();
+	
 
-		$this->loadmodel('new_cash_bank');
-		$conditions=array("transaction_id" => $auto_id,"receipt_source"=>2,"society_id"=>$s_society_id);
-		$cursor1=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
+		$this->loadmodel('cash_bank');
+		$conditions=array("transaction_id"=>$auto_id,"source"=>"bank_payment","society_id"=>$s_society_id);
+		$cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions));
 		$this->set('cursor1',$cursor1);
 
 		$this->loadmodel('society');
-		$conditions=array("society_id" => $s_society_id);
+		$conditions=array("society_id"=>$s_society_id);
 		$cursor2=$this->society->find('all',array('conditions'=>$conditions));
 		$this->set('cursor2',$cursor2);
 
-$this->loadmodel('reference');
-$conditions=array("auto_id"=>3);
-$cursor = $this->reference->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
-$tds_arr = $collection['reference']['reference'];
-}
-$this->set("tds_arr",$tds_arr);		
-		
+		$this->loadmodel('reference');
+		$conditions=array("auto_id"=>3);
+		$cursor = $this->reference->find('all',array('conditions'=>$conditions));
+		foreach($cursor as $collection){
+		$tds_arr = $collection['reference']['reference'];
+		}
+		$this->set("tds_arr",$tds_arr);	
+			
 }
 
 //Start bank_payment_update//

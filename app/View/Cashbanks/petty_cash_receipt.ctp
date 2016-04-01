@@ -132,15 +132,68 @@ $('select[name="account_group[]"]').die().live("change",function(){
 </script>
 
 
+<script>
+$("form").on("submit",function(e){
+		var allow="yes";
+		$('#main tbody tr select[name="account_group[]"]').each(function(i, obj){
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});	
+
+	
+$('#main tbody tr select[name="account_head[]"]').each(function(i, obj) {
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+
+
+$('#main tbody tr input[name="amount[]"]').each(function(i, obj) {
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		
+		
+		
+
+	
+	if(allow=="no"){
+			e.preventDefault();
+		}
+});
 
 
 
 
 
 
-
-
-
+</script>
+<style>
+input,select{
+	margin:0 !important;
+}
+.er{
+color: rgb(198, 4, 4);
+font-size: 11px;
+}
+</style>
 <?php $default_date = date('d-m-Y'); ?>
 <?php /*
 <form method="post">

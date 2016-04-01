@@ -5542,9 +5542,9 @@ function master_rate_card(){
 	$conditions=array('society_id'=>$s_society_id);
 	$result_society=$this->society->find('all',array('conditions'=>$conditions));
 	foreach($result_society as $data){
-	$area_type=(int)$data['society']['area_scale'];	
+	@$area_type=(int)@$data['society']['area_scale'];	
 	}
-	$this->set('area_type',$area_type);
+	$this->set('area_type',@$area_type);
 	
 	
 	
@@ -5814,9 +5814,9 @@ $this->loadmodel('society');
 $conditions=array('society_id'=>$s_society_id);
 $result_society=$this->society->find('all',array('conditions'=>$conditions));
 foreach($result_society as $data){
-$area_type=(int)$data['society']['area_scale'];	
+@$area_type=(int)@$data['society']['area_scale'];	
 }
-$this->set('area_type',$area_type);
+$this->set('area_type',@$area_type);
 
 
 

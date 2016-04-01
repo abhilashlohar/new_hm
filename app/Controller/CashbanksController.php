@@ -1683,31 +1683,26 @@ $this->set('s_role_id',$s_role_id);
 
 }
 
-//////////////////////////////////////////////////////////End Petty Cash Receipt View (Accounts) ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////// Start Petty cash receipt excel /////////////////////////////
+//End Petty Cash Receipt View (Accounts)//
+//Start Petty cash receipt excel//
 function petty_cash_receipt_excel()
 {
 	$this->layout="";
 	$this->ath();
-
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_role_id = (int)$this->Session->read('role_id');
-
+        
 		$this->loadmodel('society');
 		$conditions=array("society_id" => $s_society_id);
 		$cursor = $this->society->find('all',array('conditions'=>$conditions));
-		foreach ($cursor as $collection) 
-		{
+		foreach ($cursor as $collection){
 		$society_name = $collection['society']['society_name'];
 		}	
-	
 		$from = $this->request->query('f');
 		$to = $this->request->query('t');
-	
-	$fdddd = date('d-M-Y',strtotime($from));
-	$tdddd = date('d-M-Y',strtotime($to));
-$socitty_nammm = str_replace(' ','-',$society_name);
+		$fdddd = date('d-M-Y',strtotime($from));
+		$tdddd = date('d-M-Y',strtotime($to));
+		$socitty_nammm = str_replace(' ','-',$society_name);
 	
 	$filename="".$socitty_nammm."_Petty_Cash_Receipt_Register_".$fdddd."_".$tdddd."";
 	header ("Expires: 0");
@@ -1718,132 +1713,28 @@ $socitty_nammm = str_replace(' ','-',$society_name);
 	header ("Content-Disposition: attachment; filename=".$filename.".xls");
 	header ("Content-Description: Generated Report" );
 
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_role_id = (int)$this->Session->read('role_id');
-
 		$this->loadmodel('society');
-		$conditions=array("society_id" => $s_society_id);
+		$conditions=array("society_id"=>$s_society_id);
 		$cursor = $this->society->find('all',array('conditions'=>$conditions));
-		foreach ($cursor as $collection) 
-		{
-		$society_name = $collection['society']['society_name'];
-		}
+			foreach ($cursor as $collection){
+			$society_name = $collection['society']['society_name'];
+			}
+			$this->set('society_name',$society_name);
 			$from = $this->request->query('f');
 			$to = $this->request->query('t');
+			$this->set('from',$from);
+			$this->set('to',$to);
+			$m_from = 	date('Y-m-d',strtotime($from));
+			$m_to = date('Y-m-d',strtotime($to));
+			$from_strto = strtotime($m_from);
+			$to_strto = strtotime($m_to);
 
-	$m_from = 	date('Y-m-d',strtotime($from));
-	$m_to = date('Y-m-d',strtotime($to));
-		
-		$from_strto = strtotime($m_from);
-		$to_strto = strtotime($m_to);
+		$this->loadmodel('cash_bank');
+		$order=array('cash_bank.transaction_date'=>'ASC');
+		$conditions=array("society_id"=>$s_society_id,"source"=>"petty_cash_receipt");
+		$cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
+		$this->set('cursor1',$cursor1);
 
-$excel = "<table border='1'>  
-<tr>
-<th colspan='5'>$society_name Petty Cash Receipt Register From :$from &nbsp;&nbsp; To : $to</th>
-</tr>
-<tr>
-<th>PC Receipt#</th>
-<th>Transaction Date</th>
-<th>Received From</th>
-<th>Amount</th>
-<th>Narration</th>
-</tr>";
-		$total_debit = 0;
-	$this->loadmodel('new_cash_bank');
-	$order=array('new_cash_bank.transaction_date'=> 'ASC');
-	$conditions=array("society_id" => $s_society_id,"receipt_source"=>3);
-	$bank_rrr_data=$this->new_cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
-	foreach($bank_rrr_data as $bank_dataaaa)
-	{
-		$receipt_no = @$bank_dataaaa['new_cash_bank']['receipt_id'];
-		$transaction_id = (int)$bank_dataaaa['new_cash_bank']['transaction_id'];	
-		$account_type = (int)$bank_dataaaa['new_cash_bank']['account_type'];    									  
-		$d_user_id = (int)$bank_dataaaa['new_cash_bank']['user_id'];
-		$receipt_date = $bank_dataaaa['new_cash_bank']['transaction_date'];
-		$prepaired_by = (int)$bank_dataaaa['new_cash_bank']['prepaired_by'];   
-		$narration = @$bank_dataaaa['new_cash_bank']['narration'];
-		$account_head = $bank_dataaaa['new_cash_bank']['account_head'];
-		$amount = $bank_dataaaa['new_cash_bank']['amount'];
-		$prepaired_by = (int)$bank_dataaaa['new_cash_bank']['prepaired_by'];   
-		$current_date = $bank_dataaaa['new_cash_bank']['current_date'];
-		//$creation_date = date('d-m-Y',$current_date->sec);
-
-
-		
-	$result_gh = $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($prepaired_by)));
-	foreach ($result_gh as $collection) 
-	{
-	$prepaired_by_name = (int)$collection['user']['user_name'];
-	}			
-
-	if($account_type == 1)
-	{
-		$user_id1 = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($d_user_id)));
-		foreach ($user_id1 as $collection)
-		{
-		$user_id = $collection['ledger_sub_account']['user_id'];
-		$flat_id = (int)$collection['ledger_sub_account']['flat_id'];
-		}
-			
-$result_flat_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
-foreach($result_flat_info as $flat_info){
-$wing=$flat_info["flat"]["wing_id"];
-} 				
-			
-			$result = $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($user_id)));
-			foreach ($result as $collection) 
-			{
-			$user_name = $collection['user']['user_name'];
-			$tenant = (int)$collection['user']['tenant'];
-			}	
-			$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'),array('pass'=>array($wing,$flat_id)));
-	}
-
-	if($account_type == 2)
-	{
-	$user_name1 = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_amount'),array('pass'=>array($d_user_id)));
-	foreach ($user_name1 as $collection)
-	{
-	$user_name = $collection['ledger_account']['ledger_name'];
-	$wing_flat = "";
-	}
-	}
-		
-	$result2 = $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($prepaired_by)));
-	foreach ($result2 as $collection) 
-	{
-	$prepaired_by_name = $collection['user']['user_name'];   
-	$society_id = $collection['user']['society_id'];  	
-	}	
-	
-		if($receipt_date >= $from_strto && $receipt_date <= $to_strto)
-		{
-		if($s_role_id == 3)
-		{
-			$date2 = date('d-m-Y',($receipt_date));  
-			$total_debit = $total_debit + $amount;
-			$amount = number_format($amount);
-			$excel.="<tr>
-			<td>$receipt_no</td>
-			<td>$date2</td>
-			<td>$user_name &nbsp;&nbsp;&nbsp;&nbsp; $wing_flat</td>
-			<td>$amount</td>
-			<td>$narration</td>
-			</tr>";	
-		}
-		}
-	}
-	
-$excel.="<tr>
-<td colspan='3' style='text-align:right;'><b>Total</b></td>
-<td><b>";
-$total_debit = number_format($total_debit);
-$excel.="$total_debit</b></td> 
-<td></td> 
-</tr>
-</table>"; 
-
-echo $excel;
 }
 //End Petty cash receipt excel//
 //Start Petty Cash Receipt Ajax (Accounts)//
@@ -2138,28 +2029,25 @@ function petty_cash_payment_excel()
 {
 $this->layout="";
 $this->ath();
-$s_society_id = (int)$this->Session->read('society_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
 $s_role_id=$this->Session->read('role_id');
-$s_user_id = (int)$this->Session->read('user_id');
+$s_user_id = (int)$this->Session->read('hm_user_id');
 
 $this->loadmodel('society');
-$conditions=array("society_id" => $s_society_id);
+$conditions=array("society_id"=>$s_society_id);
 $cursor = $this->society->find('all',array('conditions'=>$conditions));
-foreach ($cursor as $collection) 
-{
+foreach ($cursor as $collection){
 $society_name = $collection['society']['society_name'];
 }
-
+$this->set('society_name',$society_name);
 $from = $this->request->query('f');
 $to = $this->request->query('t');
-
+$this->set('from',$from);
+$this->set('to',$to);
 $fdddd = date('d-M-Y',strtotime($from));
 $tdddd = date('d-M-Y',strtotime($to));
-
 $socitty_nammm = str_replace(' ','-',$society_name);
-
 $filename="".$socitty_nammm."_Petty_Cash_Payment_Register_".$fdddd."_".$tdddd."";
-
 header ("Expires: 0");
 header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
 header ("Cache-Control: no-cache, must-revalidate");
@@ -2168,97 +2056,15 @@ header ("Content-type: application/vnd.ms-excel");
 header ("Content-Disposition: attachment; filename=".$filename.".xls");
 header ("Content-Description: Generated Report" );
 
+$this->loadmodel('cash_bank');
+$conditions=array("society_id" => $s_society_id,"source"=>"petty_cash_payment");
+$order=array('cash_bank.transaction_date'=>'ASC');
+$cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
+$this->set('cursor1',$cursor1);
 
-
-$m_from = date("Y-m-d", strtotime($from));
-$m_from = strtotime($m_from);
-$m_to = date("Y-m-d", strtotime($to));
-$m_to = strtotime($m_to);
-
-$excel="<table border='1'>
-<tr>
-<th colspan='5' style='text-align:center;'>
-$society_name Petty Cash Payment Register From : $from To : $to
-</th>
-</tr>
-<tr>
-<th>PC Payment Vochure</th>
-<th>Transaction Date</th>
-<th>Paid To</th>
-<th>Narration</th>
-<th>Amount</th>
-</tr>";
-									
-$total_debit = 0;
-$total_credit = 0;
-$this->loadmodel('new_cash_bank');
-$order=array('new_cash_bank.transaction_date'=> 'ASC');
-$conditions=array("society_id" => $s_society_id,"receipt_source"=>4);
-$cursor = $this->new_cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
-foreach ($cursor as $collection) 
-{
-$receipt_no = (int)@$collection['new_cash_bank']['receipt_id'];
-$transaction_id = (int)$collection['new_cash_bank']['transaction_id'];	
-$account_type = (int)$collection['new_cash_bank']['account_type'];
-$user_id = (int)$collection['new_cash_bank']['user_id'];
-$date = $collection['new_cash_bank']['transaction_date'];
-$prepaired_by = (int)$collection['new_cash_bank']['prepaired_by'];   
-$narration = $collection['new_cash_bank']['narration'];
-$account_head = $collection['new_cash_bank']['account_head'];
-$amount = $collection['new_cash_bank']['amount'];
-//$amount_category_id = (int)$collection['cash_bank']['amount_category_id'];
-$current_date = $collection['new_cash_bank']['current_date'];
-$creation_date = date('d-m-Y',strtotime($current_date));										
-										
-$result_gh = $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($prepaired_by)));
-foreach ($result_gh as $collection) 
-{
-$prepaired_by_name = $collection['user']['user_name'];
-}			
-if($account_type == 1)
-{
-$result_lsa = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($user_id)));
-foreach ($result_lsa as $collection) 
-{
-$user_name = $collection['ledger_sub_account']['name'];	  
 }
-}										
-else if($account_type == 2)
-{
-$result_la = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_amount'),array('pass'=>array($user_id)));
-foreach ($result_la as $collection) 
-{
-$user_name = $collection['ledger_account']['ledger_name'];	  
-}
-}   										
-
-if($date >= $m_from && $date <= $m_to)
-{
-if($s_role_id == 3)
-{
-$date = date('d-m-Y',($date));     
-$total_debit = $total_debit + $amount;
-
-$excel.="<tr>
-<td>$receipt_no</td>
-<td>$date</td>
-<td>$user_name</td>
-<td>$narration</td>
-<td>$amount</td>
-</tr>";
-}}}
-
-$excel.="<tr>
-<th colspan='4' style='text-align:right;'>Total</th>
-<th>$total_debit</th>
-</tr>
-</table>";
-
-echo $excel;
-}
-/////////////////////// End Petty Cash Payment Excel////////////////////////////////
-
-///////////////////////////// Start Bank receipt Reference Ajax (Accounts)/////////////////////////////////////////
+//End Petty Cash Payment Excel//
+//Start Bank receipt Reference Ajax (Accounts)//
 function bank_receipt_reference_ajax()
 {
 $this->layout='blank';

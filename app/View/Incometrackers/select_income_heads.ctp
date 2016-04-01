@@ -4,42 +4,35 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 
 <?php
 $result1 = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch'),array('pass'=>array(7)));			
-foreach($result1 as $collection)
-{
-$ac_name = $collection['ledger_account']['ledger_name'];
-$ac_id = (int)$collection['ledger_account']['auto_id'];		
-if($ac_id != 43 && $ac_id != 39 && $ac_id != 40)
-{
-$income_head_arr1[] = (int)$ac_id;	
-}
-}
-foreach($cursor3 as $collection)
-{
-$income_head_selected_arr = @$collection['society']['income_head'];
-}
-if(!empty($income_head_selected_arr))
-{
-@$income_head_arr2 = array_diff($income_head_arr1,$income_head_selected_arr);
-}
-else
-{
-$income_head_arr2 = @$income_head_arr1;	
-}
-if(!empty($income_head_other_charges))
-{
-$income_head_arr2=array_diff($income_head_arr2,$income_head_other_charges);
-}
-if(!empty($income_head_arr2))
-{
-foreach($income_head_arr2 as $data)
-{
-$income_arrr[] = $data;
-}
-}
+foreach($result1 as $collection){
+	$ac_name = $collection['ledger_account']['ledger_name'];
+	$ac_id = (int)$collection['ledger_account']['auto_id'];		
+		if($ac_id != 43 && $ac_id != 39 && $ac_id != 40){
+		$income_head_arr1[] = (int)$ac_id;	
+		}
+	}
+	foreach($cursor3 as $collection){
+	$income_head_selected_arr = @$collection['society']['income_head'];
+	}
+		if(!empty($income_head_selected_arr)){
+		@$income_head_arr2 = array_diff($income_head_arr1,$income_head_selected_arr);
+		}
+		else{
+		$income_head_arr2 = @$income_head_arr1;	
+		}
+		
+	if(!empty($income_head_other_charges)){
+	$income_head_arr2=array_diff($income_head_arr2,$income_head_other_charges);
+	}
+	if(!empty($income_head_arr2)){
+		foreach($income_head_arr2 as $data){
+		$income_arrr[] = $data;
+		}
+	}
 
 
 ?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
+
 <table  align="center" border="1" bordercolor="#FFFFFF" cellpadding="0">
 <tr>
 <td><a href="<?php echo $webroot_path; ?>Incometrackers/select_income_heads" class="btn yellow" rel='tab'>Selection of Income Heads</a>

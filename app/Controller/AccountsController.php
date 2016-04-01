@@ -690,7 +690,7 @@ function final_import_opening_balance()
 	
 }
 //End final_import_opening_balance//
-//Start Master Period Status (Accounts)//
+//Start master_financial_period_status (Accounts)//
 function master_financial_period_status()
 {
 		if($this->RequestHandler->isAjax()){
@@ -748,7 +748,7 @@ The Financial Year Updated Successfully
 		$cursor1 = $this->financial_year->find('all',array('conditions'=>$conditions,'order' =>$order));
 		$this->set('cursor1',$cursor1);
 }
-//End Master Period Status (Accounts)//
+//End master_financial_period_status(Accounts)//
 //Start master Financial Year (Accounts)//
 function master_financial_year()
 {
@@ -757,64 +757,32 @@ function master_financial_year()
 	}else{
 	$this->layout='session';
 	}
+	$this->ath();
+	$this->check_user_privilages();
+	$s_role_id=$this->Session->read('role_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');		
 
-		$this->ath();
-		$this->check_user_privilages();
+		if(isset($this->request->data['sub1'])){
+			$from_date=$this->request->data['from'];	
+			$to_date =$this->request->data['to'];	
+            $from_date=date('Y-m-d',strtotime($from_date));
+			$to_date=date('Y-m-d',strtotime($to_date));
 
-			$s_role_id=$this->Session->read('hm_role_id');
-			$s_society_id = (int)$this->Session->read('hm_society_id');
-			$s_user_id=$this->Session->read('hm_user_id');		
+			
 
-		if(isset($this->request->data['sub1']))
-		{
-			$from = $this->request->data['from'];	
-			$to = $this->request->data['to'];	
-
-			$m_from = date("Y-m-d", strtotime($from));
-			$m_from = new MongoDate(strtotime($m_from));
-
-			$m_to = date("Y-m-d", strtotime($to));
-			$m_to = new MongoDate(strtotime($m_to));
-
-			$from1 = date('d-M-Y',strtotime($from));
-			$to1 = date('d-M-Y',strtotime($to));
+			
 
 	$a=$this->autoincrement('financial_year','auto_id');
 	$this->loadmodel('financial_year');
-	$multipleRowData = Array( Array("auto_id" => $a, "from" => $m_from, "to" => $m_to,"user_id"=>$s_user_id, "status"=> 1, "society_id" => $s_society_id));
+	$multipleRowData = Array( Array("auto_id"=>$a,"from"=>strtotime($from_date),"to"=>strtotime($to_date),"user_id"=>$s_user_id,"status"=>1,"society_id"=>$s_society_id));
 	$this->financial_year->saveAll($multipleRowData); 
 
     $this->Session->write('ffyyyy', 1);
 	
-?>
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body">
-<h4><b>Thank You!</b></h4>
-The Financial Year Created Successfully
-</div>
-<div class="modal-footer">
-<a href="master_financial_period_status" class="btn red">OK</a>
-</div>
-</div>
-			
-<?php
-	 }
-		$this->loadmodel('financial_year');
-		$conditions=array("society_id" => $s_society_id);
-		$order=array('financial_year.auto_id'=> 'ASC');
-		$cursor = $this->financial_year->find('all',array('conditions'=>$conditions,'order' =>$order));
-		foreach($cursor as $collection)
-		{
-			$f_date = $collection['financial_year']['from'];
-			$t_date = $collection['financial_year']['to'];
 
-			$f_d1 = date('Y-m-d',$f_date->sec);
-			$t_d1 = date('Y-m-d',$t_date->sec);
-
-			$this->set('fd1',$f_d1);
-			$this->set('td1',$t_d1);
-		}
+}
+		
 }
 //End Master Financial Year(Accounts)//
 //Start Financial Vali Ajax(Accounts)//

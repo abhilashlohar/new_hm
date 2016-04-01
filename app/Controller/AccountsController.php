@@ -273,8 +273,8 @@ $cursor=$this->financial_year->find('all',array('conditions'=>$conditions));
 	{
 	$date_from = @$collection['financial_year']['from'];
 	$date_to = @$collection['financial_year']['to'];
-	$date_from1 = date('Y-m-d',$date_from->sec);
-	$date_to1 = date('Y-m-d',$date_to->sec);
+	$date_from1 = date('Y-m-d',($date_from));
+	$date_to1 = date('Y-m-d',($date_to));
 	$datef[] = $date_from1;
 	$datet[] = $date_to1;
 	}
@@ -466,8 +466,8 @@ $this->layout=null;
 			{
 				$fin_from_date = $dataaa['financial_year']['from'];
 				$fin_to_date = $dataaa['financial_year']['to'];
-				$from_date = date('Y-m-d',$fin_from_date->sec);
-				$to_date = date('Y-m-d',$fin_to_date->sec);
+				$from_date = date('Y-m-d',($fin_from_date));
+				$to_date = date('Y-m-d',($fin_to_date));
 				$from = strtotime($from_date);
 				$to = strtotime($to_date);
 					if($from <= $dddatttt && $to >= $dddatttt)

@@ -1033,213 +1033,36 @@ $this->layout='blank';
 $this->layout='session';
 }
 	
-$this->ath();
-$this->check_user_privilages();	
-	
-$s_role_id=$this->Session->read('hm_role_id');
-$s_society_id = $this->Session->read('hm_society_id');
-$s_user_id=$this->Session->read('hm_user_id');
+	$this->ath();
+	$this->check_user_privilages();	
+	$s_role_id=$this->Session->read('role_id');
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$this->set('s_role_id',$s_role_id);
 
-$this->set('s_role_id',$s_role_id);
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("society_id" => $s_society_id, "ledger_id" => 33);
+	$cursor2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$this->set('cursor2',$cursor2);
 
-$this->loadmodel('user');
-$conditions=array("society_id" => $s_society_id,"user_id" => $s_user_id);
-$cursor=$this->user->find('all',array('conditions'=>$conditions));
-foreach ($cursor as $collection) 
-{
-$tenant_c = (int)@$collection['user']['tenant'];
-}
-$this->set('tenant_c',$tenant_c);
+	$this->loadmodel('master_tds');
+	$cursor3=$this->master_tds->find('all');
+	$this->set('cursor3',$cursor3);
 
-$this->loadmodel('ledger_sub_account');
-$conditions=array("society_id" => $s_society_id, "ledger_id" => 33);
-$cursor2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-$this->set('cursor2',$cursor2);
-
-$this->loadmodel('master_tds');
-$cursor3=$this->master_tds->find('all');
-$this->set('cursor3',$cursor3);
-
-$this->loadmodel('reference');
-$conditions=array("auto_id"=>3);
-$cursor = $this->reference->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
-$tds_arr = @$collection['reference']['reference'];
-}
-$this->set("tds_arr",@$tds_arr);
+	$this->loadmodel('reference');
+	$conditions=array("auto_id"=>3);
+	$cursor = $this->reference->find('all',array('conditions'=>$conditions));
+	foreach($cursor as $collection){
+		$tds_arr = @$collection['reference']['reference'];
+		}
+		$this->set("tds_arr",@$tds_arr);
 
 if(isset($this->request->data['bank_payment_add']))
 {
-$date = $this->request->data['date'];
-$date = date("Y-m-d", strtotime($date));
-$paid_to = (int)$this->request->data['expense_ac'];
-$invoice_reference = $this->request->data['invoice_reference'];
-$description = $this->request->data['description']; 
-$receipt_mode = $this->request->data['mode'];
-$receipt_instruction = $this->request->data['instruction'];
-$sub_account_id = (int)$this->request->data['bank_account'];
-$amount = $this->request->data['ammount'];				
-$tds_id = (int)$this->request->data['tds_p'];
-$current_date = date("d-m-Y");		
-$ac_type = (int)$this->request->data['ac_type'];
-
-if($ac_type == 1)
-{
-$account_type = 1;
-}
-else if($ac_type == 2 || $ac_type == 3)
-{
-$account_type = 2;
-}
-
-$current_date = date("Y-m-d", strtotime($current_date));
-$current_date = new MongoDate(strtotime($current_date)); 
-
-///////////////////Start Insert //////////////////////////////////////
-
-$this->loadmodel('cash_bank');
-$conditions=array("society_id" => $s_society_id,"module_id"=>2);
-$order=array('cash_bank.transaction_id'=> 'DESC');
-$cursor=$this->cash_bank->find('all',array('conditions'=>$conditions,'order' =>$order,'limit'=>1));
-foreach ($cursor as $collection) 
-{
-$last11 = $collection['cash_bank']['transaction_id'];
-$last12 = $collection['cash_bank']['receipt_id'];
-}
-if(empty($last11))
-{
-$i=0;
-$bbb = 1000;
-}	
-else
-{	
-$i=$last11;
-$bbb = $last12;
-}
-$i++; 
-$bbb++;
-$this->loadmodel('cash_bank');
-$multipleRowData = Array( Array("transaction_id" => $i, "receipt_id" => $bbb,  "current_date" => $current_date, 
-"transaction_date" => strtotime($date), "prepaired_by" => $s_user_id, 
-"user_id" => $paid_to, "invoice_reference" => $invoice_reference,"narration" => $description, "receipt_mode" => $receipt_mode,
-"receipt_instruction" => $receipt_instruction, "account_head" => $sub_account_id,  
-"amount" => $amount, "amount_category_id" => 1, "society_id" => $s_society_id, "tds_id" => $tds_id,"account_type" => $account_type,"module_id"=>2));
-$this->cash_bank->saveAll($multipleRowData);  
-
-//////////////////// End Insert///////////////////////////////
-///////////// TDS CALCULATION /////////////////////
-$this->loadmodel('master_tds');
-$conditions=array("auto_id" => $tds_id);
-$cursor4=$this->master_tds->find('all',array('conditions'=>$conditions));
-foreach($cursor4 as $collection)
-{
-$tds_rate = (int)$collection['master_tds']['charge'];	
-}
-
-$tds_amount = (int)(round(($tds_rate/100)*$amount));
-$total_tds_amount = (int)($amount - $tds_amount);
-////////////END TDS CALCULATION //////////////////// 
-////////////////START LEDGER ENTRY///////////////////////
-
-$this->loadmodel('ledger');
-$order=array('ledger.auto_id'=> 'DESC');
-$cursor=$this->ledger->find('all',array('order' =>$order,'limit'=>1));
-foreach ($cursor as $collection) 
-{
-$last21 =$collection['ledger']['auto_id'];
-}
-if(empty($last21))
-{
-$k=0;
-}	
-else
-{	
-$k=$last21;
-}
-$k++; 
-$this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $k, "receipt_id" => $bbb, 
-"amount" => $amount, "amount_category_id" => 1, "module_id" => 2, "account_type" => $account_type, "account_id" => $paid_to,
-"current_date" => $current_date, "society_id" => $s_society_id,"table_name"=>"cash_bank","module_name"=>"Bank Payment"));
-$this->ledger->saveAll($multipleRowData); 
 
 
 
-$sub_account_id_a = (int)$sub_account_id;
-$this->loadmodel('ledger');
-$order=array('ledger.auto_id'=> 'DESC');
-$cursor=$this->ledger->find('all',array('order' =>$order,'limit'=>1));
-foreach ($cursor as $collection) 
-{
-$last22=$collection['ledger']['auto_id'];
-}
-if(empty($last22))
-{
-$k=0;
-}	
-else
-{	
-$k=$last22;
-}
-$k++; 
-$this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $k, "receipt_id" => $bbb, 
-"amount" => $total_tds_amount, "amount_category_id" => 2, "module_id" => 2, "account_type" => 1, "account_id" => $sub_account_id_a, "current_date" => $current_date, "society_id" => $s_society_id,"table_name"=>"cash_bank","module_name"=>"Bank Payment"));
-$this->ledger->saveAll($multipleRowData); 
 
-if($tds_amount > 0)
-{
-$sub_account_id_t = 16;
-$this->loadmodel('ledger');
-$order=array('ledger.auto_id'=> 'DESC');
-$cursor=$this->ledger->find('all',array('order' =>$order,'limit'=>1));
-foreach ($cursor as $collection) 
-{
-$last23=$collection['ledger']['auto_id'];
-}
-if(empty($last23))
-{
-$k=0;
-}	
-else
-{	
-$k=$last23;
-}
-$k++; 
-$this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $k, "receipt_id" => $bbb, 
-"amount" => $tds_amount, "amount_category_id" => 2, "module_id" => 2, "account_type" => 2, "account_id" => $sub_account_id_t, "current_date" => $current_date, "society_id" => $s_society_id,"table_name"=>"cash_bank","module_name"=>"Bank Payment"));
-$this->ledger->saveAll($multipleRowData);
-}
-//////////////////END LEDGER ENTRY/////////////////////
-$this->loadmodel('cash_bank');
-$conditions=array("society_id" => $s_society_id,"module_id"=>2);
-$order=array('cash_bank.receipt_id'=> 'ASC');
-$cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions));
-foreach ($cursor1 as $collection) 
-{
-$d_receipt_id = (int)$collection['cash_bank']['receipt_id'];	
-}
-?>
-
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-header">
-<center>
-<h3 id="myModalLabel3" style="color:#999;"><b>Bank Payment</b></h3>
-</center>
-</div>
-<div class="modal-body">
-<center>
-<h5><b>Payment Voucher No. <?php echo $d_receipt_id; ?> is  generated successfully</b></h5>
-</center>
-</div>
-<div class="modal-footer">
-<a href="bank_payment_view" class="btn blue">OK</a>
-</div>
-</div>
-<?php
 }
 
 $this->loadmodel('ledger_sub_account');

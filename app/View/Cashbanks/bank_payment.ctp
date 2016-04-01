@@ -5,9 +5,7 @@ $default_date = date('d-m-Y');
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
 
-<input type="hidden" id="fi" value="<?php echo $datef1; ?>" />
-<input type="hidden" id="ti" value="<?php echo $datet1; ?>" />
-<input type="hidden" id="cn" value="<?php echo $count; ?>" />
+
 
 <center>
 <a href="<?php echo $webroot_path; ?>Cashbanks/bank_payment" class="btn yellow" rel='tab'>Create</a>

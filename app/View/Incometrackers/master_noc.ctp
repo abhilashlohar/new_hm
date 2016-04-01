@@ -180,11 +180,13 @@ alert();
 </script>
 
 <?php } else {?>
-<br /><br />					 
-<center>					 
-<h3 style="color:red;"><b>Please Complete Unit Configuration </b></h3>				 
-</center>					 
-<br /><br />					 
+<br />				 
+
+<ul>
+	    
+		<li style="text-align:left;"><p style="font-size:18px;">Please Complete Unit Configuration</p></li>
+	
+	</ul>					 
 <?php } ?>
 
 

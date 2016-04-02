@@ -207,6 +207,7 @@ $(document).ready(function() {
 			type: 'POST',
 			dataType:'json',
 			}).done(function(response){
+				
 			if(response.type == 'error'){
 			 $("#validdn").html('<div class="alert alert-error" style="color:red; font-weight:600; font-size:13px;">'+response.text+'</div>');
 			}

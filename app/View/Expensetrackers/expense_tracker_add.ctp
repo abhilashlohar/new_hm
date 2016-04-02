@@ -207,7 +207,8 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
                           
 <div class="form-actions">
 <button type="submit" class="btn blue">Submit</button>
-<button type="button" class="btn">Cancel</button>
+<a href="expense_tracker_add" class="btn" rel='tab' >Cancel </a>
+
 </div>
 </div>
 </div>

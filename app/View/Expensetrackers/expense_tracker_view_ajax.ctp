@@ -1,8 +1,8 @@
 <style>
-table th{
+.table th{
    background-color:#FFF;padding:3px 5px 3px 5px !important;  white-space: nowrap;
 }
-table td{
+.table td{
    background-color:#FFF;padding:3px 5px 3px 5px !important;  white-space: nowrap;
 } 
 </style>
@@ -24,7 +24,7 @@ table td{
 <label class="m-wrap pull-right"><input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;" placeholder="Search"></label>	
 </div>	
 
-<table class="table table-bordered table-striped table-hover" width="100%">
+<table class="table table-bordered table-striped table-hover" width="100%" id="table_ex">
 <thead>
 <tr>
 <th >Voucher Id</th>

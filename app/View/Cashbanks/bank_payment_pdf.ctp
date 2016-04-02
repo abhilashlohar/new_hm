@@ -22,20 +22,22 @@ $tcpdf->SetLineWidth(0.1);
 
 foreach ($cursor1 as $collection) 
 {
-$receipt_no = (int)$collection['new_cash_bank']['receipt_id'];
-$d_date = $collection['new_cash_bank']['transaction_date'];
+	$tds_amount="";
+$receipt_no = (int)$collection['cash_bank']['receipt_id'];
+$d_date = $collection['cash_bank']['transaction_date'];
 $today = date("d-M-Y");
-$receipt_mode = $collection['new_cash_bank']['receipt_mode'];
-$user_id = $collection['new_cash_bank']['user_id']; 
-$amount = (int)$collection['new_cash_bank']['amount'];
-$society_id = (int)$collection['new_cash_bank']['society_id'];
-$account_type = (int)$collection['new_cash_bank']['account_type'];
-$narration = @$collection['new_cash_bank']['narration'];
-$sub_account = (int)$collection['new_cash_bank']['account_head'];
-$invoice_ref = $collection['new_cash_bank']['invoice_reference'];
-$instrument_utr = $collection['new_cash_bank']['receipt_instruction']; 
-$prepaired_by_id = (int)$collection['new_cash_bank']['prepaired_by']; 
-$tds_id = (int)$collection['new_cash_bank']['tds_id']; 
+$receipt_mode = $collection['cash_bank']['receipt_mode'];
+$user_id = $collection['cash_bank']['user_id']; 
+$amount = $collection['cash_bank']['amount'];
+$society_id = (int)$collection['cash_bank']['society_id'];
+$account_type = (int)$collection['cash_bank']['account_type'];
+$narration = @$collection['cash_bank']['narration'];
+$sub_account = (int)$collection['cash_bank']['account_head'];
+$invoice_ref = $collection['cash_bank']['invoice_reference'];
+$instrument_utr = $collection['cash_bank']['receipt_instruction']; 
+$prepaired_by_id = (int)$collection['cash_bank']['prepaired_by']; 
+$tds_id = (int)$collection['cash_bank']['tds_id']; 
+$total_tds_amount=$amount;
 
 	foreach($tds_arr as $tds_ddd)
 	{
@@ -44,11 +46,13 @@ $tds_id = (int)$collection['new_cash_bank']['tds_id'];
 	if($tds_iddd == $tds_id) 
 	{
 	$tds_tax = $tdsss_taxxx;   
+	$tds_amount = (round(($tds_tax/100)*$amount));
+	$total_tds_amount = ($amount - $tds_amount);
+	$tds_amount = str_replace( ',', '', $tds_amount);
 	}
 	}
 	
-	$tds_amount = (round(($tds_tax/100)*$amount));
-	$total_tds_amount = ($amount - $tds_amount);
+	
 
 
 
@@ -59,8 +63,8 @@ $tds_id = (int)$collection['new_cash_bank']['tds_id'];
 
 
 }
-$tds_amount = str_replace( ',', '', $tds_amount);
-$total_tds_amount = str_replace( ',', '', $total_tds_amount );
+
+$total_tds_amount = str_replace( ',', '', @$total_tds_amount );
 $am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' =>array($total_tds_amount))));
 foreach ($cursor2 as $collection) 
 {

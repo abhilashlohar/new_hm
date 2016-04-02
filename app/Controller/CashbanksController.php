@@ -2597,43 +2597,37 @@ $conditions=array("accounts_id" => 4);
 $cursor3=$this->accounts_group->find('all',array('conditions'=>$conditions));
 $this->set('cursor3',$cursor3);
 }
-////////////////////////End Bank Payment Type Ajax /////////////////////////////////////
-
-//////////////////////////////////////// Start bank payment Pdf (Accounts)///////////////////////////////////////
+//End Bank Payment Type Ajax//
+//Start bank payment Pdf (Accounts)//
 function bank_payment_pdf($trans_id=null)
 {
-$this->layout = 'pdf'; //this will use the pdf.ctp layout 
-$s_role_id = (int)$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id = (int)$this->Session->read('user_id');	
-
+	$this->layout = 'pdf'; //this will use the pdf.ctp layout 
+	$s_role_id = (int)$this->Session->read('role_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id = (int)$this->Session->read('hm_user_id');	
 	$this->ath();
+	$trans_id = (int)$trans_id;
 
-$trans_id = (int)$trans_id;
-
-$this->loadmodel('new_cash_bank');
-$conditions=array("transaction_id" => $trans_id,"receipt_source"=>2,"society_id"=>$s_society_id);
-$cursor1=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
+$this->loadmodel('cash_bank');
+$conditions=array("transaction_id"=>$trans_id,"source"=>'bank_payment',"society_id"=>$s_society_id);
+$cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
 
 $this->loadmodel('society');
-$conditions=array("society_id" => $s_society_id);
+$conditions=array("society_id"=>$s_society_id);
 $cursor2=$this->society->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
 
-$this->loadmodel('reference');
-$conditions=array("auto_id"=>3);
-$cursor = $this->reference->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
-$tds_arr = $collection['reference']['reference'];
+	$this->loadmodel('reference');
+	$conditions=array("auto_id"=>3);
+	$cursor = $this->reference->find('all',array('conditions'=>$conditions));
+		foreach($cursor as $collection){
+		$tds_arr = $collection['reference']['reference'];
+	}
+	$this->set("tds_arr",$tds_arr);	
 }
-$this->set("tds_arr",$tds_arr);	
-
-}
-//////////////////////////////////////// End bank payment Pdf (Accounts)////////////////////////////////////////////
-
-//////////////////////////////////Start Fix Deposit Add (Accounts) ////////////////////////////////////////////////////
+//End bank payment Pdf (Accounts)//
+//Start Fix Deposit Add (Accounts)//
 function fix_deposit_add()
 {
 if($this->RequestHandler->isAjax()){

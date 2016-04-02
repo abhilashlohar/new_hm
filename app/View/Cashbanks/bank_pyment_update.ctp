@@ -1,17 +1,17 @@
 <?php
 foreach($cursor1 as $data){
-$receipt_id=$data["new_cash_bank"]["receipt_id"];
-$transaction_date=$data["new_cash_bank"]["transaction_date"];
+$receipt_id=$data["cash_bank"]["receipt_id"];
+$transaction_date=$data["cash_bank"]["transaction_date"];
 $transaction_date=date("d-m-Y",($transaction_date));
-$user_id= (int)$data["new_cash_bank"]["user_id"];
-$invoice_ref=@$data["new_cash_bank"]["invoice_reference"];
-$narration=@$data["new_cash_bank"]["narration"];
-$receipt_mode = @$data["new_cash_bank"]["receipt_mode"];
-$receipt_instruction = @$data["new_cash_bank"]["receipt_instruction"];
-$account_head = (int)@$data["new_cash_bank"]["account_head"];	
-$amount = (int)@$data["new_cash_bank"]["amount"];
-$tds_id = @$data["new_cash_bank"]["tds_id"];	
-$account_type = (int)@$data["new_cash_bank"]["account_type"];	
+$user_id= (int)$data["cash_bank"]["user_id"];
+$invoice_ref=@$data["cash_bank"]["invoice_reference"];
+$narration=@$data["cash_bank"]["narration"];
+$receipt_mode = @$data["cash_bank"]["receipt_mode"];
+$receipt_instruction = @$data["cash_bank"]["receipt_instruction"];
+$account_head = (int)@$data["cash_bank"]["account_head"];	
+$amount = (int)@$data["cash_bank"]["amount"];
+$tds_id = @$data["cash_bank"]["tds_id"];	
+$account_type = (int)@$data["cash_bank"]["account_type"];	
 }
 if($account_type == 1)
 {

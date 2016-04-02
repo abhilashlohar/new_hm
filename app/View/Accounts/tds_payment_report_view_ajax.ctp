@@ -34,7 +34,7 @@ $tomm = strtotime($to2);
 		</tr>
 	</thead>
 <tbody id="table">
-<?php $total = 0; $total_tds = 0; $net_amt = 0;
+<?php $total = 0; $total_tds = 0; $net_amt = 0; $tds_id=0;
 foreach($cursor1 as $dataaa){
 $transaction_date = $dataaa['cash_bank']['transaction_date'];	
 $payment_date = date('d-m-Y',($transaction_date));
@@ -73,9 +73,10 @@ else{
 	$user_name = $collection['ledger_account']['ledger_name'];  
 	}		
 }
+if($tds_id != 0){
 $total=$total+$amount;
 $total_tds=$total_tds+$tds_amount;
-$net_amt=$net_amt+$total_tds_amount; ?>
+$net_amt=$net_amt+$total_tds_amount;  ?>
 <tr>
 	<td>
 	<?php echo $payment_date; ?>
@@ -99,7 +100,7 @@ $net_amt=$net_amt+$total_tds_amount; ?>
 	<?php $amount2 = number_format($amount); echo $amount2; ?>
 	</td>
 </tr>
-<?php } ?>
+<?php }} ?>
 <tr>
 <td colspan="4" style="text-align:right;"><b>Total</b></td>
 <td style="text-align:right;"><b><?php $net_amt2 = number_format($net_amt); echo $net_amt2; ?></b></td>

@@ -5272,8 +5272,8 @@ function tds_report_excel()
 {
 $this->layout=null;
 $s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 $this->loadmodel('society');
 $conditions=array("society_id" => $s_society_id);
@@ -5301,21 +5301,20 @@ $tomm = date('Y-m-d',strtotime($to));
 $from_strtotime = strtotime($fromm);
 $to_strtotime = strtotime($tomm);
 	
-$this->loadmodel('new_cash_bank');
-$order=array('new_cash_bank.receipt_date'=> 'ASC');
-$conditions=array('society_id'=>$s_society_id,"receipt_source"=>2,
-'new_cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime));
-$cursor1=$this->new_cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
-$this->set('cursor1',$cursor1);	
+	$this->loadmodel('cash_bank');
+	$order=array('cash_bank.transaction_date'=> 'ASC');
+	$conditions=array('society_id'=>$s_society_id,"source"=>"bank_payment",
+	'cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime));
+	$cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
+	$this->set('cursor1',$cursor1);	
 	
 	
-$this->loadmodel('reference');
-$conditions=array("auto_id"=>3);
-$cursor = $this->reference->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
-$tds_arr = $collection['reference']['reference'];
-}
+	$this->loadmodel('reference');
+	$conditions=array("auto_id"=>3);
+	$cursor = $this->reference->find('all',array('conditions'=>$conditions));
+		foreach($cursor as $collection){
+		$tds_arr = $collection['reference']['reference'];
+	}
 $this->set("tds_arr",$tds_arr);	
 }
 //End tds_report_excel//

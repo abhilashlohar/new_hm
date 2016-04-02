@@ -26,19 +26,19 @@ header ("Content-Description: Generated Report" );
 </thead>
 <tbody>
 <?php 
-$total = 0;
-$total_tds = 0;
-$net_amt = 0;
+$total=0;
+$total_tds=0;
+$net_amt=0;
+$tds_id=0;
 foreach($cursor1 as $dataaa)
 {
-$transaction_date = $dataaa['new_cash_bank']['transaction_date'];	
+$transaction_date = $dataaa['cash_bank']['transaction_date'];	
 $payment_date = date('d-m-Y',($transaction_date));
-//$cheque_number = $dataaa['new_cash_bank'][''];
-$user_id = (int)$dataaa['new_cash_bank']['user_id'];
-$account_type = (int)$dataaa['new_cash_bank']['account_type'];
-$amount = $dataaa['new_cash_bank']['amount'];
-$instrument_utr = $dataaa['new_cash_bank']['receipt_instruction'];
-$tds_id = (int)@$dataaa['new_cash_bank']['tds_id']; 
+$user_id = (int)$dataaa['cash_bank']['user_id'];
+$account_type = (int)$dataaa['cash_bank']['account_type'];
+$amount = $dataaa['cash_bank']['amount'];
+$instrument_utr = $dataaa['cash_bank']['receipt_instruction'];
+$tds_id = (int)@$dataaa['cash_bank']['tds_id']; 
 
 	foreach($tds_arr as $tds_ddd)
 	{
@@ -87,13 +87,10 @@ else
 	$user_name = $collection['ledger_account']['ledger_name'];  
 	}		
 }
-
+if($tds_id != 0){
 $total = $total+$amount;
 $total_tds = $total_tds + $tds_amount;
 $net_amt = $net_amt + $total_tds_amount;
-
-
-
 ?>
 <tr>
 <td><?php echo $payment_date; ?></td>
@@ -104,7 +101,7 @@ $net_amt = $net_amt + $total_tds_amount;
 <td style="text-align:right;"><?php $tds_amount2 = number_format($tds_amount);  echo $tds_amount2; ?></td>
 <td style="text-align:right;"><?php $amount2 = number_format($amount); echo $amount2; ?></td>
 </tr>
-<?php } ?>
+<?php }} ?>
 <td colspan="4" style="text-align:right;"><b>Total</b></td>
 <td style="text-align:right;"><b><?php $net_amt2 = number_format($net_amt); echo $net_amt2; ?></b></td>
 <td style="text-align:right;"><b><?php $total_tds2 = number_format($total_tds); echo $total_tds2; ?></b></td>

@@ -3216,10 +3216,10 @@ $TransactionDate = $child[4];
 		foreach($cursor as $collection){
 				$from = $collection['financial_year']['from'];
 				$to = $collection['financial_year']['to'];
-				$from1 = date('Y-m-d',$from->sec);
-				$to1 = date('Y-m-d',$to->sec);
-				$from2 = strtotime($from1);
-				$to2 = strtotime($to1);
+				//$from1 = date('Y-m-d',$from->sec);
+				//$to1 = date('Y-m-d',$to->sec);
+				$from2=$from;
+				$to2=$to;  
 				$transaction1 = date('Y-m-d',strtotime($TransactionDate));
 				$transaction2 = strtotime($transaction1);
 					if($transaction2 <= $to2 && $transaction2 >= $from2){

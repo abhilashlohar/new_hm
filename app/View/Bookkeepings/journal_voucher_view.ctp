@@ -3,7 +3,7 @@
 </div> -->
 <div align="right" class="hide_at_print">
 <a  class="btn green mini" onclick="window.print()" ><i class="icon-print"></i>  </a>
-<a  class="btn green mini create_pdf"  ><i class="icon-print"></i>  </a>
+
 </div>
 <br/>
 <div style="background-color:#fff; border:solid 1px;" class="print_margin make_pdf" >

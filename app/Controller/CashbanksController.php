@@ -578,7 +578,7 @@ function delete_bank_receipt_row($record_id=null){
 	$this->bank_receipt_csv_converted->deleteAll($conditions4);
 	echo "1";
 }
-///////////////////// Start bank receipt View/////////////////////////////////////////////////////////
+//Start bank receipt View//
 function bank_receipt_view()
 {
 		if($this->RequestHandler->isAjax()){
@@ -1433,11 +1433,24 @@ function petty_cash_receipt()
 $this->ath();
 $this->check_user_privilages();	
 	
-	
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = $this->Session->read('hm_society_id');
-$s_user_id=$this->Session->read('hm_user_id');
-$this->set('s_role_id',$s_role_id);
+	$s_role_id=$this->Session->read('role_id');
+	  $s_society_id = $this->Session->read('hm_society_id');
+		$s_user_id=$this->Session->read('hm_user_id');
+		  $this->set('s_role_id',$s_role_id);
+
+$this->loadmodel('financial_year');
+	$conditions=array("society_id" => $s_society_id,"status"=>1);
+	$financial_years=$this->financial_year->find('all',array('conditions'=>$conditions));
+	$financial_year_array=array();
+	foreach($financial_years as $financial_year){
+		$from=date("d-m-Y",$financial_year["financial_year"]["from"]);
+		$to=date("d-m-Y",$financial_year["financial_year"]["to"]);
+		$pair=array($from,$to);
+		$pair=implode('/',$pair);
+		$financial_year_array[]=$pair;
+	}
+	$financial_year_string=implode(',',$financial_year_array);
+	$this->set(compact("financial_year_string"));
 
 $this->loadmodel('ledger_account');
 $conditions=array('$or'=>array(array("group_id"=>8,'society_id'=>$s_society_id),array("group_id"=>8,"society_id"=>0)));
@@ -2461,9 +2474,8 @@ $this->send_email($to_email,'accounts@housingmatters.in','HousingMatters',$subje
 		$this->response->header('Location', $this->webroot.'Cashbanks/bank_receipt_view');
 	}
 }
-////////////////////////////////////////// End Bank Receipt Pdf (Accounts)////////////////////////////////////
-
-/////////////////// Start Cash Bank Vali (Accounts) ////////////////////////////////////
+//End Bank Receipt Pdf (Accounts)//
+//Start Cash Bank Vali (Accounts)//
 function cash_bank_vali()
 {
 $this->layout='blank';

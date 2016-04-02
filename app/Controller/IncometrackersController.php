@@ -89,7 +89,7 @@ function it_regular_bill(){
 		$wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
 		foreach($wings as $data){
 			$wing_id=$data["wing"]["wing_id"];
-			if (in_array($wing_id, $wing_ids)){
+			if (($bill_for=="wing_wise" && in_array($wing_id, $wing_ids)) or ($bill_for=="all")){
 				$this->loadmodel('flat');
 				$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
 				$order=array('flat.flat_name'=>'ASC');

@@ -1179,6 +1179,26 @@ function final_import_user_enrollment(){
 } 
 }
 
+function cancel_user_enrollment(){
+	
+	$this->layout=null;
+	 $s_society_id = $this->Session->read('hm_society_id');	
+	
+		    $this->loadmodel('user_enrollment_csv_converted');
+			$conditions4=array('society_id'=>$s_society_id);
+			$this->user_enrollment_csv_converted->deleteAll($conditions4);
+			
+			$this->loadmodel('user_enrollment_info_csv');
+			$conditions4=array('society_id'=>$s_society_id);
+			$this->user_enrollment_info_csv->deleteAll($conditions4);
+			
+			$this->loadmodel('import_user_enrollment_record');
+			$conditions4=array("society_id" => $s_society_id, "module_name" => "UE");
+			$this->import_user_enrollment_record->deleteAll($conditions4);
+			echo"ok";
+		
+
+}
 
 function delete_user_enrollment_row($record_id=null){
 	$this->layout=null;

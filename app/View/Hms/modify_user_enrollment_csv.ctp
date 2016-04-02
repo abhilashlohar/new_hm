@@ -102,7 +102,7 @@ for($ii=1;$ii<=$loop;$ii++){ ?>
 </div>
 <br/>
 
-<a class="btn purple " role="button" id="final_import">Import user enrollment <i class="m-icon-swapright m-icon-white"></i></a>									
+<a class="btn purple " role="button" id="final_import">Import user enrollment <i class="m-icon-swapright m-icon-white"></i></a>	<a class="btn cancel_user"  >Cancel</a>								
 <div id="check_validation_result"></div>
 
 	
@@ -110,6 +110,23 @@ for($ii=1;$ii<=$loop;$ii++){ ?>
 <script>
 $(document).ready(function() {
 	$("select.wing_flat").chosen();
+	
+	$( ".cancel_user" ).click(function() {
+		
+			var answer = confirm ("Confirm, Are you want to cancel user enrollment ? .")
+			if(answer){
+				$.ajax({
+				url: "<?php echo $webroot_path; ?>Hms/cancel_user_enrollment",
+				}).done(function(response){
+					if(response=="ok"){
+						window.location.href="<?php echo $webroot_path; ?>Hms/import_user_enrollment";
+					}
+				});
+				
+			}
+	});
+	
+	
 	
 	$( ".owner_tenant" ).die().change(function() {
 		

@@ -5351,7 +5351,7 @@ $from2=date('Y-m-d',strtotime($from));
 $to2=date('Y-m-d',strtotime($to)); 
 $from_strtotime=strtotime($from2);
 $to_strtotime=strtotime($to2);
-$s_role_id=$this->Session->read('hm_role_id');
+$s_role_id=$this->Session->read('role_id');
 $s_society_id=(int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');	
 	
@@ -5365,9 +5365,9 @@ $this->set('society_name',$society_name);
 	
 	
 $this->loadmodel('cash_bank');
-$order=array('cash_bank.transaction_date'=> 'ASC');
-$conditions =array('$or' => array(array('society_id'=>$s_society_id,"receipt_source"=>"petty_cash_receipt",'cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime)),
-array('society_id'=>$s_society_id,"receipt_source"=>"petty_cash_payment",
+$order=array('cash_bank.transaction_date'=>'ASC');
+$conditions =array('$or'=>array(array('society_id'=>$s_society_id,"source"=>"petty_cash_receipt",'cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime)),
+array('society_id'=>$s_society_id,"source"=>"petty_cash_payment",
 'cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime))));
 $cursor2=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor2',$cursor2);	

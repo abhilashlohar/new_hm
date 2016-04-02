@@ -10,11 +10,11 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<table>
 		<tbody>
 			<tr>
-				<td><input type="text" class="date-picker m-wrap medium" id="date1" data-date-format="dd-mm-yyyy" name="from" placeholder="From" 
+				<td><input type="text" class="date-picker m-wrap small" id="date1" data-date-format="dd-mm-yyyy" name="from" placeholder="From" 
 				style="background-color:white !important;" value="<?php echo $b_date; ?>">
 				</td>
 				<td>
-				<input type="text" class="date-picker  m-wrap medium" id="date2" data-date-format="dd-mm-yyyy" 
+				<input type="text" class="date-picker  m-wrap small" id="date2" data-date-format="dd-mm-yyyy" 
 				name="to" placeholder="To" style="background-color:white !important;" value="<?php echo $c_date; ?>">
 				</td>
 				<td valign="top"><button type="button" name="sub" class="btn yellow" id="go">Go</button>

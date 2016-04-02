@@ -5324,12 +5324,14 @@ function new_bank_receipt(){
 	$financial_years=$this->financial_year->find('all',array('conditions'=>$conditions));
 	$financial_year_array=array();
 	foreach($financial_years as $financial_year){
-		$from=$financial_year["financial_year"]["from"];
-		$to=$financial_year["financial_year"]["to"];
+		$from=date("d-m-Y",$financial_year["financial_year"]["from"]);
+		$to=date("d-m-Y",$financial_year["financial_year"]["to"]);
 		$pair=array($from,$to);
+		$pair=implode('/',$pair);
 		$financial_year_array[]=$pair;
 	}
-	pr($financial_year_array);
+	$financial_year_string=implode(',',$financial_year_array);
+	$this->set(compact("financial_year_string"));
 	
 	$this->loadmodel('ledger_sub_account');
 	$conditions=array("society_id"=>$s_society_id,"ledger_id"=>112);

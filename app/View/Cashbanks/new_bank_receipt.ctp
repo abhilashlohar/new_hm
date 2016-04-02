@@ -10,6 +10,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </center>
 
 <?php $current_date= date('d-m-Y'); ?>
+<input type="text" value="<?php echo $financial_year_string; ?>" id="f_y" style="display:none;"/>
 <div class="portlet box">
 	<div class="portlet-body" >
 	<form method="post" id="myForm">
@@ -148,29 +149,30 @@ $(document).ready(function(){
 	}
 	
 	$("form").die().on("submit",function(e){
-		e.preventDefault();
 		var allow="yes";
-		var submit="no";
-		var l=$('#main tbody tr input[name="transaction_date[]"]').length;
-		$('#main tbody tr input[name="transaction_date[]"]').die().each(function(i, obj){
+		$('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj){
 			var transaction_date=$(this).val();
-			$.ajax({
-				url: "<?php echo $webroot_path; ?>Cashbanks/validate_transaction_date/"+transaction_date,
-				 async: false,
-				cache: false,
-			}).done(function(response){
-				if(response=='false'){
-					$('#main tbody tr:eq('+i+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
-					$('#main tbody tr:eq('+i+') input[name="transaction_date[]"]').closest('td').append('<p class="er">Not in financial year</p>');
-					allow="no";
+			transaction_date=transaction_date.split('-').reverse().join('');
+			
+			var f_y=$("#f_y").val();
+			var f_y2=f_y.split(',');
+			$.each(f_y2, function( index, value ) {
+				var f_y3=value.split('/');
+				var from=f_y3[0];
+				from=from.split('-').reverse().join('');
+				var to=f_y3[1];
+				to=to.split('-').reverse().join('');
+				
+				if(transaction_date>=from && transaction_date<=to){
+					$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
+					allow="yes";
+					return false;
 				}else{
-					$('#main tbody tr:eq('+i+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
-				}
-				if(i==(l-1) && allow=="yes"){
-					submit="yes";
+					$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
+					$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').append('<p class="er">Not in financial year</p>');
+					allow="no";
 				}
 			});
-			
 		});
 		
 		$('#main tbody tr select[name="deposited_in[]"]').die().each(function(i, obj){
@@ -217,9 +219,8 @@ $(document).ready(function(){
 		});
 		
 		
-		  if(allow=="yes" && submit=="yes"){
-				//$(this).unbind('submit');
-				$(this).submit();
+		  if(allow=="no"){
+				e.preventDefault();
 			}
 		
 	});

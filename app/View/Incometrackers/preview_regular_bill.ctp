@@ -191,6 +191,8 @@ if(sizeof($other_charge_ih_ids)>0){
 	</tbody>
 	</table>
 	
+
+
 <script>
 $(document).ready(function(){
 	$(".auto_save").on("blur",function(){
@@ -203,7 +205,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_income_head_values/"+auto_id+"/"+income_head_id+"/"+amount,
 		}).done(function(response){
-			$("#save_result").html('Every change you make is automatically saved.');
+			$("#save_result").html('<span> No need to save this form. The system will automatically save updated data. </span>');
 		});
 		var total=0;
 		$('input[income_head_id='+income_head_id+']').each(function(i, obj) {
@@ -223,7 +225,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_noc_values/"+auto_id+"/"+amount,
 		}).done(function(response){
-			$("#save_result").html('Every change you make is automatically saved.');
+			$("#save_result").html('<span> No need to save this form. The system will automatically save updated data. </span>');
 		});
 		var total=0;
 		$('input.auto_save_noc').each(function(i, obj) {
@@ -243,7 +245,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_other_charge/"+auto_id+"/"+income_head_id+"/"+amount,
 		}).done(function(response){
-			$("#save_result").html('Every change you make is automatically saved.');
+			$("#save_result").html('<span> No need to save this form. The system will automatically save updated data. </span>');
 		});
 		var total=0;
 		$('input[income_head_id='+income_head_id+']').each(function(i, obj) {
@@ -262,7 +264,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_intrest/"+auto_id+"/"+amount,
 		}).done(function(response){
-			$("#save_result").html('Every change you make is automatically saved.');
+			$("#save_result").html('<span> No need to save this form. The system will automatically save updated data. </span>');
 		});
 		var total=0;
 		$('.auto_save_intrest').each(function(i, obj) {
@@ -281,7 +283,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_credit/"+auto_id+"/"+amount,
 		}).done(function(response){
-			$("#save_result").html('Every change you make is automatically saved.');
+			$("#save_result").html('<span> No need to save this form. The system will automatically save updated data. </span>');
 		});
 		var total=0;
 		$('.auto_save_credit').each(function(i, obj) {

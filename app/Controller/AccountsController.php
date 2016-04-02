@@ -5402,25 +5402,25 @@ function bank_book_report_view_ajax()
 {
 $this->layout='blank';
 $this->ath();
-$bank_id=(int)$this->request->query('bank');
-$this->set('bank_id',$bank_id);	
-$from=$this->request->query('date1');
-$to=$this->request->query('date2');
-$this->set('from',$from);
-$this->set('to',$to);
-$from2=date('Y-m-d',strtotime($from)); 
-$to2=date('Y-m-d',strtotime($to)); 
-$from_strtotime=strtotime($from2);
-$to_strtotime=strtotime($to2);
-$s_role_id=$this->Session->read('hm_role_id');
-$s_society_id = (int)$this->Session->read('hm_society_id');
-$s_user_id=$this->Session->read('hm_user_id');	
+	$bank_id=(int)$this->request->query('bank');
+	  $this->set('bank_id',$bank_id);	
+		$from=$this->request->query('date1');
+		  $to=$this->request->query('date2');
+			$this->set('from',$from);
+			  $this->set('to',$to);
+				$from2=date('Y-m-d',strtotime($from)); 
+				  $to2=date('Y-m-d',strtotime($to)); 
+					$from_strtotime=strtotime($from2);
+					  $to_strtotime=strtotime($to2);
+						$s_role_id=$this->Session->read('role_id');
+						  $s_society_id = (int)$this->Session->read('hm_society_id');
+							$s_user_id=$this->Session->read('hm_user_id');	
 	
 	$this->loadmodel('society');
 	$conditions=array("society_id"=>$s_society_id);
 	$cursor=$this->society->find('all',array('conditions'=>$conditions));
-	foreach($cursor as $collection){
-	$society_name=$collection['society']['society_name'];
+		foreach($cursor as $collection){
+		$society_name=$collection['society']['society_name'];
 	}	
 	$this->set('society_name',$society_name);	
 	
@@ -5428,15 +5428,13 @@ $s_user_id=$this->Session->read('hm_user_id');
 	$conditions=array("auto_id"=>$bank_id,"society_id"=>$s_society_id);
 	$cursor1=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 	$this->set('cursor1',$cursor1);
-	
-	
-	
-$this->loadmodel('cash_bank');
-$conditions=array('$or' => array(array('society_id'=>$s_society_id,"receipt_source"=>"bank_receipt","deposited_bank_id"=>$bank_id,
-'cash_bank.receipt_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime)),
-array('society_id'=>$s_society_id,"receipt_source"=>"bank_payment","account_head"=>$bank_id,
-'cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime))));
-$cursor2=$this->cash_bank->find('all',array('conditions'=>$conditions));
+		
+	$this->loadmodel('cash_bank');
+	$conditions=array('$or' => array(array('society_id'=>$s_society_id,"source"=>"bank_receipt","deposited_bank_id"=>$bank_id,
+	'cash_bank.receipt_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime)),
+	array('society_id'=>$s_society_id,"source"=>"bank_payment","account_head"=>$bank_id,
+	'cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime))));
+	$cursor2=$this->cash_bank->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
 }
 //End bank_book_report_view_ajax//

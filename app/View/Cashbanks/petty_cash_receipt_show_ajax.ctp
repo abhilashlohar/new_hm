@@ -26,15 +26,17 @@ $nnn = 555;
 <span style="float:right;"><a href="petty_cash_receipt_excel?f=<?php echo $from; ?>&t=<?php echo $to; ?>" target="_blank" class="btn blue mini"><i class="icon-download"></i></a></span>
 <span style="float:right; margin-right:1%;"><a  class=" printt btn green mini" onclick="window.print()"><i class="icon-print"></i> </a></span>
 </div>
-<br /><br />
-<div style="width:100%; overflow:auto;" class="hide_at_print">
-<label class="m-wrap pull-right"><input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;" placeholder="Search"></label>	
+
+
+<div class="portlet box">
+	<div class="portlet-body">
+
+<div align="center"><?php echo strtoupper($society_name); ?> Bank Payment Register From : <?php echo $from;?> To : <?php echo $to;?>
+<input class="m-wrap medium pull-right" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
 </div>
+
 <table  width="100%" style=" background-color:white;" class="table table-bordered table-striped" id="table">
 <thead>
-<tr>
-<th colspan="6" style="text-align:center;"><?php echo $society_name; ?> Petty Cash Receipt Register From : <?php echo $from; ?> &nbsp;&nbsp; To : <?php echo $to; ?></th>
-</tr>
 <tr>
 <th>PC Receipt#</th>
 <th>Transaction Date</th>
@@ -118,7 +120,7 @@ $amount = number_format($amount);
 <td><?php echo $narration; ?></td>
 <td class="hide_at_print" style="text-align:left;">
 
-   <div class="btn-group">
+   <div class="btn-group" style="margin:0 !important;">
 	<a class="btn blue mini" href="#" data-toggle="dropdown">
 	<i class="icon-chevron-down"></i>	
 	</a>
@@ -146,7 +148,8 @@ echo $total_debit; ?></b></td>
 </tr>
 </tbody>
 </table>  
-            
+</div>
+</div>            
                              
 <?php } 
 if($nnn == 55)

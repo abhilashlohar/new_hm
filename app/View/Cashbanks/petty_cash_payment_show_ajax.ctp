@@ -40,9 +40,7 @@ $nnn = 555;
 </div>
 <table width="100%" style="background-color:white;" class="table table-bordered table-striped" id="table_css">
 <thead>
-	<tr>
-		<th colspan="5" style="text-align:center;"><?php echo $society_name; ?> Petty Cash Payment Register From : <?php echo $from; ?> To : <?php echo $to; ?></th>
-		</tr>
+	
 		<tr id="bg_color">
 		<th>PC Payment Vochure</th>
 		<th>Transaction Date</th>

@@ -32,13 +32,20 @@ $nnn = 555;
 </div>
 <div style="width:100%; overflow:auto; margin-top:10px;" class="hide_at_print">
 	<label class="m-wrap pull-right"><input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;" placeholder="Search"></label>	
-</div>			
+</div>
+
+
+
+
+
+	<div align="center"><?php echo strtoupper($society_name); ?> Bank Payment Register From : <?php echo date("d-m-Y",$from);?> To : <?php echo date("d-m-Y",$to);?>
+	<input class="m-wrap medium pull-right" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
+	</div>
+
+
+			
 <table  width="100%" style="background-color:white;" class="table table-bordered table-striped" id="table">
 <thead>
-	<tr>
-		<th colspan="9" style="text-align:center;"><?php echo $society_name; ?> Bank Payment Register From : <?php echo $from; ?> &nbsp;&nbsp; To : <?php echo $to; ?>
-		</th>
-		</tr>
 		<tr>
 		<th>Transaction Date</th>
 		<th>Payment Voucher</th>

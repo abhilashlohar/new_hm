@@ -74,15 +74,17 @@ $amount=$collection['cash_bank']['amount'];
 $current_date=$collection['cash_bank']['current_date'];		
 $ac_type=(int)$collection['cash_bank']['account_type'];
 $tds_id=(int)$collection['cash_bank']['tds_id']; 
+$total_tds_amount=$amount;	
 	foreach($tds_arr as $tds_ddd){
 	$tdsss_taxxx = (int)$tds_ddd[0];  
 	$tds_iddd = (int)$tds_ddd[1];  
 		if($tds_iddd == $tds_id){
 		$tds_tax = $tdsss_taxxx;   
+		$tds_amount=(round((@$tds_tax/100)*$amount));
+		$total_tds_amount=($amount - $tds_amount);
 		}
 	}
-$tds_amount=(round(($tds_tax/100)*$amount));
-$total_tds_amount=($amount - $tds_amount);	
+	
 $creation_date=date('d-m-Y',strtotime($current_date));											
 	$ussr_dataa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by_id)));  
 	foreach ($ussr_dataa as $ussrrr){

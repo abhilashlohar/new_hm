@@ -1069,7 +1069,7 @@ $this->layout='session';
 			                $bank_accounts=$this->request->data['bank_account'];
 			                  $narrations=$this->request->data['narration'];
 		$n=0;  $receipt_array=array();
-		foreach($transaction_dates as $transaction_date){
+		foreach($transaction_dates as $transaction_date){ $tds="";
 			 $transaction_date=date('Y-m-d',strtotime($transaction_date));
 			   $invoice_reference=@$invoice_references[$n];
 			     $ledger_account=$ledger_accounts[$n];
@@ -1125,9 +1125,12 @@ $this->layout='session';
 			}
 			$tds_amount = (round(($tds_rate/100)*$amount));
 			$total_tds_amount=($amount - $tds_amount);
+			
 		}else{
 		$total_tds_amount=$amount;
 		$tds_amount = 0;
+		
+			
         }
 	
 			$l=$this->autoincrement('ledger','auto_id');
@@ -1150,7 +1153,7 @@ $this->layout='session';
 		$n++;	
 	}		
 
-    exit;
+ 
 	}
 
 $this->loadmodel('ledger_sub_account');

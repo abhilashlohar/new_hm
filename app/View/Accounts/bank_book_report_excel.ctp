@@ -40,12 +40,13 @@ $total_payment = 0;
 $total_receipt = 0;
 foreach($cursor2 as $dataaa)
 {
-$receipt_id = $dataaa['cash_bank']['receipt_number'];	
+	
 $receipt_source = $dataaa['cash_bank']['source'];
 $narration = $dataaa['cash_bank']['narration'];
 
 		if($receipt_source == "bank_receipt")
 		{
+			$receipt_id = $dataaa['cash_bank']['receipt_number'];
 			$transaction_date = $dataaa['cash_bank']['transaction_date'];	
 			$transaction_date2 = date('d-m-Y',($transaction_date));	
 			$bank_id = (int)$dataaa['cash_bank']['deposited_in'];		
@@ -71,6 +72,7 @@ $subleddger_detaill=$this->requestAction(array('controller'=>'Fns','action'=> 'f
 }
 else
 {
+	$receipt_id = $dataaa['cash_bank']['receipt_id'];
 $transaction_date = $dataaa['cash_bank']['transaction_date'];	
 $transaction_date2 = date('d-m-Y',($transaction_date));		
 $payment_amount = $dataaa['cash_bank']['amount'];	
@@ -123,6 +125,6 @@ $total_balance = $total_balance + $balance;
 <td colspan="4" style="text-align:right;"><b>Total</b></td>
 <td style="text-align:right;"><b><?php if(!empty($total_receipt)) { $total_receipt2 = number_format($total_receipt); }  echo @$total_receipt2; ?></b></td>
 <td style="text-align:right;"><b><?php if(!empty($total_payment)) { $total_payment2 = number_format($total_payment); } echo @$total_payment2; ?></b></td>
-<td style="text-align:right;"></td>
+<td style="text-align:right;"><b><?php echo $total_balance; ?></b></td>
 </tr>
 </table> 

@@ -3906,7 +3906,7 @@ $cursor=$this->$table->find('all',array('order'=>$order,'limit'=>1));
 
 foreach ($cursor as $collection) 
 {
-$last=$collection[$table][$field];
+$last=@$collection[$table][$field];
 }
 
 if(empty($last))

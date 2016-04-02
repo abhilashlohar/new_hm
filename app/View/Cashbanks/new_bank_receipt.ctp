@@ -156,6 +156,7 @@ $(document).ready(function(){
 			
 			var f_y=$("#f_y").val();
 			var f_y2=f_y.split(',');
+			var al=0;
 			$.each(f_y2, function( index, value ) {
 				var f_y3=value.split('/');
 				var from=f_y3[0];
@@ -165,14 +166,17 @@ $(document).ready(function(){
 				
 				if(transaction_date>=from && transaction_date<=to){
 					$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
-					allow="yes";
-					return false;
+					al=al+1;
 				}else{
 					$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
 					$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').append('<p class="er">Not in financial year</p>');
-					allow="no";
+					al=al+0;
+					
 				}
 			});
+			if(al==0){
+				allow="no";
+			}
 		});
 		
 		$('#main tbody tr select[name="deposited_in[]"]').die().each(function(i, obj){
@@ -217,7 +221,6 @@ $(document).ready(function(){
 				$(this).closest('td').find(".er").remove();
 			}
 		});
-		
 		
 		  if(allow=="no"){
 				e.preventDefault();

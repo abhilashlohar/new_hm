@@ -5444,50 +5444,43 @@ function bank_book_report_excel()
 {
 $this->layout="";
 $this->ath();	
-	
-$s_society_id = (int)$this->Session->read('society_id');
-$s_role_id= (int)$this->Session->read('role_id');
-$s_user_id= (int)$this->Session->read('user_id');
 
-$bank_id = (int)$this->request->query('bank');
-$from = $this->request->query('f');	
-$to = $this->request->query('t');	
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	  $s_role_id= (int)$this->Session->read('role_id');
+		$s_user_id= (int)$this->Session->read('hm_user_id');
+		  $bank_id = (int)$this->request->query('bank');
+			$from = $this->request->query('f');	
+			  $to = $this->request->query('t');	
+				$from2 = date('Y-m-d',strtotime($from)); 
+				  $to2 = date('Y-m-d',strtotime($to)); 
+					$from_strtotime = strtotime($from2);
+					  $to_strtotime = strtotime($to2);		
 		
-$from2 = date('Y-m-d',strtotime($from)); 
-$to2 = date('Y-m-d',strtotime($to)); 
-
-$from_strtotime = strtotime($from2);
-$to_strtotime = strtotime($to2);		
-		
-$this->loadmodel('society');
-$conditions=array("society_id" => $s_society_id);
-$cursor=$this->society->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
-$society_name = $collection['society']['society_name'];
-}
-$socc_namm = str_replace(' ', '_', $society_name);	
-$this->set('socc_namm',$socc_namm);
+	$this->loadmodel('society');
+	$conditions=array("society_id" => $s_society_id);
+	$cursor=$this->society->find('all',array('conditions'=>$conditions));
+		foreach($cursor as $collection){
+			$society_name = $collection['society']['society_name'];
+		}
+		$socc_namm = str_replace(' ', '_', $society_name);	
+			$this->set('socc_namm',$socc_namm);
 
 	
-$this->set('society_name',$society_name);	
-$this->set('from',$from);
-$this->set('to',$to);	
+	$this->set('society_name',$society_name);	
+	  $this->set('from',$from);
+		$this->set('to',$to);	
 
-$this->loadmodel('ledger_sub_account');
-$conditions=array("auto_id"=>$bank_id,"society_id"=>$s_society_id);
-$cursor1=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-$this->set('cursor1',$cursor1);
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("auto_id"=>$bank_id,"society_id"=>$s_society_id);
+	$cursor1=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$this->set('cursor1',$cursor1);
 
-$this->loadmodel('new_cash_bank');
-//$order=array('$or' => array(array('new_cash_bank.transaction_date'=> 'ASC'),
-//array('new_cash_bank.transaction_date'=> 'ASC')));
-$conditions=array('$or' => array(array('society_id'=>$s_society_id,"receipt_source"=>1,"deposited_bank_id"=>$bank_id,
-'new_cash_bank.receipt_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime)),
-array('society_id'=>$s_society_id,"receipt_source"=>2,"account_head"=>$bank_id,
-'new_cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime))));
-$cursor2=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
-$this->set('cursor2',$cursor2);	
+$this->loadmodel('cash_bank');
+$conditions=array('$or'=>array(array('society_id'=>$s_society_id,"source"=>"bank_receipt","deposited_in"=>$bank_id,'cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime)),array('society_id'=>$s_society_id,"source"=>"bank_payment","account_head"=>$bank_id,
+'cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime))));
+$cursor2=$this->cash_bank->find('all',array('conditions'=>$conditions));
+$this->set('cursor2',$cursor2);
+
 }
 //End bank_book_report_excel//
 //Start cash_book_report_excel//

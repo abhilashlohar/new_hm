@@ -5496,45 +5496,39 @@ function cash_book_report_excel()
 {
 $this->layout="";
 $this->ath();	
-	
-$s_society_id = (int)$this->Session->read('society_id');
-$s_role_id= (int)$this->Session->read('role_id');
-$s_user_id= (int)$this->Session->read('user_id');
 
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+      $s_role_id= (int)$this->Session->read('role_id');
+		$s_user_id= (int)$this->Session->read('hm_user_id');
+          $from = $this->request->query('f');	
+			$to = $this->request->query('t');	
+			  $from2 = date('Y-m-d',strtotime($from)); 
+				$to2 = date('Y-m-d',strtotime($to)); 
 
-
-
-$from = $this->request->query('f');	
-$to = $this->request->query('t');	
+	$from_strtotime = strtotime($from2);
+		$to_strtotime = strtotime($to2);		
 		
-$from2 = date('Y-m-d',strtotime($from)); 
-$to2 = date('Y-m-d',strtotime($to)); 
-
-$from_strtotime = strtotime($from2);
-$to_strtotime = strtotime($to2);		
-		
-$this->loadmodel('society');
-$conditions=array("society_id" => $s_society_id);
-$cursor=$this->society->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
-$society_name = $collection['society']['society_name'];
-}
-$socc_namm = str_replace(' ', '_', $society_name);	
-$this->set('socc_namm',$socc_namm);	
+	$this->loadmodel('society');
+	$conditions=array("society_id"=>$s_society_id);
+	$cursor=$this->society->find('all',array('conditions'=>$conditions));
+		foreach($cursor as $collection){
+			$society_name = $collection['society']['society_name'];
+		}
+	$socc_namm = str_replace(' ', '_', $society_name);	
+		$this->set('socc_namm',$socc_namm);	
 	
-$this->set('society_name',$society_name);	
-$this->set('from',$from);
-$this->set('to',$to);
+	$this->set('society_name',$society_name);	
+		$this->set('from',$from);
+			$this->set('to',$to);
 
 
-$this->loadmodel('new_cash_bank');
-$order=array('new_cash_bank.transaction_date'=> 'ASC');
-$conditions =array('$or' => array(array('society_id'=>$s_society_id,"receipt_source"=>3,
-'new_cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime)),
-array('society_id'=>$s_society_id,"receipt_source"=>4,
-'new_cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime))));
-$cursor2=$this->new_cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
+$this->loadmodel('cash_bank');
+$order=array('cash_bank.transaction_date'=>'ASC');
+$conditions=array('$or'=>array(array('society_id'=>$s_society_id,"source"=>"petty_cash_receipt",
+'cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime)),
+array('society_id'=>$s_society_id,"source"=>"petty_cash_payment",
+'cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime))));
+$cursor2=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor2',$cursor2);	
 
 }

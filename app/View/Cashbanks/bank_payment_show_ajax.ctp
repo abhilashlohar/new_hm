@@ -30,15 +30,14 @@ $nnn = 555;
 		<a  class=" printt btn green mini" onclick="window.print()"><i class="icon-print"></i> </a>
 	</span>
 </div>
-<div style="width:100%; overflow:auto; margin-top:10px;" class="hide_at_print">
-	<label class="m-wrap pull-right"><input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;" placeholder="Search"></label>	
-</div>
 
 
 
+<div class="portlet box">
+	<div class="portlet-body">
 
 
-	<div align="center"><?php echo strtoupper($society_name); ?> Bank Payment Register From : <?php echo date("d-m-Y",$from);?> To : <?php echo date("d-m-Y",$to);?>
+	<div align="center"><?php echo strtoupper($society_name); ?> Bank Payment Register From : <?php echo $from;?> To : <?php echo $to;?>
 	<input class="m-wrap medium pull-right" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
 	</div>
 
@@ -151,6 +150,8 @@ $total_tds_amount = number_format($total_tds_amount); ?>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 <?php } if($nnn == 55) { ?>											
 <br /><br />											
 <center>

@@ -5430,12 +5430,13 @@ $this->ath();
 	$this->set('cursor1',$cursor1);
 		
 	$this->loadmodel('cash_bank');
-	$conditions=array('$or' => array(array('society_id'=>$s_society_id,"source"=>"bank_receipt","deposited_bank_id"=>$bank_id,
-	'cash_bank.receipt_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime)),
+	$conditions=array('$or'=> array(array('society_id'=>$s_society_id,"source"=>"bank_receipt","deposited_in"=>(int)$bank_id,
+	'cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime)),
 	array('society_id'=>$s_society_id,"source"=>"bank_payment","account_head"=>$bank_id,
 	'cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime))));
 	$cursor2=$this->cash_bank->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
+
 }
 //End bank_book_report_view_ajax//
 //Start bank_book_report_excel//

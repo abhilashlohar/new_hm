@@ -147,12 +147,17 @@ $(document).ready(function(){
 		$('#main tbody tr:last select[name="non_member_ledger_sub_account[]"]').chosen();
 	}
 	
-	$("form").on("submit",function(e){
+	$("form").die().on("submit",function(e){
+		e.preventDefault();
 		var allow="yes";
-		$('#main tbody tr input[name="transaction_date[]"]').each(function(i, obj){
+		var submit="no";
+		var l=$('#main tbody tr input[name="transaction_date[]"]').length;
+		$('#main tbody tr input[name="transaction_date[]"]').die().each(function(i, obj){
 			var transaction_date=$(this).val();
 			$.ajax({
 				url: "<?php echo $webroot_path; ?>Cashbanks/validate_transaction_date/"+transaction_date,
+				 async: false,
+				cache: false,
 			}).done(function(response){
 				if(response=='false'){
 					$('#main tbody tr:eq('+i+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
@@ -161,10 +166,14 @@ $(document).ready(function(){
 				}else{
 					$('#main tbody tr:eq('+i+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
 				}
+				if(i==(l-1) && allow=="yes"){
+					submit="yes";
+				}
 			});
+			
 		});
 		
-		$('#main tbody tr select[name="deposited_in[]"]').each(function(i, obj){
+		$('#main tbody tr select[name="deposited_in[]"]').die().each(function(i, obj){
 			var deposited_in=$(this).val();
 			if(deposited_in==""){
 				$(this).closest('td').find(".er").remove();
@@ -175,7 +184,7 @@ $(document).ready(function(){
 			}
 		});
 		
-		$('#main tbody tr select[name="received_from[]"]').each(function(i, obj) {
+		$('#main tbody tr select[name="received_from[]"]').die().each(function(i, obj) {
 			var received_from=$(this).val();
 			if(received_from==""){
 				$(this).closest('td').find(".er").remove();
@@ -196,7 +205,7 @@ $(document).ready(function(){
 			}
 		});
 		
-		$('#main tbody tr input[name="amount[]"]').each(function(i, obj) {
+		$('#main tbody tr input[name="amount[]"]').die().each(function(i, obj) {
 			var a=$(this).val();
 			if(a=="" || a==0){
 				$(this).closest('td').find(".er").remove();
@@ -207,9 +216,12 @@ $(document).ready(function(){
 			}
 		});
 		
-		if(allow=="no"){
-			e.preventDefault();
-		}
+		
+		  if(allow=="yes" && submit=="yes"){
+				//$(this).unbind('submit');
+				$(this).submit();
+			}
+		
 	});
 	
 	

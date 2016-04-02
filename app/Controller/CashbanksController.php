@@ -5319,6 +5319,17 @@ function new_bank_receipt(){
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id = (int)$this->Session->read('hm_user_id');
 	
+	$this->loadmodel('financial_year');
+	$conditions=array("society_id" => $s_society_id,"status"=>1);
+	$financial_years=$this->financial_year->find('all',array('conditions'=>$conditions));
+	$financial_year_array=array();
+	foreach($financial_years as $financial_year){
+		$from=$financial_year["financial_year"]["from"];
+		$to=$financial_year["financial_year"]["to"];
+		$pair=array($from,$to);
+		$financial_year_array[]=$pair;
+	}
+	pr($financial_year_array);
 	
 	$this->loadmodel('ledger_sub_account');
 	$conditions=array("society_id"=>$s_society_id,"ledger_id"=>112);

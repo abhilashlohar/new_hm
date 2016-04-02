@@ -1,8 +1,8 @@
 <style>
-#table th{
+#table_css th{
    background-color:#FFF;padding:3px 5px 3px 5px !important;
 }
-#table td{
+#table_css td{
    background-color:#FFF;padding:3px 5px 3px 5px !important;
 }
 </style>
@@ -43,7 +43,7 @@ $nnn = 555;
 
 
 			
-<table  width="100%" style="background-color:white;" class="table table-bordered table-striped" id="table">
+<table  width="100%" style="background-color:white;" class="table table-bordered table-condensed" id="table_css">
 <thead>
 		<tr>
 		<th>Transaction Date</th>
@@ -126,7 +126,7 @@ $total_tds_amount = number_format($total_tds_amount); ?>
 	<td><?php echo $account_no; ?> </td>
 	<td style="text-align:right;"><?php echo $total_tds_amount; ?> </td>
 	<td class="hide_at_print">
-	<div class="btn-group">
+	<div class="btn-group" style="margin:0 !important;">
 		<a class="btn blue mini" href="#" data-toggle="dropdown">
 		<i class="icon-chevron-down"></i>	
 		</a>

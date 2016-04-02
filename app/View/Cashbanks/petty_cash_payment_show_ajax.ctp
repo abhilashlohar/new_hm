@@ -1,8 +1,8 @@
 <style>
-#table th{
+#table_css th{
    background-color:#FFF;padding:3px 5px 3px 5px !important;
 }
-#table td{
+#table_css td{
    background-color:#FFF;padding:3px 5px 3px 5px !important;
 }
 </style>
@@ -38,7 +38,7 @@ $nnn = 555;
 <div align="center"><?php echo strtoupper($society_name); ?> Bank Payment Register From : <?php echo $from;?> To : <?php echo $to;?>
 <input class="m-wrap medium pull-right" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
 </div>
-<table width="100%" style="background-color:white;" class="table table-bordered table-striped" id="table">
+<table width="100%" style="background-color:white;" class="table table-bordered table-striped" id="table_css">
 <thead>
 	<tr>
 		<th colspan="5" style="text-align:center;"><?php echo $society_name; ?> Petty Cash Payment Register From : <?php echo $from; ?> To : <?php echo $to; ?></th>
@@ -102,7 +102,7 @@ $amount = number_format($amount);
 <td><?php echo $user_name; ?> </td>
 <td><?php echo $amount; ?></td>
 <td class="hide_at_print">
-<div class="btn-group">
+<div class="btn-group" style="margin:0 !important;">
 <a class="btn blue mini" href="#" data-toggle="dropdown">
 <i class="icon-chevron-down"></i>	
 </a>

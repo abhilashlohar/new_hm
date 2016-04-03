@@ -7,7 +7,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </center>
 <!---------------- Start Petty Cash Receipt Form ------------------------->
 <?php $default_date = date('d-m-Y'); ?>
-<input type="text" value="<?php echo $financial_year_string; ?>" id="f_y"/>
+<input type="hidden" value="<?php echo $financial_year_string; ?>" id="f_y"/>
 <div class="portlet box">
 <div class="portlet-body">
 	<form method="post">
@@ -145,7 +145,7 @@ $('input[name="amount[]"]').die().live("keyup",function(){
 <script>
 $("form").on("submit",function(e){
 		var allow="yes";
-		$('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj){
+			$('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj){
 			var transaction_date=$(this).val();
 			transaction_date=transaction_date.split('-').reverse().join('');
 			

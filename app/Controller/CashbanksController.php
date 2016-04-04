@@ -4508,7 +4508,7 @@ $this->cash_bank->updateAll(array("user_id"=>$expense_party,"account_type" =>$ac
 Petty Cash Payment <?php echo $receipt_id; ?> is Updated Successfully
 </div>
 <div class="modal-footer">
-<a class="btn red" href="<?php echo $this->webroot; ?>/Cashbanks/petty_cash_receipt_view">OK</a>
+<a class="btn red" href="<?php echo $this->webroot; ?>/Cashbanks/petty_cash_payment_view">OK</a>
 </div>
 </div>
 <?php

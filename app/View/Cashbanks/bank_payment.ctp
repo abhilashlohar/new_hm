@@ -162,7 +162,7 @@ $('select[name="tds[]"]').die().live("change",function(){
 				var charge=parseInt($('option:selected',this).attr('charge'));
 					var tds_charge=parseFloat((charge/100)*amount);
 						var total_amount=Math.round(amount-tds_charge);	
-	if($.isNumeric(total_amount)==false){ total_amount=0; }						
+	if($.isNumeric(total_amount)==false){ total_amount=amount; }						
 		$(this).closest("tr").find('input[name="net_amount[]"]').val(total_amount);
 });
 </script>
@@ -173,7 +173,7 @@ $('input[name="amount[]"]').die().live("blur",function(){
 		var amount=parseFloat($(this).val());
 			var tds_charge=parseFloat((charge/100)*amount);
 					var total_amount=Math.round(amount-tds_charge);	
-	if($.isNumeric(total_amount)==false){ total_amount=0; }						
+	if($.isNumeric(total_amount)==false){ total_amount=amount; }						
 		$(this).closest("tr").find('input[name="net_amount[]"]').val(total_amount);
 });
 </script>

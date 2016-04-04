@@ -13,13 +13,13 @@ jQuery('.tooltips').tooltip();
 </script> 
 <?php $nnn = 55;         
 $m_from = date("Y-m-d", strtotime($from));
-$m_to = date("Y-m-d", strtotime($to));
-$from_strto = strtotime($m_from);
-$to_strto = strtotime($m_to); ?>
+	$m_to = date("Y-m-d", strtotime($to));
+		$from_strto = strtotime($m_from);
+			$to_strto = strtotime($m_to); ?>
 <?php foreach ($cursor1 as $collection){
-$transaction_id = (int)$collection['cash_bank']['transaction_date'];	
-if($transaction_id >= $from_strto && $transaction_id <= $to_strto){
-$nnn = 555;
+	$transaction_id = (int)$collection['cash_bank']['transaction_date'];	
+		if($transaction_id >= $from_strto && $transaction_id <= $to_strto){
+			$nnn = 555;
 }} ?>
 <?php if($nnn == 555) { ?>
 <div style="width:100%;" class="hide_at_print">
@@ -31,9 +31,11 @@ $nnn = 555;
 <div class="portlet box">
 	<div class="portlet-body">
 
-<div align="center"><?php echo strtoupper($society_name); ?> Bank Payment Register From : <?php echo $from;?> To : <?php echo $to;?>
-<input class="m-wrap medium pull-right" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
-</div>
+	<div align="center"><?php echo strtoupper($society_name); ?> Bank Payment Register From : <?php echo $from;?> To : <?php echo $to;?>
+		<span class="hide_at_print">
+			<input class="m-wrap medium pull-right" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
+		</span>
+	</div>
 
 <table  width="100%" style=" background-color:white;" class="table table-bordered table-striped" id="table">
 <thead>

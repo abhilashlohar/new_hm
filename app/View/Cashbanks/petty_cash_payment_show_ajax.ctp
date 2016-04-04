@@ -12,32 +12,38 @@ jQuery('.tooltips').tooltip();
 });
 </script> 
 <?php
-$m_from=date("Y-m-d", strtotime($from));
-$m_from = strtotime($m_from);
-$m_to=date("Y-m-d", strtotime($to));
-$m_to = strtotime($m_to);
+	$m_from=date("Y-m-d", strtotime($from));
+		$m_from = strtotime($m_from);
+			$m_to=date("Y-m-d", strtotime($to));
+				$m_to = strtotime($m_to);
 ?>
 <?php
 $nnn = 55;
 foreach ($cursor1 as $collection){
-$transaction_date = $collection['cash_bank']['transaction_date'];
-if($transaction_date >= $m_from && $transaction_date <= $m_to){
-$nnn = 555;								
+	$transaction_date = $collection['cash_bank']['transaction_date'];
+		if($transaction_date >= $m_from && $transaction_date <= $m_to){
+			$nnn = 555;								
 }} ?>
 <?php if($nnn == 555) { ?>
 <div style="width:100%;" class="hide_at_print">
-<span style="float:right;"><a href="petty_cash_payment_excel?f=<?php echo $from; ?>&t=<?php echo $to; ?>" class="btn blue mini"><i class="icon-download"></i> </a></span>
-<span style="float:right; margin-right:1%;"><a  class=" printt btn green mini" onclick="window.print()"><i class="icon-print"></i> </a></span>
+	<span style="float:right;">
+		<a href="petty_cash_payment_excel?f=<?php echo $from; ?>&t=<?php echo $to; ?>" class="btn blue mini"><i class="icon-download"></i> </a>
+	</span>
+	<span style="float:right; margin-right:1%;">
+		<a  class=" printt btn green mini" onclick="window.print()"><i class="icon-print"></i> </a>
+	</span>
 </div>
 <br /><br />
 
 
 
 <div class="portlet box">
-	<div class="portlet-body">
-<div align="center"><?php echo strtoupper($society_name); ?> Bank Payment Register From : <?php echo $from;?> To : <?php echo $to;?>
-<input class="m-wrap medium pull-right" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
-</div>
+<div class="portlet-body">
+	<div align="center"><?php echo strtoupper($society_name); ?> Bank Payment Register From : <?php echo $from;?> To : <?php echo $to;?>
+		<span class="hide_at_print">
+			<input class="m-wrap medium pull-right" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
+		</span>
+	</div>
 <table width="100%" style="background-color:white;" class="table table-bordered table-striped" id="table_css">
 <thead>
 	

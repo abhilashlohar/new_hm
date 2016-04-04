@@ -14,7 +14,7 @@
 <br>
 
 <label style="font-size:14px;">Ledger A/c<span style="color:red;">*</span></label>
-		<select class="m-wrap span6" name="ledger_account[]">
+		<select class="m-wrap span6 chosen" name="ledger_account[]">
 		<option value="" style="display:none;">Select</option>
 		<?php foreach($cursor11 as $collection){
 		$auto_id = $collection['ledger_sub_account']['auto_id'];
@@ -49,7 +49,7 @@
 	<input type="text" class="m-wrap span6" style="text-align:right; background-color:white !important; margin-top:2.5px;" Placeholder="Instrument/UTR" name="instrument">
 <br>
 	<label style="font-size:14px;">Mode of Payment<span style="color:red;">*</span></label>
-	<select class="m-wrap span6" name="payment_mode">
+	<select class="m-wrap span6 chosen" name="payment_mode">
 	<option value="" style="display:none;">Select</option>
 	<option value="Cheque">Cheque</option>
 	<option value="NEFT">NEFT</option>
@@ -66,7 +66,7 @@
 	<input type="text" class="m-wrap span6" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="10" Placeholder="Amount" name="amount">
 <br>
 			<label style="font-size:14px;">TDS%</label>	
-			<select class="m-wrap span6" name="tds">
+			<select class="m-wrap span6 chosen" name="tds">
 			<option value="" style="display:none;">Select</option>
 			<?php for($k=0; $k<sizeof($tds_arr); $k++){
 			$tds_sub_arr = $tds_arr[$k];	
@@ -85,7 +85,7 @@
 		<br>
 		
 				<label style="font-size:14px;">Bank Account<span style="color:red;">*</span></label>
-				<select class="m-wrap span6" name="bank_account">
+				<select class="m-wrap span6 chosen" name="bank_account">
 				<option value="" style="display:none;">Select</option>    
 				<?php
 				foreach($cursor2 as $db){

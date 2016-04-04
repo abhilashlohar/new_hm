@@ -1035,9 +1035,9 @@ $this->layout='session';
 	
 	$this->ath();
 	$this->check_user_privilages();	
-	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = $this->Session->read('hm_society_id');
-	$s_user_id=$this->Session->read('hm_user_id');
+		$s_role_id=$this->Session->read('role_id');
+			$s_society_id = $this->Session->read('hm_society_id');
+				$s_user_id=$this->Session->read('hm_user_id');
 	$this->set('s_role_id',$s_role_id);
 
 $this->loadmodel('financial_year');
@@ -4573,40 +4573,58 @@ function bank_payment_update($auto_id=null)
 		}else{
 		$this->layout='session';
 		}
-	
-	$s_role_id = (int)$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id = (int)$this->Session->read('user_id');	
-	
-	
+	$s_role_id=(int)$this->Session->read('role_id');
+		$s_society_id=(int)$this->Session->read('hm_society_id');
+			$s_user_id=(int)$this->Session->read('hm_user_id');	
+		
 	$this->loadmodel('reference');
 	$conditions=array("auto_id"=>3);
 	$cursor = $this->reference->find('all',array('conditions'=>$conditions));
-	foreach($cursor as $collection)
-	{
-	$tds_arr = $collection['reference']['reference'];
+		foreach($cursor as $collection){
+			$tds_arr = $collection['reference']['reference'];
 	}
 	$this->set("tds_arr",$tds_arr);
+		$auto_id=(int)$auto_id;
+			$this->ath();
+	
+	$this->loadmodel('financial_year');
+	$conditions=array("society_id" => $s_society_id,"status"=>1);
+	$financial_years=$this->financial_year->find('all',array('conditions'=>$conditions));
+	$financial_year_array=array();
+	foreach($financial_years as $financial_year){
+		$from=date("d-m-Y",$financial_year["financial_year"]["from"]);
+		$to=date("d-m-Y",$financial_year["financial_year"]["to"]);
+		$pair=array($from,$to);
+		$pair=implode('/',$pair);
+		$financial_year_array[]=$pair;
+	}
+	$financial_year_string=implode(',',$financial_year_array);
+	$this->set(compact("financial_year_string"));	
+		
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("society_id" => $s_society_id, "ledger_id" => 33);
+	$cursor2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$this->set('cursor2',$cursor2);
 
-	$auto_id=(int)$auto_id;
-	$this->ath();
-	//$this->check_user_privilages();
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("ledger_id" => 15,"society_id"=>$s_society_id);
+	$cursor11=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$this->set('cursor11',$cursor11);
 
-	
-	
-	
-	
-	
-		$this->loadmodel('new_cash_bank');
-		$conditions=array("transaction_id" => $auto_id,"receipt_source"=>2,"society_id"=>$s_society_id);
-		$cursor1=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
-		$this->set('cursor1',$cursor1);
+	$this->loadmodel('accounts_group');
+	$conditions=array("accounts_id" => 1);
+	$cursor12=$this->accounts_group->find('all',array('conditions'=>$conditions));
+	$this->set('cursor12',$cursor12);
 
-		$this->loadmodel('ledger_sub_account');
-		$conditions=array("ledger_id" => 33,"society_id"=>$s_society_id);
-		$cursor3=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-		$this->set('cursor3',$cursor3);
-
+	$this->loadmodel('accounts_group');
+	$conditions=array("accounts_id" => 4);
+	$cursor13=$this->accounts_group->find('all',array('conditions'=>$conditions));
+	$this->set('cursor13',$cursor13);
+	
+	$this->loadmodel('new_cash_bank');
+	$conditions=array("transaction_id" => $auto_id,"receipt_source"=>2,"society_id"=>$s_society_id);
+	$cursor1=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
+	$this->set('cursor1',$cursor1);
 }
 //End Bank_Payment_Update//
 //Start Petty Cash Payment Json//

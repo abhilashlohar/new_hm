@@ -5,15 +5,21 @@
 <div class="portlet-body form">
 <div class="row-fluid">                       
 <div class="span6">
-dfhdhdsgdsg
+<label style="font-size:14px;">Transaction Date<span style="color:red;">*</span></label>
+
+
+
+
+
 </div>
 <div class="span6">
-sdgdsgsdgdsgds
+
 </div>                      
 </div>                          
 <div class="form-actions">
+    <a href="" class="btn green"><i class="icon-arrow-left"></i> Back</a>
 	<button type="submit" class="btn blue">Save</button>
-	<button type="button" class="btn">Cancel</button>
+	
 </div>
 </div>
 </div>

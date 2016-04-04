@@ -131,6 +131,13 @@ $('select[name="account_group[]"]').die().live("change",function(){
 			$(this).parent().next('td').find("#expenditure_select_box").show();
 			$(this).parent().next('td').find("#sundry_creditors_select_box").hide();
 		}
+		if(account_group==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
 });
 
 </script> 
@@ -258,6 +265,52 @@ var allow="yes";
 			e.preventDefault();
 		}
 });
+
+$('select[name="sundry_creditor[]"]').die().live("change",function(){
+		var deposited_in=$(this).val();
+		if(deposited_in==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+$('select[name="expenditure[]"]').die().live("change",function(){
+		var deposited_in=$(this).val();
+		if(deposited_in==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+
+$('input[name="amount[]"]').die().live("keyup blur",function(){
+		var amount=$(this).val();
+		if(amount=="" || amount==0){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+		if($.isNumeric(amount))
+		{
+		}else{
+		$(this).closest("td").find("#amount").val('');	
+		}
+	});
+
+
+
+
+
+
+
+
+
 </script>
 <style>
 input,select{

@@ -1,14 +1,19 @@
 <?php
 foreach($result_cash_bank as $data){
+	$transaction_date=$data['cash_bank'][''];
+	  $transaction_date=$data['cash_bank'][''];
+		$transaction_date=$data['cash_bank'][''];
+		  $transaction_date=$data['cash_bank'][''];
+			$transaction_date=$data['cash_bank'][''];
+			  $transaction_date=$data['cash_bank'][''];
+				$transaction_date=$data['cash_bank'][''];
+				  $transaction_date=$data['cash_bank'][''];
+					$transaction_date=$data['cash_bank'][''];
+					  $transaction_date=$data['cash_bank'][''];
+
+
 	
 }
-
-
-
-
-
-
-
 ?>
 
 <div class="portlet box blue">

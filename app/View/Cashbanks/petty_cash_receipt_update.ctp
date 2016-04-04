@@ -27,15 +27,15 @@ $trnsaction_date = date('d-m-Y',$d_date);
 <div class="span6">
 
 	<label style="font-size:14px;">Transaction Date<span style="color:red;">*</span></label>                        
-	<input type="text" class="date-picker m-wrap span6" data-date-format="dd-mm-yyyy" name="transaction_date" data-date-start-date="+0d" value="<?php //echo $trnsaction_date; ?>">  
+	<input type="text" class="date-picker m-wrap span6" data-date-format="dd-mm-yyyy" name="transaction_date" data-date-start-date="+0d" value="<?php echo $trnsaction_date; ?>">  
      <span id="date" class="validation"></span>
 <br>
 
 	<label style="font-size:14px;">A/c Group<span style="color:red;">*</span></label>  
 	<select class="m-wrap span6 chosen" name="account_group">
 	<option value="" style="display:none;">Select</option>
-	<option value="1" <?php if($account_type == 5){ ?> selected="selected" <?php } ?>>Members Control A/c</option>
-	<option value="2" <?php if($account_type == 6){ ?> selected="selected" <?php } ?>>Other Income</option>
+	<option value="1" <?php if($account_type == 1){ ?> selected="selected" <?php } ?>>Members Control A/c</option>
+	<option value="2" <?php if($account_type == 2){ ?> selected="selected" <?php } ?>>Other Income</option>
 	</select>
     <span id="group" class="validation"></span>
 <br>
@@ -47,7 +47,7 @@ $trnsaction_date = date('d-m-Y',$d_date);
 		<?php foreach($members_for_billing as $ledger_sub_account_id){
 		$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 		?>
-		<option value=<?php echo $ledger_sub_account_id; ?> <?php if($ledger_sub_account_id==$user_id && $account_type==7){ ?> selected="selected" <?php } ?>><?php echo ''.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
+		<option value=<?php echo $ledger_sub_account_id; ?> <?php if($ledger_sub_account_id==$user_id && $account_type==1){ ?> selected="selected" <?php } ?>><?php echo ''.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
 		} ?>
 		</select> 
 		<span id="ledger_sub_account" class="validation"></span>
@@ -60,7 +60,7 @@ $trnsaction_date = date('d-m-Y',$d_date);
 		$auto_id = (int)$collection['ledger_account']['auto_id'];
 		$name = $collection['ledger_account']['ledger_name'];
 		?>
-		<option value="<?php echo $auto_id; ?>" <?php if($auto_id==$user_id && $account_type==8){ ?> selected="selected" <?php } ?>><?php echo $name; ?></option>
+		<option value="<?php echo $auto_id; ?>" <?php if($auto_id==$user_id && $account_type==2){ ?> selected="selected" <?php } ?>><?php echo $name; ?></option>
 		<?php } ?>
 		</select>
 		<span id="other_income" class="validation"></span>
@@ -72,13 +72,13 @@ $trnsaction_date = date('d-m-Y',$d_date);
 	<label style="font-size:14px;">Account Head<span style="color:red;">*</span></label>  
 	<select   name="account_head" class="m-wrap span6 chosen">
 	<option value="" style="display:none;">Select</option>
-	<option value="32">Cash-in-hand</option>
+	<option value="32" selected="selected">Cash-in-hand</option>
 	</select> 
 	<span id="account_head" class="validation"></span>
 <br>
 
 <label style="font-size:14px;">Amount<span style="color:red;">*</span></label>  
-<input type="text" class="m-wrap span6" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="5" name="amount" value="<?php //echo $amount; ?>">
+<input type="text" class="m-wrap span6" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="5" name="amount" value="<?php echo $amount; ?>">
 <span id="amount" class="validation"></span>
 <br>
 

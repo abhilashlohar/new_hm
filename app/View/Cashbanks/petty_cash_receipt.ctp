@@ -127,6 +127,17 @@ $('select[name="account_group[]"]').die().live("change",function(){
 			$(this).parent().next('td').find("#other_income_select_box").show();
 			$(this).parent().next('td').find("#members_select_box").hide();
 		}
+		if(account_group==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+		
+		
+		
+		
 });
 
 </script>
@@ -241,21 +252,55 @@ $('#main tbody tr input[name="amount[]"]').each(function(i, obj) {
 				$(this).closest('td').find(".er").remove();
 			}
 		});
-		
-		
-		
-
 	
 	if(allow=="no"){
 			e.preventDefault();
 		}
 });
 
+$('select[name="ledger_sub_account[]"]').die().live("change",function(){
+		var deposited_in=$(this).val();
+		if(deposited_in==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+$('select[name="other_income[]"]').die().live("change",function(){
+		var deposited_in=$(this).val();
+		if(deposited_in==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
 
-
-
-
-
+$('input[name="amount[]"]').die().live("keyup blur",function(){
+		var amount=$(this).val();
+		if(amount=="" || amount==0){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+		if($.isNumeric(amount))
+		{
+		}else{
+		$(this).closest("td").find("#amount").val('');	
+		}
+	});
+	
+	
+	
+	
+	
+	
+	
 </script>
 <style>
 input,select{

@@ -1,3 +1,16 @@
+<?php
+foreach($result_cash_bank as $data){
+	
+}
+
+
+
+
+
+
+
+?>
+
 <div class="portlet box blue">
 <div class="portlet-title">
 <h4 class="block">Update Bank Payment</h4>

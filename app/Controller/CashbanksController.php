@@ -4584,7 +4584,7 @@ function bank_payment_update($auto_id=null)
 			$tds_arr = $collection['reference']['reference'];
 	}
 	$this->set("tds_arr",$tds_arr);
-		$auto_id=(int)$auto_id;
+		$transaction_id=(int)$auto_id;
 			$this->ath();
 	
 	$this->loadmodel('financial_year');
@@ -4621,10 +4621,11 @@ function bank_payment_update($auto_id=null)
 	$cursor13=$this->accounts_group->find('all',array('conditions'=>$conditions));
 	$this->set('cursor13',$cursor13);
 	
-	$this->loadmodel('new_cash_bank');
-	$conditions=array("transaction_id" => $auto_id,"receipt_source"=>2,"society_id"=>$s_society_id);
-	$cursor1=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
-	$this->set('cursor1',$cursor1);
+		$this->loadmodel('cash_bank');
+		$conditions=array("transaction_id"=>$transaction_id,"source"=>'bank_payment',"society_id"=>$s_society_id);
+		$result_cash_bank=$this->cash_bank->find('all',array('conditions'=>$conditions));
+		$this->set('result_cash_bank',$result_cash_bank);
+	
 }
 //End Bank_Payment_Update//
 //Start Petty Cash Payment Json//

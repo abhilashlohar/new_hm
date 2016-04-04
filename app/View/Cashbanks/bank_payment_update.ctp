@@ -207,15 +207,91 @@ $(document).ready(function(){
 			}else{
 				$("#bank").html('');
 			}
-	
-	
-	
-	
-	e.preventDefault();
+
 		if(allow=="no"){
 		e.preventDefault();
 		} 
 	});
+	
+	
+	$('input[name="transaction_date"]').die().live("keyup blur",function(){
+		var transaction_date=$(this).val();
+		
+		transaction_date=transaction_date.split('-').reverse().join('');
+			var f_y=$("#f_y").val();
+				var f_y2=f_y.split(',');
+					var al=0;
+						$.each(f_y2, function( index, value ) {
+							var f_y3=value.split('/');
+								var from=f_y3[0];
+									from=from.split('-').reverse().join('');
+										var to=f_y3[1];
+					to=to.split('-').reverse().join('');
+				
+				if(transaction_date>=from && transaction_date<=to){
+					
+					al=al+1;
+				}else{
+					
+					al=al+0;
+				}
+			});
+		if(al==0){
+				$("#date").html('not in financial year');
+			}
+			else{ $("#date").html('');  }
+	});
+	
+	
+$('select[name="ledger_account"]').die().live("change",function(){
+		var ledger_account=$(this).val();
+		if(ledger_account==""){
+			$("#ledger_account").html('Required');
+		}else{
+			$("#ledger_account").html('');
+		}
+	});	
+
+$('input[name="instrument"]').die().live("keyup blur",function(){
+		var instrument=$(this).val();	
+		if(instrument==""){
+			$("#instrument").html('Required');
+		}else{
+			$("#instrument").html('');
+		}
+	
+});
+	
+	$('select[name="payment_mode"]').die().live("change",function(){
+		var payment_mode=$(this).val();
+		if(payment_mode==""){
+			$("#mode").html('Required');
+		}else{
+			$("#mode").html('');
+		}
+	});	
+$('input[name="amount"]').die().live("keyup blur",function(){
+		var amount=$(this).val();	
+		if(amount==""){
+			$("#amount").html('Required');
+		}else{
+			$("#amount").html('');
+		}
+		if($.isNumeric(amount))
+		{
+		}else{
+			$('input[name="amount"]').val('');
+		}
+	
+});	
+$('select[name="bank_account"]').die().live("change",function(){
+		var bank_account=$(this).val();
+		if(bank_account==""){
+			$("#bank").html('Required');
+		}else{
+			$("#bank").html('');
+		}
+	});		
 });
 </script>
 

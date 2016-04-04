@@ -1,8 +1,18 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
+<div align="right" style="margin-right: 25px;">
+	<div class="pull-left">
+		<span style="color:red; font-size:14px;" > <i class=" icon-star"></i></span><span> Awaiting User Validation  </span> 
+	</div>
+	<a href="society_member_excel" class="blue mini btn" download="download"><i class=" icon-download-alt"></i> </a> 
+
+</div> 
 <div class="portlet box">
 	<div class="portlet-body">
+	<div align="center" style="font-size:18px;padding-bottom: 10px;"> 
+		<?php echo $result_society_name; ?> 
+	</div>
 		<table class="table table-condensed table-bordered" >
 			<thead>
 				<tr>
@@ -34,21 +44,25 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					if($q==1){?>
 						<tr>
 							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $sr_no; ?></td>
-							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $user_name; ?></td>
+							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $user_name; ?>  
+							     <?php if(empty($validation_status)){ ?>  
+									<span style="color:red; font-size:10px;" class="pull-right"> <i class=" icon-star"></i> </span> 
+								 <?php } ?>
+							</td>
 							<td><?php echo $wing_flat; ?></td>
 							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $roles; ?></td>
 							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $email; ?></td>
 							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $mobile; ?></td>
 							<?php if(empty($validation_status)){
 								if(!empty($email)){
-									echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend" id="'.$user_id.'"> Send Reminder</a></td>'; 
+									echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend" id="'.$user_id.'"> <span class="btn red mini"><i class=" icon-exclamation-sign"></i> Send Reminder </span></a></td>'; 
 								}elseif(!empty($mobile)){
-									echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend_sms" id="'.$user_id.'"> Send Reminder</a></td>';
+									echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend_sms" id="'.$user_id.'"> <span class="btn red mini"><i class=" icon-exclamation-sign"></i> Send Reminder </span></a></td>';
 								}else{
 									echo '<td rowspan="'.sizeof($wing_flats).'"></td>';
 								}
 							}else{
-								echo '<td rowspan='.sizeof($wing_flats).'>'.$validation_status.'</td>';
+								echo '<td rowspan='.sizeof($wing_flats).'><span class="btn green mini"><i class=" icon-ok"></i> '.$validation_status.'</span></td>';
 							} ?>
 							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $date; ?></td>
 							<td><a href="#" role="button" class="btn red mini exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign"></i> Exit</a></td>
@@ -64,21 +78,26 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				}else{ ?>
 					<tr>
 						<td><?php echo $sr_no; ?></td>
-						<td><?php echo $user_name; ?></td>
+						<td><?php echo $user_name; ?>
+							<?php if(empty($validation_status)){ ?>  
+									<span style="color:red; font-size:10px;" class="pull-right"> <i class=" icon-star"></i> </span> 
+								 <?php } ?>
+						
+						</td>
 						<td></td>
 						<td><?php echo $roles; ?></td>
 						<td><?php echo $email; ?></td>
 						<td><?php echo $mobile; ?></td>
 						<?php if(empty($validation_status)){
 							if(!empty($email)){
-								echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend" id="'.$user_id.'"> Send Reminder</a></td>'; 
+								echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend" id="'.$user_id.'"> <span class="btn red mini"><i class=" icon-exclamation-sign"></i> Send Reminder </span></a></td>'; 
 							}elseif(!empty($mobile)){
-								echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend_sms" id="'.$user_id.'"> Send Reminder</a></td>';
+								echo '<td rowspan='.sizeof($wing_flats).'><a href="#" role="button" class="resend_sms" id="'.$user_id.'"> <span class="btn red mini"><i class=" icon-exclamation-sign"></i> Send Reminder </span> </a></td>';
 							}else{
 								echo '<td></td>';
 							}
 						}else{
-							echo '<td>'.$validation_status.'</td>';
+							echo '<td><span class="btn green mini"><i class=" icon-ok"></i>'.$validation_status.'</span></td>';
 						} ?>
 						<td><?php echo $date; ?></td>
 						<td><a href="#" role="button" class="btn red mini exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign"></i> Exit</a></td>

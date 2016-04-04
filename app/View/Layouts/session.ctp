@@ -215,6 +215,9 @@ $(document).ready(function() {
 				
 			
 			if($user_type=="third_party" or $user_type=="member" or $user_type=="family_member"){
+				
+				$role_result=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_all_role_via_user_id'), array('pass' => array($s_user_id)));
+				
 		
 			$role_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'default_role_name_via_user_id'), array('pass' => array($s_user_id)));
 			
@@ -277,9 +280,9 @@ $(document).ready(function() {
                   </a>
                   <ul class="dropdown-menu">
                      <li><a href="<?php echo $webroot_path; ?>Hms/profile" rel='tab'><i class="icon-user"></i> My Profile</a></li>
-					<?php  if($user_type!='hm'){ ?>
+					<?php  if($user_type!='hm'){ if(sizeof($role_result)>1){ ?>
                      <li><a href="<?php echo $webroot_path; ?>Hms/change_role_member" rel='tab'><i class="fa fa-exchange"></i> Change Role</a></li>
-					 <?php } ?>
+					 <?php } } ?>
 					 
                      <li><a href="#"><i class="icon-tasks"></i> My Tasks</a></li>
                      <li class="divider"></li>

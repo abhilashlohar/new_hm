@@ -4845,12 +4845,37 @@ function in_head_report(){
 
 }
 
+function regular_bill_report_excel(){
+	
+	$this->layout=null;
+	$this->ath();
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	
+	
+	$society_name = $this->requestAction(array('controller' => 'Fns', 'action' => 'society_name_via_society_id'),array('pass'=>array($s_society_id)));
+	
+	$this->set(compact('society_name'));
+	
+	$s_user_id=$this->Session->read('hm_user_id');
+	$period=$this->request->query('period');
+	$period=explode('-',$period);
+	$start_date=(int)$period[0];
+	$end_date=(int)$period[1];
+	
+	$this->loadmodel('regular_bill');
+	$conditions=array('society_id'=>$s_society_id,'start_date'=>$start_date,'end_date'=>$end_date,'edited'=>"no");
+	$order=array('regular_bill.auto_id'=>'ASC');
+	$regular_bills=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order)); 
+	$this->set(compact('regular_bills'));
+	
+}
+
 function regular_bill_report($period=null){
 	$this->layout='blank';
 	$this->ath();
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');
-	
+	$this->set(compact('period'));
 	$period=explode('-',$period);
 	$start_date=(int)$period[0];
 	$end_date=(int)$period[1];

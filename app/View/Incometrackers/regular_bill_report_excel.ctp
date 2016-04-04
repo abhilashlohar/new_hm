@@ -1,6 +1,18 @@
+	
 
-<div class="portlet box">
-	<div class="portlet-body" >
+<?php
+
+$filename="".$society_name."_Bill_Report";
+header ("Expires: 0");
+header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+header ("Cache-Control: no-cache, must-revalidate");
+header ("Pragma: no-cache");
+header ("Content-type: application/vnd.ms-excel");
+header ("Content-Disposition: attachment; filename=".$filename.".xls");
+header ("Content-Description: Generated Report" );
+
+?>
+
 		<?php
 		foreach($regular_bills as $regular_bill){
 			$income_head_array=$regular_bill["regular_bill"]["income_head_array"];
@@ -18,16 +30,11 @@
 		}
 		$income_head_ids=array_unique($income_head_ids);
 		$other_charge_ids=array_unique($other_charge_ids);
-		echo '<div class="row-fluid"><div class="span6"><span style="font-size: 14px;">Billing Period: '.date("d-M",$start_date).' to '.date("d-M-Y",$end_date).'</span><br/></div>';
+		echo '<div class="row-fluid" align="center"><div class="span6"><span style="font-size: 14px;">Billing Period: '.date("d-M",$start_date).' to '.date("d-M-Y",$end_date).'</span><br/></div>';
 		?>
-		<div class="span6" align="right">
-			<a href="regular_bill_report_excel?period=<?php echo $period; ?>" class="btn mini green tooltips" data-original-title="Download in excel"><i class="fa fa-file-excel-o"></i></a>
-			<a href="#" class="btn mini blue tooltips" onclick="window.print();" role="button" data-original-title="Print"><i class="fa fa-print"></i></a>
-			<label class="m-wrap pull-right">Search: <input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;"></label>
-		</div>
-		</div>
-		<div style="overflow-x: scroll;">
-		<table class="table table-condensed table-bordered table-striped table-hover" id="main">
+		
+		
+		<table class="table table-condensed table-bordered table-striped table-hover" id="main" border="1">
 			<thead>
 				<tr>
 					<th>Unit</th>
@@ -49,11 +56,13 @@
 					<th>Interest on Arrears</th>
 					<th>Credit/Adjustment</th>
 					<th>Due For Payment</th>
-					<th></th>
+					
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach($regular_bills as $data){
+				<?php
+$total_noc_charges=0; $total_total=0; $total_arrear_maintenance=0; $total_arrear_intrest=0; $total_intrest_on_arrears=0; $total_credit_stock=0; $total_due_for_payment=0;
+				foreach($regular_bills as $data){
 					$auto_id=$data["regular_bill"]["auto_id"];
 					$bill_number=$data["regular_bill"]["bill_number"];
 					$ledger_sub_account_id=$data["regular_bill"]["ledger_sub_account_id"];
@@ -75,74 +84,51 @@
 						<td><?php echo $flat_area; ?></td>
 						<td><?php echo $bill_number; ?></td>
 						<?php foreach($income_head_ids as $income_head_id){
-							echo '<td>'.@$income_head_array[$income_head_id].'</td>';
+							echo '<td>'.@$income_head_array[$income_head_id].' </td>';
+								$total_income_heads[$income_head_id][]=$income_head_array[$income_head_id];
 						} ?>
-						<td><?php echo $noc_charge; ?></td>
+						<td><?php echo $noc_charge; $total_noc_charges+=$noc_charge; ?></td>
 						<?php foreach($other_charge_ids as $other_charge_id){
 							echo '<th>'.$other_charge[$other_charge_id].'</th>';
+							$total_other_charges[$other_charge_id][]=$other_charge[$other_charge_id];
 						} ?>
-						<td><?php echo $total; ?></td>
-						<td><?php echo $arrear_maintenance; ?></td>
-						<td><?php echo $arrear_intrest; ?></td>
-						<td><?php echo $intrest_on_arrears; ?></td>
-						<td><?php echo $credit_stock; ?></td>
-						<td><?php echo $due_for_payment; ?></td>
-						<td>
-							<div class="btn-group" style="margin: 0px !important;">
-							<a class="btn blue mini" href="#" data-toggle="dropdown">
-							<i class="icon-chevron-down"></i>	
-							</a>
-							<ul class="dropdown-menu" style="min-width: 80px ! important; margin-left: -52px;">
-							<li><a href="regular_bill_view/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i> View</a></li>
-							<li>
-							<a href="regular_bill_edit2/<?php echo $auto_id; ?>" role="button" rel="tab"><i class="icon-edit"></i> Edit</a></li>
-							</ul>
-							</div>
-						</td>
+						<td><?php echo $total;  $total_total+=$total; ?></td>
+						<td><?php echo $arrear_maintenance; $total_arrear_maintenance+=$arrear_maintenance; ?></td>
+						<td><?php echo $arrear_intrest; $total_arrear_intrest+=$arrear_intrest; ?></td>
+						<td><?php echo $intrest_on_arrears; $total_intrest_on_arrears+=$intrest_on_arrears; ?></td>
+						<td><?php echo $credit_stock; $total_credit_stock+=$credit_stock; ?></td>
+						<td><?php echo $due_for_payment; $total_due_for_payment+=$due_for_payment; ?></td>
+						
 					</tr>
 				<?php } ?>
 			</tbody>
-			<tfoot style="font-weight: 600;">
-				<tr>
-				</tr>
-			</tfoot>
+				<tfoot style="font-weight: 600;">
+					<tr>
+							<td colspan="4" align="right"><b>Total </b></td>
+							<?php  foreach($income_head_ids as $income_head_id){ $total_income_heads_am=0;
+										foreach($total_income_heads[$income_head_id] as $data5){
+											$total_income_heads_am+=$data5;
+										} ?>
+							<td><b><?php echo $total_income_heads_am; ?></b></td>
+							<?php } ?>
+							<td><b><?php echo $total_noc_charges; ?></b></td>
+							<?php foreach($other_charge_ids as $other_charge_id){ $total_other_charges_am=0;
+										foreach($total_other_charges[$other_charge_id] as $data6){
+											$total_other_charges_am+=$data6;
+										}
+									?>
+							<td><b><?php echo $total_other_charges_am; ?></b></td>
+								
+								
+						<?php	} ?>
+						
+						<td><b><?php echo $total_total; ?></b></td>
+						<td><b><?php echo $total_arrear_maintenance; ?></b></td>
+						<td><b><?php echo $total_arrear_intrest; ?></b></td>
+						<td><b><?php echo $total_intrest_on_arrears; ?></b></td>
+						<td><b><?php echo $total_credit_stock; ?></b></td>
+						<td><b><?php echo $total_due_for_payment; ?></b></td>
+					</tr>
+				</tfoot>
+			
 		</table>
-		</div>
-	</div>
-</div>
-<style>
-th,td{
-	font-size: 12px !important;
-	white-space: nowrap;
-}
-input{
-	margin: 0px !important;
-}
-</style>
-<script>
-$(document).ready(function(){
-	var tr=1; 
-	$('#main thead tr th').each(function(i, obj) {
-		var total=0;
-		$('#main tbody tr td:nth-child('+tr+')').each(function(i, obj) {
-			var value=parseInt($(this).text());
-			total=total+value;
-		});
-		$('#main tfoot tr').append('<td>'+total+'</td>');
-		tr++;
-	});
-	$('#main tfoot tr td:first').remove();
-	$('#main tfoot tr td:first').remove();
-	$('#main tfoot tr td:first').attr("colspan",3).html("<b>Total</b>");
-});
-
-var $rows = $('#main tr');
-$('#search').keyup(function() {
-	var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-
-	$rows.show().filter(function() {
-		var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-		return !~text.indexOf(val);
-	}).hide();
-});
-</script>

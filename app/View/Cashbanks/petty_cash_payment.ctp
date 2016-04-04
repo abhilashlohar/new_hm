@@ -303,7 +303,33 @@ $('input[name="amount[]"]').die().live("keyup blur",function(){
 		}
 	});
 
-
+$('input[name="transaction_date[]"]').die().live("keyup blur",function(){
+			var transaction_date=$(this).val();
+			transaction_date=transaction_date.split('-').reverse().join('');
+			
+			var f_y=$("#f_y").val();
+			var f_y2=f_y.split(',');
+			var al=0;
+			$.each(f_y2, function( index, value ) {
+				var f_y3=value.split('/');
+				var from=f_y3[0];
+				from=from.split('-').reverse().join('');
+				var to=f_y3[1];
+				to=to.split('-').reverse().join('');
+				
+				if(transaction_date>=from && transaction_date<=to){
+				  al=al+1;
+				}else{
+				   al=al+0;
+				}
+			});
+			if(al==0){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<p class="er">Not in financial year</p>');
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
 
 
 

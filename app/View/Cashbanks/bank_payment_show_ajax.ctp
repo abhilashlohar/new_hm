@@ -13,15 +13,15 @@ jQuery('.tooltips').tooltip();
 });
 </script>
 <?php $nnn = 55;
-$m_from = date("Y-m-d", strtotime($from));
-$m_to = date("Y-m-d", strtotime($to));
-$m_from = strtotime($from);
-$m_to = strtotime($to);
+	$m_from = date("Y-m-d", strtotime($from));
+		$m_to = date("Y-m-d", strtotime($to));
+			$m_from = strtotime($from);
+				$m_to = strtotime($to);
 ?>
 <?php foreach ($cursor2 as $collection){
-$transaction_date = $collection['cash_bank']['transaction_date'];
-if($transaction_date >= $m_from && $transaction_date <= $m_to){
-$nnn = 555;	
+	$transaction_date = $collection['cash_bank']['transaction_date'];
+		if($transaction_date >= $m_from && $transaction_date <= $m_to){
+			$nnn = 555;	
 }} ?>
 <?php if($nnn == 555){ ?>
 <div style="width:100%;" class="hide_at_print">
@@ -38,7 +38,9 @@ $nnn = 555;
 
 
 	<div align="center"><?php echo strtoupper($society_name); ?> Bank Payment Register From : <?php echo $from;?> To : <?php echo $to;?>
-	<input class="m-wrap medium pull-right" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
+		<span class="hide_at_print">
+			<input class="m-wrap medium pull-right" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
+		</span>
 	</div>
 
 

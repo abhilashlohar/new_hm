@@ -210,17 +210,7 @@ var allow="yes";
 			}
 		});
   
-  $('#main tbody tr input[name="invoice_reference[]"]').die().each(function(i, obj){
-			var deposited_in=$(this).val();
-			if(deposited_in==""){
-				$(this).closest('td').find(".er").remove();
-				$(this).closest('td').append('<span class="er">Required</span>');
-				allow="no";
-			}else{
-				$(this).closest('td').find(".er").remove();
-			}
-		});
-	 
+ 
 	 $('#main tbody tr select[name="ledger_account[]"]').die().each(function(i, obj){
 			var deposited_in=$(this).val();
 			if(deposited_in==""){
@@ -263,16 +253,7 @@ var allow="yes";
 			}
 		});
   
-        $('#main tbody tr select[name="tds[]"]').die().each(function(i, obj){
-			var deposited_in=$(this).val();
-			if(deposited_in==""){
-				$(this).closest('td').find(".err").remove();
-				$(this).closest('td').append('<span class="err">Required</span>');
-				allow="no";
-			}else{
-				$(this).closest('td').find(".err").remove();
-			}
-		});	
+      	
    $('#main tbody tr select[name="bank_account[]"]').die().each(function(i, obj){
 			var deposited_in=$(this).val();
 			if(deposited_in==""){

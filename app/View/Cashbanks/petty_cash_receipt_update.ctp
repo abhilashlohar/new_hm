@@ -28,7 +28,7 @@ $trnsaction_date = date('d-m-Y',$d_date);
 
 	<label style="font-size:14px;">Transaction Date<span style="color:red;">*</span></label>                        
 	<input type="text" class="date-picker m-wrap span6" data-date-format="dd-mm-yyyy" name="transaction_date" data-date-start-date="+0d" value="<?php echo $trnsaction_date; ?>">  
-     <span id="date" class="validation"></span>
+     <label id="date" class="validation"></label>
 <br>
 
 	<label style="font-size:14px;">A/c Group<span style="color:red;">*</span></label>  
@@ -37,7 +37,7 @@ $trnsaction_date = date('d-m-Y',$d_date);
 	<option value="1" <?php if($account_type == 1){ ?> selected="selected" <?php } ?>>Members Control A/c</option>
 	<option value="2" <?php if($account_type == 2){ ?> selected="selected" <?php } ?>>Other Income</option>
 	</select>
-    <span id="group" class="validation"></span>
+    <label id="group" class="validation"></label>
 <br>
 
 		<label style="font-size:14px;">Income/Party A/c<span style="color:red;">*</span></label>  
@@ -50,7 +50,7 @@ $trnsaction_date = date('d-m-Y',$d_date);
 		<option value=<?php echo $ledger_sub_account_id; ?> <?php if($ledger_sub_account_id==$user_id && $account_type==1){ ?> selected="selected" <?php } ?>><?php echo ''.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
 		} ?>
 		</select> 
-		<span id="ledger_sub_account" class="validation"></span>
+		<label id="ledger_sub_account" class="validation"></label>
 		</div>
 		<div id="other_income_select_box" <?php if($account_type==1){ ?> class="hide" <?php } ?>>
 		<select name="other_income" class="m-wrap medium chosen">
@@ -63,7 +63,7 @@ $trnsaction_date = date('d-m-Y',$d_date);
 		<option value="<?php echo $auto_id; ?>" <?php if($auto_id==$user_id && $account_type==2){ ?> selected="selected" <?php } ?>><?php echo $name; ?></option>
 		<?php } ?>
 		</select>
-		<span id="other_income" class="validation"></span>
+		<label id="other_income" class="validation"></label>
 		</div>
 
 </div>
@@ -74,12 +74,12 @@ $trnsaction_date = date('d-m-Y',$d_date);
 	<option value="" style="display:none;">Select</option>
 	<option value="32" selected="selected">Cash-in-hand</option>
 	</select> 
-	<span id="account_head" class="validation"></span>
+	<label id="account_head" class="validation"></label>
 <br>
 
 <label style="font-size:14px;">Amount<span style="color:red;">*</span></label>  
 <input type="text" class="m-wrap span6" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="5" name="amount" value="<?php echo $amount; ?>">
-<span id="amount" class="validation"></span>
+<label id="amount" class="validation"></label>
 <br>
 
 <label style="font-size:14px;">Narration</label> 
@@ -106,6 +106,11 @@ $('select[name="account_group"]').die().live("change",function(){
 		}else{
 			$("#other_income_select_box").show();
 			$("#members_select_box").hide();
+		}
+		if(account_group==""){
+			$("#group").html('Required');
+		}else{
+			$("#group").html('');
 		}
 });
 </script>
@@ -138,16 +143,6 @@ $(document).ready(function(){
 				allow="no";
 			}
 		
-
-
-
-
-
-
-
-
-
-
 	 var account_group=$('select[name="account_group"]').val();
 	  if(account_group==""){
 			$("#group").html('Required');	
@@ -197,6 +192,84 @@ $(document).ready(function(){
 
 	});
 });	
+
+$('input[name="transaction_date"]').die().live("keyup blur",function(){
+		var transaction_date=$(this).val();
+		
+		transaction_date=transaction_date.split('-').reverse().join('');
+			var f_y=$("#f_y").val();
+				var f_y2=f_y.split(',');
+					var al=0;
+						$.each(f_y2, function( index, value ) {
+							var f_y3=value.split('/');
+								var from=f_y3[0];
+									from=from.split('-').reverse().join('');
+										var to=f_y3[1];
+					to=to.split('-').reverse().join('');
+				
+				if(transaction_date>=from && transaction_date<=to){
+					
+					al=al+1;
+				}else{
+					
+					al=al+0;
+				}
+			});
+		if(al==0){
+				$("#date").html('not in financial year');
+			}
+			else{ $("#date").html('');  }
+	});
+
+
+$('select[name="ledger_sub_account"]').die().live("change",function(){
+		var ledger_sub_account=$(this).val();
+		if(ledger_sub_account==""){
+			$("#ledger_sub_account").html('Required');
+		}else{
+			$("#ledger_sub_account").html('');
+		}
+	});
+$('select[name="other_income"]').die().live("change",function(){
+		var other_income=$(this).val();
+		if(other_income==""){
+			$("#other_income").html('Required');
+		}else{
+			$("#other_income").html('');
+		}
+	});
+	
+$('select[name="account_head"]').die().live("change",function(){
+		var account_head=$(this).val();
+		if(account_head==""){
+			$("#account_head").html('Required');
+		}else{
+			$("#account_head").html('');
+		}
+	});
+	
+$('input[name="amount"]').die().live("keyup blur",function(){
+		var amount=$(this).val();
+		if(amount=="" || amount==0){
+			$("#amount").html('Required');
+		}else{
+			$("#amount").html('');
+		}
+		if($.isNumeric(amount))
+		{
+		}else{
+			$('input[name="amount"]').val('');
+		}
+	});
+	
+
+
+
+
+
+
+
+
 	</script>
 <style>		
 .validation{

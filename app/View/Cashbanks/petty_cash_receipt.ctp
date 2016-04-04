@@ -130,7 +130,7 @@ $('select[name="account_group[]"]').die().live("change",function(){
 		if(account_group==""){
 			$(this).closest('td').find(".er").remove();
 			$(this).closest('td').append('<span class="er">Required</span>');
-			allow="no";
+			
 		}else{
 			$(this).closest('td').find(".er").remove();
 		}

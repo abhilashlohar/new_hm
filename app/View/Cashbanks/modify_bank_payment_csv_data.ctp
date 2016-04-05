@@ -3,7 +3,7 @@
 
 <div class="portlet box">
 <div class="portlet-body">
-<table class="table table-condensed table-bordered">
+<table class="table table-condensed table-bordered" id="report_tb">
 		<thead>
 			<tr>
 				<th width="20%">Transaction Date</th>
@@ -178,6 +178,65 @@ for($ii=1;$ii<=$loop;$ii++){ ?>
 <div id="check_validation_result"></div>		  
 
 
+<script>
+$(document).ready(function(){
+	$( "#final_import" ).click(function(){
+		$('#report_tb tbody tr select[field=ledger_data]').each(function(i, obj){
+			var ledger_data=$(this).val();
+				if(ledger_data==""){
+					$(this).closest('td').find(".er").remove();
+						$(this).closest('td').append('<span class="er">Ledger A/c Required</span>');
+				}else{
+					$(this).closest('td').find(".er").remove();
+				}
+		});
+	
+		$('#report_tb tbody tr select[field=mode]').each(function(i, obj){
+			var mode=$(this).val();
+			var inst=$('#report_tb tbody tr:eq('+i+') input[field=inst]').val();
+			if(mode=="" || inst==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<p class="er">Required</p>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});	
+	
+	
+	 $('#report_tb tbody tr input[field="amt"]').die().each(function(i, obj){
+			var amount=$(this).val();
+			if(amount==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Amount Required</span>');
+				
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+	
+	
+	 $('#report_tb tbody tr select[field="bankk"]').die().each(function(i, obj){
+			var bankk=$(this).val();
+			if(bankk==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<p class="er">Select bank Account</p>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});	
+	
+	
+	
+	
+	
+	
+	
+	
+	});
+});
+</script>
 
 <script>
 $( document ).ready(function() {
@@ -311,7 +370,12 @@ $( document ).ready(function() {
 });
 </script>
 
-
+<style>
+.er{
+color: rgb(198, 4, 4);
+font-size: 11px;
+}
+</style>
 
 
 

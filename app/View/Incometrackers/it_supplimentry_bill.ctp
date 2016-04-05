@@ -2,6 +2,7 @@
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
 <?php $default_date = date('d-m-Y'); ?>
+<input type="hidden" value="<?php echo $financial_year_string; ?>" id="f_y"/>
 <!-----------Start New Supplimentry Bill Form -------->
 <div class="portlet box">
 <div class="portlet-body">
@@ -88,11 +89,11 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		</select>
 	</td>
 	<td>
-	<input type="text" class="m-wrap small" name="amount[]">
+	<input type="text" class="m-wrap small" name="amount[]" style="text-align:right;">
 	</td>
 	<td>
 	<a style="margin-top: -4px; margin-right: -5px;" role="button" class="btn mini pull-right remove_row" href="#"><i class="icon-trash"></i></a>
-	<input type="text" class="m-wrap span12" style="width:150px;" name="narration[]">
+	<input type="text" class="m-wrap span10" style="width:150px;" name="narration[]">
 	</td>
 </tr>
 </table>
@@ -122,20 +123,6 @@ $(document).ready(function(){
 });
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script>
 $('select[name="bill_type[]"]').die().live("change",function(){
 		var received_from=$(this).val();
@@ -153,7 +140,122 @@ $('select[name="bill_type[]"]').die().live("change",function(){
 	})
 
 </script>
+<script>
+$("form").on("submit",function(e){
+var allow="yes";
+$('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj){
+			var transaction_date=$(this).val();
+			transaction_date=transaction_date.split('-').reverse().join('');
+			
+			var f_y=$("#f_y").val();
+			var f_y2=f_y.split(',');
+			var al=0;
+			$.each(f_y2, function( index, value ) {
+				var f_y3=value.split('/');
+				var from=f_y3[0];
+				from=from.split('-').reverse().join('');
+				var to=f_y3[1];
+				to=to.split('-').reverse().join('');
+				
+				if(transaction_date>=from && transaction_date<=to){
+					$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
+					al=al+1;
+				}else{
+					$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
+					$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').append('<p class="er">Not in financial year</p>');
+					al=al+0;
+					
+				}
+			});
+			if(al==0){
+				allow="no";
+			}
+		});
+
+		$('#main tbody tr input[name="payment_due_date[]"]').die().each(function(i, obj){
+			var payment_due_date=$(this).val();
+				if(payment_due_date==""){
+					$(this).closest('td').find(".er").remove();
+						$(this).closest('td').append('<span class="er">Required</span>');
+							allow="no";
+					}else{
+						$(this).closest('td').find(".er").remove();
+					}
+		});	
 
 
 
 
+			$('#main tbody tr select[name="bill_type[]"]').die().each(function(i, obj){
+				var bill_type=$(this).val();
+					if(bill_type==""){
+						$(this).closest('td').find(".er").remove();
+							$(this).closest('td').append('<span class="er">Required</span>');
+								allow="no";
+						}else{
+							$(this).closest('td').find(".er").remove();
+						}
+					if(bill_type=='resident'){
+				
+			var ledger_sub_account=$(this).closest("td").find('select[name="resident[]"]').val();
+			if(ledger_sub_account==""){
+				$(this).closest("td").find(".er").remove();
+				$(this).closest("td").append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest("td").find(".er").remove();
+			}
+			}
+			else
+			{
+			var non_resident=$(this).closest("td").find('select[name="non_resident[]"]').val();
+			var company_name=$(this).closest("td").find('input[name="company_name[]"]').val();
+			if(non_resident=="" || company_name==""){
+				$(this).closest("td").find(".er").remove();
+				$(this).closest("td").append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest("td").find(".er").remove();
+			}	
+				
+			}
+			});	
+
+		$('#main tbody tr select[name="income_head[]"]').die().each(function(i, obj){
+			var income_head=$(this).val();
+				if(income_head==""){
+					$(this).closest('td').find(".er").remove();
+						$(this).closest('td').append('<span class="er">Required</span>');
+							allow="no";
+					}else{
+						$(this).closest('td').find(".er").remove();
+					}
+		});	
+
+		$('#main tbody tr input[name="amount[]"]').die().each(function(i, obj){
+			var amount=$(this).val();
+				if(amount==""){
+					$(this).closest('td').find(".er").remove();
+						$(this).closest('td').append('<span class="er">Required</span>');
+							allow="no";
+					}else{
+						$(this).closest('td').find(".er").remove();
+					}
+						
+		});	
+ 
+ if(allow=="no"){
+			e.preventDefault();
+		} 
+  
+});
+</script>
+<style>
+input,select{
+	margin:0 !important;
+}
+.er{
+color: rgb(198, 4, 4);
+font-size: 11px;
+}
+</style>

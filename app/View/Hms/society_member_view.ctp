@@ -3,17 +3,17 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 ?>
 <div align="right" style="margin-right: 25px;">
 	<div class="pull-left">
-	<span id="owner">  0 </span><span> Owner </span> 
-	<span id="tenant"> 0 </span> Tenant </span> 
-	<span id="family"> 0 </span><span> Family Member </span> 
-	<span style="color:red; font-size:14px;" > <i class=" icon-star"></i></span><span> Awaiting User Validation  </span> 
+	<span id="owner">  0 </span>-<span> Owner </span> |
+	<span id="tenant"> 0 </span>-<span> Tenant </span> |
+	<span id="family"> 0 </span>-<span> Family Member </span> |
+	<span style="color:red; font-size:10px;" > <i class=" icon-star"></i></span><span> Awaiting User Validation  </span> 
 	</div>
 	<a href="society_member_excel" class="blue mini btn" download="download"><i class="fa fa-file-excel-o"></i></a> 
 
 </div> 
 <div class="portlet box">
 	<div class="portlet-body">
-	<div align="center" style="font-size:18px;padding-bottom: 10px;"> 
+	<div align="center" style="font-size:15px;padding-bottom: 5px;"> 
 		<?php echo $result_society_name; ?> 
 	</div>
 		<table class="table table-condensed table-bordered" >

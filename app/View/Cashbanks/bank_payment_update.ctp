@@ -34,7 +34,7 @@ foreach($result_cash_bank as $data){
 
 <label style="font-size:14px;">invoice_reference</label>
 <input type="text" class="m-wrap span6" style="background-color:white !important; margin-top:2.5px;" Placeholder="Invoice Reference" name="invoice_reference">
-<br>
+<br><br>
 
 <label style="font-size:14px;">Ledger A/c<span style="color:red;">*</span></label>
 		<select class="m-wrap span6 chosen" name="ledger_account">
@@ -103,13 +103,13 @@ foreach($result_cash_bank as $data){
 			<option value= "<?php echo $tds_id; ?>" charge="<?php echo $tds_tax; ?>"><?php echo $tds_tax; ?></option>
 			<?php } ?>                           
 			</select>
-			<br>
+			<br><br>
 			
 			
 			<label style="font-size:14px;">Net Amount</label>
 		    <input type="text"  class="m-wrap span6" 
 			readonly="readonly" style="background-color:white !important; margin-top:2.5px;" Placeholder="Net Amount" name="net_amount">		
-		<br>
+			<br><br>
 		
 				<label style="font-size:14px;">Bank Account<span style="color:red;">*</span></label>
 				<select class="m-wrap span6 chosen" name="bank_account">

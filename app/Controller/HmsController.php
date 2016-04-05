@@ -14,7 +14,6 @@ var $name = 'Hms';
 
 
 
-
 function check_charecter_name($name){
 $dd=explode(' ',$name);
      for($i=0;$i<sizeof($dd);$i++){
@@ -27332,6 +27331,45 @@ function update_default_sub_module_by_hm_ajax($sub_module_id,$role,$status){
 	
 	
 }
+
+function login_third_party(){
+	if($this->RequestHandler->isAjax()){
+			$this->layout='blank';
+		}else{
+			$this->layout='session';
+		}	
+	
+		$this->ath();
+		$s_society_id = $this->Session->read('hm_society_id');
+		$s_user_id=$this->Session->read('user_id');	
+		date_default_timezone_set('Asia/kolkata');
+		$date=date("d-m-Y");
+		$time=date('h:i:a',time());
+		if(isset($this->request->data['sub'])){
+			
+				$name = $this->request->data['name'];
+				$email = @$this->request->data['email'];
+				$mobile = @$this->request->data['mobile'];
+				$password = $this->request->data['password'];
+
+				$this->loadmodel('user');
+				$i=$this->autoincrement('user','user_id');
+				$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email'=>$email,'mobile'=>$mobile,'society_id' =>$s_society_id,'signup_random'=>"",'active'=>'yes',"user_type"=>"third_party","password"=>$password,'date' => $date, 'time' => $time));
+
+				$this->loadmodel('user_flat');
+				$user_flat_id=$this->autoincrement('user_flat','user_flat_id');
+				$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$s_society_id,'exited'=>'no'));
+				
+	}
+		$this->loadmodel('user');
+		$conditions=array('active'=>'yes',"user_type"=>"third_party","society_id"=>$s_society_id);
+		$result_user=$this->user->find('all',array('conditions'=>$conditions));
+		$this->set('result_user',$result_user);
+}
+
+
+
+
 //Start create_login//
 function create_login()
 {

@@ -5,6 +5,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <a href="<?php echo $webroot_path; ?>Hms/import_user_enrollment" class="btn purple" style="float:right; margin-right:8px;"><i class="fa fa-database"></i> Bulk Import</a>
 <div id="report_success_pop">
 <a href="#" class="btn purple" role="button" id="import">Import</a>
+<a href="login_third_party" class="btn blue"  id="">Login third party</a>
 <div id="myModal3" class="modal hide fade in" style="display: none;">
 <div class="modal-backdrop fade in"></div>
 	<form id="form1" method="post">

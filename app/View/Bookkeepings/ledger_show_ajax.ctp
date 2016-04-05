@@ -117,7 +117,7 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 		 $debit=$data["ledger"]["debit"];
 		 $credit=$data["ledger"]["credit"];
 		$transaction_date=$data["ledger"]["transaction_date"];
-		$arrear_int_type=@$data["ledger"]["arrear_int_type"];
+		$arrear_int_type=@$data["ledger"]["intrest_on_arrears"];
 	 $table_name=$data["ledger"]["table_name"];
 		$element_id=(int)$data["ledger"]["element_id"];
 		$subledger_id = (int)@$data["ledger"]["ledger_sub_account_id"];

@@ -161,7 +161,7 @@ function final_import_opening_balance(){
 				final_import_opening_balance();
 			}
 			if(response.again_call_ajax=="NO"){
-				$("#first_div").html('<div class="alert alert-block alert-success fade in"><h4 class="alert-heading">Success!</h4><p>Receipts Imported successfully.</p><p><a class="btn green" href="<?php echo $webroot_path; ?>Accounts/opening_balance_import">OK</a> </p></div>');
+				$("#first_div").html('<div class="alert alert-block alert-success fade in"><h4 class="alert-heading">Success!</h4><p>Opening Balance Imported successfully.</p><p><a class="btn green" href="<?php echo $webroot_path; ?>Accounts/opening_balance_import">OK</a> </p></div>');
 			}
 		});
 	});

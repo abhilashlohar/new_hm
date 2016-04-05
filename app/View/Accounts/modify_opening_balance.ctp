@@ -5,10 +5,9 @@
 <input type="text" class="date-picker m-wrap span4" data-date-format="dd-mm-yyyy" 
 value="<?php echo $tra_date; ?>" 
 style="background-color:white !important; margin-top:2.5px;" field="transaction_date" record_id="1" placeholder="Date" id="date">
-<br>
- <br>
+
 <div style="background-color: #FFF;"> 
-<table class="table table-bordered table-striped" style="width:100%; background-color:white;" id="open_bal">
+<table class="table table-bordered table-condensed" style="width:100%; background-color:white;" id="open_bal">
 <tr>
 <th>Account Group</th>
 <th>Account Name</th>
@@ -98,22 +97,22 @@ value="<?php echo @$penalty; ?>" field="penalty" record_id="<?php echo $csv_id; 
 <?php } ?>
 <tr>
 <th colspan="2" style="text-align:right;">Total</th>
-<th><input type="text" class="m-wrap small total_debit" value="<?php echo $total_debit; ?>" style="background-color:white !important;" id="total_debit"></th>
-<th><input type="text" class="m-wrap small total_credit" value="<?php echo $total_credit; ?>" style="background-color:white !important;" id="total_credit"></th>
-<th><input type="text" class="m-wrap small total_penalty" value="<?php echo $total_penalty; ?>" style="background-color:white !important;" id="total_penalty"></th>
+<th><input type="text" class="m-wrap small total_debit" value="<?php echo $total_debit; ?>" style="background-color:white !important;" id="total_debit" readonly="readonly"></th>
+<th><input type="text" class="m-wrap small total_credit" value="<?php echo $total_credit; ?>" style="background-color:white !important;" id="total_credit" readonly="readonly"></th>
+<th><input type="text" class="m-wrap small total_penalty" value="<?php echo $total_penalty; ?>" style="background-color:white !important;" id="total_penalty" readonly="readonly"></th>
 </tr>
 <tr>
 <th colspan="2" style="text-align:right;">Grand Total</th>
-<th><input type="text" class="m-wrap small" id="grand_total_debit" value="<?php echo $grand_total_debit; ?>"><br><b>Total Debit</b></th>
-<th colspan="2"><input type="text" class="m-wrap small" id="grand_total_credit" value="<?php echo $grand_total_credit; ?>"><br><b>Total Credit</b></th>
+<th><input type="text" class="m-wrap small" id="grand_total_debit" value="<?php echo $grand_total_debit; ?>" readonly="readonly"><br><b>Total Debit</b></th>
+<th colspan="2"><input type="text" class="m-wrap small" id="grand_total_credit" value="<?php echo $grand_total_credit; ?>" readonly="readonly"><br><b>Total Credit</b></th>
 </table>
 </div>
 <div id="validat" style="color:red;"></div>
 
 
 <br/>
-<a href="<?php echo $webroot_path; ?>Accounts/opening_balance_import?bbb=55" rel="tab" class="btn purple big"><i class="m-icon-big-swapleft m-icon-white"></i> Back</a>
-<a class="btn purple big" role="button" id="final_import">IMPORT OPENING BALANCE <i class="m-icon-big-swapright m-icon-white"></i></a>									
+<a href="<?php echo $webroot_path; ?>Accounts/opening_balance_import?bbb=55" rel="tab" class="btn blue"><i class="icon-circle-arrow-left"></i> Back</a>
+<a class="btn blue" role="button" id="final_import">IMPORT OPENING BALANCE <i class="icon-circle-arrow-right"></i></a>									
 <div id="check_validation_result"></div>		  
 
 

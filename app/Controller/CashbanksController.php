@@ -295,11 +295,29 @@ function modify_bank_receipt_csv_data($page=null){
 			
 }
 
+function cancle_bank_receipt_import(){
+	$s_society_id = $this->Session->read('hm_society_id');
+	
+	$this->loadmodel('bank_receipt_csv_converted');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$this->bank_receipt_csv_converted->deleteAll($conditions);
+	
+	$this->loadmodel('bank_receipt_csv');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$this->bank_receipt_csv->deleteAll($conditions);
+	
+	$this->loadmodel('import_record');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$this->import_record->deleteAll($conditions);
+	
+	$this->redirect(array('controller' => 'Cashbanks','action' => 'import_bank_receipts_csv'));
+}
+
 function check_bank_receipt_csv_validation($page=null){
 	$this->layout=null;
 	
 	$this->ath();
-	$s_society_id = $this->Session->read('society_id');
+	$s_society_id = $this->Session->read('hm_society_id');
 	$page=(int)$page;
 	
 	$this->loadmodel('bank_receipt_csv_converted'); 
@@ -518,12 +536,12 @@ function final_import_bank_receipt_ajax(){
 			
 			
 				
-				$current_date = date('Y-m-d');
+				$current_date = date('d-m-Y');
 				
 				$this->loadmodel('cash_bank');
 				$auto_id=$this->autoincrement('cash_bank','auto_id');
 				$receipt_number=$this->autoincrement_with_society_ticket('cash_bank','receipt_number');
-				$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id, "transaction_date" => $trajection_date,"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_or_reference_no,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number))); 
+				$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id, "transaction_date" => $trajection_date,"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_or_reference_no,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number,"created_on"=>$current_date))); 
 				
 				
 				$this->loadmodel('ledger');

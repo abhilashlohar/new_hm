@@ -171,13 +171,33 @@ for($ii=1;$ii<=$loop;$ii++){ ?>
 <br/>
 
 <div align="center" id="submit_sec">
-<a class="btn blue" role="button" id="final_import">IMPORT RECEIPTS </a>									
+<a class="btn blue" role="button" id="final_import">IMPORT RECEIPTS </a>
+<a class="btn red" role="button" id="cancel_process">Cancel this process</a>							
 <div id="check_validation_result"></div>
 </div>
 
-	
+<div class="confirm_div" style="display: none;">
+	<div class="modal-backdrop fade in"></div>
+	<div class="modal" id="poll_edit_content">
+	<div class="modal-body">
+		Are you sure to cancle this process?				   			   
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn" id="close_button">NO</button>
+		<a href="<?php echo $webroot_path; ?>Cashbanks/cancle_bank_receipt_import" class="btn red">YES</a>
+	</div>
+	</div>
+</div>
+		
 <script>
 $(document).ready(function() {
+	$("#cancel_process").on("click",function(){
+		$(".confirm_div").show();
+	});
+	$("#close_button").on("click",function(){
+		$(".confirm_div").hide();
+	});
+	
 	$( ".receipt_mode" ).change(function() {
 		var record_id=$(this).attr('record_id');
 		var mode=$("option:selected",this).text();

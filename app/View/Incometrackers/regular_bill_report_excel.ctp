@@ -1,15 +1,17 @@
-	
-
 <?php
+$filename=$society_name.'_Bill_Report';
+$filename = str_replace(' ', '_', $filename);
+$filename = str_replace(' ', '-', $filename);
 
-$filename="".$society_name."_Bill_Report";
-header ("Expires: 0");
-header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
-header ("Cache-Control: no-cache, must-revalidate");
-header ("Pragma: no-cache");
-header ("Content-type: application/vnd.ms-excel");
-header ("Content-Disposition: attachment; filename=".$filename.".xls");
-header ("Content-Description: Generated Report" );
+@header("Expires: 0");
+@header("border: 1");
+@header("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+@header("Cache-Control: no-cache, must-revalidate");
+@header("Pragma: no-cache");
+@header("Content-type: application/vnd.ms-excel");
+@header("Content-Disposition: attachment; filename=".$filename.".xls");
+@header("Content-Description: Generated Report");
+
 
 ?>
 
@@ -34,7 +36,7 @@ header ("Content-Description: Generated Report" );
 		?>
 		
 		
-		<table class="table table-condensed table-bordered table-striped table-hover" id="main" border="1">
+		<table  border="1">
 			<thead>
 				<tr>
 					<th>Unit</th>

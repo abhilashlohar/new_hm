@@ -18271,6 +18271,7 @@ function society_member_view(){
 	$this->set(compact("result_society_name"));
 	$arranged_users=array();
 	
+	
 	$this->loadmodel('user');
 	$conditions=array("society_id"=>$s_society_id,"active"=>"yes");
 	$order=array('user.user_name'=>'ASC');	
@@ -18316,7 +18317,8 @@ function society_member_view(){
 		$this->loadmodel('user_role');
 		$conditions=array("user_id"=>$user_id);
 		$user_role_info=$this->user_role->find('all',array('conditions'=>$conditions));
-		$roles=array();
+		$roles=array(); $count_member_owner=0; $count_member_tenant=0; $count_member_family=0;
+		$x=0;$z=0;$y=0;
 		foreach($user_role_info as $user_role){
 			$role_id=$user_role["user_role"]["role_id"];
 			
@@ -18324,10 +18326,29 @@ function society_member_view(){
 			$conditions=array("role_id"=>$role_id);
 			$role_info=$this->role->find('all',array('conditions'=>$conditions));
 			$roles[]=$role_info[0]["role"]["role_name"];
+			
+			if($role_id==3){
+				$x++;
+				$count_member_owner+=$x;
+			}
+			
+			if($role_id==4){
+				$z++;
+				$count_member_tenant+=$z;
+			}
+			
+			if($role_id==5){
+				$y++;
+				$count_member_family+=$y;
+			}
+			if($role_id==6){
+				$y++;
+				$count_member_family+=$y;
+			}
 		}
 		$roles=implode(',',$roles);
 		
-		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id);
+		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id,"count_member_owner"=>$count_member_owner,"count_member_tenant"=>$count_member_tenant,"count_member_family"=>$count_member_family);
 	}
 	$this->set(compact("arranged_users"));
 }

@@ -25,7 +25,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					<th width="20%">Transaction Date</th>
 					<th width="20%">Ledger A/c</th>
 					<th width="20%">Mode of Payment</th>
-					<th width="20%">TDS%</th>
+					<th width="20%">Amount</th>
 					<th width="20%">Bank Account</th>
 				</tr>
 			</thead>
@@ -83,8 +83,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					<?php }} ?>
 					</select>
 					
-			<input type="text" class="m-wrap span12" 
-			style="text-align:right; background-color:white !important; margin-top:2.5px;" Placeholder="Instrument/UTR" name="instrument[]">
+			
 		 </td>
 		 <td>
 			<select class="m-wrap span12" name="payment_mode[]">
@@ -94,10 +93,14 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			<option value="PG">PG</option>
 			</select>
 		 
-		 <input type="text" class="m-wrap span12" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="10" Placeholder="Amount" name="amount[]">
+		 <input type="text" class="m-wrap span12" 
+			style="text-align:right; background-color:white !important; margin-top:2.5px;" Placeholder="Instrument/UTR" name="instrument[]">
+		 
 		 </td>
 		 <td>
-			<select class="m-wrap span12" name="tds[]">
+		  <input type="text" class="m-wrap span12" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="10" Placeholder="Amount" name="amount[]">
+		  
+			<select class="m-wrap span6" name="tds[]">
 			<option value="" style="display:none;">Select</option>
 			<?php for($k=0; $k<sizeof($tds_arr); $k++){
 			$tds_sub_arr = $tds_arr[$k];	
@@ -107,7 +110,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			<option value= "<?php echo $tds_id; ?>" charge="<?php echo $tds_tax; ?>"><?php echo $tds_tax; ?></option>
 			<?php } ?>                           
 			</select>
-		    <input type="text"  class="m-wrap span12" 
+		    <input type="text"  class="m-wrap span6" 
 			readonly="readonly" style="background-color:white !important; margin-top:2.5px;" Placeholder="Net Amount" name="net_amount[]">
 		 </td>
 		 <td>
@@ -139,8 +142,8 @@ $(document).ready(function(){
 	var new_line=$("#sample tbody").html();
 	$("#main tbody").append(new_line);
 		$('#main tbody tr:last select[name="ledger_account[]"]').chosen();
-			$('#main tbody tr:last select[name="payment_mode[]"]').chosen();
-				$('#main tbody tr:last select[name="tds[]"]').chosen();
+			//$('#main tbody tr:last select[name="payment_mode[]"]').chosen();
+				//$('#main tbody tr:last select[name="tds[]"]').chosen();
 					$('#main tbody tr:last select[name="bank_account[]"]').chosen();
 						$('#main tbody tr:last input[name="transaction_date[]"]').datepicker();
 	}

@@ -10,7 +10,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <center>
 <a href="<?php echo $webroot_path; ?>Cashbanks/bank_payment" class="btn yellow" rel='tab'>Create</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/bank_payment_view" class="btn" rel='tab'>View</a>
-<a href="#" class="btn purple" role="button" id="import" style="float:right; margin-right:8px;"><i class="fa fa-database"></i> Import csv</a>
+<a href="<?php echo $webroot_path; ?>Cashbanks/bank_payment_import_csv" class="btn purple" role="button"  style="float:right; margin-right:8px;" rel="tab"><i class="fa fa-database"></i> Import csv</a>
 </center>
 
 

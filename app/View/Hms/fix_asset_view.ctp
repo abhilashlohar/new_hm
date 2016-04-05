@@ -10,26 +10,14 @@ $current_date = date('d-m-Y');
 </div>
 
 <style>
-#tbb th{
-	font-size: 10px !important;background-color:#C8EFCE;padding:2px;border:solid 1px #55965F;white-space: nowrap !important; 
+<style>
+#table_css th{
+   background-color:#FFF;padding:3px 5px 3px 5px !important;
 }
-#tbb td{
-	padding:2px;
-	font-size: 12px;border:solid 1px #55965F;background-color:#FFF;white-space: nowrap !important; 
+#table_css td{
+   background-color:#FFF;padding:3px 5px 3px 5px !important;
 }
-.text_bx{
-	width: 50px;
-	height: 15px !important;
-	margin-bottom: 0px !important;
-	font-size: 12px;
-}
-.text_rdoff{
-	width: 50px;
-	height: 15px !important;
-	border: none !important;
-	margin-bottom: 0px !important;
-	font-size: 12px;
-}
+</style>
 </style>
 
 
@@ -48,7 +36,7 @@ $current_date = date('d-m-Y');
 </div>	
 
 
-<table class="" style="" id="tbb" width="100%" style=" background-color:white;">
+<table class="table table-bordered table-condensed"  width="100%" style=" background-color:white;" id="table_css">
 <thead>
 <tr>
 <td colspan="11" align="center"><span style="font-size:14px;"><b><?php echo $society_name; ?> Fixed Assets Register on <?php echo $current_date; ?></b></span></td>

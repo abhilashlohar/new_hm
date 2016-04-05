@@ -1,23 +1,101 @@
 
-<?php
-foreach($result_bank_receipt_converted as $data)
-{
- $csv_auto_id = (int)$data['payment_csv_converted']['auto_id'];
-   $transaction_date = $data['payment_csv_converted']['trajection_date'];	
-	$ledger_account_id = (int)$data['payment_csv_converted']['ledger_ac'];	
-	  $type = (int)$data['payment_csv_converted']['type'];
-		$amount = $data['payment_csv_converted']['amount'];		
-		  $tds = $data['payment_csv_converted']['tds'];	
-			$mode = $data['payment_csv_converted']['mode'];	
-			  $instrument = $data['payment_csv_converted']['instrument'];	
-				$bank_id = $data['payment_csv_converted']['bank'];	
-				  $invoice_ref = $data['payment_csv_converted']['invoice_ref'];
-					$narration = $data['payment_csv_converted']['narration'];
-}
-?>
 
 
 
+<div class="portlet box">
+<div class="portlet-body">
+<table class="table table-condensed table-bordered">
+		<thead>
+			<tr>
+				<th width="20%">Transaction Date</th>
+				<th width="20%">Ledger A/c</th>
+				<th width="20%">Mode of Payment</th>
+				<th width="20%">Amount</th>
+				<th width="20%">Bank Account</th>
+			</tr>
+		</thead>
+        <tbody>
+					<?php
+			foreach($result_bank_receipt_converted as $data)
+			{
+			 $csv_auto_id = (int)$data['payment_csv_converted']['auto_id'];
+			   $transaction_date = $data['payment_csv_converted']['trajection_date'];	
+				$ledger_account_id = (int)$data['payment_csv_converted']['ledger_ac'];	
+				  $type = (int)$data['payment_csv_converted']['type'];
+					$amount = $data['payment_csv_converted']['amount'];		
+					  $tds = $data['payment_csv_converted']['tds'];	
+						$mode = $data['payment_csv_converted']['mode'];	
+						  $instrument = $data['payment_csv_converted']['instrument'];	
+							$bank_id = $data['payment_csv_converted']['bank'];	
+							  $invoice_ref = $data['payment_csv_converted']['invoice_ref'];
+								$narration = $data['payment_csv_converted']['narration'];
+			
+			?>
+		
+		
+		
+            <tr>
+					<td>
+					<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy" 
+					value="<?php echo $transaction_date; ?>" 
+					style="background-color:white !important; margin-top:2.5px;" field="transaction_date" record_id="<?php echo $csv_auto_id; ?>">
+					</td>
+			
+			<td>
+					<select class="m-wrap span12 chosen" field="ledger_data" record_id="<?php echo $csv_auto_id; ?>">
+					<option value="" style="display:none;">--SELECT--</option>
+					<?php
+					foreach($cursor11 as $collection)
+					{
+					$auto_id = $collection['ledger_sub_account']['auto_id'];
+					$name = $collection['ledger_sub_account']['name'];
+					?>
+					<option value="<?php echo $auto_id; ?>,1" <?php if($ledger_account_id == $auto_id && $type == 1) { ?> selected="selected" <?php } ?> ><?php echo $name; ?></option>
+					<?php } ?>
+					<?php
+					foreach($cursor12 as $collection)
+					{
+					$auto_id_a = (int)$collection['accounts_group']['auto_id'];
+					$result33 = $this->requestAction(array('controller' => 'hms', 'action' => 'expense_tracker_fetch2'),array('pass'=>array($auto_id_a)));
+					foreach($result33 as $collection)
+					{
+					$auto_id = (int)$collection['ledger_account']['auto_id'];
+					$name = $collection['ledger_account']['ledger_name'];
+					if($auto_id == 15)
+					continue;
+					?>
+					<option value="<?php echo $auto_id; ?>,2" <?php if($ledger_account_id == $auto_id && $type == 2) { ?> selected="selected" <?php } ?>><?php echo $name; ?></option>
+					<?php }} ?>
+					<?php
+					foreach($cursor13 as $collection)
+					{
+					$auto_id_b = (int)$collection['accounts_group']['auto_id'];
+
+					$result33 = $this->requestAction(array('controller' => 'hms', 'action' => 'expense_tracker_fetch2'),array('pass'=>array($auto_id_b)));
+					foreach($result33 as $collection)
+					{
+					$auto_id = (int)$collection['ledger_account']['auto_id'];
+					$name = $collection['ledger_account']['ledger_name'];
+					?>
+					<option value="<?php echo $auto_id; ?>,2" <?php if($ledger_account_id == $auto_id && $type == 2) { ?> selected="selected" <?php } ?> ><?php echo $name; ?></option>
+					<?php }} ?>
+					</select>
+			
+			
+			</td>
+			<td></td>
+			<td></td>
+			<td></td>
+            </tr>
+			
+			
+			
+			<?php } ?>			
+        </tbody>
+
+</table>
+</div>
+</div>
 
 
 

@@ -1,3 +1,5 @@
+<span class="label label-important">NOTE</span>
+<span> No need to save this form. The system will automatically save updated data. </span>
 
 <table class="table table-bordered table-hover">
 <thead>

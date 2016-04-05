@@ -4704,7 +4704,7 @@ $s_role_id=$this->Session->read('hm_role_id');
 $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id = (int)$this->Session->read('hm_user_id');
 
-$excel = "Group Name,A/c name,wing,unit,Debit,Credit,Penalty \n";
+$excel = "Group Name,A/c name,wing,unit,Debit,Credit,Penalty(Debit) \n";
 
 $this->loadmodel('accounts_group');
 $order=(array('accounts_group.group_name'=>'ASC'));

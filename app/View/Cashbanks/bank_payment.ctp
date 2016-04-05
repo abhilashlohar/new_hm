@@ -48,9 +48,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			value="<?php echo $default_date; ?>" 
 			style="background-color:white !important; margin-top:2.5px;" name="transaction_date[]">
 		 
-			<input type="text" class="m-wrap span12" 
-			style="background-color:white !important; margin-top:2.5px;" Placeholder="Invoice Reference"
-			name="invoice_reference[]">
+			
 		 </td>
 		 <td>
 					<select class="m-wrap span12" name="ledger_account[]">
@@ -82,7 +80,9 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					<option value="<?php echo $auto_id; ?>,2" ><?php echo $name; ?></option>
 					<?php }} ?>
 					</select>
-					
+					<input type="text" class="m-wrap span12" 
+			style="background-color:white !important; margin-top:2.5px;" Placeholder="Invoice Reference"
+			name="invoice_reference[]">
 			
 		 </td>
 		 <td>
@@ -218,38 +218,30 @@ var allow="yes";
 			var deposited_in=$(this).val();
 			if(deposited_in==""){
 				$(this).closest('td').find(".err").remove();
-				$(this).closest('td').append('<span class="err">Required</span>');
+				$(this).closest('td').append('<span class="err">Ledger A/c Required</span>');
 				allow="no";
 			}else{
 				$(this).closest('td').find(".err").remove();
 			}
 		});	
 		 $('#main tbody tr input[name="instrument[]"]').die().each(function(i, obj){
-			var deposited_in=$(this).val();
-			if(deposited_in==""){
+			var instrument=$(this).val();
+			var payment_mode=$('#main tbody tr:eq('+i+') select[name="payment_mode[]"]').val();
+			if(instrument=="" || payment_mode==""){
 				$(this).closest('td').find(".er").remove();
-				$(this).closest('td').append('<span class="er">Required</span>');
+				$(this).closest('td').append('<p class="er">Required</p>');
 				allow="no";
 			}else{
 				$(this).closest('td').find(".er").remove();
 			}
 		});	
 		
-		 $('#main tbody tr select[name="payment_mode[]"]').die().each(function(i, obj){
-			var deposited_in=$(this).val();
-			if(deposited_in==""){
-				$(this).closest('td').find(".err").remove();
-				$(this).closest('td').append('<span class="err">Required</span>');
-				allow="no";
-			}else{
-				$(this).closest('td').find(".err").remove();
-			}
-		});	
+		 
 		 $('#main tbody tr input[name="amount[]"]').die().each(function(i, obj){
 			var deposited_in=$(this).val();
 			if(deposited_in==""){
 				$(this).closest('td').find(".er").remove();
-				$(this).closest('td').append('<span class="er">Required</span>');
+				$(this).closest('td').append('<span class="er">Amount Required</span>');
 				allow="no";
 			}else{
 				$(this).closest('td').find(".er").remove();
@@ -261,7 +253,7 @@ var allow="yes";
 			var deposited_in=$(this).val();
 			if(deposited_in==""){
 				$(this).closest('td').find(".err").remove();
-				$(this).closest('td').append('<span class="err">Required</span>');
+				$(this).closest('td').append('<p class="err">Select bank Account</p>');
 				allow="no";
 			}else{
 				$(this).closest('td').find(".err").remove();

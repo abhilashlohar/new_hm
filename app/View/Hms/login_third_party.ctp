@@ -51,7 +51,7 @@
 		<td><?php echo @$email; ?></td>
 		<td><?php echo @$mobile; ?></td>
 		<td><?php echo $password; ?></td>
-		<th><a href="user_assign_role" role="button" rel="tab">Assign to role</a></th>
+		<th><a href="user_assign_role" role="button" rel="tab">Assign role</a></th>
 	</tr>
 		
 		<?php } ?>

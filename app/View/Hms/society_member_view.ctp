@@ -8,7 +8,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<span id="family"> 0 </span><span> Family Member </span> 
 	<span style="color:red; font-size:14px;" > <i class=" icon-star"></i></span><span> Awaiting User Validation  </span> 
 	</div>
-	<a href="society_member_excel" class="blue mini btn" download="download"><i class=" icon-download-alt"></i> </a> 
+	<a href="society_member_excel" class="blue mini btn" download="download"><i class="fa fa-file-excel-o"></i></a> 
 
 </div> 
 <div class="portlet box">

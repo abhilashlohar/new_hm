@@ -5,7 +5,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 <!--<div style="background-color:#EFEFEF; border-top:1px solid #e6e6e6; border-bottom:1px solid #e6e6e6; padding:10px; box-shadow:5px; font-size:16px; color:#006;">
 View
 </div>-->
-<div style="float:right;"><span><a href="tenant_excel" class="blue mini btn" download="download"><i class=" icon-download-alt"></i> Download in Excel</a></span></div>
+<div style="float:right;"><span><a href="tenant_excel" class="blue mini btn" download="download"><i class="fa fa-file-excel-o"></i> Download in Excel</a></span></div>
 <div class="portlet-body" style="padding:10px;";>
 									<!--BEGIN TABS-->
 									<div class="tabbable tabbable-custom">

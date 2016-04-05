@@ -35,8 +35,8 @@
 	   <th>Sr.No.</th>
 	   <th width="20%">Name</th>
 	   <th width="30%">Email</th>
-	   <th width="20%">Mobile</th>
-	   <th width="20%">Password</th>
+	   <th width="15%">Mobile</th>
+	   <th width="15%">Password</th>
 	  <th></th>
 	</tr>
 	<?php $n=0; foreach($result_user as $data){ $n++;

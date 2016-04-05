@@ -8339,6 +8339,7 @@ $this->layout=null;
 	$order=array('bank_receipt_csv_converted.auto_id'=>'ASC');
 	$result_bank_receipt_converted=$this->payment_csv_converted->find('all',array('conditions'=>$conditions));
 	foreach($result_bank_receipt_converted as $receipt_converted){
+		$amount="";
 		$auto_id=$receipt_converted["payment_csv_converted"]["auto_id"];
 		$trajection_date=$receipt_converted["payment_csv_converted"]["trajection_date"];
 		$ledger = $receipt_converted["payment_csv_converted"]["ledger_ac"];
@@ -8429,8 +8430,7 @@ function auto_save_bank_payment($record_id=null,$field=null,$value=null){
 	}
 	
 	if($field=="ledger_data"){
-		if(empty($value)){ echo "F";}
-		else{
+		
 		$val_arr = explode(',',$value);	
 			$led_id = (int)$val_arr[0];
 			$typp = (int)$val_arr[1];
@@ -8438,7 +8438,7 @@ function auto_save_bank_payment($record_id=null,$field=null,$value=null){
 			$this->loadmodel('payment_csv_converted');
 			$this->payment_csv_converted->updateAll(array("ledger_ac"=>(int)$led_id,"type"=>(int)$typp),array("auto_id" => $record_id));
 			echo "T";
-		}
+		
 	}
 	
 	
@@ -8452,13 +8452,12 @@ function auto_save_bank_payment($record_id=null,$field=null,$value=null){
 	}
 	
 	if($field=="amt"){
-		if(empty($value)){ echo "F";}
-		else{
+		
+		
 			$this->loadmodel('payment_csv_converted');
 			$this->payment_csv_converted->updateAll(array("amount"=>$value),array("auto_id" => $record_id));
 			echo "T";
-		}
-	}
+			}
 	
 	if($field=="tdss"){
 		
@@ -8471,31 +8470,29 @@ function auto_save_bank_payment($record_id=null,$field=null,$value=null){
 
 	
 	if($field=="mode"){
-		if(empty($value)){ echo "F";}
-		else{
+		
 			$this->loadmodel('payment_csv_converted');
 			$this->payment_csv_converted->updateAll(array("mode" => $value),array("auto_id" => $record_id));
 			echo "T";
-		}
+		
 	}
 	
 	
 	if($field=="inst"){
-		if(empty($value)){ echo "F";}
-		else{
+		
+		
 			$this->loadmodel('payment_csv_converted');
 			$this->payment_csv_converted->updateAll(array("instrument" => $value),array("auto_id" => $record_id));
 			echo "T";
-		}
+		
 	}
 	
 	if($field=="bankk"){
-		if(empty($value)){ echo "F";}
-		else{
+		
 			$this->loadmodel('payment_csv_converted');
 			$this->payment_csv_converted->updateAll(array("bank" => (int)$value),array("auto_id" => $record_id));
 			echo "T";
-		}
+		
 	}
 
 	if($field=="desc"){
@@ -8592,16 +8589,17 @@ $this->layout=null;
 	
 		//////////////////////////////////////////	
 $current_date = date('Y-m-d');		
-$i=$this->autoincrement('new_cash_bank','transaction_id');
-$bbb=$this->autoincrement_with_receipt_source('new_cash_bank','receipt_id',2);
+$i=$this->autoincrement('cash_bank','transaction_id');
+$bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','bank_payment');
 $rr_arr[] = $bbb;
-$this->loadmodel('new_cash_bank');
-$multipleRowData = Array( Array("transaction_id" => $i, "receipt_id" => $bbb,  "current_date" => $current_date, 
+$this->loadmodel('cash_bank');
+$multipleRowData = Array( Array("transaction_id"=>$i, "receipt_id" => $bbb,  "current_date" => $current_date, 
 "transaction_date" => strtotime($transaction_date), "prepaired_by" => $s_user_id, 
 "user_id" => $ledger_acc,"invoice_reference" => @$invoice,"narration" => $narration, "receipt_mode" => $mode,
 "receipt_instruction" => $instrument, "account_head" => $bank_ac,  
-"amount" => $amount,"society_id" => $s_society_id, "tds_id" =>$tds_id,"account_type"=>$acc_type,"receipt_source"=>2,"auto_inc"=>"YES"));
-$this->new_cash_bank->saveAll($multipleRowData);  
+"amount" => $amount,"society_id" => $s_society_id, "tds_id" =>$tds_id,"account_type"=>$acc_type,"source"=>"bank_payment","auto_inc"=>"YES"));
+$this->cash_bank->saveAll($multipleRowData);  
+
 
 //////////////////// End Insert///////////////////////////////
 ///////////// TDS CALCULATION /////////////////////
@@ -8639,14 +8637,14 @@ if($acc_type == 1)
 {
 $l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => $amount, "credit" =>null,"ledger_account_id" => 15, "ledger_sub_account_id" =>$ledger_acc, "table_name" =>"new_cash_bank","element_id" => $i, "society_id" => $s_society_id));
+$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => $amount, "credit" =>null,"ledger_account_id" => 15, "ledger_sub_account_id" =>$ledger_acc, "table_name" =>"cash_bank","element_id" => $i, "society_id" => $s_society_id));
 $this->ledger->saveAll($multipleRowData); 
 }
 else
 {
 $l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => $amount,"credit" =>null,"ledger_account_id" =>$ledger_acc, "ledger_sub_account_id" =>null, "table_name" =>"new_cash_bank","element_id" =>$i, "society_id" => $s_society_id));
+$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => $amount,"credit" =>null,"ledger_account_id" =>$ledger_acc, "ledger_sub_account_id" =>null, "table_name" =>"cash_bank","element_id" =>$i, "society_id" => $s_society_id));
 $this->ledger->saveAll($multipleRowData); 
 }
 
@@ -8658,7 +8656,7 @@ $l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
 $multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), 
 "debit" =>null,"credit" =>$total_tds_amount,"ledger_account_id" =>33, 
-"ledger_sub_account_id" =>$sub_account_id_a, "table_name" =>"new_cash_bank","element_id" =>$i, 
+"ledger_sub_account_id" =>$sub_account_id_a, "table_name" =>"cash_bank","element_id" =>$i, 
 "society_id" => $s_society_id));
 $this->ledger->saveAll($multipleRowData); 
 
@@ -8670,7 +8668,7 @@ $l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
 $multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date),
 "debit" =>null,"credit" =>$tds_amount,"ledger_account_id" =>$sub_account_id_t, 
-"ledger_sub_account_id" =>null, "table_name" =>"new_cash_bank","element_id" =>$i, 
+"ledger_sub_account_id" =>null,"table_name"=>"cash_bank","element_id"=>$i, 
 "society_id" => $s_society_id));
 $this->ledger->saveAll($multipleRowData); 
 }

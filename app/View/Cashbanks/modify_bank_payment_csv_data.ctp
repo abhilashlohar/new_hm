@@ -173,8 +173,8 @@ for($ii=1;$ii<=$loop;$ii++){ ?>
 </ul>
 </div>
 <br/>
-<a href="<?php echo $webroot_path; ?>Cashbanks/bank_payment_import_csv?vvv=5" class="btn purple big"><i class="m-icon-big-swapleft m-icon-white"></i> BACK</a>
-<a class="btn purple big" role="button" id="final_import">IMPORT VOUCHERS <i class="m-icon-big-swapright m-icon-white"></i></a>									
+<a href="<?php echo $webroot_path; ?>Cashbanks/bank_payment_import_csv?vvv=5" class="btn blue"><i class="icon-circle-arrow-left"></i> BACK</a>
+<a class="btn blue" role="button" id="final_import">IMPORT VOUCHERS <i class="icon-circle-arrow-right"></i></a>									
 <div id="check_validation_result"></div>		  
 
 

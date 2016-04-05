@@ -283,8 +283,7 @@ $(document).ready(function() {
 					<?php  if($user_type!='hm'){ if(sizeof($role_result)>1){ ?>
                      <li><a href="<?php echo $webroot_path; ?>Hms/change_role_member" rel='tab'><i class="fa fa-exchange"></i> Change Role</a></li>
 					 <?php } } ?>
-					 
-                     <li><a href="#"><i class="icon-tasks"></i> My Tasks</a></li>
+					 <li><a href="#"><i class="icon-tasks"></i> My Tasks</a></li>
                      <li class="divider"></li>
                      <li><a href="<?php echo $webroot_path; ?>Hms/logout"><i class="icon-key"></i> Log Out</a></li>
                   </ul>

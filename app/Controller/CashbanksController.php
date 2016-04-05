@@ -8253,7 +8253,7 @@ if($this->RequestHandler->isAjax()){
 	$this->set('page',$page);
 	
 	$this->loadmodel('import_payment_record');
-	$conditions=array("society_id" => $s_society_id,"module_name" => "BP");
+	$conditions=array("society_id" => $s_society_id,"module_name"=>"BP");
 	$result_import_record = $this->import_payment_record->find('all',array('conditions'=>$conditions));
 	$this->set('result_import_record',$result_import_record);
 	foreach($result_import_record as $data_import){
@@ -8274,7 +8274,7 @@ if($this->RequestHandler->isAjax()){
 		$this->set('count_bank_receipt_converted',$count_bank_receipt_converted);
 	   }	
 $this->loadmodel('ledger_sub_account');
-$conditions=array("society_id" => $s_society_id, "ledger_id" => 33);
+$conditions=array("society_id"=>$s_society_id,"ledger_id"=>33);
 $cursor2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
 
@@ -8293,10 +8293,9 @@ $this->set("tds_arr",$tds_arr);
 
 
 $this->loadmodel('ledger_sub_account');
-$conditions=array("ledger_id" => 15,"society_id"=>$s_society_id);
+$conditions=array("ledger_id"=>15,"society_id"=>$s_society_id);
 $cursor11=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 $this->set('cursor11',$cursor11);
-
 
 $this->loadmodel('accounts_group');
 $conditions=array("accounts_id" => 1);

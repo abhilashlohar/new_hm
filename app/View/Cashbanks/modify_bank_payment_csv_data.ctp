@@ -1,3 +1,40 @@
+
+<?php
+foreach($result_bank_receipt_converted as $data)
+{
+ $csv_auto_id = (int)$data['payment_csv_converted']['auto_id'];
+   $transaction_date = $data['payment_csv_converted']['trajection_date'];	
+	$ledger_account_id = (int)$data['payment_csv_converted']['ledger_ac'];	
+	  $type = (int)$data['payment_csv_converted']['type'];
+		$amount = $data['payment_csv_converted']['amount'];		
+		  $tds = $data['payment_csv_converted']['tds'];	
+			$mode = $data['payment_csv_converted']['mode'];	
+			  $instrument = $data['payment_csv_converted']['instrument'];	
+				$bank_id = $data['payment_csv_converted']['bank'];	
+				  $invoice_ref = $data['payment_csv_converted']['invoice_ref'];
+					$narration = $data['payment_csv_converted']['narration'];
+}
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php /*
 <div style="background-color: #FFF;">
 <table style="backgroud-color:white; width:100%;" id="main_table">
 <?php
@@ -332,7 +369,7 @@ $( document ).ready(function() {
 });
 </script>
 
-
+*/ ?>
 
 
 

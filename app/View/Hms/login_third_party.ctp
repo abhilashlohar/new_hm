@@ -37,7 +37,7 @@
 	   <th width="30%">Email</th>
 	   <th width="20%">Mobile</th>
 	   <th width="20%">Password</th>
-	  
+	  <th></th>
 	</tr>
 	<?php $n=0; foreach($result_user as $data){ $n++;
 		$user_id=(int)$data['user']['user_id'];
@@ -51,7 +51,7 @@
 		<td><?php echo @$email; ?></td>
 		<td><?php echo @$mobile; ?></td>
 		<td><?php echo $password; ?></td>
-		
+		<th><a href="user_assign_role" role="button" rel="tab">Assign to role</a></th>
 	</tr>
 		
 		<?php } ?>

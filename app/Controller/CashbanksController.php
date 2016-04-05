@@ -8410,7 +8410,7 @@ if(empty($bank)){ $bank_v = 1; }else{ $bank_v = 0; }
 		if($tt == "T"){ echo"T";
 			$this->loadmodel('import_payment_record');
 			$this->import_payment_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "BP"));	
- }else{  echo "F"; die; }
+ }else{  die("not_validate"); }
 }
 //End allow_import_bank_payment//
 //Start auto_save_bank_payment//
@@ -8758,5 +8758,28 @@ $s_society_id = $this->Session->read('hm_society_id');
 	}	
 }
 //End Upload_Bank_payment_csv_file//
+//Start cancle_bank_payment_import//
+function cancle_bank_payment_import()
+{
+$s_society_id = $this->Session->read('hm_society_id');
+	
+	$this->loadmodel('payment_csv_converted');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$this->payment_csv_converted->deleteAll($conditions);
+	
+	$this->loadmodel('bank_payment_csv');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$this->bank_payment_csv->deleteAll($conditions);
+	
+	$this->loadmodel('import_payment_record');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$this->import_payment_record->deleteAll($conditions);
+	
+	$this->redirect(array('controller' => 'Cashbanks','action' => 'bank_payment_import_csv'));	
+	
+}
+
+
+//End cancle_bank_payment_import//
 }
 ?>

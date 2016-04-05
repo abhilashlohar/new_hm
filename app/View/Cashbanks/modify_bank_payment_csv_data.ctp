@@ -173,19 +173,41 @@ for($ii=1;$ii<=$loop;$ii++){ ?>
 </ul>
 </div>
 <br/>
-<a href="<?php echo $webroot_path; ?>Cashbanks/bank_payment_import_csv?vvv=5" class="btn blue"><i class="icon-circle-arrow-left"></i> BACK</a>
-<a class="btn blue" role="button" id="final_import">IMPORT VOUCHERS <i class="icon-circle-arrow-right"></i></a>									
-<div id="check_validation_result"></div>		  
+<div align="center" id="submit_sec">
+<a class="btn blue" role="button" id="final_import">IMPORT RECEIPTS </a>
+<a class="btn red" role="button" id="cancel_process">Cancel this process</a>							
+<div id="check_validation_result"></div>
+</div>		  
 
-
+<div class="confirm_div" style="display: none;">
+	<div class="modal-backdrop fade in"></div>
+	<div class="modal" id="poll_edit_content">
+	<div class="modal-body">
+		Are you sure to cancle this process?				   			   
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn" id="close_button">NO</button>
+		<a href="<?php echo $webroot_path; ?>Cashbanks/cancle_bank_payment_import" class="btn red">YES</a>
+	</div>
+	</div>
+</div>
 <script>
 $(document).ready(function(){
+	$("#cancel_process").on("click",function(){
+		$(".confirm_div").show();
+	});
+	$("#close_button").on("click",function(){
+		$(".confirm_div").hide();
+	});
+	
 	$( "#final_import" ).click(function(){
+		var allow="yes";
 		$('#report_tb tbody tr select[field=ledger_data]').each(function(i, obj){
 			var ledger_data=$(this).val();
 				if(ledger_data==""){
 					$(this).closest('td').find(".er").remove();
 						$(this).closest('td').append('<span class="er">Ledger A/c Required</span>');
+						allow="no";
 				}else{
 					$(this).closest('td').find(".er").remove();
 				}
@@ -209,7 +231,7 @@ $(document).ready(function(){
 			if(amount==""){
 				$(this).closest('td').find(".er").remove();
 				$(this).closest('td').append('<span class="er">Amount Required</span>');
-				
+				allow="no";
 			}else{
 				$(this).closest('td').find(".er").remove();
 			}
@@ -227,7 +249,22 @@ $(document).ready(function(){
 			}
 		});	
 	
-	
+	if(allow=="yes"){
+			$.ajax({
+				url: "<?php echo $webroot_path; ?>Cashbanks/allow_import_bank_payment",
+			}).done(function(response){
+				if(response=="not_validate"){
+					$("#submit_sec").find(".alert-error").remove();
+					$("#final_import").before('<div class="alert alert-error" style="width: 50%;">There are errors on other pages.</div>');
+				}else{
+					change_page_automatically("<?php echo $webroot_path; ?>Cashbanks/bank_payment_import_csv");
+				}
+				
+			});
+		}else{
+			$("#submit_sec").find(".alert-error").remove();
+			$("#final_import").before('<div class="alert alert-error" style="width: 50%;">There are errors above, marked with red color.</div>');
+		}
 	
 	
 	
@@ -285,7 +322,7 @@ $( document ).ready(function() {
 </script>
 
 			  
-<script>			  
+<script>	/*		  
 $(document).ready(function() {
 $( "#final_import" ).click(function() {
 $("#check_validation_result").html('<img src="<?php echo $webroot_path; ?>as/loding.gif" /><span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Importing Receipts.</span>');
@@ -305,7 +342,7 @@ change_page_automatically("<?php echo $webroot_path; ?>Cashbanks/bank_payment_im
 }
 });
 });	
-});	  
+});	 */ 
 </script>			  
 <script>			  
 	$( document ).ready(function() {

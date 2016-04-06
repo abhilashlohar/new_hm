@@ -40,7 +40,7 @@ function substrwords($text, $maxchar, $end='...') {
 ?>
 <div style="overflow:auto;" class="hide_at_print"> 
 <a href="ledger_excel?l=<?php echo $ledger_account_id; ?>&sl=<?php echo $ledger_sub_account_id; ?>&f=<?php echo $from; ?>&t=<?php echo $to; ?>" class="btn blue mini pull-right" target="_blank" style="margin-left:1%;"><i class="icon-download"></i></a>
-<a href="#" class="btn green mini pull-right" onclick="window.print()"> <i class="icon-print"></i> </a>
+<a href="#" role="button" class="btn green mini pull-right" onclick="window.print()"> <i class="icon-print"></i> </a>
 </div>
 <div style="width:100%; overflow:auto; margin-top:10px;" class="hide_at_print">
 <label class="m-wrap pull-right"><input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;" placeholder="Search"></label>	

@@ -22,18 +22,19 @@ $m_from = date("Y-m-d", strtotime($from));
 			$nnn = 555;
 }} ?>
 <?php if($nnn == 555) { ?>
-<div style="width:100%;" class="hide_at_print">
-<span style="float:right;"><a href="petty_cash_receipt_excel?f=<?php echo $from; ?>&t=<?php echo $to; ?>" target="_blank" class="btn blue mini"><i class="icon-download"></i></a></span>
-<span style="float:right; margin-right:1%;"><a  class=" printt btn green mini" onclick="window.print()"><i class="icon-print"></i> </a></span>
-</div>
-
 
 <div class="portlet box">
 	<div class="portlet-body">
 
 	<div align="center"><?php echo strtoupper($society_name); ?> Bank Payment Register From : <?php echo $from;?> To : <?php echo $to;?>
 		<span class="hide_at_print">
+			
+			
 			<input class="m-wrap medium pull-right" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
+			<a href="petty_cash_receipt_excel?f=<?php echo $from; ?>&t=<?php echo $to; ?>" target="_blank" class="btn blue mini pull-right" style="margin-right:1%;"><i class="icon-download"></i></a>
+			
+			<a  class=" printt btn green mini pull-right" onclick="window.print()" style="margin-right:2px;"><i class="icon-print"></i> </a>
+			
 		</span>
 	</div>
 

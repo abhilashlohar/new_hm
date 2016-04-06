@@ -4,7 +4,12 @@
 	$society_name=$society_info[0]["society"]["society_name"];
 	?>
 		<div align="center"><?php echo strtoupper($society_name); ?> Bank Receipt Register From : <?php echo date("d-m-Y",$from);?> To : <?php echo date("d-m-Y",$to);?>
-		<input class="m-wrap medium pull-right" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
+		
+		<input class="m-wrap medium pull-right hide_at_print" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
+		<div class="pull-right hide_at_print">
+		<a href="" class="btn green mini tooltips " data-placement="left" data-original-title="Download in excel"><i class="fa fa-file-excel-o"></i></a>
+		<a class="btn blue mini" onclick="window.print()"><i class="icon-print"></i></a>
+		</div>
 		</div>
 		
 		<table class="table table-condensed table-bordered" id="receiptmain">

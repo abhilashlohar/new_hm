@@ -268,8 +268,33 @@ var allow="yes";
   
 });
 
-
-
+ $('select[name="bank_account[]"]').die().live("change",function(){
+			var bank_account=$(this).val();
+			if(bank_account==""){
+				$(this).closest('td').find(".err").remove();
+				$(this).closest('td').append('<p class="err">Select bank Account</p>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".err").remove();
+			}
+		});	
+		
+ $('input[name="amount[]"]').die().live("keyup blur",function(){
+			var amount=$(this).val();
+			if(amount==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Amount Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+			if($.isNumeric(amount))
+		{
+		}else{
+		$(this).val('');	
+		}
+			
+		});
 
 
 $('input[name="instrument[]"]').die().live("keyup blur",function(i, obj){

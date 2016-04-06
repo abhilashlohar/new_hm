@@ -4,7 +4,7 @@
 
 <input type="text" class="date-picker m-wrap span4" data-date-format="dd-mm-yyyy" 
 value="<?php echo $tra_date; ?>" 
-style="background-color:white !important; margin-top:2.5px;" field="transaction_date" record_id="1" placeholder="Date" id="date">
+style="background-color:white !important; margin-top:2.5px;" field="transaction_date" record_id="1" placeholder="Transaction Date" id="date">
 
 <div style="background-color: #FFF;"> 
 <table class="table table-bordered table-condensed" style="width:100%; background-color:white;" id="open_bal">
@@ -80,7 +80,7 @@ $name = $dataa['ledger_account']['ledger_name'];
 
 <td>
 <input type="text" class="m-wrap span10 debit" style="background-color:white !important;"
-value="<?php echo @$debit; ?>" field="debit" record_id="<?php echo $csv_id; ?>" />
+value="<?php echo @$debit; ?>" field="debit" record_id="<?php echo $csv_id; ?>"/>
 </td>
 
 <td>
@@ -117,39 +117,11 @@ value="<?php echo @$penalty; ?>" field="penalty" record_id="<?php echo $csv_id; 
 
 
 
-<script>/*
-$( document ).ready(function() {
-	$( 'input[type="text"]' ).keyup(function() {
-		
-		var record_id=$(this).attr("record_id");
-		var field=$(this).attr("field");
-		var value=$(this).val();
-		
-		$.ajax({
-			url: "<?php echo $webroot_path; ?>Accounts/auto_save_opening_balance/"+record_id+"/"+field+"/"+value,
-		}).done(function(response){
-			
-			if(response=="F"){
-				$("#main_table tr#"+record_id+" td").each(function(){
-					$(this).find('input[field="'+field+'"]').parent("div").css("border", "solid 1px red");
-				});
-			}else{
-				$("#main_table tr#"+record_id+" td").each(function(){
-					$(this).find('input[field="'+field+'"]').parent("div").css("border", "");
-				});
-			}
-		});
-	});
 
-
-	
-}); */
-</script> 
 
 <script>
 $( document ).ready(function() {
 	$( 'input[type="text"]' ).blur(function() {
-		
 		var record_id=$(this).attr("record_id");
 		var field=$(this).attr("field");
 		var value=$(this).val();
@@ -168,7 +140,13 @@ $( document ).ready(function() {
 			}
 		});
 	});
-	
+	$('.debit,.credit,.penalty').die().live("keyup",function(){
+		var amount=$(this).val();
+		if($.isNumeric(amount)){
+		}else{
+			$(this).val('');	
+		}
+	});
 }); 
 </script>
 
@@ -228,7 +206,7 @@ var fd = fe[i];
 var td = te[i]
 	if(date == "")
 	{
-	$("#validat").html('Please Select Date');	
+	$("#validat").html('Please Select Transaction Date');	
 	return false;
 	}
 	else if(Date.parse(fd) <= Date.parse(date))

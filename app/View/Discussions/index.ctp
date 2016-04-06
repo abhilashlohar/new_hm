@@ -52,6 +52,7 @@ $(document).ready(function(){
 	});
 
 	$(".topic").die().live("click",function(){
+		xhr.abort();
 		clearInterval(interval);
 		$('.topic').each(function(i, obj) {
 			$(this).removeClass("run");

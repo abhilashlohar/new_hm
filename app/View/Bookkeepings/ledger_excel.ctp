@@ -78,7 +78,7 @@ $user_id = (int)$result_income_head2[0]['ledger_sub_account']['user_id'];
 	 </tr>
 	 <tr>
 	 <td colspan="7" style="text-align:center;">
-	From: <?php echo $from; ?> To: <?php echo @$to; ?>
+	From: <?php echo date('d-m-Y',strtotime($from)); ?> To: <?php echo date('d-m-Y',strtotime($to)); ?>
 	</td>
 	</tr>
 	</table>

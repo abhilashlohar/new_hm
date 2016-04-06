@@ -7566,7 +7566,7 @@ function account_statement_for_flat_ajax($ledger_sub_account_id,$from,$to){
 	$to=date("Y-m-d",strtotime($to));
 	$this->set("to",$to);
 	
-	$s_role_id=$this->Session->read('hm_role_id');
+	$s_role_id=$this->Session->read('role_id');
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');	
 	
@@ -7595,8 +7595,6 @@ function account_statement_for_flat_ajax($ledger_sub_account_id,$from,$to){
 
 function account_statement_for_flat_excel($flat_id,$from,$to){
 	$this->layout=null;
-	
-	
 	$filename="Account_statement";
 	header ("Expires: 0");
 	header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");

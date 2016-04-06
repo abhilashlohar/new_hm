@@ -145,8 +145,10 @@ $prepaired_by = $dataaaa['user']['user_name'];
 <a class="btn blue mini" href="#" data-toggle="dropdown">
 <i class="icon-chevron-down"></i>	
 </a>
-<ul class="dropdown-menu" style="min-width:80px !important;">
+<ul class="dropdown-menu" style="min-width:80px !important; margin-left: -52px;">
 <li><a href="journal_voucher_view/<?php echo $voucher_id; ?>" target="_blank" ><i class="icon-search"></i> View</a>  </li>
+<li><a href="journal_voucher_pdf/<?php echo $voucher_id; ?>" target="_blank"> Pdf</a></li>
+
 </ul>
 </div> 
 

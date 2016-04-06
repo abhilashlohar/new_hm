@@ -1,20 +1,16 @@
 <div class="hide_at_print">	
-<center>
-<?php
-
-echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
-?>
-</center>
-
+	<center>
+	<?php
+	echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
+	?>
+	</center>
 </div>
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////////// ?>  
+
 <center>
 <div class="hide_at_print">
-<a href="<?php echo $webroot_path; ?>Bookkeepings/journal_add" class="btn" rel='tab'> Create</a>
-<a href="<?php echo $webroot_path; ?>Bookkeepings/journal_view" class="btn yellow" rel='tab'> View</a>
+	<a href="<?php echo $webroot_path; ?>Bookkeepings/journal_add" class="btn" rel='tab'> Create</a>
+	<a href="<?php echo $webroot_path; ?>Bookkeepings/journal_view" class="btn yellow" rel='tab'> View</a>
 </div>
-
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
 
 <?php
 $c_date = date('d-m-Y');
@@ -46,15 +42,10 @@ $b_date = date('1-m-Y');
             </form>
             </div>
 </center>			
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
-
  
  <div id="result" style="width:100%;">
  </div>
- 
- 
- 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?> 
+
 <script>
 $(document).ready(function() {
 	$("#go").bind('click',function(){
@@ -87,25 +78,6 @@ $("#result").html('<div align="center" style="padding:10px;"><img src="<?php ech
 }
 }
 </script>
-<!--
-<script>
-$(document).ready(function() {
-	
-		 $('#search_content').live('keyup',function() {
-			 
-			 var date1=document.getElementById('date1').value;
-			 var date2=document.getElementById('date2').value;
-			 var ser=$(this).val();
-			 ser=encodeURIComponent(ser);
-			$("#tbb").html('<div align="center" style="padding:10px;"><img src="<?php echo $webroot_path; ?>as/loding.gif" />Loading....</div>').load("journal_view_ajax_show_vocher?date1=" +date1+ "&date2=" +date2+ "&search=" +ser+""); 
-			
-		});
-	
-});
-
-</script> -->
-
-
 
 			
 <script>

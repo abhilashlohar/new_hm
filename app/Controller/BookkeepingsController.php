@@ -789,6 +789,23 @@ $conditions=array('society_id'=>$s_society_id,'voucher_id'=>$voucher_id);
 $result_journal=$this->journal->find('all',array('conditions'=>$conditions));
 $this->set('result_journal',$result_journal);	
 }
+//Start journal_voucher_pdf//
+function journal_voucher_pdf($voucher_id=null)
+{
+$this->layout='pdf';
+$s_role_id=$this->Session->read('role_id');
+$s_society_id=(int)$this->Session->read('hm_society_id');
+$s_user_id=(int)$this->Session->read('hm_user_id');	
+$this->set('voc_id',$voucher_id);
+$result_society=$this->society_name($s_society_id);
+$this->set('society_name',$result_society[0]['society']['society_name']);
 
+$this->loadmodel('journal');
+$conditions=array('society_id'=>$s_society_id,'voucher_id'=>(int)$voucher_id);	
+$result_journal=$this->journal->find('all',array('conditions'=>$conditions));
+$this->set('result_journal',$result_journal);
+	
+}
+//End journal_voucher_pdf//
 }
 ?>

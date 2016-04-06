@@ -136,7 +136,7 @@ $(document).ready(function(){
 	$('#main tfoot tr td:first').attr("colspan",3).html("<b>Total</b>");
 });
 
-var $rows = $('#main tr');
+var $rows = $('#main tbody tr');
 $('#search').keyup(function() {
 	var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
 

@@ -156,15 +156,17 @@ function it_regular_bill(){
 			if(sizeof($last_bill_info)>0){
 				$last_bill_start_date=$last_bill_info[0]["regular_bill"]["start_date"];
 				$last_bill_due_date=$last_bill_info[0]["regular_bill"]["due_date"];
-				$last_bill_arrear_principal=$last_bill_info[0]["regular_bill"]["arrear_maintenance"];
-				$last_bill_arrear_intrest=$last_bill_info[0]["regular_bill"]["arrear_intrest"];
+				//$last_bill_arrear_principal=$last_bill_info[0]["regular_bill"]["arrear_maintenance"];
+				//$last_bill_arrear_intrest=$last_bill_info[0]["regular_bill"]["arrear_intrest"];
 				$last_bill_intrest_on_arrears=$last_bill_info[0]["regular_bill"]["intrest_on_arrears"];
 				$last_bill_total=$last_bill_info[0]["regular_bill"]["total"];
 				
-				$last_bill_arrear_intrest=$last_bill_arrear_intrest+$last_bill_intrest_on_arrears;
+				//$last_bill_arrear_intrest=$last_bill_arrear_intrest+$last_bill_intrest_on_arrears;
 				$new_start_date=$last_bill_start_date;
 				$new_due_date=$last_bill_due_date;
 			}
+			$last_bill_arrear_principal=$arrear_maintenance;
+			$last_bill_arrear_intrest=$arrear_interest;
 			
 			//Interest computation start//
 			$interest_on_arrears=0;
@@ -280,8 +282,8 @@ function it_regular_bill(){
 					$interest_on_arrears+=$last_bill_total*$tax_factor*($days/365);
 				}
 			}
-			
-			$new_arrear_principal=$last_bill_total+$last_bill_arrear_principal;
+			$new_arrear_principal=$last_bill_arrear_principal;
+			//$new_arrear_principal=$last_bill_total+$last_bill_arrear_principal;
 			if($interest_on_arrears<0){ $interest_on_arrears=0; }
 			$interest_on_arrears=round($interest_on_arrears);
 			

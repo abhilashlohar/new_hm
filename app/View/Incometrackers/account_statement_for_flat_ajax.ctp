@@ -135,11 +135,11 @@ foreach($result_ledger as $ledger_data){
 					
 					$element_id=$element_id;
 					
-			$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array($element_id)));
+			$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'bank_receipt_info_via_auto_id'), array('pass' => array($element_id)));
 			$refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_number"]; 
 			$ledger_sub_account_id = (int)@$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
 			$description = @$result_cash_bank[0]["cash_bank"]["narration"];
-			$date = $result_cash_bank[0]["cash_bank"]["date"];	
+			$date = $result_cash_bank[0]["cash_bank"]["created_on"];	
 			$prepaired_by = (int)$result_cash_bank[0]["cash_bank"]["created_by"];	
 							
 					$interest="";

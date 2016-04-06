@@ -23,6 +23,16 @@ var $name = 'Bookkeepings';
 		return $this->cash_bank->find('all',array('conditions'=>$conditions)); 
 	}
 	
+	
+	function bank_receipt_info_via_auto_id($auto_id){
+		$auto_id=(int)$auto_id;
+		$this->loadmodel('cash_bank');
+		$conditions = array('$or'=>array(array('auto_id'=>$auto_id,'source'=>'bank_receipt'),array('transaction_id'=>$auto_id,'source'=>'bank_receipt')));
+		return $this->cash_bank->find('all',array('conditions'=>$conditions)); 
+	}
+	
+	
+	
 function adhoc_info_via_auto_id($auto_id){
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 		$auto_id=(int)$auto_id;

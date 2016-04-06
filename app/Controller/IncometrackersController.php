@@ -7596,7 +7596,7 @@ function account_statement_for_flat_ajax($ledger_sub_account_id,$from,$to){
 	
 }
 
-function account_statement_for_flat_excel($flat_id,$from,$to){
+function account_statement_for_flat_excel($ledger_sub_account_id,$from,$to){
 	$this->layout=null;
 	$filename="Account_statement";
 	header ("Expires: 0");
@@ -7607,61 +7607,45 @@ function account_statement_for_flat_excel($flat_id,$from,$to){
 	header ("Content-Disposition: attachment; filename=".$filename.".xls");
 	header ("Content-Description: Generated Report" );
 	
-	
-	
-	
 	$from=date("Y-m-d",strtotime($from));
-	$this->set("from",$from);
-	$to=date("Y-m-d",strtotime($to));
-	$this->set("to",$to);
+		$this->set("from",$from);
+			$to=date("Y-m-d",strtotime($to));
+				$this->set("to",$to);
 	
 	
-	$flat_id = (int)$flat_id;
+	$ledger_sub_account_id = (int)$ledger_sub_account_id;
 	$this->ath();
 	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');	
-	$result_flat_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array((int)$flat_id)));
-		foreach($result_flat_info as $flat_info){
-		$wing_id=$flat_info["flat"]["wing_id"];
-		} 
-		
-	$wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'wing_flat'), array('pass' => array($wing_id,(int)$flat_id)));
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');	
+	
+	
+	$member_detail=$this->requestAction(array('controller'=>'Fns','action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id)));	
+	$wing_id = $member_detail['wing_id'];
+	$flat_id = $member_detail['flat_id'];
+    $user_id = $member_detail['user_id']; 	
+    $user_name = $member_detail['user_name'];
+	$this->set('user_name',$user_name);
+	
+	$wing_flat=$this->requestAction(array('controller' => 'Fns', 'action' => 'wing_flat_via_wing_id_and_flat_id'), array('pass' => array($wing_id,$flat_id)));
 	$this->set('wing_flat',$wing_flat);
+
+	$this->loadmodel('society');
+	$conditions=array("society_id" => $s_society_id);
+	$result_society=$this->society->find('all',array('conditions'=>$conditions));
+	$this->set('result_society',$result_society);
 		
-		//user info via flat_id//
-		$result_user_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_user_info_via_flat_id'),array('pass'=>array($wing_id,$flat_id)));
-		foreach($result_user_info as $user_info){
-			$user_id=(int)$user_info["user"]["user_id"];
-			$user_name=$user_info["user"]["user_name"];
-			$this->set('user_name',$user_name);
-		}
-
-
-
-$this->loadmodel('society');
-$conditions=array("society_id" => $s_society_id);
-$result_society=$this->society->find('all',array('conditions'=>$conditions));
-$this->set('result_society',$result_society);
-	
-$this->loadmodel('ledger_sub_account');
-$conditions=array("society_id" => $s_society_id,"flat_id" => (int)$flat_id);
-$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-$ledger_sub_account_id=@$result_ledger_sub_account[0]["ledger_sub_account"]["auto_id"];
-
-	
-$this->loadmodel('ledger');
-$conditions=array("society_id" => $s_society_id,"ledger_account_id" => 34,"ledger_sub_account_id" => (int)$ledger_sub_account_id,'transaction_date'=> array('$gte' => strtotime($from),'$lte' => strtotime($to)));
-$order=array('ledger.transaction_date'=>'ASC');
-$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
-$this->set('result_ledger',$result_ledger);
+	$this->loadmodel('ledger');
+	$conditions=array("society_id" => $s_society_id,"ledger_account_id"=>34,"ledger_sub_account_id" => (int)$ledger_sub_account_id,'transaction_date'=> array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
+	$order=array('ledger.transaction_date'=>'ASC');
+	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
+	$this->set('result_ledger',$result_ledger);
 
 
 }
-////////////////End Account Statement (Accounts)/////////////////////////////////////
+//End Account Statement (Accounts)//
+//Start ac statement Bill View//
 
-//////////////// Start ac statement Bill View////////////////////////////////////////
-/////////// Done////////////////////////////
 function ac_statement_bill_view($receipt_id=null)
 {
 $this->layout='blank';

@@ -1,10 +1,10 @@
 <?php 
 foreach($result_society as $data){
-	$society_name=$data["society"]["society_name"];
-	$society_reg_num=$data["society"]["society_reg_num"];
-	$society_address=$data["society"]["society_address"];
-	$society_email=$data["society"]["society_email"];
-	$society_phone=$data["society"]["society_phone"];
+	$society_name=@$data["society"]["society_name"];
+	$society_reg_num=@$data["society"]["society_reg_num"];
+	$society_address=@$data["society"]["society_address"];
+	$society_email=@$data["society"]["society_email"];
+	$society_phone=@$data["society"]["society_phone"];
 }
 
 
@@ -54,6 +54,8 @@ foreach($result_ledger as $ledger_data){
 		<?php	$account_balance=0; $total_maint_charges=0; $total_interest=0; $total_credits=0;  $total_account_balance=0; 
 			foreach($result_ledger as $ledger_data){ 
 			$credits = "";
+			$creater_name = "";
+			$prepaired_by = "";
 				$transaction_date=$ledger_data["ledger"]["transaction_date"];
 				$table_name=$ledger_data["ledger"]["table_name"];
 				$element_id=$ledger_data["ledger"]["element_id"];
@@ -78,12 +80,23 @@ foreach($result_ledger as $ledger_data){
 					
 					
 				}
-				if($table_name=="new_regular_bill"){
+				if($table_name=="regular_bill"){
 					$result_regular_bill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'regular_bill_info_via_auto_id'), array('pass' => array($element_id)));
 					if(sizeof($result_regular_bill)>0){
 						$bill_approved="yes";
-						$refrence_no = $result_regular_bill[0]["new_regular_bill"]["bill_no"];
-						$description = $result_regular_bill[0]["new_regular_bill"]["description"];
+						$refrence_no = $result_regular_bill[0]["regular_bill"]["bill_number"];
+						$description = $result_regular_bill[0]["regular_bill"]["description"];
+						$prepaired_by = (int)$result_regular_bill[0]["regular_bill"]["created_by"]; 
+						$current_date = $result_regular_bill[0]["regular_bill"]["current_date"];
+	
+				$date = date('d-m-Y',strtotime($current_date));
+					
+				$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by)));
+				foreach ($user_dataaaa as $user_detailll) 
+				{
+				$creater_name = @$user_detailll['user']['user_name'];
+				}	
+					
 					}
 					
 					
@@ -98,33 +111,45 @@ foreach($result_ledger as $ledger_data){
 					}
 					$credits="";
 				}
-				if($table_name=="new_cash_bank"){
+				if($table_name=="cash_bank"){
 					
 					$element_id=$element_id;
 					
-					$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array($element_id)));
-					$refrence_no=@$result_cash_bank[0]["new_cash_bank"]["receipt_id"]; 
-					$flat_id = (int)@$result_cash_bank[0]["new_cash_bank"]["party_name_id"];
-					$description = @$result_cash_bank[0]["new_cash_bank"]["narration"];
-			
-					
+			$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'bank_receipt_info_via_auto_id'), array('pass' => array($element_id)));
+			$refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_number"]; 
+			$ledger_sub_account_id = (int)@$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
+			$description = @$result_cash_bank[0]["cash_bank"]["narration"];
+			$date = $result_cash_bank[0]["cash_bank"]["date"];	
+			$prepaired_by = (int)$result_cash_bank[0]["cash_bank"]["created_by"];	
+							
 					$interest="";
 					$maint_charges="";
 					$credits=$debit+$credit;
 					$account_balance=$account_balance-(int)$credits;
 				} 
-				if($table_name=='adhoc_bill')
-				{
-				$element_id=(int)$element_id;	
-				$result_adhoc=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'adhoc_info_via_auto_id'), array('pass' => array($element_id)));
-			$refrence_no=@$result_adhoc[0]["adhoc_bill"]["receipt_id"]; 
-			$flat_id = (int)@$result_adhoc[0]["adhoc_bill"]["person_name"];
-			$description = @$result_adhoc[0]["adhoc_bill"]["description"];
+	if($table_name=='supplimentry_bill')
+	{
+	$element_id=(int)$element_id;	
+	$result_adhoc=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'adhoc_info_via_auto_id'), array('pass' =>array($element_id)));
+	
+	$refrence_no=@$result_adhoc[0]["supplimentry_bill"]["receipt_id"]; 
+	$ledger_sub_account_id = @$result_adhoc[0]["supplimentry_bill"]["ledger_sub_account_id"];
+	$description = @$result_adhoc[0]["supplimentry_bill"]["description"];
+	$date = $result_adhoc[0]["supplimentry_bill"]["date"];	
+	$prepaired_by = (int)$result_adhoc[0]["supplimentry_bill"]["created_by"];		
+				
 				
                $maint_charges=$debit+$credit;
 			   $interest="";
 			   $account_balance=$account_balance+(int)$maint_charges;
 				}				
+				
+	$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array(@$prepaired_by)));
+	foreach ($user_dataaaa as $user_detailll) 
+	{
+	@$creater_name = @$user_detailll['user']['user_name'];
+	}	
+	@$dattt = date('d-m-Y',strtotime(@$date));			
 				
 				$total_maint_charges=$total_maint_charges+(int)$maint_charges;
 				$total_interest=$total_interest+(int)$interest;
@@ -132,27 +157,27 @@ foreach($result_ledger as $ledger_data){
 				?>
 					<tr>
 						<td><?php echo date("d-m-Y",$transaction_date); ?></td>
-						<td style="text-align:right;">
-						<?php if($table_name=="new_regular_bill"){
+						<td style="text-align:right;" >
+						<?php if($table_name=="regular_bill"){
 							echo $refrence_no;
 						}
-						if($table_name=="new_cash_bank"){
+						if($table_name=="cash_bank"){
 							echo $refrence_no;
 						}
-                        if($table_name=="adhoc_bill")
+                        if($table_name=="supplimentry_bill")
 						{
 						echo $refrence_no;	
 						}
 						?>
 						</td>
 						<td>
-						<?php if($table_name=="new_regular_bill"){
+						<?php if($table_name=="regular_bill"){
 						echo "Regular Bill";
 						}
-						if($table_name=="new_cash_bank"){
+						if($table_name=="cash_bank"){
 							echo "Bank Receipt";
 						}
-						if($table_name=="adhoc_bill")
+						if($table_name=="supplimentry_bill")
 						{
 							echo "Supplimentry Bill";
 						}
@@ -163,6 +188,7 @@ foreach($result_ledger as $ledger_data){
 						<td style="text-align:right;"><?php echo $interest; ?></td>
 						<td style="text-align:right;"><?php echo $credits; ?></td>
 						<td style="text-align:right;"><?php echo $account_balance; ?></td>
+					            
 					</tr>
 				
 			<?php } ?>
@@ -172,10 +198,12 @@ foreach($result_ledger as $ledger_data){
 						<td style="text-align:right;"><b><?php echo $total_interest; ?></b></td>
 						<td style="text-align:right;"><b><?php echo $total_credits; ?></b></td>
 						<td></td>
+						
 					</tr>
 					<tr>
 						<td colspan="7" align="right" style="color:#33773E;"><b>Closing Balance</b></td>
 						<td style="color:#33773E; text-align:right;"><b><?php echo $account_balance; ?></b></td>
+						
 					</tr>
                     </tbody>
 		</table>

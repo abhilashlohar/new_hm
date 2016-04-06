@@ -128,21 +128,21 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 		$total_credit=$total_credit+$credit;
 		
 		
-		if($table_name=="new_regular_bill"){
+		if($table_name=="regular_bill"){
 			$source="Regular Bill";
-			$result_regular_bill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'regular_bill_info_via_auto_id'), array('pass' => array($element_id)));
+			$result_regular_bill=$this->requestAction(array('controller' => 'Bookkeepings', 'action'=>'regular_bill_info_via_auto_id'), array('pass' => array($element_id)));
 			
 			$bill_approved="";
 			if(sizeof($result_regular_bill)>0){
-				$bill_approved="yes";
-				$refrence_no = $result_regular_bill[0]["new_regular_bill"]["bill_no"];
-			    $description = $result_regular_bill[0]["new_regular_bill"]["description"];
-				$description=substrwords($description,200,'...');
-			    $flat_id = (int)$result_regular_bill[0]["new_regular_bill"]["flat_id"]; 
-			    $prepaired_by = (int)$result_regular_bill[0]["new_regular_bill"]["created_by"]; 
-			    $current_date = $result_regular_bill[0]["new_regular_bill"]["current_date"];
+			$bill_approved="yes";
+			$refrence_no = $result_regular_bill[0]["regular_bill"]["bill_number"];
+			$description = $result_regular_bill[0]["regular_bill"]["description"];
+			$description=substrwords($description,200,'...');
+		    $ledger_sub_account_id = (int)$result_regular_bill[0]["regular_bill"]["ledger_sub_account_id"]; 
+			$prepaired_by = (int)$result_regular_bill[0]["regular_bill"]["created_by"]; 
+			$current_date = $result_regular_bill[0]["regular_bill"]["current_date"];
 	
-$current_datttt = date('d-m-Y',($current_date));
+$current_datttt = date('d-m-Y',strtotime($current_date));
 	
 $user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by)));
 foreach ($user_dataaaa as $user_detailll) 
@@ -151,18 +151,16 @@ $creater_name = @$user_detailll['user']['user_name'];
 }	
 			
 				//wing_id via flat_id//
-				$result_flat_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
-				foreach($result_flat_info as $flat_info){
-					$wing_id=$flat_info["flat"]["wing_id"];
-				}
-				
-		$user_detail = $this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'fetch_user_info_via_flat_id'), array('pass' => array($wing_id,$flat_id)));		
-		foreach($user_detail as $data){
-		$user_name = $data['user']['user_name'];
-		$wing_id = $data['user']['wing'];
-		$flat_id = $data['user']['flat'];	
+		$user_id1 = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+		
+		$user_id=$user_id1['user_id'];
+		$user_name=$user_id1['user_name'];
+		$wing_id=(int)$user_id1['wing_id'];
+		$flat_id=(int)$user_id1['flat_id'];
+		
+			
 		$wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'wing_flat'), array('pass' => array($wing_id,$flat_id)));
-		}
+		
 		}
 		}
 		
@@ -658,7 +656,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 		}
 	
 		
-		if(($table_name=="new_regular_bill"  &&  $bill_approved=="yes") || $table_name=="cash_bank" || $table_name=="opening_balance" || $table_name=="expense_tracker" || $table_name=="journal" || $table_name=="fix_asset" || $table_name=="supplimentry_bill"){
+		if(($table_name=="regular_bill"  &&  $bill_approved=="yes") || $table_name=="cash_bank" || $table_name=="opening_balance" || $table_name=="expense_tracker" || $table_name=="journal" || $table_name=="fix_asset" || $table_name=="supplimentry_bill"){
 		
 		if($tds_ledger_id == 15)
 		{
@@ -703,7 +701,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
             <td><?php echo @$description; ?></td>
 			<td><?php echo $source; ?></td>
             <td>
-			<?php if($table_name=="new_regular_bill"){
+			<?php if($table_name=="regular_bill"){
 				echo '<a href="'.$this->webroot.'Incometrackers/regular_bill_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
 			}
 			if($table_name=="cash_bank"){

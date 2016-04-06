@@ -615,6 +615,38 @@ function bank_receipt_view()
 ////////////////////End Bank receipt View////////////////////////////////////////////////////////////
 
 /////////////////////// Start bank receipt show ajax //////////////////////////////////////////////
+function bank_receipt_excel()
+{
+	$this->layout=null;
+	$this->ath();
+
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_role_id= $this->Session->read('role_id');
+	$s_user_id= $this->Session->read('hm_user_id');
+
+	 $from =$this->request->query('from');
+	  $to =$this->request->query('to');
+	 
+	
+	$this->loadmodel('cash_bank');
+	$conditions=array('society_id'=>$s_society_id,"source"=>"bank_receipt",	'cash_bank.transaction_date'=>array('$gte'=>$from,'$lte'=>$to));
+	
+	$order=array('cash_bank.transaction_date'=> 'ASC');
+	$receipts=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
+	pr($receipts);
+	exit;
+	$this->set('receipts',$receipts);
+	
+	$this->loadmodel('society');
+	$conditions=array('society_id'=>$s_society_id);
+	$society_info=$this->society->find('all',array('conditions'=>$conditions));
+	$this->set('society_info',$society_info);
+	
+	 
+
+}
+
+
 function bank_receipt_show_ajax($from=null,$to=null)
 {
 	$this->layout='blank';
@@ -623,8 +655,8 @@ function bank_receipt_show_ajax($from=null,$to=null)
 	$s_society_id = $this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');
 
-	$from = date('Y-m-d',strtotime($from));
-	$to = date('Y-m-d',strtotime($to));
+	 $from = date('Y-m-d',strtotime($from));
+	 $to = date('Y-m-d',strtotime($to));
 
 	$from = strtotime($from);
 	$to = strtotime($to);
@@ -636,6 +668,7 @@ function bank_receipt_show_ajax($from=null,$to=null)
 	$conditions=array('society_id'=>$s_society_id,"source"=>"bank_receipt",	'cash_bank.transaction_date'=>array('$gte'=>$from,'$lte'=>$to));
 	$order=array('cash_bank.transaction_date'=> 'ASC');
 	$receipts=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
+	
 	$this->set('receipts',$receipts);
 	
 	$this->loadmodel('society');
@@ -851,196 +884,7 @@ exit;
 //////////////////////// End bank receipt email code ////////////////////////////////
 
 ////////////////// Start Bank receipt Excel (Accounts)/////////////////////////////
-function bank_receipt_excel()
-{
-$this->layout="";
-$this->ath();
 
-$s_society_id = (int)$this->Session->read('society_id');
-$s_role_id= (int)$this->Session->read('role_id');
-$s_user_id= (int)$this->Session->read('user_id');
-
-$this->loadmodel('society');
-$conditions=array("society_id" => $s_society_id);
-$cursor=$this->society->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
-$society_name = $collection['society']['society_name'];
-}
-
-$from = $this->request->query('f');
-$to = $this->request->query('t');
-
-$fdddd = date('d-M-Y',strtotime($from));
-$tdddd = date('d-M-Y',strtotime($to));
-
-$socc_namm = str_replace(' ', '_', $society_name);
-
-$filename="".$socc_namm."_Bank_Receipt_Register_".$fdddd."_".$tdddd."";
-
-header ("Expires: 0");
-header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
-header ("Cache-Control: no-cache, must-revalidate");
-header ("Pragma: no-cache");
-header ("Content-type: application/vnd.ms-excel");
-header ("Content-Disposition: attachment; filename=".$filename.".xls");
-header ("Content-Description: Generated Report" );
-
-
-
-$m_from = date("Y-m-d", strtotime($from));
-$m_from = strtotime($m_from);
-$m_to = date("Y-m-d", strtotime($to));
-$m_to = strtotime($m_to);
-
-$s_society_id = (int)$this->Session->read('society_id');
-$s_role_id= (int)$this->Session->read('role_id');
-$s_user_id= (int)$this->Session->read('user_id');
-
-$excel="<table border='1'>
-</tr>
-<tr>
-<th colspan='10'>$society_name Bank Receipt Register From : $from &nbsp;&nbsp; To : $to </th>
-</tr>
-<tr>
-<th>Receipt#</th>
-<th>Receipt Date </th>
-<th>Receipt Type</th>
-<th>Party Name</th>
-<th>Unit Detail</th>
-<th>Payment Mode</th>
-<th>Instrument/UTR</th>
-<th>Deposit Bank</th>
-<th>Narration</th>
-<th>Amount</th>
-</tr>";
-  
-		$total_credit = 0;
-		$total_debit = 0;
-		$n=0;
-	$this->loadmodel('new_cash_bank');
-	$order=array('new_cash_bank.receipt_date'=> 'ASC');
-	$conditions=array('society_id'=>$s_society_id,"receipt_source"=>1,"edit_status"=>"NO",'new_cash_bank.receipt_date'=>array('$gte'=>$m_from,'$lte'=>$m_to));
-	$cursor2=$this->new_cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));	
-	foreach ($cursor2 as $collection) 
-	{
-	$n++;
-	$receipt_no = $collection['new_cash_bank']['receipt_id'];
-	$receipt_mode = $collection['new_cash_bank']['receipt_mode'];
-	$TransactionDate = $collection['new_cash_bank']['receipt_date'];
-						
-		if($receipt_mode == "Cheque")
-		{
-		$reference_utr = $collection['new_cash_bank']['cheque_number'];
-		$cheque_date = $collection['new_cash_bank']['cheque_date'];
-		$drawn_on_which_bank = $collection['new_cash_bank']['drawn_on_which_bank'];
-		}
-		else
-		{
-		$reference_utr = $collection['new_cash_bank']['reference_utr'];
-		$cheque_date = $collection['new_cash_bank']['cheque_date'];
-		$drawn_on_which_bank = "";
-		}
-	
-	$member_type = $collection['new_cash_bank']['member_type'];
-	$narration = @$collection['new_cash_bank']['narration'];
-		if($member_type == 1)
-		{
-		$party_name_id = (int)$collection['new_cash_bank']['party_name_id'];
-		$receipt_type = $collection['new_cash_bank']['receipt_type'];
-			
-			if($receipt_type == 1)
-			{
-			 $receipt_tppp = "Maintenance";	
-			}
-			else
-			{
-			 $receipt_tppp = "Other";	
-			}
-			
-			
-			
-			
-	$flatt_datta = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($party_name_id)));
-	foreach ($flatt_datta as $fltt_datttaa) 
-	{
-	$wnngg_idddd = (int)$fltt_datttaa['flat']['wing_id'];
-	}			
-		
-		$user_fetch = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_user_info_via_flat_id'),array(				'pass'=>array($wnngg_idddd,$party_name_id)));	
-		foreach($user_fetch as $rrr)
-		{
-		$party_name = $rrr['user']['user_name'];	
-		$wing_id = $rrr['user']['wing'];
-		}
-			
-		$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array($wing_id,$party_name_id)));
-		}
-		else
-		{
-		$receipt_tppp = "Non-Residential";
-		$wing_flat = "";
-		$party_name_id = (int)$collection['new_cash_bank']['party_name_id'];
-		
-		$ledger_subaccc = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($party_name_id)));
-foreach ($ledger_subaccc as $dataaa) 
-{
-$party_name = $dataaa['ledger_sub_account']['name'];
-}	
-		$bill_reference = @$collection['new_cash_bank']['bill_reference'];	
-		}
-		
-
-		$amount=$collection['new_cash_bank']['amount'];
-		$flat_id = $collection['new_cash_bank']['flat_id'];
-		$deposited_bank_id = (int)$collection['new_cash_bank']['deposited_bank_id'];
-		$current_date = $collection['new_cash_bank']['current_date'];
-		if($receipt_mode == "Cheque")
-		{
-		$receipt_mode = $receipt_mode;
-		}
-			
-	$ledger_sub_account_fetch_result = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($deposited_bank_id)));			
-	foreach($ledger_sub_account_fetch_result as $rrrr)
-	{
-	$deposited_bank_name = $rrrr['ledger_sub_account']['name'];	
-	}			
-	
-		if($s_role_id == 3)
-		{
-		$TransactionDate = date('d-m-Y',$TransactionDate);
-		$total_debit =  $total_debit + $amount; 
-		if(empty($reference_utr))
-		{
-		$reference_utr = $reference_utr;
-		} 
- 
-$excel.=" <tr>
-<td>$receipt_no</td>
-<td>$TransactionDate</td>
-<td>$receipt_tppp</td>
-<td>$party_name</td>
-<td>$wing_flat</td>
-<td>$receipt_mode - $drawn_on_which_bank</td>
-<td>$reference_utr</td>
-<td>$deposited_bank_name</td>
-<td>$narration</td>
-<td align='right'>";
-$amount = number_format($amount);
-$excel.="$amount</td>
-</tr>";	
-
-}
-}
-	
-$excel.="<tr>
-<td colspan='9' style='text-align:right;'><b>Total</b></td>
-<td align='right'><b>";
-$total_debit = number_format($total_debit);
-$excel.="$total_debit</b></td>
-</tr></table>";   
-echo $excel; 
-}
 //End Bank receipt Excel (Accounts)//
 //Start Bank Payment (Accounts)//
 function bank_payment()

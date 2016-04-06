@@ -144,12 +144,11 @@ $('select[name="account_group[]"]').die().live("change",function(){
 
 <script>
 $('input[name="amount[]"]').die().live("keyup",function(){
-		var amount=$(this).val();
-		if($.isNumeric(amount))
-		{
-		}else{
+	var amount=$(this).val();
+	if($.isNumeric(amount)){
+	}else{
 		$(this).closest("td").find("#amount").val('');	
-		}
+	}
 });
 </script>
 

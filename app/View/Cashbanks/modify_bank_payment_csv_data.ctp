@@ -201,7 +201,7 @@ $(document).ready(function(){
 	
 	$( "#final_import" ).click(function(){
 		var allow="yes";
-		
+		/*
 		$('#report_tb tbody tr input[field="transaction_date"]').die().each(function(ii, obj){
 			var transaction_date=$(this).val();
 			transaction_date=transaction_date.split('-').reverse().join('');
@@ -229,7 +229,7 @@ $(document).ready(function(){
 			if(al==0){
 				allow="no";
 			}
-		});
+		}); */
 		
 		$('#report_tb tbody tr select[field=ledger_data]').each(function(i, obj){
 			var ledger_data=$(this).val();

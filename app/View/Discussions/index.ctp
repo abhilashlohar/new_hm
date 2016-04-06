@@ -40,8 +40,7 @@
 	
 
 $(document).ready(function(){
-	
-	
+	//clearInterval(interval);
 	$.ajax({
 	   url: "<?php echo $webroot_path; ?>Discussions/topic_detail/"+"<?php echo $id; ?>",
 	   success: function(data) {
@@ -53,6 +52,7 @@ $(document).ready(function(){
 	});
 
 	$(".topic").die().live("click",function(){
+		clearInterval(interval);
 		$('.topic').each(function(i, obj) {
 			$(this).removeClass("run");
 		});

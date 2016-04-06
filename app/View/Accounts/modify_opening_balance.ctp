@@ -79,17 +79,17 @@ $name = $dataa['ledger_account']['ledger_name'];
 </td>
 
 <td>
-<input type="text" class="m-wrap span10 debit" style="background-color:white !important;"
+<input type="text" class="m-wrap span10 debit" style="background-color:white !important; text-align:right;"
 value="<?php echo @$debit; ?>" field="debit" record_id="<?php echo $csv_id; ?>"/>
 </td>
 
 <td>
-<input type="text" class="m-wrap span10 credit" style="background-color:white !important;"
+<input type="text" class="m-wrap span10 credit" style="background-color:white !important; text-align:right;"
 value="<?php echo @$credit; ?>" field="credit" record_id="<?php echo $csv_id; ?>" />
 </td>
 
 <td>
-<input type="text" class="m-wrap span10 penalty" style="background-color:white !important;"
+<input type="text" class="m-wrap span10 penalty" style="background-color:white !important; text-align:right;"
 value="<?php echo @$penalty; ?>" field="penalty" record_id="<?php echo $csv_id; ?>" />                       
 </td>                      
 
@@ -97,14 +97,14 @@ value="<?php echo @$penalty; ?>" field="penalty" record_id="<?php echo $csv_id; 
 <?php } ?>
 <tr>
 <th colspan="2" style="text-align:right;">Total</th>
-<th><input type="text" class="m-wrap small total_debit" value="<?php echo $total_debit; ?>" style="background-color:white !important;" id="total_debit" readonly="readonly"></th>
-<th><input type="text" class="m-wrap small total_credit" value="<?php echo $total_credit; ?>" style="background-color:white !important;" id="total_credit" readonly="readonly"></th>
-<th><input type="text" class="m-wrap small total_penalty" value="<?php echo $total_penalty; ?>" style="background-color:white !important;" id="total_penalty" readonly="readonly"></th>
+<th><input type="text" class="m-wrap small total_debit" value="<?php echo $total_debit; ?>" style="background-color:white !important; text-align:right;" id="total_debit" readonly="readonly"></th>
+<th><input type="text" class="m-wrap small total_credit" value="<?php echo $total_credit; ?>" style="background-color:white !important; text-align:right;" id="total_credit" readonly="readonly"></th>
+<th><input type="text" class="m-wrap small total_penalty" value="<?php echo $total_penalty; ?>" style="background-color:white !important; text-align:right;" id="total_penalty" readonly="readonly"></th>
 </tr>
 <tr>
 <th colspan="2" style="text-align:right;">Grand Total</th>
-<th><input type="text" class="m-wrap small" id="grand_total_debit" value="<?php echo $grand_total_debit; ?>" readonly="readonly"><br><b>Total Debit</b></th>
-<th colspan="2"><input type="text" class="m-wrap small" id="grand_total_credit" value="<?php echo $grand_total_credit; ?>" readonly="readonly"><br><b>Total Credit</b></th>
+<th><input type="text" class="m-wrap small" id="grand_total_debit" value="<?php echo $grand_total_debit; ?>" readonly="readonly" style="text-align:right;"><br><b>Total Debit</b></th>
+<th colspan="2"><input type="text" class="m-wrap small" id="grand_total_credit" value="<?php echo $grand_total_credit; ?>" readonly="readonly" style="text-align:right;"><br><b>Total Credit</b></th>
 </table>
 </div>
 <div id="validat" style="color:red;"></div>

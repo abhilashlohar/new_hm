@@ -162,7 +162,7 @@ $('select[name="bill_type[]"]').die().live("change",function(){
 			var company_name=$(this).closest("td").find('input[name="company_name[]"]').val();
 			if(non_resident=="" || company_name==""){
 				$(this).closest("td").find(".er").remove();
-				$(this).closest("td").append('<span class="er">Required</span>');
+				$(this).closest("td").append('<p class="er">Required</p>');
 				allow="no";
 			}else{
 				$(this).closest("td").find(".er").remove();
@@ -218,7 +218,7 @@ $('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj
 			var payment_due_date=$(this).val();
 				if(payment_due_date==""){
 					$(this).closest('td').find(".er").remove();
-						$(this).closest('td').append('<span class="er">Required</span>');
+						$(this).closest('td').append('<p class="er">Required</p>');
 							allow="no";
 					}else{
 						$(this).closest('td').find(".er").remove();
@@ -232,7 +232,7 @@ $('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj
 				var bill_type=$(this).val();
 					if(bill_type==""){
 						$(this).closest('td').find(".er").remove();
-							$(this).closest('td').append('<span class="er">Required</span>');
+							$(this).closest('td').append('<p class="er">Required</p>');
 								allow="no";
 						}else{
 							$(this).closest('td').find(".er").remove();
@@ -242,7 +242,7 @@ $('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj
 			var ledger_sub_account=$(this).closest("td").find('select[name="resident[]"]').val();
 			if(ledger_sub_account==""){
 				$(this).closest("td").find(".er").remove();
-				$(this).closest("td").append('<span class="er">Required</span>');
+				$(this).closest("td").append('<p class="er">Required</p>');
 				allow="no";
 			}else{
 				$(this).closest("td").find(".er").remove();
@@ -254,7 +254,7 @@ $('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj
 			var company_name=$(this).closest("td").find('input[name="company_name[]"]').val();
 			if(non_resident=="" || company_name==""){
 				$(this).closest("td").find(".er").remove();
-				$(this).closest("td").append('<span class="er">Required</span>');
+				$(this).closest("td").append('<p class="er">Required</p>');
 				allow="no";
 			}else{
 				$(this).closest("td").find(".er").remove();
@@ -267,7 +267,7 @@ $('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj
 			var income_head=$(this).val();
 				if(income_head==""){
 					$(this).closest('td').find(".er").remove();
-						$(this).closest('td').append('<span class="er">Required</span>');
+						$(this).closest('td').append('<p class="er">Required</p>');
 							allow="no";
 					}else{
 						$(this).closest('td').find(".er").remove();
@@ -278,7 +278,7 @@ $('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj
 			var amount=$(this).val();
 				if(amount==""){
 					$(this).closest('td').find(".er").remove();
-						$(this).closest('td').append('<span class="er">Required</span>');
+						$(this).closest('td').append('<p class="er">Required</p>');
 							allow="no";
 					}else{
 						$(this).closest('td').find(".er").remove();
@@ -297,7 +297,7 @@ $('input[name="amount[]"]').die().live("keyup blur",function(){
 			var amount=$(this).val();
 				if(amount==""){
 					$(this).closest('td').find(".er").remove();
-						$(this).closest('td').append('<span class="er">Required</span>');
+						$(this).closest('td').append('<p class="er">Required</p>');
 							allow="no";
 					}else{
 						$(this).closest('td').find(".er").remove();
@@ -317,7 +317,7 @@ $('select[name="income_head[]"]').die().live("change",function(){
 			var income_head=$(this).val();
 				if(income_head==""){
 					$(this).closest('td').find(".er").remove();
-						$(this).closest('td').append('<span class="er">Required</span>');
+						$(this).closest('td').append('<p class="er">Required</p>');
 							allow="no";
 					}else{
 						$(this).closest('td').find(".er").remove();
@@ -332,7 +332,7 @@ $('select[name="non_resident[]"]').die().live("change",function(){
 			var company_name=$(this).closest("td").find('input[name="company_name[]"]').val();
 					if(non_resident=="" || bill_type=="" || company_name==""){
 						$(this).closest('td').find(".er").remove();
-							$(this).closest('td').append('<span class="er">Required</span>');
+							$(this).closest('td').append('<p class="er">Required</p>');
 								allow="no";
 						}else{
 							$(this).closest('td').find(".er").remove();
@@ -346,7 +346,7 @@ $('select[name="non_resident[]"]').die().live("change",function(){
 			var bill_type=$(this).closest("td").find('select[name="bill_type[]"]').val();
 					if(non_resident=="" || bill_type=="" || company_name==""){
 						$(this).closest('td').find(".er").remove();
-							$(this).closest('td').append('<span class="er">Required</span>');
+							$(this).closest('td').append('<p class="er">Required</p>');
 								allow="no";
 						}else{
 							$(this).closest('td').find(".er").remove();
@@ -363,7 +363,7 @@ $('select[name="resident[]"]').die().live("change",function(){
 			var bill_type=$(this).closest("td").find('select[name="bill_type[]"]').val();	
 					if(resident=="" || bill_type==""){
 						$(this).closest('td').find(".er").remove();
-							$(this).closest('td').append('<span class="er">Required</span>');
+							$(this).closest('td').append('<p class="er">Required</p>');
 								allow="no";
 						}else{
 							$(this).closest('td').find(".er").remove();
@@ -379,7 +379,7 @@ $('input[name="payment_due_date[]"]').die().live("keyup blur",function(){
 			var payment_due_date=$(this).val();
 				if(payment_due_date==""){
 					$(this).closest('td').find(".er").remove();
-						$(this).closest('td').append('<span class="er">Required</span>');
+						$(this).closest('td').append('<p class="er">Required</p>');
 							allow="no";
 					}else{
 						$(this).closest('td').find(".er").remove();

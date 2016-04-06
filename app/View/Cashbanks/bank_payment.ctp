@@ -217,11 +217,11 @@ var allow="yes";
 	 $('#main tbody tr select[name="ledger_account[]"]').die().each(function(i, obj){
 			var deposited_in=$(this).val();
 			if(deposited_in==""){
-				$(this).closest('td').find(".err").remove();
-				$(this).closest('td').append('<span class="err">Ledger A/c Required</span>');
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Ledger A/c Required</span>');
 				allow="no";
 			}else{
-				$(this).closest('td').find(".err").remove();
+				$(this).closest('td').find(".er").remove();
 			}
 		});	
 		 $('#main tbody tr input[name="instrument[]"]').die().each(function(i, obj){
@@ -246,6 +246,8 @@ var allow="yes";
 			}else{
 				$(this).closest('td').find(".er").remove();
 			}
+			
+			
 		});
   
       	
@@ -265,6 +267,97 @@ var allow="yes";
 		} 
   
 });
+
+
+
+
+
+$('input[name="instrument[]"]').die().live("keyup blur",function(i, obj){
+		var instrument=$(this).val();
+		var payment_mode=$(this).closest("td").find('select[name="payment_mode[]"]').val();
+			if(instrument=="" || payment_mode==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+
+$('select[name="payment_mode[]"]').die().live("change",function(i, obj){
+	var payment_mode=$(this).val();
+	var instrument=$(this).closest("td").find('input[name="instrument[]"]').val();
+			
+			if(instrument=="" || payment_mode==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<p class="er">Required</p>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});	
+
+
+
+
+$('select[name="ledger_account[]"]').die().live("change",function(){
+		var ledger_account=$(this).val();
+		if(ledger_account==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+
+$('input[name="transaction_date[]"]').die().live("keyup blur",function(){
+			var transaction_date=$(this).val();
+			transaction_date=transaction_date.split('-').reverse().join('');
+			
+			var f_y=$("#f_y").val();
+			var f_y2=f_y.split(',');
+			var al=0;
+			$.each(f_y2, function( index, value ) {
+				var f_y3=value.split('/');
+				var from=f_y3[0];
+				from=from.split('-').reverse().join('');
+				var to=f_y3[1];
+				to=to.split('-').reverse().join('');
+				
+				if(transaction_date>=from && transaction_date<=to){
+					
+					al=al+1;
+				}else{
+						al=al+0;
+					
+				}
+			});
+			if(al==0){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<p class="er">Not in financial year</p>');	
+			}else{
+				
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 <script>
 $(document).ready(function() {

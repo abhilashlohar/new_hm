@@ -266,7 +266,24 @@ var allow="yes";
   
 });
 </script>
-
+<script>
+$(document).ready(function() {
+	<?php	
+	$bank_receipt=(int)$this->Session->read('bank_payment');
+	if($bank_receipt==1)
+	{
+	?>
+	$.gritter.add({
+	title: 'Success',
+	text: '<p>Vouchers generated sucessfully.</p>',
+	sticky: false,
+	time: '10000',
+	});
+	<?php
+	$this->requestAction(array('controller' => 'hms', 'action' => 'griter_notification'), array('pass' => array('bank_payment')));
+	} ?>
+	});
+</script>
 <style>
 input,select{
 	margin:0 !important;

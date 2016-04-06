@@ -1186,7 +1186,7 @@ $this->loadmodel('financial_year');
 		$n++;	
 	}		
 
- 
+ $this->Session->write('bank_payment', 1);
 	}
 
 $this->loadmodel('ledger_sub_account');

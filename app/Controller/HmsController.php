@@ -1751,13 +1751,15 @@ $this->loadmodel('user');
 function griter_notification($id)
 {	
 
-//////////////// Destroy Session_code start ///////////////////////
 
-////////////////// Start bill update /////////////////////////
 
 if($id=="bank_receipt"){
 	$this->Session->delete('bank_receipt');
 }
+if($id=="bank_payment"){
+	$this->Session->delete('bank_payment');	
+}
+
 
 	if($id=="bill_update")
 	{

@@ -126,7 +126,7 @@ $amount = number_format($amount);
 	<a class="btn blue mini" href="#" data-toggle="dropdown">
 	<i class="icon-chevron-down"></i>	
 	</a>
-	<ul class="dropdown-menu" style="min-width:80px !important;">
+	<ul class="dropdown-menu" style="min-width:80px !important; margin-left: -52px;">
 	<li><a href="petty_cash_receipt_html_view/<?php echo $transaction_id; ?>" target="_blank"><i class="icon-search"></i>View</a></li>
 	<li><a href="petty_cash_receipt_update/<?php echo $transaction_id; ?>"><i class="icon-edit"></i>Edit</a> </li>
 	<!--<li><a href="petty_cash_receipt_pdf?c=<?php echo $transaction_id; ?>" target="_blank"><i class="icon-file"></i>Pdf</a></li>-->

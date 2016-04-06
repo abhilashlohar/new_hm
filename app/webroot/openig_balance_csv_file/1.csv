@@ -94,12 +94,12 @@ Reserve & Surplus,Reserve Fund Seed Money,,,,,
 Reserve & Surplus,Sinking Fund (Reserves),,,,,
 Reserve & Surplus,Transfer Charges (Reserves),,,,,
 Taxes & Utilities,Electricity Expenses,,,,,
-Taxes & Utilities,Property Tax,,,1300,,
-Taxes & Utilities,Water charges,,,,1300,
-Members Control A/c,Nagendra,Wing A,101,,,
-Members Control A/c,Dilip,Wing A,102,,,
-Members Control A/c,Hitesh,Wing A,103,,,
-Members Control A/c,Dharam,Wing A,104,,,
+Taxes & Utilities,Property Tax,,,,,
+Taxes & Utilities,Water charges,,,,,
+Members Control A/c,Nagendra,Wing A,101,1000,,1000
+Members Control A/c,Dilip,Wing A,102,1000,,1000
+Members Control A/c,Hitesh,Wing A,103,1000,,1000
+Members Control A/c,Dharam,Wing A,104,,6000,
 Members Control A/c,Bharat,Wing A,105,,,
 Sundry Debtors Control A/c,Ramesh,,,,,
 Sundry Debtors Control A/c,Suresh,,,,,

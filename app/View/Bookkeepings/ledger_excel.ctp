@@ -111,7 +111,7 @@ $user_id = (int)$result_income_head2[0]['ledger_sub_account']['user_id'];
 		 $debit=$data["ledger"]["debit"];
 		 $credit=$data["ledger"]["credit"];
 		$transaction_date=$data["ledger"]["transaction_date"];
-		$arrear_int_type=@$data["ledger"]["arrear_int_type"];
+		$arrear_int_type=@$data["ledger"]["intrest_on_arrears"];
 	 $table_name=$data["ledger"]["table_name"];
 		$element_id=(int)$data["ledger"]["element_id"];
 		$subledger_id = (int)@$data["ledger"]["ledger_sub_account_id"];
@@ -122,21 +122,21 @@ $user_id = (int)$result_income_head2[0]['ledger_sub_account']['user_id'];
 		$total_credit=$total_credit+$credit;
 		
 		
-		if($table_name=="new_regular_bill"){
+		if($table_name=="regular_bill"){
 			$source="Regular Bill";
-			$result_regular_bill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'regular_bill_info_via_auto_id'), array('pass' => array($element_id)));
+			$result_regular_bill=$this->requestAction(array('controller' => 'Bookkeepings', 'action'=>'regular_bill_info_via_auto_id'), array('pass' => array($element_id)));
 			
 			$bill_approved="";
 			if(sizeof($result_regular_bill)>0){
-				$bill_approved="yes";
-				$refrence_no = $result_regular_bill[0]["new_regular_bill"]["bill_no"];
-			    $description = $result_regular_bill[0]["new_regular_bill"]["description"];
-				$description=substrwords($description,200,'...');
-			    $flat_id = (int)$result_regular_bill[0]["new_regular_bill"]["flat_id"]; 
-			    $prepaired_by = (int)$result_regular_bill[0]["new_regular_bill"]["created_by"]; 
-			    $current_date = $result_regular_bill[0]["new_regular_bill"]["current_date"];
+			$bill_approved="yes";
+			$refrence_no = $result_regular_bill[0]["regular_bill"]["bill_number"];
+			$description = $result_regular_bill[0]["regular_bill"]["description"];
+			$description=substrwords($description,200,'...');
+		    $ledger_sub_account_id = (int)$result_regular_bill[0]["regular_bill"]["ledger_sub_account_id"]; 
+			$prepaired_by = (int)$result_regular_bill[0]["regular_bill"]["created_by"]; 
+			$current_date = $result_regular_bill[0]["regular_bill"]["current_date"];
 	
-$current_datttt = date('d-m-Y',($current_date));
+$current_datttt = date('d-m-Y',strtotime($current_date));
 	
 $user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by)));
 foreach ($user_dataaaa as $user_detailll) 
@@ -145,18 +145,16 @@ $creater_name = @$user_detailll['user']['user_name'];
 }	
 			
 				//wing_id via flat_id//
-				$result_flat_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
-				foreach($result_flat_info as $flat_info){
-					$wing_id=$flat_info["flat"]["wing_id"];
-				}
-				
-		$user_detail = $this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'fetch_user_info_via_flat_id'), array('pass' => array($wing_id,$flat_id)));		
-		foreach($user_detail as $data){
-		$user_name = $data['user']['user_name'];
-		$wing_id = $data['user']['wing'];
-		$flat_id = $data['user']['flat'];	
+		$user_id1 = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+		
+		$user_id=$user_id1['user_id'];
+		$user_name=$user_id1['user_name'];
+		$wing_id=(int)$user_id1['wing_id'];
+		$flat_id=(int)$user_id1['flat_id'];
+		
+			
 		$wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'wing_flat'), array('pass' => array($wing_id,$flat_id)));
-		}
+		
 		}
 		}
 		
@@ -222,7 +220,7 @@ $creater_name = @$user_detailll['user']['user_name'];
 	{
 		$tds_array_for_bank_payment = array();
 		
-		$source="Bank_payment";
+		$source="Bank payment";
 		$trans_id = (int)$result_cash_bank[0]["cash_bank"]["transaction_id"];  
 		$description = @$result_cash_bank[0]["cash_bank"]["narration"];
 		$description=substrwords($description,200,'...');
@@ -652,7 +650,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 		}
 	
 		
-		if(($table_name=="new_regular_bill"  &&  $bill_approved=="yes") || $table_name=="cash_bank" || $table_name=="opening_balance" || $table_name=="expense_tracker" || $table_name=="journal" || $table_name=="fix_asset" || $table_name=="supplimentry_bill"){
+		if(($table_name=="regular_bill"  &&  $bill_approved=="yes") || $table_name=="cash_bank" || $table_name=="opening_balance" || $table_name=="expense_tracker" || $table_name=="journal" || $table_name=="fix_asset" || $table_name=="supplimentry_bill"){
 		
 		if($tds_ledger_id == 15)
 		{
@@ -671,11 +669,12 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			<td><?php echo $source; ?></td>
           	<td><?php
            if($receipt_source == "bank_payment") { 
-		   echo $refrence_no; } ?>
+		   echo '<a href="'.$this->webroot.'Cashbanks/bank_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } ?>
            </td>
             <td style="text-align:right;"><?php echo $amttt; ?></td>
 			<td style="text-align:right;"><?php echo $credit; ?></td>
-			</tr>
+			
+           </tr>
 			<?php
 		  } 		  
 		}
@@ -689,21 +688,21 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
             <td><?php echo @$description; ?></td>
 			<td><?php echo $source; ?></td>
             <td>
-			<?php if($table_name=="new_regular_bill"){
-				echo $refrence_no;
+			<?php if($table_name=="regular_bill"){
+				echo '<a href="'.$this->webroot.'Incometrackers/regular_bill_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
 			}
 			if($table_name=="cash_bank"){
 				if($receipt_source == "bank_receipt")
 				{
-				echo $refrence_no;
-			}else if($receipt_source == "bank_payment") { echo $refrence_no; } else if($receipt_source =="petty_cash_payment") { echo $refrence_no; }else if($receipt_source == "petty_cash_receipt"){
-				 echo $refrence_no; } } ?>
+				echo '<a href="'.$this->webroot.'Cashbanks/bank_receipt_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>';
+			}else if($receipt_source == "bank_payment") { echo '<a href="'.$this->webroot.'Cashbanks/bank_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } else if($receipt_source == "petty_cash_payment") { echo '<a href="'.$this->webroot.'Cashbanks/petty_cash_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; }else if($receipt_source == "petty_cash_receipt"){
+				 echo '<a href="'.$this->webroot.'Cashbanks/petty_cash_receipt_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } } ?>
 				 
 			<?php if($table_name=="journal"){
-				echo $journal_voucher_id;
+				echo '<a href="'.$this->webroot.'Bookkeepings/journal_voucher_view/'.$journal_voucher_id.'" target="_blank">'.$journal_voucher_id.'</a>';
 			}?>
 				<?php if($table_name=="supplimentry_bill"){
-				echo $supplimentry_receipt;
+				echo '<a href="'.$this->webroot.'Incometrackers/supplimentry_view/'.$adhoc_id.'" target="_blank">'.$supplimentry_receipt.'</a>';
 			}?> 
 			
 			<?php if($table_name=="expense_tracker"){
@@ -718,12 +717,14 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			</td>
 			<td style="text-align:right;"><?php echo $debit; ?></td>
 			<td style="text-align:right;"><?php echo $credit; ?></td>
+			
 		</tr>
 	<?php }}} ?>
 		<tr>
 			<td colspan="5" align="right"><b>Total</b></td>
 			<td style="text-align:right;"><b><?php echo $total_debit; ?></b></td>
 			<td style="text-align:right;"><b><?php echo $total_credit; ?></b></td>
+			
 		</tr>
 	</tbody>
 </table>

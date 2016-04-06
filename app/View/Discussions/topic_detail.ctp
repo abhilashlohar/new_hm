@@ -65,18 +65,28 @@ $(document).ready(function(){
 		});
 		e.preventDefault(); 
 	});
-	interval = setInterval(function(){
-		xhr.abort();
+	
+	
+	
+	
+	var xhr;
+
+    var fn = function(){
+        if(xhr && xhr.readystate != 4){
+            xhr.abort();
+        }
 		var post_id=$("div[post_id]").attr("post_id");
 		var comment_id=$("#comments div[comment_id]:last").attr("comment_id");
 		if(!comment_id){ comment_id=0; }
-		var xhr = $.ajax({
-		   url: "<?php echo $webroot_path; ?>Discussions/comments/"+post_id+'/'+comment_id,
-		   success: function(data){
-			   $("#comments").append(data); // show response from the php script.
-		   }
-		});
-		
-	}, 2000);
+        xhr = $.ajax({
+            url: "<?php echo $webroot_path; ?>Discussions/comments/"+post_id+'/'+comment_id,
+            success: function(data) {
+                $("#comments").append(data);
+            }
+        });
+    };
+
+    var interval = setInterval(fn, 2000);
+	
 });
 </script>

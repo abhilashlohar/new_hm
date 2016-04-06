@@ -132,6 +132,7 @@ function event_submit(){
 		$result_user_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'), array('pass' => array($s_user_id)));
 		foreach($result_user_info as $collection2){
 		$user_name_created=$collection2["user"]["user_name"];
+		$sender_email_reply=$collection2["user"]["email"];
 		@$profile_pic=@$collection2["user"]["profile_pic"];
 		}
 		$result_user_flat_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_flat_info_via_user_id'), array('pass' => array($s_user_id)));
@@ -143,9 +144,12 @@ function event_submit(){
 	@$wing_flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'), array('pass' => array(@$wing,@$flat)));
 
 	$from="Support@housingmatters.in";
-	$reply="Support@housingmatters.in";
 	$from_name="HousingMatters";
-	
+	if(!empty($sender_email_reply)){
+				$reply=$sender_email_reply;
+			}else{
+				$reply="Support@housingmatters.in";
+			}
 	$society_result=$this->society_name($s_society_id);
 	foreach($society_result as $data){
 	@$society_name=@$data['society']['society_name'];

@@ -439,11 +439,18 @@ foreach ($result_user as $collection) {
 
 	$user_name=$result_member_info["user_name"]; 
 	$wing_flat_result=$result_member_info["wing_flat"]; 
-	$reply=$result_member_info["email"]; 
+	$reply_member=$result_member_info["email"]; 
 	foreach($wing_flat_result as $data){
 		$wing_flat=$data;
 	}
 
+	if(!empty($reply_member)){
+		$reply=$reply_member;
+	}else{
+		$reply="donotreply@housingmatters.in";
+	}
+	
+	
 	if($ticket_priority==1){
 		$ticket_priority="Urgent";
 	}
@@ -628,7 +635,7 @@ if($user_mail==2)
 {
 $to=$reply;
 $from_name="HousingMatters";
-$reply="donotreply@housingmatters.in";
+//$reply="donotreply@housingmatters.in";
 
 
 
@@ -1212,6 +1219,14 @@ $this->set('status',$status);
 $s_society_id=$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');
 
+$result_member_info_session=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($s_user_id))); 
+
+ $reply_member=$result_member_info_session["email"]; 
+	 if(!empty($reply_member)){
+		$reply=$reply_member;
+	 }else{
+		$reply="donotreply@housingmatters.in";
+	 }
 $this->seen_notification(1,$hd_id);
 ////////////////////////////////////////////////////////
 ////////////////////close ticket///////////////////////
@@ -1383,7 +1398,7 @@ if (isset($this->request->data['close'])) {
         </tbody>
 </table>';
 
-$reply="donotreply@housingmatters.in";
+//$reply="donotreply@housingmatters.in";
 $from_name="HousingMatters";
 
 $this->loadmodel('email');

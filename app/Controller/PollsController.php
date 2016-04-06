@@ -122,7 +122,18 @@ function poll_add(){
 	$this->check_user_privilages();
 	$s_society_id=$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');
-
+	$this->loadmodel('user');
+	$conditions=array("user_id"=>$s_user_id,"active"=>"yes");
+	$users=$this->user->find('all',array('conditions'=>$conditions));
+	foreach($users as $data){
+		
+		$sender_email=$data["user"]["email"];
+	}
+	if(!empty($sender_email)){
+		$reply=$sender_email;
+	}else{
+		$reply="donotreply@housingmatters.in";
+	}
 	
 	if (isset($this->request->data['create_poll'])){
 		$ip= $this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
@@ -293,7 +304,7 @@ function poll_add(){
         </tbody>
 </table>';
 
-		$reply="donotreply@housingmatters.in";
+		
 		$subject="[".$s_name."]- New Poll: ".$question;
 		$from_name="HousingMatters";
 		$this->loadmodel('email');

@@ -135,7 +135,12 @@ function governance_invite_submit()
 					foreach($result_user as $data4)
 					{
 						  $user_name=$data4['user']['user_name'];
-						
+						  $send_email_member=$data4['user']['email'];
+					}
+					if(!empty($send_email_member)){
+						$reply=$send_email_member;
+					}else{
+						$reply="donotreply@housingmatters.in";
 					}
 		
 				$email_id=$this->autoincrement('governance_invite','governance_invite_id');
@@ -326,7 +331,7 @@ function governance_invite_submit()
 						
 					 @$title.= '['. $society_name . ']  - '.'Notice of '.$moc.' Meeting scheduled'.'  on   '.''.$date.'';	
 					
-					$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,'donotreply@housingmatters.in');
+					$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,$reply);
 					$title="";
 					
 		
@@ -552,7 +557,7 @@ $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" 
 
 						
 					@$title.= '['. $society_name . ']  - '.'Notice of '.$moc.' Meeting scheduled'.'  on   '.''.$date.'';	
-					$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,'donotreply@housingmatters.in');
+					$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,$reply);
 						$title="";
 				     
 					}
@@ -786,7 +791,7 @@ $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" 
 					
 					
 				@$title.= '['. $society_name . ']  - '.'Notice of '.$moc.' Meeting scheduled'.'  on   '.''.$date.'';
-				$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,'donotreply@housingmatters.in');
+				$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,$reply);
 				$title="";
 			}
 			
@@ -1110,8 +1115,12 @@ function governance_invite_submit_draft(){
 			
 			$result_user=$this->profile_picture($s_user_id);
 			$user_name=$result_user[0]['user']['user_name'];
-			
-			
+			$send_reply_member=$result_user[0]['user']['email'];
+			if(!empty($send_reply_member)){
+				$reply=$send_reply_member;
+			}else{
+				$reply='donotreply@housingmatters.in';
+			}
 			
 			
 			
@@ -1267,7 +1276,7 @@ function governance_invite_submit_draft(){
 </table>';
 						
 			 @$title.= '['. $society_name . ']  - '.'Notice of '.$moc.' Meeting scheduled'.'  on   '.''.$date.'';	
-					$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,'donotreply@housingmatters.in');
+					$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,$reply);
 					$title="";
 }
 			
@@ -1563,8 +1572,14 @@ function governance_minute_drft_submit_new()
 			$result_user=$this->profile_picture($s_user_id);
 			foreach($result_user as $data3){
 				$user_name_session=$data3['user']['user_name'];
-				
+				$send_email_member=$data3['user']['email'];
 			}
+				if(!empty($send_email_member)){
+					$reply=$send_email_member;
+				}else{
+					$reply='donotreply@housingmatters.in';
+				}
+					
 ////// start to mail code 
 
 
@@ -1720,7 +1735,7 @@ foreach($user as $id){
 
 
 	@$title.= '['. $society_name . ']  - '.'Minutes of Agenda'; 
-	$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,'donotreply@housingmatters.in');		
+	$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,$reply);		
 	$title="";
 }
 

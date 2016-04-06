@@ -1395,6 +1395,17 @@ function submit_notice(){
 		 $society_name=$child['society']['society_name'];
 	}
 	
+		$this->loadmodel('user');
+		$conditions=array("user_id"=>$s_user_id,"active"=>"yes");
+		$users_result=$this->user->find('all',array('conditions'=>$conditions));
+		foreach($users_result as $data){
+			$sender_email=$data["user"]["email"];
+		}
+		if(!empty($sender_email)){
+			$reply=$sender_email;
+		}else{
+			$reply="donotreply@housingmatters.in";
+		}
 	
 	
 	if(empty($post_data['notice_subject'])){
@@ -1479,7 +1490,7 @@ if($post_data['post_type']==1){
 				$from=$collection['email']['from'];
 			}
 			$from_name="HousingMatters";
-			$reply="donotreply@housingmatters.in";
+			
 			$category_name=$this->notice_category_name($category_id);
 			
 
@@ -1726,9 +1737,21 @@ function submit_notice_edit($id=null){
 				$from=$collection['email']['from'];
 			}
 			$from_name="HousingMatters";
-			$reply="donotreply@housingmatters.in";
+			
 			$category_name=$this->notice_category_name($category_id);
 			
+			$this->loadmodel('user');
+			$conditions=array("user_id"=>$s_user_id,"active"=>"yes");
+			$users_res=$this->user->find('all',array('conditions'=>$conditions));
+			foreach($users_res as $data){
+				
+				$sender_email=$data["user"]["email"];
+			}
+			if(!empty($sender_email)){
+				$reply=$sender_email;
+			}else{
+				$reply="donotreply@housingmatters.in";
+			}
 
 foreach($receivers as $user_id=>$data){
 	

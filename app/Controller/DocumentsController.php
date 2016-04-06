@@ -23,6 +23,19 @@ function resource_add()
 	$s_role_id=$this->Session->read('role_id');
 	$s_user_id=$this->Session->read('hm_user_id');
 	
+	$this->loadmodel('user');
+	$user_result=$this->user->find('all',array('conditions'=>array('user_id'=>$s_user_id,'active'=>'yes')));
+	foreach($user_result as $data){
+			$send_email_member=$data['user']['email'];
+	}
+	if(!empty($send_email_member)){
+			$reply=$send_email_member;
+		}else{
+			$reply="donotreply@housingmatters.in";
+		}
+	
+	
+	
 	$this->set('role_id',$s_role_id=$this->Session->read('role_id')); 
 	$this->loadmodel('resource_category');
 	$this->set('result_resource_category',$this->resource_category->find('all'));  
@@ -136,7 +149,7 @@ $from=$collection['email']['from'];
 }
 
 $from_name="HousingMatters";
-$reply="donotreply@housingmatters.in";
+
 $category_name=$this->resource_category_name($resource_cat);
 
 $society_result=$this->society_name($s_society_id);

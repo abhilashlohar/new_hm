@@ -1,8 +1,8 @@
 <style>
-table th{
+.table th{
    background-color:#FFF;padding:3px 5px 3px 5px !important;
 }
-table td{
+.table td{
    background-color:#FFF;padding:3px 5px 3px 5px !important;
 }
 </style>
@@ -16,9 +16,9 @@ $society_name=$society_result[0]["society"]["society_name"];
 <span style="font-size: 14px;"><?php echo $society_name; ?></span><br/>
 <span >Trial-Balance Report</span><br/>
 From: <?php echo $from; ?> To: <?php echo $to; ?>
-	<div style="overflow: auto;">
+	<div style="overflow: auto;" class="" >
 
-	<a href="trial_balance_ajax_show_excel/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $wise; ?>" class="btn mini blue pull-right" ><i class="icon-download"></i> </a>
+	<a href="trial_balance_ajax_show_excel/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $wise; ?>" class="btn mini green pull-right tooltips " data-placement="left" data-original-title="Download in excel" ><i class="fa fa-file-excel-o " ></i> </a>
 
 	
 	</div>

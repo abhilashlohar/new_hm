@@ -1,8 +1,8 @@
 <style>
-table th{
+.table th{
    background-color:#FFF;padding:3px 5px 3px 5px !important;
 }
-table td{
+.table td{
    background-color:#FFF;padding:3px 5px 3px 5px !important;
 }
 </style>
@@ -18,8 +18,8 @@ $society_name=$society_result[0]["society"]["society_name"];
  <?php echo $from; ?> 
 	<div align="right" class="hide_at_print">
 
-		<a href="balance_sheet_excel?from=<?php echo $from; ?>" class="btn blue mini"><i class="icon-download"></i></a>
-		<a class="btn green mini" onclick="window.print()"><i class="icon-print"></i></a>
+		<a href="balance_sheet_excel?from=<?php echo $from; ?>" class="btn green mini tooltips" data-placement="left" data-original-title="Download in excel"><i class="fa fa-file-excel-o"></i></a>
+		<a class="btn blue mini" onclick="window.print()"><i class="icon-print"></i></a>
     </div>
 </div>
 <div class="row-fluid" style="background-color:#FFF;">

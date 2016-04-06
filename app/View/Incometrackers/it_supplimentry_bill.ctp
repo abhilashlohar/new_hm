@@ -425,6 +425,23 @@ $('input[name="transaction_date[]"]').die().live("keyup blur",function(){
 
 
 
+$(document).ready(function() {
+	<?php	
+	$supplimentry_bill=(int)$this->Session->read('supplimentry_bill');
+	if($supplimentry_bill==1)
+	{
+	?>
+	$.gritter.add({
+	title: 'Success',
+	text: '<p>Supplimentry bills generated sucessfully.</p>',
+	sticky: false,
+	time: '10000',
+	});
+	<?php
+	$this->requestAction(array('controller' => 'hms', 'action' => 'griter_notification'), array('pass' => array('supplimentry_bill')));
+	} ?>
+	});
+</script>
 
 
 

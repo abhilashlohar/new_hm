@@ -1759,7 +1759,9 @@ if($id=="bank_receipt"){
 if($id=="bank_payment"){
 	$this->Session->delete('bank_payment');	
 }
-
+if($id=="supplimentry_bill"){
+	$this->Session->delete('supplimentry_bill');	
+}
 
 	if($id=="bill_update")
 	{

@@ -4315,6 +4315,7 @@ $this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,
 }
 }
 }
+$this->Session->write('supplimentry_bill', 1);
 }
 
 if(isset($this->request->data['add_non_member']))

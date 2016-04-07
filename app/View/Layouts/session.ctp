@@ -300,7 +300,7 @@ $(document).ready(function() {
    <!-- BEGIN CONTAINER -->
    <div class="page-container row-fluid">
       <!-- BEGIN SIDEBAR -->
-      <div class="page-sidebar nav-collapse collapse" style="position: fixed; width: 225px ! important; height: 0px;">
+      <div class="page-sidebar nav-collapse collapse" >
          <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
          <div class="clearfix"></div>
          <!-- END RESPONSIVE QUICK SEARCH FORM -->

@@ -114,9 +114,43 @@ $this->requestAction(array('controller' => 'hms', 'action' => 'griter_notificati
 </script>  
      
    
+ <script>
+$(document).ready(function() {
+	<?php	
+	$bank_receipt=(int)$this->Session->read('bank_payment');
+	if($bank_receipt==1)
+	{
+	?>
+	$.gritter.add({
+	title: 'Success',
+	text: '<p>Vouchers generated sucessfully.</p>',
+	sticky: false,
+	time: '10000',
+	});
+	<?php
+	$this->requestAction(array('controller' => 'hms', 'action' => 'griter_notification'), array('pass' => array('bank_payment')));
+	} ?>
+	});
+</script>  
+ 
    
-   
-   
-   
+ <script>
+$(document).ready(function() {
+	<?php	
+	$bank_payment_update=(int)$this->Session->read('bank_payment_update');
+	if($bank_payment_update==1)
+	{
+	?>
+	$.gritter.add({
+	title: 'Success',
+	text: '<p>Vouchers Updated sucessfully.</p>',
+	sticky: false,
+	time: '10000',
+	});
+	<?php
+	$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('bank_payment_update')));
+	} ?>
+	});
+</script>    
    
      	

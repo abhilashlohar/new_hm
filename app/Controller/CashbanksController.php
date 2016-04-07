@@ -1022,6 +1022,7 @@ $this->loadmodel('financial_year');
 	}		
 
  $this->Session->write('bank_payment', 1);
+$this->redirect(array('controller' => 'Cashbanks','action' => 'bank_payment_view'));
 	}
 
 $this->loadmodel('ledger_sub_account');
@@ -4491,7 +4492,8 @@ $sub_account_id_t = 16;
 $this->loadmodel('ledger');
 $this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"credit"=>$tds_amount,"ledger_sub_account_id"=>null),array("society_id"=>$s_society_id,"element_id"=>$element_id,"debit"=>null,"ledger_account_id"=>16));
 }
-
+ $this->Session->write('bank_payment_update', 1);
+$this->redirect(array('controller' => 'Cashbanks','action' => 'bank_payment_view'));
 }		
 
 	$this->loadmodel('reference');

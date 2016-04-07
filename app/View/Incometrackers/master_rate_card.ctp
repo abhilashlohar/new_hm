@@ -9,8 +9,10 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 <a href="<?php echo $webroot_path; ?>Incometrackers/neft_add" class="btn" style="font-size:16px;" rel='tab'>Add NEFT</a>
 <a href="<?php echo $webroot_path; ?>Incometrackers/it_setup" class="btn" style="font-size:16px;" rel='tab'>Remarks</a>
 <a href="<?php echo $webroot_path; ?>Incometrackers/other_charges" class="btn" rel='tab'>Other Charges</a>
+<a href="<?php echo $webroot_path; ?>Incometrackers/map_other_members" class="btn" rel='tab'>Advance</a>
 </div>
 <br/>
+
 <?php if($count == 0){ ?>
 <div id="output"><span class="label label-important">NOTE</span><span> No need to save this form. The system will automatically save updated data. </span></div>
 <div style="background-color: rgb(255, 255, 255);padding: 5px;overflow-x: auto;">

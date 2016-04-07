@@ -46,7 +46,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	</form>
 </div>
 
-<div class="portlet box span6" >
+<div class="portlet box span6" style="margin-left:25%;">
 	<div class="portlet-body">
 		<table class="table table-bordered table-hover">
 			<thead>

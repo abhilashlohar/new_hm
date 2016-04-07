@@ -52,6 +52,7 @@ $ifsc_code = "";
 </td>
 <td><a href="<?php echo $webroot_path; ?>Incometrackers/other_charges" class="btn" rel='tab'>Other Charges</a>
 </td>
+<td><a href="<?php echo $webroot_path; ?>Incometrackers/map_other_members" class="btn" rel='tab'>Advance</a></td>
 </tr>
 </table> 
 <?php /////////////////////////////////////////////////////////////////////// ?>

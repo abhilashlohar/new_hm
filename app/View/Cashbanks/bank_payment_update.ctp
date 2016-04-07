@@ -8,7 +8,7 @@ foreach($result_cash_bank as $data){
 			  $receipt_instruction=$data['cash_bank']['receipt_instruction'];
 				$account_head=(int)$data['cash_bank']['account_head'];
 				  $amount=$data['cash_bank']['amount'];
-					$tds_id=(int)$data['cash_bank']['tds_id'];
+					$tds_id_via_table=(int)$data['cash_bank']['tds_id'];
 					  $account_type=(int)$data['cash_bank']['account_type'];
                         $transaction_id=(int)$data['cash_bank']['transaction_id'];
                           $receipt_id=$data['cash_bank']['receipt_id'];
@@ -28,12 +28,12 @@ foreach($result_cash_bank as $data){
 <div class="row-fluid">                       
 <div class="span6">
 <label style="font-size:14px;">Transaction Date<span style="color:red;">*</span></label>
-<input type="text" class="date-picker m-wrap span6" data-date-format="dd-mm-yyyy" value="" style="background-color:white !important; margin-top:2.5px;" name="transaction_date">
+<input type="text" class="date-picker m-wrap span6" data-date-format="dd-mm-yyyy" value="<?php echo $transaction_date; ?>" style="background-color:white !important; margin-top:2.5px;" name="transaction_date">
 <label id="date" class="validation"></label>
 <br>
 
 <label style="font-size:14px;">invoice_reference</label>
-<input type="text" class="m-wrap span6" style="background-color:white !important; margin-top:2.5px;" Placeholder="Invoice Reference" name="invoice_reference">
+<input type="text" class="m-wrap span6" style="background-color:white !important; margin-top:2.5px;" Placeholder="Invoice Reference" name="invoice_reference" value="<?php echo $invoice_reference; ?>">
 <br><br>
 
 <label style="font-size:14px;">Ledger A/c<span style="color:red;">*</span></label>
@@ -43,7 +43,7 @@ foreach($result_cash_bank as $data){
 		$auto_id = $collection['ledger_sub_account']['auto_id'];
 		$name = $collection['ledger_sub_account']['name'];
 		?>
-		<option value="<?php echo $auto_id; ?>,1" ><?php echo $name; ?></option>
+		<option value="<?php echo $auto_id; ?>,1" <?php if($account_type==1 && $ledger_id==$auto_id) { ?> selected="selected" <?php } ?>><?php echo $name; ?></option>
 		<?php } ?>
 		<?php foreach($cursor12 as $collection){
 		$auto_id_a=(int)$collection['accounts_group']['auto_id'];
@@ -54,7 +54,7 @@ foreach($result_cash_bank as $data){
 		if($auto_id == 15)
 		continue;
 		?>
-		<option value="<?php echo $auto_id; ?>,2" ><?php echo $name; ?></option>
+		<option value="<?php echo $auto_id; ?>,2" <?php if($account_type==2 && $ledger_id==$auto_id) { ?> selected="selected" <?php } ?>><?php echo $name; ?></option>
 		<?php }} ?>
 		<?php foreach($cursor13 as $collection){
 		$auto_id_b = (int)$collection['accounts_group']['auto_id'];
@@ -63,22 +63,22 @@ foreach($result_cash_bank as $data){
 		$auto_id = (int)$collection['ledger_account']['auto_id'];
 		$name = $collection['ledger_account']['ledger_name'];
 		?>
-		<option value="<?php echo $auto_id; ?>,2" ><?php echo $name; ?></option>
+		<option value="<?php echo $auto_id; ?>,2" <?php if($account_type==2 && $ledger_id==$auto_id) { ?> selected="selected" <?php } ?>><?php echo $name; ?></option>
 		<?php }} ?>
 		</select>
 		<label id="ledger_account" class="validation"></label>
 <br>					
 
 <label style="font-size:14px;">Instrument/UTR<span style="color:red;">*</span></label>
-	<input type="text" class="m-wrap span6" style="text-align:right; background-color:white !important; margin-top:2.5px;" Placeholder="Instrument/UTR" name="instrument">
+	<input type="text" class="m-wrap span6" style="text-align:right; background-color:white !important; margin-top:2.5px;" Placeholder="Instrument/UTR" name="instrument" value="<?php echo $receipt_instruction; ?>">
 	<label id="instrument" class="validation"></label>
 <br>
 	<label style="font-size:14px;">Mode of Payment<span style="color:red;">*</span></label>
 	<select class="m-wrap span6 chosen" name="payment_mode">
 	<option value="" style="display:none;">Select</option>
-	<option value="Cheque">Cheque</option>
-	<option value="NEFT">NEFT</option>
-	<option value="PG">PG</option>
+	<option value="Cheque" <?php if($receipt_mode=="Cheque" || $receipt_mode=="cheque"){ ?> selected="selected" <?php } ?>>Cheque</option>
+	<option value="NEFT" <?php if($receipt_mode=="NEFT"){ ?> selected="selected" <?php } ?>>NEFT</option>
+	<option value="PG" <?php if($receipt_mode=="PG"){ ?> selected="selected" <?php } ?>>PG</option>
 	</select>
 	<label id="mode" class="validation"></label>
 	<br>	 
@@ -89,7 +89,7 @@ foreach($result_cash_bank as $data){
 </div>
 <div class="span6">
 	<label style="font-size:14px;">Amount<span style="color:red;">*</span></label>	
-	<input type="text" class="m-wrap span6" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="10" Placeholder="Amount" name="amount">
+	<input type="text" class="m-wrap span6" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="10" Placeholder="Amount" name="amount" value="<?php echo $amount; ?>">
 	<label id="amount" class="validation"></label>
 <br>
 			<label style="font-size:14px;">TDS%</label>	
@@ -100,7 +100,7 @@ foreach($result_cash_bank as $data){
 			$tds_id = (int)$tds_sub_arr[1];
 			$tds_tax = $tds_sub_arr[0];	
 			?>
-			<option value= "<?php echo $tds_id; ?>" charge="<?php echo $tds_tax; ?>"><?php echo $tds_tax; ?></option>
+			<option value= "<?php echo $tds_id; ?>" charge="<?php echo $tds_tax; ?>" <?php if($tds_id==$tds_id_via_table){ ?> selected="selected" <?php } ?>><?php echo $tds_tax; ?></option>
 			<?php } ?>                           
 			</select>
 			<br><br>
@@ -121,20 +121,20 @@ foreach($result_cash_bank as $data){
 				$ac_number = $db['ledger_sub_account']['bank_account']; 
 				$bank_acccc = substr($ac_number,-4);  
 				?>
-				<option value="<?php echo $sub_account_id; ?>"><?php echo $sub_account_name; ?>&nbsp;&nbsp;<?php echo $bank_acccc; ?></option>
+				<option value="<?php echo $sub_account_id; ?>" <?php if($account_head==$sub_account_id){ ?> selected="selected" <?php } ?>><?php echo $sub_account_name; ?>&nbsp;&nbsp;<?php echo $bank_acccc; ?></option>
 				<?php } ?>
 				</select>
 				<label id="bank" class="validation"></label>
 				<br>
 				
 				<label style="font-size:14px;">Narration</label>
-				<input type="text" class="m-wrap span10" style="background-color:white !important; margin-top:2.5px;" Placeholder="Narration" name="narration">	
+				<input type="text" class="m-wrap span10" style="background-color:white !important; margin-top:2.5px;" Placeholder="Narration" name="narration" value="<?php echo @$narration; ?>">	
 		
 </div>                      
 </div>                          
 <div class="form-actions">
-    <a href="<?php echo $webroot_path; ?>Cashbanks/bank_payment_view" class="btn green"><i class="icon-arrow-left"></i> Back</a>
-	<button type="submit" class="btn blue">Save</button>
+    <a href="<?php echo $webroot_path; ?>Cashbanks/bank_payment_view" class="btn green" rel="tab"><i class="icon-arrow-left"></i> Back</a>
+	<button type="submit" class="btn blue" name="submit">Update</button>
 	
 </div>
 </div>

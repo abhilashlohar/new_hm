@@ -4439,6 +4439,24 @@ function bank_payment_update($auto_id=null)
 		$s_society_id=(int)$this->Session->read('hm_society_id');
 			$s_user_id=(int)$this->Session->read('hm_user_id');	
 		
+	if(isset($this->request->data['submit'])){
+	   $transaction_date=$this->request->data['transaction_date'];	
+	     $invoice_reference=$this->request->data['invoice_reference'];
+	       $ledger_account=$this->request->data['ledger_account'];
+		     $instrument_utr=$this->request->data['instrument'];
+		       $mode_of_payment=$this->request->data['payment_mode'];
+		         $tds_id=$this->request->data['tds'];
+		           $bank_account=$this->request->data['bank_account'];
+			         $amount=$this->request->data['amount'];
+			           $narration=$this->request->data['narration'];
+
+
+
+
+
+	exit;
+	}		
+
 	$this->loadmodel('reference');
 	$conditions=array("auto_id"=>3);
 	$cursor = $this->reference->find('all',array('conditions'=>$conditions));

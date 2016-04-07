@@ -65,7 +65,7 @@
 </td>
 
 
-<td width="2%"><a href="#" role="button" class="btn mini black delete_row" id="<?php echo $t; ?>"><i class="icon-remove"></i></a></td>
+<td width="2%"><a href="#" role="button" class="btn mini delete_row" id="<?php echo $t; ?>"><i class="icon-trash"></i></a></td>
 </tr>
 
 

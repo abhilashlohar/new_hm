@@ -7,7 +7,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 
 <style>
 #main_table th{
-	font-size: 10px !important;background-color:#C8EFCE;padding:2px;border:solid 1px #55965F;white-space: nowrap !important; 
+	font-size: 12px !important;padding:2px;border:solid 1px #55965F;white-space: nowrap !important; 
 }
 #main_table td{
 	padding:2px;
@@ -54,7 +54,7 @@ $default_date = date('d-m-Y');
 <div id="succ">
 <div class="portlet box green" style="width:100%;">
 <div class="portlet-title">
-<h4><i class="icon-reorder"></i>Journal</h4>
+<h4><i class="icon-reorder"></i>Create Journal Voucher</h4>
 </div>
 <div class="portlet-body form">
 
@@ -203,7 +203,7 @@ $default_date = date('d-m-Y');
 </td>
 
 
-<td width="2%"><a href="#" role="button" class="btn mini black delete_row" id="2"><i class="icon-remove"></i></a></td>
+<td width="2%"><a href="#" role="button" class="btn mini delete_row" id="2"><i class="icon-trash"></i></a></td>
 </tr>	
 
 
@@ -243,9 +243,11 @@ $default_date = date('d-m-Y');
 
 <br><br>
 <div class="form-actions" style="background-color:#fff">
-<button type="submit" class="btn blue" name="journal_add" id="submit">Submit</button>
+
 <button type="button" id="button_add" class="btn blue"> <i class="icon-plus"></i> Add Row</button>
 <a href="journal_add" class="btn">Reset</a>
+<div class="pull-right">
+<button type="submit" class="btn blue" name="journal_add" id="submit">Submit</button> </div>
 </div>
 
 

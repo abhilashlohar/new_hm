@@ -624,17 +624,18 @@ function bank_receipt_excel()
 	$s_role_id= $this->Session->read('role_id');
 	$s_user_id= $this->Session->read('hm_user_id');
 
-	 $from =$this->request->query('from');
-	  $to =$this->request->query('to');
+	 $from =(int)$this->request->query('from');
+	 $to =(int)$this->request->query('to');
 	 
+	 $this->set('from',$from);
+	 $this->set('to',$to);
 	
 	$this->loadmodel('cash_bank');
 	$conditions=array('society_id'=>$s_society_id,"source"=>"bank_receipt",	'cash_bank.transaction_date'=>array('$gte'=>$from,'$lte'=>$to));
 	
 	$order=array('cash_bank.transaction_date'=> 'ASC');
 	$receipts=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
-	pr($receipts);
-	exit;
+	
 	$this->set('receipts',$receipts);
 	
 	$this->loadmodel('society');

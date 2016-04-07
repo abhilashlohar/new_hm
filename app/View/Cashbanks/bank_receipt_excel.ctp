@@ -1,11 +1,32 @@
+
+<?php 
+
+$society_name=$society_info[0]["society"]["society_name"];
+$from1= date("d-m-Y",$from);
+$to1= date("d-m-Y",$to);
+
+$filename=$society_name.'_Bank_receipt_'.$from1.'_'.$to1;
+$filename = str_replace(' ', '_', $filename);
+$filename = str_replace(' ', '-', $filename);
+header ("Expires: 0");
+header ("border: 1");
+header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+header ("Cache-Control: no-cache, must-revalidate");
+header ("Pragma: no-cache");
+header ("Content-type: application/vnd.ms-excel");
+header ("Content-Disposition: attachment; filename=".$filename.".xls");
+header ("Content-Description: Generated Report" );
+
+?>
+
+
+
+
 <div class="portlet box">
 	<div class="portlet-body">
-	<?php
-	$society_name=$society_info[0]["society"]["society_name"];
-	?>
+	<div align="center"><?php echo strtoupper($society_name); ?> Bank Receipt Register From : <?php echo date("d-m-Y",$from);?> To : <?php echo date("d-m-Y",$to);?>
 		
-		
-		<table class="table table-condensed table-bordered" id="receiptmain">
+		<table class="table table-condensed table-bordered" id="receiptmain" border="1">
 			<thead>
 				<tr>
 					<th>Receipt No.</th>
@@ -17,11 +38,13 @@
 					<th>Instrument/UTR</th>
 					<th>Narration</th>
 					<th>Amount</th>
-					<th></th>
+					
 				</tr>
 			</thead>
 			<tbody>
-			<?php foreach($receipts as $receipt){
+			<?php
+				$total_amount=0;
+			foreach($receipts as $receipt){
 			
 				$auto_id=$receipt["cash_bank"]["auto_id"];
 				$receipt_number=$receipt["cash_bank"]["receipt_number"];
@@ -78,54 +101,16 @@
 					<td><?php echo $receipt_mode; ?></td>
 					<td><?php echo $cheque_number; ?></td>
 					<td><?php echo $narration; ?></td>
-					<td style="text-align: right;"><?php echo $amount; ?></td>
-					<td>
-						<div class="btn-group" style="margin: 0px !important;">
-							<a class="btn blue mini" href="#" data-toggle="dropdown">
-							<i class="icon-chevron-down"></i>	
-							</a>
-							<ul class="dropdown-menu" style="min-width:80px !important;left:-53px;padding: 3px 0px; box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3); font-size: 12px;">
-							<li><a href="bank_receipt_html_view/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i>View</a></li>
-							</ul>
-						</div>
-						<i class="icon-info-sign tooltips " data-placement="left" data-original-title="Created by: <?php echo $creator_name; ?> On: <?php echo $created_on; ?>" style="cursor: default;"></i>
-					</td>
+					<td style="text-align: right;"><?php echo $amount; $total_amount+=$amount; ?> </td>
+					
 				</tr>
 			<?php } ?>
 			</tbody>
 			<tfoot style="font-weight: 600;">
 				<tr>
+				<td colspan="8" align="right">Total</td><td align="right"><?php echo $total_amount; ?></td>
 				</tr>
 			</tfoot>
 		</table>
 	</div>
 </div>
-<script>
-$(document).ready(function(){
-	var tr=1; 
-	$('#receiptmain thead tr th').each(function(i, obj) {
-		var total=0;
-		$('#receiptmain tbody tr td:nth-child('+tr+')').each(function(i, obj) {
-			var value=parseInt($(this).text());
-			if($.isNumeric(value)){ }else{ value=0; }
-			total=total+value;
-		});
-		$('#receiptmain tfoot tr').append('<td style="text-align: right;">'+total+'</td>');
-		tr++;
-	});
-	$('#receiptmain tfoot tr td:lt(7)').remove();
-	$('#receiptmain tfoot tr td:first').attr("colspan",8).html('<b>Total</b>');
-	$('#receiptmain tfoot tr td:last').html("");
-	
-	
-	var $rows = $('#receiptmain tbody tr');
-	$('#search').keyup(function() {
-		var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-
-		$rows.show().filter(function() {
-			var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-			return !~text.indexOf(val);
-		}).hide();
-	});
-});
-</script>

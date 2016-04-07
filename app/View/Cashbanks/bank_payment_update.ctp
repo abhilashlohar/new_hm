@@ -27,6 +27,7 @@ foreach($result_cash_bank as $data){
 <div class="portlet-body form">
 <div class="row-fluid">                       
 <div class="span6">
+<input type="hidden" name="element_id" value="<?php echo $transaction_id; ?>">
 <label style="font-size:14px;">Transaction Date<span style="color:red;">*</span></label>
 <input type="text" class="date-picker m-wrap span6" data-date-format="dd-mm-yyyy" value="<?php echo $transaction_date; ?>" style="background-color:white !important; margin-top:2.5px;" name="transaction_date">
 <label id="date" class="validation"></label>

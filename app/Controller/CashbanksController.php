@@ -4441,33 +4441,29 @@ function bank_payment_update($auto_id=null)
 			$s_user_id=(int)$this->Session->read('hm_user_id');	
 		
 	if(isset($this->request->data['submit'])){
-	   $transaction_date=$this->request->data['transaction_date'];	
-	     $invoice_reference=$this->request->data['invoice_reference'];
-	       $ledger_account=$this->request->data['ledger_account'];
-		     $instrument_utr=$this->request->data['instrument'];
-		       $mode_of_payment=$this->request->data['payment_mode'];
-		         $tds_id=$this->request->data['tds'];
-		           $bank_account=$this->request->data['bank_account'];
-			         $amount=$this->request->data['amount'];
-			           $narration=$this->request->data['narration'];
+	   $element_id=(int)$this->request->data['element_id'];
+	     $transaction_date=$this->request->data['transaction_date'];	
+	       $transaction_date=date('Y-m-d',strtotime($transaction_date));
+   		    $invoice_reference=$this->request->data['invoice_reference'];
+	          $ledger_account=$this->request->data['ledger_account'];
+		        $instrument_utr=$this->request->data['instrument'];
+		          $mode_of_payment=$this->request->data['payment_mode'];
+		            $tds_id=(int)$this->request->data['tds'];
+		              $bank_account=$this->request->data['bank_account'];
+			            $amount=$this->request->data['amount'];
+			              $narration=$this->request->data['narration'];
+		$ledger_account_array=explode(',',$ledger_account);			  
+          $ledger_account_id=(int)$ledger_account_array[0];
+		    $ledger_account_type=(int)$ledger_account_array[1];
 
-        exit;
-
-
-
-
-
-
-	$i=$this->autoincrement('cash_bank','transaction_id');
-	$bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','bank_payment');
-	$rr_arr[] = $bbb;
-	$this->loadmodel('new_cash_bank');
-	$multipleRowData = Array( Array("transaction_id" => $i, "receipt_id" => $bbb,"current_date" => $current_date, 
-	"transaction_date" => strtotime($transaction_date), "prepaired_by" => $s_user_id, 
-	"user_id" => $ledger_acc,"invoice_reference" => @$invoice,"narration" => $narration, "receipt_mode" => $mode,
-	"receipt_instruction" => $instrument, "account_head" => $bank_ac,  
-	"amount" => $amount,"society_id" => $s_society_id, "tds_id" =>$tds_id,"account_type"=>$acc_type,"source"=>"bank_payment","auto_inc"=>"YES"));
-	$this->cash_bank->saveAll($multipleRowData);  
+	$this->loadmodel('cash_bank');
+	$this->loadmodel->updateAll(array("transaction_date"=>strtotime($transaction_date),"user_id"=>$ledger_account_id,"invoice_reference"=>@$invoice_reference,"narration"=>$narration,"receipt_mode"=>$mode_of_payment,"receipt_instruction"=>$instrument_utr,"account_head"=>$bank_account,"amount"=>$amount,"tds_id"=>$tds_id,"account_type"=>$ledger_account_type),array("society_id"=>$s_society_id,));
+	
+	 exit;
+	 
+	   
+	 
+	
 
 	$this->loadmodel('reference');
 	$conditions=array("auto_id" => 3);
@@ -4530,7 +4526,9 @@ $this->ledger->saveAll($multipleRowData);
 
 
 	
-	}		
+}
+
+}		
 
 	$this->loadmodel('reference');
 	$conditions=array("auto_id"=>3);

@@ -5,7 +5,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </div>
 <?php
 	foreach($cursor1 as $collection){
-		$type = @$collection['society']['neft_type'];
+		 $type = @$collection['society']['neft_type'];
 			$neft_detail = @$collection['society']['neft_detail'];
 	}
 if($type == "ALL"){
@@ -58,7 +58,7 @@ else
 <div class="portlet-body form">
 <div class="row-fluid">                     
 <div class="span6">                      
- 
+<!--
 <label  style="font-size:14px;">NEFT Detail For<span style="color:red;">*</span> </label>
 <div class="controls">
 <label class="radio">
@@ -70,9 +70,8 @@ All
 Wing Wise
 </label>
 </div>
-<br />
- 
- 
+<br />-->
+<input type="hidden" value="ALL" name="neft_for">
 <div id="show1">
 <label style="font-size:14px;">Account Name<span style="color:red;">*</span></label>
 <div class="controls">

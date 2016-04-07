@@ -8046,7 +8046,7 @@ $bank_name = $this->request->data['bank_name'];
 $branch = $this->request->data['branch'];
 $ifsc_code = $this->request->data['ifsc'];
 $ac_number = $this->request->data['acnu'];
-$neft_for = $this->request->data['neft_for'];
+$neft_for = $this->request->data['neft_for']; 
 if($neft_for == "WW")
 {
 $wing_id = $this->request->data['select_wing'];

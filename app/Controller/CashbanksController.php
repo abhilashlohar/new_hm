@@ -4449,7 +4449,7 @@ function bank_payment_update($auto_id=null)
 		        $instrument_utr=$this->request->data['instrument'];
 		          $mode_of_payment=$this->request->data['payment_mode'];
 		            $tds_id=(int)$this->request->data['tds'];
-		              $bank_account=$this->request->data['bank_account'];
+		              $bank_account=(int)$this->request->data['bank_account'];
 			            $amount=$this->request->data['amount'];
 			              $narration=$this->request->data['narration'];
 		$ledger_account_array=explode(',',$ledger_account);			  
@@ -4457,75 +4457,49 @@ function bank_payment_update($auto_id=null)
 		    $ledger_account_type=(int)$ledger_account_array[1];
 
 	$this->loadmodel('cash_bank');
-	$this->loadmodel->updateAll(array("transaction_date"=>strtotime($transaction_date),"user_id"=>$ledger_account_id,"invoice_reference"=>@$invoice_reference,"narration"=>$narration,"receipt_mode"=>$mode_of_payment,"receipt_instruction"=>$instrument_utr,"account_head"=>$bank_account,"amount"=>$amount,"tds_id"=>$tds_id,"account_type"=>$ledger_account_type),array("society_id"=>$s_society_id,));
-	
-	 exit;
-	 
-	   
-	 
-	
+	$this->cash_bank->updateAll(array("transaction_date"=>strtotime($transaction_date),"user_id"=>$ledger_account_id,"invoice_reference"=>@$invoice_reference,"narration"=>$narration,"receipt_mode"=>$mode_of_payment,"receipt_instruction"=>$instrument_utr,"account_head"=>$bank_account,"amount"=>$amount,"tds_id"=>$tds_id,"account_type"=>$ledger_account_type),array("society_id"=>$s_society_id,"transaction_id"=>$element_id));
+	exit;
 
 	$this->loadmodel('reference');
-	$conditions=array("auto_id" => 3);
+	$conditions=array("auto_id"=>3);
 	$cursor4=$this->reference->find('all',array('conditions'=>$conditions));
 		foreach($cursor4 as $collection){
 			$tds_arr = $collection['reference']['reference'];	
 	}
 	if(!empty($tds_id)){
 		for($r=0; $r<sizeof($tds_arr); $r++){
-			$tds_sub_arr = $tds_arr[$r];
-			$tds_id2 = (int)$tds_sub_arr[1];
-			if($tds_id2 == $tds_id){
-				$tds_rate = $tds_sub_arr[0];
+			$tds_sub_arr=$tds_arr[$r];
+			$tds_id2=(int)$tds_sub_arr[1];
+			if($tds_id2==$tds_id){
+				$tds_rate=$tds_sub_arr[0];
 				break;
 		}
 	}
-	$tds_amount = (round(($tds_rate/100)*$amount));
-	$total_tds_amount = ($amount - $tds_amount);
+	$tds_amount=(round(($tds_rate/100)*$amount));
+	$total_tds_amount=($amount-$tds_amount);
 }
 else{
 	$total_tds_amount = $amount;
-	$tds_amount = 0;
+	$tds_amount=0;
 }
 
-if($acc_type == 1)
-{
-$l=$this->autoincrement('ledger','auto_id');
-$this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => $amount, "credit" =>null,"ledger_account_id" => 15, "ledger_sub_account_id" =>$ledger_acc, "table_name" =>"cash_bank","element_id" => $i, "society_id" => $s_society_id));
-$this->ledger->saveAll($multipleRowData); 
+if($ledger_account_type == 1){
+	$this->loadmodel('ledger');
+	$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"debit"=>$amount,"ledger_account_id"=>15,"ledger_sub_account_id"=>$ledger_account_id),array("society_id"=>$s_society_id,"element_id"=>$element_id,"credit" =>null));
 }
 else
 {
-$l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), "debit" => $amount,"credit" =>null,"ledger_account_id" =>$ledger_acc, "ledger_sub_account_id" =>null, "table_name" =>"cash_bank","element_id" =>$i, "society_id" => $s_society_id));
-$this->ledger->saveAll($multipleRowData); 
+$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"debit"=>$amount,"ledger_account_id"=>$ledger_account_id,"ledger_sub_account_id"=>null),array("society_id"=>$s_society_id,"element_id"=>$element_id,"credit" =>null));
 }
 
-$sub_account_id_a = (int)$bank_ac;
-$l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date), 
-"debit" =>null,"credit" =>$total_tds_amount,"ledger_account_id" =>33, 
-"ledger_sub_account_id" =>$sub_account_id_a, "table_name" =>"cash_bank","element_id" =>$i, 
-"society_id" => $s_society_id));
-$this->ledger->saveAll($multipleRowData); 
+$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"credit"=>$total_tds_amount,"ledger_account_id"=>33,"ledger_sub_account_id"=>$bank_account),array("society_id"=>$s_society_id,"element_id"=>$element_id,"debit"=>null));
 
-
-if($tds_amount > 0)
-{
+if($tds_amount > 0){
 $sub_account_id_t = 16;
-$l=$this->autoincrement('ledger','auto_id');
 $this->loadmodel('ledger');
-$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>strtotime($transaction_date),
-"debit" =>null,"credit" =>$tds_amount,"ledger_account_id" =>$sub_account_id_t, 
-"ledger_sub_account_id" =>null, "table_name" =>"cash_bank","element_id" =>$i, 
-"society_id" => $s_society_id));
-$this->ledger->saveAll($multipleRowData); 
-
-
-	
+$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"credit"=>$tds_amount,"ledger_sub_account_id"=>null),array("society_id"=>$s_society_id,"element_id"=>$element_id,"debit"=>null,"ledger_account_id"=>16));
 }
 
 }		

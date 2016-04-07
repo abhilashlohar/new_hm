@@ -51,6 +51,21 @@ foreach($wing_flat as $data){
 </div>
 <script>
 $(document).ready(function(){
+	function load_comments(){
+		var post_id=$("div[post_id]").attr("post_id");
+		var comment_id=$("#comments div[comment_id]:last").attr("comment_id");
+		
+		
+		if(!comment_id){ comment_id=0; }
+		
+        $.ajax({
+            url: "<?php echo $webroot_path; ?>Discussions/comments/"+post_id+'/'+comment_id,
+            success: function(data) {
+                $("#comments").append(data);
+            }
+        });
+	};
+	
 	$("#idForm").on("submit",function(e){
 		$('#sub').attr('disabled','disabled');
 		$.ajax({
@@ -61,32 +76,11 @@ $(document).ready(function(){
 			   $('#sub').removeAttr('disabled');
 			   $("textarea[name=comment_box]").val("");
 			   $("#save_comment").html(data); // show response from the php script.
+			   
+			   load_comments();
 		   }
 		});
 		e.preventDefault(); 
 	});
-	
-	
-	
-	
-	var xhr;
-
-    var fn = function(){
-        if(xhr && xhr.readystate != 4){
-            xhr.abort();
-        }
-		var post_id=$("div[post_id]").attr("post_id");
-		var comment_id=$("#comments div[comment_id]:last").attr("comment_id");
-		if(!comment_id){ comment_id=0; }
-        xhr = $.ajax({
-            url: "<?php echo $webroot_path; ?>Discussions/comments/"+post_id+'/'+comment_id,
-            success: function(data) {
-                $("#comments").append(data);
-            }
-        });
-    };
-
-    var interval = setInterval(fn, 2000);
-	
 });
 </script>

@@ -35,16 +35,25 @@
 </div>
 
 <script>
-
-	
-	
-
 $(document).ready(function(){
-	//clearInterval(interval);
+	function load_comments(){
+		var post_id=$("div[post_id]").attr("post_id");
+		var comment_id=$("#comments div[comment_id]:last").attr("comment_id");
+		if(!comment_id){ comment_id=0; }
+		
+        $.ajax({
+            url: "<?php echo $webroot_path; ?>Discussions/comments/"+post_id+'/'+comment_id,
+            success: function(data) {
+                $("#comments").append(data);
+            }
+        });
+	};
+
 	$.ajax({
 	   url: "<?php echo $webroot_path; ?>Discussions/topic_detail/"+"<?php echo $id; ?>",
 	   success: function(data) {
 		   $("#topic_detail").html(data);
+		   load_comments();
 		   $("html, body").animate({
 				scrollTop:0
 			},"slow");
@@ -62,6 +71,7 @@ $(document).ready(function(){
 		   url: "<?php echo $webroot_path; ?>Discussions/topic_detail/"+post_id,
 		   success: function(data) {
 			   $("#topic_detail").html(data);
+			   load_comments();
 			   $("html, body").animate({
 					scrollTop:0
 				},"slow");

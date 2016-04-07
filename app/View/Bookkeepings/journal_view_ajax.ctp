@@ -2,8 +2,8 @@
 
 <div align="right" class="hide_at_print">
 
-<a href="journal_excel?to=<?php echo $to; ?>&from=<?php echo $from; ?>&search_vocher=<?php echo @$search_vocher; ?>" class="btn blue mini"><i class="icon-download"></i></a>
-<a  class="btn green mini" onclick="window.print()" ><i class="icon-print"></i>  </a>
+<a href="journal_excel?to=<?php echo $to; ?>&from=<?php echo $from; ?>&search_vocher=<?php echo @$search_vocher; ?>" class="btn green mini"><i class="fa fa-file-excel-o"></i></a>
+<a  class="btn blue mini" onclick="window.print()" ><i class="icon-print"></i>  </a>
 <!--<a href="expense_tracker_pdf?to=<?php echo $to; ?>&from=<?php echo $from; ?>" class="btn purple mini">Pdf</a>-->
 </div>
 <!--<label class="m-wrap pull-left"><input type="text" id="search_content" class="m-wrap medium" style="background-color:#FFF !important;" placeholder="search by voucher"></label>-->

@@ -24,12 +24,42 @@ function index($list=null,$id=null){
 	$this->set("id",$id);
 	$s_user_id=$this->Session->read('hm_user_id'); 
 	$s_society_id=$this->Session->read('hm_society_id');
-	
 	$this->loadmodel('discussion_post');
-	$conditions=array("society_id"=>$s_society_id,'users_have_access' =>array('$in' => array($s_user_id)));
+	$conditions=array("society_id"=>$s_society_id,"status"=>0,'users_have_access' =>array('$in' => array($s_user_id)));
 	$order=array('discussion_post.discussion_post_id'=> 'DESC');
 	$posts=$this->discussion_post->find('all',array('conditions'=>$conditions,'order'=>$order));
 	$this->set(compact("posts"));
+}
+
+function topic_show_type($type_list=null){
+	$this->layout='blank';
+	$this->ath();
+	$s_user_id=$this->Session->read('hm_user_id'); 
+	$s_society_id=$this->Session->read('hm_society_id');
+	
+	$this->set(compact("type_list"));
+	if($type_list=="all"){
+		$this->loadmodel('discussion_post');
+		$conditions=array("society_id"=>$s_society_id,"status"=>0,'users_have_access' =>array('$in' => array($s_user_id)));
+		$order=array('discussion_post.discussion_post_id'=> 'DESC');
+		$posts=$this->discussion_post->find('all',array('conditions'=>$conditions,'order'=>$order));
+		$this->set(compact("posts"));
+	}
+	if($type_list=="my"){
+		$this->loadmodel('discussion_post');
+		$conditions=array("society_id"=>$s_society_id,"status"=>0,'user_id' =>$s_user_id);
+		$order=array('discussion_post.discussion_post_id'=> 'DESC');
+		$posts=$this->discussion_post->find('all',array('conditions'=>$conditions,'order'=>$order));
+		$this->set(compact("posts"));
+	}
+	
+	if($type_list=="archive"){
+		$this->loadmodel('discussion_post');
+		$conditions=array("society_id"=>$s_society_id,'status' =>1);
+		$order=array('discussion_post.discussion_post_id'=> 'DESC');
+		$posts=$this->discussion_post->find('all',array('conditions'=>$conditions,'order'=>$order));
+		$this->set(compact("posts"));
+	}
 }
 
 function submit_comment(){
@@ -156,7 +186,7 @@ function new_topic(){
 		
 		$this->loadmodel('discussion_post');
 		$discussion_post_id=$this->autoincrement('discussion_post','discussion_post_id');
-		$this->discussion_post->saveAll(Array( Array("discussion_post_id" => $discussion_post_id, "user_id" => $s_user_id , "society_id" => $s_society_id, "topic" => $topic,"description" => $description, "file" =>$file,"delete" =>"no", "date" =>strtotime($date), "time" => $time, "visible" => $send_to, "sub_visible" => $sub_visible,"users_have_access"=>$users_have_access))); 
+		$this->discussion_post->saveAll(Array( Array("discussion_post_id" => $discussion_post_id, "user_id" => $s_user_id , "society_id" => $s_society_id, "topic" => $topic,"description" => $description, "file" =>$file,"delete" =>"no", "date" =>strtotime($date), "time" => $time, "visible" => $send_to, "sub_visible" => $sub_visible,"users_have_access"=>$users_have_access,"status"=>0))); 
 		
 		$this->loadmodel('society');
 		$conditions=array("society_id"=>$s_society_id);
@@ -295,29 +325,22 @@ function new_topic(){
 
 function delete_topic(){
 $this->layout='blank';
-$s_society_id=$this->Session->read('society_id'); 
-
-$con=$this->request->query('con');
-$con=(int)$this->decode($con,'housingmatters');
-
-if($con==0) { $this->redirect(array('controller' => 'Discussions','action' => 'index')); }
-
+$s_society_id=$this->Session->read('hm_society_id'); 
+$con=(int)$this->request->query('con');
 $this->loadmodel('discussion_post');
-$this->discussion_post->updateAll(array("delete_id" =>1),array("discussion_post_id" => $con));
+$this->discussion_post->updateAll(array("status" =>1),array("discussion_post_id" => $con));
 
-$this->redirect(array('controller' => 'Discussions','action' => 'index/mytopics/1'));
+$this->redirect(array('controller' => 'Discussions','action' => 'index'));
 }
 
 function archive()
 {
 	$this->layout='blank';
-	$s_society_id=$this->Session->read('society_id'); 
+	$s_society_id=$this->Session->read('hm_society_id'); 
 	$con=(int)$this->request->query('con');
-	$con=(int)$this->decode($con,'housingmatters');
-	if($con==0) { $this->redirect(array('controller' => 'Discussions','action' => 'index')); }
 	$this->loadmodel('discussion_post');
-	$this->discussion_post->updateAll(array("delete_id" =>2),array("discussion_post_id" => $con));
-	$this->redirect(array('controller' => 'Discussions','action' => 'index/archives/2'));
+	$this->discussion_post->updateAll(array("status" =>2),array("discussion_post_id" => $con));
+	$this->redirect(array('controller' => 'Discussions','action' => 'index'));
 	
 }
 

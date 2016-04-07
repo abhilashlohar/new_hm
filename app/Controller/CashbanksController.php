@@ -818,7 +818,7 @@ function cancel_receipt_due_to_check_bounce($record_id=null){
 	</div>
 	<?php
 }
-//////////////////////// Start bank receipt ////////////////////////////////////////////
+//Start bank receipt//
 function bank_receipt()
 {
 		if($this->RequestHandler->isAjax())
@@ -875,18 +875,8 @@ echo"sdgdsg";
 exit;
 
 */
-
-
-
-
-
-
 }
-//////////////////////// End bank receipt email code ////////////////////////////////
-
-////////////////// Start Bank receipt Excel (Accounts)/////////////////////////////
-
-//End Bank receipt Excel (Accounts)//
+//End bank receipt email code//
 //Start Bank Payment (Accounts)//
 function bank_payment()
 {
@@ -4458,7 +4448,7 @@ function bank_payment_update($auto_id=null)
 
 	$this->loadmodel('cash_bank');
 	$this->cash_bank->updateAll(array("transaction_date"=>strtotime($transaction_date),"user_id"=>$ledger_account_id,"invoice_reference"=>@$invoice_reference,"narration"=>$narration,"receipt_mode"=>$mode_of_payment,"receipt_instruction"=>$instrument_utr,"account_head"=>$bank_account,"amount"=>$amount,"tds_id"=>$tds_id,"account_type"=>$ledger_account_type),array("society_id"=>$s_society_id,"transaction_id"=>$element_id));
-	exit;
+	
 
 	$this->loadmodel('reference');
 	$conditions=array("auto_id"=>3);
@@ -4494,7 +4484,7 @@ $this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),
 }
 
 $this->loadmodel('ledger');
-$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"credit"=>$total_tds_amount,"ledger_account_id"=>33,"ledger_sub_account_id"=>$bank_account),array("society_id"=>$s_society_id,"element_id"=>$element_id,"debit"=>null));
+$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"credit"=>$total_tds_amount,"ledger_sub_account_id"=>$bank_account),array("society_id"=>$s_society_id,"element_id"=>$element_id,"debit"=>null,"ledger_account_id"=>33));
 
 if($tds_amount > 0){
 $sub_account_id_t = 16;

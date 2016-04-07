@@ -125,6 +125,6 @@ $total_balance = $total_balance + $balance;
 <td colspan="4" style="text-align:right;"><b>Total</b></td>
 <td style="text-align:right;"><b><?php if(!empty($total_receipt)) { $total_receipt2 = number_format($total_receipt); }  echo @$total_receipt2; ?></b></td>
 <td style="text-align:right;"><b><?php if(!empty($total_payment)) { $total_payment2 = number_format($total_payment); } echo @$total_payment2; ?></b></td>
-<td style="text-align:right;"><b><?php echo $total_balance; ?></b></td>
+<td style="text-align:right;"></td>
 </tr>
 </table> 

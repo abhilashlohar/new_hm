@@ -223,6 +223,18 @@ $('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj
 					}else{
 						$(this).closest('td').find(".er").remove();
 					}
+					
+        var transaction_date= $(this).parent().prev('td').find('input[name="transaction_date[]"]').val();	
+		transaction_date=transaction_date.split('-').reverse().join('');		
+		payment_due_date=payment_due_date.split('-').reverse().join('');		
+				if(payment_due_date<transaction_date){
+				$(this).closest('td').find(".er").remove();
+						$(this).closest('td').append('<p class="er">Due date is big</p>');
+							allow="no";	
+				}else{
+				$(this).closest('td').find(".er").remove();	
+				}	
+					
 		});	
 
 

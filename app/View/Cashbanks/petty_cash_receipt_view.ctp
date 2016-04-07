@@ -50,26 +50,42 @@ $(document).ready(function() {
 			
 <script>
 $(document).ready(function() {
-<?php	
-$status5=(int)$this->Session->read('petty_cc_rr');
-if($status5==1)
-{
-	
-?>
-$.gritter.add({
-title: 'Petty Cash Receipt',
-text: '<p>Thank you.</p><p>Petty Cash Receipt generated successfully</p>',
-sticky: false,
-time: '10000',
-});
-<?php
-$this->requestAction(array('controller' => 'hms', 'action' => 'griter_notification'), array('pass' => array(1301)));
-} ?>
-});
-</script>           
+	<?php	
+	$petty_cash_receipt=(int)$this->Session->read('petty_cash_receipt');
+	if($petty_cash_receipt==1)
+	{
+	?>
+	$.gritter.add({
+	title: 'Success',
+	text: '<p>Receipts generated sucessfully.</p>',
+	sticky: false,
+	time: '10000',
+	});
+	<?php
+	$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('petty_cash_receipt')));
+	} ?>
+	});
+</script>        
             
             
-            
+ <script>
+$(document).ready(function() {
+	<?php	
+	$petty_cash_receipt_update=(int)$this->Session->read('petty_cash_receipt_update');
+	if($petty_cash_receipt_update==1)
+	{
+	?>
+	$.gritter.add({
+	title: 'Success',
+	text: '<p>Receipt Updated sucessfully.</p>',
+	sticky: false,
+	time: '10000',
+	});
+	<?php
+	$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('petty_cash_receipt_update')));
+	} ?>
+	});
+</script>            
             
             
             

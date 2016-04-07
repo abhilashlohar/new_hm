@@ -1762,9 +1762,23 @@ function griter_notification($id)
 	if($id=="bank_payment_update"){
 		$this->Session->delete('bank_payment_update');	
 	}
+	if($id=="petty_cash_payment"){
+		$this->Session->delete('petty_cash_payment');	
+	}
+	if($id=="petty_cash_payment_update"){
+		$this->Session->delete('petty_cash_payment_update');	
+	}
+	if($id=="petty_cash_receipt"){
+		$this->Session->delete('petty_cash_receipt');	
+	}
+	if($id=="petty_cash_receipt_update"){
+		$this->Session->delete('petty_cash_receipt_update');	
+	}
 	
 	
-
+	
+	
+	
 	if($id=="bill_update")
 	{
 		$this->Session->delete('bill_update_status');

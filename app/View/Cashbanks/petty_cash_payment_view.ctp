@@ -66,21 +66,40 @@ $(document).ready(function() {
 
 <script>
 $(document).ready(function() {
-<?php	
-$status5=(int)$this->Session->read('petty_cc_pp');
-if($status5==1)
-{
-?>
-$.gritter.add({
-title: 'Petty Cash Payment',
-text: '<p>Thank you.</p><p>Petty Cash Payment generated successfully</p>',
-sticky: false,
-time: '10000',
-});
-<?php
-$this->requestAction(array('controller' => 'hms', 'action' => 'griter_notification'), array('pass' => array(1401)));
-} ?>
-});
+	<?php	
+	$petty_cash_payment=(int)$this->Session->read('petty_cash_payment');
+	if($petty_cash_payment==1)
+	{
+	?>
+	$.gritter.add({
+	title: 'Success',
+	text: '<p>Vouchers generated sucessfully.</p>',
+	sticky: false,
+	time: '10000',
+	});
+	<?php
+	$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('petty_cash_payment')));
+	} ?>
+	});
+</script>  
+
+<script>
+$(document).ready(function() {
+	<?php	
+	$petty_cash_payment_update=(int)$this->Session->read('petty_cash_payment_update');
+	if($petty_cash_payment_update==1)
+	{
+	?>
+	$.gritter.add({
+	title: 'Success',
+	text: '<p>Voucher Updated sucessfully.</p>',
+	sticky: false,
+	time: '10000',
+	});
+	<?php
+	$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('petty_cash_payment_update')));
+	} ?>
+	});
 </script>  
 
 

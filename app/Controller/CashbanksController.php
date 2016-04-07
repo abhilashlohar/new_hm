@@ -1285,18 +1285,9 @@ $this->ledger->saveAll($multipleRowData);
 $n++;
 }
 $receipt_array_for_view=implode(',',$receipt_array);
-?>
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body">
-<h4><b>Thank You!</b></h4>
-Petty Cash Receipt <?php echo $receipt_array_for_view; ?> generated successfully
-</div>
-<div class="modal-footer">
-<a class="btn red" href="petty_cash_receipt_view">OK</a>
-</div>
-</div>
-<?php
+
+$this->Session->write('petty_cash_receipt',1);
+$this->redirect(array('controller' => 'Cashbanks','action'=>'petty_cash_receipt_view'));
 }		
 
 }
@@ -1579,18 +1570,8 @@ $this->set('cursor2',$cursor2);
 	$n++;		
 	}
 	$receipt_array_for_view=implode(',',$receipt_array);
-	?>
-	<div class="modal-backdrop fade in"></div>
-	<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-	<div class="modal-body">
-	<h4><b>Thank You!</b></h4>
-	Petty Cash Payment <?php echo $receipt_array_for_view; ?> generated successfully
-	</div>
-	<div class="modal-footer">
-	<a class="btn red" href="petty_cash_payment_view">OK</a>
-	</div>
-	</div>
-	<?php
+	$this->Session->write('petty_cash_payment', 1);
+	$this->redirect(array('controller' => 'Cashbanks','action'=>'petty_cash_payment_view'));
 	}
 }
 //End Petty cash Payment (Accounts)//
@@ -4272,18 +4253,8 @@ if(isset($this->request->data['submit']))
 
 	$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"debit"=>$amount, "ledger_account_id"=>$account_head_id,"ledger_sub_account_id"=>null),array('society_id'=>$s_society_id,"element_id"=>$element_id,"table_name"=>"cash_bank","credit"=>null));
 
-?>
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body">
-<h4><b>Thank You!</b></h4>
-Petty Cash Receipt <?php echo $receipt_id; ?> is Updated Successfully
-</div>
-<div class="modal-footer">
-<a class="btn red" href="<?php echo $this->webroot; ?>/Cashbanks/petty_cash_receipt_view">OK</a>
-</div>
-</div>
-<?php 
+$this->Session->write('petty_cash_receipt_update',1);
+$this->redirect(array('controller' => 'Cashbanks','action'=>'petty_cash_receipt_view'));
 }	
 
 }
@@ -4367,18 +4338,9 @@ $this->cash_bank->updateAll(array("user_id"=>$expense_party,"account_type" =>$ac
 	}
         $this->loadmodel('ledger');	
 		$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"credit"=>$amount,"ledger_account_id"=>$paid_from_id,"ledger_sub_account_id"=>null),array('society_id'=>$s_society_id,"element_id"=>$element_id,"table_name"=>"cash_bank","debit"=>null));	
-?>		 
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body">
-<h4><b>Thank You!</b></h4>
-Petty Cash Payment <?php echo $receipt_id; ?> is Updated Successfully
-</div>
-<div class="modal-footer">
-<a class="btn red" href="<?php echo $this->webroot; ?>/Cashbanks/petty_cash_payment_view">OK</a>
-</div>
-</div>
-<?php
+		
+$this->Session->write('petty_cash_payment_update', 1);
+$this->redirect(array('controller' => 'Cashbanks','action'=>'petty_cash_payment_view'));
 }
 }
 //End petty_cash_Payment_Update//

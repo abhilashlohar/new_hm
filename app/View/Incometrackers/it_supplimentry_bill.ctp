@@ -225,6 +225,7 @@ $('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj
 					}
 					
         var transaction_date= $(this).parent().prev('td').find('input[name="transaction_date[]"]').val();	
+		if(transaction_date != "" && payment_due_date != ""){
 		transaction_date=transaction_date.split('-').reverse().join('');		
 		payment_due_date=payment_due_date.split('-').reverse().join('');		
 				if(payment_due_date<transaction_date){
@@ -234,7 +235,7 @@ $('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj
 				}else{
 				$(this).closest('td').find(".er").remove();	
 				}	
-					
+		}		
 		});	
 
 

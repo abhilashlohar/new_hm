@@ -47,15 +47,11 @@ $(document).ready(function(){
 		$('#contact-form').validate({
 	    rules: {
 	      pass: {
-	       
-	        required: true
-			
-	      },
+	          required: true
+		 },
 		   cpass: {
-	       
-	        equalTo: "#register_password"
-			
-	      }
+	            equalTo: "#register_password"
+		  }
 		  
 	     
 	    },

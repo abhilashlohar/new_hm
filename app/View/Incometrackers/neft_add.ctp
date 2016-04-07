@@ -2,35 +2,29 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
-
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////// ?>
 <?php
-//echo $d = date('Y-m-d',($d_from));
-//echo $t = date('Y-m-d',($d_to));
-foreach($cursor1 as $collection)
-{
-$type = @$collection['society']['neft_type'];
-$neft_detail = @$collection['society']['neft_detail'];
-}
-if($type == "ALL")
-{
-$account_name = $neft_detail['account_name'];	
-$bank_name = $neft_detail['bank_name'];
-$account_number = $neft_detail['account_number'];
-$branch = $neft_detail['branch'];
-$ifsc_code = $neft_detail['ifsc_code'];	
+	foreach($cursor1 as $collection){
+		$type = @$collection['society']['neft_type'];
+			$neft_detail = @$collection['society']['neft_detail'];
+	}
+if($type == "ALL"){
+	$account_name = $neft_detail['account_name'];	
+		$bank_name = $neft_detail['bank_name'];
+			$account_number = $neft_detail['account_number'];
+				$branch = $neft_detail['branch'];
+					$ifsc_code = $neft_detail['ifsc_code'];	
 }
 else
 {
-$account_name = "";
-$bank_name = "";
-$account_number = "";
-$branch = "";
-$ifsc_code = "";	
+	$account_name = "";
+		$bank_name = "";
+			$account_number = "";
+				$branch = "";
+					$ifsc_code = "";	
 }
 ?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
+
 <table  align="center" border="1" bordercolor="#FFFFFF" cellpadding="0">
 <tr>
 <td><a href="<?php echo $webroot_path; ?>Incometrackers/select_income_heads" class="btn" rel='tab'>Selection of Income Heads</a>
@@ -55,7 +49,7 @@ $ifsc_code = "";
 <td><a href="<?php echo $webroot_path; ?>Incometrackers/map_other_members" class="btn" rel='tab'>Advance</a></td>
 </tr>
 </table> 
-<?php /////////////////////////////////////////////////////////////////////// ?>
+
 <form method="post" id="contact-form">
 <div class="portlet box blue">
 <div class="portlet-title">
@@ -142,6 +136,12 @@ $wing_id = (int)$data['wing']['wing_id'];
 </div>
 <br />
 
+<label style="font-size:14px;">Repeate Account Number<span style="color:red;">*</span></label>
+<div class="controls">
+<input type="text" name="acnu2" class="m-wrap span9" id="acn2" value="<?php echo $account_number; ?>"/>
+<label id="acn2"></label>
+</div>
+<br />
 
 <label style="font-size:14px;">Branch<span style="color:red;">*</span></label>
 <div class="controls">
@@ -175,10 +175,12 @@ $wing_id = (int)$data['wing']['wing_id'];
 </form>
 
 
-<?php /////////////////////////////////////////////////////////////////////// ?>
 
 <script>
 $(document).ready(function(){
+$('#acn2').bind('paste', function(){
+  return false
+});
 
 jQuery.validator.addMethod("ifc", function(value, element) {
 return this.optional(element) || /^([a-zA-Z]){4}([0]){1}([a-zA-Z0-9]){6}?$/.test( value );
@@ -211,8 +213,10 @@ acnu : {
 	number:true
 },
 
-	
-	
+acnu2 : {
+ equalTo: "#acn"	
+},
+
 bank_name: {
 required: true
 },

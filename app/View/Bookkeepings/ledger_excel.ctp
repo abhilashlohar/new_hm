@@ -243,7 +243,7 @@ $creater_name = $ussrrr['user']['user_name'];
 				$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 
 				'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($vendor_id)));
 				foreach($subleddger_detaill as $subledger_datttaa){
-				echo $user_name = $subledger_datttaa['ledger_sub_account']['name'];
+				$user_name = $subledger_datttaa['ledger_sub_account']['name'];
 				}
 				
 				

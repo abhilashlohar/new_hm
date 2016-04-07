@@ -91,7 +91,7 @@ if(sizeof($result_regular_bill_temp)>0){
 				<div class="control-group">
 				  <label class="control-label">Billing Cycle<span style="color:red;">*</span></label>
 				  <div class="controls">
-					<select class="span6 m-wrap" name="billing_cycle">
+					<select class="span6 m-wrap" name="billing_cycle" required="required">
 						<option value="" >--Billing Cycle--</option>
 						<option value="1">Monthly</option>
 						<option value="2">Bi-Monthly</option>
@@ -105,14 +105,14 @@ if(sizeof($result_regular_bill_temp)>0){
 			   <div class="control-group">
 				  <label class="control-label">Billing Start Date<span style="color:red;">*</span></label>
 				  <div class="controls">
-					<input type="text" name="start_date" class="m-wrap span7 date-picker" data-date-format="dd-mm-yyyy" placeholder="Billing Start Date">
+					<input type="text" name="start_date" class="m-wrap span7 date-picker" data-date-format="dd-mm-yyyy" placeholder="Billing Start Date" required="required">
 				  </div>
 			   </div>
 			   
 			    <div class="control-group">
 				  <label class="control-label">Payment Due Date<span style="color:red;">*</span></label>
 				  <div class="controls">
-					<input type="text" name="due_date" class="m-wrap span7 date-picker" data-date-format="dd-mm-yyyy" placeholder="Payment Due Date"style="border-color:rgb(206, 73, 73);" >
+					<input type="text" name="due_date" class="m-wrap span7 date-picker" data-date-format="dd-mm-yyyy" placeholder="Payment Due Date"style="border-color:rgb(206, 73, 73);" required="required">
 				  </div>
 			   </div>
 			</div>

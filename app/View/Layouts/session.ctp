@@ -4,6 +4,7 @@
 <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
+
 <?php
 echo $this->fetch('meta');
 $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'webroot_path'));
@@ -299,7 +300,7 @@ $(document).ready(function() {
    <!-- BEGIN CONTAINER -->
    <div class="page-container row-fluid">
       <!-- BEGIN SIDEBAR -->
-      <div class="page-sidebar nav-collapse collapse">
+      <div class="page-sidebar nav-collapse collapse" style="position: fixed; width: 225px ! important; height: 0px;">
          <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
          <div class="clearfix"></div>
          <!-- END RESPONSIVE QUICK SEARCH FORM -->

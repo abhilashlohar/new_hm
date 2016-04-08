@@ -17,9 +17,9 @@ $am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' 
 foreach ($cursor2 as $collection) 
 {
 $society_name = $collection['society']['society_name'];
-$society_reg_no = $collection['society']['society_reg_num'];
-$society_address = $collection['society']['society_address'];
-$sig_title = $collection['society']['sig_title'];
+@$society_reg_no = @$collection['society']['society_reg_num'];
+@$society_address = @$collection['society']['society_address'];
+@$sig_title = @$collection['society']['sig_title'];
 }
 $ussrr_dataa=$this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'), array('pass' => array($prepaired_by)));
 foreach ($ussrr_dataa as $usssrr) 

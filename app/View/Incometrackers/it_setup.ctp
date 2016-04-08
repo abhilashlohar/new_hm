@@ -1,9 +1,6 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
-
-
-<?php ////////////////////////////////////////////////////////////////////////////////// ?>
      
 <table  align="center" border="1" bordercolor="#FFFFFF" cellpadding="0">
 <tr>
@@ -29,7 +26,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <td><a href="<?php echo $webroot_path; ?>Incometrackers/map_other_members" class="btn" rel='tab'>Advance</a></td>
 </tr>
 </table> 
-<?php /////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
+
 <div style="background-color:#fff;padding:5px;width:96%;margin:auto; overflow:auto;" class="form_div">
 <h4 style="color: #09F;font-weight: 500;border-bottom: solid 1px #DAD9D9;padding-bottom: 10px;"><i class="icon-money"></i>Add New Remarks</h4>
 
@@ -123,31 +120,16 @@ $(".edit_tems").live('click',function(){
 
 
  $(".save_edited_terms").live('click',function(){
-	
 		var t_id=$(this).attr("tems_id");
-		 
 		var tems_name=$("#description").val();
 		var temnam=encodeURIComponent(tems_name);
-		
-		//var des=encodeURIComponent(des1);
-		//var close_date1=$("#close_date").val();
-		//var close_date=encodeURIComponent(close_date1);
-		
 		$("#tt"+t_id).html(tems_name);
-		//$("#close_date"+p_id).html(close_date1);
-			
 		$("#tems_edit_content").load('<?php echo $this->webroot; ?>Incometrackers/edit_terms?t_id='+t_id+'&tem='+temnam+'&edit=1', function() {
-			
 		});
-			
-		
-		
 	 });
-	 
-	 
 });
 </script>
-<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
+
 <script>
 $(document).ready(function(){
 $.validator.setDefaults({ ignore: ":hidden:not(select)" });

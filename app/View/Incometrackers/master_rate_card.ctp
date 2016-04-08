@@ -1,6 +1,7 @@
 <?php
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
+<center>
 <div>
 <a href="<?php echo $webroot_path; ?>Incometrackers/select_income_heads" class="btn" rel='tab'>Selection of Income Heads</a>
 <a href="<?php echo $webroot_path; ?>Incometrackers/master_rate_card" class="btn yellow" style="font-size:16px;" rel='tab'>Rate Card</a>
@@ -12,7 +13,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 <a href="<?php echo $webroot_path; ?>Incometrackers/map_other_members" class="btn" rel='tab'>Advance</a>
 </div>
 <br/>
-
+</center>
 <?php if($count == 0){ ?>
 <div id="output"><span class="label label-important">NOTE</span><span> No need to save this form. The system will automatically save updated data. </span></div>
 <div style="background-color: rgb(255, 255, 255);padding: 5px;overflow-x: auto;">

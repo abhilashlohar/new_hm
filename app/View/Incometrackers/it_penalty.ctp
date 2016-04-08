@@ -1,9 +1,7 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
-
-
-<?php /////////////////////////////////////////////////////////////////////////////////////////////// ?>            
+           
 <table  align="center" border="1" bordercolor="#FFFFFF" cellpadding="0">
 <tr>
 <td><a href="<?php echo $webroot_path; ?>Incometrackers/select_income_heads" class="btn" rel='tab'>Selection of Income Heads</a>
@@ -28,10 +26,12 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <td><a href="<?php echo $webroot_path; ?>Incometrackers/map_other_members" class="btn" rel='tab'>Advance</a></td>
 </tr>
 </table> 
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
+
 <form method="post" id="contact-form">
 <center>
+<div id="output"><span class="label label-important">NOTE</span><span> No need to save this form. The system will automatically save updated data. </span></div>
 <div style="width:60%; border:solid 1px #F00; background-color:white;">
+
 <h4 style="color:red;"><b>Penalty Option</b></h4>
 <h5 style="color:red"><b>Enter Penalty in Percentage</b></h5>
 <table border="0">
@@ -65,56 +65,41 @@ From First day
 <label id="tax"></label>
 </td>
 </tr>
-</table>
+</table><!--
 <div style="">
 <button class="btn green" name="sub" >Update</button>
-</div>
+</div>-->
 <br />
 </div>
 </center>
-
 </form>
-<?php /////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
-<script>
-$(document).ready(function(){
-		$.validator.setDefaults({ ignore: ":hidden:not(select)" });
-		
-		$('#contact-form').validate({
-		
-		errorElement: "label",
-                    //place all errors in a <div id="errors"> element
-                    errorPlacement: function(error, element) {
-                        //error.appendTo("label#errors");
-						error.appendTo('label#' + element.attr('id'));
-                    },
-					
-	    rules: {
-	      tax: {
-	           required: true,
-			   number: true
-	           },
-		type: 
-		    {  
-            required: true
-		    }
-	
-		},
-			highlight: function(element) {
-				$(element).closest('.control-group').removeClass('success').addClass('error');
-			},
-			success: function(element) {
-				element
-				.text('OK!').addClass('valid')
-				.closest('.control-group').removeClass('error').addClass('success');
-			}
-	  });
 
-}); 
+<script>
+$('input[name="tax"]').die().live("keyup",function(){
+	var tax=$(this).val();
+	if($.isNumeric(tax)){
+	}else{
+		$(this).val('');	
+	}
+});
 </script>
 
+<script>
+$(document).ready(function(){
+	$("input").bind("blur keyup",function(){
+		var penalty=$(this).val();
+			$("#output").html("Saving changes...");
+			$.ajax({
+				url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_penalty/"+penalty,
+			}).done(function(response){
+				$("#output").html("<span class='label label-important'>NOTE</span><span> No need to save this form. The system will automatically save updated data. </span>");
+			});
+		
+		
+	});
+});
 
-
+</script>
 
 
 

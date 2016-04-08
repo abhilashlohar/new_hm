@@ -8375,15 +8375,18 @@ $output = json_encode(array('type'=>'success', 'text' => 'supplimentry_bill_view
 $output = json_encode(array('type'=>'success', 'text' => 'supplimentry_bill_view2?from='.$from.'&due='.$due.'&ih='.$in_head.'
 &amt='.$amountt.'&des='.$descc.'&typ='.$bill_typp.'&user='.$user_idd.''));
 die($output);	
-		
-		
-		
 		}	
-		
 		}
-		
 		}
-		
-////////////////////////////////////End Supplimentry Bill Json /////////////////////////////////////////////
+//End Supplimentry Bill Json //
+//Start auto_save_penalty//
+function auto_save_penalty($penalty=null)
+{
+$s_society_id=(int)$this->Session->read('hm_society_id');
+	
+$this->loadmodel('society');
+$this->society->updateAll(array("tax"=>(int)$penalty),array('society_id'=>$s_society_id));
+}
+//End auto_save_penalty//
 }
 ?>

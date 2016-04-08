@@ -678,7 +678,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			<td><?php echo $source; ?></td>
           	<td><?php
            if($receipt_source == "bank_payment") { 
-		   echo '<a href="'.$this->webroot.'Cashbanks/bank_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } ?>
+		   echo $refrence_no; } ?>
            </td>
             <td style="text-align:right;"><?php echo $amttt; ?></td>
 			<td style="text-align:right;"><?php echo $credit; ?></td>
@@ -698,20 +698,20 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			<td><?php echo $source; ?></td>
             <td>
 			<?php if($table_name=="regular_bill"){
-				echo '<a href="'.$this->webroot.'Incometrackers/regular_bill_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
+				echo $refrence_no;
 			}
 			if($table_name=="cash_bank"){
 				if($receipt_source == "bank_receipt")
 				{
-				echo '<a href="'.$this->webroot.'Cashbanks/bank_receipt_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>';
-			}else if($receipt_source == "bank_payment") { echo '<a href="'.$this->webroot.'Cashbanks/bank_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } else if($receipt_source == "petty_cash_payment") { echo '<a href="'.$this->webroot.'Cashbanks/petty_cash_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; }else if($receipt_source == "petty_cash_receipt"){
-				 echo '<a href="'.$this->webroot.'Cashbanks/petty_cash_receipt_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } } ?>
+				echo $refrence_no;
+			}else if($receipt_source == "bank_payment") { echo $refrence_no; } else if($receipt_source == "petty_cash_payment") { echo $refrence_no; }else if($receipt_source == "petty_cash_receipt"){
+				 echo $refrence_no; } } ?>
 				 
 			<?php if($table_name=="journal"){
-				echo '<a href="'.$this->webroot.'Bookkeepings/journal_voucher_view/'.$journal_voucher_id.'" target="_blank">'.$journal_voucher_id.'</a>';
+				echo $journal_voucher_id;
 			}?>
 				<?php if($table_name=="supplimentry_bill"){
-				echo '<a href="'.$this->webroot.'Incometrackers/supplimentry_view/'.$adhoc_id.'" target="_blank">'.$supplimentry_receipt.'</a>';
+				echo $supplimentry_receipt;
 			}?> 
 			
 			<?php if($table_name=="expense_tracker"){

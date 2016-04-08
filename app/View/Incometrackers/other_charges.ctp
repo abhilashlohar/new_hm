@@ -81,6 +81,7 @@ $income_arrr[] = $data;
 							<select name="income_head"  id="income_head" class="m-wrap large chosen" data-placeholder="Select Income Head" tabindex="1">
 								<option value="">
 								<?php
+					if(!empty($income_arrr)){
 					for($r=0; $r<sizeof($income_arrr); $r++)
 					{ 
 					$income_id = (int)$income_arrr[$r];
@@ -90,6 +91,7 @@ $income_arrr[] = $data;
 					{
 					$ac_name = $collection2['ledger_account']['ledger_name'];
 					$ac_id = (int)$collection2['ledger_account']['auto_id'];		
+					}
 					}
 									?>
 								<option value="<?php echo $ac_id; ?>"><?php echo $ac_name; ?>

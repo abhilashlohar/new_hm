@@ -57,9 +57,11 @@ foreach ($user_wing as $collection)
 $q++;
 $wing_name=$collection['wing']['wing_name'];
 ?>
-<tr class="odd gradeX" >
+<tr class="odd gradeX">
 <td><?php echo $q; ?></td>
-<td><?php echo $wing_name; ?></td></tr>
+<td><?php echo $wing_name; ?></td>
+<td><a href="#" class="btn mini red"><i class="icon-trash"></i></a></td>
+</tr>
 <?php } ?>
 </tbody>
 </table>

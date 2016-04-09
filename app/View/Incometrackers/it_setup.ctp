@@ -27,52 +27,6 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </tr>
 </table> 
 
-
-<div class="portlet box blue">
-<div class="portlet-title">
-<h4 class="block">Add New Remarks</h4>
-</div>
-<div class="portlet-body form">
-
-
-
-
-
-
-<div class="form-actions">
-<button type="submit" class="btn blue">Save</button>
-<button type="button" class="btn">Cancel</button>
-</div>
-</div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
 <div style="background-color:#fff;padding:5px;width:96%;margin:auto; overflow:auto;" class="form_div">
 <h4 style="color: #09F;font-weight: 500;border-bottom: solid 1px #DAD9D9;padding-bottom: 10px;"><i class="icon-money"></i>Add New Remarks</h4>
 
@@ -128,7 +82,7 @@ $terms_name = $terms_con[$i];
 </div>
 </div>
 
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////// ?>
+
 <script>
 $(document).ready(function() {
  $(".delete_tems").live('click',function(){
@@ -207,7 +161,7 @@ element
 	
 </div>
 </div>
--->
+
 
 
 

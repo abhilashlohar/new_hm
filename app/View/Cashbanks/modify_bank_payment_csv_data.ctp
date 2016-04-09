@@ -498,17 +498,28 @@ var ledger_data=$(this).val();
 			}
 		});	
 
+	$('input[field=inst]').die().live("keyup blur",function(i, obj){
+			var inst=$(this).val();
+			var mode=$(this).closest("td").find('select[field=mode]').val();
+			if(mode=="" || inst==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<p class="er">Required</p>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});	
 
-
-
-
-
-
-
-
-
-
-
+	$('input[field="amt"]').die().live("keyup blur",function(i, obj){
+			var amount=$(this).val();
+			if(amount==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Amount Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
 		
 });
 </script>

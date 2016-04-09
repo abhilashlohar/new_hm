@@ -10928,7 +10928,7 @@ function resident_approve_resend_sms()
 	
 $this->layout='blank';
 $user_temp_id=(int)$this->request->query('con');
-/*
+
 $s_society_id=(int)$this->Session->read('hm_society_id');
 $result_society=$this->society_name($s_society_id);
 foreach($result_society as $dd)
@@ -10964,12 +10964,11 @@ $sms="".$user_name.", Your housing society ".$s_n." has enrolled you in HousingM
 $sms1=str_replace(" ", '+', $sms);
 $payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');
 
-
 $this->loadmodel('user');
 $this->user->updateAll(array('password'=>$random,'signup_random'=>$random),array('user_id'=>$user_temp_id)); 
  
 }
-*/
+
 }
 
 

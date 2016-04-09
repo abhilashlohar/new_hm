@@ -201,10 +201,10 @@ $(document).ready(function(){
 	
 	$( "#final_import" ).click(function(){
 		var allow="yes";
-		/*
+		
 		$('#report_tb tbody tr input[field="transaction_date"]').die().each(function(ii, obj){
 			var transaction_date=$(this).val();
-			transaction_date=transaction_date.split('-').reverse().join('');
+		transaction_date=transaction_date.split('-').reverse().join('');
 			
 			var f_y=$("#f_y").val();
 			var f_y2=f_y.split(',');
@@ -217,19 +217,24 @@ $(document).ready(function(){
 				to=to.split('-').reverse().join('');
 				
 				if(transaction_date>=from && transaction_date<=to){
-					$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').find(".er").remove();
+					//$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').find(".er").remove();
 					al=al+1;
 				}else{
-					$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').find(".er").remove();
-					$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').append('<p class="er">Not in financial year</p>');
+					//$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').find(".er").remove();
+					//$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').append('<p class="er">Not in financial year</p>');
 					al=al+0;
 					
 				}
 			});
 			if(al==0){
+					$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').find(".er").remove();
+					$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').append('<p class="er">Not in financial year</p>');
 				allow="no";
 			}
-		}); */
+			else{
+				$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').find(".er").remove();
+			}
+		}); 
 		
 		$('#report_tb tbody tr select[field=ledger_data]').each(function(i, obj){
 			var ledger_data=$(this).val();

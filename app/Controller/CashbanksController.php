@@ -8282,7 +8282,7 @@ function auto_save_bank_payment($record_id=null,$field=null,$value=null){
 		
 		
 			$this->loadmodel('payment_csv_converted');
-			$this->payment_csv_converted->updateAll(array("trajection_date" => $value),array("auto_id" => $record_id));
+			$this->payment_csv_converted->updateAll(array("trajection_date" => $value),array("auto_id"=>$record_id));
 			echo "T";
 		
 	}
@@ -8360,7 +8360,7 @@ function auto_save_bank_payment($record_id=null,$field=null,$value=null){
 	}
 }
 //End auto_save_bank_payment//
-////////////// Start check_bank_payment_csv_validation /////////////////////////
+//Start check_bank_payment_csv_validation//
 function check_bank_payment_csv_validation()
 {
 $this->layout=null;

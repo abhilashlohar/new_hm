@@ -295,6 +295,8 @@ $('input[name="amount[]"]').die().live("keyup blur",function(){
 		}else{
 			$(this).closest('td').find(".er").remove();
 		}
+		$(this).val($(this).val().toString().replace(/^[0-9]\./g, ',')
+    .replace(/\./g, ''));
 		if($.isNumeric(amount))
 		{
 		}else{

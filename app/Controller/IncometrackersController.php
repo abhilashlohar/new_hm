@@ -6000,8 +6000,8 @@ $this->set('cursor1',$cursor1);
 
 
 }
-////////////////////////// End master noc view///////////////////////////////////////
-///////////////////// Start IT Penalty (Accounts)///////////////////////////////////
+//End master noc view//
+//Start IT Penalty (Accounts)//
 function it_penalty()
 {
 if($this->RequestHandler->isAjax()){
@@ -6021,7 +6021,6 @@ if(isset($this->request->data['sub']))
 {
 $type = (int)$this->request->data['type'];
 $tax = $this->request->data['tax'];
-
 $this->loadmodel('society');
 $this->society->updateAll(array('tax'=>$tax,"tax_type"=>$type),array('society_id'=>$s_society_id));
 
@@ -8385,7 +8384,7 @@ function auto_save_penalty($penalty=null)
 $s_society_id=(int)$this->Session->read('hm_society_id');
 	
 $this->loadmodel('society');
-$this->society->updateAll(array("tax"=>(int)$penalty),array('society_id'=>$s_society_id));
+$this->society->updateAll(array("tax"=>$penalty),array('society_id'=>$s_society_id));
 }
 //End auto_save_penalty//
 }

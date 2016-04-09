@@ -261,6 +261,23 @@ function modify_bank_receipt_csv_data($page=null){
 	$page=(int)$page;
 	$this->set('page',$page);
 	
+	$this->loadmodel('financial_year');
+	$conditions=array("society_id" => $s_society_id,"status"=>1);
+	$financial_years=$this->financial_year->find('all',array('conditions'=>$conditions));
+	$financial_year_array=array();
+	foreach($financial_years as $financial_year){
+		$from=date("d-m-Y",$financial_year["financial_year"]["from"]);
+		$to=date("d-m-Y",$financial_year["financial_year"]["to"]);
+		$pair=array($from,$to);
+		$pair=implode('/',$pair);
+		$financial_year_array[]=$pair;
+	}
+	$financial_year_string=implode(',',$financial_year_array);
+	$this->set(compact("financial_year_string"));
+	
+	
+	
+	
 	$this->loadmodel('import_record');
 	$conditions=array("society_id" => $s_society_id,"module_name" => "BR");
 	$result_import_record = $this->import_record->find('all',array('conditions'=>$conditions));
@@ -8279,8 +8296,6 @@ function auto_save_bank_payment($record_id=null,$field=null,$value=null){
 	$record_id=(int)$record_id; 
 		  
 	if($field=="transaction_date"){
-		
-		
 			$this->loadmodel('payment_csv_converted');
 			$this->payment_csv_converted->updateAll(array("trajection_date" => $value),array("auto_id"=>$record_id));
 			echo "T";

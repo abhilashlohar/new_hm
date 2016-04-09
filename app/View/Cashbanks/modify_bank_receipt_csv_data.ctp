@@ -3,8 +3,10 @@ input.m-wrap[type="text"]{
 	background-color:#FFF !important;
 }
 </style>
+<input type="hidden" value="<?php echo $financial_year_string; ?>" id="f_y"/>
 <div style="background-color:#FFF;">
 <table id="report_tb" class="table table-bordered table-condensed" width="100%">
+	<thead>
 	<tr>
 		<th>Transaction Date</th>
 		<th>Deposited In</th>
@@ -15,6 +17,8 @@ input.m-wrap[type="text"]{
 		<th>Narration</th>
 		<th>Delete</th>
 	</tr>
+	</thead>
+	<tbody>
 	<?php foreach($result_bank_receipt_converted as $receipt_converted){ 
 		$auto_id=$receipt_converted["bank_receipt_csv_converted"]["auto_id"];
 		$trajection_date=$receipt_converted["bank_receipt_csv_converted"]["trajection_date"];
@@ -106,7 +110,7 @@ input.m-wrap[type="text"]{
 		</td>
 		<td valign="top">
 			<div class="member">
-			<select class="m-wrap chosen" style="width=100%;" record_id="<?php echo $auto_id; ?>" field="ledger_sub_account_id" >
+			<select class="m-wrap chosen" style="width=100%;" record_id="<?php echo $auto_id; ?>"field="ledger_sub_account_id" >
 				<option value="" style="display:none;">Select...</option>
 				 <?php
 				foreach ($result_members as $member_info){
@@ -149,6 +153,7 @@ input.m-wrap[type="text"]{
 		</td>
 	</tr>
 	<?php } ?>
+	</tbody>
 </table>
 </div>
 <?php if(empty($page)){ $page=1;} ?>
@@ -214,6 +219,49 @@ $(document).ready(function() {
 	
 	$( "#final_import" ).click(function() {
 		var allow="yes";
+		
+		$('#report_tb tbody tr input[field="trajection_date"]').die().each(function(ii, obj){
+			
+			var trajection_date=$(this).val();
+			trajection_date=trajection_date.split('-').reverse().join('');
+			
+			var f_y=$("#f_y").val();
+			var f_y2=f_y.split(',');
+			var al=0;
+			$.each(f_y2, function( index, value ) {
+				var f_y3=value.split('/');
+				var from2=f_y3[0];
+				from2=from2.split('-').reverse().join('');
+				var to=f_y3[1];
+				to=to.split('-').reverse().join('');
+				if(trajection_date>=from2 && trajection_date<=to){
+					
+					//$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').find(".er").remove();
+					al=al+1;
+					
+				}else{
+					//$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').find(".er").remove();
+					//$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').append('<p class="er">Not in financial year</p>');
+					al=al+0;
+					
+				}
+			});
+			if(al==0){
+					$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').find(".er").remove();
+					$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').append('<p class="er">Not in financial year</p>');
+				allow="no";
+			}
+			else{
+				$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').find(".er").remove();
+			}
+		}); 
+		
+		
+		
+		
+		
+		
+		
 		$('#report_tb tbody tr select[field=deposited_in]').each(function(i, obj) {
 			var deposited_in=$(this).val();
 			if(deposited_in==""){

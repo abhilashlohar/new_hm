@@ -89,8 +89,8 @@ if($status5==1)
 {
 ?>
 $.gritter.add({
-title: 'Financial Year',
-text: '<p>Thank you.</p><p>The Financial year added successfully.</p>',
+title: 'Success',
+text: '<p>The Financial year added successfully.</p>',
 sticky: false,
 time: '10000',
 });
@@ -101,7 +101,24 @@ $this->requestAction(array('controller' => 'hms', 'action' => 'griter_notificati
 </script> 
 
 
-
+<script>
+$(document).ready(function() {
+<?php	
+$financial_status=(int)$this->Session->read('financial_status');
+if($financial_status==1)
+{
+?>
+$.gritter.add({
+title: 'Success',
+text: '<p>The Financial year Updated successfully.</p>',
+sticky: false,
+time: '10000',
+});
+<?php
+$this->requestAction(array('controller' => 'hms', 'action' => 'griter_notification'), array('pass' => array('financial_status')));
+} ?>
+});
+</script> 
 
 
 

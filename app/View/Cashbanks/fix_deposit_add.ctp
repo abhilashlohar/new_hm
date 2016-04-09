@@ -260,8 +260,8 @@ if($status5==1)
 {
 ?>
 $.gritter.add({
-title: 'Fixed Deposit',
-text: '<p>Thank you.</p><p>Fixed Deposit generated successfully.</p>',
+title: 'Sucess',
+text: '<p>Fixed Deposit generated successfully.</p>',
 sticky: false,
 time: '10000',
 });

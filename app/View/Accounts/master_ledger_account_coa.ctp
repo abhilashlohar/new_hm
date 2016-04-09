@@ -2,7 +2,6 @@
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
 
-<?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////?>
 <center>
 <a href="<?php echo $webroot_path; ?>Accounts/master_ledger_account_coa" class="btn yellow" rel='tab'>Ledger Accounts Add</a>
 <a href="<?php echo $webroot_path; ?>Accounts/master_ledger_sub_accounts_coa" class="btn" rel='tab'>Ledger Sub Accounts Add</a>
@@ -11,7 +10,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </center>
 <input type="hidden" id="yy" value="<?php echo $y; ?>" />
 <input type="hidden" id="ledger" value="<?php echo $ledger2; ?>" />
-<?php /////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
+
 <form method="post" id="contact-form"> 
 <div class="portlet box blue">
 <div class="portlet-title">
@@ -178,8 +177,8 @@ if($status5==1)
 {
 ?>
 $.gritter.add({
-title: 'Ledger Account',
-text: '<p>Thank you.</p><p>Ledger Account added sucessfully.</p>',
+title: 'Success',
+text: '<p>Ledger Account added sucessfully.</p>',
 sticky: false,
 time: '10000',
 });

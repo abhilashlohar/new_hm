@@ -2445,27 +2445,7 @@ $this->loadmodel('fix_deposit');
 $multipleRowData = Array( Array("auto_id" => $i, "bank_name" => $bank_name,  "branch" => $branch, "account_reference" => $account_reference, "prepaired_by" => $s_user_id, 
 "principal_amount" => $principal_amount, "start_date" => $start_date,"maturity_date" => $maturity_date, "interest_rate" => $interest_rate,"remark" => $remark, "reminder" => $reminder,"name" => $name, "society_id" => $s_society_id, "email" => $email,"mobile" => $mobile, "current_date"=>$current_date));
 $this->fix_deposit->saveAll($multipleRowData);
-?>
 
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-header">
-<center>
-<h3 id="myModalLabel3" style="color:#999;"><b>Fix Deposit</b></h3>
-</center>
-</div>
-<div class="modal-body">
-<center>
-<h5><b>Record Inserted Successfully</b></h5>
-</center>
-</div>
-<div class="modal-footer">
-<a href="fix_deposit_view" class="btn blue">OK</a>
-</div>
-</div>
-
-
-<?php
 }
 
 $this->loadmodel('reference');

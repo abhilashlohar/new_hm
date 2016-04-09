@@ -88,8 +88,8 @@ if($status5==1)
 {
 ?>
 $.gritter.add({
-title: 'Journal',
-text: '<p>Thank you.</p><p>Journals generated successfully.</p>',
+title: 'Sccess',
+text: '<p>Journals generated successfully.</p>',
 sticky: false,
 time: '10000',
 });

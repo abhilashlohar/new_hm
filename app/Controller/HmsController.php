@@ -1774,7 +1774,9 @@ function griter_notification($id)
 	if($id=="petty_cash_receipt_update"){
 		$this->Session->delete('petty_cash_receipt_update');	
 	}
-	
+	if($id=="financial_status"){
+		$this->Session->delete('financial_status');	
+	}
 	
 	
 	

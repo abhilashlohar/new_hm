@@ -727,20 +727,7 @@ function master_financial_period_status()
 				$this->financial_year->updateAll(array("status" => 2),array('auto_id'=> $auto_id));	
 				}
 		    }
-?>
-
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body">
-<h4><b>Thank You!</b></h4>
-The Financial Year Updated Successfully
-</div>
-<div class="modal-footer">
-<a href="master_financial_period_status" class="btn red">OK</a>
-</div>
-</div>
-		
-<?php
+ $this->Session->write('financial_status', 1);
 	}
 		$this->loadmodel('financial_year');
 		$conditions=array("society_id" => $s_society_id);
@@ -774,9 +761,7 @@ function master_financial_year()
 		{
 			$from = $this->request->data['from'];	
 			$to = $this->request->data['to'];	
-
 			$m_from = date("Y-m-d", strtotime($from));
-
 			$m_to = date("Y-m-d", strtotime($to));
 
 	$a=$this->autoincrement('financial_year','auto_id');
@@ -784,9 +769,7 @@ function master_financial_year()
 	$multipleRowData = Array( Array("auto_id" => $a, "from" => strtotime($m_from), "to" => strtotime($m_to),"user_id"=>$s_user_id, "status"=> 1, "society_id" => $s_society_id));
 
 	$this->financial_year->saveAll($multipleRowData); 
-
     $this->Session->write('ffyyyy', 1);
-	
 	$this->redirect(array('action' => 'master_financial_period_status'));
 	 }
 		$this->loadmodel('financial_year');
@@ -4927,20 +4910,6 @@ if($reminder_for == 3){
 $this->loadmodel('society');
 $this->society->updateAll(array('reminder'=>$arrr),array('society_id'=>$s_society_id));
 }
-
-?>
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body">
-<h4><b>Thank You!</b></h4>
-<p>The Record Updated Successfully</p>
-
-</div>
-<div class="modal-footer">
-<a href="reminder_settings" class="btn red">OK</a>
-</div>
-</div>
-<?php
 $this->Session->write('remindrrr', 1);
 }
 

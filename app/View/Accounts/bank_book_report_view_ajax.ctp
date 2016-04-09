@@ -52,7 +52,7 @@ $narration = $dataaa['cash_bank']['narration'];
 	$subleddger_detaill=$this->requestAction(array('controller'=>'Fns','action'=> 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 	foreach($subleddger_detaill as $subledger_datttaa){
 	$user_name = $subledger_datttaa['ledger_sub_account']['name'];
-	$user_id_via_ledger_sub_account=$subledger_datttaa['ledger_sub_account']['user_id'];
+	@$user_id_via_ledger_sub_account=@$subledger_datttaa['ledger_sub_account']['user_id'];
 	}
 
 	$result_user_flat=$this->requestAction(array('controller'=>'Fns','action' => 'user_flat_info_via_user_id'), array('pass' => array((int)$user_id_via_ledger_sub_account)));

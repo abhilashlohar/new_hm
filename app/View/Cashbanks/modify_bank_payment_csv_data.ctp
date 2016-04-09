@@ -209,7 +209,7 @@ $(document).ready(function(){
 			var f_y=$("#f_y").val();
 			var f_y2=f_y.split(',');
 			var al=0;
-			$.each(f_y2, function( index, value ) {
+			$.each(f_y2, function( index, value ){
 				var f_y3=value.split('/');
 				var from=f_y3[0];
 				from=from.split('-').reverse().join('');
@@ -312,7 +312,6 @@ $(document).ready(function(){
 <script>
 $( document ).ready(function() {
 	$( 'input[type="text"]' ).blur(function() {
-		
 		var record_id=$(this).attr("record_id");
 		var field=$(this).attr("field");
 		var value=$(this).val();
@@ -321,15 +320,7 @@ $( document ).ready(function() {
 			url: "<?php echo $webroot_path; ?>Cashbanks/auto_save_bank_payment/"+record_id+"/"+field+"/"+value,
 		}).done(function(response){
 			
-			if(response=="F"){
-				$("#main_table tr#"+record_id+" td").each(function(){
-					$(this).find('input[field="'+field+'"]').parent("div").css("border", "solid 1px red");
-				});
-			}else{
-				$("#main_table tr#"+record_id+" td").each(function(){
-					$(this).find('input[field="'+field+'"]').parent("div").css("border", "");
-				});
-			}
+			
 		});
 	});
 	

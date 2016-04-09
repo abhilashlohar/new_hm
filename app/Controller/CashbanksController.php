@@ -502,7 +502,28 @@ function allow_import_bank_receipt(){
 		$deposited_in=(int)$receipt_converted["bank_receipt_csv_converted"]["deposited_in"];
 		$ledger_sub_account_id=$receipt_converted["bank_receipt_csv_converted"]["ledger_sub_account_id"];
 		$amount=(float)$receipt_converted["bank_receipt_csv_converted"]["amount"];
-		if(empty($deposited_in) or empty($ledger_sub_account_id) or empty($amount)){
+		$trajection_date=$receipt_converted["bank_receipt_csv_converted"]["trajection_date"];
+
+		$this->loadmodel('financial_year');
+		$conditions=array("society_id" => $s_society_id,"status"=>1);
+		$cursor = $this->financial_year->find('all',array('conditions'=>$conditions));
+		$abc = 555;
+		foreach($cursor as $collection){
+				$from = $collection['financial_year']['from'];
+				$to = $collection['financial_year']['to'];
+				$from1 = date('Y-m-d',($from));
+				$to1 = date('Y-m-d',($to));
+				$from2 = strtotime($from1);
+				$to2 = strtotime($to1);
+				$transaction1 = date('Y-m-d',strtotime($trajection_date));
+				$transaction2 = strtotime($transaction1);
+					if($transaction2 <= $to2 && $transaction2 >= $from2){
+					$abc = 5;
+					break;
+					}	
+		}
+
+		if(empty($deposited_in) or empty($ledger_sub_account_id) or empty($amount) or $abc==555){
 			die("not_validate");
 		}
 	}

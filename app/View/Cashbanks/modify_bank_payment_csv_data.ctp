@@ -474,26 +474,42 @@ $(document).ready(function(){
 			}
 		}); 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-$('select[field=deposited_in]').die().live("change",function(){
-		var ledger_sub_account=$(this).val();
-		if(ledger_sub_account==""){
-			$(this).closest('td').find(".er").remove();
-			$(this).closest('td').append('<span class="er">Required</span>');
+$('select[field=ledger_data]').die().live("change",function(i, obj){
+var ledger_data=$(this).val();
+	if(ledger_data==""){
+		$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<p class="er">Ledger A/c Required</p>');
 			allow="no";
-		}else{
-			$(this).closest('td').find(".er").remove();
-		}
-	});
+	}else{
+		$(this).closest('td').find(".er").remove();
+	}
+});
 
+
+	$('select[field=mode]').die().live("change",function(i, obj){
+			var mode=$(this).val();
+			var inst=$(this).closest("td").find('input[field=inst]').val();
+			if(mode=="" || inst==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<p class="er">Required</p>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});	
+
+
+
+
+
+
+
+
+
+
+
+
+		
 });
 </script>
 

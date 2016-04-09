@@ -1845,7 +1845,7 @@ $this->set('cursor2',$cursor2);
 
 
 }
-
+//Start b_receipt_edit//
 function b_receipt_edit($transaction_id=null){
 	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
@@ -1853,10 +1853,8 @@ function b_receipt_edit($transaction_id=null){
 	$this->layout='session';
 	}
 	$s_role_id = (int)$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id = (int)$this->Session->read('user_id');	
-
-	
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id = (int)$this->Session->read('hm_user_id');	
 	$this->ath();
 	
 	$this->loadmodel('ledger_sub_account');
@@ -1864,14 +1862,14 @@ function b_receipt_edit($transaction_id=null){
 	$cursor3=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 	$this->set('cursor3',$cursor3);
 
-	$this->loadmodel('new_cash_bank');
-	$conditions=array("transaction_id"=>(int)$transaction_id,"society_id"=>$s_society_id);
-	$cursor1=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
+	$this->loadmodel('cash_bank');
+	$conditions=array("auto_id"=>(int)$transaction_id,"society_id"=>$s_society_id);
+	$cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions));
 	$this->set('cursor1',$cursor1);
 	foreach($cursor1 as $receipt_data){
-		$receipt_id=$receipt_data["new_cash_bank"]["receipt_id"];
+		$receipt_id=$receipt_data["cash_bank"]["receipt_number"];
 		$receipt_id=$receipt_id.'-R';
-		$bill_one_time_id=$receipt_data["new_cash_bank"]["bill_one_time_id"];
+		
 	}
 	
 	if(isset($this->request->data['bank_receipt_update'])){
@@ -2229,7 +2227,7 @@ foreach($result_society as $data_society){
 	$email_is_on_off=(int)@$data_society["society"]["account_email"];
 	$sms_is_on_off=(int)@$data_society["society"]["account_sms"];
    }
-//////////////////////////////////////////////////////////////////////////
+
 
 
 if($email_is_on_off==1){

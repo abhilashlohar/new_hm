@@ -1,27 +1,26 @@
-
 <?php
 foreach($cursor1 as $data){
-$receipt_id=$data["new_cash_bank"]["receipt_id"];
-$transaction_date=$data["new_cash_bank"]["receipt_date"];
+$receipt_id=$data["cash_bank"]["receipt_number"];
+$transaction_date=$data["cash_bank"]["transaction_date"];
 $transaction_date=date("d-m-Y",($transaction_date));
-$receipt_mode=$data["new_cash_bank"]["receipt_mode"];
-if($receipt_mode == "Cheque")
+$receipt_mode=$data["cash_bank"]["receipt_mode"];
+if($receipt_mode == "Cheque" || $receipt_mode == "cheque" )
 {
-$cheque_number=@$data["new_cash_bank"]["cheque_number"];
-$which_bank=@$data["new_cash_bank"]["drawn_on_which_bank"];
-$receipt_date1 = @$data["new_cash_bank"]["cheque_date"];
+$cheque_number=@$data["cash_bank"]["cheque_number"];
+$which_bank=@$data["cash_bank"]["drawn_on_which_bank"];
+$receipt_date1 = @$data["cash_bank"]["cheque_date"];
 }
 else
 {
-$refrence_utr = @$data["new_cash_bank"]["reference_utr"];
-$receipt_date2 = @$data["new_cash_bank"]["cheque_date"];	
+$refrence_utr = @$data["cash_bank"]["reference_utr"];
+$receipt_date2 = @$data["cash_bank"]["cheque_date"];	
 }
 
-$member_type = (int)@$data["new_cash_bank"]["member_type"];
+$member_type = (int)@$data["cash_bank"]["member_type"];
 if($member_type == 1)
 {
-$receipt_type = @$data["new_cash_bank"]["receipt_type"];	
-$party_name_flat_id = @$data["new_cash_bank"]["flat_id"];	
+$receipt_type = @$data["cash_bank"]["receipt_type"];	
+$party_name_flat_id = @$data["cash_bank"]["flat_id"];	
 
 $ledger_sub_dettt = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_subLedger_detail_via_flat_id'),array('pass'=>array((int)$party_name_flat_id)));
 
@@ -41,12 +40,12 @@ $wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing
 }
 else
 {
-$party_name = @$data["new_cash_bank"]["party_name_id"];	
-$bill_reference = @$data["new_cash_bank"]["bill_reference"];		
+$party_name = @$data["cash_bank"]["party_name_id"];	
+$bill_reference = @$data["cash_bank"]["bill_reference"];		
 }
-$amount = @$data["new_cash_bank"]["amount"];
-$deposited_bank_id = @$data["new_cash_bank"]["deposited_bank_id"];
-$narration = @$data["new_cash_bank"]["narration"];
+$amount = @$data["cash_bank"]["amount"];
+$deposited_bank_id = @$data["cash_bank"]["deposited_in"];
+$narration = @$data["cash_bank"]["narration"];
 }
 	
 ?>
@@ -99,11 +98,11 @@ $bank_account_number = $db['ledger_sub_account']["bank_account"];
 Cheque
 </label>
 <label class="radio">
-<div class="radio" id="uniform-undefined"><span><input type="radio" name="receipt_mode" value="NEFT" style="opacity: 0;" id="mode" class="neft" onclick="neft_text_view()" <?php if($receipt_mode == "NEFT") { ?> checked="checked" <?php } ?>></span></div>
+<div class="radio" id="uniform-undefined"><span><input type="radio" name="receipt_mode" value="NEFT" style="opacity: 0;" id="mode" class="neft" onclick="neft_text_view()" <?php if($receipt_mode == "NEFT" || $receipt_mode == "neft") { ?> checked="checked" <?php } ?>></span></div>
 NEFT
 </label>
 <label class="radio">
-<div class="radio" id="uniform-undefined"><span><input type="radio" name="receipt_mode" value="PG" style="opacity: 0;" id="mode" class="pg" onclick="pg_show()" <?php if($receipt_mode == "PG") { ?> checked="checked" <?php } ?>></span></div>
+<div class="radio" id="uniform-undefined"><span><input type="radio" name="receipt_mode" value="PG" style="opacity: 0;" id="mode" class="pg" onclick="pg_show()" <?php if($receipt_mode == "PG" || $receipt_mode == "pg") { ?> checked="checked" <?php } ?>></span></div>
 PG
 </label> 
 <label id="mode"></label>
@@ -111,7 +110,7 @@ PG
 <br />
 		
 		 
-<div id="cheque_show_by_query" <?php if($receipt_mode != "Cheque") { ?> class="hide"  <?php } ?> >
+<div id="cheque_show_by_query" <?php if($receipt_mode != "Cheque" || $receipt_mode != "cheque") { ?> class="hide"  <?php } ?> >
 <label style="font-size:14px;">Cheque No.<span style="color:red;">*</span><span style="margin-left:12%;">Cheque Date<span style="color:red;">*</span></span></label>
 <div class="controls">
 <input type="text"  name="cheque_number" class="m-wrap span3 chhh1 ignore" placeholder="Cheque No." style="background-color:white !important;" id="ins" value="<?php echo @$cheque_number; ?>">
@@ -129,7 +128,7 @@ PG
 <br />
 </div>
 
-<div <?php if($receipt_mode == "Cheque") { ?> class="hide"  <?php } ?> id="neft_show">
+<div <?php if($receipt_mode == "Cheque" || $receipt_mode == "cheque") { ?> class="hide"  <?php } ?> id="neft_show">
 <label style="font-size:14px;">Reference/UTR #<span style="color:red;">*</span><span style="margin-left:15%;">Date<span style="color:red;">*</span></span></label>
 <div class="controls">
 <input type="text"  name="reference_number" class="m-wrap span4 nefftt1 ignore" placeholder="Reference/UTR #" style="background-color:white !important;" id="reff" value="<?php echo @$refrence_utr; ?>">&nbsp;&nbsp;

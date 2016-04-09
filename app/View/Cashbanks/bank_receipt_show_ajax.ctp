@@ -28,6 +28,7 @@
 				</tr>
 			</thead>
 			<tbody>
+			     <?php $total=0; ?> 
 			<?php foreach($receipts as $receipt){
 			
 				$auto_id=$receipt["cash_bank"]["auto_id"];
@@ -70,7 +71,9 @@
 				$receipt_mode=$receipt["cash_bank"]["receipt_mode"];
 				$cheque_number=$receipt["cash_bank"]["cheque_number"];
 				$narration=$receipt["cash_bank"]["narration"];
-				$amount=$receipt["cash_bank"]["amount"];?>
+				$amount=$receipt["cash_bank"]["amount"];
+				$total=$total+$amount;
+				?>
 				<tr>
 					<td><?php echo $receipt_number; ?></td>
 					<td><?php echo date("d-m-Y",$transaction_date); ?></td>
@@ -85,7 +88,7 @@
 					<td><?php echo $receipt_mode; ?></td>
 					<td><?php echo $cheque_number; ?></td>
 					<td><?php echo $narration; ?></td>
-					<td style="text-align: right;"><?php echo $amount; ?></td>
+					<td style="text-align: right;"><?php $amount_for_view=number_format($amount); echo $amount_for_view; ?></td>
 					<td>
 						<div class="btn-group" style="margin: 0px !important;">
 							<a class="btn blue mini" href="#" data-toggle="dropdown">
@@ -99,6 +102,10 @@
 					</td>
 				</tr>
 			<?php } ?>
+			<tr>
+			<th colspan="8" style="text-align:right;">Total</td>
+			<th style="text-align:right;"><?php $total_for_view=number_format($total); echo $total_for_view; ?></th>
+			<th></th>
 			</tbody>
 			<tfoot style="font-weight: 600;">
 				<tr>
@@ -107,7 +114,7 @@
 		</table>
 	</div>
 </div>
-<script>
+<script>/*
 $(document).ready(function(){
 	var tr=1; 
 	$('#receiptmain thead tr th').each(function(i, obj) {
@@ -134,5 +141,5 @@ $(document).ready(function(){
 			return !~text.indexOf(val);
 		}).hide();
 	});
-});
+}); */
 </script>

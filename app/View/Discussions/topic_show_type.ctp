@@ -1,7 +1,10 @@
 <?php
 if($type_list=="all"){ ?>
 <div align="center" style="color: rgb(84, 83, 83); font-weight: 600;">All Topics</div>
-		<?php foreach($posts as $post){
+		<?php 
+		if(empty($posts)){ echo'<center>No any record found </center>';  }
+		
+		foreach($posts as $post){
 			$discussion_post_id=$post["discussion_post"]["discussion_post_id"];
 			$topic=$post["discussion_post"]["topic"];
 			$date=$post["discussion_post"]["date"];
@@ -18,7 +21,9 @@ if($type_list=="all"){ ?>
 <?php
 if($type_list=="my"){ ?>
 <div align="center" style="color: rgb(84, 83, 83); font-weight: 600;">My Topics</div>
-		<?php foreach($posts as $post){
+		<?php 
+		if(empty($posts)){ echo'<center>No any record found </center>';  }
+		foreach($posts as $post){
 			$discussion_post_id=$post["discussion_post"]["discussion_post_id"];
 			$topic=$post["discussion_post"]["topic"];
 			$date=$post["discussion_post"]["date"];
@@ -38,7 +43,9 @@ if($type_list=="my"){ ?>
 <?php
 if($type_list=="archive"){ ?>
 <div align="center" style="color: rgb(84, 83, 83); font-weight: 600;">Archive Topics</div>
-		<?php foreach($posts as $post){
+		<?php 
+		if(empty($posts)){ echo'<center>No any record found </center>';  }
+		foreach($posts as $post){
 			$discussion_post_id=$post["discussion_post"]["discussion_post_id"];
 			$topic=$post["discussion_post"]["topic"];
 			$date=$post["discussion_post"]["date"];

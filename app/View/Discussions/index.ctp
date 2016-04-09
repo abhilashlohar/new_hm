@@ -13,7 +13,7 @@
 </table>
 </div>
 
-<div style="background-color: #FFF; padding: 0px 10px; border: 1px solid rgb(233, 231, 231);margin-top: 2px;">
+<div style="background-color: #FFF; padding: 0px 10px; border: 1px solid rgb(233, 231, 231);margin-top: 2px;min-height:500px;">
 	<div class="row-fluid" id="hello">
 		<div class="span6" id="topic_detail">
 			

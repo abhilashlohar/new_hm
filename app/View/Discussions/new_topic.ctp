@@ -4,7 +4,7 @@
 		<td style="white-space: nowrap;"><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-comments"></i> Discussion Forum</span></td>
 		<td align="right">
 			<a href="<?php echo $webroot_path; ?>Discussions/index/all" topic_type="all" role="button" rel="tab"  class="btn btn_menu select_type" style="margin-top: 5px; margin-bottom: 5px;"><i class="icon-cloud"></i> All Topics</a>
-			<a href="<?php echo $webroot_path; ?>Discussions/index/archives" rel="tab"  topic_type="my" role="button"  class="btn btn_menu select_type" style="margin-top: 5px; margin-bottom: 5px;"><i class="icon-heart"></i> My Topics</a>
+			<a href="<?php echo $webroot_path; ?>Discussions/index/my" rel="tab"  topic_type="my" role="button"  class="btn btn_menu select_type" style="margin-top: 5px; margin-bottom: 5px;"><i class="icon-heart"></i> My Topics</a>
 			<a href="<?php echo $webroot_path; ?>Discussions/new_topic" role="button" rel="tab" class="btn btn_menu btn_active" style="margin-top: 5px; margin-bottom: 5px;"><i class=" icon-plus-sign"></i> Start Topic</a>
 			<input class="m-wrap medium" placeholder="Search" id="search" style="margin-top: 5px; margin-bottom: 5px;" type="text">
 			<a href="<?php echo $webroot_path; ?>Discussions/index/archives" rel="tab"  topic_type="archive"  role="button"  class="btn btn_menu select_type" style="margin-top: 5px; margin-bottom: 5px;"><i class="icon-trash"></i> Archives</a>

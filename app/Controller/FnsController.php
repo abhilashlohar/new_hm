@@ -41,6 +41,7 @@ function hms_sms_ip(){
 	}
 }
 
+
 function hms_email_ip(){
 	$this->loadmodel('assistant');
 	$conditions=array('auto_id'=>3);

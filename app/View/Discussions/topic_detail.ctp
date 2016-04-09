@@ -7,6 +7,7 @@ $creator_user_id=$posts[0]["discussion_post"]["user_id"];
 $file=$posts[0]["discussion_post"]["file"];
 $date=$posts[0]["discussion_post"]["date"];
 $time=$posts[0]["discussion_post"]["time"];
+$status=$posts[0]["discussion_post"]["status"];
 $result_user=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($creator_user_id)));
 $user_name=$result_user["user_name"];			
 $wing_flat=$result_user["wing_flat"];
@@ -39,6 +40,7 @@ foreach($wing_flat as $data){
 <div id="comments">
 	
 </div>
+<?php if($status!=1){ ?>
 <div class="chat-form hide_at_print" style="margin-left: 5px;width: 94%;">
 	<form method="post" id="idForm">
 		<input type="hidden" value="<?php echo $discussion_post_id; ?>" name="post_id"/>
@@ -49,6 +51,7 @@ foreach($wing_flat as $data){
 		</div>
 	</form>
 </div>
+<?php } ?>
 <script>
 $(document).ready(function(){
 	function load_comments(){

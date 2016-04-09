@@ -5,11 +5,12 @@ if($type_list=="all"){ ?>
 			$discussion_post_id=$post["discussion_post"]["discussion_post_id"];
 			$topic=$post["discussion_post"]["topic"];
 			$date=$post["discussion_post"]["date"];
+			$result_count_comment=$this->requestAction(array('controller' => 'Discussions', 'action' => 'count_comment_via_discussion_post_id'), array('pass' => array($discussion_post_id)));
 			$time=$post["discussion_post"]["time"];?>
 			
-			<div class="topic" post_id="<?php echo $discussion_post_id; ?>">
+			<div class="topic show_list" post_id="<?php echo $discussion_post_id; ?>">
 				<div align="center" style="font-size: 14px;"><?php echo $topic; ?></div>
-				<div align="center"><span>(0 Comments ) </span><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp; <?php echo $time; ?></div>
+				<div align="center"><span>(<?php echo sizeof($result_count_comment); ?> Comments ) </span><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp; <?php echo $time; ?></div>
 			</div>
 <?php } } ?>
 
@@ -21,13 +22,15 @@ if($type_list=="my"){ ?>
 			$discussion_post_id=$post["discussion_post"]["discussion_post_id"];
 			$topic=$post["discussion_post"]["topic"];
 			$date=$post["discussion_post"]["date"];
+			$result_count_comment=$this->requestAction(array('controller' => 'Discussions', 'action' => 'count_comment_via_discussion_post_id'), array('pass' => array($discussion_post_id)));
 			$time=$post["discussion_post"]["time"];?>
-			<div class="topic" post_id="<?php echo $discussion_post_id; ?>">
-				<span class="pull-right move_archive tooltips" data-placement="top" post_id="<?php echo $discussion_post_id; ?>" data-original-title="close topics" >
-					<i class="icon-trash"></i>
+				<span class="btn mini pull-right move_archive tooltips" data-placement="top" post_id="<?php echo $discussion_post_id; ?>" style="margin-right: 15px;" data-original-title="close topics" >
+				<i class="icon-trash"></i>
 				</span>
+			<div class="topic show_list" post_id="<?php echo $discussion_post_id; ?>">
+				
 					<div align="center" style="font-size: 14px;"><?php echo $topic; ?></div>
-					<div align="center"><span>(0 Comments ) </span><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp; <?php echo $time; ?></div>
+					<div align="center"><span>(<?php echo sizeof($result_count_comment); ?>Comments ) </span><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp; <?php echo $time; ?></div>
 			</div>
 <?php } } ?>
 
@@ -39,12 +42,15 @@ if($type_list=="archive"){ ?>
 			$discussion_post_id=$post["discussion_post"]["discussion_post_id"];
 			$topic=$post["discussion_post"]["topic"];
 			$date=$post["discussion_post"]["date"];
+			$result_count_comment=$this->requestAction(array('controller' => 'Discussions', 'action' => 'count_comment_via_discussion_post_id'), array('pass' => array($discussion_post_id)));
 			$time=$post["discussion_post"]["time"];?>
-			<div class="topic" post_id="<?php echo $discussion_post_id; ?>">
-				<span class="pull-right delete_per" post_id="<?php echo $discussion_post_id; ?>">
+			<span class="btn mini pull-right delete_per" style="margin-right: 15px;" post_id="<?php echo $discussion_post_id; ?>">
 					<i class="icon-trash"></i>
-				</span>
+			</span>
+			
+			<div class="topic show_list" post_id="<?php echo $discussion_post_id; ?>">
+				
 					<div align="center" style="font-size: 14px;"><?php echo $topic; ?></div>
-					<div align="center"><span>(0 Comments ) </span><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp; <?php echo $time; ?></div>
+					<div align="center"><span>(<?php echo sizeof($result_count_comment); ?> Comments ) </span><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp; <?php echo $time; ?></div>
 			</div>
 <?php } } ?>

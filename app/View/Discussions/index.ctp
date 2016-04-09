@@ -14,7 +14,7 @@
 </div>
 
 <div style="background-color: #FFF; padding: 0px 10px; border: 1px solid rgb(233, 231, 231);margin-top: 2px;">
-	<div class="row-fluid">
+	<div class="row-fluid" id="hello">
 		<div class="span6" id="topic_detail">
 			
 		</div>
@@ -24,10 +24,11 @@
 			$discussion_post_id=$post["discussion_post"]["discussion_post_id"];
 			$topic=$post["discussion_post"]["topic"];
 			$date=$post["discussion_post"]["date"];
+			$result_count_comment=$this->requestAction(array('controller' => 'Discussions', 'action' => 'count_comment_via_discussion_post_id'), array('pass' => array($discussion_post_id)));
 			$time=$post["discussion_post"]["time"];?>
-			<div class="topic" post_id="<?php echo $discussion_post_id; ?>">
+			<div class="topic show_list" post_id="<?php echo $discussion_post_id; ?>">
 				<div align="center" style="font-size: 14px;"><?php echo $topic; ?></div>
-				<div align="center"><span>(0 Comments ) </span><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp; <?php echo $time; ?></div>
+				<div align="center"><span>(<?php echo sizeof($result_count_comment); ?> Comments ) </span><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp; <?php echo $time; ?></div>
 			</div>
 		<?php } ?>
 		</div>
@@ -36,6 +37,7 @@
 <div id="delete_topic_result"></div>
 <script>
 $(document).ready(function(){
+	
 	function load_comments(){
 		var post_id=$("div[post_id]").attr("post_id");
 		var comment_id=$("#comments div[comment_id]:last").attr("comment_id");
@@ -52,6 +54,7 @@ $(document).ready(function(){
 	$.ajax({
 	   url: "<?php echo $webroot_path; ?>Discussions/topic_detail/"+"<?php echo $id; ?>",
 	   success: function(data) {
+		  
 		   $("#topic_detail").html(data);
 		   load_comments();
 		   $("html, body").animate({
@@ -61,6 +64,7 @@ $(document).ready(function(){
 	});
 
 	$(".topic").die().live("click",function(){
+		
 		//clearInterval(interval);
 		$('.topic').each(function(i, obj) {
 			$(this).removeClass("run");
@@ -108,15 +112,15 @@ $(document).ready(function(){
 		$('#delete_topic_result').html('<div id="pp"><div class="modal-backdrop fade in"></div><div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"><div class="modal-body" style="font-size:14px;"><i class="icon-warning-sign" style="color:#d84a38;"></i> Sure, you want to delete the discussion permanently ?</div><div class="modal-footer"><a href="<?php echo $webroot_path; ?>Discussions/archive?con='+dp+'" class="btn blue" id="yes">Yes</a><a href="#" role="button" id="can" class="btn">No</a></div></div></div>');
 	});
 	
-	var $rows = $('#topic_list');
-	 $('#search').keyup(function() {
-		var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-		
-		$rows.show().filter(function() {
+	
+		$('#search').keyup(function() {
+			var $rows = $('.topic');
+			var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+			$rows.show().filter(function() {
 			var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
 			return !~text.indexOf(val);
-		}).hide();
-	});
+			}).hide();
+		});
 });
 </script>
 <style>

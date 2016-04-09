@@ -8,40 +8,37 @@ if($receipt_mode == "Cheque" || $receipt_mode == "cheque" )
 {
 $cheque_number=@$data["cash_bank"]["cheque_number"];
 $which_bank=@$data["cash_bank"]["drawn_on_which_bank"];
-$receipt_date1 = @$data["cash_bank"]["cheque_date"];
+$receipt_date1 = @$data["cash_bank"]["date"];
 }
 else
 {
-$refrence_utr = @$data["cash_bank"]["reference_utr"];
-$receipt_date2 = @$data["cash_bank"]["cheque_date"];	
+$refrence_utr = @$data["cash_bank"]["cheque_number"];
+$receipt_date2 = @$data["cash_bank"]["date"];	
 }
 
-$member_type = (int)@$data["cash_bank"]["member_type"];
-if($member_type == 1)
+$member_type = @$data["cash_bank"]["received_from"];
+if($member_type == 'residential')
 {
 $receipt_type = @$data["cash_bank"]["receipt_type"];	
-$party_name_flat_id = @$data["cash_bank"]["flat_id"];	
+$ledger_sub_account_id=(int)@$data["cash_bank"]["ledger_sub_account_id"];	
 
-$ledger_sub_dettt = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_subLedger_detail_via_flat_id'),array('pass'=>array((int)$party_name_flat_id)));
+$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+				$user_name=$member_info["user_name"];
+				$wing_name=$member_info["wing_name"];
+				$flat_name=$member_info["flat_name"];
 
-foreach ($ledger_sub_dettt as $sub_leddg_dataa) 
-{
-$resident_name = $sub_leddg_dataa['ledger_sub_account']['name'];
-}	
-
-$flat_detail = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($party_name_flat_id)));
-foreach ($flat_detail as $flat_dataa) 
-{
-$wing_id = (int)$flat_dataa['flat']['wing_id'];
-}	
-
-$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array($wing_id,$party_name_flat_id)));
 
 }
 else
 {
-$party_name = @$data["cash_bank"]["party_name_id"];	
-$bill_reference = @$data["cash_bank"]["bill_reference"];		
+$ledger_sub_account_id=(int)@$data["cash_bank"]["ledger_sub_account_id"];
+$bill_reference = @$data["cash_bank"]["bill_reference"];	
+		
+				$result_ledger_sub_account = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id)));
+				foreach($result_ledger_sub_account as $dataa)
+				{
+				$user_name = $dataa['ledger_sub_account']['name'];	
+				}
 }
 $amount = @$data["cash_bank"]["amount"];
 $deposited_bank_id = @$data["cash_bank"]["deposited_in"];
@@ -139,7 +136,7 @@ PG
 </div>
 </div>
 <div class="span6">		
-<?php if($member_type == 1) { ?>		
+<?php if($member_type == 'residential') { ?>		
 <h5><b>Receipt For : Residential</b></h5>	
 <input type="hidden" name="member_type" value="1" />	
 
@@ -151,8 +148,8 @@ PG
 <input type="hidden" name="receipt_type" value="2" />
 	
 <?php }  ?>
-<h5><b>Resident Name: <?php echo $resident_name; ?>   <?php echo $wing_flat; ?></b></h5>	
-<input type="hidden" name="resident_flat_id" value="<?php echo $party_name_flat_id; ?>" />	
+<h5><b>Resident Name: <?php echo $user_name.' ('.$wing_name.' - '.$flat_name.')'; ?></b></h5>	
+<input type="hidden" name="resident_flat_id" value="<?php echo $ledger_sub_account_id; ?>" />	
 <br />
 <?php
 } else { ?>
@@ -162,7 +159,7 @@ PG
 
 <label style="font-size:14px;">Party Name<span style="color:red;">*</span></label>
 <div class="controls">
-<input type="text" class="m-wrap span9 nonrr1 ignore" name="party_name" id="party" value="<?php echo $party_name; ?>"/>
+<input type="text" class="m-wrap span9 nonrr1 ignore" name="party_name" id="party" value="<?php echo $user_name; ?>"/>
 </div>
 <br />
 

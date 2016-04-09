@@ -5585,9 +5585,10 @@ function master_rate_card(){
 	$result_society=$this->society->find('all',array('conditions'=>$conditions));
 	foreach($result_society as $data){
 	@$area_type=(int)@$data['society']['area_scale'];	
+	@$income_heads=@$data['society']['income_head'];
 	}
 	$this->set('area_type',@$area_type);
-	
+	$this->set('income_heads',$income_heads);
 	
 	
 }

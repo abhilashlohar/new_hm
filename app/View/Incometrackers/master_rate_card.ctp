@@ -14,7 +14,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 </div>
 <br/>
 </center>
-<?php if($count == 0){ ?>
+<?php if($count == 0 && !empty($income_heads)){ ?>
 <div id="output"><span class="label label-important">NOTE</span><span> No need to save this form. The system will automatically save updated data. </span></div>
 <div style="background-color: rgb(255, 255, 255);padding: 5px;overflow-x: auto;">
 <table class="table table-condensed table-bordered">
@@ -94,9 +94,12 @@ $(document).ready(function(){
 <br />
 
 <ul>
-	    
+	   <?php if($count != 0){ ?> 
 		<li style="text-align:left;"><p style="font-size:18px;">Please Complete Unit Configuration</p></li>
-	
+	   <?php } ?>
+	    <?php if(empty($income_heads)){ ?> 
+		<li style="text-align:left;"><p style="font-size:18px;">Please Select Income Heads</p></li>
+		<?php } ?>
 	</ul>
 
 

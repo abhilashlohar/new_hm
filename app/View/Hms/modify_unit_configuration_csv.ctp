@@ -85,7 +85,8 @@ for($ii=1;$ii<=$loop;$ii++){ ?>
 </div>
 <br/>
 
-<a class="btn purple " role="button" id="final_import">Import Unit Configuration <i class="m-icon-swapright m-icon-white"></i></a>									
+<a class="btn purple " role="button" id="final_import">Import Unit Configuration <i class="m-icon-swapright m-icon-white"></i></a>
+<a class="btn cancel_user" role="button" >Cancel </a>										
 <div id="check_validation_result"></div>
 
 	
@@ -156,6 +157,22 @@ $( document ).ready(function() {
 });
 
 $( document ).ready(function() {
+	
+	$( ".cancel_user" ).click(function() {
+		
+			var answer = confirm ("Confirm, Are you want to cancel unit configuration ? .")
+			if(answer){
+				$.ajax({
+				url: "<?php echo $webroot_path; ?>Hms/cancel_unit_configuration",
+				}).done(function(response){
+					
+					if(response=="ok"){
+						window.location.href="<?php echo $webroot_path; ?>Hms/unit_configuration_import";
+					}
+				});
+				
+			}
+	});
 	
 	$( 'input[type="text"]' ).blur(function() {
 		var record_id=$(this).attr("record_id");

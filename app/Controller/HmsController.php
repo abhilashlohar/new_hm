@@ -130,7 +130,24 @@ function unit_configuration_excel(){
 }
 
 
+function cancel_unit_configuration(){
 
+	$this->layout=null;
+	$s_society_id = $this->Session->read('hm_society_id');
+	$this->loadmodel('unit_configuration_csv_converted');
+	$conditions4=array('society_id'=>$s_society_id);
+	$this->unit_configuration_csv_converted->deleteAll($conditions4);
+
+	$this->loadmodel('unit_configuration_info_csv');
+	$conditions4=array('society_id'=>$s_society_id);
+	$this->unit_configuration_info_csv->deleteAll($conditions4);
+
+	$this->loadmodel('import_unit_configuration_record');
+	$conditions4=array("society_id" => $s_society_id, "module_name" => "UC");
+	$this->import_unit_configuration_record->deleteAll($conditions4);
+	echo"ok";
+	
+}
 
 
 

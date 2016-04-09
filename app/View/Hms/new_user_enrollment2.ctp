@@ -2,10 +2,10 @@
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
 
-<a href="<?php echo $webroot_path; ?>Hms/import_user_enrollment" class="btn purple" style="float:right; margin-right:8px;"><i class="fa fa-database"></i> Bulk Import</a>
+<a href="<?php echo $webroot_path; ?>Hms/import_user_enrollment" class="btn purple" style="float:right;margin-left: 2px; margin-right:8px;"><i class="fa fa-database"></i> Bulk Import</a>
 <div id="report_success_pop">
-<a href="#" class="btn purple" role="button" id="import">Import</a>
-<a href="login_third_party" role="button" rel="tab" class="btn blue"  id="">Login third party</a>
+<!--<a href="#" class="btn purple" role="button" id="import">Import</a>-->
+<a href="login_third_party" role="button" rel="tab" class="btn yellow pull-right"  id="">Login third party</a>
 <div id="myModal3" class="modal hide fade in" style="display: none;">
 <div class="modal-backdrop fade in"></div>
 	<form id="form1" method="post">
@@ -34,7 +34,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	</div>
 	</form>
 </div>
-<a href="email_mobile_update" class="btn purple" role="btn" id="import">Import Email and Mobile</a>
+<!--<a href="email_mobile_update" class="btn purple" role="btn" id="import">Import Email and Mobile</a>-->
 <div id="report_id"></div>								
 <div id="report"></div>
 <table class="table table-bordered" style="background-color:#FFC;">

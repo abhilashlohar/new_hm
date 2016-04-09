@@ -975,7 +975,7 @@ function final_import_user_enrollment(){
 		}
 	}
 	
-			$this->user->saveAll(array('user_id' => $i,'user_name' => $name,'email' => $email, 'password' => @$random, 'mobile' => $mobile,'society_id' => $s_society_id,'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes','user_type'=>'member'));	
+			$this->user->saveAll(array('user_id' => $i,'user_name' => $name,'email' => $email, 'password' => @$random, 'mobile' => $mobile,'society_id' => $s_society_id,'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes','user_type'=>'member','profile_pic'=>'blank.jpg'));	
 			
 			$user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 			$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$s_society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no','owner'=>$type));
@@ -10780,7 +10780,7 @@ $random=$de_user_id.'/'.$random;
 
 
 
-$this->user->saveAll(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'mobile' => $mobile,  'society_id' => $society_id, 'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes',"user_type"=>"member"));
+$this->user->saveAll(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'mobile' => $mobile,  'society_id' => $society_id, 'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes',"user_type"=>"member",'profile_pic'=>'blank.jpg'));
 
 $this->loadmodel('user_role');
 $auto_id=$this->autoincrement('user_role','auto_id');
@@ -11588,7 +11588,7 @@ date_default_timezone_set('Asia/kolkata');
 $date=date("d-m-Y");
 $time=date('h:i:a',time());
 $this->loadmodel('user');
-$this->user->save(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'password' =>'', 'mobile' => $mobile,'society_id' => $society_id,'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes','user_type'=>'third_party'));
+$this->user->save(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'password' =>'', 'mobile' => $mobile,'society_id' => $society_id,'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes','user_type'=>'third_party','profile_pic'=>'blank.jpg'));
 
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'exited'=>'no'));
@@ -11846,7 +11846,7 @@ $this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
 
 
 $this->loadmodel('user');
-$this->user->save(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'password' => $password, 'mobile' => $mobile,  'society_id' => $society_id,'date' => $date, 'time' => $time,"profile_pic"=>'blank.jpg','signup_random'=>$random,'active'=>'yes','user_type'=>$user_type));
+$this->user->save(array('user_id' => $i, 'user_name' => $user_name,'email' => $email, 'password' => $password, 'mobile' => $mobile,  'society_id' => $society_id,'date' => $date, 'time' => $time,"profile_pic"=>'blank.jpg','signup_random'=>$random,'active'=>'yes','user_type'=>$user_type,'profile_pic'=>'blank.jpg'));
 
 $this->loadmodel('user_role');
 $auto_id=$this->autoincrement('user_role','auto_id');
@@ -18740,7 +18740,7 @@ if(!empty($mobile)){ if(empty($email)) {
  }
 }
 
-$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email' => $email, 'mobile' => $mobile,  'society_id' => $society_id, 'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes',"user_type"=>"member"));
+$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email' => $email, 'mobile' => $mobile,  'society_id' => $society_id, 'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes',"user_type"=>"member",'profile_pic'=>'blank.jpg'));
  
 $this->loadmodel('user_role');
 $auto_id=$this->autoincrement('user_role','auto_id');
@@ -25423,7 +25423,7 @@ if(($access_tenant==1 && $type_owner=="Tenant") || $type_owner=="Owner"){
 }
 		
 		
-$this->user->saveAll(array('user_id' => $i,'user_name' => $name,'email' => $email, 'password' => @$random, 'mobile' => $mobile,'society_id' => $s_society_id,'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes','user_type'=>'member'));
+$this->user->saveAll(array('user_id' => $i,'user_name' => $name,'email' => $email, 'password' => @$random, 'mobile' => $mobile,'society_id' => $s_society_id,'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes','user_type'=>'member','profile_pic'=>'blank.jpg'));
  
 
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
@@ -27376,7 +27376,7 @@ function login_third_party(){
 
 				$this->loadmodel('user');
 				$i=$this->autoincrement('user','user_id');
-				$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email'=>$email,'mobile'=>$mobile,'society_id' =>$s_society_id,'signup_random'=>"",'active'=>'yes',"user_type"=>"third_party","password"=>$password,'date' => $date, 'time' => $time));
+				$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email'=>$email,'mobile'=>$mobile,'society_id' =>$s_society_id,'signup_random'=>"",'active'=>'yes',"user_type"=>"third_party","password"=>$password,'date' => $date, 'time' => $time,'profile_pic'=>'blank.jpg'));
 
 				$this->loadmodel('user_flat');
 				$user_flat_id=$this->autoincrement('user_flat','user_flat_id');

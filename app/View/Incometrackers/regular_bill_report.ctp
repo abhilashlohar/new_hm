@@ -23,7 +23,7 @@
 		<div class="span6" align="right">
 			<a href="regular_bill_report_excel?period=<?php echo $period; ?>" class="btn mini green tooltips" data-original-title="Download in excel"><i class="fa fa-file-excel-o"></i></a>
 			<a href="#" class="btn mini blue tooltips" onclick="window.print();" role="button" data-original-title="Print"><i class="fa fa-print"></i></a>
-			<label class="m-wrap pull-right">Search: <input type="text" id="search" class="m-wrap medium" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" placeholder="Search"></label>
+			<input type="text" id="search" class="m-wrap medium" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" placeholder="Search">
 		</div>
 		</div>
 		<div style="overflow-x: scroll;">

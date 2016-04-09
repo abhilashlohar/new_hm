@@ -35,7 +35,7 @@ if($type_list=="my"){ ?>
 			<div class="topic show_list" post_id="<?php echo $discussion_post_id; ?>">
 				
 					<div align="center" style="font-size: 14px;"><?php echo $topic; ?></div>
-					<div align="center"><span>(<?php echo sizeof($result_count_comment); ?>Comments ) </span><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp; <?php echo $time; ?></div>
+					<div align="center"><span>(<?php echo sizeof($result_count_comment); ?> Comments ) </span><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp; <?php echo $time; ?></div>
 			</div>
 <?php } } ?>
 

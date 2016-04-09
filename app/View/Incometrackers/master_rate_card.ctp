@@ -98,7 +98,7 @@ $(document).ready(function(){
 		<li style="text-align:left;"><p style="font-size:18px;">Please Complete Unit Configuration</p></li>
 	   <?php } ?>
 	    <?php if(empty($income_heads)){ ?> 
-		<li style="text-align:left;"><p style="font-size:18px;">Please Select Income Heads</p></li>
+		<li style="text-align:left;"><p style="font-size:18px;">Please Select at List One Income Head</p></li>
 		<?php } ?>
 	</ul>
 

@@ -142,5 +142,21 @@ $(document).ready(function(){
 			return !~text.indexOf(val);
 		}).hide();
 	});
+<<<<<<< HEAD
 }); 
 </script>
+=======
+}); */
+</script>
+<script>
+		 var $rows = $('#receiptmain tr');
+		 $('#search').keyup(function() {
+			var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+			
+			$rows.show().filter(function() {
+				var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+				return !~text.indexOf(val);
+			}).hide();
+		});
+ </script>	
+>>>>>>> 7a7808be81aa59643da23abdff7fedbe8c1d0ccd

@@ -180,7 +180,7 @@ PG
 
 <label style="font-size:14px;">Amount Applied<span style="color:red;">*</span></label>
 <div class="controls">
-<input type="text" name="amount" id="amtttt" class="m-wrap span5" value="<?php echo $amount; ?>"/>
+<input type="text" name="amount" class="m-wrap span5" value="<?php echo $amount; ?>" style="text-align:right;"/>
 <label id="amtttt"></label>
 </div>
 <br />
@@ -228,21 +228,17 @@ $(document).ready(function() {
 });
 </script>
 <script>
-function cheque_view()
-{
-
+function cheque_view(){
 $("#cheque_show_by_query").show();
 $("#neft_show").hide();
 }
-function neft_text_view()
-{	
+function neft_text_view(){	
 $("#cheque_show_by_query").hide();
 $("#neft_show").show();
-
 }
-function pg_show()
-{
+function pg_show(){
 $("#cheque_show_by_query").hide();
 $("#neft_show").show();
 }
 </script>
+

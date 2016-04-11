@@ -115,9 +115,9 @@
 		</table>
 	</div>
 </div>
-<script>/*
+<script>
 $(document).ready(function(){
-	var tr=1; 
+	/* var tr=1; 
 	$('#receiptmain thead tr th').each(function(i, obj) {
 		var total=0;
 		$('#receiptmain tbody tr td:nth-child('+tr+')').each(function(i, obj) {
@@ -131,7 +131,7 @@ $(document).ready(function(){
 	$('#receiptmain tfoot tr td:lt(7)').remove();
 	$('#receiptmain tfoot tr td:first').attr("colspan",8).html('<b>Total</b>');
 	$('#receiptmain tfoot tr td:last').html("");
-	
+	*/
 	
 	var $rows = $('#receiptmain tbody tr');
 	$('#search').keyup(function() {
@@ -142,5 +142,5 @@ $(document).ready(function(){
 			return !~text.indexOf(val);
 		}).hide();
 	});
-}); */
+}); 
 </script>

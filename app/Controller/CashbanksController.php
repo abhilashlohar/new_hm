@@ -110,15 +110,20 @@ function read_csv_file(){
 	$f = fopen('Bank_Receipt_csv_files/'.$s_society_id.'.csv', 'r') or die("ERROR OPENING DATA");
 	$batchcount=0;
 	$records=0;
-	while (($line = fgetcsv($f, 4096, ';')) !== false) {
+	while(($line = fgetcsv($f, 4096, ',')) !== false) {
+	$line = implode(";", $line);
 	$numcols = count($line);
 	$test[]=$line;
 	++$records;
 	}
 	$i=0;
+	
 	foreach($test as $child){ $i++;
 		if($i>1){
-			$child_ar=explode(',',$child[0]);
+			
+			//$child_ar=implode(';',$child[0]);
+			$child_ar=explode(';',$child);
+			
 			$trajection_date=$child_ar[0];
 			$deposited_in=$child_ar[1];
 			$receipt_mode=$child_ar[2];
@@ -130,7 +135,8 @@ function read_csv_file(){
 			$wing=$child_ar[8];
 			$flat=$child_ar[9];
 			$receipt_type=$child_ar[10];
-			$amount=$child_ar[11];
+			$amount=$child_ar[11];  
+			$amount = str_replace(',', '', $amount); 
 			$narration=$child_ar[12];
 			
 			$this->loadmodel('bank_receipt_csv');
@@ -462,7 +468,7 @@ function auto_save_bank_receipt($record_id=null,$field=null,$value=null){
 	
 	
 	if($field=="amount"){
-		$value=(int)$value;
+		$value = str_replace(',', '', $value);
 		if(empty($value)){ echo "F"; 
 			$this->loadmodel('bank_receipt_csv_converted');
 			$this->bank_receipt_csv_converted->updateAll(array("amount" => (int)$value),array("auto_id" => $record_id));

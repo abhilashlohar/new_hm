@@ -7339,7 +7339,11 @@ function dashboard(){
 	  $s_user_id = $this->Session->read('hm_user_id'); 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	
-	
+//replace comma in amount
+
+  // $a = str_replace(',', '', $amount);
+  
+//////End
 	$this->loadmodel("ledger_account");
 	$result_ledger_account=$this->ledger_account->find('all');
 	foreach($result_ledger_account as $data){

@@ -159,7 +159,14 @@ PG
 
 <label style="font-size:14px;">Party Name<span style="color:red;">*</span></label>
 <div class="controls">
-<input type="text" class="m-wrap span9 nonrr1 ignore" name="party_name" id="party" value="<?php echo $user_name; ?>"/>
+       <select name="non_member_ledger_sub_account" class="m-wrap chosen" style="width:300px;">
+		<option value="" style="display:none;">--non member--</option>
+		<?php foreach($non_members as $ledger_sub_account_data){
+		       $ledger_sub_account_id2 = $ledger_sub_account_data['ledger_sub_account']['auto_id'];
+		       $non_member_name = $ledger_sub_account_data['ledger_sub_account']['name']; ?>
+			   <option value="<?php echo $ledger_sub_account_id2; ?>" <?php if($ledger_sub_account_id2==$ledger_sub_account_id){ ?> selected="selected" <?php } ?>><?php echo $non_member_name; ?></option>
+		<?php } ?>
+		</select>
 </div>
 <br />
 

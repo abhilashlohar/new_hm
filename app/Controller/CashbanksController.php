@@ -1861,7 +1861,12 @@ function b_receipt_edit($transaction_id=null){
 	$conditions=array("ledger_id" => 33,"society_id"=>$s_society_id);
 	$cursor3=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 	$this->set('cursor3',$cursor3);
-
+    
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("society_id"=>$s_society_id,"ledger_id"=>112);
+	$non_members = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$this->set(compact("non_members"));
+	
 	$this->loadmodel('cash_bank');
 	$conditions=array("auto_id"=>(int)$transaction_id,"society_id"=>$s_society_id);
 	$cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions));

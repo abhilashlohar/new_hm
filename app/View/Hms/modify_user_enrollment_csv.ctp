@@ -55,7 +55,7 @@ input.m-wrap[type="text"]{
 			
 		</td>
 		<td valign="top">
-			<div class="mobile">
+			<div class="mobile_new">
 				<input class="m-wrap span12"  style="background-color:white !important;" id="datt1" value="<?php echo $mobile; ?>" type="text" placeholder="Mobile" record_id="<?php echo $auto_id; ?>" field="mobile" />
 			</div>
 		</td>
@@ -185,7 +185,7 @@ $( document ).ready(function() {
 		url: "<?php echo $webroot_path; ?>Hms/check_user_enrollment_validation/<?php echo $page; ?>",
 		//dataType: 'json'
 	}).done(function(response){
-		
+		alert(response);
 		response.forEach(function(item) {
 			
 			if(item[0]==1){ $("table#report_tb tr#"+item[9]+" td:nth-child(1) .transaction").css("border", "solid 1px red","!important"); }

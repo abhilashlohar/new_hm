@@ -800,6 +800,54 @@ function check_user_enrollment_validation($page=null){
 		$this->loadmodel('user_enrollment_csv_converted'); 
 		$conditions=array("society_id"=>(int)$s_society_id);
 		$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,"limit"=>50,"page"=>$page));
+	 foreach($user_enrollment_csv_converted as $user_enrollment_converted){ 
+		$auto_id=$user_enrollment_converted["user_enrollment_csv_converted"]["auto_id"];
+		$name=$user_enrollment_converted["user_enrollment_csv_converted"]["name"];
+		$wing=(int)$user_enrollment_converted["user_enrollment_csv_converted"]["wing"];
+		$email=$user_enrollment_converted["user_enrollment_csv_converted"]["email"];
+		$mobile=$user_enrollment_converted["user_enrollment_csv_converted"]["mobile"];
+		 $owner=$user_enrollment_converted["user_enrollment_csv_converted"]["owner"];
+		 $committee=$user_enrollment_converted["user_enrollment_csv_converted"]["committee"];
+		$flat=(int)$user_enrollment_converted["user_enrollment_csv_converted"]["flat"];
+		if(empty($name)){ $name_v=1;   }else{  $name_v=0; }
+		if(empty($flat)){ $flat_v=1;   }else{  $flat_v=0; }
+		
+		
+		if(!filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($email)) { $email_v=1; 
+		}else{
+			
+				$this->loadmodel('user_temp');
+				$conditions=array("email" => $email,'reject'=>0);
+				$result3 = $this->user_temp->find('all',array('conditions'=>$conditions));
+				$n3 = sizeof($result3);
+				$this->loadmodel('user');
+				$conditions=array("email" => $email);
+				$result4 = $this->user->find('all',array('conditions'=>$conditions));
+				$n4 = sizeof($result4);
+				$e=$n3+$n4;
+				if($e>0){
+					$email_v=1;
+				}else{ $email_v=0; }
+		}
+		
+			if(!preg_match ( '/^\\d{10}$/',$mobile) && !empty($mobile)) {
+				$mobile_v=1;
+			}else{
+					$this->loadmodel('user_temp');
+					$conditions=array("mobile" => $mobile,'reject'=>0);
+					$result3 = $this->user_temp->find('all',array('conditions'=>$conditions));
+					$n3 = sizeof($result3);
+					$this->loadmodel('user');
+					$conditions=array("mobile" => $mobile,'user_id'=>array('$ne'=>1));
+					$result4 = $this->user->find('all',array('conditions'=>$conditions));
+					$n4 = sizeof($result4);
+					$e=$n3+$n4;
+					if($e>0){
+						$mobile_v=1;
+					}else{ $mobile_v=0; }
+			}
+		
+	}
 	
 }
 

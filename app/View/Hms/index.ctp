@@ -4,7 +4,7 @@
   </div>
   <!-- END LOGO -->
   <!-- BEGIN LOGIN -->
-  <div class="content" style="height: 454px;">
+  <div class="content" >
     <!-- BEGIN LOGIN FORM -->
     <form id="contact-form" method="post" class="form-vertical login-form"  />
     <fieldset>
@@ -78,7 +78,7 @@
 <div id="status" style="display:none;">
 </div>
 	  
-      <div class="forget-password">
+      <div class="forget-password">Forgot your password ?
         <p>
           no worries, click <a href="<?php echo $webroot_path ; ?>hms/forget" class="" id="forget-password">here</a>
           to reset your password.

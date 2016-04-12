@@ -146,6 +146,15 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
    
 <script>
 $(document).ready(function() {
+
+$("#menus_area>li").live('click',function(e){
+//$("li").removeClass("active");
+	alert();
+	$(this).addClass("active");
+});
+
+
+
 	$("a[rel='tab']").live('click',function(e){
 		e.preventDefault();
 		$("#loading").show();
@@ -197,7 +206,7 @@ $(document).ready(function() {
    <div class="header navbar navbar-inverse navbar-fixed-top hide_at_print">
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="navbar-inner">
-         <div class="container-fluid">
+         <div class="container-fluid" style="background-color: white;">
             <!-- BEGIN LOGO -->
             <a class="brand desktop" href="<?php echo $webroot_path; ?>Hms/Dashboard" style="margin-top: -3px;"> 
             <img src="<?php echo $webroot_path; ?>as/hm/housingmatterslogo.png" alt="HousingMatters" style="height: 30px;" />
@@ -228,7 +237,7 @@ $(document).ready(function() {
 		
 			if(!empty($society_name)){
 			?>
-			<a class="btn" href="#" role="button" style="color: #DEDEDE;background-color: #1F1F1F;font-size: 14px;font-weight: bold;cursor: default;"><?php echo $society_name; ?></a>
+			<a class="btn" href="#" role="button" style="color:black;background-color: rgb(255, 255, 255);font-size: 14px;font-weight: bold;cursor: default;"><?php echo $society_name; ?></a>
 			<?php } ?>
             <!-- END LOGO -->
             <!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -263,12 +272,12 @@ $(document).ready(function() {
 						<td style="padding: 1px; font-weight: 600; font-size: 12px;">
 							 <table cellpadding="0" cellspacing="0" style="line-height: 14px;">
 							  <tr>
-								<td style="padding: 1px; font-size: 12px; color: #FFF; font-weight: bold;">
+								<td style="padding: 1px; font-size: 12px; color: black; font-weight: bold;">
 								<?php echo $name; ?>
 								</td>
 							  </tr>
 							  <tr>
-								<td style="font-size: 12px;color: #E7E4E4 !important;">
+								<td style="font-size: 12px;color:black !important;">
 								<?php echo @$role_name; ?>
 								</td>
 							  </tr>
@@ -306,7 +315,7 @@ $(document).ready(function() {
          <!-- END RESPONSIVE QUICK SEARCH FORM -->
          <!-- BEGIN SIDEBAR MENU -->
          <ul id="menus_area" >
-            <li class="">
+            <li class="active">
                <a href="<?php echo $webroot_path; ?>Hms/Dashboard">
                <i class="icon-home"></i> Dashboard               
                </a>              
@@ -334,7 +343,7 @@ $(document).ready(function() {
    </div>
    <!-- END CONTAINER -->
    <!-- BEGIN FOOTER -->
-   <div class="footer hide_at_print">
+   <div class="footer hide_at_print" style="color:black;">
       HousingMatters
       <div class="span pull-right">
          <span class="go-top"><i class="icon-angle-up"></i></span>

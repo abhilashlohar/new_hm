@@ -4,11 +4,11 @@
   </div>
   <!-- END LOGO -->
   <!-- BEGIN LOGIN -->
-  <div class="content">
+  <div class="content" style="height: 454px;">
     <!-- BEGIN LOGIN FORM -->
     <form id="contact-form" method="post" class="form-vertical login-form"  />
     <fieldset>
-      <h3 class="form-title">Login to HousingMatters</h3>
+      <h4 class="form-title">Sign in to HousingMatters</h4>
 	  <?php  if(!empty($wrong_fb)){ ?>
 		<div class="alert alert-block alert-error fade in">
 			<button type="button" class="close" data-dismiss="alert"></button>
@@ -48,7 +48,7 @@
 		 <table width="100%">
 			<tr>
 				<td width="20%" style="background-color:#35508D;padding: 7px;" align="center"><i class="icon-facebook" style="font-size: 28px;"></i></td>
-				<td style="background-color: rgb(60, 90, 152); padding-left: 15px; font-size: 14px; font-weight: bold;">Login with Facebook</td>
+				<td style="background-color: rgb(60, 90, 152); padding-left: 15px; font-size: 14px; font-weight: bold;">Sign up with Facebook</td>
 			</tr>
 		 </table>
 		 </div>
@@ -59,7 +59,7 @@
 		 <table width="100%">
 			<tr>
 				<td width="20%" style="background-color:#C5462E;padding: 7px;" align="center"><i class="icon-google-plus" style="font-size: 28px;"></i></td>
-				<td style="background-color: #DD4D3B; padding-left: 15px; font-size: 14px; font-weight: bold;">Login with Google</td>
+				<td style="background-color: #DD4D3B; padding-left: 15px; font-size: 14px; font-weight: bold;">Sign up Google</td>
 			</tr>
 		 </table>
 		 </div>
@@ -79,7 +79,6 @@
 </div>
 	  
       <div class="forget-password">
-        <h4>Forgot your password ?</h4>
         <p>
           no worries, click <a href="<?php echo $webroot_path ; ?>hms/forget" class="" id="forget-password">here</a>
           to reset your password.

@@ -4,11 +4,11 @@ $receipt_id=$data["cash_bank"]["receipt_number"];
 $transaction_date=$data["cash_bank"]["transaction_date"];
 $transaction_date=date("d-m-Y",($transaction_date));
 $receipt_mode=$data["cash_bank"]["receipt_mode"];
-if($receipt_mode == "Cheque" || $receipt_mode == "cheque" )
-{
+if($receipt_mode == "Cheque" || $receipt_mode == "cheque" ){
 $cheque_number=@$data["cash_bank"]["cheque_number"];
-$which_bank=@$data["cash_bank"]["drawn_on_which_bank"];
-$receipt_date1 = @$data["cash_bank"]["date"];
+$which_bank=@$data["cash_bank"]["drown_in_which_bank"];
+$receipt_date1=@$data["cash_bank"]["date"];
+$branch_of_bank=@$data["cash_bank"]["branch_of_bank"];
 }
 else
 {
@@ -91,7 +91,7 @@ $bank_account_number = $db['ledger_sub_account']["bank_account"];
 <label  style="font-size:14px;">Receipt Mode<span style="color:red;">*</span></label>
 <div class="controls">
 <label class="radio">
-<div class="radio" id="uniform-undefined"><span><input type="radio" name="receipt_mode" value="Cheque" style="opacity: 0;" id="mode" class="chn" onclick="cheque_view()" <?php if($receipt_mode == "Cheque") { ?> checked="checked" <?php } ?>></span></div>
+<div class="radio" id="uniform-undefined"><span><input type="radio" name="receipt_mode" value="Cheque" style="opacity: 0;" id="mode" class="chn" onclick="cheque_view()" <?php if($receipt_mode == "Cheque" || $receipt_mode == "cheque") { ?> checked="checked" <?php } ?>></span></div>
 Cheque
 </label>
 <label class="radio">
@@ -107,7 +107,7 @@ PG
 <br />
 		
 		 
-<div id="cheque_show_by_query" <?php if($receipt_mode != "Cheque" || $receipt_mode != "cheque") { ?> class="hide"  <?php } ?> >
+<div id="cheque_show_by_query" <?php if($receipt_mode != "Cheque" && $receipt_mode != "cheque") { ?> class="hide"  <?php } ?> >
 <label style="font-size:14px;">Cheque No.<span style="color:red;">*</span><span style="margin-left:12%;">Cheque Date<span style="color:red;">*</span></span></label>
 <div class="controls">
 <input type="text"  name="cheque_number" class="m-wrap span3 chhh1 ignore" placeholder="Cheque No." style="background-color:white !important;" id="ins" value="<?php echo @$cheque_number; ?>">
@@ -123,6 +123,10 @@ PG
 <label id="ins"></label>
 </div>
 <br />
+<label style="font-size:14px;">Branch of Bank<span style="color:red;">*</span> </label>
+<div class="controls">
+<input type="text"  name="branch" class="m-wrap span9 chhh3 ignore" placeholder="Branch of Bank" style="background-color:white !important;" value="<?php echo @$branch_of_bank; ?>">
+</div>
 </div>
 
 <div <?php if($receipt_mode == "Cheque" || $receipt_mode == "cheque") { ?> class="hide"  <?php } ?> id="neft_show">
@@ -138,36 +142,27 @@ PG
 <div class="span6">		
 <?php if($member_type == 'residential') { ?>		
 <h5><b>Receipt For : Residential</b></h5>	
-<input type="hidden" name="member_type" value="1" />	
+<input type="hidden" name="member_type" value="residential" />	
 
-<?php if($receipt_type == 1) { ?>
+<?php if($receipt_type=='maintenance') { ?>
 <h5><b>Receipt type: Maintanance</b></h5>	
-<input type="hidden" name="receipt_type" value="1" />
+<input type="hidden" name="receipt_type" value="maintenance" />
 <?php } else { ?>
 <h5><b>Receipt type: Other</b></h5>	
-<input type="hidden" name="receipt_type" value="2" />
+<input type="hidden" name="receipt_type" value="other" />
 	
 <?php }  ?>
 <h5><b>Resident Name: <?php echo $user_name.' ('.$wing_name.' - '.$flat_name.')'; ?></b></h5>	
-<input type="hidden" name="resident_flat_id" value="<?php echo $ledger_sub_account_id; ?>" />	
+<input type="hidden" name="ledger_sub_account" value="<?php echo $ledger_sub_account_id; ?>" />	
 <br />
 <?php
 } else { ?>
 <h5><b>Receipt For : Non-Residential</b></h5>
-<input type="hidden" name="member_type" value="2" />
-<br />
+<input type="hidden" name="member_type" value="non_residential"/>
 
-<label style="font-size:14px;">Party Name<span style="color:red;">*</span></label>
-<div class="controls">
-       <select name="non_member_ledger_sub_account" class="m-wrap chosen" style="width:300px;">
-		<option value="" style="display:none;">--non member--</option>
-		<?php foreach($non_members as $ledger_sub_account_data){
-		       $ledger_sub_account_id2 = $ledger_sub_account_data['ledger_sub_account']['auto_id'];
-		       $non_member_name = $ledger_sub_account_data['ledger_sub_account']['name']; ?>
-			   <option value="<?php echo $ledger_sub_account_id2; ?>" <?php if($ledger_sub_account_id2==$ledger_sub_account_id){ ?> selected="selected" <?php } ?>><?php echo $non_member_name; ?></option>
-		<?php } ?>
-		</select>
-</div>
+
+<h5><b>Party Name: <?php echo $user_name; ?></b></h5>
+<input type="hidden" name="ledger_sub_account" value="<?php echo $ledger_sub_account_id; ?>"/>
 <br />
 
 <label style="font-size:14px;">Bill Reference<span style="color:red;">*</span></label>

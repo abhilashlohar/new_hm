@@ -110,15 +110,20 @@ function read_csv_file(){
 	$f = fopen('Bank_Receipt_csv_files/'.$s_society_id.'.csv', 'r') or die("ERROR OPENING DATA");
 	$batchcount=0;
 	$records=0;
-	while (($line = fgetcsv($f, 4096, ';')) !== false) {
+	while(($line = fgetcsv($f, 4096, ',')) !== false) {
+	$line = implode(";", $line);
 	$numcols = count($line);
 	$test[]=$line;
 	++$records;
 	}
 	$i=0;
+	
 	foreach($test as $child){ $i++;
 		if($i>1){
-			$child_ar=explode(',',$child[0]);
+			
+			//$child_ar=implode(';',$child[0]);
+			$child_ar=explode(';',$child);
+			
 			$trajection_date=$child_ar[0];
 			$deposited_in=$child_ar[1];
 			$receipt_mode=$child_ar[2];
@@ -130,7 +135,8 @@ function read_csv_file(){
 			$wing=$child_ar[8];
 			$flat=$child_ar[9];
 			$receipt_type=$child_ar[10];
-			$amount=$child_ar[11];
+			$amount=$child_ar[11];  
+			$amount = str_replace(',', '', $amount); 
 			$narration=$child_ar[12];
 			
 			$this->loadmodel('bank_receipt_csv');
@@ -462,7 +468,7 @@ function auto_save_bank_receipt($record_id=null,$field=null,$value=null){
 	
 	
 	if($field=="amount"){
-		$value=(int)$value;
+		$value = str_replace(',', '', $value);
 		if(empty($value)){ echo "F"; 
 			$this->loadmodel('bank_receipt_csv_converted');
 			$this->bank_receipt_csv_converted->updateAll(array("amount" => (int)$value),array("auto_id" => $record_id));
@@ -1878,45 +1884,68 @@ function b_receipt_edit($transaction_id=null){
 	}
 	
 	if(isset($this->request->data['bank_receipt_update'])){
-		$tranjection_date = $this->request->data['transaction_date']; 
+		$tranjection_date=$this->request->data['transaction_date']; 
 		$tranjection_date=date('Y-m-d',strtotime($tranjection_date));
-		$deposited_bank_id = (int)$this->request->data['deposited_bank_id'];
-		$receipt_mode = $this->request->data['receipt_mode'];
+		$deposited_bank_id=(int)$this->request->data['deposited_bank_id'];
+		$receipt_mode=$this->request->data['receipt_mode'];
 		
 		$cheque_number = null;
 		$cheque_date = null;
 		$drawn_on_which_bank = null;
 		$reference_utr = null;
-		if($receipt_mode=="Cheque"){
-			$cheque_number = @$this->request->data['cheque_number'];
-			$cheque_date = @$this->request->data['cheque_date1'];
-			$drawn_on_which_bank = @$this->request->data['drawn_on_which_bank'];
+		if($receipt_mode=="Cheque" || $receipt_mode=="cheque"){
+			 $cheque_number=@$this->request->data['cheque_number'];
+			 $cheque_date=@$this->request->data['cheque_date1'];
+			 $drawn_on_which_bank=@$this->request->data['drawn_on_which_bank'];
+			 $branch_of_bank=@$this->request->data['branch'];
 		}
-		if($receipt_mode=="NEFT" or $receipt_mode=="PG"){
-			$reference_utr = @$this->request->data['reference_number'];
-			$cheque_date = @$this->request->data['neft_date'];
+		if($receipt_mode=="NEFT" || $receipt_mode=="PG" || $receipt_mode=="neft" || $receipt_mode=="pg"){
+			 $cheque_number = @$this->request->data['reference_number'];
+			 $cheque_date = @$this->request->data['neft_date'];
 		}
-		$member_type = @$this->request->data['member_type'];
+		 $member_type = @$this->request->data['member_type'];
 		
 		$party_name = null;
 		$bill_reference = null;
 		$receipt_type = null;
-		$resident_flat_id = null;
-		if($member_type==1){
+		$ledger_sub_account_id = null;
+		if($member_type=='residential'){
 			$receipt_type = @$this->request->data['receipt_type'];
-			if($receipt_type==1){
-				
+			if($receipt_type=='other'){
+			 $ledger_sub_account_id=(int)@$this->request->data['ledger_sub_account'];
 			}
-			$resident_flat_id = (int)@$this->request->data['resident_flat_id'];
 		}
-		if($member_type==2){
-			$party_name = @$this->request->data['party_name'];
-			$bill_reference = @$this->request->data['bill_reference'];
+		if($member_type=='non_residential'){
+			 $ledger_sub_account_id=@$this->request->data['ledger_sub_account'];
+			 $bill_reference=@$this->request->data['bill_reference'];
 		}
-		$amount = @$this->request->data['amount'];
-		$narration = @$this->request->data['description'];
-	
+		 $amount = @$this->request->data['amount'];
+		 $narration = @$this->request->data['description'];
 		$current_date = date('Y-m-d');
+				
+	$this->loadmodel('cash_bank');
+	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number"=> $cheque_number,"date"=>$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"bill_reference"=>$bill_reference),Array('auto_id'=>(int)$transaction_id)); 
+
+		$this->loadmodel('ledger');
+		$this->ledger->updateAll(Array("transaction_date"=> strtotime($tranjection_date), "debit"=>$amount,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$deposited_bank_id),Array("table_name"=>"cash_bank","element_id"=>(int)$transaction_id,"society_id"=>$s_society_id,"credit"=>null)); 
+                    
+	if($member_type=="residential"){
+		$this->loadmodel('ledger');
+		$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date), "credit"=>$amount,"ledger_account_id"=>34,"ledger_sub_account_id"=>(int)$ledger_sub_account_id),Array("table_name"=>"cash_bank","element_id"=>(int)$transaction_id,"society_id"=>$s_society_id,"debit"=>null));
+				    }else{
+		$this->loadmodel('ledger');			
+		$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date), "credit"=>$amount,"ledger_account_id"=>112,"ledger_sub_account_id"=> (int)$ledger_sub_account_id),Array("table_name"=>"cash_bank","element_id"=>(int)$transaction_id,"society_id"=>$s_society_id,"debit"=>null));	
+	}
+
+	$this->Session->write('bank_eddd', 1);
+	$this->response->header('Location', $this->webroot.'Cashbanks/bank_receipt_view');
+
+		
+		
+	/*	
+		
+		exit;
+		
 		
 		$this->loadmodel('new_cash_bank');
 		$this->new_cash_bank->updateAll(array('edit_status'=>'YES'),array("transaction_id"=>(int)$transaction_id));	
@@ -2251,9 +2280,8 @@ $this->send_email($to_email,'accounts@housingmatters.in','HousingMatters',$subje
 }		
 
 /////////////////////////////////////////		
-		}
-	    $this->Session->write('bank_eddd', 1);
-		$this->response->header('Location', $this->webroot.'Cashbanks/bank_receipt_view');
+		} */
+	   
 	}
 }
 //End Bank Receipt Pdf (Accounts)//

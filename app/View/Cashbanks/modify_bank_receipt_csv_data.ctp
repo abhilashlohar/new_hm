@@ -339,6 +339,7 @@ $(document).ready(function() {
 		}else{
 			$(this).closest('td').find(".er").remove();
 		}
+		
 	});
 });
 

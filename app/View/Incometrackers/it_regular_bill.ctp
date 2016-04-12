@@ -106,6 +106,8 @@ if(sizeof($result_regular_bill_temp)>0){
 				  <label class="control-label">Billing Start Date<span style="color:red;">*</span></label>
 				  <div class="controls">
 					<input type="text" name="start_date" class="m-wrap span7 date-picker" data-date-format="dd-mm-yyyy" placeholder="Billing Start Date" required="required">
+		<p id="start_date" style="color: rgb(198, 4, 4);
+font-size: 11px;"></p>
 				  </div>
 			   </div>
 			   
@@ -169,7 +171,6 @@ if(sizeof($result_regular_bill_temp)>0){
 </div>
 
 <?php } a: ; ?>
-
 <script>
 $(document).ready(function(){
 	$("input[name=bill_for]").on("click",function(){
@@ -182,3 +183,48 @@ $(document).ready(function(){
 	});
 });
 </script>
+
+<script>
+$(document).ready(function(){
+	$("form").on("submit",function(e){
+		var allow="yes";
+
+	$('input[name="start_date"]').die().each(function(ii, obj){
+		var start_date=$(this).val();
+	     $.ajax({url:"regular_bill_validation_ajax/"+start_date, 
+		 success: function(result){
+         alert(result);
+        }
+	});
+
+
+	
+	});	
+
+
+
+
+
+
+
+e.preventDefault();
+
+	});
+});  
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

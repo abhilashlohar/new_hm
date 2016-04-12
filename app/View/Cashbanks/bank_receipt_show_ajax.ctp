@@ -96,7 +96,9 @@
 							</a>
 							<ul class="dropdown-menu" style="min-width:80px !important;left:-53px;padding: 3px 0px; box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3); font-size: 12px;">
 							<li><a href="bank_receipt_html_view/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i>View</a></li>
+							<?php if($receipt_type!="maintenance"){ ?>
 							<li><a href="b_receipt_edit/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i>Edit</a></li>
+							<?php } ?>
 							</ul>
 						</div>
 						<i class="icon-info-sign tooltips " data-placement="left" data-original-title="Created by: <?php echo $creator_name; ?> On: <?php echo $created_on; ?>" style="cursor: default;"></i>

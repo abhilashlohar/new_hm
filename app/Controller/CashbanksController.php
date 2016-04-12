@@ -1883,6 +1883,22 @@ function b_receipt_edit($transaction_id=null){
 		
 	}
 	
+	$this->loadmodel('financial_year');
+	$conditions=array("society_id" => $s_society_id,"status"=>1);
+	$financial_years=$this->financial_year->find('all',array('conditions'=>$conditions));
+	$financial_year_array=array();
+	foreach($financial_years as $financial_year){
+		$from=date("d-m-Y",$financial_year["financial_year"]["from"]);
+		$to=date("d-m-Y",$financial_year["financial_year"]["to"]);
+		$pair=array($from,$to);
+		$pair=implode('/',$pair);
+		$financial_year_array[]=$pair;
+	}
+	$financial_year_string=implode(',',$financial_year_array);
+	$this->set(compact("financial_year_string"));
+	
+	
+	
 	if(isset($this->request->data['bank_receipt_update'])){
 		$tranjection_date=$this->request->data['transaction_date']; 
 		$tranjection_date=date('Y-m-d',strtotime($tranjection_date));

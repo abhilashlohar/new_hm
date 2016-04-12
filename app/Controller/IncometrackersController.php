@@ -8388,5 +8388,26 @@ $this->loadmodel('society');
 $this->society->updateAll(array("tax"=>$penalty),array('society_id'=>$s_society_id));
 }
 //End auto_save_penalty//
+//Start regular_bill_validation_ajax// 
+function regular_bill_validation_ajax($start_date=null)
+{
+$s_society_id=(int)$this->Session->read('hm_society_id');	
+$start_date=date('Y-m-d',strtotime($start_date));
+$start_date_for_compare=strtotime($start_date);
+$result="not_match";
+$this->loadmodel('regular_bill');
+$order=array('regular_bill.start_date'=>'ASC');
+$conditions=array("society_id"=>$s_society_id);
+$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order));
+foreach($result_regular_bill as $data){
+	$start_date_from_table=$data['regular_bill']['start_date'];	
+	$end_date_from_table=$data['regular_bill']['end_date'];
+if($start_date_for_compare<=$end_date_from_table){
+	$result="match";
+	break;
+}}
+echo $result;
+}
+//End regular_bill_validation_ajax//
 }
 ?>

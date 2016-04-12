@@ -8,7 +8,7 @@
     <!-- BEGIN LOGIN FORM -->
     <form id="contact-form" method="post" class="form-vertical login-form"  />
     <fieldset>
-      <h4 class="form-title">Sign in to HousingMatters</h4>
+      <h4 class="form-title"><center>Sign in to HousingMatters </center></h4>
 	  <?php  if(!empty($wrong_fb)){ ?>
 		<div class="alert alert-block alert-error fade in">
 			<button type="button" class="close" data-dismiss="alert"></button>
@@ -33,13 +33,14 @@
            
              </div>
 		</div>
-	  </div>  
-      <div class="form-actions">
+	  </div> 
+<div class="form-actions " style="background-color: #FBFBFB;border: none;" >
        <label class="checkbox">
         <div class="checker" id="uniform-undefined"><span><input type="checkbox" <?php if(!empty($bgColor)){?> checked="checked" <?php } ?> name="rememberme" value="1" style="opacity: 0;"></span></div> Remember me
         </label>
 			<button type="submit" name="login" class="btn green  pull-right" style="font-size:16px; width:45%" >Login  <i class="icon-signin m-icon-white" ></i></button>
-      </div>
+      </div>	  
+      
 	  
 	    <div align="center" style="color:#7A7A7A;"><b>OR</b></div>
 		<br/>

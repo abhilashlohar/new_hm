@@ -2857,7 +2857,7 @@ Login page
 
 /* logo page */
 .login {
-  background-color: rgba(229, 229, 229, 0.45) !important;
+  background-color: rgba(229, 229, 229, 0) !important; 
 }
 
 .login .logo {
@@ -2869,7 +2869,7 @@ Login page
 }  
 
 .login .content {
-  background-color:#fff; 
+  background-color:rgba(221, 221, 221, 0.14);
   width: 291px;
   margin: 0 auto; 
   padding: 30px;  
@@ -2918,7 +2918,7 @@ Login page
 }
 
 .login .content .form-actions {
-  background-color: #fff;
+  background-color: rgba(221, 221, 221, 0.14);
   clear: both;
   border: 0px;
   border-bottom: 1px solid #eee;

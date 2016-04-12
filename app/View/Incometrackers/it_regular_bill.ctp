@@ -184,7 +184,7 @@ $(document).ready(function(){
 });
 </script>
 
-<script>
+<script>/*
 $(document).ready(function(){
 	$("form").on("submit",function(e){
 		var allow="yes";
@@ -193,24 +193,25 @@ $(document).ready(function(){
 		var start_date=$(this).val();
 	     $.ajax({url:"regular_bill_validation_ajax/"+start_date, 
 		 success: function(result){
-         alert(result);
+        if(result=="match"){
+			var allow="no";
+		$('#start_date').html('Bills already generated for this period');
+		}else{
+		$('#start_date').html('');	
+		}
         }
 	});
-
-
-	
 	});	
 
-
-
-
-
-
+alert(allow);
 
 e.preventDefault();
 
+if(allow=="no"){
+			e.preventDefault();
+		}
 	});
-});  
+});  */
 </script>
 
 

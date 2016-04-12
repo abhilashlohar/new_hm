@@ -1884,45 +1884,54 @@ function b_receipt_edit($transaction_id=null){
 	}
 	
 	if(isset($this->request->data['bank_receipt_update'])){
-		$tranjection_date = $this->request->data['transaction_date']; 
+		$tranjection_date=$this->request->data['transaction_date']; 
 		$tranjection_date=date('Y-m-d',strtotime($tranjection_date));
-		$deposited_bank_id = (int)$this->request->data['deposited_bank_id'];
-		$receipt_mode = $this->request->data['receipt_mode'];
+		$deposited_bank_id=(int)$this->request->data['deposited_bank_id'];
+		$receipt_mode=$this->request->data['receipt_mode'];
 		
 		$cheque_number = null;
 		$cheque_date = null;
 		$drawn_on_which_bank = null;
 		$reference_utr = null;
-		if($receipt_mode=="Cheque"){
-			$cheque_number = @$this->request->data['cheque_number'];
-			$cheque_date = @$this->request->data['cheque_date1'];
-			$drawn_on_which_bank = @$this->request->data['drawn_on_which_bank'];
+		if($receipt_mode=="Cheque" || $receipt_mode=="cheque"){
+			 $cheque_number=@$this->request->data['cheque_number'];
+			 $cheque_date=@$this->request->data['cheque_date1'];
+			 $drawn_on_which_bank=@$this->request->data['drawn_on_which_bank'];
 		}
-		if($receipt_mode=="NEFT" or $receipt_mode=="PG"){
-			$reference_utr = @$this->request->data['reference_number'];
-			$cheque_date = @$this->request->data['neft_date'];
+		if($receipt_mode=="NEFT" || $receipt_mode=="PG" || $receipt_mode=="neft" || $receipt_mode=="pg"){
+			 $cheque_number = @$this->request->data['reference_number'];
+			 $cheque_date = @$this->request->data['neft_date'];
 		}
-		$member_type = @$this->request->data['member_type'];
+		 $member_type = @$this->request->data['member_type'];
 		
 		$party_name = null;
 		$bill_reference = null;
 		$receipt_type = null;
-		$resident_flat_id = null;
-		if($member_type==1){
+		$ledger_sub_account_id = null;
+		if($member_type=='residential'){
 			$receipt_type = @$this->request->data['receipt_type'];
-			if($receipt_type==1){
-				
+			if($receipt_type=='other'){
+			 $ledger_sub_account_id=(int)@$this->request->data['ledger_sub_account'];
 			}
-			$resident_flat_id = (int)@$this->request->data['resident_flat_id'];
 		}
-		if($member_type==2){
-			$party_name = @$this->request->data['party_name'];
-			$bill_reference = @$this->request->data['bill_reference'];
+		if($member_type=='non_residential'){
+			 $ledger_sub_account_id=@$this->request->data['ledger_sub_account'];
+			 $bill_reference = @$this->request->data['bill_reference'];
 		}
-		$amount = @$this->request->data['amount'];
-		$narration = @$this->request->data['description'];
-	
+		 $amount = @$this->request->data['amount'];
+		 $narration = @$this->request->data['description'];
 		$current_date = date('Y-m-d');
+				
+	$this->loadmodel('cash_bank');
+	$this->cash_bank->updateAll(Array( Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number"=> $cheque_number,"date"=>$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$received_from,"ledger_sub_account_id"=>$ledger_sub_account_id_for_insertion,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number,"bill_reference"=>$bill_reference,"created_on"=>$created_on))); 
+		
+		
+		
+		
+		
+		
+		exit;
+		
 		
 		$this->loadmodel('new_cash_bank');
 		$this->new_cash_bank->updateAll(array('edit_status'=>'YES'),array("transaction_id"=>(int)$transaction_id));	

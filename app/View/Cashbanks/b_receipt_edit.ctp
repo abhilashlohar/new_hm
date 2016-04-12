@@ -4,8 +4,7 @@ $receipt_id=$data["cash_bank"]["receipt_number"];
 $transaction_date=$data["cash_bank"]["transaction_date"];
 $transaction_date=date("d-m-Y",($transaction_date));
 $receipt_mode=$data["cash_bank"]["receipt_mode"];
-if($receipt_mode == "Cheque" || $receipt_mode == "cheque" )
-{
+if($receipt_mode == "Cheque" || $receipt_mode == "cheque" ){
 $cheque_number=@$data["cash_bank"]["cheque_number"];
 $which_bank=@$data["cash_bank"]["drawn_on_which_bank"];
 $receipt_date1 = @$data["cash_bank"]["date"];

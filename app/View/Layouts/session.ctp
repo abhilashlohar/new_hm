@@ -149,7 +149,7 @@ $(document).ready(function() {
 
 $("#menus_area>li").live('click',function(e){
 //$("li").removeClass("active");
-	alert();
+	
 	$(this).addClass("active");
 });
 

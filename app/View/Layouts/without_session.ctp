@@ -58,10 +58,10 @@ border-left:auto;
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
-<body class="login" style="rgba(102, 102, 102, 0.11) !important">
+<body class="login" >
   <?php echo $this->fetch('content'); ?>  
   <!-- BEGIN COPYRIGHT -->
-  <div class="copyright">
+  <div class="copyright" style="color:black;">
     HousingMatters
   </div>
   <!-- END COPYRIGHT -->

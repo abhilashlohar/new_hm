@@ -1897,6 +1897,7 @@ function b_receipt_edit($transaction_id=null){
 			 $cheque_number=@$this->request->data['cheque_number'];
 			 $cheque_date=@$this->request->data['cheque_date1'];
 			 $drawn_on_which_bank=@$this->request->data['drawn_on_which_bank'];
+			 $branch_of_bank=@$this->request->data['branch'];
 		}
 		if($receipt_mode=="NEFT" || $receipt_mode=="PG" || $receipt_mode=="neft" || $receipt_mode=="pg"){
 			 $cheque_number = @$this->request->data['reference_number'];
@@ -1916,16 +1917,26 @@ function b_receipt_edit($transaction_id=null){
 		}
 		if($member_type=='non_residential'){
 			 $ledger_sub_account_id=@$this->request->data['ledger_sub_account'];
-			 $bill_reference = @$this->request->data['bill_reference'];
+			 $bill_reference=@$this->request->data['bill_reference'];
 		}
 		 $amount = @$this->request->data['amount'];
 		 $narration = @$this->request->data['description'];
 		$current_date = date('Y-m-d');
 				
 	$this->loadmodel('cash_bank');
-	$this->cash_bank->updateAll(Array( Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number"=> $cheque_number,"date"=>$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$received_from,"ledger_sub_account_id"=>$ledger_sub_account_id_for_insertion,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number,"bill_reference"=>$bill_reference,"created_on"=>$created_on))); 
+	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number"=> $cheque_number,"date"=>$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"bill_reference"=>$bill_reference),array('auto_id'=>$transaction_id))); 
 		
 		
+
+
+
+
+
+
+
+
+
+
 		
 		
 		

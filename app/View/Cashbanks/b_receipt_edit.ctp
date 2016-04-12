@@ -117,7 +117,9 @@ font-size: 11px;"></p>
 <div class="controls">
 <input type="text"  name="cheque_number" class="m-wrap span3 chhh1 ignore" placeholder="Cheque No." style="background-color:white !important;" id="ins" value="<?php echo @$cheque_number; ?>">
 <input type="text"  class="date-picker m-wrap span4 chhh2 ignore" name="cheque_date1" data-date-format="dd-mm-yyyy" placeholder="Date" id="chh" value="<?php echo @$receipt_date1; ?>"/>
-<table border="0" width="65%"><tr><td style="width:44%;"><p class="instruction"></p></td><td><p id="cheque_date"></p></td></tr></table>
+<table border="0" width="65%"><tr><td style="width:44%;"><p class="instruction" style="color: rgb(198, 4, 4);
+font-size: 11px;"></p></td><td><p class="cheque_date" style="color: rgb(198, 4, 4);
+font-size: 11px;"></p></td></tr></table>
 </div>
 <br />
 
@@ -125,26 +127,32 @@ font-size: 11px;"></p>
 <label style="font-size:14px;">Drawn on which bank?<span style="color:red;">*</span> </label>
 <div class="controls">
 <input type="text"  name="drawn_on_which_bank" class="m-wrap span9 chhh3 ignore" placeholder="Drawn on which bank?" style="background-color:white !important;" id="ins" data-provide="typeahead" data-source="[<?php if(!empty($kendo_implode)) { echo $kendo_implode; } ?>]" value="<?php echo @$which_bank; ?>">
-<p id="drawn_bank"></p>
+<p class="drawn_bank" style="color: rgb(198, 4, 4);
+font-size: 11px;"></p>
 </div>
 <br />
 <label style="font-size:14px;">Branch of Bank<span style="color:red;">*</span> </label>
 <div class="controls">
 <input type="text"  name="branch" class="m-wrap span9 chhh3 ignore" placeholder="Branch of Bank" style="background-color:white !important;" value="<?php echo @$branch_of_bank; ?>">
-<p class="branch"></p>
+<p class="branch" style="color: rgb(198, 4, 4);
+font-size: 11px;"></p>
 </div>
 </div>
+
 
 <div <?php if($receipt_mode == "Cheque" || $receipt_mode == "cheque") { ?> class="hide"  <?php } ?> id="neft_show">
 <label style="font-size:14px;">Reference/UTR #<span style="color:red;">*</span><span style="margin-left:15%;">Date<span style="color:red;">*</span></span></label>
 <div class="controls">
 <input type="text"  name="reference_number" class="m-wrap span4 nefftt1 ignore" placeholder="Reference/UTR #" style="background-color:white !important;" id="reff" value="<?php echo @$refrence_utr; ?>">&nbsp;&nbsp;
-<input type="text"  name="neft_date" class="m-wrap span3 date-picker nefftt2 ignore" placeholder="Date" data-date-format="dd-mm-yyyy" style="background-color:white !important;" id="dtt" value="<?php echo @$receipt_date2; ?>">
-<table border="0" width="80%"><tr><td style="width:44%;"><p id="reference"></p></td><td><p class="date2"></p></td></tr></table>
+<input type="text"  name="neft_date" class="m-wrap span3 date-picker nefftt2 ignore" placeholder="Date" data-date-format="dd-mm-yyyy" style="background-color:white !important;" id="dtt" value="<?php //echo @$receipt_date2; ?>">
+<table border="0" width="80%"><tr><td style="width:44%;"><p class="reference" style="color: rgb(198, 4, 4);
+font-size: 11px;"></p></td><td><p class="date2" style="color: rgb(198, 4, 4);
+font-size: 11px;"></p></td></tr></table>
 </div>
 <br />
 </div>
 </div>
+
 <div class="span6">		
 <?php if($member_type == 'residential') { ?>		
 <h5><b>Receipt For : Residential</b></h5>	
@@ -183,7 +191,8 @@ font-size: 11px;"></p>
 <label style="font-size:14px;">Amount Applied<span style="color:red;">*</span></label>
 <div class="controls">
 <input type="text" name="amount" class="m-wrap span5" value="<?php echo $amount; ?>" style="text-align:right;"/>
-<label class="amount"></label>
+<p class="amount" style="color: rgb(198, 4, 4);
+font-size: 11px;"></p>
 </div>
 <br />
 
@@ -286,16 +295,126 @@ $("form").on("submit",function(e){
 				}
 				
 		});	
+				
+		var mode=$("input[type='radio'][name='receipt_mode']:checked").val();
+		if(mode=="Cheque" || mode=="cheque")
+		{
 		
+		$('input[name="cheque_number"]').die().each(function(ii, obj){
+			var cheque_number=$(this).val();
+				if(cheque_number==""){
+					allow="no";
+						$('.instruction').html('Required');
+					}else{
+						$('.instruction').html('');	
+					}
+		});	
+
+		$('input[name="cheque_date1"]').die().each(function(ii, obj){
+			var cheque_date1=$(this).val();
+			
+				if(cheque_date1==""){
+					allow="no";
+					$('.cheque_date').html('Required');
+				}else{
+					$('.cheque_date').html('');	
+				}
+		});	
+
+		$('input[name="drawn_on_which_bank"]').die().each(function(ii, obj){
+			var drawn_on_which_bank=$(this).val();
+				if(drawn_on_which_bank==""){
+					allow="no";
+					$('.drawn_bank').html('Required');
+				}else{
+					$('.drawn_bank').html('');	
+				}
+		});	
 		
-		
-		
-		
-		
-		
+		$('input[name="branch"]').die().each(function(ii, obj){
+			var branch=$(this).val();
+				if(branch==""){
+					allow="no";
+					$('.branch').html('Required');
+				}else{
+					$('.branch').html('');	
+				}
+		});		
+		}
+        else{
+			
+		$('input[name="reference_number"]').die().each(function(ii, obj){
+			var reference_number=$(this).val();
+				if(reference_number==""){
+					allow="no";
+			  $('.reference').html('Required');
+				}else{
+					$('.reference').html('');	
+				}
+		});		
+			
+		$('input[name="neft_date"]').die().each(function(ii, obj){
+			var neft_date=$(this).val();
+				if(neft_date==""){
+					allow="no";
+				$('.date2').html('Required');
+				}else{
+					$('.date2').html('');	
+				}
+		});		
+			
+			
+			
+		}
+
+		$('input[name="amount"]').die().each(function(ii, obj){
+			var amount=$(this).val();
+				if(amount==""){
+					allow="no";
+				$('.amount').html('Required');
+				}else{
+					$('.amount').html('');	
+				}
+				
+		});	
+
+
+
+
+	e.preventDefault();	
 
 if(allow=="no"){
 			e.preventDefault();
 		}
 });
+
+
+$('input[name="amount"]').die().live("keyup blur",function(){
+			var amount=$(this).val();
+				if(amount==""){
+					
+				$('.amount').html('Required');
+				}else{
+					$('.amount').html('');	
+				}
+				$(this).val($(this).val().toString().replace(/^[0-9]\./g, ',')
+    .replace(/\./g, ''));
+		if($.isNumeric(amount))
+		{
+		}else{
+		$(this).val('');	
+		}
+				
+		});	
+
+
+
+
+
+
+
+
+
+
+
 </script>

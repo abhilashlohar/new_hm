@@ -148,8 +148,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 $(document).ready(function() {
 
 $("#menus_area>li").live('click',function(e){
-//$("li").removeClass("active");
-	
+	$("li").removeClass("active");
 	$(this).addClass("active");
 });
 
@@ -206,7 +205,7 @@ $("#menus_area>li").live('click',function(e){
    <div class="header navbar navbar-inverse navbar-fixed-top hide_at_print">
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="navbar-inner">
-         <div class="container-fluid" style="background-color: white;">
+         <div class="container-fluid" style="background-color: #F5F8F9;">
             <!-- BEGIN LOGO -->
             <a class="brand desktop" href="<?php echo $webroot_path; ?>Hms/Dashboard" style="margin-top: -3px;"> 
             <img src="<?php echo $webroot_path; ?>as/hm/housingmatterslogo.png" alt="HousingMatters" style="height: 30px;" />
@@ -237,7 +236,7 @@ $("#menus_area>li").live('click',function(e){
 		
 			if(!empty($society_name)){
 			?>
-			<a class="btn" href="#" role="button" style="color:black;background-color: rgb(255, 255, 255);font-size: 14px;font-weight: bold;cursor: default;"><?php echo $society_name; ?></a>
+			<a class="btn" href="#" role="button" style="color:black;background-color: rgb(245, 248, 249);font-size: 14px;font-weight: bold;cursor: default;"><?php echo $society_name; ?></a>
 			<?php } ?>
             <!-- END LOGO -->
             <!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -325,7 +324,7 @@ $("#menus_area>li").live('click',function(e){
       </div>
       <!-- END SIDEBAR -->
       <!-- BEGIN PAGE -->  
-      <div class="page-content">
+      <div class="page-content" style="background-color:white;">
          
          <!-- BEGIN PAGE CONTAINER-->
          <div class="container-fluid" id="ctp_content_area">

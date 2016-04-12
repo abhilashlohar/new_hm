@@ -193,7 +193,7 @@ $(document).ready(function(){
 		var start_date=$(this).val();
 	     $.ajax({url:"regular_bill_validation_ajax/"+start_date, 
 		 success: function(result){
-      
+         alert(result);
         }
 	});
 
@@ -210,7 +210,7 @@ $(document).ready(function(){
 e.preventDefault();
 
 	});
-});
+});  
 </script>
 
 

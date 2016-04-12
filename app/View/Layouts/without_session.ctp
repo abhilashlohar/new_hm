@@ -58,7 +58,7 @@ border-left:auto;
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
-<body class="login">
+<body class="login" style="rgba(102, 102, 102, 0.11) !important">
   <?php echo $this->fetch('content'); ?>  
   <!-- BEGIN COPYRIGHT -->
   <div class="copyright">

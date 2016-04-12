@@ -1924,7 +1924,7 @@ function b_receipt_edit($transaction_id=null){
 		$current_date = date('Y-m-d');
 				
 	$this->loadmodel('cash_bank');
-	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number"=> $cheque_number,"date"=>$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"bill_reference"=>$bill_reference),Array('auto_id'=>$transaction_id))); 
+	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number"=> $cheque_number,"date"=>$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"bill_reference"=>$bill_reference),Array('auto_id'=>(int)$transaction_id)); 
 
 		$this->loadmodel('ledger');
 		$this->ledger->updateAll(Array("transaction_date"=> strtotime($tranjection_date), "debit"=>$amount,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$deposited_bank_id),Array("table_name"=>"cash_bank","element_id"=>(int)$transaction_id,"society_id"=>$s_society_id,"credit"=>null)); 

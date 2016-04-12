@@ -46,7 +46,7 @@ $narration = @$data["cash_bank"]["narration"];
 }
 	
 ?>
-
+<input type="hidden" value="<?php echo $financial_year_string; ?>" id="f_y"/>
 <form method="post">
 <div class="portlet box blue">
 	<div class="portlet-title">
@@ -65,14 +65,16 @@ $narration = @$data["cash_bank"]["narration"];
 <div class="span6">
 <label style="font-size:14px;">Transaction date<span style="color:red;">*</span></label>
 <div class="controls">
-<input type="text" class="date-picker m-wrap span7" data-date-format="dd-mm-yyyy" name="transaction_date" placeholder="Transaction Date" style="background-color:white !important;" id="date" value="<?php echo $transaction_date; ?>">
+<input type="text" class="date-picker m-wrap span7" data-date-format="dd-mm-yyyy" name="transaction_date" placeholder="Transaction Date" style="background-color:white !important;"  value="<?php echo $transaction_date; ?>">
+<p class="date" style="color: rgb(198, 4, 4);
+font-size: 11px;"></p>
 </div>
 <br />   
 
 
 <label style="font-size:14px;">Deposited In<span style="color:red;">*</span></label>
 <div class="controls">
-<select name="deposited_bank_id" class="span9 m-wrap chosen" id="bank">
+<select name="deposited_bank_id" class="span9 m-wrap chosen">
 <option value="" style="display:none;">which bank?</option>    
 <?php
 foreach ($cursor3 as $db) 
@@ -81,9 +83,11 @@ $bank_id = (int)$db['ledger_sub_account']["auto_id"];
 $bank_ac = $db['ledger_sub_account']["name"];
 $bank_account_number = $db['ledger_sub_account']["bank_account"];
 ?>
-<option value="<?php echo $bank_id; ?>" <?php if($deposited_bank_id == $bank_id) { ?> selected="selected" <?php } ?>><?php echo $bank_ac; ?> &nbsp;&nbsp; <?php echo $bank_account_number; ?></option>
+<option value="<?php echo $bank_id; ?>" <?php if($deposited_bank_iddd == $bank_id) { ?> selected="selected" <?php } ?>><?php echo $bank_ac; ?> &nbsp;&nbsp; <?php echo $bank_account_number; ?></option>
 <?php } ?>
 </select>
+<p class="bank" style="color: rgb(198, 4, 4);
+font-size: 11px;"></p>
 </div>
 <br />
 	   
@@ -91,18 +95,19 @@ $bank_account_number = $db['ledger_sub_account']["bank_account"];
 <label  style="font-size:14px;">Receipt Mode<span style="color:red;">*</span></label>
 <div class="controls">
 <label class="radio">
-<div class="radio" id="uniform-undefined"><span><input type="radio" name="receipt_mode" value="Cheque" style="opacity: 0;" id="mode" class="chn" onclick="cheque_view()" <?php if($receipt_mode == "Cheque" || $receipt_mode == "cheque") { ?> checked="checked" <?php } ?>></span></div>
+<div class="radio" id="uniform-undefined"><span><input type="radio" name="receipt_mode" value="Cheque" style="opacity: 0;" class="chn" onclick="cheque_view()" <?php if($receipt_mode == "Cheque" || $receipt_mode == "cheque") { ?> checked="checked" <?php } ?>></span></div>
 Cheque
 </label>
 <label class="radio">
-<div class="radio" id="uniform-undefined"><span><input type="radio" name="receipt_mode" value="NEFT" style="opacity: 0;" id="mode" class="neft" onclick="neft_text_view()" <?php if($receipt_mode == "NEFT" || $receipt_mode == "neft") { ?> checked="checked" <?php } ?>></span></div>
+<div class="radio" id="uniform-undefined"><span><input type="radio" name="receipt_mode" value="NEFT" style="opacity: 0;" class="neft" onclick="neft_text_view()" <?php if($receipt_mode == "NEFT" || $receipt_mode == "neft") { ?> checked="checked" <?php } ?>></span></div>
 NEFT
 </label>
 <label class="radio">
-<div class="radio" id="uniform-undefined"><span><input type="radio" name="receipt_mode" value="PG" style="opacity: 0;" id="mode" class="pg" onclick="pg_show()" <?php if($receipt_mode == "PG" || $receipt_mode == "pg") { ?> checked="checked" <?php } ?>></span></div>
+<div class="radio" id="uniform-undefined"><span><input type="radio" name="receipt_mode" value="PG" style="opacity: 0;" class="pg" onclick="pg_show()" <?php if($receipt_mode == "PG" || $receipt_mode == "pg") { ?> checked="checked" <?php } ?>></span></div>
 PG
 </label> 
-<label id="mode"></label>
+<p class="mode" style="color: rgb(198, 4, 4);
+font-size: 11px;"></p>
 </div>
 <br />
 		
@@ -112,7 +117,7 @@ PG
 <div class="controls">
 <input type="text"  name="cheque_number" class="m-wrap span3 chhh1 ignore" placeholder="Cheque No." style="background-color:white !important;" id="ins" value="<?php echo @$cheque_number; ?>">
 <input type="text"  class="date-picker m-wrap span4 chhh2 ignore" name="cheque_date1" data-date-format="dd-mm-yyyy" placeholder="Date" id="chh" value="<?php echo @$receipt_date1; ?>"/>
-<table border="0" width="65%"><tr><td style="width:44%;"><label id="ins"></label></td><td> <label id="chh"></label></td></tr></table>
+<table border="0" width="65%"><tr><td style="width:44%;"><p class="instruction"></p></td><td><p id="cheque_date"></p></td></tr></table>
 </div>
 <br />
 
@@ -120,12 +125,13 @@ PG
 <label style="font-size:14px;">Drawn on which bank?<span style="color:red;">*</span> </label>
 <div class="controls">
 <input type="text"  name="drawn_on_which_bank" class="m-wrap span9 chhh3 ignore" placeholder="Drawn on which bank?" style="background-color:white !important;" id="ins" data-provide="typeahead" data-source="[<?php if(!empty($kendo_implode)) { echo $kendo_implode; } ?>]" value="<?php echo @$which_bank; ?>">
-<label id="ins"></label>
+<p id="drawn_bank"></p>
 </div>
 <br />
 <label style="font-size:14px;">Branch of Bank<span style="color:red;">*</span> </label>
 <div class="controls">
 <input type="text"  name="branch" class="m-wrap span9 chhh3 ignore" placeholder="Branch of Bank" style="background-color:white !important;" value="<?php echo @$branch_of_bank; ?>">
+<p class="branch"></p>
 </div>
 </div>
 
@@ -134,7 +140,7 @@ PG
 <div class="controls">
 <input type="text"  name="reference_number" class="m-wrap span4 nefftt1 ignore" placeholder="Reference/UTR #" style="background-color:white !important;" id="reff" value="<?php echo @$refrence_utr; ?>">&nbsp;&nbsp;
 <input type="text"  name="neft_date" class="m-wrap span3 date-picker nefftt2 ignore" placeholder="Date" data-date-format="dd-mm-yyyy" style="background-color:white !important;" id="dtt" value="<?php echo @$receipt_date2; ?>">
-<table border="0" width="80%"><tr><td style="width:44%;"><label id="reff"></label></td><td> <label id="dtt"></label></td></tr></table>
+<table border="0" width="80%"><tr><td style="width:44%;"><p id="reference"></p></td><td><p class="date2"></p></td></tr></table>
 </div>
 <br />
 </div>
@@ -167,7 +173,8 @@ PG
 
 <label style="font-size:14px;">Bill Reference<span style="color:red;">*</span></label>
 <div class="controls">
-<input type="text" class="m-wrap span9 nonrr2 ignore" name="bill_reference" id="bill_ref" value="<?php echo $bill_reference; ?>"/>
+<input type="text" class="m-wrap span9 nonrr2 ignore" name="bill_reference" value="<?php echo $bill_reference; ?>"/>
+<p class="bill_reference"></p>
 </div>
 <br />
 
@@ -176,7 +183,7 @@ PG
 <label style="font-size:14px;">Amount Applied<span style="color:red;">*</span></label>
 <div class="controls">
 <input type="text" name="amount" class="m-wrap span5" value="<?php echo $amount; ?>" style="text-align:right;"/>
-<label id="amtttt"></label>
+<label class="amount"></label>
 </div>
 <br />
 
@@ -199,14 +206,14 @@ PG
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn" role="button" id="close_button">CLOSE</button>
-				<button type="submit" class="btn red" name="bank_receipt_update">UPDATE RECEIPT</button>
+				
 			</div>
 			</div>
 		</div>
 		
 <div class="form-actions">
 <a href="<?php echo $webroot_path; ?>Cashbanks/bank_receipt_view" role="button" rel="tab" class="btn green"><i class="icon-arrow-left"></i> Back</a>
-<a href="#" role="button" class="btn green submit_button">UPDATE RECEIPT</a>
+<button type="submit" class="btn red" name="bank_receipt_update">UPDATE RECEIPT</button>
 </div>
 </div>
 </div>
@@ -237,3 +244,58 @@ $("#neft_show").show();
 }
 </script>
 
+<script>
+$("form").on("submit",function(e){
+		var allow="yes";
+
+		$('input[name="transaction_date"]').die().each(function(ii, obj){
+			var transaction_date=$(this).val();
+			transaction_date=transaction_date.split('-').reverse().join('');
+			
+			var f_y=$("#f_y").val();
+			var f_y2=f_y.split(',');
+			var al=0;
+			$.each(f_y2, function( index, value ) {
+				var f_y3=value.split('/');
+				var from=f_y3[0];
+				from=from.split('-').reverse().join('');
+				var to=f_y3[1];
+				to=to.split('-').reverse().join('');
+				
+				if(transaction_date>=from && transaction_date<=to){
+					$('.date').html('');
+					al=al+1;
+				}else{
+					$('.date').html('not in Financial year');
+					al=al+0;
+					
+				}
+			});
+			if(al==0){
+				allow="no";
+			}
+		});
+
+		$('select[name="deposited_bank_id"]').die().each(function(ii, obj){
+				var bankk=$(this).val();
+				if(bankk==""){
+					allow="no";
+					$('.bank').html('Required');
+				}else{
+				   $('.bank').html('');	
+				}
+				
+		});	
+		
+		
+		
+		
+		
+		
+		
+
+if(allow=="no"){
+			e.preventDefault();
+		}
+});
+</script>

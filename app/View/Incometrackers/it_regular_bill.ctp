@@ -78,7 +78,7 @@ if(sizeof($result_regular_bill_temp)>0){
 ?>
 
 <?php if(!empty($select_income_head_array) && !empty($penalty_tax) && !empty($neft_type) && $nn==55 && $nnn==55){ ?>
-
+<input type="hidden" id="validat_value">
 <div class="portlet box blue">
 	<div class="portlet-title">
 	<h4 class="block"><i class="icon-reorder"></i>Create regular bill</h4>
@@ -184,42 +184,44 @@ $(document).ready(function(){
 });
 </script>
 
-<script>/*
+<script>
 $(document).ready(function(){
 	$("form").on("submit",function(e){
 		var allow="yes";
-
-	$('input[name="start_date"]').die().each(function(ii, obj){
-		var start_date=$(this).val();
-	     $.ajax({url:"regular_bill_validation_ajax/"+start_date, 
-		 success: function(result){
-        if(result=="match"){
-			var allow="no";
-		$('#start_date').html('Bills already generated for this period');
-		}else{
-		$('#start_date').html('');	
+		var value=$("#validat_value").val();
+	    if(value==5){
+			allow="no";
+			$('#start_date').html('Bills already generated for this period');
 		}
-        }
-	});
-	});	
-
-alert(allow);
-
-e.preventDefault();
 
 if(allow=="no"){
 			e.preventDefault();
 		}
 	});
-});  */
+});  
 </script>
-
-
-
-
-
-
-
+<script>
+function validation(t){
+$('#validat_value').val(t);	
+}
+</script>
+<script>
+$('input[name="start_date"]').die().live("blur",function(){
+			var start_date=$(this).val();
+				var a1=0;	    
+					$.ajax({url:"regular_bill_validation_ajax/"+start_date, 
+						success: function(result){
+					if(result=="match"){
+					validation(5)
+				$('#start_date').html('Bills already generated for this period');
+				}else{
+					$('#start_date').html('');
+				validation(10)		
+			}
+			}
+		});
+	});	
+</script>
 
 
 

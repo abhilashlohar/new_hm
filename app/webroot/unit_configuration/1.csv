@@ -1,11 +1,11 @@
 Wing,Flat Number,Flat Type,Flat Area (Sq. Ft.) 
-A,101,1 bhk,1000
-A,102,2 bhk,1000
-A,103,3 bhk,1000
-A,104,4 bhk,1000
-A,105,5 bhk,1000
-B,201,6 bhk,1000
-B,202,7 bhk,1000
-B,203,8 bhk,1000
-B,204,9 bhk,1000
-B,205,10 bhk,1000
+Wing A,0000000101,,
+Wing A,0000000102,,
+Wing A,0000000103,,
+Wing A,0000000104,,
+Wing A,0000000105,,
+Wing B,0000000201,,
+Wing B,0000000202,,
+Wing B,0000000203,,
+Wing B,0000000204,,
+Wing B,0000000205,,

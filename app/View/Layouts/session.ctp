@@ -152,8 +152,6 @@ $("#menus_area>li").live('click',function(e){
 	$(this).addClass("active");
 });
 
-
-
 	$("a[rel='tab']").live('click',function(e){
 		e.preventDefault();
 		$("#loading").show();

@@ -8388,5 +8388,19 @@ $this->loadmodel('society');
 $this->society->updateAll(array("tax"=>$penalty),array('society_id'=>$s_society_id));
 }
 //End auto_save_penalty//
+//Start regular_bill_validation_ajax// 
+function regular_bill_validation_ajax($start_date=null)
+{
+$s_society_id=(int)$this->Session->read('hm_society_id');	
+	
+	
+	
+	
+	
+	
+	
+	
+}
+//End regular_bill_validation_ajax//
 }
 ?>

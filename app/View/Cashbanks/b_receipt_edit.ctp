@@ -137,9 +137,9 @@ PG
 <div class="span6">		
 <?php if($member_type == 'residential') { ?>		
 <h5><b>Receipt For : Residential</b></h5>	
-<input type="hidden" name="member_type" value="1" />	
+<input type="hidden" name="member_type" value="residential" />	
 
-<?php if($receipt_type == 1) { ?>
+<?php if($receipt_type=='maintenance') { ?>
 <h5><b>Receipt type: Maintanance</b></h5>	
 <input type="hidden" name="receipt_type" value="1" />
 <?php } else { ?>

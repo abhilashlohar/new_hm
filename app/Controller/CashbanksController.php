@@ -1774,25 +1774,19 @@ $type = (int)$this->request->query('rf');
 $this->set('type',$type);
 $this->set('flat_id',$flat_id);
 }
-
-/////////////////////End Bank Receipt Reference Ajax (Accounts)///////////////////////////////////////////
-
-/////////////////////////////// Start Bank Receipt Amount Ajax(Accounts)///////////////////////////////////
+//End Bank Receipt Reference Ajax (Accounts)//
+//Start Bank Receipt Amount Ajax(Accounts)//
 function bank_receipt_amount_ajax()
 {
 $this->layout='blank';
 $s_role_id=$this->Session->read('role_id');
 $s_society_id = $this->Session->read('society_id');
 $s_user_id=$this->Session->read('user_id');
-
 $i_head = $this->request->query('ss');
 $this->set('i_head',$i_head);
-
 }
-
-////////////////////////////// End Bank Receipt Amount Ajax(Accounts)/////////////////////////////////////
-
-/////////////////////////// Start Bank Receipt Pdf (Accounts)//////////////////////////////////////
+//End Bank Receipt Amount Ajax(Accounts)//
+//Start Bank Receipt Pdf (Accounts)//
 function bank_receipt_pdf($auto_id=null)
 {
 $this->layout = 'pdf'; //this will use the pdf.ctp layout 

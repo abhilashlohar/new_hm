@@ -39,5 +39,25 @@ $n_date=$data['notice']['n_date'];
 <?php } ?> 
 </tbody>
 </table>
-<?php if(sizeof($result_notice_draft)==0){ echo '<div align="center">No any Notice Published</div>'; } ?>
+<?php if(sizeof($result_notice_draft)==0){ echo '<div align="center">No Notice Published</div>'; } ?>
 </div>
+
+<script>
+
+<?php 
+ $draft_notice_griter=$this->session->read('draft_notice');
+if($draft_notice_griter==1){
+ ?>	
+		$.gritter.add({
+			title: '<i class="icon-bullhorn"></i> Notice',
+			text: '<p>Your notice has been saved in Draft box. You can edit/post later.</p>',
+			sticky: false,
+			time: '10000',
+
+		});
+		
+<?php 
+$this->requestAction(array('controller' => 'hms', 'action' => 'griter_notification'), array('pass' => array('draft_notice_griter')));
+} ?>
+
+</script>

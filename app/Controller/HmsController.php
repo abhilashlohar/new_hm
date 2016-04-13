@@ -1815,9 +1815,19 @@ $this->loadmodel('user');
 
 function griter_notification($id)
 {	
+
 	if($id=="bank_receipt"){
 		$this->Session->delete('bank_receipt');
 	}
+	
+	if($id=="notice_create"){
+		$this->Session->delete('create_notice');
+	}
+	
+	if($id=="draft_notice_griter"){
+		$this->Session->delete('draft_notice');
+	}
+	
 	if($id=="bank_payment"){
 		$this->Session->delete('bank_payment');	
 	}

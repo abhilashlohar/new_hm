@@ -5,7 +5,7 @@
 		<td align="right">
 			<span style="margin-top: 5px; margin-bottom: 5px;"><a href='contact_handbook_export'class='btn' download='download'><i class="fa fa-file-excel-o"></i></a></span>
 			<input class="m-wrap medium" placeholder="Search" id="search" style="margin-top: 5px; margin-bottom: 5px;" type="text">
-			<a  onclick="blank_value();" href="javascript:ShowContactForm()" class=" btn blue" style="margin-top: 5px; margin-bottom: 5px;"><i class='icon-plus-sign'></i> Add New Contact </a>
+			<a  onclick="blank_value();" href="javascript:ShowContactForm()" class=" btn blue" style="margin-top: 5px; margin-bottom: 5px;"><i class='icon-plus-sign'></i> Add New </a>
 		</td>
 	</tr>
 </table>
@@ -114,31 +114,31 @@ foreach($flat_info as $wing_flat){
 ?>
 
 <div class="r_d fadeleftsome" style="width:45%" >
-<div class="hv_b" style="overflow: auto;padding: 5px;cursor: pointer;" title="">
-<div style="float:left;margin-left:3%;"  >
+	<div class="hv_b" style="overflow: auto;padding: 5px;cursor: pointer;" title="">
+		<div style="float:left;margin-left:3%;"  >
 
-<i class="icon-user"></i> &nbsp; <span style="font-size:16px;"><?php echo $name; ?></span><br/>
-<i class=" icon-wrench"></i> &nbsp; <span style="font-size:14px;">Services : <?php echo $service_name ; ?></span><br/>
-<i class="icon-phone-sign"></i> &nbsp; <span style="font-size:14px;"><?php echo $mobile ; ?></span><br/>
-<i class="icon-envelope-alt"></i> &nbsp; <span style="font-size:14px;"><a style="text-decoration: blink;" href="mailto:<?php echo $email ; ?>"><?php echo $email ; ?></a></span><br/>
-<i class="icon-sitemap"></i> &nbsp; <span style="font-size:14px;"><a href='<?php echo $web ; ?>' target="_blank"> <?php echo $web ; ?></a></span><br/>
+			<i class="icon-user"></i> &nbsp; <span style="font-size:16px;"><?php echo $name; ?></span><br/>
+			<i class=" icon-wrench"></i> &nbsp; <span style="font-size:14px;">Services : <?php echo $service_name ; ?></span><br/>
+			<i class="icon-phone-sign"></i> &nbsp; <span style="font-size:14px;"><?php echo $mobile ; ?></span><br/>
+			<i class="icon-envelope-alt"></i> &nbsp; <span style="font-size:14px;"><a style="text-decoration: blink;" href="mailto:<?php echo $email ; ?>"><?php echo $email ; ?></a></span><br/>
+			<i class="icon-sitemap"></i> &nbsp; <span style="font-size:14px;"><a href='<?php echo $web ; ?>' target="_blank"> <?php echo $web ; ?></a></span><br/>
 
-<i class="icon-user"></i> &nbsp; <span class="" data-placement="right" data-original-title="">Added by: <?php echo $user_name ; ?> <?php echo $wing_flat; ?></span><br/> 
-<div style="">
-<?php
-if($s_user_id==$user_id )
-{
-?>
-<span class="btn mini yellow contact_edit" contact_id="<?php echo $c_h_id; ?>"><i class=' icon-edit'></i>  </span> 
-<?php } ?>
-<?php
-if($s_user_id==$user_id)
-{ ?>
-<span ><a role='button' element_id='<?php echo $c_h_id ; ?>' class="btn mini con_delete red" > <i class="icon-trash"></i>  </a></span>
-<?php } ?>
-</div>
-</div>
-</div>
+			<i class="icon-user"></i> &nbsp; <span class="" data-placement="right" data-original-title="">Added by: <?php echo $user_name ; ?> <?php echo $wing_flat; ?></span><br/> 
+				<center>
+				<?php
+				if($s_user_id==$user_id )
+				{
+				?>
+				<span class="btn mini yellow contact_edit" contact_id="<?php echo $c_h_id; ?>"><i class=' icon-edit'></i>  </span> 
+				<?php } ?>
+				<?php
+				if($s_user_id==$user_id)
+				{ ?>
+				<span ><a role='button' element_id='<?php echo $c_h_id ; ?>' class="btn mini con_delete red" > <i class="icon-trash"></i>  </a></span>
+				<?php } ?>
+				</center>
+		</div>
+	</div>
 </div>
 <?php 
 }
@@ -275,7 +275,7 @@ $(".con_delete").click(function(){
                                <label class="" style="font-size:14px;" >Services offered </label>
                               
 								 
-								  <select data-placeholder="Select services "  name="service[]"  class="  chosen" multiple="multiple" style="width: 290% !important;" >
+								  <select data-placeholder="You can select multiple services "  name="service[]"  class="  chosen" multiple="multiple" style="width: 290% !important;" >
 									 <?php
 									foreach($contact_handbook_service as $data){
 										$contact_handbook_service_id=$data['contact_handbook_service']['contact_handbook_service_id'];

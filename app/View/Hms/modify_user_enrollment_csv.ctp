@@ -6,6 +6,7 @@ input.m-wrap[type="text"]{
 </style>
 <div style="background-color:#FFF;">
 <table id="report_tb" class="table table-bordered table-striped" width="100%">
+	<thead>
 	<tr>
 		<th>Name</th>
 		<th>Unit</th>
@@ -15,6 +16,8 @@ input.m-wrap[type="text"]{
 		<th>Committee</th>
 		<th>Delete</th>
 	</tr>
+	</thead>
+	</tbody>
 	<?php foreach($user_enrollment_csv_converted as $user_enrollment_converted){ 
 		$auto_id=$user_enrollment_converted["user_enrollment_csv_converted"]["auto_id"];
 		$name=$user_enrollment_converted["user_enrollment_csv_converted"]["name"];
@@ -81,6 +84,7 @@ input.m-wrap[type="text"]{
 		</td>
 	</tr>
 	<?php } ?>
+	</tbody>
 </table>
 </div>
 <?php if(empty($page)){ $page=1;} ?>
@@ -142,11 +146,30 @@ $(document).ready(function() {
 	});
 	
 	$( "#final_import" ).click(function(){
+		var allow="yes";
+		
+		$('#report_tb tbody tr input[field=name]').each(function(i, obj){
+			var name=$(this).val();
+				if(name==""){
+					$(this).closest('td').find(".er").remove();
+						$(this).closest('td').append('<p class="er">Required</p>');
+					allow="no";
+				}else{
+					$(this).closest('td').find(".er").remove();
+				}
+		});
+		$('#report_tb tbody tr select[field=flat]').each(function(i, obj){
+			var flat=$(this).val();
+				if(flat==""){
+					$(this).closest('td').find(".er").remove();
+						$(this).closest('td').append('<p class="er">Required</p>');
+					allow="no";
+				}else{
+					$(this).closest('td').find(".er").remove();
+				}
+		});
+		
 		var allow="no";
-		
-		
-		
-		
 			if(allow=="yes"){
 				$.ajax({
 					url: "<?php echo $webroot_path; ?>Hms/allow_user_enrollment",
@@ -265,7 +288,12 @@ $(document).ready(function(){
 	});
 });
 </script>
-
+<style>
+.er{
+color: rgb(198, 4, 4);
+font-size: 11px;
+}
+</style>
 
 
 

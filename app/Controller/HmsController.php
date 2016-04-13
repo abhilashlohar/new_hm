@@ -27882,10 +27882,34 @@ return $group_name=$collection['group']['group_name'];
 //Start user_enrolment_validation_with_table//
 function user_enrolment_validation_with_table($email=null)
 {
-$s_society_id=$this->Session->read('hm_society_id'); 
+	$result="not_match";
+		
+		$this->loadmodel('user');
+		$result_user=$this->user->find('all');
+		foreach($result_user as $data){
+				$email_id=$data['user']['email'];
+                  if($email_id==$email){
+					$result="match";
+					break;					
+				  }					  
+		}
+echo $result;	
 
-echo "result";
-	
+/*
+$.ajax({url:"user_enrolment_validation_with_table/"+email, 
+						success: function(result){
+							if(result=="match"){
+					
+			$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
+			$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').append('<p class="er">Already Exist</p>');
+				}
+				else{
+				$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();	
+				}
+			}
+		});
+
+*/
 }
 //End user_enrolment_validation_with_table//
 }

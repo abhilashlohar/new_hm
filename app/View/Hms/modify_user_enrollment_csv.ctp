@@ -111,7 +111,7 @@ for($ii=1;$ii<=$loop;$ii++){ ?>
 <a class="btn purple " role="button" id="final_import">Import user enrollment <i class="m-icon-swapright m-icon-white"></i></a>	<a class="btn cancel_user">Cancel</a>					
 <div id="check_validation_result"></div>
 </div>
-	
+<input type="hidden" id="email_valid1">
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 <script>
 $(document).ready(function() {
@@ -155,23 +155,23 @@ $(document).ready(function() {
 				if(email==""){
 					$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
 				}else{
-				
-				$.ajax({url:"user_enrolment_validation_with_table/"+email, 
-						success: function(result){
-			$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
-			$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').append('<p class="er">Already Exist</p>');
-			}
+				var result;
+				$.ajax({
+					type: "POST",
+					url: "user_enrolment_validation_with_table",
+					data: email,
+					async: false,
+					success: function(data) {
+						
+						 result = data;
+					}
+				});
+				alert(result);
+		   }
+		   
 		});
-				
-				
-				
-			
-				}
-		});
 		
-		
-		
-		
+	
 		
 		
 		

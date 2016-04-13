@@ -107,6 +107,7 @@ function submit_comment(){
 }
 
 function topic_detail($post_id=null){
+	$this->layout="blank";
 	$this->ath();
 	$s_user_id=$this->Session->read('hm_user_id');
 	$s_society_id=$this->Session->read('hm_society_id');

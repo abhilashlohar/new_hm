@@ -2,6 +2,9 @@
 if(sizeof($posts)==0){ echo "No any topic created."; exit; }
 $discussion_post_id=$posts[0]["discussion_post"]["discussion_post_id"];
 $topic=$posts[0]["discussion_post"]["topic"];
+$topic=$posts[0]["discussion_post"]["topic"];
+$visible=$posts[0]["discussion_post"]["visible"];
+$sub_visible=$posts[0]["discussion_post"]["sub_visible"];
 $description=$posts[0]["discussion_post"]["description"];
 $creator_user_id=$posts[0]["discussion_post"]["user_id"];
 $file=$posts[0]["discussion_post"]["file"];
@@ -14,7 +17,51 @@ $wing_flat=$result_user["wing_flat"];
 $profile_pic=$result_user["profile_pic"];
 foreach($wing_flat as $data){
 	$wing_flat=$data;
-}?>
+}
+
+	$visible_detail='';
+	if($visible=="all_users"){
+		
+		$visible_show="All Users";
+		$visible_detail="All Users";
+	}
+
+	if($visible=="role_wise") {
+		
+		unset($role_name); 
+		$visible_show="Role wise";
+		foreach ($sub_visible as $role_id) 
+		{
+		if($role_id!="resident_family" and $role_id!="resident" ){
+			$role_name1=$this->requestAction(array('controller' => 'Fns', 'action' => 'role_name_via_role_id'), array('pass' => array($role_id)));
+				if(!empty($role_name1))
+				{
+				$role_name[]=$role_name1;
+				}
+			}
+		}
+		$visible_detail=implode(" , ",$role_name);
+	}
+
+	if($visible=="wing_wise"){
+		
+		unset($wing_name);
+		$visible_show="Wing wise";
+		foreach ($sub_visible as $wing_id) {
+			
+			$wing_id=(int)$wing_id;
+			$wing_name1="wing-".$this->requestAction(array('controller' => 'Fns', 'action' => 'wing_name_via_wing_id'), array('pass' => array($wing_id)));
+				if(!empty($wing_name1)){
+					
+					$wing_name[]=$wing_name1;
+				}
+			}
+		$visible_detail=implode(" , ",$wing_name);
+	}
+
+
+
+?>
 <div style="text-align:center;  font-size:16px; font-weight:bold; padding:5px;" post_id="<?php echo $discussion_post_id; ?>">
 <?php echo $topic; ?>
 </div>
@@ -22,7 +69,9 @@ foreach($wing_flat as $data){
 	<tr>
 		<td width="15%"><img src="<?php echo $webroot_path; ?>profile/<?php echo $profile_pic; ?>" style="height:50px; width:50px;"></td>
 		<td style="padding-left:5px;" valign="middle" width="85%">
-			<span style="font-size:16px;"><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $wing_flat; ?></span>
+			<span style="font-size:16px;"><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $wing_flat; ?>
+			<i class="tooltips icon-info-sign" data-placement="bottom" data-original-title="This discussion is visible to :-<?php echo $visible_detail; ?>"></i>
+			</span>
 			<br>
 			<span style="color:#ADABAB;"><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp;<?php echo $time; ?></span>
 		</td>

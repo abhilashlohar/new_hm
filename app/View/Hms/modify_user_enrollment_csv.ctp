@@ -150,6 +150,36 @@ $(document).ready(function() {
 	$( "#final_import" ).click(function(){
 		var allow="yes";
 		
+		$('#report_tb tbody tr input[field=email]').each(function(i, obj){
+			var email=$(this).val();
+				if(email==""){
+					$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
+				}else{
+				
+				$.ajax({url:"user_enrolment_validation_with_table/"+email, 
+						success: function(result){
+			$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
+			$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').append('<p class="er">Required</p>');
+			}
+		});
+				
+				
+				
+			
+				}
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		$('#report_tb tbody tr input[field=name]').each(function(i, obj){
 			var name=$(this).val();
 				if(name==""){
@@ -180,6 +210,16 @@ $(document).ready(function() {
 					$(this).closest('td').find(".er").remove();
 				}
 		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		var allow="no";
 			if(allow=="yes"){
@@ -307,6 +347,13 @@ font-size: 11px;
 }
 </style>
 
+<?php
+function email_validation_database($email)
+{
+$rrr= "result";
+return $email;	
+}
+?>
 
 
 

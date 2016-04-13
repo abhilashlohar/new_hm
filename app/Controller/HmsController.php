@@ -27878,8 +27878,15 @@ return $group_name=$collection['group']['group_name'];
 }
 }
 
-//End group
+//End group//
+//Start user_enrolment_validation_with_table//
+function user_enrolment_validation_with_table($email=null)
+{
+$s_society_id=$this->Session->read('hm_society_id'); 
 
-
+echo "result";
+	
+}
+//End user_enrolment_validation_with_table//
 }
 ?>

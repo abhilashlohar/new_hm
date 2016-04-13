@@ -159,7 +159,7 @@ $(document).ready(function() {
 				$.ajax({url:"user_enrolment_validation_with_table/"+email, 
 						success: function(result){
 			$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
-			$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').append('<p class="er">Required</p>');
+			$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').append('<p class="er">Already Exist</p>');
 			}
 		});
 				

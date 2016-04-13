@@ -5,7 +5,7 @@ input.m-wrap[type="text"]{
 }
 </style>
 <div style="background-color:#FFF;">
-<table id="report_tb" class="table table-bordered table-striped" width="100%">
+<table id="report_tb" class="table table-bordered table-condensed" width="100%">
 	<thead>
 	<tr>
 		<th>Name</th>
@@ -65,6 +65,7 @@ input.m-wrap[type="text"]{
 		<td valign="top">
 			<div class="owner">
 				<select class="m-wrap span12 owner_tenant " record_id="<?php echo $auto_id; ?>" field="owner" >
+				<option value="">Select</option>
 				<option value="yes" <?php if($owner=="yes"){?> selected <?php } ?>>Yes</option>
 				<option value="no" <?php if($owner=="no"){?> selected <?php } ?>>No</option>
 				</select>
@@ -73,6 +74,7 @@ input.m-wrap[type="text"]{
 		<td valign="top">
 			<div class="committee" <?php if($owner=="no") { ?> style="display:none" <?php } ?>>
 				<select class="m-wrap span12 " record_id="<?php echo $auto_id; ?>" field="committee">
+				
 				<option value="yes" <?php if($committee=="yes"){?> selected <?php } ?>>Yes</option>
 				<option value="no" <?php if($committee=="no"){?> selected <?php } ?> >No</option>
 				</select>
@@ -161,6 +163,16 @@ $(document).ready(function() {
 		$('#report_tb tbody tr select[field=flat]').each(function(i, obj){
 			var flat=$(this).val();
 				if(flat==""){
+					$(this).closest('td').find(".er").remove();
+						$(this).closest('td').append('<p class="er">Required</p>');
+					allow="no";
+				}else{
+					$(this).closest('td').find(".er").remove();
+				}
+		});
+		$('#report_tb tbody tr select[field=owner]').each(function(i, obj){
+			var owner=$(this).val();
+				if(owner==""){
 					$(this).closest('td').find(".er").remove();
 						$(this).closest('td').append('<p class="er">Required</p>');
 					allow="no";

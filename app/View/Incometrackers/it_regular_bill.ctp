@@ -115,6 +115,8 @@ font-size: 11px;"></p>
 				  <label class="control-label">Payment Due Date<span style="color:red;">*</span></label>
 				  <div class="controls">
 					<input type="text" name="due_date" class="m-wrap span7 date-picker" data-date-format="dd-mm-yyyy" placeholder="Payment Due Date"style="border-color:rgb(206, 73, 73);" required="required">
+						<p id="due_date" style="color: rgb(198, 4, 4);
+font-size: 11px;"></p>
 				  </div>
 			   </div>
 			</div>
@@ -193,7 +195,23 @@ $(document).ready(function(){
 			allow="no";
 			$('#start_date').html('Bills already generated for this period');
 		}
+		else{
+			$('#start_date').html('');
+		}
 
+		var start_date=$('input[name="start_date"]').val();
+		var due_date=$('input[name="due_date"]').val();
+		start_date=start_date.split('-').reverse().join('');
+		due_date=due_date.split('-').reverse().join('');
+		if(due_date<start_date){
+			allow="no";
+			$('#due_date').html('Due date is small than start date');
+		}else{
+		  $('#due_date').html('');	
+		}
+		
+		
+		
 if(allow=="no"){
 			e.preventDefault();
 		}
@@ -220,6 +238,19 @@ $('input[name="start_date"]').die().live("blur",function(){
 			}
 			}
 		});
+	});	
+	
+	$('input[name="due_date"]').die().live("blur keyup",function(){	
+	  var due_date=$(this).val();
+	  var start_date=$('input[name="start_date"]').val();
+	  start_date=start_date.split('-').reverse().join('');
+		due_date=due_date.split('-').reverse().join('');
+		if(due_date<start_date){
+			$('#due_date').html('Due date is small than start date');
+		}else{
+		  $('#due_date').html('');	
+		}
+
 	});	
 </script>
 

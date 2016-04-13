@@ -155,18 +155,20 @@ $(document).ready(function() {
 				if(email==""){
 					$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
 				}else{
-				var result;
+				var result;	
 				$.ajax({
-					type: "POST",
-					url: "user_enrolment_validation_with_table",
-					data: email,
-					async: false,
-					success: function(data) {
-						
-						 result = data;
-					}
-				});
-				alert(result);
+					    url:"user_enrolment_validation_with_table/"+email, 
+					    async: false,
+						success: function(data){
+							result=data;
+					
+			
+				
+			}
+			});
+		
+		alert(result);
+		
 		   }
 		   
 		});

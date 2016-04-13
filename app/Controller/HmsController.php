@@ -27884,6 +27884,7 @@ function user_enrolment_validation_with_table($email=null)
 {
 	$result="not_match";
 		
+		
 		$this->loadmodel('user');
 		$result_user=$this->user->find('all');
 		foreach($result_user as $data){
@@ -27893,7 +27894,7 @@ function user_enrolment_validation_with_table($email=null)
 					break;					
 				  }					  
 		}
-echo $result;	
+echo $email;	
 
 /*
 $.ajax({url:"user_enrolment_validation_with_table/"+email, 
@@ -27907,8 +27908,19 @@ $.ajax({url:"user_enrolment_validation_with_table/"+email,
 				$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();	
 				}
 			}
-		});
-
+			});
+var result;
+				$.ajax({
+					type: "POST",
+					url: "user_enrolment_validation_with_table",
+					data: email,
+					async: false,
+					success: function(data) {
+						
+						 result = data;
+					}
+				});
+				alert(result);	
 */
 }
 //End user_enrolment_validation_with_table//

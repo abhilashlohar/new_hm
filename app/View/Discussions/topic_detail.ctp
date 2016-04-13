@@ -21,7 +21,7 @@ foreach($wing_flat as $data){
 <table>
 	<tr>
 		<td width="15%"><img src="<?php echo $webroot_path; ?>profile/<?php echo $profile_pic; ?>" style="height:50px; width:50px;"></td>
-		<td style="padding-left:5px;" valign="top" width="85%">
+		<td style="padding-left:5px;" valign="middle" width="85%">
 			<span style="font-size:16px;"><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $wing_flat; ?></span>
 			<br>
 			<span style="color:#ADABAB;"><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp;<?php echo $time; ?></span>
@@ -44,7 +44,7 @@ foreach($wing_flat as $data){
 <div class="chat-form hide_at_print" style="margin-left: 5px;width: 94%;">
 	<form method="post" id="idForm">
 		<input type="hidden" value="<?php echo $discussion_post_id; ?>" name="post_id"/>
-		<textarea class="span12 m-wrap" type="text" name="comment_box" placeholder="Type a message here..." style="background-color:#FFF !important; resize:none;"></textarea>
+		<textarea class="span12 m-wrap" type="text" name="comment_box" placeholder="Type your comments..." style="background-color:#FFF !important; resize:none;"></textarea>
 		<div align="right">
 		<div class="pull-left" id="save_comment"></div>
 		<button type="submit" id="sub" style="margin-top:-10px;" class="btn blue icn-only tooltips" data-placement="bottom" data-original-title="Tab + Enter for post comment">POST</button>

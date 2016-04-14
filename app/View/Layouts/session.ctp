@@ -147,11 +147,6 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 <script>
 $(document).ready(function() {
 
-$("#menus_area>li").live('click',function(e){
-	$("li").removeClass("active");
-	$(this).addClass("active");
-});
-
 	$("a[rel='tab']").live('click',function(e){
 		e.preventDefault();
 		$("#loading").show();
@@ -192,6 +187,13 @@ $("#menus_area>li").live('click',function(e){
 		$('#ctp_content_area').load(pageurl+'?rel=tab');
 		
 	};
+	
+	
+$("#menus_area>li").live('click',function(e){
+	$("li").removeClass("active");
+	$(this).addClass("active");
+});
+
 });
 </script>
    

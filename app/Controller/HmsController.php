@@ -756,13 +756,15 @@ function modify_user_enrollment_csv($page=null){
 	
 	if($process_status==3){
 		$this->loadmodel('user_enrollment_csv_converted'); 
+		$order=array('user_enrollment_csv_converted.auto_id'=>'ASC');
 		$conditions=array("society_id"=>(int)$s_society_id);
-		$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,"limit"=>50,"page"=>$page));
+		$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,"limit"=>50,"page"=>$page,'order' =>$order));
 		$this->set('user_enrollment_csv_converted',$user_enrollment_csv_converted);
 		
 		$this->loadmodel('user_enrollment_csv_converted'); 
+		$order=array('user_enrollment_csv_converted.auto_id'=>'ASC');
 		$conditions=array("society_id"=>(int)$s_society_id);
-		$count_user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('count',array('conditions'=>$conditions));
+		$count_user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('count',array('conditions'=>$conditions,'order' =>$order));
 		$this->set('count_user_enrollment_csv_converted',$count_user_enrollment_csv_converted);
 	}
 		$this->loadmodel('wing');
@@ -860,62 +862,39 @@ function auto_save_user_enrollment($record_id=null,$field=null,$value=null){
 	$record_id=(int)$record_id; 
 
 		if($field=="name"){
-			if(empty($value)){ echo "F";}
-			else{
 				$this->loadmodel('user_enrollment_csv_converted');
 				$this->user_enrollment_csv_converted->updateAll(array("name" => $value),array("auto_id" => $record_id));
 				echo "T";
-			}
 		}	
 		
 		if($field=="email"){
-			if(!filter_var($value, FILTER_VALIDATE_EMAIL) && !empty($value)) { echo "F";}
-			else{
 				$this->loadmodel('user_enrollment_csv_converted');
 				$this->user_enrollment_csv_converted->updateAll(array("email" => $value),array("auto_id" => $record_id));
 				echo "T";
-			}
 		}	
-		
 		if($field=="mobile"){
-			if (!preg_match ( '/^\\d{10}$/',$value) && !empty($value)) { echo "F";}
-			else{
 				$this->loadmodel('user_enrollment_csv_converted');
 				$this->user_enrollment_csv_converted->updateAll(array("mobile" => $value),array("auto_id" => $record_id));
 				echo "T";
-			}
 		}	
-	
 		if($field=="flat"){
-			
 			$wing_flat=explode(',',$value);
 			$wing_id=(int)$wing_flat[0];
 			$flat_id=(int)$wing_flat[1];
 			$this->loadmodel('user_enrollment_csv_converted');
-			$this->user_enrollment_csv_converted->updateAll(array("wing" => $wing_id,"flat"=>$flat_id),array("auto_id" => $record_id));
-			$conditions=array('wing'=>$wing_id,"flat"=>$flat_id,"society_id"=>$s_society_id);
-			$count=$this->user_enrollment_csv_converted->find('count',array('conditions'=>$conditions));
-			if($count==2){
-				echo "F";
-			}else{
-				echo "T";
-			}
+			$this->user_enrollment_csv_converted->updateAll(array("wing"=>$wing_id,"flat"=>$flat_id),array("auto_id"=>$record_id));
 		}
 		
 		if($field=="owner"){
-			
 			$this->loadmodel('user_enrollment_csv_converted');
-			$this->user_enrollment_csv_converted->updateAll(array("owner" => $value),array("auto_id" => $record_id));
+			$this->user_enrollment_csv_converted->updateAll(array("owner"=>$value),array("auto_id"=>$record_id));
 			echo "T";
-			
 		}
 		
 		if($field=="committee"){
-			
 			$this->loadmodel('user_enrollment_csv_converted');
-			$this->user_enrollment_csv_converted->updateAll(array("committee" => $value),array("auto_id" => $record_id));
+			$this->user_enrollment_csv_converted->updateAll(array("committee"=>$value),array("auto_id"=>$record_id));
 			echo "T";
-			
 		}
 	
 }
@@ -1815,9 +1794,23 @@ $this->loadmodel('user');
 
 function griter_notification($id)
 {	
+
 	if($id=="bank_receipt"){
 		$this->Session->delete('bank_receipt');
 	}
+	
+	if($id=="notice_create"){
+		$this->Session->delete('create_notice');
+	}
+	
+	if($id=="contact_handbook"){
+		$this->Session->delete('contact_create');
+	}
+	
+	if($id=="draft_notice_griter"){
+		$this->Session->delete('draft_notice');
+	}
+	
 	if($id=="bank_payment"){
 		$this->Session->delete('bank_payment');	
 	}
@@ -17704,6 +17697,8 @@ foreach($result_user as $data)
 $visible_user_id[]=$data['user']['user_id'];
 }
 
+$this->Session->write('contact_create',1);
+
 $this->send_notification('<span class="label label-warning" ><i class="icon-phone"></i></span>','Addition to contact handbook  <b>'.$name.'</b> added by',21,$i,$this->webroot.'Hms/contact_handbook',$s_user_id,$visible_user_id);
 
 $this->response->header('location','contact_handbook');
@@ -25208,7 +25203,7 @@ else
 
 
 }
-///////////////////////////////// Start Check Email Already Exist /////////////////////////////////////////////
+//Start Check Email Already Exist//
 function check_email_already_exist()
 {
 $this->layout='blank';
@@ -27878,8 +27873,180 @@ return $group_name=$collection['group']['group_name'];
 }
 }
 
-//End group
-
-
+//End group//
+//Start user_enrolment_validation_with_table//
+function user_enrolment_validation_with_table($email=null)
+{
+	$result="not_match";
+		$this->loadmodel('user');
+		$result_user=$this->user->find('all');
+		foreach($result_user as $data){
+				$email_id=$data['user']['email'];
+                  if($email_id==$email){
+					$result="match";
+					break;					
+				  }					  
+		}
+echo $result;	
+}
+//End user_enrolment_validation_with_table//
+//Start mobile_validation_with_table// 
+function mobile_validation_with_table($mobile=null)
+{
+$result="not_match";
+		$this->loadmodel('user');
+		$result_user=$this->user->find('all');
+		foreach($result_user as $data){
+				$mobile_number=$data['user']['mobile'];
+                  if($mobile_number==$mobile){
+					$result="match";
+					break;					
+				  }					  
+		}
+echo $result;	
+}
+//End mobile_validation_with_table//
+//Start email_overlap_validation//
+function email_overlap_validation($email=null)
+{
+    $s_society_id = $this->Session->read('hm_society_id');
+    $email_array=array();
+	$result="not_match";
+	$this->loadmodel('user_enrollment_csv_converted'); 
+	$order=array('user_enrollment_csv_converted.auto_id'=>'ASC');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,'order'=>$order));
+	 foreach($user_enrollment_csv_converted as $data){
+		$email_id=$data['user_enrollment_csv_converted']['email']; 
+		if($email_id==""){
+		}else{
+		$email_array[]=$email_id;	
+		}
+	 }	
+		$n=0;
+		for($k=0; $k<sizeof($email_array); $k++){
+		$email_from_array=$email_array[$k];
+			if($email_from_array==$email){
+				$n++;
+			}
+			
+		}	
+  if($n>1){
+	 $result="match"; 
+  }	
+echo $result;
+	
+}
+//End email_overlap_validation//
+//Start mobile_overlap_validation//
+function mobile_overlap_validation($mobile=null)
+{
+ $s_society_id = $this->Session->read('hm_society_id');
+    $mobile_array=array();
+	$result="not_match";
+	$this->loadmodel('user_enrollment_csv_converted'); 
+	$order=array('user_enrollment_csv_converted.auto_id'=>'ASC');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,'order'=>$order));
+	 foreach($user_enrollment_csv_converted as $data){
+		$mobile_no=$data['user_enrollment_csv_converted']['mobile']; 
+		if($mobile_no==""){
+		}else{
+		$mobile_array[]=$mobile_no;	
+		}
+	 }	
+		$n=0;
+		for($k=0; $k<sizeof($mobile_array); $k++){
+		$mobil_from_array=$mobile_array[$k];
+			if($mobil_from_array==$mobile){
+				$n++;
+			}
+			
+		}	
+  if($n>1){
+	 $result="match"; 
+  }	
+echo $result;	
+}
+//End mobile_overlap_validation//
+//Start wing_flat_validation//
+function wing_flat_validation($wing_flat=null,$owner_type=null)
+{
+ $result="not_match";
+ $s_society_id = $this->Session->read('hm_society_id');	
+ $wing_flat_explode=explode(',',$wing_flat);
+ $wing=(int)$wing_flat_explode[0];
+ $flat=(int)$wing_flat_explode[1];
+  
+		$this->loadmodel('flat');
+		$conditions=array("flat_id"=>$flat);
+		$result_flat=$this->flat->find('all',array('conditions'=>$conditions));
+			foreach($result_flat as $dataa){
+				$flat_type=(int)$dataa['flat']['noc_ch_tp'];	
+			}
+			if($flat_type == 1){
+				if($owner_type=='no'){
+				$result="self_occupied";	//only owner can take this flat
+				}
+		}
+		$this->loadmodel('user_flat');
+		$conditions=array("flat"=>$flat,"owner"=>array('$ne'=>null));
+		$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions));
+		$n4 = sizeof($result_user_flat); 
+		if($n4==1){
+			$tenant=$result_user_flat[0]['user_flat']['owner'];
+			if($tenant=='yes'){
+				if($tenant==$owner_type){
+				 $result="owner_already";	
+			}
+			}else{
+				if($tenant==$owner_type){
+                 $result="tenant_already";
+				}
+			}
+		}
+        if($n4==2)
+		{
+		  $result="already_exist";	
+		}
+ 
+echo $result;
+}
+//End wing_flat_validation//
+//Start wing_flat_overlap_validation//
+function wing_flat_overlap_validation($wing_flat=null,$owner_type=null)
+{
+	$s_society_id = $this->Session->read('hm_society_id');
+    $wing_flat_array=array();
+	$result="not_match";
+	$this->loadmodel('user_enrollment_csv_converted'); 
+	$order=array('user_enrollment_csv_converted.auto_id'=>'ASC');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,'order'=>$order));
+	 foreach($user_enrollment_csv_converted as $data){
+		$wing=(int)$data['user_enrollment_csv_converted']['wing']; 
+		$flat=(int)$data['user_enrollment_csv_converted']['flat']; 
+		$wing_flat_array[]=array($wing,$flat);
+	 }	
+	
+		$wing_flat_explode=explode(',',$wing_flat);
+		$wing_id=(int)$wing_flat_explode[0];
+		$flat_id=(int)$wing_flat_explode[1];
+        $n=0;
+		for($k=0; $k<sizeof($wing_flat_array); $k++){
+	       $wing_flat_sub_array=$wing_flat_array[$k];
+		   $wing_id_from_array=(int)$wing_flat_sub_array[0];
+		   $flat_id_from_array=(int)$wing_flat_sub_array[1];
+		   if($wing_id_from_array==$wing_id && $flat_id_from_array==$flat_id){
+			 $n++;  
+		   }
+		}
+	if($n>1){
+	$result="match";	
+	}
+	
+echo $result;	
+}
+//End wing_flat_overlap_validation//
 }
 ?>

@@ -221,13 +221,17 @@ $(document).ready(function() {
 			}
 			if(response.type=='created'){
 				$(".portlet").remove();
-				$(".alert-success").show().append("<p>"+response.text+"</p><p><a class='btn green' href='<?php echo $webroot_path; ?>Notices/notice_publish' rel='tab' >ok</a></p>");
+				//$(".alert-success").show().append("<p>"+response.text+"</p><p><a class='btn green' href='<?php echo $webroot_path; ?>Notices/notice_publish' rel='tab' >ok</a></p>");
 				$("#output").remove();
+								
+				change_page_automatically("<?php echo $webroot_path; ?>Notices/notice_publish");
 			}
 			if(response.type=='draft'){
 				$(".portlet").remove();
-				$(".alert-success").show().append("<p>"+response.text+"</p><p><a class='btn green' href='<?php echo $webroot_path; ?>Notices/notice_draft' rel='tab' >ok</a></p>");
+				//$(".alert-success").show().append("<p>"+response.text+"</p><p><a class='btn green' href='<?php echo $webroot_path; ?>Notices/notice_draft' rel='tab' >ok</a></p>");
 				$("#output").remove();
+				
+				change_page_automatically("<?php echo $webroot_path; ?>Notices/notice_draft");
 			}
 			if(response.type=='error'){
 				$("#output").html('<div class="alert alert-error">'+response.text+'</div>');
@@ -244,6 +248,24 @@ $(document).ready(function() {
 	});
 });
 
+
+
+function change_page_automatically(pageurl){
+	$.ajax({
+		url: pageurl,
+		}).done(function(response) {
+		
+		//$("#loading_ajax").html('');
+		
+		$(".page-content").html(response);
+		$("html, body").animate({
+			scrollTop:0
+		},"slow");
+		 $('#submit_success').hide();
+		});
+	
+	window.history.pushState({path:pageurl},'',pageurl);
+}
 </script>
 
 

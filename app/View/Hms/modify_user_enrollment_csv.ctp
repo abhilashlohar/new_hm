@@ -5,7 +5,8 @@ input.m-wrap[type="text"]{
 }
 </style>
 <div style="background-color:#FFF;">
-<table id="report_tb" class="table table-bordered table-striped" width="100%">
+<table id="report_tb" class="table table-bordered table-condensed" width="100%">
+	<thead>
 	<tr>
 		<th>Name</th>
 		<th>Unit</th>
@@ -15,6 +16,8 @@ input.m-wrap[type="text"]{
 		<th>Committee</th>
 		<th>Delete</th>
 	</tr>
+	</thead>
+	</tbody>
 	<?php foreach($user_enrollment_csv_converted as $user_enrollment_converted){ 
 		$auto_id=$user_enrollment_converted["user_enrollment_csv_converted"]["auto_id"];
 		$name=$user_enrollment_converted["user_enrollment_csv_converted"]["name"];
@@ -62,6 +65,7 @@ input.m-wrap[type="text"]{
 		<td valign="top">
 			<div class="owner">
 				<select class="m-wrap span12 owner_tenant " record_id="<?php echo $auto_id; ?>" field="owner" >
+				<option value="">Select</option>
 				<option value="yes" <?php if($owner=="yes"){?> selected <?php } ?>>Yes</option>
 				<option value="no" <?php if($owner=="no"){?> selected <?php } ?>>No</option>
 				</select>
@@ -70,6 +74,7 @@ input.m-wrap[type="text"]{
 		<td valign="top">
 			<div class="committee" <?php if($owner=="no") { ?> style="display:none" <?php } ?>>
 				<select class="m-wrap span12 " record_id="<?php echo $auto_id; ?>" field="committee">
+				
 				<option value="yes" <?php if($committee=="yes"){?> selected <?php } ?>>Yes</option>
 				<option value="no" <?php if($committee=="no"){?> selected <?php } ?> >No</option>
 				</select>
@@ -81,6 +86,7 @@ input.m-wrap[type="text"]{
 		</td>
 	</tr>
 	<?php } ?>
+	</tbody>
 </table>
 </div>
 <?php if(empty($page)){ $page=1;} ?>
@@ -105,7 +111,7 @@ for($ii=1;$ii<=$loop;$ii++){ ?>
 <a class="btn purple " role="button" id="final_import">Import user enrollment <i class="m-icon-swapright m-icon-white"></i></a>	<a class="btn cancel_user">Cancel</a>					
 <div id="check_validation_result"></div>
 </div>
-	
+<input type="hidden" id="email_valid1">
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 <script>
 $(document).ready(function() {
@@ -142,11 +148,218 @@ $(document).ready(function() {
 	});
 	
 	$( "#final_import" ).click(function(){
+		var allow="yes";
+		
+		$('#report_tb tbody tr select[field=flat]').each(function(i, obj){
+			var flat=$(this).val();
+			var owner_type=$('#report_tb tbody tr:eq('+i+') select[field=owner]').val();
+			
+				if(flat==""){
+					$(this).closest('td').find(".er").remove();
+						$(this).closest('td').append('<p class="er">Required</p>');
+						allow="no";
+				}else{
+					$.ajax({
+							url:"<?php echo $webroot_path; ?>Hms/wing_flat_overlap_validation/"+flat+"/"+owner_type, 
+							async: false,
+							success: function(data){
+							result=data;
+							}
+						});
+						alert(result);
+                        if(result=='match'){
+							
+							allow="no";
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').append('<p class="er">Flat overlap</p>'); 
+						
+						}else{
+							$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
+						}
+					 
+				}
+		});
+		
+	alert(allow);	
+		
+		
+		
+		
+		
+		
+		
+		$('#report_tb tbody tr select[field=flat]').each(function(i, obj){
+			var flat=$(this).val();
+			var owner_type=$('#report_tb tbody tr:eq('+i+') select[field=owner]').val();
+			
+				if(flat==""){
+					$(this).closest('td').find(".er").remove();
+						$(this).closest('td').append('<p class="er">Required</p>');
+						allow="no";
+				}else{
+					$.ajax({
+							url:"<?php echo $webroot_path; ?>Hms/wing_flat_validation/"+flat+"/"+owner_type, 
+							async: false,
+							success: function(data){
+							result=data;
+							}
+						});
+					if(result=='self_occupied'){
+						allow="no";
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').append('<p class="er">Flat Self Occupied</p>'); 
+					 }
+					 if(result=='owner_already'){
+						 allow="no";
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').append('<p class="er">Flat Already Exist</p>');  
+					 }
+					 if(result=='tenant_already'){
+						 allow="no";
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').append('<p class="er">Flat Already Exist</p>'); 
+					 }
+					 if(result=='already_exist'){
+						 allow="no";
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').append('<p class="er">Flat Already Exist</p>'); 
+					 }
+					 if(result=='not_match'){
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove(); 
+					 }
+				}
+		});
+		
+		$('#report_tb tbody tr input[field=mobile]').each(function(i, obj){
+		var mobile=$(this).val();
+			if(mobile==""){
+				$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').find(".er").remove();
+			}else{
+				var result;	
+					$.ajax({
+							url:"<?php echo $webroot_path; ?>Hms/mobile_overlap_validation/"+mobile, 
+							async: false,
+							success: function(data){
+								result=data;
+							}
+						});
+						if(result == 'match'){
+							allow='no';
+								$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').find(".er").remove();
+								$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').append('<p class="er">Overlap Mobile</p>');
+						}else{
+								$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').find(".er").remove();	
+					}
+				}
+	});
+		
+			$('#report_tb tbody tr input[field=email]').each(function(i, obj){
+				var email=$(this).val();
+					if(email==""){
+					$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
+					}else{
+					var result;	
+					$.ajax({
+							url:"<?php echo $webroot_path; ?>Hms/email_overlap_validation/"+email, 
+							async: false,
+							success: function(data){
+								result=data;
+							}
+						});
+						if(result == 'match'){
+							allow='no';
+								$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
+								$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').append('<p class="er">Overlap Email</p>');
+						}else{
+								$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();	
+					}
+				}
+	}); 	
+		
+		
+	$('#report_tb tbody tr input[field=email]').each(function(i, obj){
+		var email=$(this).val();
+			if(email==""){
+				$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
+			}else{
+				var result;	
+					$.ajax({
+							url:"<?php echo $webroot_path; ?>Hms/user_enrolment_validation_with_table/"+email, 
+							async: false,
+							success: function(data){
+							result=data;
+							}
+						});
+						if(result == 'match'){
+							allow='no';
+								$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
+								$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').append('<p class="er">Already Exist</p>');
+						}else{
+								$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();	
+					}
+				}
+	}); 
+		
+	$('#report_tb tbody tr input[field=mobile]').each(function(i, obj){
+		var mobile=$(this).val();
+			if(mobile==""){
+				$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').find(".er").remove();
+			}else{
+				var result;	
+					$.ajax({
+							url:"<?php echo $webroot_path; ?>Hms/mobile_validation_with_table/"+mobile, 
+							async: false,
+							success: function(data){
+							result=data;
+							}
+						});
+						if(result == 'match'){
+							allow='no';
+								$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').find(".er").remove();
+								$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').append('<p class="er">Already Exist</p>');
+						}else{
+								$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').find(".er").remove();	
+					}
+				}
+	});
+	    */
+		$('#report_tb tbody tr input[field=name]').each(function(i, obj){
+			var name=$(this).val();
+				if(name==""){
+					$(this).closest('td').find(".er").remove();
+						$(this).closest('td').append('<p class="er">Required</p>');
+					allow="no";
+				}else{
+					$(this).closest('td').find(".er").remove();
+				}
+		});
+		
+		
+		
+		
+		
+		$('#report_tb tbody tr select[field=owner]').each(function(i, obj){
+			var owner=$(this).val();
+				if(owner==""){
+					$(this).closest('td').find(".er").remove();
+						$(this).closest('td').append('<p class="er">Required</p>');
+					allow="no";
+				}else{
+					$(this).closest('td').find(".er").remove();
+				}
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		var allow="no";
-		
-		
-		
-		
 			if(allow=="yes"){
 				$.ajax({
 					url: "<?php echo $webroot_path; ?>Hms/allow_user_enrollment",
@@ -210,7 +423,7 @@ $( document ).ready(function() {
 
 $( document ).ready(function() {
 	
-	$( 'input[type="text"]' ).blur(function() {
+	$('input[type="text"]').blur(function() {
 		var record_id=$(this).attr("record_id");
 		var field=$(this).attr("field");
 		var value=$(this).val();
@@ -265,6 +478,12 @@ $(document).ready(function(){
 	});
 });
 </script>
+<style>
+.er{
+color: rgb(198, 4, 4);
+font-size: 11px;
+}
+</style>
 
 
 

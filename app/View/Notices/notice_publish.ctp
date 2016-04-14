@@ -121,7 +121,26 @@ $(document).ready(function() {
 			$(this).removeClass("blue");
 			 $(this).addClass("red");
 			 });
+		<?php 
+ $notice_create=$this->session->read('create_notice');
+if($notice_create==1){
+ ?>	
+		$.gritter.add({
+
+			title: '<i class="icon-bullhorn"></i> Notice',
+			text: '<p>Your notice has been created and sent via email to all users selected by you.</p>',
+			sticky: false,
+			time: '10000',
+
+		});
+		
+<?php 
+$this->requestAction(array('controller' => 'hms', 'action' => 'griter_notification'), array('pass' => array('notice_create')));
+} ?>
+
 	 });
+	 
+	 
 </script>
 
 

@@ -65,7 +65,7 @@ input.m-wrap[type="text"]{
 		<td valign="top">
 			<div class="owner">
 				<select class="m-wrap span12 owner_tenant " record_id="<?php echo $auto_id; ?>" field="owner" >
-				<option value="">Select</option>
+				
 				<option value="yes" <?php if($owner=="yes"){?> selected <?php } ?>>Yes</option>
 				<option value="no" <?php if($owner=="no"){?> selected <?php } ?>>No</option>
 				</select>
@@ -383,12 +383,14 @@ $(document).ready(function() {
 		});
 		
 			if(allow=="yes"){
+				
 				$.ajax({
-					url: "<?php echo $webroot_path; ?>Hms/allow_user_enrollment",
+					url:"<?php echo $webroot_path; ?>Hms/allow_user_enrollment",
 					}).done(function(response){
-						if(response=="F"){
-							$("#check_validation_result").html("");
-								alert("Your Data Is Not Validate.");
+					   if(response=="not_validate"){
+					$("#submit_sec").find(".alert-error").remove();
+					$("#final_import").before('<div class="alert alert-error" style="width: 50%;">There are errors on other pages.</div>');
+							
 							}else{
 								change_page_automatically("<?php echo $webroot_path; ?>Hms/import_user_enrollment");
 							}

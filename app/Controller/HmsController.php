@@ -917,12 +917,12 @@ function allow_user_enrollment(){
 		 $committee=$user_enrollment_converted["user_enrollment_csv_converted"]["committee"];
 		$flat=(int)$user_enrollment_converted["user_enrollment_csv_converted"]["flat"];
 		if(empty($name)){ $name_v=1;   }else{  $name_v=0; }
-	
-	}
-			
+		}
+		
+echo "not_validate";		
 			$this->loadmodel('import_user_enrollment_record');
 			$this->import_user_enrollment_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "UE"));
-			echo "T"; die;
+			
 }
 
 

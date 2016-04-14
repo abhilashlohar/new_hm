@@ -83,7 +83,7 @@ $bank_id = (int)$db['ledger_sub_account']["auto_id"];
 $bank_ac = $db['ledger_sub_account']["name"];
 $bank_account_number = $db['ledger_sub_account']["bank_account"];
 ?>
-<option value="<?php echo $bank_id; ?>" <?php if($deposited_bank_iddd == $bank_id) { ?> selected="selected" <?php } ?>><?php echo $bank_ac; ?> &nbsp;&nbsp; <?php echo $bank_account_number; ?></option>
+<option value="<?php echo $bank_id; ?>" <?php if($deposited_bank_id == $bank_id) { ?> selected="selected" <?php } ?>><?php echo $bank_ac; ?> &nbsp;&nbsp; <?php echo $bank_account_number; ?></option>
 <?php } ?>
 </select>
 <p class="bank" style="color: rgb(198, 4, 4);

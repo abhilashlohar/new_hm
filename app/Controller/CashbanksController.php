@@ -590,10 +590,10 @@ function final_import_bank_receipt_ajax(){
 				
 				$this->loadmodel('ledger');
 				$ledger_id=$this->autoincrement('ledger','auto_id');
-				$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($trajection_date), "debit" => $amount, "credit" =>null, "ledger_account_id" => 33, "ledger_sub_account_id" => $deposited_in,"table_name" => "cash_bank","element_id" => $auto_id, "society_id" => $s_society_id))); 
+				$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> $trajection_date, "debit" => $amount, "credit" =>null, "ledger_account_id" => 33, "ledger_sub_account_id" => $deposited_in,"table_name" => "cash_bank","element_id" => $auto_id, "society_id" => $s_society_id))); 
 
 				$ledger_id=$this->autoincrement('ledger','auto_id');
-				$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($trajection_date), "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name" => "cash_bank","element_id" => $auto_id, "society_id" => $s_society_id,"receipt_type" =>$receipt_type)));
+				$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> $trajection_date, "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name" => "cash_bank","element_id" => $auto_id, "society_id" => $s_society_id,"receipt_type" =>$receipt_type)));
 				
 				$this->loadmodel('bank_receipt_csv_converted');
 				$this->bank_receipt_csv_converted->updateAll(array("is_imported" => "YES"),array("auto_id" => $bank_receipt_csv_id));

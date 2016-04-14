@@ -1,5 +1,6 @@
 name,wing,flat,email,mobile,Owner,committee
 <<<<<<< HEAD
+<<<<<<< HEAD
 yash,A,1001,yashrajrao52@gmail.com,,Yes,Yes
 vinod verma,A,1002,varmavinod549@gmail.com,,Yes,No
 abhilash lohar,A,1003,abhilashlohar01@gmail.com,,Yes,Yes
@@ -62,3 +63,8 @@ user51,Wing A,551,,,,Y
 user52,Wing A,552,,,,Y
 ,,,,,,Y
 >>>>>>> 49abc30e10a0064fa165d3a6cd86a252b3a4ef47
+=======
+user2,Wing A,502,aaaaaaaaaa@bb.cc,528478963,y,y
+user3,Wing A,503,bbbbbbbbbb@cc.dd,456123568,y,y
+user4,Wing A,504,ccccccccccc@dd.ee,456123568,y,y
+>>>>>>> f9915e6e245ea2a3bef02be9a6912cb248cedc39

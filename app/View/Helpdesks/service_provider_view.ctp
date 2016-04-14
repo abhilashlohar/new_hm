@@ -55,7 +55,11 @@ table th { font-size:12px !important ; }
 	
 <div id="st" class="h_d"> 
  </div>
-<input type="text" class="span6 m-wrap popovers" data-trigger="hover" data-content="Popover body <br/> goes here.<br/> Popover body goes here." data-original-title="Popover header">
+<div  class="span m-wrap popovers" data-trigger="hover" data-content="<table><tr><td>Contract Type</td><td>AMC</td></tr><tr><td>Popover body</td> <td>PPopover body goes</td></tr></table>" data-original-title="Popover header">
+view
+</div>
+
+<span style="" class="popovers" data-trigger="hover" data-content="<table><tr><td>Contract Type</td><td>AMC</td></tr><tr><td>Popover body</td> <td>PPopover body goes</td></tr></table>" data-original-title="Popover header">b</span>
 <div class="portlet box " >
 							
 							<div class="portlet-body">

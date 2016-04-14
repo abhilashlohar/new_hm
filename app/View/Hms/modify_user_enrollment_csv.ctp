@@ -150,38 +150,31 @@ $(document).ready(function() {
 	$( "#final_import" ).click(function(){
 		var allow="yes";
 		
-		$('#report_tb tbody tr input[field=email]').each(function(i, obj){
-			var email=$(this).val();
-				if(email==""){
-					$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
-				}else{
+	$('#report_tb tbody tr input[field=email]').each(function(i, obj){
+		var email=$(this).val();
+			if(email==""){
+				$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
+			}else{
 				var result;	
-				$.ajax({
-					    url:"user_enrolment_validation_with_table/"+email, 
-					    async: false,
-						success: function(data){
+					$.ajax({
+							url:"user_enrolment_validation_with_table/"+email, 
+							async: false,
+							success: function(data){
 							result=data;
-					
-			
-				
-			}
-			});
-		
-		alert(result);
-		
-		   }
-		   
-		});
+							}
+						});
+						if(result == 'match'){
+							allow='no';
+								$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
+								$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').append('<p class="er">Already Exist</p>');
+						}else{
+								$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();	
+					}
+				}
+	});
 		
 	
-		
-		
-		
-		
-		
-		
-		
-		
+	
 		$('#report_tb tbody tr input[field=name]').each(function(i, obj){
 			var name=$(this).val();
 				if(name==""){

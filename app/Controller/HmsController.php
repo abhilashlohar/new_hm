@@ -27904,7 +27904,7 @@ function user_enrolment_validation_with_table($email=null)
 					break;					
 				  }					  
 		}
-echo $email;	
+echo $result;	
 
 /*
 $.ajax({url:"user_enrolment_validation_with_table/"+email, 

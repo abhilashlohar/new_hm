@@ -28066,6 +28066,44 @@ function wing_flat_validation($wing_flat=null,$owner_type=null)
 		{
 		  $result="already_exist";	
 		}
+		
+	$wing_flat_array=array();
+	$this->loadmodel('user_enrollment_csv_converted'); 
+	$order=array('user_enrollment_csv_converted.auto_id'=>'ASC');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,'order'=>$order));
+	 foreach($user_enrollment_csv_converted as $data){
+		$wingg=(int)$data['user_enrollment_csv_converted']['wing']; 
+		$flatt=(int)$data['user_enrollment_csv_converted']['flat']; 
+		$wing_flat_arrayy[]=array($wingg,$flatt);
+	 }	
+	
+		$wing_flat_explode=explode(',',$wing_flat);
+		$wing_idd=(int)$wing_flat_explode[0];
+		$flat_idd=(int)$wing_flat_explode[1];
+        $n=0;
+		for($k=0; $k<sizeof($wing_flat_arrayy); $k++){
+	       $wing_flat_sub_array=$wing_flat_arrayy[$k];
+		   $wing_id_from_array=(int)$wing_flat_sub_array[0];
+		   $flat_id_from_array=(int)$wing_flat_sub_array[1];
+		   if($wing_id_from_array==$wing_idd && $flat_id_from_array==$flat_idd){
+			 $n++;  
+		   }
+		}
+	if($n>1){
+	$result="match_overlap";	
+	}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
  
 echo $result;
 }

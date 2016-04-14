@@ -227,6 +227,7 @@ $(document).ready(function() {
 								$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
 								$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').append('<p class="er">Already Exist</p>');
 						}else if(result=='match_overlap'){
+							allow="no";
 							$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
 							$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').append('<p class="er">Overlap Email</p>');
 						}else{
@@ -260,43 +261,8 @@ $(document).ready(function() {
 		
 		
 		//End Email Validation//
-		$('#report_tb tbody tr select[field=flat]').each(function(i, obj){
-			var flat=$(this).val();
-			var owner_type=$('#report_tb tbody tr:eq('+i+') select[field=owner]').val();
-			
-				if(flat==""){
-					$(this).closest('td').find(".er").remove();
-						$(this).closest('td').append('<p class="er">Required</p>');
-						allow="no";
-				}else{
-					$.ajax({
-							url:"<?php echo $webroot_path; ?>Hms/wing_flat_overlap_validation/"+flat+"/"+owner_type, 
-							async: false,
-							success: function(data){
-							result=data;
-							}
-						});
-						
-                        if(result=='match'){
-							
-							allow="no";
-						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
-						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').append('<p class="er">Flat overlap</p>'); 
-						
-						}else{
-							$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
-						}
-					 
-				}
-		});
 		
-		
-		
-		
-		
-		
-		
-		
+		//Start Wing Flat Validation//
 		
 		$('#report_tb tbody tr select[field=flat]').each(function(i, obj){
 			var flat=$(this).val();
@@ -334,6 +300,11 @@ $(document).ready(function() {
 						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
 						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').append('<p class="er">Flat Already Exist</p>'); 
 					 }
+					 if(result='match_overlap'){
+						 allow="no";
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').append('<p class="er">Flat Overlap</p>');  
+					 }
 					 if(result=='not_match'){
 						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove(); 
 					 }
@@ -341,13 +312,41 @@ $(document).ready(function() {
 		});
 		
 		
-		
+		/*
+		$('#report_tb tbody tr select[field=flat]').each(function(i, obj){
+			var flat=$(this).val();
+			var owner_type=$('#report_tb tbody tr:eq('+i+') select[field=owner]').val();
 			
+				if(flat==""){
+					$(this).closest('td').find(".er").remove();
+						$(this).closest('td').append('<p class="er">Required</p>');
+						allow="no";
+				}else{
+					$.ajax({
+							url:"<?php echo $webroot_path; ?>Hms/wing_flat_overlap_validation/"+flat+"/"+owner_type, 
+							async: false,
+							success: function(data){
+							result=data;
+							}
+						});
+						
+                        if(result=='match'){
+							
+							allow="no";
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').append('<p class="er">Flat overlap</p>'); 
+						
+						}else{
+							$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
+						}
+					 
+				}
+		});
+		
+		*/
 		
 		
-	
-		
-	
+		//End Wing Flat Validation//
 	   
 		$('#report_tb tbody tr input[field=name]').each(function(i, obj){
 			var name=$(this).val();

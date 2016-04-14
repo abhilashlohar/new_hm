@@ -898,33 +898,60 @@ function auto_save_user_enrollment($record_id=null,$field=null,$value=null){
 		}
 	
 }
-
+//Start allow_user_enrollment// 
 function allow_user_enrollment(){
 	$this->layout=null;
 	
 	$this->ath();
 	 $s_society_id = $this->Session->read('hm_society_id'); 
+	
+	
+	
+	$empty_validate=0;
+	$wing_flat=0;
 	$this->loadmodel('user_enrollment_csv_converted');
+	$order=array('user_enrollment_csv_converted.auto_id'=>'ASC');
 	$conditions=array("society_id"=>(int)$s_society_id);
-	$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions));
+	$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,'order'=>$order));
 	foreach($user_enrollment_csv_converted as $user_enrollment_converted){ 
 		$auto_id=$user_enrollment_converted["user_enrollment_csv_converted"]["auto_id"];
 		$name=$user_enrollment_converted["user_enrollment_csv_converted"]["name"];
 		$wing=(int)$user_enrollment_converted["user_enrollment_csv_converted"]["wing"];
 		$email=$user_enrollment_converted["user_enrollment_csv_converted"]["email"];
 		$mobile=$user_enrollment_converted["user_enrollment_csv_converted"]["mobile"];
-		 $owner=$user_enrollment_converted["user_enrollment_csv_converted"]["owner"];
-		 $committee=$user_enrollment_converted["user_enrollment_csv_converted"]["committee"];
+		$owner=$user_enrollment_converted["user_enrollment_csv_converted"]["owner"];
+		$committee=$user_enrollment_converted["user_enrollment_csv_converted"]["committee"];
 		$flat=(int)$user_enrollment_converted["user_enrollment_csv_converted"]["flat"];
-		if(empty($name)){ $name_v=1;   }else{  $name_v=0; }
+		if(empty($wing) && empty($flat)){
+		 $wing_flat=1;	
+		}
+		if(empty($name) || empty($owner)){
+		$empty_validate=1;	
 		}
 		
-echo "not_validate";		
-			$this->loadmodel('import_user_enrollment_record');
-			$this->import_user_enrollment_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "UE"));
+		if($email==""){
+		}else{
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+	}		
+		
+$total_validation=$wing_flat+$empty_validate;	
+		
+if($total_validation>0){		
+echo "not_validate";
+}		
+	$this->loadmodel('import_user_enrollment_record');
+	$this->import_user_enrollment_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "UE"));
 			
 }
-
+//End allow_user_enrollment// 
 
 function final_import_user_enrollment(){
 	

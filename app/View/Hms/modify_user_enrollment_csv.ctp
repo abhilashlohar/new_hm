@@ -149,7 +149,7 @@ $(document).ready(function() {
 	
 	$( "#final_import" ).click(function(){
 		var allow="yes";
-		/*
+		
 	$('#report_tb tbody tr input[field=email]').each(function(i, obj){
 		var email=$(this).val();
 			if(email==""){
@@ -171,7 +171,7 @@ $(document).ready(function() {
 								$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();	
 					}
 				}
-	}); */
+	}); 
 		
 	$('#report_tb tbody tr input[field=mobile]').each(function(i, obj){
 		var mobile=$(this).val();

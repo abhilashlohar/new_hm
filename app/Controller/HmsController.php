@@ -27877,6 +27877,7 @@ return $group_name=$collection['group']['group_name'];
 //Start user_enrolment_validation_with_table//
 function user_enrolment_validation_with_table($email=null)
 {
+	$s_society_id=$this->Session->read('hm_society_id');
 	$result="not_match";
 		$this->loadmodel('user');
 		$result_user=$this->user->find('all');
@@ -27887,12 +27888,43 @@ function user_enrolment_validation_with_table($email=null)
 					break;					
 				  }					  
 		}
+		
+	$email_array=array();
+	$this->loadmodel('user_enrollment_csv_converted'); 
+	$order=array('user_enrollment_csv_converted.auto_id'=>'ASC');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,'order'=>$order));
+	 foreach($user_enrollment_csv_converted as $data){
+		$email_idd=$data['user_enrollment_csv_converted']['email']; 
+		if($email_idd==""){
+		}else{
+		$email_array[]=$email_idd;	
+		}
+	 }	
+		$n=0;
+		for($k=0; $k<sizeof($email_array); $k++){
+		$email_from_array=$email_array[$k];
+			if($email_from_array==$email){
+				$n++;
+			}
+			
+		}	
+  if($n>1){
+	 $result="match_overlap"; 
+  }		
+		
+		
+		
+		
+		
+		
 echo $result;	
 }
 //End user_enrolment_validation_with_table//
 //Start mobile_validation_with_table// 
 function mobile_validation_with_table($mobile=null)
 {
+	 $s_society_id=$this->Session->read('hm_society_id');
 $result="not_match";
 		$this->loadmodel('user');
 		$result_user=$this->user->find('all');
@@ -27903,6 +27935,31 @@ $result="not_match";
 					break;					
 				  }					  
 		}
+		
+	$mobile_array=array();
+	$this->loadmodel('user_enrollment_csv_converted'); 
+	$order=array('user_enrollment_csv_converted.auto_id'=>'ASC');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,'order'=>$order));
+	 foreach($user_enrollment_csv_converted as $data){
+		$mobile_no=$data['user_enrollment_csv_converted']['mobile']; 
+		if($mobile_no==""){
+		}else{
+		$mobile_array[]=$mobile_no;	
+		}
+	 }	
+		$n=0;
+		for($k=0; $k<sizeof($mobile_array); $k++){
+		$mobil_from_array=$mobile_array[$k];
+			if($mobil_from_array==$mobile){
+				$n++;
+			}
+			
+		}	
+  if($n>1){
+	 $result="match_overlap"; 
+  }		
+		
 echo $result;	
 }
 //End mobile_validation_with_table//

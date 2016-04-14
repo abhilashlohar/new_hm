@@ -975,7 +975,11 @@ function allow_user_enrollment(){
 						}	
 						if($n>1){
 							$empty_validate=1;
-						}		
+			}			
+			}
+             if($mobile=="")
+			 {}else{
+						
 				$this->loadmodel('user');
 					$result_user=$this->user->find('all');
 						foreach($result_user as $dataa){
@@ -994,8 +998,6 @@ function allow_user_enrollment(){
 							if($m>1){
 								$empty_validate=1; 
 							}		
-			
-			
 		}
 		
 		

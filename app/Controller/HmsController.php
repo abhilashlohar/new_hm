@@ -28078,9 +28078,9 @@ function wing_flat_validation($wing_flat=null,$owner_type=null)
 		$wing_flat_arrayy[]=array($wingg,$flatt);
 	 }	
 	
-		$wing_flat_explode=explode(',',$wing_flat);
-		$wing_idd=(int)$wing_flat_explode[0];
-		$flat_idd=(int)$wing_flat_explode[1];
+		$wing_flat_explodee=explode(',',$wing_flat);
+		 $wing_idd=(int)$wing_flat_explodee[0];
+		 $flat_idd=(int)$wing_flat_explodee[1];
         $n=0;
 		for($k=0; $k<sizeof($wing_flat_arrayy); $k++){
 	       $wing_flat_sub_array=$wing_flat_arrayy[$k];
@@ -28093,18 +28093,7 @@ function wing_flat_validation($wing_flat=null,$owner_type=null)
 	if($n>1){
 	$result="match_overlap";	
 	}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
- 
+
 echo $result;
 }
 //End wing_flat_validation//

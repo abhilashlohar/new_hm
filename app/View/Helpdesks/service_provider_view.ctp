@@ -154,13 +154,13 @@ table th { font-size:12px !important ; }
 							<td><?php echo $email; ?></td>
                                                    
                             <td>
-								<span style="min-width:50px !important;" data-placement="left" class="popovers" data-trigger="hover"
+								<span style="min-width:50px !important; " data-placement="left" class="popovers btn mini" data-trigger="hover"
 								data-content="<table border='1'>
 								<tr><td>Contract Type</td> <td><?php echo $Contract_type; ?></td></tr>
 								<tr><td>Contract from</td> <td><?php echo $Contract_start; ?></td></tr>
 								<tr><td>Contract to</td> <td><?php echo $Contract_end; ?></td></tr>
 								<tr><td>PAN Number</td> <td><?php echo $pan_number; ?></td></tr>
-								</table>" data-original-title="Detail Other Info"
+								</table>" data-original-title="Other Info"
 								>View detail</span>
 							</td>
                             <td class="hide_at_print">

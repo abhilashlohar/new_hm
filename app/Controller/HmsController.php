@@ -756,13 +756,15 @@ function modify_user_enrollment_csv($page=null){
 	
 	if($process_status==3){
 		$this->loadmodel('user_enrollment_csv_converted'); 
+		$order=array('user_enrollment_csv_converted.auto_id'=>'ASC');
 		$conditions=array("society_id"=>(int)$s_society_id);
-		$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,"limit"=>50,"page"=>$page));
+		$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,"limit"=>50,"page"=>$page,'order' =>$order));
 		$this->set('user_enrollment_csv_converted',$user_enrollment_csv_converted);
 		
 		$this->loadmodel('user_enrollment_csv_converted'); 
+		$order=array('user_enrollment_csv_converted.auto_id'=>'ASC');
 		$conditions=array("society_id"=>(int)$s_society_id);
-		$count_user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('count',array('conditions'=>$conditions));
+		$count_user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('count',array('conditions'=>$conditions,'order' =>$order));
 		$this->set('count_user_enrollment_csv_converted',$count_user_enrollment_csv_converted);
 	}
 		$this->loadmodel('wing');
@@ -860,62 +862,39 @@ function auto_save_user_enrollment($record_id=null,$field=null,$value=null){
 	$record_id=(int)$record_id; 
 
 		if($field=="name"){
-			if(empty($value)){ echo "F";}
-			else{
 				$this->loadmodel('user_enrollment_csv_converted');
 				$this->user_enrollment_csv_converted->updateAll(array("name" => $value),array("auto_id" => $record_id));
 				echo "T";
-			}
 		}	
 		
 		if($field=="email"){
-			if(!filter_var($value, FILTER_VALIDATE_EMAIL) && !empty($value)) { echo "F";}
-			else{
 				$this->loadmodel('user_enrollment_csv_converted');
 				$this->user_enrollment_csv_converted->updateAll(array("email" => $value),array("auto_id" => $record_id));
 				echo "T";
-			}
 		}	
-		
 		if($field=="mobile"){
-			if (!preg_match ( '/^\\d{10}$/',$value) && !empty($value)) { echo "F";}
-			else{
 				$this->loadmodel('user_enrollment_csv_converted');
 				$this->user_enrollment_csv_converted->updateAll(array("mobile" => $value),array("auto_id" => $record_id));
 				echo "T";
-			}
 		}	
-	
 		if($field=="flat"){
-			
 			$wing_flat=explode(',',$value);
 			$wing_id=(int)$wing_flat[0];
 			$flat_id=(int)$wing_flat[1];
 			$this->loadmodel('user_enrollment_csv_converted');
-			$this->user_enrollment_csv_converted->updateAll(array("wing" => $wing_id,"flat"=>$flat_id),array("auto_id" => $record_id));
-			$conditions=array('wing'=>$wing_id,"flat"=>$flat_id,"society_id"=>$s_society_id);
-			$count=$this->user_enrollment_csv_converted->find('count',array('conditions'=>$conditions));
-			if($count==2){
-				echo "F";
-			}else{
-				echo "T";
-			}
+			$this->user_enrollment_csv_converted->updateAll(array("wing"=>$wing_id,"flat"=>$flat_id),array("auto_id"=>$record_id));
 		}
 		
 		if($field=="owner"){
-			
 			$this->loadmodel('user_enrollment_csv_converted');
-			$this->user_enrollment_csv_converted->updateAll(array("owner" => $value),array("auto_id" => $record_id));
+			$this->user_enrollment_csv_converted->updateAll(array("owner"=>$value),array("auto_id"=>$record_id));
 			echo "T";
-			
 		}
 		
 		if($field=="committee"){
-			
 			$this->loadmodel('user_enrollment_csv_converted');
-			$this->user_enrollment_csv_converted->updateAll(array("committee" => $value),array("auto_id" => $record_id));
+			$this->user_enrollment_csv_converted->updateAll(array("committee"=>$value),array("auto_id"=>$record_id));
 			echo "T";
-			
 		}
 	
 }

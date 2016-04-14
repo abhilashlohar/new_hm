@@ -301,7 +301,7 @@ $( document ).ready(function() {
 
 $( document ).ready(function() {
 	
-	$( 'input[type="text"]' ).blur(function() {
+	$('input[type="text"]').blur(function() {
 		var record_id=$(this).attr("record_id");
 		var field=$(this).attr("field");
 		var value=$(this).val();

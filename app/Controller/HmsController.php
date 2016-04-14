@@ -931,7 +931,9 @@ function allow_user_enrollment(){
 		
 		if($email==""){
 		}else{
-			
+			if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+				$empty_validate=1;	
+			}	
 			
 		}
 		

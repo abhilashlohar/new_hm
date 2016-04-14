@@ -27893,8 +27893,6 @@ return $group_name=$collection['group']['group_name'];
 function user_enrolment_validation_with_table($email=null)
 {
 	$result="not_match";
-		
-		
 		$this->loadmodel('user');
 		$result_user=$this->user->find('all');
 		foreach($result_user as $data){
@@ -27905,34 +27903,23 @@ function user_enrolment_validation_with_table($email=null)
 				  }					  
 		}
 echo $result;	
-
-/*
-$.ajax({url:"user_enrolment_validation_with_table/"+email, 
-						success: function(result){
-							if(result=="match"){
-					
-			$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
-			$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').append('<p class="er">Already Exist</p>');
-				}
-				else{
-				$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();	
-				}
-			}
-			});
-var result;
-				$.ajax({
-					type: "POST",
-					url: "user_enrolment_validation_with_table",
-					data: email,
-					async: false,
-					success: function(data) {
-						
-						 result = data;
-					}
-				});
-				alert(result);	
-*/
 }
 //End user_enrolment_validation_with_table//
+//Start mobile_validation_with_table// 
+function mobile_validation_with_table($mobile=null)
+{
+$result="not_match";
+		$this->loadmodel('user');
+		$result_user=$this->user->find('all');
+		foreach($result_user as $data){
+				$mobile_number=$data['user']['mobile'];
+                  if($mobile_number==$mobile){
+					$result="match";
+					break;					
+				  }					  
+		}
+echo $result;	
+}
+//End mobile_validation_with_table//
 }
 ?>

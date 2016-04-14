@@ -149,7 +149,7 @@ $(document).ready(function() {
 	
 	$( "#final_import" ).click(function(){
 		var allow="yes";
-		
+		/*
 	$('#report_tb tbody tr input[field=email]').each(function(i, obj){
 		var email=$(this).val();
 			if(email==""){
@@ -171,9 +171,30 @@ $(document).ready(function() {
 								$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();	
 					}
 				}
-	});
+	}); */
 		
-	
+	$('#report_tb tbody tr input[field=mobile]').each(function(i, obj){
+		var mobile=$(this).val();
+			if(mobile==""){
+				$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').find(".er").remove();
+			}else{
+				var result;	
+					$.ajax({
+							url:"mobile_validation_with_table/"+mobile, 
+							async: false,
+							success: function(data){
+							result=data;
+							}
+						});
+						if(result == 'match'){
+							allow='no';
+								$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').find(".er").remove();
+								$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').append('<p class="er">Already Exist</p>');
+						}else{
+								$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').find(".er").remove();	
+					}
+				}
+	});
 	
 		$('#report_tb tbody tr input[field=name]').each(function(i, obj){
 			var name=$(this).val();
@@ -342,13 +363,7 @@ font-size: 11px;
 }
 </style>
 
-<?php
-function email_validation_database($email)
-{
-$rrr= "result";
-return $email;	
-}
-?>
+
 
 
 

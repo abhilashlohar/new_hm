@@ -211,6 +211,9 @@ $(document).ready(function() {
 		//Start Email Validation//
 		$('#report_tb tbody tr input[field=email]').each(function(i, obj){
 		var email=$(this).val();
+			var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            var valid_email=regex.test(email);
+			
 			if(email==""){
 				$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
 			}else{
@@ -230,6 +233,10 @@ $(document).ready(function() {
 							allow="no";
 							$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
 							$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').append('<p class="er">Overlap Email</p>');
+						}else if(valid_email==false){
+							allow="no";
+							$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
+							$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').append('<p class="er">Invalid Email</p>');
 						}else{
 								$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();	
 					}

@@ -280,6 +280,7 @@ $(document).ready(function() {
 							result=data;
 							}
 						});
+						
 					if(result=='self_occupied'){
 						allow="no";
 						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
@@ -300,7 +301,7 @@ $(document).ready(function() {
 						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
 						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').append('<p class="er">Flat Already Exist</p>'); 
 					 }
-					 if(result='match_overlap'){
+					 if(result=='match_overlap'){
 						 allow="no";
 						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
 						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').append('<p class="er">Flat Overlap</p>');  

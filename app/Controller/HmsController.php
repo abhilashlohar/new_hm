@@ -905,20 +905,30 @@ function allow_user_enrollment(){
 			$s_society_id=(int)$this->Session->read('hm_society_id'); 
 	
 	$email_array=array();
+	$mobile_array=array();
 	$this->loadmodel('user_enrollment_csv_converted');
 	$order=array('user_enrollment_csv_converted.auto_id'=>'ASC');
 	$conditions=array("society_id"=>(int)$s_society_id);
 	$result_user_enrollment_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,'order'=>$order));
 	 foreach($result_user_enrollment_converted as $data){
-		$email_idd=$data['user_enrollment_csv_converted']['email']; 
+		$email_idd=$data['user_enrollment_csv_converted']['email'];
+		$mobile_no=$data['user_enrollment_csv_converted']['mobile'];		
 			if($email_idd==""){
 				}else{
 					$email_array[]=$email_idd;	
-				}  
+				}
+					if($mobile_no==""){
+					}else{
+					$mobile_array[]=$mobile_no;	
+					}				
+				
 	 }	  
 	
 	
-	
+	 
+		
+	 
+		
 	
 	
 	$empty_validate=0;
@@ -974,6 +984,16 @@ function allow_user_enrollment(){
 									$empty_validate=1;
 						    }					  
 						}
+						$m=0;
+						for($x=0; $x<sizeof($mobile_array); $x++){
+							$mobil_from_array=$mobile_array[$x];
+								if($mobil_from_array==$mobile){
+									$m++;
+								}
+							}	
+							if($m>1){
+								$empty_validate=1; 
+							}		
 			
 			
 		}

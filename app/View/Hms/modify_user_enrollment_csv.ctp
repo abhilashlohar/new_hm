@@ -101,10 +101,10 @@ for($ii=1;$ii<=$loop;$ii++){ ?>
 </ul>
 </div>
 <br/>
-
-<a class="btn purple " role="button" id="final_import">Import user enrollment <i class="m-icon-swapright m-icon-white"></i></a>	<a class="btn cancel_user"  >Cancel</a>								
+<div align="center" id="submit_sec">
+<a class="btn purple " role="button" id="final_import">Import user enrollment <i class="m-icon-swapright m-icon-white"></i></a>	<a class="btn cancel_user">Cancel</a>					
 <div id="check_validation_result"></div>
-
+</div>
 	
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 <script>
@@ -141,21 +141,27 @@ $(document).ready(function() {
 		
 	});
 	
-	$( "#final_import" ).click(function() {
+	$( "#final_import" ).click(function(){
+		var allow="no";
 		
-		$("#check_validation_result").html('<img src="<?php echo $webroot_path; ?>as/loding.gif" /><span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Importing User Enrollment.</span>');
 		
-		$.ajax({
-			url: "<?php echo $webroot_path; ?>Hms/allow_user_enrollment",
-		}).done(function(response){
-			
-			if(response=="F"){
-				$("#check_validation_result").html("");
-				alert("Your Data Is Not Validate.");
+		
+		
+			if(allow=="yes"){
+				$.ajax({
+					url: "<?php echo $webroot_path; ?>Hms/allow_user_enrollment",
+					}).done(function(response){
+						if(response=="F"){
+							$("#check_validation_result").html("");
+								alert("Your Data Is Not Validate.");
+							}else{
+								change_page_automatically("<?php echo $webroot_path; ?>Hms/import_user_enrollment");
+							}
+				});
 			}else{
-				change_page_automatically("<?php echo $webroot_path; ?>Hms/import_user_enrollment");
-			}
-		});
+			$("#submit_sec").find(".alert-error").remove();
+			$("#final_import").before('<div class="alert alert-error" style="width: 50%;">There are errors above, marked with red color.</div>');	
+		}
 	});
 });
 
@@ -247,8 +253,7 @@ $( document ).ready(function() {
 	
 });
 
-
-$( document ).ready(function() {
+$(document).ready(function(){
 	$( '.delete_row' ).click(function() {
 		var record_id=$(this).attr("record_id");
 		$(this).closest("tr").remove();
@@ -257,9 +262,15 @@ $( document ).ready(function() {
 		}).done(function(response){
 			
 		});
-		
-		
 	});
 });
-
 </script>
+
+
+
+
+
+
+
+
+

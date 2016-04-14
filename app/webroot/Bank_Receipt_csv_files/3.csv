@@ -1,51 +1,55 @@
 Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Receipt Type,Amount,Narration 
-1-4-2015,UCO Bank,Cheque,71536,1-4-2015,ACE Co-op Bank Ltd,N/A,Usha R Supekar,F,503,M,10024,April 2015 Receipt
-1-4-2015,UCO Bank,Cheque,577092,1-4-2015,ICICI Bank,N/A,T.R. Ramanathan,F,602,M,9075,April 2015 Receipt
-1-4-2015,UCO Bank,Cheque,335117,1-4-2015,PMC Bank,N/A,Bamabhahadur Yadav,SH,1,M,3580,April 2015 Receipt
-1-4-2015,UCO Bank,Cheque,1430,1-4-2015,ICICI Bank,N/A,Mohit Bhat,F,303,M,10024,April 2015 Receipt
-4-4-2015,UCO Bank,NEFT ,999,4-4-2015,,,Mukhtar Elaskar,F,1402,M,9975,April 2015 Receipt
-4-4-2015,UCO Bank,NEFT ,999,4-4-2015,,,Mukhtar Elaskar,F,1402,M,48535,April 2015 Receipt
-5-4-2015,UCO Bank,NEFT ,999,5-4-2015,,,Mukhtar Elaskar,F,1402,M,30000,April 2015 Receipt
-5-4-2015,UCO Bank,Cheque,168564,5-4-2015,ICICI Bank,N/A,Pradeep Rao Wagh,F,802,M,9075,April 2015 Receipt
-6-4-2015,UCO Bank,NEFT ,999,6-4-2015,,,Arati kanade,F,1203,M,11141,April 2015 Receipt
-13-4-2015,UCO Bank,Cheque,65,13-4-2015,HDFC Bank,N/A,Parag R. Desai,SH,5,M,5258,April 2015 Receipt
-15-4-2015,UCO Bank,Cheque,49,15-4-2015,HDFC Bank,N/A,Sanjay Sharma,F,1003,M,10230,April 2015 Receipt
-16-4-2015,UCO Bank,Cheque,854659,16-4-2015,State Bank of India,N/A,Debi Prasad Rajgarhia,F,1202,M,9075,April 2015 Receipt
-20-4-2015,UCO Bank,Cheque,854660,20-4-2015,State Bank of India,N/A,Mohammed Anis Dadani,F,1401,M,11254,April 2015 Receipt
-20-4-2015,UCO Bank,Cheque,81134,20-4-2015,HDFC Bank,N/A,Sudha Ranganathan,F,1102,M,11310,April 2015 Receipt
-21-4-2015,UCO Bank,Cheque,14158,21-4-2015,Axis Bank,N/A,Dinesh Chandra Agarwal,SH,9,M,18272,April 2015 Receipt
-22-4-2015,UCO Bank,Cheque,872739,22-4-2015,State Bank of India,N/A,Dr. D K Aswal,F,1302,M,10264,April 2015 Receipt
-23-4-2015,UCO Bank,NEFT ,999,23-4-2015,,,Shashi Pandey,F,701,M,10519,April 2015 Receipt
-25-4-2015,UCO Bank,Cheque,875825,25-4-2015,State Bank of India,N/A,Sulbha Parab,F,1201,M,11254,April 2015 Receipt
-25-4-2015,UCO Bank,Cheque,310695,25-4-2015,Greater Bank,N/A,Rajesh Puri,F,702,M,10264,April 2015 Receipt
-27-4-2015,UCO Bank,Cheque,18,27-4-2015,Kotak Mahindra Bank,N/A,Shagufta Khan,F,1503,M,17160,April 2015 Receipt
-27-4-2015,UCO Bank,NEFT ,999,27-4-2015,,,Kienzla Parekh,F,202,M,10258,April 2015 Receipt
-27-4-2015,UCO Bank,Cheque,465696,27-4-2015,ICICI Bank,N/A,Sunder Mahadevan,F,801,M,10354,April 2015 Receipt
-27-4-2015,UCO Bank,Cheque,110,27-4-2015,Bank of Baroda,N/A,Gurmeet Singh,F,601,M,10354,April 2015 Receipt
-30-4-2015,UCO Bank,NEFT ,999,30-4-2015,,,Sudha Ranganathan,F,1102,M,11310,April 2015 Receipt Cash deposited
-1-5-2015,UCO Bank,Cheque,13,1-5-2015,HDFC Bank,N/A,Vikas P. Shinde,F,1703,M,10024,May 2015 Receipt
-1-5-2015,UCO Bank,Cheque,293890,1-5-2015,Indusland Bank,N/A,Rajesh Merugu,F,502,M,9364,May 2015 Receipt
-5-5-2015,UCO Bank,Cheque,878906,5-5-2015,PNB Bank,N/A,Lalit Mohan Pant,F,501,M,11419,May 2015 Receipt
-6-5-2015,UCO Bank,NEFT ,999,6-5-2015,,,Shiv Prakash Yadav,F,301,M,11419,May 2015 Receipt
-7-5-2015,UCO Bank,Cheque,138361,7-5-2015,State Bank of India,N/A,Sanjay Nakhate,F,902,M,9664,Mayl 2015 Receipt
-7-5-2015,UCO Bank,Cheque,781608,7-5-2015,State Bank of India,N/A,D S Padmanabhan,F,1501,M,10519,May 2015 Receipt
-8-5-2015,UCO Bank,Cheque,335479,8-5-2015,State Bank of India,N/A,Poonam Manish Shukla,F,402,M,9075,May 2015 Receipt
-8-5-2015,UCO Bank,Cheque,566977,8-5-2015,Indian Overseas Bank,N/A,Ranjit & Gormej Kaur,F,203,M,10552,May 2015 Receipt
-8-5-2015,UCO Bank,Cheque,566978,8-5-2015,Indian Overseas Bank,N/A,Ranjit & Gormej Kaur,F,203,M,11048,May 2015 Receipt
-9-5-2015,UCO Bank,NEFT ,999,9-5-2015,,,Joseph Varghese,F,302,M,9364,May 2015 Receipt
-9-5-2015,UCO Bank,Cheque,82473,9-5-2015,NKGS Bank,N/A,Anup Singh,SH,3,M,5258,May 2015 Receipt
-9-5-2015,UCO Bank,Cheque,52760,9-5-2015,IDBI Bank,N/A,Harish Pant,F,901,M,11419,May 2015 Receipt
-10-5-2015,UCO Bank,Cheque,77382,10-5-2015,Axis Bank,N/A,Mahantesh Komanur,F,401,M,20923,May 2015 Receipt
-11-5-2015,UCO Bank,Cheque,947062,11-5-2015,State Bank of India,N/A,Akhil Nair,F,703,M,10024,May 2015 Receipt
-11-5-2015,UCO Bank,Cheque,889399,11-5-2015,State Bank of India,N/A,Asha R Daundakar,F,903,M,10024,May 2015 Receipt
-11-5-2015,UCO Bank,Cheque,889399,11-5-2015,State Bank of India,N/A,Ananda Tahalkar,SH,17,M,2572,May 2015 Receipt
-11-5-20015,UCO Bank,Cheque,49,11-5-2015,HDFC Bank,N/A,K. V. GopalaKrishnan,F,1303,M,10024,May 2015 Receipt
-14-5-2015,UCO Bank,Cheque,41395,14-5-2015,State Bank of India,N/A,Gautam Das,F,1101,M,10519,May 2015 Receipt
-15-5-2015,UCO Bank,Cheque,100139,15-5-2015,Abhyudaya Co-op Bank Ltd,N/A,Suryakant Deshmukh,F,1502,M,10264,May 2015 Receipt
-1-6-2015,UCO Bank,Cheque,24009,1-6-2015,Central Bank of India,N/A,Dr. Kakoli Bose nee Ghosh,F,1103,M,10924,June 2015 Receipt
-1-6-2015,UCO Bank,Cheque,4,1-6-2015,HDFC Bank,N/A,Paramit Kaur,F,1001,M,11339,June 2015 Receipt
-2-6-2015,UCO Bank,NEFT ,999,2-6-2015,,,Anshu Singhal,F,1403,M,34956,June 2015 Receipt
-3-6-2015,UCO Bank,Cheque,186284,3-6-2015,Indusland Bank,N/A,Rupinder Singh,SH,11,M,5048,June 2015 Receipt
-10-6-2015,UCO Bank,NEFT ,999,10-6-2015,,,Vinod Satpute,F,1002,M,18350,June 2015 Receipt
-11-6-2015,UCO Bank,NEFT ,999,11-6-2015,,,Pankaj Kishor,F,803,M,11278,June 2015 Receipt
-22-6-2015,UCO Bank,Cheque,60982,22-6-2015,HDFC Bank,N/A,Gaje Singh Chahal,F,1701,M,10519,June 2015 Receipt
+1-7-2015,UCO Bank,Cheque,18,1-7-2015,HDFC Bank,N/A,Uday Powar,FLAT,1702,M,18728,Jul to Sep 2015 Receipt & advance
+2-7-2015,UCO Bank,Cheque,577099,2-7-2015,ICICI Bank,N/A,T.R. Ramanathan,FLAT,602,M,9075,Jul to Sep 2015 Receipt
+3-7-2015,UCO Bank,Cheque,81135,3-7-2015,HDFC Bank,N/A,Sudha Ranganathan,FLAT,1102,M,10264,Jul to Sep 2015 Receipt
+5-7-2015,UCO Bank,Cheque,168655,5-7-2015,ICICI Bank,N/A,Pradeep Rao Wagh,FLAT,802,M,9075,Jul to Sep 2015 Receipt
+6-7-2015,UCO Bank,Cheque,1431,6-7-2015,ICICI Bank,N/A,Mohit Bhat,FLAT,303,M,10024,Jul to Sep 2015 Receipt
+6-7-2015,UCO Bank,Cheque,538846,6-7-2015,Citi Bank,N/A,Elona Panda,FLAT,1301,M,11419,part payment of bill amt Rs 23101
+7-7-2015,UCO Bank,Cheque,2237,7-7-2015,Kotak Mahindra Bank,N/A,Sanjay Bakliwal,FLAT,1603,M,32971,Jul 2015 Receipt 2
+14-7-2015,UCO Bank,Cheque,67,14-7-2015,HDFC Bank,N/A,Parag R. Desai,SHOP,5,M,5258,Jul to Sep 2015 Receipt
+14-7-2015,UCO Bank,Cheque,71546,14-7-2015,ACE Co-op Bank Ltd,N/A,Usha R Supekar,FLAT,503,M,10024,Jul to Sep 2015 Receipt
+14-7-2015,UCO Bank,Cheque,59,14-7-2015,HDFC Bank,N/A,Sanjay Sharma,FLAT,1003,M,10230,Jul to Sep 2015 Receipt
+15-7-2015,UCO Bank,Cheque,335119,15-7-2015,PMC Bank,N/A,Bamabhahadur Yadav,SHOP,1,M,3576,Jul to Sep 2015 Receipt
+20-7-2015,UCO Bank,Cheque,2214,20-7-2015,Kotak Mahindra Bank,N/A,Sanjay Bakliwal,FLAT,1603,M,1484,Jul 2015 Receipt 3
+21-7-2015,UCO Bank,NEFT,999,21-7-2015,,,Shashi Pandey,FLAT,701,M,10519,Jul to Sep 2015 Receipt
+23-7-2015,UCO Bank,Cheque,872742,23-7-2015,State Bank of India,N/A,Dr. D K Aswal,FLAT,1302,M,10264,Jul to Sep 2015 Receipt
+24-7-2015,UCO Bank,Cheque,485484,24-7-2015,HDFC Bank,N/A,Sarojini B. Marks,SHOP,12,M,8940,Jul to Dec 2015 Receipt
+24-7-2015,UCO Bank,NEFT,999,24-7-2015,,,Arati kanade,FLAT,1203,M,11147,part payment of bill amt Rs 23214
+28-7-2015,UCO Bank,Cheque,310707,28-7-2015,Greater Bank,N/A,Rajesh Puri,FLAT,702,M,10262,Jul to Sep 2015 Receipt
+28-7-2015,UCO Bank,Cheque,854673,28-7-2015,State Bank of India,N/A,Debi Prasad Rajgarhia,FLAT,1202,M,9075,Jul to Sep 2015 Receipt
+28-7-2015,UCO Bank,Cheque,854672,28-7-2015,State Bank of India,N/A,Mohammed Anis Dadani,FLAT,1401,M,11252,Jul to Sep 2015 Receipt
+29-7-2015,UCO Bank,Cheque,132753,29-7-2015,NKGS Bank,N/A,Anup Singh,SHOP,3,M,5259,Jul to Sep 2015 Receipt
+30-7-2015,UCO Bank,Cheque,139,30-7-2015,Bank of Baroda,N/A,Gurmeet Singh,FLAT,601,M,10352,Jul to Sep 2015 Receipt
+30-7-2015,UCO Bank,Cheque,96374,30-7-2015,State Bank of India,N/A,Sanjay Nakhate,FLAT,902,M,10263,Jul to Sep 2015 Receipt
+30-7-2015,UCO Bank,Cheque,2231,30-7-2015,Kotak Mahindra Bank,N/A,Sanjay Bakliwal,FLAT,1601,M,35281,Jul to Sep 2015 Receipt
+30-7-2015,UCO Bank,Cheque,2232,30-7-2015,Kotak Mahindra Bank,N/A,Sanjay Bakliwal,FLAT,1602,M,31272,Jul to Sep 2015 Receipt 1
+30-7-2015,UCO Bank,NEFT,999,30-7-2015,,,Sanjay Bakliwal,FLAT,1602,M,1099,Jul to Sep 2015 Receipt 2
+31-7-2015,UCO Bank,NEFT,999,31-7-2015,,,Kienzla Parekh,FLAT,202,M,9645,Jul to Sep 2015 Receipt
+1-8-2015,UCO Bank,Cheque,619591,1-8-2015,SBI,N/A,Ragini Nigam,FLAT,1503,M,13438,payment of Bill 1121 (bill on previous owner name)
+1-8-2015,UCO Bank,Cheque,619591,1-8-2015,SBI,N/A,Ragini Nigam,FLAT,1503,M,0,payment of Bill 1121 (bill on previous owner name)
+5-8-2015,UCO Bank,Cheque,695460,5-8-2015,ICICI bank,N/A,Ravinder K Sharma,FLAT,1603,M,6820,Aug-Sept 2015 maintenance
+5-8-2015,UCO Bank,Cheque,346771,5-8-2015,Indian Overseas Bank,N/A,Ranjit & Gormej Kaur,FLAT,203,M,10552,Jul to Sep 2015 Receipt
+5-8-2015,UCO Bank,Cheque,91896,5-8-2015,ICICI Bank,N/A,Rajesh Merugu,FLAT,502,M,9364,Jul to Sep 2015 Receipt
+6-8-2015,UCO Bank,NEFT,999,6-8-2015,,,Shiv Prakash Yadav,FLAT,301,M,11419,Jul to Sep 2015 Receipt
+8-8-2015,UCO Bank,NEFT,cash,8-8-2015,,,K.V. Bhosle,SHOP,2,M,11482,Jul to Sep 2015 Receipt
+9-8-2015,UCO Bank,Cheque,679714,9-8-2015,State Bank of India,N/A,Poonam Manish Shukla,FLAT,402,M,9090,Jul to Sep 2015 Receipt
+9-8-2015,UCO Bank,Cheque,29,9-8-2015,Kotak Mahindra Bank,N/A,Sanjay Bakliwal,FLAT,1603,M,3410,Jul 2015 Receipt 1
+10-8-2015,UCO Bank,Cheque,878909,10-8-2015,PNB Bank,N/A,Lalit Mohan Pant,FLAT,501,M,11417,Jul to Sep 2015 Receipt
+10-8-2015,UCO Bank,NEFT,999,10-8-2015,,,Akhil Nair,FLAT,703,M,10623,Jul to Sep 2015 Receipt
+10-8-2015,UCO Bank,Cheque,465705,10-8-2015,ICICI Bank,N/A,Sunder Mahadevan,FLAT,801,M,10352,Jul to Sep 2015 Receipt
+11-8-2015,UCO Bank,NEFT,999,11-8-2015,,,Joseph Varghese,FLAT,302,M,9364,Jul to Sep 2015 Receipt
+12-8-2015,UCO Bank,Cheque,52761,12-8-2015,IDBI Bank,N/A,Harish Pant,FLAT,901,M,11419,Jul to Sep 2015 Receipt
+13-8-2015,UCO Bank,Cheque,9754,13-8-2015,State Bank of India,N/A,Gautam Das,FLAT,1101,M,10517,Jul to Sep 2015 Receipt
+13-8-2015,UCO Bank,NEFT,999,13-8-2015,,,K. V. GopalaKrishnan,FLAT,1303,M,10024,Jul to Sep 2015 Receipt
+13-8-2015,UCO Bank,Cheque,781631,13-8-2015,State Bank of India,N/A,D S Padmanabhan,FLAT,1501,M,10526,Jul to Sep 2015 Receipt
+14-8-2015,UCO Bank,Cheque,39567,14-8-2015,State Bank of India,N/A,Ananda Tahalkar,SHOP,17,M,2576,Jul to Sep 2015 Receipt
+14-8-2015,UCO Bank,Cheque,39568,14-8-2015,State Bank of India,N/A,Asha R Daundakar,FLAT,903,M,10022,Jul to Sep 2015 Receipt
+14-8-2015,UCO Bank,Cheque,26822,14-8-2015,Central Bank of India,N/A,Dr. Kakoli Bose nee Ghosh,FLAT,1103,M,10114,Jul to Sep 2015 Receipt
+14-8-2015,UCO Bank,Cheque,875835,14-8-2015,State Bank of India,N/A,Sulbha Parab,FLAT,1201,M,10352,Jul to Sep 2015 Receipt
+14-8-2015,UCO Bank,Cheque,100144,14-8-2015,Abhyudaya Co-op Bank Ltd,N/A,Suryakant Deshmukh,FLAT,1502,M,10264,Jul to Sep 2015 Receipt
+14-8-2015,UCO Bank,Cheque,2357,14-8-2015,Kotak Mahindra Bank,N/A,Sanjay Bakliwal,FLAT,1602,M,9402,Jul to Sep 2015 Receipt 3
+14-8-2015,UCO Bank,Cheque,5375,14-8-2015,Union Bank,N/A,Vikas P. Shinde,FLAT,1703,M,10024,Jul to Sep 2015 Receipt
+15-8-2015,UCO Bank,Cheque,21340,15-8-2015,PMC Bank,N/A,Paramit Kaur,FLAT,1001,M,11346,Jul to Sep 2015 Receipt
+24-8-2015,UCO Bank,NEFT,cash,24-8-2015,,,Saeeda J. Sayed Jahangir,SHOP,13,M,8800,Jul to Sep 2015 Receipt & advance
+24-8-2015,UCO Bank,Cheque,829061,24-8-2015,State Bank of India,N/A,Darshan Badole,FLAT,201,M,14000,part payment of bill amt Rs 42872
+24-9-2015,UCO Bank,Cheque,468342,24-9-2015,ICICI Bank,N/A,Darshan Badole,FLAT,201,M,7750,part payment of bill amt Rs 42872

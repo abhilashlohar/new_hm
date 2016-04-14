@@ -898,34 +898,125 @@ function auto_save_user_enrollment($record_id=null,$field=null,$value=null){
 		}
 	
 }
-
+//Start allow_user_enrollment// 
 function allow_user_enrollment(){
 	$this->layout=null;
+		$this->ath();
+			$s_society_id=(int)$this->Session->read('hm_society_id'); 
 	
-	$this->ath();
-	 $s_society_id = $this->Session->read('hm_society_id'); 
+	$email_array=array();
+	$mobile_array=array();
 	$this->loadmodel('user_enrollment_csv_converted');
+	$order=array('user_enrollment_csv_converted.auto_id'=>'ASC');
 	$conditions=array("society_id"=>(int)$s_society_id);
-	$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions));
+	$result_user_enrollment_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,'order'=>$order));
+	 foreach($result_user_enrollment_converted as $data){
+		$email_idd=$data['user_enrollment_csv_converted']['email'];
+		$mobile_no=$data['user_enrollment_csv_converted']['mobile'];		
+			if($email_idd==""){
+				}else{
+					$email_array[]=$email_idd;	
+				}
+					if($mobile_no==""){
+					}else{
+					$mobile_array[]=$mobile_no;	
+					}				
+				
+	 }	  
+	
+	
+	 
+		
+	 
+		
+	
+	
+	$empty_validate=0;
+	$wing_flat=0;
+	$this->loadmodel('user_enrollment_csv_converted');
+	$order=array('user_enrollment_csv_converted.auto_id'=>'ASC');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,'order'=>$order));
 	foreach($user_enrollment_csv_converted as $user_enrollment_converted){ 
 		$auto_id=$user_enrollment_converted["user_enrollment_csv_converted"]["auto_id"];
 		$name=$user_enrollment_converted["user_enrollment_csv_converted"]["name"];
 		$wing=(int)$user_enrollment_converted["user_enrollment_csv_converted"]["wing"];
 		$email=$user_enrollment_converted["user_enrollment_csv_converted"]["email"];
 		$mobile=$user_enrollment_converted["user_enrollment_csv_converted"]["mobile"];
-		 $owner=$user_enrollment_converted["user_enrollment_csv_converted"]["owner"];
-		 $committee=$user_enrollment_converted["user_enrollment_csv_converted"]["committee"];
+		$owner=$user_enrollment_converted["user_enrollment_csv_converted"]["owner"];
+		$committee=$user_enrollment_converted["user_enrollment_csv_converted"]["committee"];
 		$flat=(int)$user_enrollment_converted["user_enrollment_csv_converted"]["flat"];
-		if(empty($name)){ $name_v=1;   }else{  $name_v=0; }
-	
-	}
+		if(empty($wing) && empty($flat)){
+		 $wing_flat=1;	
+		}
+		if(empty($name) || empty($owner)){
+		$empty_validate=1;	
+		}
+		
+		if($email==""){
+		}else{
+			if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+				$empty_validate=1;	
+			}	
+			$this->loadmodel('user');
+				$result_user=$this->user->find('all');
+					foreach($result_user as $data){
+						$email_id=$data['user']['email'];
+							if($email_id==$email){
+								$empty_validate=1;	
+						}					  
+					}
+					$n=0;
+					for($k=0; $k<sizeof($email_array); $k++){
+						$email_from_array=$email_array[$k];
+							if($email_from_array==$email){
+								$n++;
+							}
+						}	
+						if($n>1){
+							$empty_validate=1;
+			}			
+			}
+             if($mobile=="")
+			 {}else{
+						
+				$this->loadmodel('user');
+					$result_user=$this->user->find('all');
+						foreach($result_user as $dataa){
+							$mobile_number=$dataa['user']['mobile'];
+								if($mobile_number==$mobile){
+									$empty_validate=1;
+						    }					  
+						}
+						$m=0;
+						for($x=0; $x<sizeof($mobile_array); $x++){
+							$mobil_from_array=$mobile_array[$x];
+								if($mobil_from_array==$mobile){
+									$m++;
+								}
+							}	
+							if($m>1){
+								$empty_validate=1; 
+							}		
+		}
+		
+		
+		
+		
+		
+		
+	}		
+		
+$total_validation=$wing_flat+$empty_validate;	
+		
+if($total_validation>0){		
+echo "not_validate";
+}		
+	$this->loadmodel('import_user_enrollment_record');
+	$this->import_user_enrollment_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "UE"));
 			
-			$this->loadmodel('import_user_enrollment_record');
-			$this->import_user_enrollment_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "UE"));
-			echo "T"; die;
 }
-
-
+//End allow_user_enrollment// 
 function final_import_user_enrollment(){
 	
 	$this->layout=null;

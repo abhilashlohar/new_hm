@@ -150,7 +150,54 @@ $(document).ready(function() {
 	$( "#final_import" ).click(function(){
 		var allow="yes";
 		
-	$('#report_tb tbody tr input[field=email]').each(function(i, obj){
+		$('#report_tb tbody tr input[field=mobile]').each(function(i, obj){
+		var mobile=$(this).val();
+			if(mobile==""){
+				$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').find(".er").remove();
+			}else{
+				var result;	
+					$.ajax({
+							url:"mobile_overlap_validation/"+mobile, 
+							async: false,
+							success: function(data){
+								result=data;
+							}
+						});
+						if(result == 'match'){
+							allow='no';
+								$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').find(".er").remove();
+								$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').append('<p class="er">Overlap Mobile</p>');
+						}else{
+								$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').find(".er").remove();	
+					}
+				}
+	});
+		
+			$('#report_tb tbody tr input[field=email]').each(function(i, obj){
+				var email=$(this).val();
+					if(email==""){
+					$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
+					}else{
+					var result;	
+					$.ajax({
+							url:"email_overlap_validation/"+email, 
+							async: false,
+							success: function(data){
+								result=data;
+							}
+						});
+						if(result == 'match'){
+							allow='no';
+								$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
+								$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').append('<p class="er">Overlap Email</p>');
+						}else{
+								$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();	
+					}
+				}
+	}); 	
+		
+		
+	/*$('#report_tb tbody tr input[field=email]').each(function(i, obj){
 		var email=$(this).val();
 			if(email==""){
 				$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
@@ -195,7 +242,7 @@ $(document).ready(function() {
 					}
 				}
 	});
-	
+	    */
 		$('#report_tb tbody tr input[field=name]').each(function(i, obj){
 			var name=$(this).val();
 				if(name==""){

@@ -27900,5 +27900,68 @@ $result="not_match";
 echo $result;	
 }
 //End mobile_validation_with_table//
+//Start email_overlap_validation//
+function email_overlap_validation($email=null)
+{
+    $s_society_id = $this->Session->read('hm_society_id');
+    $email_array=array();
+	$result="not_match";
+	$this->loadmodel('user_enrollment_csv_converted'); 
+	$order=array('user_enrollment_csv_converted.auto_id'=>'ASC');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,'order'=>$order));
+	 foreach($user_enrollment_csv_converted as $data){
+		$email_id=$data['user_enrollment_csv_converted']['email']; 
+		if($email_id==""){
+		}else{
+		$email_array[]=$email_id;	
+		}
+	 }	
+		$n=0;
+		for($k=0; $k<sizeof($email_array); $k++){
+		$email_from_array=$email_array[$k];
+			if($email_from_array==$email){
+				$n++;
+			}
+			
+		}	
+  if($n>1){
+	 $result="match"; 
+  }	
+echo $result;
+	
+}
+//End email_overlap_validation//
+//Start mobile_overlap_validation//
+function mobile_overlap_validation($mobile=null)
+{
+ $s_society_id = $this->Session->read('hm_society_id');
+    $mobile_array=array();
+	$result="not_match";
+	$this->loadmodel('user_enrollment_csv_converted'); 
+	$order=array('user_enrollment_csv_converted.auto_id'=>'ASC');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$user_enrollment_csv_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,'order'=>$order));
+	 foreach($user_enrollment_csv_converted as $data){
+		$mobile_no=$data['user_enrollment_csv_converted']['mobile']; 
+		if($mobile_no==""){
+		}else{
+		$mobile_array[]=$mobile_no;	
+		}
+	 }	
+		$n=0;
+		for($k=0; $k<sizeof($mobile_array); $k++){
+		$mobil_from_array=$mobile_array[$k];
+			if($mobil_from_array==$mobile){
+				$n++;
+			}
+			
+		}	
+  if($n>1){
+	 $result="match"; 
+  }	
+echo $result;	
+}
+//End mobile_overlap_validation//
 }
 ?>

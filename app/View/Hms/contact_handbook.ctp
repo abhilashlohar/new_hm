@@ -81,9 +81,6 @@ background-color:rgb(218, 236, 240);
 <div id="all_dir">
 
 
-
-
-
 <div id="view_search" >
 
  <?php
@@ -118,7 +115,7 @@ foreach($flat_info as $wing_flat){
 		<div style="float:left;margin-left:3%;"  >
 
 			<i class="icon-user"></i> &nbsp; <span style="font-size:16px;"><?php echo $name; ?></span><br/>
-			<i class=" icon-wrench"></i> &nbsp; <span style="font-size:14px;">Services : <?php echo $service_name ; ?></span><br/>
+			<i class=" icon-wrench"></i> &nbsp; <span style="font-size:14px;">Services :<span class=" tooltips" data-placement="top" data-original-title="<?php echo $service_name ; ?>">  <i class=" icon-search"></i> view</span> </span><br/>
 			<i class="icon-phone-sign"></i> &nbsp; <span style="font-size:14px;"><?php echo $mobile ; ?></span><br/>
 			<i class="icon-envelope-alt"></i> &nbsp; <span style="font-size:14px;"><a style="text-decoration: blink;" href="mailto:<?php echo $email ; ?>"><?php echo $email ; ?></a></span><br/>
 			<i class="icon-sitemap"></i> &nbsp; <span style="font-size:14px;"><a href='<?php echo $web ; ?>' target="_blank"> <?php echo $web ; ?></a></span><br/>
@@ -344,8 +341,26 @@ $(".con_delete").click(function(){
 <div id="edit_contact">
 </div>		
 	<input type="hidden" id="new_text"value="1"	>	
+	<?php echo $this->session->read('contact_create'); ?>
 <script>
 $(document).ready(function(){
+<?php 
+	$contact_handbook=$this->session->read('contact_create');
+if($contact_handbook==1){
+?>	
+	$.gritter.add({
+
+			title: '<i class="icon-th-list"></i> Contact Handbook',
+			text: '<p>Contact handbook is successfully register.</p>',
+			sticky: false,
+			time: '10000',
+
+		});
+	
+<?php
+$this->requestAction(array('controller' => 'hms', 'action' => 'griter_notification'), array('pass' => array('contact_handbook')));
+ } ?>
+	
 		$('#contact-form').validate({
 			
 	    rules: {

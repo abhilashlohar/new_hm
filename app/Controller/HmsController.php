@@ -1803,6 +1803,10 @@ function griter_notification($id)
 		$this->Session->delete('create_notice');
 	}
 	
+	if($id=="contact_handbook"){
+		$this->Session->delete('contact_create');
+	}
+	
 	if($id=="draft_notice_griter"){
 		$this->Session->delete('draft_notice');
 	}
@@ -17692,6 +17696,8 @@ foreach($result_user as $data)
 {
 $visible_user_id[]=$data['user']['user_id'];
 }
+
+$this->Session->write('contact_create',1);
 
 $this->send_notification('<span class="label label-warning" ><i class="icon-phone"></i></span>','Addition to contact handbook  <b>'.$name.'</b> added by',21,$i,$this->webroot.'Hms/contact_handbook',$s_user_id,$visible_user_id);
 

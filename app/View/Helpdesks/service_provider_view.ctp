@@ -55,7 +55,7 @@ table th { font-size:12px !important ; }
 	
 <div id="st" class="h_d"> 
  </div>
-
+<input type="text" class="span6 m-wrap popovers" data-trigger="hover" data-content="Popover body <br/> goes here.<br/> Popover body goes here." data-original-title="Popover header">
 <div class="portlet box " >
 							
 							<div class="portlet-body">

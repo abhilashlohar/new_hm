@@ -1727,7 +1727,7 @@ var App = function () {
     }
 
     var handlePopover = function () {
-        jQuery('.popovers').popover();
+        jQuery('.popovers').popover({html: true});
     }
 
     var handleChoosenSelect = function () {

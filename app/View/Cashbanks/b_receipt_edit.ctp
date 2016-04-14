@@ -381,7 +381,7 @@ $("form").on("submit",function(e){
 
 
 
-	e.preventDefault();	
+	
 
 if(allow=="no"){
 			e.preventDefault();

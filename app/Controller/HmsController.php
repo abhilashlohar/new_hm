@@ -25197,7 +25197,7 @@ else
 
 
 }
-///////////////////////////////// Start Check Email Already Exist /////////////////////////////////////////////
+//Start Check Email Already Exist//
 function check_email_already_exist()
 {
 $this->layout='blank';
@@ -27963,5 +27963,49 @@ function mobile_overlap_validation($mobile=null)
 echo $result;	
 }
 //End mobile_overlap_validation//
+//Start wing_flat_validation//
+function wing_flat_validation($wing_flat=null,$owner_type=null)
+{
+ $result="not_match";
+ $s_society_id = $this->Session->read('hm_society_id');	
+ $wing_flat_explode=explode(',',$wing_flat);
+ $wing=(int)$wing_flat_explode[0];
+ $flat=(int)$wing_flat_explode[1];
+  
+		$this->loadmodel('flat');
+		$conditions=array("flat_id"=>$flat);
+		$result_flat=$this->flat->find('all',array('conditions'=>$conditions));
+			foreach($result_flat as $dataa){
+				$flat_type=(int)$dataa['flat']['noc_ch_tp'];	
+			}
+			if($flat_type == 1){
+				if($owner_type=='no'){
+				$result="self_occupied";	//only owner can take this flat
+				}
+		}
+		$this->loadmodel('user_flat');
+		$conditions=array("flat"=>$flat,"owner"=>array('$ne'=>null));
+		$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions));
+		$n4 = sizeof($result_user_flat); 
+		if($n4==1){
+			$tenant=$result_user_flat[0]['user_flat']['owner'];
+			if($tenant=='yes'){
+				if($tenant==$owner_type){
+				 $result="owner_already";	
+			}
+			}else{
+				if($tenant==$owner_type){
+                 $result="tenant_already";
+				}
+			}
+		}
+        if($n4==2)
+		{
+		  $result="already_exist";	
+		}
+ 
+echo $result;
+}
+//End wing_flat_validation//
 }
 ?>

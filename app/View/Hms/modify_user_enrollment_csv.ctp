@@ -150,6 +150,56 @@ $(document).ready(function() {
 	$( "#final_import" ).click(function(){
 		var allow="yes";
 		
+		$('#report_tb tbody tr select[field=flat]').each(function(i, obj){
+			var flat=$(this).val();
+			var owner_type=$('#report_tb tbody tr:eq('+i+') select[field=owner]').val();
+			
+				if(flat==""){
+					$(this).closest('td').find(".er").remove();
+						$(this).closest('td').append('<p class="er">Required</p>');
+						allow="no";
+				}else{
+					$.ajax({
+							url:"wing_flat_validation/"+flat+"/"+owner_type, 
+							async: false,
+							success: function(data){
+							result=data;
+							}
+						});
+					if(result=='self_occupied'){
+						allow="no";
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').append('<p class="er">Flat Self Occupied</p>'); 
+					 }
+					 if(result=='owner_already'){
+						 allow="no";
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').append('<p class="er">Flat Already Exist</p>');  
+					 }
+					 if(result=='tenant_already'){
+						 allow="no";
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').append('<p class="er">Flat Already Exist</p>'); 
+					 }
+					 if(result=='already_exist'){
+						 allow="no";
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').append('<p class="er">Flat Already Exist</p>'); 
+					 }
+					 if(result=='not_match'){
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove(); 
+					 }
+				}
+		});
+		
+	alert(allow);	
+		
+		
+		
+		
+		
+		
+		
 		$('#report_tb tbody tr input[field=mobile]').each(function(i, obj){
 		var mobile=$(this).val();
 			if(mobile==""){
@@ -253,16 +303,11 @@ $(document).ready(function() {
 					$(this).closest('td').find(".er").remove();
 				}
 		});
-		$('#report_tb tbody tr select[field=flat]').each(function(i, obj){
-			var flat=$(this).val();
-				if(flat==""){
-					$(this).closest('td').find(".er").remove();
-						$(this).closest('td').append('<p class="er">Required</p>');
-					allow="no";
-				}else{
-					$(this).closest('td').find(".er").remove();
-				}
-		});
+		
+		
+		
+		
+		
 		$('#report_tb tbody tr select[field=owner]').each(function(i, obj){
 			var owner=$(this).val();
 				if(owner==""){

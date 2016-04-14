@@ -9,6 +9,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 </div>
 <style>
 table th { font-size:12px !important ; }
+.popover{ width:230px !important }
 </style>
 <script type="text/javascript">
    var xobj;
@@ -55,11 +56,7 @@ table th { font-size:12px !important ; }
 	
 <div id="st" class="h_d"> 
  </div>
-<div  class="span m-wrap popovers" data-trigger="hover" data-content="<table><tr><td>Contract Type</td><td>AMC</td></tr><tr><td>Popover body</td> <td>PPopover body goes</td></tr></table>" data-original-title="Popover header">
-view
-</div>
 
-<span style="" class="popovers" data-trigger="hover" data-content="<table><tr><td>Contract Type</td><td>AMC</td></tr><tr><td>Popover body</td> <td>PPopover body goes</td></tr></table>" data-original-title="Popover header">b</span>
 <div class="portlet box " >
 							
 							<div class="portlet-body">
@@ -67,7 +64,7 @@ view
 									<a href="service_provider_excel" class="btn blue mini"><i class="fa fa-file-excel-o"></i> </a>
 									<a class="btn green mini" onclick="window.print()"><i class="icon-print"></i>  </a>
 									</div>
-							<table class="table table-striped table-bordered" id="sample_1">
+							<table class="table table-bordered" id="sample_1">
 							<thead>
     						<tr >
                                         	
@@ -77,10 +74,8 @@ view
 								    <th>Services</th>
 									<th>Mobile</th>
 									<th>Email</th>
-                                    <th>Contract Type</th>
-                                    <th>Contract from</th>
-									<th>Contract to</th>
-                                    <th>PAN Number</th>
+                                   
+                                    <th></th>
 									<th class="hide_at_print"><span style="font-size:14px;"><i class="icon-paper-clip"></i></span></th>
                                     <?php if($role_id==1)
 									{ 
@@ -117,7 +112,7 @@ view
 						 
 						
                         ?>
-                            <tr class="odd gradeX">
+                            <tr class="">
                             <td><?php echo $z; ?></td>
                             <td><?php echo $name; ?></td>
                             <td><?php echo $contrect_person; ?></td>
@@ -157,10 +152,17 @@ view
                             </td>
                             <td><?php echo $contect; ?></td>
 							<td><?php echo $email; ?></td>
-                            <td><?php echo $Contract_type; ?></td>
-                            <td><?php echo $Contract_start; ?></td>
-                            <td><?php echo $Contract_end; ?></td>
-                            <td><?php echo $pan_number; ?></td>
+                                                   
+                            <td>
+								<span style="min-width:50px !important;" data-placement="left" class="popovers" data-trigger="hover"
+								data-content="<table border='1'>
+								<tr><td>Contract Type</td> <td><?php echo $Contract_type; ?></td></tr>
+								<tr><td>Contract from</td> <td><?php echo $Contract_start; ?></td></tr>
+								<tr><td>Contract to</td> <td><?php echo $Contract_end; ?></td></tr>
+								<tr><td>PAN Number</td> <td><?php echo $pan_number; ?></td></tr>
+								</table>" data-original-title="Detail Other Info"
+								>View detail</span>
+							</td>
                             <td class="hide_at_print">
                             <?php
                             if(!empty($attachment))
@@ -255,6 +257,8 @@ view
 	
 	<script>
 	 $(document).ready(function () {
+		  jQuery('.popovers').popover({html: true});
+		 
 	  $('.h_d').delay(10000).fadeOut();
 	 
 	

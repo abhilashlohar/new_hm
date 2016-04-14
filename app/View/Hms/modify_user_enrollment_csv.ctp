@@ -160,7 +160,45 @@ $(document).ready(function() {
 						allow="no";
 				}else{
 					$.ajax({
-							url:"wing_flat_validation/"+flat+"/"+owner_type, 
+							url:"<?php echo $webroot_path; ?>Hms/wing_flat_overlap_validation/"+flat+"/"+owner_type, 
+							async: false,
+							success: function(data){
+							result=data;
+							}
+						});
+						alert(result);
+                        if(result=='match'){
+							
+							allow="no";
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
+						$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').append('<p class="er">Flat overlap</p>'); 
+						
+						}else{
+							$('#report_tb tbody tr:eq('+i+') select[field=flat]').closest('td').find(".er").remove();
+						}
+					 
+				}
+		});
+		
+	alert(allow);	
+		
+		
+		
+		
+		
+		
+		
+		$('#report_tb tbody tr select[field=flat]').each(function(i, obj){
+			var flat=$(this).val();
+			var owner_type=$('#report_tb tbody tr:eq('+i+') select[field=owner]').val();
+			
+				if(flat==""){
+					$(this).closest('td').find(".er").remove();
+						$(this).closest('td').append('<p class="er">Required</p>');
+						allow="no";
+				}else{
+					$.ajax({
+							url:"<?php echo $webroot_path; ?>Hms/wing_flat_validation/"+flat+"/"+owner_type, 
 							async: false,
 							success: function(data){
 							result=data;
@@ -192,14 +230,6 @@ $(document).ready(function() {
 				}
 		});
 		
-	alert(allow);	
-		
-		
-		
-		
-		
-		
-		
 		$('#report_tb tbody tr input[field=mobile]').each(function(i, obj){
 		var mobile=$(this).val();
 			if(mobile==""){
@@ -207,7 +237,7 @@ $(document).ready(function() {
 			}else{
 				var result;	
 					$.ajax({
-							url:"mobile_overlap_validation/"+mobile, 
+							url:"<?php echo $webroot_path; ?>Hms/mobile_overlap_validation/"+mobile, 
 							async: false,
 							success: function(data){
 								result=data;
@@ -230,7 +260,7 @@ $(document).ready(function() {
 					}else{
 					var result;	
 					$.ajax({
-							url:"email_overlap_validation/"+email, 
+							url:"<?php echo $webroot_path; ?>Hms/email_overlap_validation/"+email, 
 							async: false,
 							success: function(data){
 								result=data;
@@ -247,14 +277,14 @@ $(document).ready(function() {
 	}); 	
 		
 		
-	/*$('#report_tb tbody tr input[field=email]').each(function(i, obj){
+	$('#report_tb tbody tr input[field=email]').each(function(i, obj){
 		var email=$(this).val();
 			if(email==""){
 				$('#report_tb tbody tr:eq('+i+') input[field=email]').closest('td').find(".er").remove();
 			}else{
 				var result;	
 					$.ajax({
-							url:"user_enrolment_validation_with_table/"+email, 
+							url:"<?php echo $webroot_path; ?>Hms/user_enrolment_validation_with_table/"+email, 
 							async: false,
 							success: function(data){
 							result=data;
@@ -277,7 +307,7 @@ $(document).ready(function() {
 			}else{
 				var result;	
 					$.ajax({
-							url:"mobile_validation_with_table/"+mobile, 
+							url:"<?php echo $webroot_path; ?>Hms/mobile_validation_with_table/"+mobile, 
 							async: false,
 							success: function(data){
 							result=data;

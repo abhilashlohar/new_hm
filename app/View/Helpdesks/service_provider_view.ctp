@@ -58,14 +58,6 @@ table th { font-size:12px !important ; }
  </div>
 
  
- <span style="min-width:50px !important; " data-placement="right" class="popovers btn mini" data-trigger="click"
-								data-content="
-								<p> <span> Contract Type </span> : <span> Amc </span></p>
-								<p> <span> Contract from </span> : <span>  01-2-2015 </span> </p>
-								<p><span> Contract to </span>  <span style='margin-left:18px;'>:  25-2-2015 </span> </p>
-								<p><span> PAN Number </span>  <span style='margin-left:6px;'>:  1234567894 </span></p>
-								" data-original-title="Other Info"
-								>detail</span>
  
 <div class="portlet box " >
 							
@@ -164,14 +156,17 @@ table th { font-size:12px !important ; }
 							<td><?php echo $email; ?></td>
                                                    
                             <td>
-								<span style="min-width:50px !important; " data-placement="left" class="popovers btn mini" data-trigger="hover"
-								data-content="<table border='1'>
-								<tr><td>Contract Type</td> <td><?php echo $Contract_type; ?></td></tr>
-								<tr><td>Contract from</td> <td><?php echo $Contract_start; ?></td></tr>
-								<tr><td>Contract to</td> <td><?php echo $Contract_end; ?></td></tr>
-								<tr><td>PAN Number</td> <td><?php echo $pan_number; ?></td></tr>
-								</table>" data-original-title="Other Info"
-								>View detail</span>
+								
+								 <span style="min-width:50px !important; " data-placement="left" class="popovers btn mini" data-trigger="hover"
+								data-content="
+								<p> <span> Contract Type </span> : <span> <?php echo $Contract_type; ?> </span></p>
+								<p> <span> Contract from </span> : <span>  <?php echo $Contract_start; ?> </span> </p>
+								<p><span> Contract to </span>  <span style='margin-left:18px;'>:  <?php echo $Contract_end; ?> </span> </p>
+								<p><span> PAN Number </span>  <span style='margin-left:6px;'>:  <?php echo $pan_number; ?> </span></p>
+								" data-original-title="Other Info"
+								>detail</span>
+								
+								
 							</td>
                             <td class="hide_at_print">
                             <?php

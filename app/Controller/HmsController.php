@@ -7471,12 +7471,13 @@ function dashboard(){
 	  $s_user_id = $this->Session->read('hm_user_id'); 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	
+	
 //replace comma in amount
 
   // $a = str_replace(',', '', $amount);
   
 //////End
-	$this->loadmodel("ledger_account");
+	/* $this->loadmodel("ledger_account");
 	$result_ledger_account=$this->ledger_account->find('all');
 	foreach($result_ledger_account as $data){
 			$auto_id=(int)$data['ledger_account']['auto_id'];
@@ -7484,6 +7485,12 @@ function dashboard(){
 			$ledger_name=trim($data['ledger_account']['ledger_name']);
 			$this->ledger_account->updateAll(array('auto_id'=>$auto_id,'group_id'=>$group_id,'ledger_name'=>$ledger_name),array('auto_id'=>$auto_id));
 	}
+		*/
+		
+	$this->loadmodel('test');
+	//$this->test->saveAll(array('auto_id'=>3,'name'=>'raju','due_amount'=>2000,'pri_amount'=>9000));
+	
+	$this->set('result_test',$this->test->find('all'));
 		
 }
 function reject_notification($id,$change)

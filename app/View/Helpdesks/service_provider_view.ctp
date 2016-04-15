@@ -9,7 +9,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 </div>
 <style>
 table th { font-size:12px !important ; }
-.popover{ width:230px !important }
+.popover{ width:204px !important }
 </style>
 <script type="text/javascript">
    var xobj;
@@ -57,6 +57,16 @@ table th { font-size:12px !important ; }
 <div id="st" class="h_d"> 
  </div>
 
+ 
+ <span style="min-width:50px !important; " data-placement="right" class="popovers btn mini" data-trigger="click"
+								data-content="
+								<p> <span> Contract Type </span> : <span> Amc </span></p>
+								<p> <span> Contract from </span> : <span>  01-2-2015 </span> </p>
+								<p><span> Contract to </span>  <span style='margin-left:18px;'>:  25-2-2015 </span> </p>
+								<p><span> PAN Number </span>  <span style='margin-left:6px;'>:  1234567894 </span></p>
+								" data-original-title="Other Info"
+								>detail</span>
+ 
 <div class="portlet box " >
 							
 							<div class="portlet-body">

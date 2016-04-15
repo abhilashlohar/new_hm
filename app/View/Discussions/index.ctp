@@ -18,7 +18,7 @@
 		<div class="span6" id="topic_detail">
 			
 		</div>
-		<div class="span3"></div>
+		
 		<div class="span3" id="topic_list">
 		<div align="center" style="color: rgb(84, 83, 83); font-weight: 600;">ALL TOPICS</div>
 		<?php foreach($posts as $post){
@@ -28,10 +28,19 @@
 			$result_count_comment=$this->requestAction(array('controller' => 'Discussions', 'action' => 'count_comment_via_discussion_post_id'), array('pass' => array($discussion_post_id)));
 			$time=$post["discussion_post"]["time"];?>
 			<div class="topic show_list" post_id="<?php echo $discussion_post_id; ?>">
-				<div align="center" style="font-size: 12px;"><?php echo $topic; ?></div>
-				<div align="center" style="font-size: 10px;"><span >(<?php echo sizeof($result_count_comment); ?> Comments ) </span><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp; <?php echo $time; ?></div>
+				<div align="left" style="font-size: 12px;"><?php echo $topic; ?></div>
+				<div align="left" style="font-size: 10px;"><span >(<?php echo sizeof($result_count_comment); ?> Comments ) </span><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp; <?php echo $time; ?></div>
 			</div>
 		<?php } ?>
+		</div>
+		<div class="span3" >
+			<div  align="center" style="color: rgb(84, 83, 83); font-weight: 600;">Photo galery to be updated</div>
+				<div class="photo_galery" style="min-height:200px;font-size:12px;">
+					<center>
+						New features coming soon...
+					</center>
+				</div>
+		
 		</div>
 	</div>
 </div>
@@ -125,6 +134,17 @@ $(document).ready(function(){
 });
 </script>
 <style>
+
+.photo_galery{
+	margin: auto auto 2px; width: 80%; border: 1px solid rgb(204, 204, 204); padding: 5px; cursor: pointer;
+}
+.photo_galery:hover{
+	border: 1px solid rgba(80, 80, 80, 0.78);
+}
+
+
+
+
 .topic{
 	margin: auto auto 2px; width: 80%; border: 1px solid rgb(204, 204, 204); padding: 5px; cursor: pointer;
 }

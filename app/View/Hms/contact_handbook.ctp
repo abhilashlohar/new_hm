@@ -341,7 +341,7 @@ $(".con_delete").click(function(){
 <div id="edit_contact">
 </div>		
 	<input type="hidden" id="new_text"value="1"	>	
-	<?php echo $this->session->read('contact_create'); ?>
+	
 <script>
 $(document).ready(function(){
 <?php 

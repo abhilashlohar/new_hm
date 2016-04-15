@@ -70,7 +70,7 @@ $wing_name = $collection['wing']['wing_name'];
 </div>
 <div class="span7">
 
-<table class="table table-striped table-bordered">
+<table class="table table-condensed table-bordered">
 <tr>
 <th style="text-align:center;">Sr #</th>
 <th style="text-align:center;">Wing Name</th>

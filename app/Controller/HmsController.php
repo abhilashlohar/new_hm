@@ -913,8 +913,8 @@ function allow_user_enrollment(){
 	 foreach($result_user_enrollment_converted as $data){
 		$email_idd=$data['user_enrollment_csv_converted']['email'];
 		$mobile_no=$data['user_enrollment_csv_converted']['mobile'];
-		$wingg=(int)$data["user_enrollment_csv_converted"]["wing"];	
-        $flatt=(int)$data["user_enrollment_csv_converted"]["flat"];		
+		$wingg=(int)$data["user_enrollment_csv_converted"]['wing'];	
+        $flatt=(int)$data["user_enrollment_csv_converted"]['flat'];		
 			if($email_idd==""){
 				}else{
 					$email_array[]=$email_idd;	
@@ -1037,7 +1037,7 @@ function allow_user_enrollment(){
 	       $wing_flat_sub_array=$wing_flat_array[$j];
 		   $wing_id_from_array=(int)$wing_flat_sub_array[0];
 		   $flat_id_from_array=(int)$wing_flat_sub_array[1];
-		   if($wing_id_from_array==$wing_idd && $flat_id_from_array==$flat_idd){
+		   if($wing_id_from_array==$wing && $flat_id_from_array==$flat){
 			 $g++;  
 		   }
 		}

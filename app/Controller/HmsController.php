@@ -903,7 +903,7 @@ function allow_user_enrollment(){
 	$this->layout=null;
 		$this->ath();
 			$s_society_id=(int)$this->Session->read('hm_society_id'); 
-	
+	$wing_flat_array=array();
 	$email_array=array();
 	$mobile_array=array();
 	$this->loadmodel('user_enrollment_csv_converted');
@@ -912,7 +912,9 @@ function allow_user_enrollment(){
 	$result_user_enrollment_converted=$this->user_enrollment_csv_converted->find('all',array('conditions'=>$conditions,'order'=>$order));
 	 foreach($result_user_enrollment_converted as $data){
 		$email_idd=$data['user_enrollment_csv_converted']['email'];
-		$mobile_no=$data['user_enrollment_csv_converted']['mobile'];		
+		$mobile_no=$data['user_enrollment_csv_converted']['mobile'];
+		$wingg=(int)$data["user_enrollment_csv_converted"]["wing"];	
+        $flatt=(int)$data["user_enrollment_csv_converted"]["flat"];		
 			if($email_idd==""){
 				}else{
 					$email_array[]=$email_idd;	
@@ -921,7 +923,7 @@ function allow_user_enrollment(){
 					}else{
 					$mobile_array[]=$mobile_no;	
 					}				
-				
+			$wing_flat_array[]=array($wingg,$flatt);	
 	 }	  
 	
 	
@@ -999,12 +1001,49 @@ function allow_user_enrollment(){
 								$empty_validate=1; 
 							}		
 		}
-		
-		
-		
-		
-		
-		
+				$this->loadmodel('flat');
+				$conditions=array("flat_id"=>$flat);
+				$result_flat=$this->flat->find('all',array('conditions'=>$conditions));
+					foreach($result_flat as $dataa){
+						$flat_type=(int)$dataa['flat']['noc_ch_tp'];	
+					}
+						if($flat_type == 1){
+							if($owner=='no'){
+								$empty_validate=1; 
+						}
+					}
+			$this->loadmodel('user_flat');
+			$conditions=array("flat"=>$flat,"owner"=>array('$ne'=>null));
+			$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions));
+				$n4 = sizeof($result_user_flat); 
+					if($n4==1){
+						$tenant=$result_user_flat[0]['user_flat']['owner'];
+							if($tenant=='yes'){
+								if($tenant==$owner){
+									$empty_validate=1; 	
+								}
+								}else{
+									if($tenant==$owner){
+										$empty_validate=1; 
+									}
+								}
+							} 
+							if($n4==2)
+							{
+							$empty_validate=1;	
+					}
+        $g=0;
+		for($j=0; $j<sizeof($wing_flat_array); $j++){
+	       $wing_flat_sub_array=$wing_flat_array[$j];
+		   $wing_id_from_array=(int)$wing_flat_sub_array[0];
+		   $flat_id_from_array=(int)$wing_flat_sub_array[1];
+		   if($wing_id_from_array==$wing_idd && $flat_id_from_array==$flat_idd){
+			 $g++;  
+		   }
+		}
+	if($g>1){
+	$empty_validate=1;		
+	} 
 	}		
 		
 $total_validation=$wing_flat+$empty_validate;	

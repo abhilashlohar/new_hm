@@ -86,7 +86,7 @@ foreach($arranged_users as $user_info){
 							else{ ?>
 								<img alt="" src="<?php echo $webroot_path; ?>profile/blank.jpg" class="profile_pic" />
 							<?php } ?>
-					<div style="float:left;margin-left:3%;margin-top: 3px;">
+					<div style="float:left;margin-left:3%;margin-top: 8px;">
 						<span style="font-size:18px;"><?php echo ucfirst($user_name); ?></span> 
 						 <br>
 						<span style="font-size:14px;"><?php echo $wing_flat; ?></span>

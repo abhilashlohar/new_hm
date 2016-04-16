@@ -25938,6 +25938,7 @@ die($output);
 //Start Function expense Tracker Add Fetch2 (Accounts)//
 function expense_tracker_fetch2($auto_id) 
 {
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 $this->loadmodel('ledger_account');
 $conditions =array('$or'=>array(array("group_id"=>$auto_id,'society_id' =>$s_society_id),array("society_id" => 0,"group_id"=>$auto_id)));
 return $this->ledger_account->find('all',array('conditions'=>$conditions));

@@ -87,20 +87,19 @@ $s_user_id = (int)$this->Session->read('hm_user_id');
 $date=date("d-m-Y");
 $excel = "Posting Date,Date of invoice,Due Date,Party account head,Invoice Reference,Expense Head,Amount of invoice, Description \n";
 
-
 	$this->loadmodel('accounts_group');
 	$conditions=array("accounts_id" => 4);
 	$result_account_group=$this->accounts_group->find('all',array('conditions'=>$conditions));
-	
-	$auto_id=$result_account_group[0]['accounts_group']['auto_id'];
+	//pr($result_account_group); 
+	 $auto_id=$result_account_group[0]['accounts_group']['auto_id']; 
 	$result_ledger_account= $this->requestAction(array('controller' => 'hms', 'action' => 'expense_tracker_fetch2'),array('pass'=>array($auto_id)));
 	
-	$expense_head=$result_ledger_account[0]['ledger_account']['ledger_name'];
+	$expense_head=@$result_ledger_account[0]['ledger_account']['ledger_name']; 
 	$this->loadmodel('ledger_sub_account');
 	
 	$conditions=array("ledger_id" => 15,"society_id"=>$s_society_id);
 	$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-	$party_ac_head=$result_ledger_sub_account[0]['ledger_sub_account']['name'];
+	$party_ac_head=@$result_ledger_sub_account[0]['ledger_sub_account']['name'];
 
 
 $excel.="".$date.",".$date.",".$date.",".$party_ac_head.",test,".$expense_head.",100,description";

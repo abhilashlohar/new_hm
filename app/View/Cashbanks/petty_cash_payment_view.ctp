@@ -78,7 +78,7 @@ $(document).ready(function() {
 	time: '10000',
 	});
 	<?php
-	//$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('petty_cash_payment')));
+	$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('petty_cash_payment')));
 	} ?>
 	});
 </script>  

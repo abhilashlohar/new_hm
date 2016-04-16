@@ -17,21 +17,16 @@ $tooo_dattt = $maturity_date;
 }
 
 
-$dat_toooo = date('d-m-Y',($tooo_dattt))
+$dat_toooo = date('d-m-Y',(@$tooo_dattt))
 
 ?>
 
 
 <div class="hide_at_print">
 <?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
+echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
-<script>
-$(document).ready(function() {
-$("#fix<?php echo $id_current_page; ?>").removeClass("blue");
-$("#fix<?php echo $id_current_page; ?>").addClass("red");
-});
-</script>    
+   
 <center>
 <a href="<?php echo $webroot_path; ?>Cashbanks/fix_deposit_add" class="btn" rel='tab'>Add</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/fix_deposit_view" class="btn yellow" rel='tab'>Active Deposits</a>

@@ -73,12 +73,12 @@ $(document).ready(function() {
 	?>
 	$.gritter.add({
 	title: 'Petty Cash Payment Voucher',
-	text: '<p>Petty cash payment voucher <?php echo $voucher[1]; ?> is generated successfully</p>',
+	text: '<p>Voucher <?php echo $voucher[1]; ?> is generated successfully</p>',
 	sticky: false,
 	time: '10000',
 	});
 	<?php
-	//$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('petty_cash_payment')));
+	$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('petty_cash_payment')));
 	} ?>
 	});
 </script>  

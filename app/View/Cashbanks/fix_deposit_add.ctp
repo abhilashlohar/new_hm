@@ -124,7 +124,7 @@ $default_date = date('d-m-Y');
      </td>
 			
 			
-			<td style="border:solid 1px blue;">
+			<td style="border:solid 1px blue;vertical-align:middle" >
 			<a class="btn green mini adrww" onclick="fix_deposit_add_row()"><i class="icon-plus"></i></a><br>
 			</td>
 </tr>	 
@@ -254,14 +254,15 @@ $(document).ready(function(){
 </div> 	
 <script>
 $(document).ready(function() {
-<?php	
-$status5=(int)$this->Session->read('fix_ddd');
+<?php
+$vouchar=$this->Session->read('fix_ddd');
+$status5=(int)$vouchar[0];
 if($status5==1)
 {
 ?>
 $.gritter.add({
-title: 'Sucess',
-text: '<p>Fixed Deposit generated successfully.</p>',
+title: 'Fixed Deposit',
+text: '<p>Voucher <?php echo $vouchar[1]; ?> is generated successfully.</p>',
 sticky: false,
 time: '10000',
 });

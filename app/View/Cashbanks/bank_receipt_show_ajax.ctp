@@ -24,7 +24,7 @@
 					<th>Instrument/UTR</th>
 					<th>Narration</th>
 					<th>Amount</th>
-					<th></th>
+					<th class="hide_at_print"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -89,7 +89,7 @@
 					<td><?php echo $cheque_number; ?></td>
 					<td><?php echo $narration; ?></td>
 					<td style="text-align: right;"><?php $amount_for_view=number_format($amount); echo $amount_for_view; ?></td>
-					<td>
+					<td class="hide_at_print">
 						<div class="btn-group" style="margin: 0px !important;">
 							<a class="btn blue mini" href="#" data-toggle="dropdown">
 							<i class="icon-chevron-down"></i>	

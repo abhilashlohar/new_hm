@@ -369,20 +369,6 @@ $('input[name="transaction_date[]"]').die().live("keyup blur",function(){
 	
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
 <script>
 $(document).ready(function() {

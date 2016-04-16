@@ -124,7 +124,7 @@ $(document).ready(function() {
 	?>
 	$.gritter.add({
 	title: 'Bank Payment Voucher',
-	text: '<p>Bank payment voucher <?php echo $voucher[1]; ?> is generated successfully.</p>',
+	text: '<p>Voucher <?php echo $voucher[1]; ?> is generated successfully.</p>',
 	sticky: false,
 	time: '10000',
 	});

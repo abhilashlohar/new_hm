@@ -3239,8 +3239,17 @@ $multipleRowData = Array( Array("transaction_id" => $l,"receipt_id"=>$re_id,"ban
 $this->fix_deposit->saveAll($multipleRowData);
 }
 
+$first=reset($rr);
+$last=end($rr);
 
-$this->Session->write('fix_ddd',1);
+if($first!=$last){
+	$show_vouchar=$first.' to '.$last;
+}else{
+	$show_vouchar=$first;
+}
+$show_vouch=array(1,$show_vouchar);
+
+$this->Session->write('fix_ddd',$show_vouch);
 
 $rrr = implode(',',$rr);
 
@@ -3318,9 +3327,9 @@ function fix_deposit_excel()
 $this->layout="";
 $this->ath();
 
-$s_society_id = (int)$this->Session->read('society_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
 $s_role_id= (int)$this->Session->read('role_id');
-$s_user_id= (int)$this->Session->read('user_id');
+$s_user_id= (int)$this->Session->read('hm_user_id');
 
 $this->loadmodel('society');
 $conditions=array("society_id" => $s_society_id);
@@ -3342,10 +3351,6 @@ header ("Pragma: no-cache");
 header ("Content-type: application/vnd.ms-excel");
 header ("Content-Disposition: attachment; filename=".$filename.".xls");
 header ("Content-Description: Generated Report" );
-
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id = (int)$this->Session->read('user_id');	
 
 $currr_datee = date('d-M-Y');
 
@@ -5367,7 +5372,7 @@ function new_bank_receipt(){
 					$auto_id=$this->autoincrement('cash_bank','auto_id');
 					$receipt_number=$this->autoincrement_with_society_ticket('cash_bank','receipt_number');
 					$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id, "transaction_date" => strtotime($transaction_date),"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$received_from,"ledger_sub_account_id"=>$ledger_sub_account_id_for_insertion,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number,"bill_reference"=>$bill_reference,"created_on"=>$created_on))); 
-					
+					$receipt_array_num[]=$receipt_number;
 					
 					$this->loadmodel('ledger');
 					$ledger_id=$this->autoincrement('ledger','auto_id');
@@ -5567,8 +5572,19 @@ function new_bank_receipt(){
 				
 				
 			$i++; }
+		//vochar code
+		
+			$first=reset($receipt_array_num);
+			$last=end($receipt_array_num);
+			if($first!=$last){
+				$show_vouchar=$first.' to '.$last;
+			}else{
 				
-			$this->Session->write('bank_receipt', 1);
+				$show_vouchar=$first;
+			}
+			$show_vouch=array(1,$show_vouchar);
+		///	
+			$this->Session->write('bank_receipt', $show_vouch);
 		}
 	
 }

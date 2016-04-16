@@ -3247,8 +3247,9 @@ if($first!=$last){
 }else{
 	$show_vouchar=$first;
 }
+$show_vouch=array(1,$show_vouchar);
 
-$this->Session->write('fix_ddd',1);
+$this->Session->write('fix_ddd',$show_vouch);
 
 $rrr = implode(',',$rr);
 
@@ -3326,9 +3327,9 @@ function fix_deposit_excel()
 $this->layout="";
 $this->ath();
 
-$s_society_id = (int)$this->Session->read('society_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
 $s_role_id= (int)$this->Session->read('role_id');
-$s_user_id= (int)$this->Session->read('user_id');
+$s_user_id= (int)$this->Session->read('hm_user_id');
 
 $this->loadmodel('society');
 $conditions=array("society_id" => $s_society_id);
@@ -3350,10 +3351,6 @@ header ("Pragma: no-cache");
 header ("Content-type: application/vnd.ms-excel");
 header ("Content-Disposition: attachment; filename=".$filename.".xls");
 header ("Content-Description: Generated Report" );
-
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id = (int)$this->Session->read('user_id');	
 
 $currr_datee = date('d-M-Y');
 

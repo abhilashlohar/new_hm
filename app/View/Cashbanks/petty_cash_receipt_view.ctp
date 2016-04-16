@@ -58,7 +58,7 @@ $(document).ready(function() {
 	?>
 	$.gritter.add({
 	title: 'Petty Cash Voucher',
-	text: '<p>Petty cash voucher <?php echo $voucher[1]; ?> is generated successfully.</p>',
+	text: '<p>Voucher <?php echo $voucher[1]; ?> is generated successfully.</p>',
 	sticky: false,
 	time: '10000',
 	});

@@ -302,14 +302,15 @@ $(document).ready(function(){
 </script>
 <script>
 $(document).ready(function() {
-	<?php	
-	$bank_receipt=(int)$this->Session->read('bank_receipt');
+	<?php
+	$vouchar=$this->Session->read('bank_receipt');	
+	$bank_receipt=(int)$vouchar[0];
 	if($bank_receipt==1)
 	{
 	?>
 	$.gritter.add({
-	title: 'Success',
-	text: '<p>Receipts generated sucessfully.</p>',
+	title: 'Bank Receipt Voucher',
+	text: '<p>Voucher <?php echo $vouchar[1]; ?> is generated sucessfully.</p>',
 	sticky: false,
 	time: '10000',
 	});

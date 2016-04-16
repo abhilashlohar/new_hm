@@ -1063,11 +1063,21 @@ $this->loadmodel('financial_year');
 			$this->ledger->saveAll($multipleRowData); 			
 		}						   
 		$n++;	
-	}		
+	}	
+/// voucher code
+    $first = reset($receipt_array);
+    $last = end($receipt_array);
+   if($first!=$last){
+	 $show_voucher=$first.' to '.$last; 
+  }else{
+	  $show_voucher=$first;
+  }
+////  
 
- $this->Session->write('bank_payment', 1);
-$this->redirect(array('controller' => 'Cashbanks','action' => 'bank_payment_view'));
-	}
+	$show_vouch=array(1,$show_voucher);
+	$this->Session->write('bank_payment', $show_vouch);
+	$this->redirect(array('controller' => 'Cashbanks','action' => 'bank_payment_view'));
+}
 
 $this->loadmodel('ledger_sub_account');
 $conditions=array("ledger_id" => 15,"society_id"=>$s_society_id);
@@ -1328,9 +1338,20 @@ $multipleRowData = Array( Array("auto_id"=>$l,"transaction_date"=>strtotime($tra
 $this->ledger->saveAll($multipleRowData);
 $n++;
 }
-$receipt_array_for_view=implode(',',$receipt_array);
+//$receipt_array_for_view=implode(',',$receipt_array);
 
-$this->Session->write('petty_cash_receipt',1);
+ $first=reset($receipt_array);
+ $last=end($receipt_array);
+
+if($first!=$last){
+	$show_voucher=$first.' to '.$last;	
+}else{
+	$show_voucher=$first;	
+}
+
+$show_vouch=array(1,$show_voucher);
+
+$this->Session->write('petty_cash_receipt',$show_vouch);
 $this->redirect(array('controller' => 'Cashbanks','action'=>'petty_cash_receipt_view'));
 }		
 
@@ -1613,8 +1634,16 @@ $this->set('cursor2',$cursor2);
 	$this->ledger->saveAll($multipleRowData);			
 	$n++;		
 	}
-	$receipt_array_for_view=implode(',',$receipt_array);
-	$this->Session->write('petty_cash_payment', 1);
+	//$receipt_array_for_view=implode(',',$receipt_array);
+	$first=reset($receipt_array);
+	$last=end($receipt_array);
+	if($first!=$last){
+		$show_vouchar=$first.' to '.$last;
+	}else{
+		$show_vouchar=$first;
+	}
+	$show_vouch=array(1,$show_vouchar);
+	$this->Session->write('petty_cash_payment', $show_vouch);
 	$this->redirect(array('controller' => 'Cashbanks','action'=>'petty_cash_payment_view'));
 	}
 }

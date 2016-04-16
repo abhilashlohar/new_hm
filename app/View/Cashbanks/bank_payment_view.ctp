@@ -117,13 +117,14 @@ $this->requestAction(array('controller' => 'hms', 'action' => 'griter_notificati
  <script>
 $(document).ready(function() {
 	<?php	
-	$bank_receipt=(int)$this->Session->read('bank_payment');
+	$voucher=$this->Session->read('bank_payment');
+	$bank_receipt=(int)$voucher[0];
 	if($bank_receipt==1)
 	{
 	?>
 	$.gritter.add({
-	title: 'Success',
-	text: '<p>Vouchers generated sucessfully.</p>',
+	title: 'Bank Payment Voucher',
+	text: '<p>Bank payment voucher <?php echo $voucher[1]; ?> is generated successfully.</p>',
 	sticky: false,
 	time: '10000',
 	});

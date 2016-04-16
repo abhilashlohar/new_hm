@@ -45,7 +45,6 @@ $b_date = date('1-m-Y');
 </div>
 </center>
 
-
 <script>
 $(document).ready(function() {
 	$("#go").bind('click',function(){
@@ -66,19 +65,20 @@ $(document).ready(function() {
 
 <script>
 $(document).ready(function() {
-	<?php	
-	$petty_cash_payment=(int)$this->Session->read('petty_cash_payment');
+	<?php
+	$voucher=$this->Session->read('petty_cash_payment');
+	$petty_cash_payment=(int)$voucher[0];
 	if($petty_cash_payment==1)
 	{
 	?>
 	$.gritter.add({
-	title: 'Success',
-	text: '<p>Vouchers generated sucessfully.</p>',
+	title: 'Petty Cash Payment Voucher',
+	text: '<p>Petty cash payment voucher <?php echo $voucher[1]; ?> is generated successfully</p>',
 	sticky: false,
 	time: '10000',
 	});
 	<?php
-	$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('petty_cash_payment')));
+	//$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('petty_cash_payment')));
 	} ?>
 	});
 </script>  

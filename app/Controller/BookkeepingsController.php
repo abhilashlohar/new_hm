@@ -766,8 +766,8 @@ $ledger_sub_account2=null;
 		
 
 ////////////////////////////////////////////////////////////////
-
-$this->Session->write('journll',1);
+$show_vouchar=array(1,$voucher_id);
+$this->Session->write('journll',$show_vouchar);
 
 $output = json_encode(array('type'=>'succ', 'text' => 'Journal voucher '.$voucher_id.' is generated successfully.'));
     die($output);

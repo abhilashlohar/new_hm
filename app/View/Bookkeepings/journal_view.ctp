@@ -42,7 +42,7 @@ $b_date = date('1-m-Y');
             </form>
             </div>
 </center>			
- 
+
  <div id="result" style="width:100%;">
  </div>
 
@@ -83,13 +83,14 @@ $("#result").html('<div align="center" style="padding:10px;"><img src="<?php ech
 <script>
 $(document).ready(function() {
 <?php	
-$status5=(int)$this->Session->read('journll');
+ $voucher=$this->Session->read('journll');
+$status5=(int)$voucher[0];
 if($status5==1)
 {
 ?>
 $.gritter.add({
-title: 'Sccess',
-text: '<p>Journals generated successfully.</p>',
+title: 'Journal voucher',
+text: '<p>Journal voucher <?php echo $voucher[1]; ?>  is generated successfully.</p>',
 sticky: false,
 time: '10000',
 });

@@ -51,13 +51,14 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
 	<?php	
-	$petty_cash_receipt=(int)$this->Session->read('petty_cash_receipt');
+	$voucher=$this->Session->read('petty_cash_receipt');
+	$petty_cash_receipt=(int)$voucher[0];
 	if($petty_cash_receipt==1)
 	{
 	?>
 	$.gritter.add({
-	title: 'Success',
-	text: '<p>Receipts generated sucessfully.</p>',
+	title: 'Petty Cash Voucher',
+	text: '<p>Petty cash voucher <?php echo $voucher[1]; ?> is generated successfully.</p>',
 	sticky: false,
 	time: '10000',
 	});
@@ -82,7 +83,7 @@ $(document).ready(function() {
 	time: '10000',
 	});
 	<?php
-	$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('petty_cash_receipt_update')));
+	//$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('petty_cash_receipt_update')));
 	} ?>
 	});
 </script>            

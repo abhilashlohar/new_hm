@@ -56,8 +56,6 @@ table th { font-size:12px !important ; }
 	
 <div id="st" class="h_d"> 
  </div>
-
- 
  
 <div class="portlet box " >
 							

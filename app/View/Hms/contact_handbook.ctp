@@ -81,7 +81,7 @@ background-color:rgb(218, 236, 240);
 <div id="all_dir">
 
 
-<div id="view_search" >
+<div id="view_search">
 
  <?php
 			foreach ($result_contact_handbook as $collection)            
@@ -115,7 +115,7 @@ foreach($flat_info as $wing_flat){
 		<div style="float:left;margin-left:3%;"  >
 
 			<i class="icon-user"></i> &nbsp; <span style="font-size:16px;"><?php echo $name; ?></span><br/>
-			<i class=" icon-wrench"></i> &nbsp; <span style="font-size:14px;">Services :<span class=" tooltips" data-placement="top" data-original-title="<?php echo $service_name ; ?>">  <i class=" icon-search"></i></span> </span><br/>
+			<i class=" icon-wrench"></i> &nbsp; <span style="font-size:14px;">Services :<span style="display:none;"><?php echo $service_name ; ?></span><span class=" tooltips" data-placement="top" data-original-title="<?php echo $service_name ; ?>">  <i class=" icon-search"></i></span> </span><br/>
 			<i class="icon-phone-sign"></i> &nbsp; <span style="font-size:14px;"><?php echo $mobile ; ?></span><br/>
 			<i class="icon-envelope-alt"></i> &nbsp; <span style="font-size:14px;"><a style="text-decoration: blink;" href="mailto:<?php echo $email ; ?>"><?php echo $email ; ?></a></span><br/>
 			<i class="icon-sitemap"></i> &nbsp; <span style="font-size:14px;"><a href='<?php echo $web ; ?>' target="_blank"> <?php echo $web ; ?></a></span><br/>

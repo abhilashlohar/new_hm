@@ -21787,8 +21787,21 @@ $this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 15,
 "table_name"=>"fix_asset","element_id"=>$fix_asset_id,"society_id"=>$s_society_id,
 "transaction_date"=>strtotime($purchase_date2)));
 
-$this->Session->write('fix_asst',1);
 }
+
+
+		$voc=sizeof($rrrr);
+		if($voc>1){
+			$first = reset($rrrr);
+			$last = end($rrrr);
+			$voucher=$first.' to '.$last;
+		}else{
+			$voucher= $first = reset($rrrr);	
+		}
+		
+		$show_vouc=array(1,$voucher);
+
+$this->Session->write('fix_asst',$show_vouc);
 $fix_receipt_id = implode(',',$rrrr);
 
 $output=json_encode(array('type'=>'success','text'=>'Fixed Asset Voucher No. #'.$fix_receipt_id.' is generated successfully'));

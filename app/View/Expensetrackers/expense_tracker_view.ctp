@@ -66,13 +66,14 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
 <?php	
-$status5=(int)$this->Session->read('exp_ttt');
+$voucher=$this->Session->read('exp_ttt');
+$status5=(int)$voucher[0];
 if($status5==1)
 {
 ?>
 $.gritter.add({
 title: 'Expense Tracker',
-text: '<p>Thank you.</p><p>Expense Tracker generated successfully.</p>',
+text: '<p>voucher <?php echo $voucher[1]; ?> is generated successfully.</p>',
 sticky: false,
 time: '10000',
 });

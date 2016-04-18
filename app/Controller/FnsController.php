@@ -950,5 +950,11 @@ function sending_option_results($send_to=null,$details=null){
 	return $arranged_array;
 }
 
+function check_wing_can_delete_or_not($wing_id=null){
+	$this->loadmodel('flat');
+	$conditions=array("wing_id"=>(int)$wing_id);
+	return $this->flat->find('count',array('conditions'=>$conditions));
+}
+
 }
 ?>

@@ -40,11 +40,12 @@ Society Setup
 
 
 
-<table class="table table-striped table-bordered" id="sample_2" style="width:100%;">
+<table class="table table-striped table-bordered"  style="width:100%;">
 <thead>
 <tr>
 <th>Sr No.</th>
 <th>Wing-Name</th>
+<th></th>
 </tr>
 </thead>
 <tbody>
@@ -56,11 +57,13 @@ foreach ($user_wing as $collection)
 {
 $q++;
 $wing_name=$collection['wing']['wing_name'];
+$wing_id=$collection['wing']['wing_id'];
+$count = $this->requestAction(array('controller' => 'Fns', 'action' => 'check_wing_can_delete_or_not'),array('pass'=>array($wing_id)));
 ?>
-<tr class="odd gradeX">
+<tr >
 <td><?php echo $q; ?></td>
 <td><?php echo $wing_name; ?></td>
-<td><a href="#" class="btn mini red"><i class="icon-trash"></i></a></td>
+<td><?php if($count==0){ echo'<a href="'.$webroot_path.'Hms/delete_wing/'.$wing_id.'" class="btn mini red"><i class="icon-trash"></i></a>'; } ?></td>
 </tr>
 <?php } ?>
 </tbody>

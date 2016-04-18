@@ -21133,6 +21133,17 @@ $this->set('user_wing',$result);
 
 
 }
+
+function delete_wing($wing_id=null){
+	$this->loadmodel('flat');
+	$conditions=array("wing_id"=>(int)$wing_id);
+	$count= $this->flat->find('count',array('conditions'=>$conditions));
+	if($count==0){
+		$this->loadmodel('wing');
+		$this->wing->deleteAll(array("wing_id" => (int)$wing_id));
+	}
+	$this->redirect(array('action' => 'master_sm_wing'));
+}
  /////////////////////////////////////////// End Master Sm wing ////////////////////////////////////////////////// 
 
 

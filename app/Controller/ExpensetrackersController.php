@@ -379,7 +379,9 @@ foreach($myArray as $child){
 		$voucher= $first = reset($voucher_num);	
 		}
 		
-$this->Session->write('exp_ttt',1);		
+		$show_vouc=array(1,$voucher);
+		
+$this->Session->write('exp_ttt',$show_vouc);		
 		
 $output=json_encode(array('report_type'=>'submit','text'=>'Expense voucher '.$voucher.' is generated successfully.'));
 die($output);

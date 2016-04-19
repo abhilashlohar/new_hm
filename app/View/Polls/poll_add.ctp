@@ -16,7 +16,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 		<div class="control-group">
 		  <label class="control-label">Question</label>
 		  <div class="controls">
-			 <input type="text" class="span12 m-wrap" name="question" e_id="question" placeholder="Type a question here..." >
+			 <input type="text" class="span12 m-wrap" name="question" id="question" placeholder="Type a question here..." >
 			<label id="question"></label>
 		  </div>
 		</div>
@@ -201,7 +201,7 @@ $(document).ready(function() {
 	
 		inc++;
 		$("#choice_text_box1").val(inc);
-		$("#choice_div").append('<div class="controls" e_id=tax'+inc+'><input name=choice'+inc+' type="text" class="span10 m-wrap" placeholder='+inc+'></div>');
+		$("#choice_div").append('<div class="controls" id=tax'+inc+'><input name=choice'+inc+' type="text" class="span10 m-wrap" placeholder='+inc+'></div>');
 	 });
 	 
 	 $("#remove1").bind('click',function(){

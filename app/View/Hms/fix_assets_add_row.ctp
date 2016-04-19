@@ -109,7 +109,7 @@ $default_date = date('d-m-Y');
 
          </table>
 </td>
-<td style="border:solid 1px blue">
+<td style="border:solid 1px blue;vertical-align:middle;">
 <a class="btn green mini adrww" onclick="add_rowwss()"><i class="icon-plus"></i></a><br>
 <a  class="btn red mini" onclick="delete_row(<?php echo $count; ?>)"><i class=" icon-remove"></i></a><br>
 </td>

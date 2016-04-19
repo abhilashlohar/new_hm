@@ -117,12 +117,15 @@ move_uploaded_file(@$this->request->form['file']['tmp_name'],@$target);
 
 if($visible=='all_users'){	
 $sub_visible=0;
+$sub_visible_implode=0;
 }
 if($visible=='role_wise'){	
 $sub_visible=$this->request->data['roles'];
+$sub_visible_implode=implode(',',$sub_visible);
 }
 if($visible=='wing_wise'){
 $sub_visible=$this->request->data['wings'];
+$sub_visible_implode=implode(',',$sub_visible);
 }
 $result_user=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'),array('pass'=>array((int)$s_user_id)));
 foreach($result_user as $data){
@@ -131,7 +134,7 @@ foreach($result_user as $data){
 	  @$c_user_name=@$data['user']['user_name'];
 }
 
-$sub_visible_implode=implode(',',$sub_visible);
+
 $recieve_info=$this->requestAction(array('controller'=>'Fns','action'=>'sending_option_results'), array('pass' => array($visible,$sub_visible_implode)));
 
 $user_id_array=array();

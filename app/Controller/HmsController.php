@@ -981,7 +981,12 @@ function allow_user_enrollment(){
 			}
              if($mobile=="")
 			 {}else{
-						
+				
+					if(is_numeric($mobile)){ 
+					}else{
+					$empty_validate=1;	
+					} 
+				
 				$this->loadmodel('user');
 					$result_user=$this->user->find('all');
 						foreach($result_user as $dataa){
@@ -21133,6 +21138,17 @@ $this->set('user_wing',$result);
 
 
 }
+
+function delete_wing($wing_id=null){
+	$this->loadmodel('flat');
+	$conditions=array("wing_id"=>(int)$wing_id);
+	$count= $this->flat->find('count',array('conditions'=>$conditions));
+	if($count==0){
+		$this->loadmodel('wing');
+		$this->wing->deleteAll(array("wing_id" => (int)$wing_id));
+	}
+	$this->redirect(array('action' => 'master_sm_wing'));
+}
  /////////////////////////////////////////// End Master Sm wing ////////////////////////////////////////////////// 
 
 
@@ -21776,8 +21792,21 @@ $this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 15,
 "table_name"=>"fix_asset","element_id"=>$fix_asset_id,"society_id"=>$s_society_id,
 "transaction_date"=>strtotime($purchase_date2)));
 
-$this->Session->write('fix_asst',1);
 }
+
+
+		$voc=sizeof($rrrr);
+		if($voc>1){
+			$first = reset($rrrr);
+			$last = end($rrrr);
+			$voucher=$first.' to '.$last;
+		}else{
+			$voucher= $first = reset($rrrr);	
+		}
+		
+		$show_vouc=array(1,$voucher);
+
+$this->Session->write('fix_asst',$show_vouc);
 $fix_receipt_id = implode(',',$rrrr);
 
 $output=json_encode(array('type'=>'success','text'=>'Fixed Asset Voucher No. #'.$fix_receipt_id.' is generated successfully'));
@@ -28096,7 +28125,13 @@ $result="not_match";
 		}	
   if($n>1){
 	 $result="match_overlap"; 
-  }		
+  }
+
+		 if(is_numeric($mobile)){ 
+		 } 
+         else{
+			 $result="not_numeric";  
+		 }       
 		
 echo $result;	
 }

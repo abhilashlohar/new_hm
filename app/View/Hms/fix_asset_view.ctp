@@ -156,14 +156,15 @@ $this->requestAction(array('controller' => 'hms', 'action' => 'griter_notificati
  
  <script>
 $(document).ready(function() {
-<?php	
-$status5=(int)$this->Session->read('fix_asst');
+<?php
+$voucher=$this->Session->read('fix_asst');	
+$status5=(int)$voucher[0];
 if($status5==1)
 {
 ?>
 $.gritter.add({
 title: 'Fixed Assets',
-text: '<p>Thank you.</p><p>The Fixed Assets generated successfully.</p>',
+text: '<p>Voucher <?php echo $voucher[1]; ?> is generated successfully.</p>',
 sticky: false,
 time: '10000',
 });

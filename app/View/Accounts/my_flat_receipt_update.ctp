@@ -113,7 +113,7 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 				    </td>
 										 
 					<td>
-			<?php if(sizeof($members_for_billing)>1){ ?>
+			<?php if(sizeof(@$members_for_billing)>1){ ?>
 			<select name="ledger_sub_account[]" class="m-wrap" style="width:200px;">
 			<option value="" style="display:none;">--member--</option>
 			<?php foreach($members_for_billing as $ledger_sub_account_id){
@@ -122,7 +122,7 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 			} ?>
 			</select>  
 			<?php } ?>		
-			<?php if(sizeof($members_for_billing)==1){ ?>
+			<?php if(sizeof(@$members_for_billing)==1){ ?>
 			<select name="ledger_sub_account[]" class="m-wrap" style="width:200px;" disabled="disabled">
 			<option value="" style="display:none;">--member--</option>
 			<?php foreach($members_for_billing as $ledger_sub_account_id){

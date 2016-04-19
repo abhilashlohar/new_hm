@@ -196,6 +196,6 @@ foreach($result_account_group as $data){
                     </td>
                     <td style="border:solid 1px blue;vertical-align: middle;">
 <a class="btn green mini adrww" onclick="add_rowwwww()"><i class="icon-plus"></i></a><br>
-<a  class="btn red mini" onclick="delete_row(<?php echo $count; ?>)"><i class=" icon-remove"></i></a><br>
+<a  class="btn mini" onclick="delete_row(<?php echo $count; ?>)"><i class="icon-trash"></i></a><br>
 </td>
 </tr>

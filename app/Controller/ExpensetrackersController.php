@@ -685,16 +685,13 @@ $this->layout='blank';
 						die($output);
 				}
 	
-	if(empty($child[2])){
-					
-						$output=json_encode(array('report_type'=>'error','text'=>'Due Date is Required'));
-						die($output);
-				}
+	
 	
 	
 	
 	$invoice_date = $child[1];
 	$due_date = $child[2];
+	if(!empty($due_date)){
 	$invoice_date = date('Y-m-d',strtotime($invoice_date));
 	$due_date = date('Y-m-d',strtotime($due_date));
 	$invoice_date = strtotime($invoice_date);
@@ -705,7 +702,7 @@ $this->layout='blank';
 	$output=json_encode(array('report_type'=>'error','text'=>'Due Date should be Greater Than Invoice date'));
 	die($output);	
 	}
-	
+	}
 	
 	
 	
@@ -779,15 +776,15 @@ foreach($myArray as $child){
 		$description = $child[7];
 	   $auto_id = (int)$child[8];
 			
-		///////////// add Expense tracker code /////////////////////
+		
 		
 
 			
-///////////////////////////// End ///////////////////////////////////
+
 $this->loadmodel('expense_tracker');
 $this->expense_tracker->updateAll(array('posting_date'=>$posting_date,'due_date'=>$payment_due_date,'date_of_invoice'=>$date_of_invoice,'expense_head'=>$expense_head,'invoice_reference'=>$invoice_ref,'party_ac_head'=>$part_ac,'ammount_of_invoice'=>$amt_inv,'description'=>$description),array("society_id" => (int)$s_society_id, "expense_tracker_id" => (int)$auto_id));	
 			
-///////////// Start Ledger Code ////////////////////////////////////////////////
+
 			
 			
 $this->loadmodel('ledger');

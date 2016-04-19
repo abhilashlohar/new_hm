@@ -1897,7 +1897,7 @@ function b_receipt_edit($transaction_id=null){
 	$this->set(compact("non_members"));
 	
 	$this->loadmodel('cash_bank');
-	$conditions=array("auto_id"=>(int)$transaction_id,"society_id"=>$s_society_id);
+	$conditions=array("transaction_id"=>(int)$transaction_id,"society_id"=>$s_society_id);
 	$cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions));
 	$this->set('cursor1',$cursor1);
 	foreach($cursor1 as $receipt_data){
@@ -5369,9 +5369,9 @@ function new_bank_receipt(){
 				$cheque_date=$date;
 				
 					$this->loadmodel('cash_bank');
-					$auto_id=$this->autoincrement('cash_bank','auto_id');
+					$auto_id=$this->autoincrement('cash_bank','transaction_id');
 					$receipt_number=$this->autoincrement_with_society_ticket('cash_bank','receipt_number');
-					$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id, "transaction_date" => strtotime($transaction_date),"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$received_from,"ledger_sub_account_id"=>$ledger_sub_account_id_for_insertion,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number,"bill_reference"=>$bill_reference,"created_on"=>$created_on))); 
+					$this->cash_bank->saveAll(Array( Array("transaction_id"=>$auto_id, "transaction_date" => strtotime($transaction_date),"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$received_from,"ledger_sub_account_id"=>$ledger_sub_account_id_for_insertion,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number,"bill_reference"=>$bill_reference,"created_on"=>$created_on))); 
 					$receipt_array_num[]=$receipt_number;
 					
 					$this->loadmodel('ledger');

@@ -88,7 +88,7 @@ $prepaired_by_name=$result_user[0]['user']['user_name'];
 <td><?php echo $invoice_reference; ?></td>
 <td><?php echo $ledger_name; ?></td>
 <td><?php echo $description; ?></td>
-<td align="right"><?php echo $ammount_of_invoice; ?> <?php $total+=$ammount_of_invoice ; ?></td>
+<td style="text-align:right;"><?php echo $ammount_of_invoice; ?> <?php $total+=$ammount_of_invoice ; ?></td>
 <td class="hide_at_print">
 
 <div class="btn-group">

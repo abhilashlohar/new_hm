@@ -222,6 +222,41 @@ $(document).ready(function(){
 			}
 		});
 		
+	$('#main tbody tr select[name="receipt_mode[]"]').die().each(function(i, obj){
+		var mode=$(this).val();
+		  var cheque_number=$(this).closest('td').find('input[name="cheque_number[]"]').val();
+			var date=$(this).closest('td').find('input[name="date[]"]').val();
+		if(mode=="cheque"){
+		var drawn=$(this).closest('td').find('input[name="drown_in_which_bank[]"]').val();
+			var branch=$(this).closest('td').find('input[name="branch_of_bank[]"]').val();	
+			if(cheque_number=="" || date=="" || drawn=="" || branch==""){
+			 $(this).closest('td').find(".er").remove();
+			  $(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}			
+		}else{
+			if(cheque_number=="" || date==""){
+			$(this).closest('td').find(".er").remove();
+			  $(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		}
+			
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		  if(allow=="no"){
 				e.preventDefault();
 			}

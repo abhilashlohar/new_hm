@@ -248,6 +248,8 @@ var allow="yes";
 			
 		});
   
+ 
+  
       	
    $('#main tbody tr select[name="bank_account[]"]').die().each(function(i, obj){
 			var deposited_in=$(this).val();

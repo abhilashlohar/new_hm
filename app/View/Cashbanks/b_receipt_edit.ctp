@@ -53,10 +53,7 @@ $narration = @$data["cash_bank"]["narration"];
 	<h4 class="block"><i class="icon-reorder"></i>Edit Receipt - <?php echo $receipt_id; ?></h4>
 	</div>
 	<div class="portlet-body form">
-
-
-
-<div class="row-fluid">
+	<div class="row-fluid">
 
 	
 	

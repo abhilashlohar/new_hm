@@ -163,19 +163,14 @@ $creater_name = @$user_detailll['user']['user_name'];
 		
 		}
 		}
-		
-		
-		
 		if($table_name=="cash_bank"){
-			
-			$element_id=$element_id;
+				$element_id=$element_id;
+			$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array((int)$element_id)));
+			$receipt_source = $result_cash_bank[0]["cash_bank"]["source"];  
 	
-	$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array($element_id)));
-	$receipt_source = $result_cash_bank[0]["cash_bank"]["source"];  
-	if($receipt_source == "bank_receipt")
-	{
+	if($receipt_source == "bank_receipt"){
 	$source="Receipt";
-	$trans_id = (int)$result_cash_bank[0]["cash_bank"]["auto_id"]; 
+	$trans_id = (int)$result_cash_bank[0]["cash_bank"]["transaction_id"]; 
 	$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_number"]; 
 	$ledger_sub_account_id = (int)$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
 	$description = @$result_cash_bank[0]["cash_bank"]["narration"];

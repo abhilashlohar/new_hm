@@ -31,7 +31,7 @@
 			     <?php $total=0; ?> 
 			<?php foreach($receipts as $receipt){
 			
-				$auto_id=$receipt["cash_bank"]["auto_id"];
+				$auto_id=$receipt["cash_bank"]["transaction_id"];
 				$receipt_number=$receipt["cash_bank"]["receipt_number"];
 				$transaction_date=$receipt["cash_bank"]["transaction_date"];
 				$received_from = $receipt['cash_bank']['received_from'];

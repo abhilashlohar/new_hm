@@ -209,6 +209,19 @@ $(document).ready(function(){
 					$(this).closest('td').find(".er").remove();
 				}
 			}
+			if(received_from=="non_residential"){
+			  var ledger_sub_account=$(this).closest("td").find('select[name="non_member_ledger_sub_account[]"]').val();
+			  var bill_reference=$(this).closest("td").find('input[name="bill_reference[]"]').val();
+			  if(ledger_sub_account=="" || bill_reference==""){
+				  $(this).closest('td').find(".er").remove();
+					$(this).closest('td').append('<span class="er">Required</span>');
+					allow="no";
+			  }else{
+				  $(this).closest('td').find(".er").remove();
+				  
+			  }
+			
+			}
 		});
 		
 		$('#main tbody tr input[name="amount[]"]').die().each(function(i, obj) {

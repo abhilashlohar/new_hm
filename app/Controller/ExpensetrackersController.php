@@ -8,7 +8,7 @@ public $components = array(
 );
 var $name = 'Expensetrackers';
 
-///////////////////// Start Expense Tracker Pie Chart (Accounts)///////////////////////////////
+//Start Expense Tracker Pie Chart (Accounts)//
 function expense_tracker_pie_chart()
 {
 if($this->RequestHandler->isAjax()){
@@ -26,10 +26,8 @@ $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');	
 
 }
-///////////////////// End Expense Tracker Pie Chart (Accounts)/////////////////////////////////
-
-///////////////Start Expense Tracker Pie Chart Ajax(Accounts)//////////////////////////////////
-
+//End Expense Tracker Pie Chart (Accounts)//
+//Start Expense Tracker Pie Chart Ajax(Accounts)//
 function expense_tracker_pie_chart_ajax()
 {
 $this->layout = 'blank';
@@ -48,7 +46,8 @@ $cursor1=$this->expense_tracker->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
 
 }
-///////////////End Expense Tracker Pie Chart Ajax(Accounts)//////////////////////////////////
+//End Expense Tracker Pie Chart Ajax(Accounts)//
+//Start add_new_party_account_head// 
 function add_new_party_account_head($party_name=null){
 	$this->layout=null;
 	$s_society_id = (int)$this->Session->read('hm_society_id');
@@ -68,7 +67,8 @@ function add_new_party_account_head($party_name=null){
 		echo "OK"; exit;
 	}
 }
-
+//End add_new_party_account_head// 
+//Start expense_tracker_export//
 function expense_tracker_export(){
 $this->layout="";
 $this->ath();
@@ -105,12 +105,9 @@ $excel = "Posting Date,Date of invoice,Due Date,Party account head,Invoice Refer
 $excel.="".$date.",".$date.",".$date.",".$party_ac_head.",test,".$expense_head.",100,description";
 
 echo $excel;
-
-	
 }
-
-
-
+//End expense_tracker_export//
+//Start expense_tracker_add// 
 function expense_tracker_add(){
 	
 	if($this->RequestHandler->isAjax()){
@@ -134,10 +131,10 @@ $this->set('result_account_group',$result_account_group);
 			$conditions=array("ledger_id" => 15,"society_id"=>$s_society_id);
 			$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 			$this->set('result_ledger_sub_account',$result_ledger_sub_account);
-
-		
+	
 }
-
+//End expense_tracker_add//
+//Start expense_tracker_add_row//
 function expense_tracker_add_row(){
 	
 	$this->layout='blank';
@@ -157,8 +154,8 @@ function expense_tracker_add_row(){
 			$this->set('result_ledger_sub_account',$result_ledger_sub_account);
 	
 }
-
-
+//End expense_tracker_add_row//
+//Start expense_tracker_json// 
 function expense_tracker_json(){
 	$this->layout=null;
 	$this->ath();
@@ -386,7 +383,8 @@ $this->Session->write('exp_ttt',$show_vouc);
 $output=json_encode(array('report_type'=>'submit','text'=>'Expense voucher '.$voucher.' is generated successfully.'));
 die($output);
 }
-
+//End expense_tracker_json// 
+//Start expense_tracker_view// 
 function expense_tracker_view(){
 		if($this->RequestHandler->isAjax()){
 		$this->layout='blank';
@@ -403,6 +401,8 @@ function expense_tracker_view(){
 		$result_expense_tracker=$this->expense_tracker->find('all',array('conditions'=>$conditions));
 		$this->set('result_expense_tracker',$result_expense_tracker);
 }
+//End expense_tracker_view// 
+//Start expense_tracker_view_ajax// 
 function expense_tracker_view_ajax(){
 		if($this->RequestHandler->isAjax()){
 		$this->layout='blank';
@@ -431,7 +431,8 @@ function expense_tracker_view_ajax(){
 		$result_expense_tracker=$this->expense_tracker->find('all',array('conditions'=>$conditions,'order'=>$order));
 		$this->set('result_expense_tracker',$result_expense_tracker);
 }
-
+//End expense_tracker_view_ajax//
+//Start expense_tracker_excel// 
 function expense_tracker_excel(){
 	
 	$this->layout=null;
@@ -453,7 +454,8 @@ function expense_tracker_excel(){
 	$result_expense_tracker=$this->expense_tracker->find('all',array('conditions'=>$conditions,'order'=>$order));
 	$this->set('result_expense_tracker',$result_expense_tracker);
 }
-
+//End expense_tracker_excel// 
+//Start import_expense_tracker_ajax// 
 function import_expense_tracker_ajax(){
 	
 	if($this->RequestHandler->isAjax()){
@@ -544,7 +546,7 @@ function import_expense_tracker_ajax(){
 	$this->set('table',$table);
 	
 }
-
+//End import_expense_tracker_ajax// 
 function expense_tracker_pdf(){
 	
 	$this->layout=null;
@@ -562,7 +564,7 @@ function expense_tracker_pdf(){
 	$this->set('result_expense_tracker',$result_expense_tracker);
 	
 }
-///////////////////////////// Start expense_tracker_update //////////////////////////////
+//Start expense_tracker_update//
 function expense_tracker_update($auto_id=null)
 {
 		if($this->RequestHandler->isAjax()){
@@ -889,8 +891,8 @@ $s_society_id = $this->Session->read('hm_society_id');
 		die(json_encode("UPLOADED"));
 	}	
 }
-//////////////////////// End upload_expense_tracker_csv_file //////////////////
-//////////////////////// Start read_csv_file_expense //////////////////////////
+//End upload_expense_tracker_csv_file//
+//Start read_csv_file_expense//
 function read_csv_file_expense()
 {
 $this->layout=null;
@@ -931,8 +933,8 @@ $this->layout=null;
 	
 	
 }
-/////////////////////// End read_csv_file_expense /////////////////////////////
-////////////////////// Start convert_imported_data_et //////////////////////////////
+//End read_csv_file_expense//
+//Start convert_imported_data_et//
 function convert_imported_data_et()
 {
 $this->layout=null;

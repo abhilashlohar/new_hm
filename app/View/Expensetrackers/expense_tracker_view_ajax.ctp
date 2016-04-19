@@ -67,12 +67,11 @@ foreach($result_expense_tracker as $data){
 	$description=$data['expense_tracker']['description'];
 	@$file=$data['expense_tracker']['file'];
 	$result_ledger_account = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch2'),array('pass'=>array($expense_head)));
-	foreach($result_ledger_account as $collection)
-	{
+	foreach($result_ledger_account as $collection){
 	$ledger_name = $collection['ledger_account']['ledger_name'];
 	}
 
-	$result_ledger_sub_account = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($party_ac_head)));
+	$result_ledger_sub_account = $this->requestAction(array('controller'=>'Fns','action'=> 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($party_ac_head)));
 	foreach($result_ledger_sub_account as $collection)
 	{
 	 $party_name = $collection['ledger_sub_account']['name'];

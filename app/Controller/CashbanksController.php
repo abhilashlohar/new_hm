@@ -583,9 +583,9 @@ function final_import_bank_receipt_ajax(){
 				$current_date = date('d-m-Y');
 				
 				$this->loadmodel('cash_bank');
-				$auto_id=$this->autoincrement('cash_bank','auto_id');
+				$auto_id=$this->autoincrement('cash_bank','transaction_id');
 				$receipt_number=$this->autoincrement_with_society_ticket('cash_bank','receipt_number');
-				$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id, "transaction_date" => $trajection_date,"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_or_reference_no,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number,"created_on"=>$current_date))); 
+				$this->cash_bank->saveAll(Array( Array("transaction_id" => $auto_id, "transaction_date" => $trajection_date,"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_or_reference_no,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number,"created_on"=>$current_date))); 
 				
 				
 				$this->loadmodel('ledger');

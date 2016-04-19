@@ -981,7 +981,12 @@ function allow_user_enrollment(){
 			}
              if($mobile=="")
 			 {}else{
-						
+				
+					if(is_numeric($mobile)){ 
+					}else{
+					$empty_validate=1;	
+					} 
+				
 				$this->loadmodel('user');
 					$result_user=$this->user->find('all');
 						foreach($result_user as $dataa){
@@ -28120,7 +28125,13 @@ $result="not_match";
 		}	
   if($n>1){
 	 $result="match_overlap"; 
-  }		
+  }
+
+		 if(is_numeric($mobile)){ 
+		 } 
+         else{
+			 $result="not_numeric";  
+		 }       
 		
 echo $result;	
 }

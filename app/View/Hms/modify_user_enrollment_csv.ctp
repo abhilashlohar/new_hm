@@ -174,6 +174,11 @@ $(document).ready(function() {
 								$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').find(".er").remove();
 								$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').append('<p class="er">Overlap mobile</p>');
 							
+						}else if(result=='not_numeric'){
+							allow='no';
+							$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').find(".er").remove();
+							$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').append('<p class="er">not Numeric</p>');
+							
 						}
 						else{
 								$('#report_tb tbody tr:eq('+i+') input[field=mobile]').closest('td').find(".er").remove();	

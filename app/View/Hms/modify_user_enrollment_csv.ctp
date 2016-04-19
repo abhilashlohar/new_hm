@@ -59,7 +59,7 @@ input.m-wrap[type="text"]{
 		</td>
 		<td valign="top">
 			<div class="mobile_new">
-				<input class="m-wrap span12"  style="background-color:white !important;" id="datt1" value="<?php echo $mobile; ?>" type="text" placeholder="Mobile" record_id="<?php echo $auto_id; ?>" field="mobile" />
+				<input class="m-wrap span12"  style="background-color:white !important;" id="datt1" value="<?php echo $mobile; ?>" type="text" placeholder="Mobile" record_id="<?php echo $auto_id; ?>" field="mobile" maxlength="10"/>
 			</div>
 		</td>
 		<td valign="top">

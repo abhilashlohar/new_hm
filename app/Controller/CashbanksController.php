@@ -4129,7 +4129,7 @@ $s_user_id = (int)$this->Session->read('hm_user_id');
 
 
 $this->loadmodel('cash_bank');
-$conditions=array("auto_id" => $auto_id,"society_id"=>$s_society_id);
+$conditions=array("transaction_id" => $auto_id,"society_id"=>$s_society_id);
 $cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions));
 $this->set('result_cash_bank',$cursor1);
 

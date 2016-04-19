@@ -11,7 +11,7 @@ foreach($result_society as $data){
 	$nn=55; 
 	if(!empty($select_income_head_array)){
 	foreach($select_income_head_array as $income_head){  
-	foreach($flat_type_ids as $flat_type_id){  
+	foreach(@$flat_type_ids as @$flat_type_id){  
 	$rate_card_count = $this->requestAction(array('controller' => 'Fns', 'action' => 'rate_card_info_via_flat_type_id_and_income_head_id'),array('pass'=>array(@$flat_type_id,@$income_head)));  
 		 if($rate_card_count == 0)
 		 {

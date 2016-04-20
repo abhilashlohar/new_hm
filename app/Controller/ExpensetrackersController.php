@@ -448,11 +448,13 @@ function expense_tracker_excel(){
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$result_society=$this->society_name($s_society_id);
 	$this->set('society_name',$result_society[0]['society']['society_name']);
+	
 	$this->loadmodel('expense_tracker');
 	$conditions=array('society_id'=>$s_society_id,'expense_tracker.posting_date'=>array('$gte'=>$from,'$lte'=>$to));
 	$order=array('expense_tracker.posting_date'=> 'ASC');
 	$result_expense_tracker=$this->expense_tracker->find('all',array('conditions'=>$conditions,'order'=>$order));
 	$this->set('result_expense_tracker',$result_expense_tracker);
+
 }
 //End expense_tracker_excel// 
 //Start import_expense_tracker_ajax// 

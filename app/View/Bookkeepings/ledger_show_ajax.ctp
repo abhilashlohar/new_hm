@@ -104,53 +104,44 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 	</thead>
 	<tbody id="table">
 	<?php 
-	
 	$i=0; $total_debit=0; $total_credit=0;
 	foreach($result_ledger as $data){ $i++;
-	     $created_by = "";
-		 $created_on = "";
-	 
-		$creater_name = "";	
-		$approver_name = "";
-	 
-	 
-		 $debit=$data["ledger"]["debit"];
-		 $credit=$data["ledger"]["credit"];
-		$transaction_date=$data["ledger"]["transaction_date"];
-		$arrear_int_type=@$data["ledger"]["intrest_on_arrears"];
-	 $table_name=$data["ledger"]["table_name"];
-		$element_id=(int)$data["ledger"]["element_id"];
-		$subledger_id = (int)@$data["ledger"]["ledger_sub_account_id"];
-		$ledger_id = (int)@$data["ledger"]["ledger_account_id"];
-		$tds_ledger_id = "";
-		$refrence_no="";
-		$total_debit=$total_debit+$debit;
-		$total_credit=$total_credit+$credit;
+	$created_by = "";
+	$created_on = "";
+	$creater_name = "";	
+	$approver_name = "";
+	 	 
+	$debit=$data["ledger"]["debit"];
+	  $credit=$data["ledger"]["credit"];
+	    $transaction_date=$data["ledger"]["transaction_date"];
+		  $arrear_int_type=@$data["ledger"]["intrest_on_arrears"];
+			$table_name=$data["ledger"]["table_name"];
+			  $element_id=(int)$data["ledger"]["element_id"];
+				$subledger_id = (int)@$data["ledger"]["ledger_sub_account_id"];
+				  $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
+					$tds_ledger_id = "";
+					  $refrence_no="";
+						$total_debit=$total_debit+$debit;
+						  $total_credit=$total_credit+$credit;
 		
-		
-		if($table_name=="regular_bill"){
-			$source="Regular Bill";
+	if($table_name=="regular_bill"){
+		$source="Regular Bill";
 			$result_regular_bill=$this->requestAction(array('controller' => 'Bookkeepings', 'action'=>'regular_bill_info_via_auto_id'), array('pass' => array($element_id)));
-			
 			$bill_approved="";
 			if(sizeof($result_regular_bill)>0){
-			$bill_approved="yes";
-			$refrence_no = $result_regular_bill[0]["regular_bill"]["bill_number"];
-			$description = $result_regular_bill[0]["regular_bill"]["description"];
-			$description=substrwords($description,200,'...');
-		    $ledger_sub_account_id = (int)$result_regular_bill[0]["regular_bill"]["ledger_sub_account_id"]; 
-			$prepaired_by = (int)$result_regular_bill[0]["regular_bill"]["created_by"]; 
-			$current_date = $result_regular_bill[0]["regular_bill"]["current_date"];
+				$bill_approved="yes";
+				  $refrence_no=$result_regular_bill[0]["regular_bill"]["bill_number"];
+					$description=$result_regular_bill[0]["regular_bill"]["description"];
+					  $description=substrwords($description,200,'...');
+						$ledger_sub_account_id = (int)$result_regular_bill[0]["regular_bill"]["ledger_sub_account_id"]; 
+							$prepaired_by = (int)$result_regular_bill[0]["regular_bill"]["created_by"]; 
+								$current_date = $result_regular_bill[0]["regular_bill"]["current_date"];
+				$current_datttt = date('d-m-Y',strtotime($current_date));
 	
-$current_datttt = date('d-m-Y',strtotime($current_date));
-	
-$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by)));
-foreach ($user_dataaaa as $user_detailll) 
-{
-$creater_name = @$user_detailll['user']['user_name'];
-}	
-			
-				//wing_id via flat_id//
+		$user_dataaaa = $this->requestAction(array('controller'=>'hms','action'=>'user_fetch'),array('pass'=>array($prepaired_by)));
+		foreach ($user_dataaaa as $user_detailll){
+			$creater_name = @$user_detailll['user']['user_name'];
+		}	
 		$user_id1 = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 		
 		$user_id=$user_id1['user_id'];

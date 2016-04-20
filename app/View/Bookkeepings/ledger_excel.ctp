@@ -169,7 +169,7 @@ $creater_name = @$user_detailll['user']['user_name'];
 	if($receipt_source == "bank_receipt")
 	{
 	$source="Receipt";
-	$trans_id = (int)$result_cash_bank[0]["cash_bank"]["auto_id"]; 
+	$trans_id = (int)$result_cash_bank[0]["cash_bank"]["transaction_id"]; 
 	$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_number"]; 
 	$ledger_sub_account_id = (int)$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
 	$description = @$result_cash_bank[0]["cash_bank"]["narration"];

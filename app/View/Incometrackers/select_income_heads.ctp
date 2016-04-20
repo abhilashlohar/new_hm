@@ -59,7 +59,7 @@ foreach($result1 as $collection){
 </table> 
 <?php /////////////////////////////////////////////////////////////////////////////////// ?>
 
-<form method="post">                
+<form method="post" id="contact-form">                
 <div class="portlet box blue">
 <div class="portlet-title">
 <h4 class="block">Select Income Heads for Bill Charges</h4>
@@ -70,7 +70,7 @@ foreach($result1 as $collection){
 <div class="span6">
 <label style="font-size:14px;"> &nbsp;&nbsp;&nbsp; Select Income Heads<span style="color:red;">*</span></label>
 <div class="controls">
-&nbsp;&nbsp;&nbsp;	<select data-placeholder="Select Account Heads"  name="i_head[]" id="i_head" class="m-wrap span10 chosen" multiple="multiple" tabindex="6">	
+&nbsp;&nbsp;&nbsp;	<select data-placeholder="Select Account Heads"  name="i_head[]" id="i_head" class="m-wrap span10 chosen" multiple="multiple" tabindex="6" required="required">	
 <option value="" style="display:none;">Select</option>
 <?php
 for($r=0; $r<sizeof($income_arrr); $r++)
@@ -137,6 +137,36 @@ $income_head_name = $collection['ledger_account']['ledger_name'];
 
 
 
+<script>
+$(document).ready(function(){
+	$('#contact-form').validate({
+	ignore: 'null', 
+	    rules: {
+	     "i_head[]": {
+	        required: true,
+	      },
+		
+	    },
+		messages: {
+	                "i_head[]": {
+						required: "Please select at-least one income head."
+					},
+	
+	            },
+		
+			highlight: function(element) {
+				$(element).closest('.control-group').removeClass('success').addClass('error');
+			},
+			success: function(element) {
+				element
+				.text('OK!').addClass('valid')
+				.closest('.control-group').removeClass('error').addClass('success');
+			}
+	  });
+	  
+}); 
+
+</script>
 
 
 

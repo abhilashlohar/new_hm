@@ -8,6 +8,19 @@ public $components = array(
 );
 var $name = 'Bookkeepings';
 
+function ledger_detail_for_pagination($element_id,$from,$to)
+{
+	    $this->loadmodel('ledger');
+		$conditions=array("ledger_account_id"=>16,
+		"ledger_sub_account_id"=>null,"element_id"=>(int)$element_id,"table_name"=>"cash_bank",
+		'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
+		$order=array('ledger.transaction_date'=>'ASC');
+		return $this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order)); 
+		
+}
+
+
+
 
 	function regular_bill_info_via_auto_id($auto_id){
 		$auto_id=(int)$auto_id;
@@ -519,7 +532,7 @@ $ledger_account_id = (int)$id_arr[0];
 	$this->loadmodel('ledger');
 	$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>$ledger_account_id,'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
 	$order=array('ledger.transaction_date'=>'ASC');
-	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order,"limit"=>10,"page"=>$page)); 
+	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order,"limit"=>20,"page"=>$page)); 
 	$this->set('result_ledger',$result_ledger);
 	
 	
@@ -538,16 +551,15 @@ $ledger_account_id = (int)$id_arr[0];
 	
 	if($ledger_account_id == 15 || $ledger_account_id == 33 || $ledger_account_id == 34 || $ledger_account_id == 35 || $ledger_account_id == 112){
 
-
+       $element_id="";
         $this->loadmodel('ledger');
 		$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>$ledger_account_id,
 		"ledger_sub_account_id"=>$ledger_sub_account_id,
 		'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
 		$order=array('ledger.transaction_date'=>'ASC');
-		$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order,"limit"=>10,"page"=>$page)); 
+		$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order,"limit"=>20,"page"=>$page)); 
 		$this->set('result_ledger',$result_ledger);
-
-
+		
 		$this->loadmodel('ledger');
 		$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>$ledger_account_id,
 		"ledger_sub_account_id"=>$ledger_sub_account_id,
@@ -555,25 +567,32 @@ $ledger_account_id = (int)$id_arr[0];
 		$order=array('ledger.transaction_date'=>'ASC');
 		$result_ledger2=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order)); 
 		$count_bank_receipt_converted=0;
-		foreach($result_ledger2 as $rrr)
+		foreach($result_ledger2 as $rrr){
+		$element_id=(int)$rrr['ledger']['element_id'];
+		$count_bank_receipt_converted++;	
+		
+		$rrrrrr = $this->requestAction(array('controller'=>'Bookkeepings','action' => 'ledger_detail_for_pagination'),array('pass'=>array($element_id,$from,$to)));
+		foreach($rrrrrr as $ddd)
 		{
 		$count_bank_receipt_converted++;	
 		}
-				
 		
+		}
 		
-		
-if($ledger_account_id == 15)
-{
-$this->loadmodel('ledger');
-$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>$ledger_account_id,
-"ledger_sub_account_id"=>$ledger_sub_account_id,
-'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
-$order=array('ledger.transaction_date'=>'ASC');
-$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order,"limit"=>5,"page"=>$page)); 
-$this->set('result_ledger',$result_ledger);	
-$count_bank_receipt_converted = $count_bank_receipt_converted*2;
-}
+	
+
+//if($ledger_account_id == 15){
+
+//$this->loadmodel('ledger');
+//$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>$ledger_account_id,
+//"ledger_sub_account_id"=>$ledger_sub_account_id,
+//'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
+//$order=array('ledger.transaction_date'=>'ASC');
+//$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order,"limit"=>5,"page"=>$page));
+//$this->set('result_ledger',$result_ledger);	
+//$count_bank_receipt_converted = $count_bank_receipt_converted*2;
+//}
+
 		
 	$this->set('count_bank_receipt_converted',$count_bank_receipt_converted);	
 		

@@ -140,8 +140,8 @@ input.m-wrap[type="text"]{
 			<div class="r_type">
 			<select class="span12 m-wrap"  record_id="<?php echo $auto_id; ?>" field="receipt_type" >
 				<option value="" style="display:none;">Select...</option>
-				<option value="1" <?php if($receipt_type=="maintenance"){ echo 'selected="selected"'; } ?> >Maintanace</option>
-				<option value="2" <?php if($receipt_type=="other"){ echo 'selected="selected"'; } ?> >Other</option>
+				<option value="maintenance" <?php if($receipt_type=="maintenance"){ echo 'selected="selected"'; } ?> >Maintanace</option>
+				<option value="other" <?php if($receipt_type=="other"){ echo 'selected="selected"'; } ?> >Other</option>
 			</select>
 			</div>
 		</td>

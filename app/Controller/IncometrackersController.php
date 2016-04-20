@@ -178,7 +178,7 @@ function it_regular_bill(){
 				if(sizeof($last_receipts_info)>0 && sizeof($last_bill_info)>0){
 					$i=0;
 					foreach($last_receipts_info as $receipts_info){ $i++;
-						$receipt_auto_id=$receipts_info["cash_bank"]["auto_id"];
+						$receipt_auto_id=$receipts_info["cash_bank"]["transaction_id"];
 						$receipt_date=$receipts_info["cash_bank"]["transaction_date"];
 						$amount=$receipts_info["cash_bank"]["amount"];
 						
@@ -260,7 +260,7 @@ function it_regular_bill(){
 							
 						
 						$this->loadmodel('cash_bank');
-						$this->cash_bank->updateAll(array('applied'=>"yes"),array("auto_id"=>$receipt_auto_id));
+						$this->cash_bank->updateAll(array('applied'=>"yes"),array("transaction_id"=>$receipt_auto_id));
 						
 					}
 					if($last_bill_arrear_principal>0){

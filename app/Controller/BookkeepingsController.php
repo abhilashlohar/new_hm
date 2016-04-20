@@ -579,19 +579,10 @@ $ledger_account_id = (int)$id_arr[0];
 		
 		}
 		
-		
-		
-		
-		
-		
-		
-<<<<<<< HEAD
+	
 
-//if($ledger_account_id == 15)
-//{
-=======
 //if($ledger_account_id == 15){
->>>>>>> origin/master
+
 //$this->loadmodel('ledger');
 //$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>$ledger_account_id,
 //"ledger_sub_account_id"=>$ledger_sub_account_id,

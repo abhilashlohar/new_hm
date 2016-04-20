@@ -824,9 +824,8 @@ $target=@$target.basename($file_name);
 move_uploaded_file($file_tmp_name,@$target);
 }
 }
-///////////////// End expense_upload ////////////////////////////
-
-/////////////////// Start expense_tracker_import ////////////////////////////////////
+//End expense_upload//
+//Start expense_tracker_import//
 function expense_tracker_import()
 {
 if($this->RequestHandler->isAjax()){
@@ -867,8 +866,8 @@ $this->loadmodel('import_expense_tracker_record');
 	}
 
 }
-////////////////// End expense_tracker_import ///////////////////////////////////////
-////////////////// Start upload_expense_tracker_csv_file //////////////////////
+//End expense_tracker_import//
+//Start upload_expense_tracker_csv_file//
 function upload_expense_tracker_csv_file()
 {
 $s_society_id = $this->Session->read('hm_society_id');
@@ -1166,10 +1165,12 @@ if(empty($posting_date2)){ $posting_v = 1; }else {  $posting_v = 0;  }
 		$cursor = $this->financial_year->find('all',array('conditions'=>$conditions));
 		$abc = 555;
 		foreach($cursor as $collection){
+				
 				$from = $collection['financial_year']['from'];
 				$to = $collection['financial_year']['to'];
-				$from1 = date('Y-m-d',$from->sec);
-				$to1 = date('Y-m-d',$to->sec);
+				
+				$from1 = date('Y-m-d',$from);
+				$to1 = date('Y-m-d',$to);
 				$from2 = strtotime($from1);
 				$to2 = strtotime($to1);
 				$transaction1 = date('Y-m-d',strtotime($TransactionDate));

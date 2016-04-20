@@ -19,7 +19,7 @@ header ("Content-Description: Generated Report" );
 <span>Expense Tracker: <?php echo $from1; ?> to <?php echo $to1; ?> <span>
 </div>
 
-<table class="" style="" id="tbb" width="100%" border="1">
+<table border="1">
 <thead>
 <tr>
 <th >Voucher Id</th>
@@ -32,6 +32,7 @@ header ("Content-Description: Generated Report" );
 <th width="20%">Description</th>
 <th >Amount</th>
 </tr>
+
 </thead>
 <tbody id="count_row">
 <?php 
@@ -39,10 +40,15 @@ header ("Content-Description: Generated Report" );
 $total=0;
 foreach($result_expense_tracker as $data){
 	$expense_tracker_id=$data['expense_tracker']['expense_tracker_id'];
+	$user_id=(int)$data['expense_tracker']['user_id'];
 	$voucher_id=$data['expense_tracker']['expense_id'];
 	$posting_date=$data['expense_tracker']['posting_date'];
 	$posting_date=date('d-m-Y',$posting_date);
+	$creation_date = $data['expense_tracker']['current_date'];
 	$due_date=$data['expense_tracker']['due_date'];
+	
+	$creation_date = date('d-m-Y',strtotime($creation_date));
+	
 	if(!empty($due_date)){
 	$due_date=date('d-m-Y',$due_date);
 	}
@@ -50,24 +56,22 @@ foreach($result_expense_tracker as $data){
 	$date_of_invoice=date('d-m-Y',$date_of_invoice);
 	$expense_head=$data['expense_tracker']['expense_head'];
 	$invoice_reference=$data['expense_tracker']['invoice_reference'];
-	$party_ac_head=$data['expense_tracker']['party_ac_head'];
+	$party_ac_head=(int)$data['expense_tracker']['party_ac_head'];
 	$ammount_of_invoice=$data['expense_tracker']['ammount_of_invoice'];
 	$description=$data['expense_tracker']['description'];
-	$file=$data['expense_tracker']['file'];
+	@$file=$data['expense_tracker']['file'];
 	$result_ledger_account = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch2'),array('pass'=>array($expense_head)));
-	foreach($result_ledger_account as $collection)
-	{
+	foreach($result_ledger_account as $collection){
 	$ledger_name = $collection['ledger_account']['ledger_name'];
 	}
 
-	$result_ledger_sub_account = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($party_ac_head)));
+	$result_ledger_sub_account = $this->requestAction(array('controller'=>'Fns','action'=> 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($party_ac_head)));
 	foreach($result_ledger_sub_account as $collection)
 	{
-	$party_name = $collection['ledger_sub_account']['name'];
+	 $party_name = $collection['ledger_sub_account']['name'];
 	}
-	
-
-
+$result_user = $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($user_id)));
+$prepaired_by_name=$result_user[0]['user']['user_name'];
 ?>
 <tr>
 <td><?php echo $voucher_id; ?></td>
@@ -75,10 +79,10 @@ foreach($result_expense_tracker as $data){
 <td><?php echo $date_of_invoice; ?></td>
 <td><?php echo $due_date; ?></td>
 <td><?php echo $party_name; ?></td>
-<td align="right"><?php echo $invoice_reference; ?></td>
+<td><?php echo $invoice_reference; ?></td>
 <td><?php echo $ledger_name; ?></td>
 <td><?php echo $description; ?></td>
-<td align="right"><?php echo $ammount_of_invoice; ?> <?php $total+=$ammount_of_invoice ; ?></td>
+<td style="text-align:right;"><?php echo $ammount_of_invoice; ?> <?php $total+=$ammount_of_invoice ; ?></td>
 </tr>
 <?php } ?>
 

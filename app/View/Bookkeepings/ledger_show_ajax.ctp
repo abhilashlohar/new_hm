@@ -753,8 +753,8 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 <div class="pagination pagination-medium hide_at_print">
 <ul>
 <?php 
-$loop=(int)($count_bank_receipt_converted/10);
-if($count_bank_receipt_converted%10>0){
+$loop=(int)($count_bank_receipt_converted/20);
+if($count_bank_receipt_converted%20>0){
 	$loop++;
 }
 for($ii=1;$ii<=$loop;$ii++){ ?>

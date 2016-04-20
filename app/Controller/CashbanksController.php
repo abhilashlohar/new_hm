@@ -482,7 +482,7 @@ function auto_save_bank_receipt($record_id=null,$field=null,$value=null){
 	
 	if($field=="receipt_type"){
 		$this->loadmodel('bank_receipt_csv_converted');
-		$this->bank_receipt_csv_converted->updateAll(array("receipt_type" => (int)$value),array("auto_id" => $record_id));
+		$this->bank_receipt_csv_converted->updateAll(array("receipt_type" => $value),array("auto_id" => $record_id));
 		echo "T";
 	}
 	

@@ -15,17 +15,16 @@ header ("Content-Disposition: attachment; filename=".$filename.".xls");
 header ("Content-Description: Generated Report" );
 ?>
 
-<table class="" style="" id="tbb" width="100%" style=" background-color:white;" border="1">
+<table border="1">
 <thead>
 <tr>
-<td colspan="11" align="center"><span style="font-size:14px;"><b><?php echo $society_name; ?> Fixed Assets Register on <?php echo $current_date; ?></b></span></td>
+<td colspan="10" align="center"><span style="font-size:14px;"><b><?php echo $society_name; ?> Fixed Assets Register on <?php echo $current_date; ?></b></span></td>
 </tr>
 <tr>
 <th >Sr.No.</th>
 <th>Asset Category</th>
 <th>Asset Name</th>
 <th>Narration</th>
-<th>Date of Purchase</th>
 <th width="5%">Date of Purchase</th>
 <th>Cost of Purchase</th>
 <th>Supplier</th>
@@ -46,13 +45,18 @@ foreach($result_fix_asset as $data){
 	$purchase_date=$data['fix_asset']['purchase_date'];
 	$purchase_date=date('d-m-Y',$purchase_date);
 	$description=$data['fix_asset']['description'];
-	
-$ammount=$data['fix_asset']['cost_of_purchase'];
-
+	$file = @$data['fix_asset']['file_name'];
 	$amount=$data['fix_asset']['cost_of_purchase'];
 	$warranty_period_to=$data['fix_asset']['warranty_period_to'];
 	$warranty_period_from=$data['fix_asset']['warranty_period_from'];
 	$maintanance_schedule=$data['fix_asset']['maintanance_schedule'];
+	$prepaired_by_id = (int)$data['fix_asset']['user_id'];
+	$current_date22 = $data['fix_asset']['current_date'];
+	$user_detaill = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by_id)));
+foreach($user_detaill as $data)
+{
+$prepaired_by = $data['user']['user_name'];
+}
 	
 	$result_ledger_account = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch2'),array('pass'=>array($asset_category_id)));
 	foreach($result_ledger_account as $collection)
@@ -72,9 +76,8 @@ $ammount=$data['fix_asset']['cost_of_purchase'];
 <td><?php echo $asset_name; ?></td>
 <td><?php echo $description; ?></td>
 <td><?php echo $purchase_date; ?></td>
-<td><?php echo $ammount; ?></td>
 <td align="right"><?php echo $amount; ?><?php $total_amount+=$amount; ?></td>
-<td><?php echo $asset_supplier_name; ?></td>
+<td><?php echo @$asset_supplier_name; ?></td>
 <td><?php echo $warranty_period_from; ?></td>
 <td><?php echo $warranty_period_to; ?></td>
 <td><?php echo $maintanance_schedule; ?></td>

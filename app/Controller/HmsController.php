@@ -21518,14 +21518,9 @@ $this->loadmodel('expense_tracker');
 $conditions=array("party_head" => $vendor_id);
 $cursor2=$this->expense_tracker->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
-
-
 }
-
-
-/////////////////////////////////////// End report_excel_expense_tracker (Accounts)////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////// Start Fix Asset View (Accounts)///////////////////////////////////////////////////////////////////////////////////
+//End report_excel_expense_tracker (Accounts)//
+//Start Fix Asset View (Accounts)//
 function fix_asset_view(){
 if($this->RequestHandler->isAjax()){
 $this->layout='blank';
@@ -21549,13 +21544,9 @@ $order=array('fix_asset.purchase_date'=> 'ASC');
 $conditions=array("society_id" => $s_society_id);
 $result_fix_asset=$this->fix_asset->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('result_fix_asset',$result_fix_asset);
-
-
-
 }
-////////////////////////////// End Fix Asset View (Accounts)///////////////////////////////////////////////////////
-
-/////////////////////////////Start Fix Asset Add (Accounts)////////////////////////////////////////////////////////
+//End Fix Asset View (Accounts)//
+//Start Fix Asset Add (Accounts)//
 function fix_asset_add()
 {
 if($this->RequestHandler->isAjax()){
@@ -21813,35 +21804,27 @@ $output=json_encode(array('type'=>'success','text'=>'Fixed Asset Voucher No. #'.
 die($output);   
 
 }
-/////////////////////////////////// End Fix asset Json //////////////////////////////////
-////////////////////////// Start Fix Asset Excel ////////////////////////////////////////
+//End Fix asset Json//
+//Start Fix Asset Excel//
 function fix_asset_excel()
 {
 	$this->layout=null;
-	$this->ath();
-	//$this->check_user_privilages();	
-
-	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = $this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
-
-	$result_society=$this->society_name($s_society_id);
-	$society_name = $result_society[0]['society']['society_name'];
+		$this->ath();
+			$s_role_id=$this->Session->read('role_id');
+				$s_society_id = $this->Session->read('hm_society_id');
+					$s_user_id=$this->Session->read('hm_user_id');
+						$result_society=$this->society_name($s_society_id);
+							$society_name = $result_society[0]['society']['society_name'];
 	$this->set('society_name',$society_name);
 
-	$this->loadmodel('fix_asset');
-	$conditions=array("society_id" => $s_society_id);
-	$result_fix_asset=$this->fix_asset->find('all',array('conditions'=>$conditions));
-	$this->set('result_fix_asset',$result_fix_asset);
-
-
-
+$this->loadmodel('fix_asset');
+	$order=array('fix_asset.purchase_date'=> 'ASC');
+		$conditions=array("society_id" => $s_society_id);
+			$result_fix_asset=$this->fix_asset->find('all',array('conditions'=>$conditions,'order'=>$order));
+				$this->set('result_fix_asset',$result_fix_asset);
 }
-//////////////////////////////// End Fix Asset Excel ///////////////////////////////////////////////////////
-
-
-
-////////////////////////// Start Ledger Sub Account Fetch (Accounts)//////////////////////////////////////////////////
+//End Fix Asset Excel//
+//Start Ledger Sub Account Fetch (Accounts)//
 function ledger_sub_account_fetch($value) 
 {
 $s_society_id = $this->Session->read('hm_society_id');

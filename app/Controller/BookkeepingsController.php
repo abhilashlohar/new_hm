@@ -567,20 +567,21 @@ $ledger_account_id = (int)$id_arr[0];
 		$order=array('ledger.transaction_date'=>'ASC');
 		$result_ledger2=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order)); 
 		$count_bank_receipt_converted=0;
+		$count=0;
 		foreach($result_ledger2 as $rrr){
-		$element_id=(int)$rrr['ledger']['element_id'];
+		$element_id=(int)$rrr['ledger']['element_id']; 
 		$count_bank_receipt_converted++;	
-		
 		$rrrrrr = $this->requestAction(array('controller'=>'Bookkeepings','action' => 'ledger_detail_for_pagination'),array('pass'=>array($element_id,$from,$to)));
-		foreach($rrrrrr as $ddd)
-		{
-		$count_bank_receipt_converted++;	
+		foreach($rrrrrr as $ddd){
+		$lllll="";
+		$lllll=(int)$ddd['ledger']['ledger_account_id'];
+	    $table_name=$ddd['ledger']['table_name'];
+		if($lllll == 16){
+		$count++;	
+		}}
 		}
-		
-		}
-		
-		
-		
+		$count=(int)$count/2;
+		$count_bank_receipt_converted=$count_bank_receipt_converted+$count;
 		
 		
 		

@@ -1,2 +1,8 @@
 Transaction Date,Ledger A/c,Amount,TDS in Percentage,Mode of Payment,Instrument/UTR,Bank Account,Invoice Reference,Narration 
-12-10-2015,Sinking Fund,10000,2,NEFT,HHHG4455,SBI,for marketing,narration 
+12-4-2016,Sanjay,10,2,Cheque,515616,SBI,N/A,"sfJL,"
+12-4-2016,Ramesh,20,,NEFT,999,SBI,N/A,VNI
+12-4-201,Kamal,30,,Cheque ,651494,SBI,N/A,BBIHDDA
+12-4-2016,kapil,50,5,NEFT,999,SBI,N/A,DFYBB
+12-4-2016,ramesh,10,,Cheque,51151,SBI,N/A,DFGYY
+12-4-2016,ramesh,60,10,NEFT,999,SBI,N/A,DBUY
+12-4-2016,kamal,80,2,Cheque,555151,SBI,N/A,NUH

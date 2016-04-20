@@ -1,4 +1,69 @@
 Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Receipt Type,Amount,Narration 
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBBJ,neft,3534,25-01-2015,,,B L Naik,B,601,O,1953,Receipt for jan
-25-01-2015,SBBJ,pg,3534,25-01-2015,,,B L Naik,B,601,M,1953,Receipt for jan
+15-8-2016,co,Cheque,15422,15-8-2016,SBI,N/A,sachin,A,101,M,4125,july Sep Qtr Bill
+11111,SBI,Cheque,619488,15-8-2016,ICICI,N/A,Abhilash Lohar,A,102,M,6921,july Sep Qtr Bill
+15-8-2016,SBI,Cheque,44648,15-8-2016,ICICI,N/A,Nikhil Vyas,A,1001,M,16233,july Sep Qtr Bill
+15-8-2016,SBI,Cheque,65446,15-8-2016,SBI,N/A,gopesh singh parihar,A,1002,M,13645,july Sep Qtr Bill
+15-8-2016,SBI,NEFT,999,15-8-2016,FEDERAL BANK,N/A,Ashish Jain,A,1003,M,17300,july Sep Qtr Bill
+15-8-2016,SBI,Cheque,65194,15-8-2016,ICICI,N/A,Rohit Joshi,B,101,M,5779,july Sep Qtr Bill
+15-8-2016,SBI,Cheque,5160984,15-8-2016,SBI,N/A,yashraj,B,102,M,5000,july Sep Qtr Bill
+15-8-2016,SBI,NEFT,999,15-8-2016,SBI,N/A,nikhilesh,B,201,M,5801,july Sep Qtr Bill
+15-8-2016,SBI,Cheque,6618,15-8-2016,INDIAN OVERSEAS,N/A,deepak,B,202,M,6283,july Sep Qtr Bill
+15-8-2016,SBI,Cheque,6816,15-8-2016,SBI,N/A,nikhilesh vyas,C,501,M,17790,july Sep Qtr Bill
+15-8-2016,SBI,Cheque,651611,15-8-2016,STATE BANK OF TRAVANCORE,N/A,yash,C,502,M,17505,july Sep Qtr Bill
+15-8-2016,SBI,NEFT,999,15-8-2016,SBI,N/A,nilesh tailor,C,503,M,7798,july Sep Qtr Bill
+15-8-2016,SBI,Cheque,61598,15-8-2016,HDFC,N/A,dsu menaria,C,504,M,5358,july Sep Qtr Bill
+15-8-2016,SBI,Cheque,919454,15-8-2016,PMC,N/A,Suryakant Deshmukh,Flat,101,M,12248,july Sep Qtr Bill
+15-8-2016,SBI,NEFT,999,15-8-2016,HDFC,N/A,Shagufta Khan,Flat,102,M,11916,july Sep Qtr Bill
+15-8-2016,SBI,Cheque,3654891,15-8-2016,SBI,N/A,Sanjay Bakliwal,Flat,103,M,12251,july Sep Qtr Bill
+20-7-2016,SBI,Cheque,619948,20-7-2016,ANDHRA BANK,N/A,Sanjay Bakliwal,Flat,104,M,12126,july Sep Qtr Bill
+20-7-2016,SBI,Cheque,654954,20-7-2016,HDFC,N/A,Sanjay Bakliwal,Flat,105,M,12556,july Sep Qtr Bill
+20-7-2016,SBI,Cheque,44545,20-7-2016,IDBI,N/A,Gaje Singh Chahal,Flat,106,M,12186,july Sep Qtr Bill
+20-7-2016,SBI,NEFT,999,20-7-2016,HDFC,N/A,Uday Powar,Flat,107,M,12186,july Sep Qtr Bill
+20-7-2016,SBI,Cheque,1616151,20-7-2016,SBI,N/A,Vikas P. Shinde,Flat,108,M,13356,july Sep Qtr Bill
+20-7-2016,SBI,Cheque,544,20-7-2016,CANARA BANK,N/A,Bamabhahadur Yadav,Flat,109,M,12087,july Sep Qtr Bill
+20-7-2016,SBI,Cheque,258,20-7-2016,AXIS,N/A,K.V. Bhosle,Flat,110,M,12436,july Sep Qtr Bill
+20-7-2016,SBI,Cheque,6196,20-7-2016,VIJAYA BANK,N/A,Anup Singh,Flat,111,M,9263,july Sep Qtr Bill
+20-7-2016,SBI,NEFT,999,20-7-2016,ICICI,N/A,Sampat Mangade,Flat,112,M,12756,july Sep Qtr Bill
+20-7-2016,SBI,Cheque,84844,20-7-2016,SBI,N/A,Parag R. Desai,Flat,113,M,12204,july Sep Qtr Bill
+20-7-2016,SBI,Cheque,15494,20-7-2016,KOTAK MAHINDRA,N/A,Bharat Tankariya,Flat,114,M,12336,july Sep Qtr Bill
+20-7-2016,SBI,Cheque,45,20-7-2016,INDIAN BANK,N/A,Dinesh Chandra Agarwal,Flat,116,M,12225,july Sep Qtr Bill
+20-7-2016,SBI,Cheque,8,20-7-2016,PNB,N/A,Rajesh Puri,Flat,1001,M,12356,july Sep Qtr Bill
+20-7-2016,SBI,Cheque,8,20-7-2016,AXIS,N/A,Akhil Nair,Flat,1002,M,12266,july Sep Qtr Bill
+20-7-2016,SBI,NEFT,999,20-7-2016,TMB,N/A,Sunder Mahadevan,Flat,1003,M,12221,july Sep Qtr Bill
+27-8-2016,SBI,NEFT,999,27-8-2016,SBI,N/A,Pradeep Rao Wagh,Flat,1101,M,11786,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,5151,27-8-2016,TMB,N/A,Pankaj Kishor,Flat,1102,M,12686,july Sep Qtr Bill
+27-8-2016,SBI,NEFT,999,27-8-2016,STATE BANK OF PATIALA,N/A,Harish Pant,Flat,1103,M,12191,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,541654,27-8-2016,ABHYUDAYA,N/A,Sanjay Nakhate,Flat,1201,M,12204,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,5164,27-8-2016,VAISHYA SAHAKARI BANK,N/A,Asha R Daundakar,Flat,1202,M,9763,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,65454,27-8-2016,CORPORATION BANK,N/A,Paramit Kaur,Flat,1203,M,12126,july Sep Qtr Bill
+27-8-2016,SBI,NEFT,999,27-8-2016,SBI,N/A,Vinod Satpute,Flat,1301,M,12381,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,654564,27-8-2016,ICICI,N/A,Sanjay Sharma,Flat,1302,M,12236,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,5444,27-8-2016,HDFC,N/A,Gautam Das,Flat,1303,M,12400,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,45646,27-8-2016,ICICI,N/A,Sudha Ranganathan,Flat,1401,M,12216,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,65156464,27-8-2016,CORPORATION BANK,N/A,Dr. Kakoli Bose nee Ghosh,Flat,1402,M,12364,july Sep Qtr Bill
+27-8-2016,SBI,NEFT,999,27-8-2016,SBI,N/A,Sulbha Parab,Flat,1403,M,12204,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,151564,27-8-2016,HDFC,N/A,Debi Prasad Rajgarhia,Flat,1501,M,12556,july Sep Qtr Bill
+27-8-2016,SBI,NEFT,999,27-8-2016,HDFC,N/A,Arati kanade,Flat,1502,M,9413,july Sep Qtr Bill
+27-8-2016,SBI,NEFT,999,27-8-2016,ICICI,N/A,Elona Panda,Flat,1503,M,3555,july Sep Qtr Bill
+27-8-2016,SBI,NEFT,999,27-8-2016,SBI,N/A,Dr. D K Aswal,Flat,1601,M,9578,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,196485,27-8-2016,SBI,N/A,K. V. GopalaKrishnan,Flat,1602,M,12206,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,15148,27-8-2016,AXIS,N/A,Mohammed Anis Dadani,Flat,1603,M,12346,july Sep Qtr Bill
+27-8-2016,SBI,NEFT,999,27-8-2016,BOI,N/A,Mukhtar Elaskar,Flat,1701,M,8628,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,15616,27-8-2016,CITI BANK,N/A,Anshu Singhal,Flat,1702,M,9068,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,6544,27-8-2016,SBI,N/A,D S Padmanabhan,Flat,1703,M,8408,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,5165164,27-8-2016,AXIS,N/A,Darshan Badole,Shop,2,M,9970,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,5165684,27-8-2016,SBI,N/A,Kienzla Parekh,Shop,3,M,9780,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,565151,27-8-2016,HDFC,N/A,Ranjit & Gormej Kaur,Shop,4,M,13135,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,56151,27-8-2016,SBI,N/A,Shiv Prakash Yadav,Shop,5,M,12915,july Sep Qtr Bill
+27-8-2016,SBI,NEFT,999,27-8-2016,AXIS BANK,N/A,Joseph Varghese,Shop,6,M,13285,july Sep Qtr Bill
+27-8-2016,SBI,NEFT,999,27-8-2016,AXIS BANK,N/A,Mohit Bhat,Shop,7,M,9830,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,164494,27-8-2016,ICICI,N/A,Mahantesh Komanur,Shop,8,M,9940,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,541654,27-8-2016,ABHYUDAYA,N/A,Poonam Manish Shukla,Shop,9,M,9730,july Sep Qtr Bill
+27-8-2016,SBI,NEFT,999,27-8-2016,SBI,N/A,Kishraram Vishnoi,Shop,10,M,12915,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,516514,27-8-2016,SBI,N/A,Lalit Mohan Pant,Shop,11,M,12959,july Sep Qtr Bill
+27-8-2016,SBI,NEFT,999,27-8-2016,IDBI,N/A,Rajesh Merugu,Shop,12,M,9830,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,15654,27-8-2016,SS BANK,N/A,Usha R Supekar,Shop,13,M,9780,july Sep Qtr Bill
+27-8-2016,SBI,NEFT,999,27-8-2016,BANK OF MAHARASHTRA,N/A,Gurmeet Singh,Shop,14,M,13035,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,54646,27-8-2016,ICICI,N/A,T.R. Ramanathan,Shop,15,M,9830,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,54647,27-8-2016,ICICI,N/A,MGM Pharma Pvt Ltd,Shop,16,M,12870,july Sep Qtr Bill
+27-8-2016,SBI,Cheque,794,27-8-2016,HDFC,N/A,Shashi Pandey,Shop,17,M,9977,july Sep Qtr Bill

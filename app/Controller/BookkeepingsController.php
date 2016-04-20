@@ -519,7 +519,7 @@ $ledger_account_id = (int)$id_arr[0];
 	$this->loadmodel('ledger');
 	$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>$ledger_account_id,'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
 	$order=array('ledger.transaction_date'=>'ASC');
-	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order,"limit"=>10,"page"=>$page)); 
+	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order,"limit"=>20,"page"=>$page)); 
 	$this->set('result_ledger',$result_ledger);
 	
 	
@@ -544,7 +544,7 @@ $ledger_account_id = (int)$id_arr[0];
 		"ledger_sub_account_id"=>$ledger_sub_account_id,
 		'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
 		$order=array('ledger.transaction_date'=>'ASC');
-		$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order,"limit"=>10,"page"=>$page)); 
+		$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order,"limit"=>20,"page"=>$page)); 
 		$this->set('result_ledger',$result_ledger);
 
 
@@ -570,7 +570,7 @@ $conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>$ledger_accou
 "ledger_sub_account_id"=>$ledger_sub_account_id,
 'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
 $order=array('ledger.transaction_date'=>'ASC');
-$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order,"limit"=>5,"page"=>$page)); 
+$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order,"limit"=>20,"page"=>$page)); 
 $this->set('result_ledger',$result_ledger);	
 $count_bank_receipt_converted = $count_bank_receipt_converted*2;
 }

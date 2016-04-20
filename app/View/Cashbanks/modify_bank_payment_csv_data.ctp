@@ -112,8 +112,27 @@
 			<option value= "<?php echo $tds_id; ?>" <?php if($tds_tax==$tds) { ?> selected="selected" <?php } ?>><?php echo $tds_tax; ?></option>
 			<?php } ?>                           
 			</select>
+			<?php
+			if(!empty($tds)){
+			$tax_tds="";
+			for($l=0; $l<sizeof($tds_arr); $l++){
+			$tds_sub_arr = $tds_arr[$l];	
+			$tds_idd = (int)$tds_sub_arr[1];
+			$tds_taxx = $tds_sub_arr[0];
+			  if($tds==$tds_taxx){
+				$tax_tds=$tds_taxx;
+					break;				
+			  }
+			}
+			$tds_amount = (round(($tax_tds/100)*$amount));
+			$total_tds_amount=($amount - $tds_amount);
+			}else{
+			$total_tds_amount=$amount;
+			$tds_amount = 0;
+			}			
+			?>
 			<input type="text"  class="m-wrap span6" 
-				  readonly="readonly" style="background-color:white !important; margin-top:2.5px;">
+				  readonly="readonly" style="background-color:white !important; margin-top:2.5px;" value="<?php echo $total_tds_amount; ?>">
 			
 			
 			

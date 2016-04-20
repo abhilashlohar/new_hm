@@ -1041,9 +1041,7 @@ $this->loadmodel('financial_year');
 		}else{
 		$total_tds_amount=$amount;
 		$tds_amount = 0;
-		
-			
-        }
+	    }
 	
 			$l=$this->autoincrement('ledger','auto_id');
 			$this->loadmodel('ledger');

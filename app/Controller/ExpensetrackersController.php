@@ -1165,8 +1165,10 @@ if(empty($posting_date2)){ $posting_v = 1; }else {  $posting_v = 0;  }
 		$cursor = $this->financial_year->find('all',array('conditions'=>$conditions));
 		$abc = 555;
 		foreach($cursor as $collection){
+				
 				$from = $collection['financial_year']['from'];
 				$to = $collection['financial_year']['to'];
+				
 				$from1 = date('Y-m-d',$from);
 				$to1 = date('Y-m-d',$to);
 				$from2 = strtotime($from1);

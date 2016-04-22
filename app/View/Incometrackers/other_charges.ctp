@@ -92,10 +92,10 @@ $income_arrr[] = $data;
 					$ac_name = $collection2['ledger_account']['ledger_name'];
 					$ac_id = (int)$collection2['ledger_account']['auto_id'];		
 					}
-					}
+				
 									?>
 								<option value="<?php echo $ac_id; ?>"><?php echo $ac_name; ?>
-								<?php } ?>
+					<?php }} ?>
 							 </select>
 							  <label id="income_head"></label>
 						</div>

@@ -135,8 +135,8 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 					  $description=substrwords($description,200,'...');
 						$ledger_sub_account_id = (int)$result_regular_bill[0]["regular_bill"]["ledger_sub_account_id"]; 
 							$prepaired_by = (int)$result_regular_bill[0]["regular_bill"]["created_by"]; 
-								$current_date = $result_regular_bill[0]["regular_bill"]["current_date"];
-				$current_datttt = date('d-m-Y',strtotime($current_date));
+								@$current_date = @$result_regular_bill[0]["regular_bill"]["current_date"];
+				@$current_datttt = date('d-m-Y',strtotime(@$current_date));
 	
 		$user_dataaaa = $this->requestAction(array('controller'=>'hms','action'=>'user_fetch'),array('pass'=>array($prepaired_by)));
 		foreach ($user_dataaaa as $user_detailll){

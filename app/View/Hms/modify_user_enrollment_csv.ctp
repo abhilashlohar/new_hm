@@ -64,8 +64,8 @@ input.m-wrap[type="text"]{
 		</td>
 		<td valign="top">
 			<div class="owner">
-				<select class="m-wrap span12 owner_tenant " record_id="<?php echo $auto_id; ?>" field="owner" >
-				
+				<select class="m-wrap span12 owner_tenant " record_id="<?php echo $auto_id; ?>" field="owner">
+				<option value="">Select</option>
 				<option value="yes" <?php if($owner=="yes"){?> selected <?php } ?>>Yes</option>
 				<option value="no" <?php if($owner=="no"){?> selected <?php } ?>>No</option>
 				</select>

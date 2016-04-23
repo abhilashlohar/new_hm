@@ -4168,7 +4168,7 @@ if(isset($this->request->data['dep_slip']))
 			$arr[] = $value;
 			
 			$this->loadmodel('cash_bank');
-			$this->cash_bank->updateAll(array("deposit_status"=>1),array('society_id'=>$s_society_id,"auto_id"=>$trns_id));	
+			$this->cash_bank->updateAll(array("deposit_status"=>1),array('society_id'=>$s_society_id,"transaction_id"=>$trns_id));	
 			
 			}
 		}

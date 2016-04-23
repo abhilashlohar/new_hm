@@ -8157,6 +8157,9 @@ $this->layout=null;
 	$conditions=array("society_id"=>$s_society_id,"is_converted"=>"NO");
 	$result_import_record=$this->bank_payment_csv->find('all',array('conditions'=>$conditions,'limit'=>20));
 	foreach($result_import_record as $import_record){
+		$ledger_id="";
+		$typppp="";
+		$bank_id="";
 		$bank_payment_csv_id=$import_record["bank_payment_csv"]["auto_id"];
 		$trajection_date=trim($import_record["bank_payment_csv"]["trajection_date"]);
 		$ledger_ac=trim($import_record["bank_payment_csv"]["ledger_ac"]);

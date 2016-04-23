@@ -559,7 +559,7 @@ $ledger_account_id = (int)$id_arr[0];
 		$order=array('ledger.transaction_date'=>'ASC');
 		$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order,"limit"=>20,"page"=>$page)); 
 		$this->set('result_ledger',$result_ledger);
-		
+				
 		$this->loadmodel('ledger');
 		$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>$ledger_account_id,
 		"ledger_sub_account_id"=>$ledger_sub_account_id,

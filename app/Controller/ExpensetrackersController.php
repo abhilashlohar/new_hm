@@ -1218,8 +1218,8 @@ $this->import_expense_tracker_record->updateAll(array("step4" => 1),array("socie
 		    
 }else{ echo "F"; die; }
 }
-////////////////// End allow_import_expense_tracker ////////////////////////////
-//////////////////// Start final_import_expense_tracker ///////////////////////
+//End allow_import_expense_tracker//
+//Start final_import_expense_tracker//
 function final_import_expense_tracker()
 {
 $this->layout=null;
@@ -1274,10 +1274,10 @@ $process_status= @$step1+@$step2+@$step3+@$step4;
 			
 								
 $auto_id=$this->autoincrement('ledger','auto_id');
-$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => $expense_head_id,"ledger_sub_account_id" => null,"debit"=>$amount,"credit"=>null,"table_name"=>"expense_tracker","element_id"=>$expense_tracker_id,"society_id"=>$s_society_id,"transaction_date"=>$posting_date));
+$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id"=>(int)$expense_head_id,"ledger_sub_account_id" => null,"debit"=>$amount,"credit"=>null,"table_name"=>"expense_tracker","element_id"=>$expense_tracker_id,"society_id"=>$s_society_id,"transaction_date"=>$posting_date));
 			
 $auto_id=$this->autoincrement('ledger','auto_id');
-$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 15,"ledger_sub_account_id" => $party_ac_id,"debit"=>null,"credit"=>$amount,"table_name"=>"expense_tracker","element_id"=>$expense_tracker_id,"society_id"=>$s_society_id,"transaction_date"=>$posting_date));
+$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 15,"ledger_sub_account_id"=>(int)$party_ac_id,"debit"=>null,"credit"=>$amount,"table_name"=>"expense_tracker","element_id"=>$expense_tracker_id,"society_id"=>$s_society_id,"transaction_date"=>$posting_date));
 
 $this->loadmodel('expense_tracker_csv_converted');
 $this->expense_tracker_csv_converted->updateAll(array("is_imported" => "YES"),array("auto_id" => $et_id));

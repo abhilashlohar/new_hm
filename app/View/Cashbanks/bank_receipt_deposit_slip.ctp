@@ -57,7 +57,7 @@ foreach($cursor1 as $collection){
 	$receipt_no = $collection['cash_bank']['receipt_number'];
 	$receipt_mode = $collection['cash_bank']['receipt_mode'];
 	$TransactionDate = $collection['cash_bank']['transaction_date'];
-	$transaction_id = (int)$collection['cash_bank']['auto_id'];
+	$transaction_id = (int)$collection['cash_bank']['transaction_id'];
 	$bill_one_time_id = @$collection['cash_bank']['bill_one_time_id'];
 	$receipt_date = $collection['cash_bank']['transaction_date'];
 	@$deposit_status=(int)@$collection['cash_bank']['deposit_status'];
@@ -84,8 +84,15 @@ foreach($cursor1 as $collection){
 			$wing_flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
         }else{
 			$wing_flat = "";
-			$party_name = $collection['cash_bank']['party_name_id'];
+			$ledger_sub_account_id=(int)$collection['cash_bank']['ledger_sub_account_id'];
+			
+			$result_ledger_sub_accounts=$this->requestAction(array('controller'=>'Fns','action'=>'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+			foreach($result_ledger_sub_accounts as $data){
+			$party_name = $data['ledger_sub_account']['name'];
+			}
 			$bill_reference = @$collection['cash_bank']['bill_reference'];	
+		
+		
 		}
 		$amount=$collection['cash_bank']['amount'];
 		$deposited_bank_id = (int)$collection['cash_bank']['deposited_in'];

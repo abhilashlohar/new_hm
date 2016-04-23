@@ -4161,7 +4161,7 @@ if(isset($this->request->data['dep_slip']))
 		$cursor2=$this->cash_bank->find('all',array('conditions'=>$conditions));
 		foreach($cursor2 as $data)
 		{
-		$trns_id = (int)$data['cash_bank']['auto_id'];
+		$trns_id = (int)$data['cash_bank']['transaction_id'];
 		$receipt_mode = $data['cash_bank']['receipt_mode'];
 		$value = @$this->request->data['dd'.$trns_id];
 			if(!empty($value)){

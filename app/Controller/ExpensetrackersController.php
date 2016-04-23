@@ -945,7 +945,8 @@ $this->layout=null;
 	$conditions=array("society_id" => $s_society_id,"is_converted" => "NO");
 	$result_import_record = $this->expense_tracker_csv->find('all',array('conditions'=>$conditions,'limit'=>20));
 	foreach($result_import_record as $import_record){
-
+$party_ac_id="";
+$expense_head_id="";
 $ep_id=(int)@$import_record["expense_tracker_csv"]["auto_id"];
 $posting_date=trim(@$import_record["expense_tracker_csv"]["posting_date"]);
 $invoice_date=trim(@$import_record["expense_tracker_csv"]["invoice_date"]);

@@ -3,6 +3,7 @@
 <?php
 foreach($result_bank_receipt_converted as $data)
 {
+$party_ac_id="";	
 $csv_auto_id = (int)$data['expense_tracker_csv_converted']['auto_id'];
 $posting_date = $data['expense_tracker_csv_converted']['posting_date'];	
 $invoice_date = $data['expense_tracker_csv_converted']['invoice_date'];	

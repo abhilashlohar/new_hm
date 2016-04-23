@@ -27624,7 +27624,7 @@ $password = $this->request->data['password'];
 
 $this->loadmodel('user');
 $i=$this->autoincrement('user','user_id');
-$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email'=>$email,'mobile'=>$mobile,'society_id' =>null,'signup_random'=>"",'active'=>'yes',"user_type"=>"hm_child","password"=>$password));
+$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email'=>$email,'mobile'=>$mobile,'society_id' =>null,'signup_random'=>"",'active'=>'yes',"user_type"=>"hm_child","password"=>$password,'profile_pic'=>'blank.jpg'));
 
 $this->loadmodel('user_flat');
 $user_flat_id=$this->autoincrement('user_flat','user_flat_id');

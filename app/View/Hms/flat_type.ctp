@@ -21,19 +21,10 @@ Society Setup
 <a href="#"role="button" class="btn purple" id="import_btn"><i class="fa fa-database"></i> Import csv</a>
 <div id="error_msg"></div>
 <div id="don"></div>
-
-<?php ////////////////////////////////////////////////////////////////////////////////////////////// ?> 
-<?php
- //echo $aaa= date('Y-m-d',1456597800);  // 1057
- //echo $bbb= date('Y-m-d',1456684200);  //1056
- //echo $ccc= date('Y-m-d',1456684200); //1055 
-?>
-
+ 
 <div style="background-color:#fff;padding:5px;width:96%;margin:auto; overflow:auto;" class="form_div">    
-
-<?php ////////////////////////////////////////////////////////////////////////////////////////////// ?>   
+   
 <div class="form_div">    
-
 <div class="row-fluid">
 <div class="span5">    
 <form  method="post" id="form2">

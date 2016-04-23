@@ -71,7 +71,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		</tr>
 			
 				
-			<?php foreach($flat_type_ids as $flat_type_id){
+			<?php if(!empty($flat_type_ids)){ 
+			foreach($flat_type_ids as $flat_type_id){
 		$flat_type_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'flat_type_name_via_flat_type_id'), array('pass' => array($flat_type_id)));
 		    
 			
@@ -125,7 +126,7 @@ if($head_id == $income_id){ ?> selected="selected" <?php }} ?>><?php echo $ac_na
 </td>
 <th></th>
 </tr>
-<?php } ?>
+			<?php }} ?>
 </table>
 </div>
 </div>

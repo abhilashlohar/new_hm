@@ -5569,11 +5569,11 @@ function master_rate_card(){
 	foreach($flats as $flat){
 		$flat_type_ids[]=@$flat["flat"]["flat_type_id"];
 	}
-	
+	if(!empty($flat_type_ids)){
 	$flat_type_ids=array_unique($flat_type_ids);
 	asort($flat_type_ids);
 	$this->set(compact("flat_type_ids"));
-	}
+	}}
 	$this->loadmodel('society');
 	$conditions=array('society_id'=>$s_society_id);
 	$society_info=$this->society->find('all',array('conditions'=>$conditions));
@@ -5844,10 +5844,11 @@ $this->set('area_typppp',@$area_typppp);
 	foreach($flats as $flat){
 	$flat_type_ids[]=@$flat["flat"]["flat_type_id"];
 	}
-$flat_type_ids=array_unique($flat_type_ids);
-asort($flat_type_ids);
-$this->set(compact("flat_type_ids"));
-	}
+    if(!empty($flat_type_ids)){
+	$flat_type_ids=array_unique($flat_type_ids);
+	asort($flat_type_ids);
+	$this->set(compact("flat_type_ids"));
+	}}
 $this->loadmodel('society');
 $conditions=array("society_id"=>$s_society_id);
 $cursor3 = $this->society->find('all',array('conditions'=>$conditions));

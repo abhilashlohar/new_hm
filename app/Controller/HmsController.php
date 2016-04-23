@@ -23686,35 +23686,33 @@ return $this->terms_condition->find('all',array('conditions'=>$conditions));
 
 }
 
-////////////////// End terms Condition fetch(Accounts) (Accounts)//////////////////////
-
-///////////////////// Start Flat Type //////////////////////////////////////////////
+//End terms Condition fetch(Accounts) (Accounts)//
+//Start Flat Type//
 function flat_type()
 {
-if($this->RequestHandler->isAjax()){
-$this->layout='blank';
-}else{
-$this->layout='session';
-}
-
-$this->ath();
-$this->check_user_privilages();
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	$this->ath();
+	$this->check_user_privilages();
 
 $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');	
 
 $this->loadmodel('flat');
+$order=array('flat.flat_name'=>'ASC');
 $conditions=array("society_id" => $s_society_id);
-$cursor1 = $this->flat->find('all',array('conditions'=>$conditions));
+$cursor1 = $this->flat->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor1',$cursor1);
 
 $this->loadmodel('wing');
 $conditions=array("society_id" => $s_society_id);
 $cursor2 = $this->wing->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
-
 }
-
+//End Flat Type//
 //Start Flat Import//
 function save_import_flat(){
 	$this->layout=null ;

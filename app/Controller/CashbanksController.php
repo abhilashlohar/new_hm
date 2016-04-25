@@ -656,9 +656,8 @@ function bank_receipt_view()
 		$s_user_id=$this->Session->read('hm_user_id');
 
 }
-////////////////////End Bank receipt View////////////////////////////////////////////////////////////
-
-/////////////////////// Start bank receipt show ajax //////////////////////////////////////////////
+//End Bank receipt View//
+//Start bank_receipt_excel//
 function bank_receipt_excel()
 {
 	$this->layout=null;
@@ -686,12 +685,9 @@ function bank_receipt_excel()
 	$conditions=array('society_id'=>$s_society_id);
 	$society_info=$this->society->find('all',array('conditions'=>$conditions));
 	$this->set('society_info',$society_info);
-	
-	 
-
 }
-
-
+//End bank_receipt_excel//
+//Start bank_receipt_show_ajax// 
 function bank_receipt_show_ajax($from=null,$to=null)
 {
 	$this->layout='blank';
@@ -721,7 +717,8 @@ function bank_receipt_show_ajax($from=null,$to=null)
 	$society_info=$this->society->find('all',array('conditions'=>$conditions));
 	$this->set('society_info',$society_info);
 }
-//End bank receipt show ajax//
+//End bank_receipt_show_ajax// 
+//Start cancel_receipt_due_to_check_bounce//
 function cancel_receipt_due_to_check_bounce($record_id=null){
 	$this->ath();
 	$s_role_id=$this->Session->read('role_id');
@@ -862,6 +859,7 @@ function cancel_receipt_due_to_check_bounce($record_id=null){
 	</div>
 	<?php
 }
+//End cancel_receipt_due_to_check_bounce//
 //Start bank receipt//
 function bank_receipt()
 {
@@ -920,8 +918,8 @@ exit;
 
 */
 }
-//End bank receipt email code//
-//Start Bank Payment (Accounts)//
+//End bank receipt//
+//Start Bank Payment//
 function bank_payment()
 {
 if($this->RequestHandler->isAjax()){
@@ -1094,8 +1092,7 @@ $cursor13=$this->accounts_group->find('all',array('conditions'=>$conditions));
 $this->set('cursor13',$cursor13);
 
 }
-
-//End Bank Payment(Accounts)//
+//End Bank Payment//
 //Start Bank Payment View (Accounts)//
 function bank_payment_view()
 {
@@ -1352,7 +1349,6 @@ $show_vouch=array(1,$show_voucher);
 $this->Session->write('petty_cash_receipt',$show_vouch);
 $this->redirect(array('controller' => 'Cashbanks','action'=>'petty_cash_receipt_view'));
 }		
-
 }
 //End Petty Cash Receipt (Accounts)//
 //Start Petty Cash Receipt Show Ajax (Accounts)//
@@ -1401,18 +1397,11 @@ if($this->RequestHandler->isAjax()){
 $this->ath();
 $this->check_user_privilages();	
 	
-	
 $s_role_id=$this->Session->read('role_id');
 $s_society_id = $this->Session->read('society_id');
 $s_user_id=$this->Session->read('user_id');
-
 $this->set('s_role_id',$s_role_id);
-
-
-
-
 }
-
 //End Petty Cash Receipt View (Accounts)//
 //Start Petty cash receipt excel//
 function petty_cash_receipt_excel()

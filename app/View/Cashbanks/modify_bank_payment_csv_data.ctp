@@ -125,6 +125,7 @@
 					break;				
 			  }
 			}
+			
 			$tds_amount = (round(($tax_tds/100)*$amount));
 			$total_tds_amount=($amount - $tds_amount);
 			}else{

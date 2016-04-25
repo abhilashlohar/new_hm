@@ -241,8 +241,8 @@ $(document).ready(function(){
 			var date=$(this).closest('td').find('input[name="date[]"]').val();
 		if(mode=="cheque"){
 		var drawn=$(this).closest('td').find('input[name="drown_in_which_bank[]"]').val();
-			var branch=$(this).closest('td').find('input[name="branch_of_bank[]"]').val();	
-			if(cheque_number=="" || date=="" || drawn=="" || branch==""){
+			
+			if(cheque_number=="" || date=="" || drawn==""){
 			 $(this).closest('td').find(".er").remove();
 			  $(this).closest('td').append('<span class="er">Required</span>');
 				allow="no";

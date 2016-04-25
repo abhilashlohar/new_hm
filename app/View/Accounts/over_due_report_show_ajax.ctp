@@ -44,7 +44,7 @@ $new_intrest_on_arrears = @$collection['regular_bill']['new_intrest_on_arrears']
 $new_total = @$collection['regular_bill']['new_total'];
 }
 	$total_debit=0; $total_credit=0;
-	$ledger_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id_via_regular_bill)));		
+	$ledger_detail = $this->requestAction(array('controller'=>'Fns','action' => 'ledger_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id_via_regular_bill)));		
 	foreach($ledger_detail as $data){
 	$debit = $data['ledger']['debit'];	
 	$credit = $data['ledger']['credit'];
@@ -156,7 +156,7 @@ $due_amt2 = number_format($due_amt);
 		<a class="btn blue mini" href="#" data-toggle="dropdown">
 		<i class="icon-chevron-down"></i>	
 		</a><ul class="dropdown-menu" style="min-width:80px !important;">
-		<li><a href="regular_bill_view/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i> View</a></li>
+		<li><a href="<?php echo $webroot_path; ?>Incometrackers/regular_bill_view/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i> View</a></li>
 		</ul>
 		</div>
 	</td>
@@ -182,7 +182,7 @@ $due_amt2 = number_format($due_amt); ?>
 		<a class="btn blue mini" href="#" data-toggle="dropdown">
 		<i class="icon-chevron-down"></i>	
 		</a><ul class="dropdown-menu" style="min-width:80px !important;">
-		<li><a href="regular_bill_view/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i> View</a></li>
+		<li><a href="<?php echo $webroot_path; ?>Incometrackers/regular_bill_view/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i> View</a></li>
 		</ul>
 		</div>
 	</td>

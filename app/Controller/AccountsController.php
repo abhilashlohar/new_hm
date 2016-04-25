@@ -1226,7 +1226,7 @@ function over_due_report_show_ajax()
 	$s_role_id=$this->Session->read('role_id');
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');
-
+    $this->ath();
 		$this->loadmodel('society');
 		$conditions=array("society_id" => $s_society_id);
 		$cursor = $this->society->find('all',array('conditions'=>$conditions));
@@ -1263,6 +1263,7 @@ function over_due_report_show_ajax()
 	$conditions=array("society_id"=> $s_society_id);
 	$cursor1=$this->regular_bill->find('all',array('conditions'=>$conditions));
 	$this->set('cursor1',$cursor1);	
+	
 }
 //End over due report show ajax(Accounts)//
 //Start OverDue Excel//

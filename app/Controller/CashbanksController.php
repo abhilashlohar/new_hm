@@ -1806,18 +1806,14 @@ $this->set('i_head',$i_head);
 function bank_receipt_pdf($auto_id=null)
 {
 $this->layout = 'pdf'; //this will use the pdf.ctp layout 
-
 $this->ath();
-
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');	
-
-$auto_id = (int)$auto_id;
-
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id = (int)$this->Session->read('user_id');	
+	$s_role_id=$this->Session->read('role_id');
+		$s_society_id = (int)$this->Session->read('society_id');
+			$s_user_id=$this->Session->read('user_id');	
+				$auto_id = (int)$auto_id;
+					$s_role_id=$this->Session->read('role_id');
+						$s_society_id = (int)$this->Session->read('society_id');
+							$s_user_id = (int)$this->Session->read('user_id');	
 
 
 $this->loadmodel('new_cash_bank');
@@ -1829,9 +1825,9 @@ $this->loadmodel('society');
 $conditions=array("society_id" => $s_society_id);
 $cursor2=$this->society->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
-
 }
-
+//End Bank Receipt Pdf (Accounts)//
+//Start b_receipt_view//
 function b_receipt_view()
 {
 $this->layout = 'session'; //this will use the pdf.ctp layout 
@@ -1857,10 +1853,8 @@ $this->loadmodel('society');
 $conditions=array("society_id" => $s_society_id);
 $cursor2=$this->society->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
-
-
-
 }
+//End b_receipt_view//
 //Start b_receipt_edit//
 function b_receipt_edit($transaction_id=null){
 	if($this->RequestHandler->isAjax()){
@@ -2310,7 +2304,7 @@ $this->send_email($to_email,'accounts@housingmatters.in','HousingMatters',$subje
 	   
 	}
 }
-//End Bank Receipt Pdf (Accounts)//
+//End b_receipt_edit//
 //Start Cash Bank Vali (Accounts)//
 function cash_bank_vali()
 {
@@ -2322,9 +2316,8 @@ $s_user_id=$this->Session->read('user_id');
 $cc = (int)$this->request->query('ss');
 $this->set('cc',$cc);
 }
-/////////////////// End Cash Bank Vali (Accounts) ////////////////////////////////////////
-
-//////////////////////////// Start Bank Receipt ajax (Accounts)///////////////////////
+//End Cash Bank Vali (Accounts)//
+//Start Bank Receipt ajax (Accounts)//
 function bank_receipt_ajax()
 {
 $this->layout = 'blank';
@@ -2346,7 +2339,7 @@ $cursor1=$this->ledger_sub_account->find('all',array('conditions'=>$conditions))
 $this->set('cursor1',$cursor1);
 
 }
-// End bank receipt Ajax (Accounts)//
+//End bank receipt Ajax (Accounts)//
 //Start tds Bank Payment Ajax (Accounts)//
 function bank_payment_tds_ajax()
 {
@@ -2381,9 +2374,8 @@ echo $charge;
 //$total_amount = round($amount - $tds_charge); 
 //$this->set('total_amount',$total_amount);
 }
-/////////////////////// End tds bank Payment Ajax (Accounts)///////////////////////
-
-/////////////////////// Start bank_payment_type_json_ajax ////////////////////////////////
+//End tds bank Payment Ajax (Accounts)//
+//Start bank_payment_type_json_ajax//
 function bank_payment_type_json_ajax()
 {
 $this->layout='blank';
@@ -2412,22 +2404,19 @@ $conditions=array("accounts_id" => 4);
 $cursor3=$this->accounts_group->find('all',array('conditions'=>$conditions));
 $this->set('cursor3',$cursor3);
 }
-/////////////////////// End bank_payment_type_json_ajax ////////////////////////////////
-////////////////////////// Start Bank Payment Type Ajax////////////////////////////////////
+//End bank_payment_type_json_ajax//
+//Start Bank Payment Type Ajax//
 function bank_payment_type_ajax()
 {
 $this->layout='blank';
 $s_role_id=$this->Session->read('role_id');
-$s_society_id = $this->Session->read('society_id');
+$s_society_id=(int)$this->Session->read('society_id');
 $s_user_id=$this->Session->read('user_id');
 
-$type= (int)$this->request->query('type');
-$ussidd= (int)@$this->request->query('ussidd');
-$this->set('type',$type);
-$this->set('ussidd',$ussidd);
-
-
-
+	$type= (int)$this->request->query('type');
+		$ussidd= (int)@$this->request->query('ussidd');
+			$this->set('type',$type);
+				$this->set('ussidd',$ussidd);
 
 $this->loadmodel('ledger_sub_account');
 $conditions=array("ledger_id" => 15);
@@ -2641,29 +2630,24 @@ function fixed_diposit_show_ajax()
 {
 $this->layout='blank';
 $s_role_id=$this->Session->read('role_id');
-$s_society_id = $this->Session->read('society_id');
+$s_society_id=(int)$this->Session->read('society_id');
 $s_user_id=$this->Session->read('user_id');
 
 $this->ath();
 
-$from = $this->request->query('date1');
-$to = $this->request->query('date2');
-
-$this->set('from',$from);
-$this->set('to',$to);
-
-
-$from = date('Y-m-d',strtotime($from));
-$to = date('Y-m-d',strtotime($to));
-
-$from = strtotime($from);
-$to = strtotime($to);
+	$from = $this->request->query('date1');
+		$to = $this->request->query('date2');
+			$this->set('from',$from);
+				$this->set('to',$to);
+					$from = date('Y-m-d',strtotime($from));
+						$to = date('Y-m-d',strtotime($to));
+							$from = strtotime($from);
+								$to = strtotime($to);
 
 $this->loadmodel('fix_deposit');
 $conditions=array('society_id'=>$s_society_id,"matured_status"=>1,'fix_deposit.start_date'=>array('$gte'=>$from,'$lte'=>$to));
 $cursor1=$this->fix_deposit->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
-
 
 $this->loadmodel('society');
 $conditions=array("society_id" => $s_society_id);
@@ -2680,13 +2664,13 @@ function bank_payment_json()
 {
 $this->layout="";
 $this->ath();
-$s_society_id=$this->Session->read('hm_society_id');
-$s_user_id=$this->Session->read('hm_user_id');
-$date=date('d-m-Y');
-$time = date(' h:i a', time());
-$q=$this->request->query('q');
-$q = html_entity_decode($q);
-$myArray = json_decode($q, true);
+	$s_society_id=$this->Session->read('hm_society_id');
+		$s_user_id=$this->Session->read('hm_user_id');
+			$date=date('d-m-Y');
+				$time = date(' h:i a', time());
+					$q=$this->request->query('q');
+						$q = html_entity_decode($q);
+							$myArray = json_decode($q, true);
 
 $c = 0;
 foreach($myArray as $child)
@@ -2993,11 +2977,11 @@ function fix_deposit_json()
 {
 $this->layout='blank';
 	$s_society_id = (int)$this->Session->read('hm_society_id');
-	$s_user_id = (int)$this->Session->read('hm_user_id');
-	$post_data=$this->request->data;
-    $this->ath();
-    $q=$post_data['myJsonString'];
-		$myArray = json_decode($q, true);
+		$s_user_id = (int)$this->Session->read('hm_user_id');
+			$post_data=$this->request->data;
+				$this->ath();
+					$q=$post_data['myJsonString'];
+						$myArray = json_decode($q, true);
 		$c=0;
 foreach($myArray as $child){
 $c++;
@@ -3242,18 +3226,16 @@ $rrr = implode(',',$rr);
 
 $output = json_encode(array('type'=>'success', 'text' => 'fixed deposit #'.$rrr.' generated successfully'));
 die($output);
-
-
 }
 // End Fix Deposit Jason //
 // Start Matured Deposit View //
 function matured_deposit_view()
 {
-if($this->RequestHandler->isAjax()){
-$this->layout='blank';
-}else{
-$this->layout='session';
-}
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
 
 $this->ath();
 $this->check_user_privilages();
@@ -3306,17 +3288,16 @@ $society_name = $dataa['society']['society_name'];
 $this->set('society_name',$society_name);
 
 }
-///////////////////////////////// End Matured Deposit View /////////////////////////////////////////////////
-
-////////////////////////////////// Start Fix Deposit view (Active) Excel///////////////////////////////////////////
+//End Matured Deposit View//
+//Start Fix Deposit view (Active) Excel//
 function fix_deposit_excel()
 {
 $this->layout="";
 $this->ath();
 
-$s_society_id = (int)$this->Session->read('hm_society_id');
-$s_role_id= (int)$this->Session->read('role_id');
-$s_user_id= (int)$this->Session->read('hm_user_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+		$s_role_id= (int)$this->Session->read('role_id');
+			$s_user_id= (int)$this->Session->read('hm_user_id');
 
 $this->loadmodel('society');
 $conditions=array("society_id" => $s_society_id);
@@ -3397,31 +3378,27 @@ $excel.="<tr><td colspan='7' style='text-align:right;'><b>Total</b></td>
 
 echo $excel;
 }
-////////////////////////////////// Start Fix Deposit view (Active) Excel///////////////////////////////////////////
-/////////////////////////////////// Start Edit PCP //////////////////////////////////////////////////////////////
+//End Fix Deposit view (Active) Excel//
+//Start Edit PCP//
 function edit_pcp($rr_id)
 {
-if($this->RequestHandler->isAjax()){
+	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
 	}else{
 	$this->layout='session';
 	}
 	
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id = (int)$this->Session->read('user_id');	
-
-
-
+	$s_role_id=$this->Session->read('role_id');
+		$s_society_id = (int)$this->Session->read('society_id');
+			$s_user_id = (int)$this->Session->read('user_id');	
 
 $this->loadmodel('cash_bank');
 $conditions=array("society_id" => $s_society_id,"module_id"=>4,"receipt_id"=>$rr_id);
 $cursor1 = $this->cash_bank->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
-
 }
-/////////////////////////////////// End Edit PCP //////////////////////////////////////////////////////////////
-/////////////////////////////////// Start bank_receipt_import ////////////////////////////////////////////////////////
+//End Edit PCP//
+//Start bank_receipt_import//
 function bank_receipt_import()
 {
 $this->layout="";
@@ -3444,9 +3421,8 @@ $excel.="12-5-2015,Cheque,55434,Hiran Magri,445566H,SBBJ,SBBJ,25-5-2015,Abhilash
 
 echo $excel;
 }
-/////////////////////////////// End bank_receipt_import ////////////////////////////////////////////////////////////
-
-////////////////////////////// Start bank_receipt_import_ajax //////////////////////////////////////////////////////////
+//End bank_receipt_import//
+//Start bank_receipt_import_ajax//
 function bank_receipt_import_ajax()
 {
 $this->layout="blank";
@@ -3556,18 +3532,17 @@ $this->loadmodel('ledger_sub_account');
 $conditions=array("society_id" => $s_society_id,"ledger_id"=>34);
 $cursor2 = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 $this->set('cursor2',$cursor2);
-
 }
-////////////////////////////// End bank_receipt_import_ajax //////////////////////////////////////////////////////////
-///////////////////////////////// Start Save bank Imp ///////////////////////////////////////////////////////////////
+//End bank_receipt_import_ajax//
+//Start Save bank Imp//
 function save_bank_imp()
 {
 $this->layout='blank';
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id = (int)$this->Session->read('user_id');
-$this->ath();
-$q=$this->request->query('q'); 
-$myArray = json_decode($q, true);
+	$s_society_id = (int)$this->Session->read('society_id');
+		$s_user_id = (int)$this->Session->read('user_id');
+			$this->ath();
+				$q=$this->request->query('q'); 
+					$myArray = json_decode($q, true);
 
 $r=1;
 foreach($myArray as $child){
@@ -4096,23 +4071,21 @@ $this->Session->write('bank_rrr2',1);
 $output=json_encode(array('report_type'=>'done','text'=>'Please Fill Date in row'));
 die($output);
 }
-///////////////////////////////// End Save bank Imp ///////////////////////////////////////////////////////////////
-///////////////////////////// Start bank receipt html view //////////////////////////////////////////////////////////////
+//End Save bank Imp//
+//Start bank receipt html view//
 function bank_receipt_html_view($auto_id=null)
 {
-if($this->RequestHandler->isAjax()){
-$this->layout='blank';
-}else{
-$this->layout='session';
-}
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
  
-$this->ath();
-  
-$auto_id = (int)$auto_id;
-
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('hm_society_id');
-$s_user_id = (int)$this->Session->read('hm_user_id');	
+	$this->ath();
+		$auto_id = (int)$auto_id;
+			$s_role_id=$this->Session->read('role_id');
+				$s_society_id = (int)$this->Session->read('hm_society_id');
+					$s_user_id = (int)$this->Session->read('hm_user_id');	
 
 
 $this->loadmodel('cash_bank');
@@ -4136,11 +4109,11 @@ function bank_receipt_deposit_slip()
 	$this->layout='session';
 	}
 	$s_role_id=$this->Session->read('hm_role_id');
-	$s_society_id = (int)$this->Session->read('hm_society_id');
-	$s_user_id = (int)$this->Session->read('hm_user_id');
-	$this->set('s_role_id',$s_role_id);
-	$this->ath();
-	$this->check_user_privilages();
+		$s_society_id = (int)$this->Session->read('hm_society_id');
+			$s_user_id = (int)$this->Session->read('hm_user_id');
+				$this->set('s_role_id',$s_role_id);
+					$this->ath();
+						$this->check_user_privilages();
 
 if(isset($this->request->data['dep_slip']))
 {
@@ -4169,14 +4142,12 @@ $this->loadmodel('cash_bank');
 $conditions=array('society_id'=>$s_society_id,"source"=>"bank_receipt");
 $cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
-
-
 }
 //End Bank Receipt Deposit Slip//
 //Start print_deposit_slip//
 function print_deposit_slip()
 {
-$this->layout='blank';
+	$this->layout='blank';
 }
 //End print_deposit_slip//
 //Start petty_cash_payment_html_view//
@@ -4188,10 +4159,10 @@ function petty_cash_payment_html_view($auto_id=null)
 	$this->layout='session';
 	}
 	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('hm_society_id');
-	$s_user_id = (int)$this->Session->read('hm_user_id');
-	$this->ath();
-	$auto_id = (int)$auto_id;
+		$s_society_id = (int)$this->Session->read('hm_society_id');
+			$s_user_id = (int)$this->Session->read('hm_user_id');
+				$this->ath();
+					$auto_id = (int)$auto_id;
 
 	$this->loadmodel('cash_bank');
 	$conditions=array("transaction_id"=>$auto_id,"source"=>"petty_cash_payment","society_id"=>$s_society_id);
@@ -4214,10 +4185,10 @@ function petty_cash_receipt_html_view($auto_id=null)
 	$this->layout='session';
 	}
 	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('hm_society_id');
-	$s_user_id = (int)$this->Session->read('hm_user_id');
-	$this->ath();
-	$auto_id = (int)$auto_id;
+		$s_society_id = (int)$this->Session->read('hm_society_id');
+			$s_user_id = (int)$this->Session->read('hm_user_id');
+				$this->ath();
+					$auto_id = (int)$auto_id;
 
 	$this->loadmodel('cash_bank');
 	$conditions=array("transaction_id"=>$auto_id,"source"=>"petty_cash_receipt","society_id"=>$s_society_id);
@@ -4434,13 +4405,11 @@ function bank_payment_html_view($auto_id=null)
 		}
 	
 	$s_role_id = (int)$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('hm_society_id');
-	$s_user_id = (int)$this->Session->read('hm_user_id');	
-
-	$auto_id=(int)$auto_id;
-	$this->ath();
+		$s_society_id = (int)$this->Session->read('hm_society_id');
+			$s_user_id = (int)$this->Session->read('hm_user_id');	
+				$auto_id=(int)$auto_id;
+					$this->ath();
 	
-
 		$this->loadmodel('cash_bank');
 		$conditions=array("transaction_id"=>$auto_id,"source"=>"bank_payment","society_id"=>$s_society_id);
 		$cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions));
@@ -4594,22 +4563,20 @@ function petty_cash_payment_json()
 {
 $this->layout="";
 $this->ath();
-$s_society_id=$this->Session->read('hm_society_id');
-$s_user_id=$this->Session->read('hm_user_id');
-$date=date('d-m-Y');
-$time = date(' h:i a', time());
-
-$q=$this->request->query('q');
-$q = html_entity_decode($q);
-$myArray = json_decode($q, true);
-$c = 0;
-foreach($myArray as $child)
-{
-$c++;
-	if(empty($child[0])){
-	$output = json_encode(array('type'=>'error','text'=>'Transaction Date is Required in row '.$c));
-	die($output);
-	}	
+	$s_society_id=(int)$this->Session->read('hm_society_id');
+		$s_user_id=(int)$this->Session->read('hm_user_id');
+			$date=date('d-m-Y');
+				$time = date(' h:i a', time());
+					$q=$this->request->query('q');
+						$q = html_entity_decode($q);
+							$myArray = json_decode($q, true);
+		$c = 0;
+		foreach($myArray as $child){
+		$c++;
+		if(empty($child[0])){
+		$output = json_encode(array('type'=>'error','text'=>'Transaction Date is Required in row '.$c));
+		die($output);
+		}	
 
 
         $TransactionDate = $child[0];
@@ -4718,18 +4685,18 @@ die($output);
 function petty_cash_receipt_update_json()
 {
 $this->layout=null;
-$post_data=$this->request->data;
-$this->ath();
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+	$post_data=$this->request->data;
+		$this->ath();
+			$s_society_id=(int)$this->Session->read('society_id');
+				$s_user_id=(int)$this->Session->read('user_id');
 
-$transaction_date = $post_data['dddd'];
-$acgroup = (int)$post_data['actpp'];
-$party_acc = (int)$post_data['usssr'];
-$achddd = (int)$post_data['acheadd'];
-$amttt = $post_data['amttt'];
-$narration = $post_data['nrrr'];
-$element_id = (int)$post_data['elidd'];
+	$transaction_date = $post_data['dddd'];
+	  $acgroup = (int)$post_data['actpp'];
+		$party_acc = (int)$post_data['usssr'];
+		  $achddd = (int)$post_data['acheadd'];
+			$amttt = $post_data['amttt'];
+			  $narration = $post_data['nrrr'];
+				$element_id = (int)$post_data['elidd'];
 
 $report = array();
 if(empty($transaction_date)){
@@ -4796,8 +4763,6 @@ die($output);
 function bank_payment_import_excel()
 {
 $this->layout="";
-
-
 $filename="Bank_Payment_Import";
 header ("Expires: 0");
 header ("Last-Modified: " . gmdate("D,d M YH:i:s") . "GMT");
@@ -4807,12 +4772,10 @@ header ("Content-type: application/vnd.ms-excel");
 header ("Content-Disposition: attachment; filename=".$filename.".csv");
 header ("Content-Description: Generated Report" );
 
-
 $this->ath();
-
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id = (int)$this->Session->read('user_id');
+	$s_role_id=$this->Session->read('role_id');
+		$s_society_id = (int)$this->Session->read('society_id');
+			$s_user_id = (int)$this->Session->read('user_id');
 
 
 $excel = "Transaction Date,Ledger A/c,Amount,TDS in Percentage,Mode of Payment,Instrument/UTR,Bank Account,Invoice Reference,Narration \n";
@@ -4927,14 +4890,13 @@ $cursor13=$this->accounts_group->find('all',array('conditions'=>$conditions));
 $this->set('cursor13',$cursor13);
 
 }
-/////////////////////////////////// End bank_payment_import_view //////////////////////////////////////////////
-
-/////////////////////////////////// Start save_bank_payment_imp //////////////////////////////////////////////
+//End bank_payment_import_view//
+//Start save_bank_payment_imp//
 function save_bank_payment_imp()
 {
 	$this->layout='blank';
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id = (int)$this->Session->read('user_id');
+		$s_society_id = (int)$this->Session->read('hm_society_id');
+			$s_user_id = (int)$this->Session->read('hm_user_id');
 	
 	$this->ath();
 	
@@ -5135,9 +5097,9 @@ die($output);
 //Start bank_payment_add_row// 
 function bank_payment_add_row()
 {
-$this->layout='blank';
-$s_society_id = (int)$this->Session->read('hm_society_id');
-$s_user_id = (int)$this->Session->read('hm_user_id');
+	$this->layout='blank';
+		$s_society_id = (int)$this->Session->read('hm_society_id');
+			$s_user_id = (int)$this->Session->read('hm_user_id');
 
 $this->ath();
 
@@ -5187,9 +5149,9 @@ $this->set('cursor13',$cursor13);
 function show_deposit_slip()
 {
 $this->layout='session';
-$s_society_id = (int)$this->Session->read('hm_society_id');
-$s_user_id = (int)$this->Session->read('hm_user_id');
-$this->ath();
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+		$s_user_id = (int)$this->Session->read('hm_user_id');
+			$this->ath();
 
 	$this->loadmodel('society');
 	$conditions=array("society_id" =>$s_society_id);
@@ -5214,6 +5176,7 @@ $bank_account = $data['ledger_sub_account']['bank_account'];
 $this->set('bank_account',$bank_account);
 }
 //End show_deposit_slip//
+//Start new_cash_receipt_add// 
 function new_cash_receipt_add(){
 	
 $this->layout="blank";
@@ -5225,23 +5188,20 @@ $conditions=array("ledger_id" => 33,"society_id"=>$s_society_id);
 $result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 $this->set('result_ledger_sub_account',$result_ledger_sub_account);
 }
-
-
+//End new_cash_receipt_add//
 //Start new_bank_receipt//
 function new_bank_receipt(){
 	
-	if($this->RequestHandler->isAjax())
-	{
+	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
 	}else{
 	$this->layout='session';
 	}
 
 	$this->ath();
-	$this->check_user_privilages();
-
-	$s_society_id = (int)$this->Session->read('hm_society_id');
-	$s_user_id = (int)$this->Session->read('hm_user_id');
+		$this->check_user_privilages();
+			$s_society_id = (int)$this->Session->read('hm_society_id');
+				$s_user_id = (int)$this->Session->read('hm_user_id');
 	
 	$this->loadmodel('financial_year');
 	$conditions=array("society_id" => $s_society_id,"status"=>1);
@@ -5592,9 +5552,8 @@ $this->set('flat_id',$flat_id);
 $this->set('type',$type);
 $this->set('ccc',$ccc);
 }
-///////////////////////////////////// End bank_receipt_mode_ajax //////////////////////////////////////
-
-////////////////////////// Start bank_receipt_json /////////////////////////////////////////////////////
+//End bank_receipt_mode_ajax//
+//Start bank_receipt_json//
 function bank_receipt_json()
 {
 		$this->layout='blank';
@@ -6334,31 +6293,31 @@ $this->Session->write('new_bank_rrr', 1);
 $output = json_encode(array('type'=>'success', 'text' => 'The Bank Receipt #'.$arr_rrr.' Generated Sucessfully'));
 die($output);
 }
-////////////////////////// End bank_receipt_json //////////////////////////////
-////////////////////////////// Start new_bank_receipt_reference_ajax ///////////
+//End bank_receipt_json//
+//Start new_bank_receipt_reference_ajax//
 function new_bank_receipt_reference_ajax()
 {
 $this->layout='blank';
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = $this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
-$this->ath();
-$flat_id = (int)$this->request->query('flat');
-$type = (int)$this->request->query('rf');
-$this->set('type',$type);
-$this->set('flat_id',$flat_id);
+	$s_role_id=$this->Session->read('role_id');
+		$s_society_id = $this->Session->read('society_id');
+			$s_user_id=$this->Session->read('user_id');
+				$this->ath();
+					$flat_id = (int)$this->request->query('flat');
+						$type = (int)$this->request->query('rf');
+							$this->set('type',$type);
+								$this->set('flat_id',$flat_id);
 }
 //End new_bank_receipt_reference_ajax//
 //Start petty_cash_payment_add_row//
 function petty_cash_payment_add_row()
 {
 $this->layout='blank';
-$s_role_id=$this->Session->read('hm_role_id');
-$s_society_id = $this->Session->read('hm_society_id');
-$s_user_id=$this->Session->read('hm_user_id');
-$this->ath();
-$count = (int)$this->request->query('con');
-$this->set('count',$count);
+	$s_role_id=$this->Session->read('hm_role_id');
+		$s_society_id = $this->Session->read('hm_society_id');
+			$s_user_id=$this->Session->read('hm_user_id');
+				$this->ath();
+					$count = (int)$this->request->query('con');
+						$this->set('count',$count);
 }
 //End petty_cash_payment_add_row//
 //Start Fixed Deposit Bar chart //
@@ -6370,37 +6329,28 @@ function fixed_deposit_bar_chart()
 	$this->layout='session';
 	}
 		$this->ath();
-		$this->check_user_privilages();
-		
-		$s_society_id=(int)$this->Session->read('society_id');
-		$s_user_id= (int)$this->Session->read('user_id');
-
-
+			$this->check_user_privilages();
+				$s_society_id=(int)$this->Session->read('society_id');
+					$s_user_id= (int)$this->Session->read('user_id');
 
 $this->loadmodel('fix_deposit');
 $conditions=array('society_id'=>$s_society_id,"matured_status"=>1);
 $cursor1=$this->fix_deposit->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
-
-
-
 }
-///////////////////////////////////// End Fixed Deposit Bar chart /////////////////////////////////////////////
-//////////////////////////////////// Start fixed_deposit_bar_chart_ajax ////////////////////////////////////////// 
+//End Fixed Deposit Bar chart//
+//Start fixed_deposit_bar_chart_ajax//
 function fixed_deposit_bar_chart_ajax()
 {
-$this->layout='blank';
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = $this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
-
-$this->ath();
-
-$from = $this->request->query('date1');
-$to = $this->request->query('date2');
-
-$this->set('from',$from);
-$this->set('to',$to);
+	$this->layout='blank';
+		$s_role_id=$this->Session->read('role_id');
+			$s_society_id = $this->Session->read('society_id');
+				$s_user_id=$this->Session->read('user_id');
+					$this->ath();
+						$from = $this->request->query('date1');
+							$to = $this->request->query('date2');
+								$this->set('from',$from);
+									$this->set('to',$to);
 
 
 $this->loadmodel('fix_deposit');

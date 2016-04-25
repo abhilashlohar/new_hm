@@ -581,8 +581,8 @@ $ledger_account_id = (int)$id_arr[0];
 		}}
 		}
 
-		$count=(int)$count/2;
-		$count_bank_receipt_converted=$count_bank_receipt_converted+$count;
+		//$count=(int)$count/2;
+		//$count_bank_receipt_converted=$count_bank_receipt_converted+$count;
 		
 		
 		

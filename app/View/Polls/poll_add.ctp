@@ -323,6 +323,12 @@ $(document).ready(function(){
 				element
 				.text('OK!').addClass('valid')
 				.closest('.control-group').removeClass('error').addClass('success');
+			},
+			submitHandler: function () {
+				
+				$("button[name=create_poll]").attr('disabled','disabled');
+				
+				 form.submit();
 			}
 		
 	  });

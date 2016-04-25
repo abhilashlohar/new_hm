@@ -167,8 +167,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	
 </div>
 		
-<div  style="margin-bottom:0px !important;">
-	<button type="submit" name="create_event" class="btn blue" style="font-size: 20px;padding: 12px;"><i class="icon-calendar"></i> Create Event</button>
+<div  style="margin-bottom:0px !important;" >
+	<div id="cer_ev"><button type="submit" name="create_event" class="btn blue" style="font-size: 20px;padding: 12px;"><i class="icon-calendar"></i> Create Event</button> </div>
 	 <div style="display:none;" id='wait'><img src="<?php echo $webroot_path; ?>as/fb_loading.gif" /> Please Wait...</div>
 </div>
 </form>
@@ -263,6 +263,7 @@ $(document).ready(function() {
 				m_data.append( 'sub_visible', wing_wise);
 			}
 		}
+		$("#cer_ev").hide();
 		
 		m_data.append( 'ask_no_of_member', $('input:checkbox[name=ask_no_of_member]:checked').val());
 		$(".form_post").addClass("disabled");
@@ -276,8 +277,9 @@ $(document).ready(function() {
 			type: 'POST',
 			dataType:'json',
 			}).done(function(response) {
-			//alert(response);
+			
 				if(response.report_type=='error'){
+					$("#cer_ev").show();
 					$(".remove_report").html('');
 						jQuery.each(response.report, function(i, val) {
 						$("label[report="+val.label+"]").html('<span style="color:red;">'+val.text+'</span>');

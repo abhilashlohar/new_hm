@@ -91,8 +91,8 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
                          
                            
                            <div class="form-actions">
-                              <input type="submit" name="sub" class="btn blue" value="Publish It" >
-                              <input type="submit" name="draft" class="btn blue" value="Save as Draft" >
+                              <input type="submit" name="sub" class="btn blue" value="Publish It">
+                              <input type="submit" name="draft" class="btn blue" value="Save as Draft">
                            </div>
                            </fieldset>
                         </form>
@@ -141,8 +141,13 @@ $(document).ready(function(){
 				element
 				.text('OK!').addClass('valid')
 				.closest('.control-group').removeClass('error').addClass('success');
+			},
+			submitHandler: function (form) {
+				
+				$("input[name=draft]").hide();
+				$("input[name=sub]").hide();
+				 form.submit();
 			}
-			
 	  });
 
 }); 

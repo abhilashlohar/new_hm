@@ -149,7 +149,7 @@ Ticket has been closed on <?php echo @$help_desk_close_date ;?>
 						<td><textarea class="m-wrap span12" id="asign_msg<?php echo $sp_id; ?>" style="height:80px;"><?php echo strip_tags($help_desk_description); ?></textarea></td>
 						</tr>
 						</tbody></table>
-						<div class="pull-right"><button type="button" onclick=assign_ticket(<?php echo $sp_id; ?>) class="btn blue">Assign Ticket</button></div>
+						<div class="pull-right assign_sub"><button type="button" onclick=assign_ticket(<?php echo $sp_id; ?>) class="btn blue">Assign Ticket</button></div>
 						</div>
 						
 						
@@ -174,7 +174,7 @@ Ticket has been closed on <?php echo @$help_desk_close_date ;?>
 						</tr>
 						
 						</tbody></table>
-						<div class="pull-right"><button type="button" value="<?php echo $sp_id ; ?>" class="btn blue sms_assign">Assign Ticket</button></div>
+						<div class="pull-right sms_hi"><button type="button" value="<?php echo $sp_id ; ?>" class="btn blue sms_assign">Assign Ticket</button></div>
 						</div>
 						
 						
@@ -203,7 +203,7 @@ Ticket has been closed on <?php echo @$help_desk_close_date ;?>
 	</div>
 	<div id="collapse_2" class="accordion-body collapse">
 		<div class="accordion-inner" style="border: solid 2px green; border-top:none;overflow: auto; background-color:#fff; ">
-			<form method="post">
+			<form method="post" class="close_sub">
 			<input type="hidden" value="<?php echo $hd_id; ?>" id="hd_id" name="hd_id">
 			 <table style="font-size:14px;" width="100%">
 				<tr>
@@ -308,7 +308,7 @@ function assign_ticket(sp_id)
 {
 
 	$(document).ready(function() {
-		
+				$(".assign_sub").hide();
 				var msg=encodeURIComponent($("#asign_msg"+sp_id).val());
 				var hd_id=$("#hd_id").val();
 				window.location.href = "<?php echo $this->webroot;?>Helpdesks/assign_ticket_to_sp?sp_id="+sp_id+"&msg="+msg+"&hd_id="+hd_id;
@@ -325,6 +325,14 @@ function assign_ticket(sp_id)
 	
 
 $(document).ready(function() {
+	$('form.close_sub').validate({
+		submitHandler: function () {
+
+				$("button[name=close]").attr('disabled','disabled');
+				 form.submit();
+			}
+	  });
+	
 	$("#reply123").bind('click',function(){
 			var r=$("#msg_reply").val();
 			var a=$("#hd_id").val();
@@ -358,7 +366,7 @@ $(document).ready(function() {
 	var r=$(this).val();
 	var z=$("#mob"+r).val();
 	var msg=encodeURIComponent($("#asign_sms"+r).val());
-	
+	$(".sms_hi").hide();
 	if(z=="")
 	{
 	$("#mob_er"+r).html("<span style='color:red;'>this field is required.</span>");

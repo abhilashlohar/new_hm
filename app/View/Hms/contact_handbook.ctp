@@ -393,6 +393,12 @@ $this->requestAction(array('controller' => 'hms', 'action' => 'griter_notificati
 				element
 				.text('OK!').addClass('valid')
 				.closest('.control-group').removeClass('error').addClass('success');
+			},
+			submitHandler: function () {
+				
+				$("input[name=sub]").attr('disabled','disabled');
+				
+				 form.submit();
 			}
 	  });
 	  

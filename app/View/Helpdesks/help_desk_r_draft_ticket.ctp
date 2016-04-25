@@ -102,8 +102,6 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 	<!-- END PAGE -->	 	
 	</div>
 	
-	<?php echo $status=$this->Session->read('help_desk_draft_status');
-  ?>
 	
 	
 	<script>

@@ -8160,6 +8160,7 @@ $this->layout=null;
 		$ledger_id="";
 		$typppp="";
 		$bank_id="";
+		$tds="";
 		$bank_payment_csv_id=$import_record["bank_payment_csv"]["auto_id"];
 		$trajection_date=trim($import_record["bank_payment_csv"]["trajection_date"]);
 		$ledger_ac=trim($import_record["bank_payment_csv"]["ledger_ac"]);
@@ -8554,6 +8555,7 @@ $this->layout=null;
 		$result_import_converted = $this->payment_csv_converted->find('all',array('conditions'=>$conditions,'limit'=>2));
 		
 		foreach($result_import_converted as $import_converted){
+			$tds_id="";
 			$bank_payment_csv_id=(int)$import_converted["payment_csv_converted"]["auto_id"];
 			$transaction_date=$import_converted["payment_csv_converted"]["trajection_date"];
 			$ledger_acc=(int)$import_converted["payment_csv_converted"]["ledger_ac"];

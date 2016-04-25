@@ -16,6 +16,7 @@
 	<?php
 			foreach($result_bank_receipt_converted as $data)
 			{
+			$tds="";
 			 $csv_auto_id = (int)$data['payment_csv_converted']['auto_id'];
 			   $transaction_date = $data['payment_csv_converted']['trajection_date'];	
 				$ledger_account_id = (int)$data['payment_csv_converted']['ledger_ac'];	

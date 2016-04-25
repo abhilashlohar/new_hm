@@ -108,9 +108,9 @@
 			{
 			$tds_sub_arr = $tds_arr[$k];	
 			$tds_id = (int)$tds_sub_arr[1];
-			$tds_tax = $tds_sub_arr[0];	
+			$tds_tax=$tds_sub_arr[0];	
 			?>
-			<option value= "<?php echo $tds_id; ?>" <?php if($tds_tax==$tds) { ?> selected="selected" <?php } ?>><?php echo $tds_tax; ?></option>
+			<option value= "<?php echo $tds_tax; ?>" <?php if($tds_tax==$tds) { ?> selected="selected" <?php } ?>><?php echo $tds_tax; ?></option>
 			<?php } ?>                           
 			</select>
 			<?php

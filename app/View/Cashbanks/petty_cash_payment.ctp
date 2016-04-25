@@ -32,7 +32,7 @@ $default_date = date('d-m-Y');
 		</table>
 		<button type="submit" class="btn blue pull-right" name="submit">Create Voucher</button>
 	</form>
-		<a href="#" role="button" id="add_row" class="btn"><i class="icon-plus"></i> Add Row</a>
+		<!--<a href="#" role="button" id="add_row" class="btn"><i class="icon-plus"></i> Add Row</a>-->
 </div>
 </div>
 
@@ -92,8 +92,13 @@ $default_date = date('d-m-Y');
 			</td>
 			
 			<td><input type="text" class="m-wrap span10" name="narration[]">
+			<div style="margin-top: -4px; margin-right: -5px;" class="pull-right">
+			<a style="" role="button" class="btn mini  remove_row" href="#"><i class="icon-trash"></i></a><br>
+			<a href="#" class="btn mini add_row" role="button"><i class="icon-plus"></i></a>
+			</div>
 			
-			<a style="margin-top: -4px; margin-right: -5px;" role="button" class="btn mini pull-right remove_row" href="#"><i class="icon-trash"></i></a></td>
+			
+			</td>
 		</tr>
 	</tbody>
 </table>

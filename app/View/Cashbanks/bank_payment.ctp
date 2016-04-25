@@ -34,7 +34,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		</table>
 		<button type="submit" class="btn blue pull-right" name="submit">Create Voucher</button>
 	</form>
-		<a href="#" role="button" id="add_row" class="btn"><i class="icon-plus"></i> Add Row</a>
+		<!--<a href="#" role="button" id="add_row" class="btn"><i class="icon-plus"></i> Add Row</a>-->
 </div>
 </div>	
 
@@ -112,7 +112,12 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			readonly="readonly" style="background-color:white !important; margin-top:2.5px;" Placeholder="Net Amount" name="net_amount[]">
 		 </td>
 		 <td>
-		 <a style="margin-top: -4px; margin-right: -5px;" role="button" class="btn mini pull-right remove_row" href="#"><i class="icon-trash"></i></a>
+		 <div style="margin-top: -4px; margin-right: -5px;" class="pull-right">
+		 <a style="" role="button" class="btn mini remove_row" href="#"><i class="icon-trash"></i></a><br>
+		 <a href="#" role="button" class="btn mini add_row"><i class="icon-plus"></i></a>
+		 </div>
+		 
+		 
 				<select class="m-wrap span10" name="bank_account[]">
 				<option value="" style="display:none;">Select</option>    
 				<?php
@@ -146,7 +151,7 @@ $(document).ready(function(){
 						$('#main tbody tr:last input[name="transaction_date[]"]').datepicker();
 	}
 	
-	$("#add_row").on("click",function(){
+	$(".add_row").die().live("click",function(){
 		add_row();
 	})
 	$(".remove_row").die().live("click",function(){

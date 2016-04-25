@@ -91,7 +91,9 @@ $default_date = date('d-m-Y');
 			<td><input type="text" class="m-wrap span12" maxlength="5" name="amount[]" style="text-align:right;" id="amount">
 			</td>
 			
-			<td><input type="text" class="m-wrap span10" name="narration[]"><a style="margin-top: -4px; margin-right: -5px;" role="button" class="btn mini pull-right remove_row" href="#"><i class="icon-trash"></i></a></td>
+			<td><input type="text" class="m-wrap span10" name="narration[]">
+			
+			<a style="margin-top: -4px; margin-right: -5px;" role="button" class="btn mini pull-right remove_row" href="#"><i class="icon-trash"></i></a></td>
 		</tr>
 	</tbody>
 </table>

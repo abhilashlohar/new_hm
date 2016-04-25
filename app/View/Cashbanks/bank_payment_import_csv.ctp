@@ -134,9 +134,9 @@ function final_import_bank_payment_ajax(){
 	$( document ).ready(function() {
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Cashbanks/final_import_bank_payment_ajax",
-			dataType: 'json'
+			//dataType: 'json'
 		}).done(function(response){
-			
+			alert(response);
 			//response = response.replace(/\s+/g,' ').trim();
 			//alert(response);
 			//alert(response.again_call_ajax);

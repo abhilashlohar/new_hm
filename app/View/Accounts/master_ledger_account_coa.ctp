@@ -59,9 +59,6 @@ $name = $collection['accounts_groups']['group_name'];
 </div>
 </form>
 
-
-<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
-
 <script>
 $(document).ready(function() {
 	$("#go").bind('change',function(){
@@ -122,6 +119,10 @@ $(document).ready(function(){
 				element
 				.text('OK!').addClass('valid')
 				.closest('.control-group').removeClass('error').addClass('success');
+			},
+			submitHandler: function () {
+				$("button[name=sub]").attr('disabled','disabled');
+			    form.submit();
 			}
 	  });
 

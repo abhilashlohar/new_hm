@@ -79,7 +79,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 <table class="table table-hover" style="background-color:#CDE9FE;" id="main_table">
 <tbody id="show_import_data">
 <tr>
-<td style="border:solid 1px blue;">
+<td style="">
                     
               <table class="table table-bordered" id="sub_table2">
                     
@@ -197,7 +197,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
                     </table>
 
 </td>
-<td style="border:solid 1px blue;vertical-align: middle;">
+<td style="vertical-align: middle;">
 <a class="btn green mini adrww" onclick="add_rowwwww()"><i class="icon-plus"></i></a><br>
 </td>
 </tr>

@@ -81,7 +81,7 @@ foreach($result_account_group as $data){
 </td>
 </tr>--> */ ?>
 <tr class="content_<?php echo $count; ?>">
- <td style="border:solid 1px blue;">
+ <td style="">
 
         <table class="table table-bordered" id="sub_table2">
                     
@@ -194,7 +194,7 @@ foreach($result_account_group as $data){
                     
                     </table>
                     </td>
-                    <td style="border:solid 1px blue;vertical-align: middle;">
+                    <td style="vertical-align: middle;">
 <a class="btn green mini adrww" onclick="add_rowwwww()"><i class="icon-plus"></i></a><br>
 <a  class="btn mini" onclick="delete_row(<?php echo $count; ?>)"><i class="icon-trash"></i></a><br>
 </td>

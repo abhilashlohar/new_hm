@@ -15,7 +15,7 @@
 <div id="validdn"></div> 
 <table class="table table-hover" style="background-color:#CDE9FE;" id="main_table">
 <tr>
-<td style="border:solid 1px blue;">
+<td style="">
          <table class="table table-bordered" id="subb_table">  
          
 		       <tr style="background-color:#E8EAE8;">
@@ -122,7 +122,7 @@
 
          </table>
 </td>
-<td style="border:solid 1px blue;vertical-align:middle;">
+<td style="vertical-align:middle;">
 <a class="btn green mini adrww" onclick="add_rowwss()"><i class="icon-plus"></i></a><br>
 </td>
 </tr>

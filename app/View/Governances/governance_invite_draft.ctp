@@ -449,7 +449,7 @@ $('form#contact-form').submit( function(ev){
 	m_data.append( 'any_other',any_other );
 	m_data.append( 'file', $('input[name=file]')[0].files[0]);
 	m_data.append( 'edit_attachment', $('#edit_att').val());
-	
+	$('button[name=send]').hide();
 	$.ajax({
 			url: "<?php echo $webroot_path ; ?>Governances/governance_invite_submit_draft",
 			data: m_data,
@@ -469,7 +469,7 @@ $('form#contact-form').submit( function(ev){
 				$("#output").html('<div class="alert alert-error">'+response.text+'</div>');
 				}
 				if(response.report_type=='error'){
-				
+					$('button[name=send]').show();
 					$(".remove_report").html('');
 						jQuery.each(response.report, function(i, val) {
 						$("label[report="+val.label+"]").html('<span style="color:red;">'+val.text+'</span>');

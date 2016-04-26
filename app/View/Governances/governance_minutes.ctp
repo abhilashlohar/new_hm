@@ -466,6 +466,8 @@ $('form#contact-form').submit( function(ev){
 		
 	}
 	
+	$('button[name=send]').hide();
+	
 	$.ajax({
 			url: "governance_minute_submit",
 			data: m_data,
@@ -486,7 +488,7 @@ $('form#contact-form').submit( function(ev){
 				
 				}
 				if(response.report_type=='error'){
-				
+					$('button[name=send]').show();
 					$(".remove_report").html('');
 						jQuery.each(response.report, function(i, val) {
 						$("label[report="+val.label+"]").html('<span style="color:red;">'+val.text+'</span>');

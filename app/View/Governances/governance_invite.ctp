@@ -272,9 +272,10 @@ Note: File size must be less than 2 MB and All extension are allowed.
 <label id="file"></label>				   
 
 
-
-	<button type="submit" name="send" class="btn blue test" value="1"><i class=" icon-envelope-alt "></i> Send</button>
-	<button type="submit" name="draft" class="btn blue test " value="2"><i class=" icon-envelope-alt "></i> Save as Draft</button>
+	<div id="hide_sub">
+		<button type="submit" name="send" class="btn blue test" value="1"><i class=" icon-envelope-alt "></i> Send</button>
+		<button type="submit" name="draft" class="btn blue test " value="2"><i class=" icon-envelope-alt "></i> Save as Draft</button>
+	</div>
 </form>
 
 </div>
@@ -497,7 +498,7 @@ $('form#contact-form').submit( function(ev){
 		comm.push([c]);
 		comments.push([d]);
 	}
-	
+	$("#hide_sub").hide();
 	m_data.append('meeting_agenda_time',time_ag);
 	m_data.append('meeting_agenda_input',comm );
 	m_data.append('meeting_agenda_textarea',comments);
@@ -533,7 +534,7 @@ $('form#contact-form').submit( function(ev){
 				$("#output").html('<div class="alert alert-error">'+response.text+'</div>');
 				}
 				if(response.report_type=='error'){
-				
+					$("#hide_sub").show();
 					$(".remove_report").html('');
 						jQuery.each(response.report, function(i, val) {
 						$("label[report="+val.label+"]").html('<span style="color:red;">'+val.text+'</span>');

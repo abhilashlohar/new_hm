@@ -25,6 +25,7 @@
 			<li>Flat Area Should be Numeric</li>
 			<li>It will be overlap on previous record</li>
 			<li>All Fields are not complusory</li>
+			<li>Flat Type should be predefined in system</li>
 			</ul><br/>
 			<h5 id="submit_element" >
 			<button type="submit" class="btn blue">IMPORT </button>

@@ -212,7 +212,7 @@ $(document).ready(function(){
 		ar.push([bank_name,branch,ac_reference,pricipal_amt,start_date,maturity_date,interest,purpose]);
 		
 		}
-		
+		$('.form-actions').hide();
 		var myJsonString = JSON.stringify(ar);
 		m_data.append('myJsonString',myJsonString);
 			$.ajax({
@@ -224,8 +224,8 @@ $(document).ready(function(){
 			dataType:'json',
 			}).done(function(response){
 					//alert(response);
-					if(response.type == 'error'){
-			
+		if(response.type == 'error'){
+			$('.form-actions').show();
 			 $("#validdn").html('<div class="alert alert-error" style="color:red; font-weight:600; font-size:13px;">'+response.text+'</div>');
 			$("html, body").animate({
 					 scrollTop:0

@@ -19,7 +19,13 @@
 			<h5>Upload CSV file in given format to import Unit configuration.</h5>
 			<input name="file" class="default" id="image-file" type="file">
 			 <label id="vali"></label>	
-			<a href="<?php echo $webroot_path; ?>Hms/unit_configuration_sample" download=""><b>Click here for sample format</b></a><br/><br/>
+			<a href="<?php echo $webroot_path; ?>Hms/unit_configuration_sample" download=""><b>Click here for sample format</b></a><br/>
+			<h6><b>Instructions</b></h6>
+			<ul>
+			<li>Flat Area Should be Numeric</li>
+			<li>It will be overlap on previous record</li>
+			<li>All Fields are not complusory</li>
+			</ul><br/>
 			<h5 id="submit_element" >
 			<button type="submit" class="btn blue">IMPORT </button>
 			</h5>

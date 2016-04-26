@@ -6370,25 +6370,20 @@ function matured_deposit_add()
 		}
 		
 		$this->ath();
-		$this->check_user_privilages();
-		
-		$s_society_id=(int)$this->Session->read('society_id');
-		$s_user_id= (int)$this->Session->read('user_id');
-
-		
-if(isset($this->request->data['sub']))
-{		
-$arr = array();	
-$this->loadmodel('fix_deposit');
-$conditions=array('society_id'=>$s_society_id,"matured_status"=>1);
-$cursor=$this->fix_deposit->find('all',array('conditions'=>$conditions));
-foreach($cursor as $dataaa)	
-{
-$receipt_id = (int)$dataaa['fix_deposit']['receipt_id'];
-$auto_id = (int)$dataaa['fix_deposit']['transaction_id'];
-$value = (int)@$this->request->data['app'.$auto_id];
-if($value == 1)
-{
+			$this->check_user_privilages();
+				$s_society_id=(int)$this->Session->read('hm_society_id');
+					$s_user_id= (int)$this->Session->read('hm_user_id');
+	if(isset($this->request->data['sub'])){		
+		$arr = array();	
+			
+	$this->loadmodel('fix_deposit');
+	$conditions=array('society_id'=>$s_society_id,"matured_status"=>1);
+	$cursor=$this->fix_deposit->find('all',array('conditions'=>$conditions));
+		foreach($cursor as $dataaa){
+		$receipt_id = (int)$dataaa['fix_deposit']['receipt_id'];
+		$auto_id = (int)$dataaa['fix_deposit']['transaction_id'];
+		$value = (int)@$this->request->data['app'.$auto_id];
+	if($value == 1){
 $arr[] = $receipt_id;
 $this->loadmodel('fix_deposit');
 $this->fix_deposit->updateAll(array('matured_status'=>2),array('transaction_id'=>$auto_id,"society_id"=>$s_society_id));

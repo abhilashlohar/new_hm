@@ -3180,7 +3180,7 @@ $this->set('sp_name',$collection3['service_provider']['sp_name']);
 }
 }
 
-
+//Start help_desk_reports//
 function help_desk_reports()
 {
 if($this->RequestHandler->isAjax()){
@@ -3191,13 +3191,13 @@ if($this->RequestHandler->isAjax()){
 	
 $this->ath();
 }
-
+//End help_desk_reports//
 function help_desk_report_1()
 {
 $this->layout='blank';
 $this->ath();
 
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 
 $d1=$this->request->query('d1');
 $d2=$this->request->query('d2');
@@ -3219,7 +3219,7 @@ function help_desk_report_2()
 $this->layout='blank';
 $this->ath();
 
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 
 $d1=$this->request->query('d1');
 $d2=$this->request->query('d2');
@@ -3242,7 +3242,7 @@ function help_desk_report_3()
 $this->layout='blank';
 $this->ath();
 
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 
 $d1=$this->request->query('d1');
 $d2=$this->request->query('d2');
@@ -3264,7 +3264,7 @@ function help_desk_report_4()
 $this->layout='blank';
 $this->ath();
 
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 
 $d1=$this->request->query('d1');
 $d2=$this->request->query('d2');
@@ -15398,7 +15398,7 @@ $this->layout='session';
 function contact_report()
 {
 $this->layout='session';
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $this->loadmodel('user');
 $conditions=array('society_id'=>$s_society_id);
 $result=$this->user->find('all',array('conditions'=>$conditions));
@@ -15431,14 +15431,12 @@ function log_all_report()
 
 function login_report_user()
 {
-
 $this->layout='session';
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $this->loadmodel('user');
 $conditions=array('society_id'=>$s_society_id);
 $result=$this->user->find('all',array('conditions'=>$conditions));
 $this->set('result_user',$result);
-
 }
 
 
@@ -15446,7 +15444,7 @@ function profile_report()
 {
 
 $this->layout='session';
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $this->loadmodel('user');
 $conditions=array('society_id'=>$s_society_id);
 $result=$this->user->find('all',array('conditions'=>$conditions));
@@ -15491,8 +15489,8 @@ function complaint_closed_report()
 {
 
 $this->layout="session";	
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $this->loadmodel('help_desk');
 $conditions=array("help_desk_status" =>1,"society_id" => $s_society_id);
 $order=array('help_desk.ticket_id'=> 'DESC');
@@ -15507,8 +15505,8 @@ $this->set('result_help_desk',$result);
 function complaint_open_report()
 {
 $this->layout="session";
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $this->loadmodel('help_desk');
 $conditions=array("help_desk_status" => 0,"society_id" => $s_society_id);
 $order=array('help_desk.ticket_id'=> 'DESC');
@@ -15521,11 +15519,9 @@ $this->set('result_help_desk',$result_help_desk);
 
 function sp_performance_report()
 {
-	
-
 $this->layout="session";
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
 
 if($this->request->is('post')) 

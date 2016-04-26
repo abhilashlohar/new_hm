@@ -36,10 +36,15 @@ foreach($result_user as $data)
 $i++;
 
  $user_name=$data['user']['user_name'];
- $da_user_id=$data['user']['user_id'];
-   $wing_id=$data['user']['wing'];
-   $flat_id=$data['user']['flat'];
-  $flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing_id,$flat_id)));
+ $da_user_id=(int)$data['user']['user_id'];
+ 
+		$user_flat=$this->requestAction(array('controller'=>'Fns','action'=>'user_flat_info_via_user_id'),array('pass' => array($da_user_id)));
+		foreach($user_flat as $data){
+		@$wing_id=(int)@$data['user_flat']['wing'];
+		@$flat_id=(int)@$data['user_flat']['flat'];	 
+		}
+  
+  $flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'), array('pass'=> array($wing_id,$flat_id)));
    $result_log=$this->requestAction(array('controller' => 'hms', 'action' => 'log_user'), array('pass' => array($da_user_id)));
    foreach($result_log as $data)
    {

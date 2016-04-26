@@ -560,7 +560,7 @@ function wing_flat_via_wing_id_and_flat_id($wing_id,$flat_id){
 		foreach($result2 as $data){
 	$flat_name=$data['flat']['flat_name'];
 	}
-	$flat_name=ltrim($flat_name,'0');
+	@$flat_name=ltrim(@$flat_name,'0');
 	if(!empty($wing_name) && !empty($flat_name)){
 		return @$wing_name.' '.@$flat_name;
 	}

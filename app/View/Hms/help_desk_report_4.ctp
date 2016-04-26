@@ -25,7 +25,7 @@ $help_desk_date=date("Y-m-d",strtotime(date("d-m-y",strtotime($help_desk_date)))
 $open=0;
 $open_and_assigned=0;
 $closed=0;
-if(sizeof($help_desk_result)==0){$help_desk_result=array();};
+if(sizeof(@$help_desk_result)==0){$help_desk_result=array();};
 foreach ($help_desk_result as $data) 
 {
 if($data['help_desk_status']==0 && $data['help_desk_service_provider_id']==0) { $open++;}

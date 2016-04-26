@@ -41,7 +41,7 @@ $default_date = date('d-m-Y');
 <div id="validdn"></div>
 <table class="table table-hover" style="background-color:#CDE9FE;" id="main_table">
  <tr>          
-   <td style="border:solid 1px blue;">
+   <td >
        <table class="table table-bordered" id="sub_tablll">		 
 		 <tr style="background-color:#E8EAE8;">
                <th style="width:20%;">Bank Name</th>
@@ -124,7 +124,7 @@ $default_date = date('d-m-Y');
      </td>
 			
 			
-			<td style="border:solid 1px blue;vertical-align:middle" >
+			<td style="vertical-align:middle" >
 			<a class="btn green mini adrww" onclick="fix_deposit_add_row()"><i class="icon-plus"></i></a><br>
 			</td>
 </tr>	 

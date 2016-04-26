@@ -3,7 +3,7 @@ $default_date = date('d-m-Y');
 ?>
 
  <tr class="content_<?php echo $count; ?>">          
-   <td style="border:solid 1px blue;">
+   <td style="">
        <table class="table table-bordered" id="sub_tablll">		 
 		 <tr style="background-color:#E8EAE8;">
                <th>Bank Name</th>
@@ -85,7 +85,7 @@ $default_date = date('d-m-Y');
      </td>
 			
 			
-			<td style="border:solid 1px blue;vertical-align:middle;">
+			<td style="vertical-align:middle;">
 			<a class="btn green mini adrww" onclick="fix_deposit_add_row()"><i class="icon-plus"></i></a><br>
 			 <a  class="btn mini" onclick="delete_rowwww(<?php echo $count; ?>)"><i class="icon-trash"></i></a><br>
 			</td>

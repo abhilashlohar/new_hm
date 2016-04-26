@@ -30,7 +30,7 @@ Designation
 <label >Designation Name <span style="font-size:12px; color:#999;"></span></label>
 <div class="controls">
 <input type="text" class="m-wrap span7" name="wing_name"  id="designation">
-<button type="submit" class="btn form_post" style="background-color: #09F; color:#fff;" value="xyz">Add Designation</button>
+<button type="submit" class="btn form_post" style="background-color: #09F; color:#fff;" name="gov_sub" value="xyz">Add Designation</button>
 <label report="win" class="remove_report"></label>
 
 </div>
@@ -93,7 +93,7 @@ $(document).ready(function() {
 	ev.preventDefault();
 	var m_data = new FormData();
 	m_data.append( 'designation', $("#designation").val());
-	
+	$('button[name=gov_sub]').hide();
 	$.ajax({
 			url: "governance_designation_ajax",
 			data: m_data,
@@ -104,6 +104,7 @@ $(document).ready(function() {
 			}).done(function(response) {
 			
 			if(response.report_type=='error'){
+				$('button[name=gov_sub]').show();
 					$(".remove_report").html('');
 						jQuery.each(response.report, function(i, val) {
 						$("label[report="+val.label+"]").html('<span style="color:red;">'+val.text+'</span>');

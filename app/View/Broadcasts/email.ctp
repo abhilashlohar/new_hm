@@ -328,6 +328,11 @@ messages: {
 		.text('OK!').addClass('valid')
 		.closest('.control-group').removeClass('error').addClass('success');
 	},
+	submitHandler: function () {
+				
+				$("button[name=send]").attr('disabled','disabled');
+			    form.submit();
+			}
 	
 });
 

@@ -371,6 +371,8 @@ var description=$("#main_table tr:nth-child("+i+") td:nth-child(1) #sub_table2 t
 
 ar.push([posting_date,date_of_invoice,due_date,ex_head,invoice_ref,party_ac,amt_inv,description]);
 			}
+			
+	$('.form-actions').hide();		
 	var myJsonString = JSON.stringify(ar);
 	m_data.append('myJsonString',myJsonString);
 	$.ajax({
@@ -384,7 +386,7 @@ ar.push([posting_date,date_of_invoice,due_date,ex_head,invoice_ref,party_ac,amt_
 				//alert(response);
 				$("#output").html(response);
 			if(response.report_type=='error'){
-			
+				$('.form-actions').show();
 					$("#output").html('<div class="alert alert-error" style="color:red; font-weight:600; font-size:13px;">'+response.text+'</div>');
 					 //setInterval(function(){ $("#output").html(''); }, 10000);
 					//$("#output").html('');

@@ -269,6 +269,8 @@ var allow="yes";
   
   if(allow=="no"){
 			e.preventDefault();
+		}else{
+		$("button[name=submit]").hide();	
 		} 
   
 });

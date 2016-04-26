@@ -4,13 +4,13 @@
 foreach ($result_tenant as $collection) 
 
 			{
-			 	$t_address=$collection['tenant']['t_address'];
-				$name=$collection['tenant']['name'];
-				$verification=$collection['tenant']['verification'];
-				$t_start_date=$collection['tenant']['t_start_date'];
-				$t_end_date=$collection['tenant']['t_end_date'];
-				 $t_agreement=$collection['tenant']['t_agreement'];
-				$t_police=$collection['tenant']['t_police'];
+			 	$t_address=@$collection['tenant']['t_address'];
+				$name=@$collection['tenant']['name'];
+				$verification=@$collection['tenant']['verification'];
+				$t_start_date=@$collection['tenant']['t_start_date'];
+				$t_end_date=@$collection['tenant']['t_end_date'];
+				 $t_agreement=@$collection['tenant']['t_agreement'];
+				$t_police=@$collection['tenant']['t_police'];
 			} 
 			
 		
@@ -87,7 +87,7 @@ foreach ($result_tenant as $collection)
                               <input type="submit" class="btn green " value="Update" name="sub" </div>
                            
                            </fieldset>
-                        </form>
+                     </form>
 					
 					
 					

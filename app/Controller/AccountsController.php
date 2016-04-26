@@ -1607,7 +1607,7 @@ $this->set('result_ledger',$result_ledger);
 //Start my_flat_bill_excel_export// 
 function my_flat_bill_excel_export($from=null,$to=null,$ledger_sub_account_id=null)
 {
-$this->layout=null;
+	$this->layout=null;
 	$this->ath();
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');
@@ -1620,34 +1620,29 @@ $this->layout=null;
 	$this->set("ledger_sub_account_id",$ledger_sub_account_id);
 	
 $this->loadmodel('society');
-$conditions=array("society_id" => $s_society_id);
+$conditions=array("society_id"=>$s_society_id);
 $result_societydattt=$this->society->find('all',array('conditions'=>$conditions));
 foreach($result_societydattt as $dataaaaa)
 {
 $society_name = $dataaaaa['society']['society_name'];
 }
 $sss_namm = str_replace(' ','-',$society_name);	
-	
 $filename="".$sss_namm."_My_Flat_Register_".$from."_".$to."";
-$filename = str_replace(' ', '_', $filename);
-$filename = str_replace(' ', '-', $filename);
 header ("Expires: 0");
-header ("border: 1");
-header ("Last-Modified: " . gmdate("D,d M YH:i:s") . "GMT");
+header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
 header ("Cache-Control: no-cache, must-revalidate");
 header ("Pragma: no-cache");
 header ("Content-type: application/vnd.ms-excel");
 header ("Content-Disposition: attachment; filename=".$filename.".xls");
 header ("Content-Description: Generated Report" );
 	
-	
 	$this->loadmodel('society');
-	$conditions=array("society_id" => $s_society_id);
+	$conditions=array("society_id"=>$s_society_id);
 	$result_society=$this->society->find('all',array('conditions'=>$conditions));
 	$this->set('result_society',$result_society);
 		
 	$this->loadmodel('ledger');
-	$conditions=array("society_id"=>$s_society_id,"ledger_account_id"=>34,"ledger_sub_account_id" => (int)$ledger_sub_account_id,'transaction_date'=> array('$gte' => strtotime($from),'$lte' => strtotime($to)));
+	$conditions=array("society_id"=>$s_society_id,"ledger_account_id"=>34,"ledger_sub_account_id"=>(int)$ledger_sub_account_id,'transaction_date'=> array('$gte'=> strtotime($from),'$lte'=>strtotime($to)));
 	$order=array('ledger.transaction_date'=>'ASC');
 	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
 	$this->set('result_ledger',$result_ledger);	

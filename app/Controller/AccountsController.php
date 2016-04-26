@@ -766,23 +766,25 @@ function master_financial_year()
 
 	$a=$this->autoincrement('financial_year','auto_id');
 	$this->loadmodel('financial_year');
-	$multipleRowData = Array( Array("auto_id" => $a, "from" => strtotime($m_from), "to" => strtotime($m_to),"user_id"=>$s_user_id, "status"=> 1, "society_id" => $s_society_id));
+	$multipleRowData = Array( Array("auto_id" => $a, "from" => strtotime($m_from), "to" => strtotime($m_to),"user_id"=>$s_user_id, "status"=> 1, "society_id"=>$s_society_id));
 
 	$this->financial_year->saveAll($multipleRowData); 
     $this->Session->write('ffyyyy', 1);
 	$this->redirect(array('action' => 'master_financial_period_status'));
 	 }
 		$this->loadmodel('financial_year');
-		$conditions=array("society_id" => $s_society_id);
+		$conditions=array("society_id"=>$s_society_id);
 		$order=array('financial_year.auto_id'=> 'ASC');
-		$cursor = $this->financial_year->find('all',array('conditions'=>$conditions,'order' =>$order));
+		$cursor = $this->financial_year->find('all',array('conditions'=>$conditions,'order'=>$order));
 		foreach($cursor as $collection)
 		{
 			$f_date = $collection['financial_year']['from'];
 			$t_date = $collection['financial_year']['to'];
-
-
-}
+			$f_d1=date('Y-m-d',($f_date));
+			$t_d1=date('Y-m-d',($t_date));
+			$this->set('fd1',$f_d1);
+			$this->set('td1',$t_d1);
+		}
 		
 }
 //End Master Financial Year(Accounts)//

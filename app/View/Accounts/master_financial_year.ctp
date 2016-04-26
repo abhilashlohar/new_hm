@@ -58,7 +58,6 @@ $tooo = date('31-3-'.$yyy.'');
 
 <div class="form-actions" style="background-color:#D7DACD;">
 <button type="submit" class="btn blue" name="sub1" id="go">Submit</button>
-<!--<button type="submit" class="btn green" name="sub1" value="xyz" id="go">Submit</button> -->
 <button type="reset" class="btn">Cancel</button>
 </div>
     
@@ -70,11 +69,9 @@ $tooo = date('31-3-'.$yyy.'');
 			  
 </center>
 
-<?php /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
 <script>
-
 $(document).ready(function(){
-		$.validator.setDefaults({ ignore: ":hidden:not(select)" });
+		$.validator.setDefaults({ ignore: ":hidden:not(select)"});
 		
 		$('#contact-form').validate({
 		
@@ -104,43 +101,15 @@ $(document).ready(function(){
 				element
 				.text('OK!').addClass('valid')
 				.closest('.control-group').removeClass('error').addClass('success');
+			},
+			submitHandler: function (){
+				$("button[name=sub1]").attr('disabled','disabled');
+			    form.submit();
 			}
 	  });
 
 }); 
 </script>
-
-
-<!--
-<div class="edit_div" style="display: none;">
-<div class="modal-backdrop fade in"></div>
-<div class="modal" id="poll_edit_content">
-<div class="modal-header">
-	<h4 id="myModalLabel1">Edit poll</h4>
-</div>
-<div class="modal-body">
-<div class="control-group">
-<label class="control-label">Description</label>
-<div class="controls">
-<textarea class="m-wrap span12" id="description">i have a support for this project develop. please give me your review. 
-thanks</textarea>
-</div>
-</div>
-<div class="control-group">
-<label class="control-label">Poll will be close after</label>
-<div class="controls">
-<input class="m-wrap" id="close_date" type="text" value="29-12-2014">
-</div>
-</div>
-			   
-</div>
-<div class="modal-footer">
-<button class="btn" id="close_edit">Close</button>
-<button class="btn blue save_edited_poll" poll_id="4">Save</button>
-</div>
-</div>
-</div>
--->
 
 	<script>
 		$(document).ready(function() {
@@ -150,14 +119,7 @@ thanks</textarea>
 		 var tod1 = document.getElementById("to").value;
          var fd1 = document.getElementById("fd1").value;
 		 var td1 = document.getElementById("td1").value;
-         
-		 //if(fromd1=== '') { $('#validate_result').html('<div style="background-color:white; color:red; padding:5px;">Please Fill from date</div>'); return false; }
-		 
-		 //if(tod1=== '') { $('#validate_result').html('<div style="background-color:white; color:red; padding:5px;">Please Fill to date</div>'); return false; }
-		 
-		 
-		 
-		 var fromd = fromd1.split("-").reverse().join("-");
+         var fromd = fromd1.split("-").reverse().join("-");
 		 var tod = tod1.split("-").reverse().join("-");
 		 if(fromd == "")
 		 {
@@ -179,7 +141,9 @@ thanks</textarea>
 		 }
 		 else
 		 {
-		 $("#result5").load("financial_vali_ajax?ss=" + 3 + "");	 
+		 $("#result5").load("financial_vali_ajax?ss=" + 3 + "");
+				 
+		
 		 }
 		
 		 
@@ -187,16 +151,5 @@ thanks</textarea>
 		});
 		});
 		</script>	
-
-
-
-
-
-
-
-
-
-
-
 
 

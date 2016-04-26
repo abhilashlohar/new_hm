@@ -38,8 +38,9 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <textarea class="span9 m-wrap" name="terms" style="resize:none;" rows="4" id="tem" placeholder="Please Type Remarks"></textarea>
 <label id="tem"></label>
 </div>
-<br />
-<input type="submit" class="btn green" value="Submit" name="sub">
+<br/>
+<button type="submit" class="btn green" name="sub"> Submit </button>
+<!--<input type="submit" class="btn green" value="Submit" name="sub">-->
 </form>
 </div>
 <div class="span7">
@@ -134,24 +135,28 @@ $(".edit_tems").live('click',function(){
 $(document).ready(function(){
 $.validator.setDefaults({ ignore: ":hidden:not(select)" });
 $('#contact-form').validate({
-errorElement: "label",
-errorPlacement: function(error, element) {
-error.appendTo('label#' + element.attr('id'));
-},
-rules: {
-terms: {
-required: true
-},
-},
-highlight: function(element) {
-$(element).closest('.control-group').removeClass('success').addClass('error');
-},
-success: function(element) {
-element
-.text('OK!').addClass('valid')
-.closest('.control-group').removeClass('error').addClass('success');
-}
-});
+	errorElement: "label",
+	errorPlacement: function(error, element) {
+	error.appendTo('label#' + element.attr('id'));
+	},
+	rules: {
+		terms: {
+		required: true
+		},
+	},
+	highlight: function(element) {
+		$(element).closest('.control-group').removeClass('success').addClass('error');
+	},
+	success: function(element) {
+		element
+		.text('OK!').addClass('valid')
+		.closest('.control-group').removeClass('error').addClass('success');
+	},
+		submitHandler: function () {
+				$("button[name=sub]").attr('disabled','disabled');
+			    form.submit();
+			}
+ });
 }); 
 </script>	
 

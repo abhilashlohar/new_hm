@@ -80,7 +80,7 @@ function import_bank_receipts_csv(){
 		$this->set("converted_per_im",($total_converted_records*100)/$total_records);
 	}
 }
-
+//Start Upload_Bank_receipt_csv_file// 
 function Upload_Bank_receipt_csv_file(){
 	$s_society_id = $this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');
@@ -102,7 +102,8 @@ function Upload_Bank_receipt_csv_file(){
 		die(json_encode("UPLOADED"));
 	}
 }
-
+//End Upload_Bank_receipt_csv_file// 
+//Start read_csv_file// 
 function read_csv_file(){
 	$this->layout=null;
 	$s_society_id = $this->Session->read('hm_society_id');
@@ -148,7 +149,7 @@ function read_csv_file(){
 	$this->import_record->updateAll(array("step2" => 1),array("society_id" => $s_society_id, "module_name" => "BR"));
 	die(json_encode("READ"));
 }
-
+//End read_csv_file//
 function convert_imported_data(){
 	$this->layout=null;
 	$s_society_id = $this->Session->read('hm_society_id');

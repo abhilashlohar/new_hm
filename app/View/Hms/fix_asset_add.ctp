@@ -129,7 +129,7 @@
 </table>
 <div class="form-actions">
 		
-		<button type="submit" class="btn form_post" style="background-color: #09F; color:#fff;" value="xyz">Submit</button>
+		<button type="submit" class="btn form_post"  style="background-color: #09F; color:#fff;" value="xyz">Submit</button>
 		<div style="display:none;" id='wait'><img src="<?php echo $webroot_path; ?>as/fb_loading.gif" /> Please Wait...</div>
 		</div>
 </div>
@@ -197,6 +197,7 @@ $(document).ready(function() {
 		ar.push([asset_cat,purchase_date,supplier,cost,asset_name,from_war,to_war,desc,shedule]);
 		
 		}
+		$('button').hide();
 		var myJsonString = JSON.stringify(ar);
 		m_data.append('myJsonString',myJsonString);
 			$.ajax({
@@ -209,6 +210,7 @@ $(document).ready(function() {
 			}).done(function(response){
 				
 			if(response.type == 'error'){
+				$('button').show();
 			 $("#validdn").html('<div class="alert alert-error" style="color:red; font-weight:600; font-size:13px;">'+response.text+'</div>');
 			}
 		    if(response.type == 'success'){

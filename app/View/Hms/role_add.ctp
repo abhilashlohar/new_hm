@@ -27,11 +27,14 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
         </tr>
 		<?php } ?>
         </table>
-        <form method="post">
-        <div class="input-append" style="margin-left:23%;">                      
-        <input class="m-wrap" size="16" type="text" placeholder="Role name" id="role_name" name="role_name">
-        <button class="btn blue" type="submit" name="add_role">Add New Role</button>
-        </div>
+        <form method="post" id="contact-form">
+		
+			<div class="input-append" style="margin-left:23%;">   
+				<div align="left" style="float:left;">			
+				<input class="m-wrap" size="16" type="text" placeholder="Role name" id="role_name" name="role_name"> </div>
+				<div align="left"> <button class="btn blue" type="submit" name="add_role">Add New Role</button>
+				</div>
+		   </div>
         </form>
         
         
@@ -41,3 +44,19 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
         
         </div>
         </div>
+		
+<script>
+$(document).ready(function(){
+	$('#contact-form').validate({
+		rules: {
+			  role_name: {
+				required: true
+			  },
+		},	  
+		submitHandler: function () {
+				$("button[name=add_role]").attr('disabled','disabled');
+			    form.submit();
+			}
+	});
+});
+</script>		

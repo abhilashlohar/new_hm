@@ -1605,16 +1605,19 @@ $this->set('result_ledger',$result_ledger);
 }
 //End My Flat Bill Ajax//
 //Start my_flat_bill_excel_export// 
-function my_flat_bill_excel_export($from=null,$to=null,$flat_id=null)
+function my_flat_bill_excel_export($from=null,$to=null,$ledger_sub_account_id=null)
 {
 $this->layout=null;
 	$this->ath();
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$this->set("s_user_id",$s_user_id);		
 
-	$fdddd = date('d-M-Y',strtotime($from));
-	$tdddd = date('d-M-Y',strtotime($to));	
+	$from=date("Y-m-d",strtotime($from));
+	$this->set("from",$from);
+	$to=date("Y-m-d",strtotime($to));
+	$this->set("to",$to);
+	$this->set("ledger_sub_account_id",$ledger_sub_account_id);
 	
 $this->loadmodel('society');
 $conditions=array("society_id" => $s_society_id);
@@ -1625,70 +1628,30 @@ $society_name = $dataaaaa['society']['society_name'];
 }
 $sss_namm = str_replace(' ','-',$society_name);	
 	
+$filename="".$sss_namm."_My_Flat_Register_".$from."_".$to."";
+$filename = str_replace(' ', '_', $filename);
+$filename = str_replace(' ', '-', $filename);
+header ("Expires: 0");
+header ("border: 1");
+header ("Last-Modified: " . gmdate("D,d M YH:i:s") . "GMT");
+header ("Cache-Control: no-cache, must-revalidate");
+header ("Pragma: no-cache");
+header ("Content-type: application/vnd.ms-excel");
+header ("Content-Disposition: attachment; filename=".$filename.".xls");
+header ("Content-Description: Generated Report" );
 	
-	
-	$filename="".$sss_namm."_My_Flat_Register_".$fdddd."_".$tdddd."";
-	header ("Expires: 0");
-	header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
-	header ("Cache-Control: no-cache, must-revalidate");
-	header ("Pragma: no-cache");
-	header ("Content-type: application/vnd.ms-excel");
-	header ("Content-Disposition: attachment; filename=".$filename.".xls");
-	header ("Content-Description: Generated Report" );
-	
-			 $from=date("Y-m-d",strtotime($from));
-			 $this->set("from",$from);
-			 $to=date("Y-m-d",strtotime($to));
-			 $this->set("to",$to);
-	
-	
-	$flat_id=(int)$flat_id; 
-	if($flat_id==0)
-	{
-		$result_user_info=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($s_user_id)));
-		foreach($result_user_info as $collection2)
-		{
-		$user_name=$collection2["user"]["user_name"];
-		$this->set('user_name',$user_name);
-		$wing_id=$collection2["user"]["wing"];
-		$flat_id=$collection2["user"]["flat"];
-		}
-
-		$wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing_id,$flat_id)));
-		$this->set('wing_flat',$wing_flat);
-	}else{
-		$result_flat_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array((int)$flat_id)));
-		foreach($result_flat_info as $flat_info){
-		$wing_id=$flat_info["flat"]["wing_id"];
-		} 
-		
-	$wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'wing_flat'), array('pass' => array($wing_id,(int)$flat_id)));
-	$this->set('wing_flat',$wing_flat);
-		
-		//user info via flat_id//
-		$result_user_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_user_info_via_flat_id'),array('pass'=>array($wing_id,$flat_id)));
-		foreach($result_user_info as $user_info){
-			$user_id=(int)$user_info["user"]["user_id"];
-			$user_name=$user_info["user"]["user_name"];
-			$this->set('user_name',$user_name);
-		} 
-	}
 	
 	$this->loadmodel('society');
 	$conditions=array("society_id" => $s_society_id);
 	$result_society=$this->society->find('all',array('conditions'=>$conditions));
 	$this->set('result_society',$result_society);
-	
-	$this->loadmodel('ledger_sub_account');
-	$conditions=array("society_id" => $s_society_id,"flat_id" => (int)$flat_id);
-	$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-	$ledger_sub_account_id=$result_ledger_sub_account[0]["ledger_sub_account"]["auto_id"];
-	
+		
 	$this->loadmodel('ledger');
-	$conditions=array("society_id" => $s_society_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id,'transaction_date'=> array('$gte' => strtotime($from),'$lte' => strtotime($to)));
+	$conditions=array("society_id"=>$s_society_id,"ledger_account_id"=>34,"ledger_sub_account_id" => (int)$ledger_sub_account_id,'transaction_date'=> array('$gte' => strtotime($from),'$lte' => strtotime($to)));
 	$order=array('ledger.transaction_date'=>'ASC');
 	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
-	$this->set('result_ledger',$result_ledger);
+	$this->set('result_ledger',$result_ledger);	
+	
 }
 //End my_flat_bill_excel_export// 
 //Start Bank Receipt Pdf (Accounts)//

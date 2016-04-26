@@ -8,7 +8,6 @@ foreach($result_society as $data){
 }
 
 
-
 foreach($result_ledger as $ledger_data){
 	$table_name=$ledger_data["ledger"]["table_name"];
 	$debit=$ledger_data["ledger"]["debit"];
@@ -22,40 +21,12 @@ foreach($result_ledger as $ledger_data){
 			$opening_balance=$debit+$credit;
 		}
 	}
-	
 }
 ?>
-<style>
-#report_tb th{
-	font-size: 14px !important;background-color:#C8EFCE;padding:5px;border:solid 1px #55965F;text-align: left;
-}
-#report_tb td{
-	padding:5px;
-	font-size: 15px;border:solid 1px #55965F;background-color:#FFF;
-}
-table#report_tb tr:hover td {
-background-color: #E6ECE7;
-}
-</style>
-
 	
-	<div>
-	
-		<table id="report_tb" width="100%" border="1">
-			<tr>
-				<td colspan="8">
-				<div class="row-fluid" style="font-size:14px;" align="center">
-					<div class="span6">
-						<span style="font-size:16px;">Statement of Account</span><br/>
-						For : <?php echo $user_name; ?> (<?php echo $wing_flat; ?>)
-					</div>
-					<div class="span6" align="center">
-						<span style="font-size:12px;">From <?php echo date("d-m-Y",strtotime($from)); ?> to <?php echo date("d-m-Y",strtotime($to)); ?></span>
-					</div>
-				</div>
-				</td>
-			</tr>
-			<tr>
+	<table border="1">
+			
+            <tr>
 				<th>Date</th>
 				<th>Reference</th>
 				<th>Type</th>
@@ -65,17 +36,14 @@ background-color: #E6ECE7;
 				<th>Credits</th>
 				<th>Account Balance</th>
 			</tr>
-			<?php 
-			if(sizeof($result_ledger)==0){
-				?>
-				<tr>
-					<td colspan="7" align="center">No Record Found for above selected period.</td>
-				</tr>
-				<?php
-			}
-			$account_balance=0; $total_maint_charges=0; $total_interest=0; $total_credits=0;  $total_account_balance=0; 
+			            
+		<?php
+        /*
+		$account_balance=0; $total_maint_charges=0; $total_interest=0; $total_credits=0;  $total_account_balance=0; 
 			foreach($result_ledger as $ledger_data){ 
 				$credits = "";
+				$creater_name = "";
+				$prepaired_by = "";
 				$transaction_date=$ledger_data["ledger"]["transaction_date"];
 				$table_name=$ledger_data["ledger"]["table_name"];
 				$element_id=$ledger_data["ledger"]["element_id"];
@@ -100,12 +68,16 @@ background-color: #E6ECE7;
 					
 					
 				}
-				if($table_name=="new_regular_bill"){
+				if($table_name=="regular_bill"){
 					$result_regular_bill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'regular_bill_info_via_auto_id'), array('pass' => array($element_id)));
 					if(sizeof($result_regular_bill)>0){
 						$bill_approved="yes";
-						$refrence_no = $result_regular_bill[0]["new_regular_bill"]["bill_no"];
-						$description = $result_regular_bill[0]["new_regular_bill"]["description"];
+						$refrence_no = $result_regular_bill[0]["regular_bill"]["bill_number"];
+						$description = $result_regular_bill[0]["regular_bill"]["description"];
+						$prepaired_by = (int)$result_regular_bill[0]["regular_bill"]["created_by"]; 
+						$current_date = $result_regular_bill[0]["regular_bill"]["current_date"];
+	
+				       $date = date('d-m-Y',strtotime($current_date));
 					}
 					
 					
@@ -120,70 +92,85 @@ background-color: #E6ECE7;
 					}
 					$credits="";
 				}
-				if($table_name=="new_cash_bank"){
+				if($table_name=="cash_bank"){
 					
 					$element_id=$element_id;
 					
 					$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array($element_id)));
-					$refrence_no=@$result_cash_bank[0]["new_cash_bank"]["receipt_id"]; 
-					$flat_id = (int)@$result_cash_bank[0]["new_cash_bank"]["party_name_id"];
-					$description = @$result_cash_bank[0]["new_cash_bank"]["narration"];
-			
+	$refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_number"]; 
+	$ledger_sub_account_id = (int)@$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
+	$description = @$result_cash_bank[0]["cash_bank"]["narration"];
+	$date = $result_cash_bank[0]["cash_bank"]["date"];	
+	$prepaired_by = (int)$result_cash_bank[0]["cash_bank"]["created_by"];	
 					
 					$interest="";
 					$maint_charges="";
 					$credits=$debit+$credit;
 					$account_balance=$account_balance-(int)$credits;
 				} 
-				if($table_name=='adhoc_bill')
+				if($table_name=='supplimentry_bill')
 				{
 				$element_id=$element_id;	
 				$result_adhoc=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'adhoc_info_via_auto_id'), array('pass' => array($element_id)));
-				$refrence_no=@$result_adhoc[0]["adhoc_bill"]["receipt_id"]; 
-				$flat_id = (int)@$result_adhoc[0]["adhoc_bill"]["person_name"];
-				$description = @$result_adhoc[0]["adhoc_bill"]["description"];
-
-				$maint_charges=$debit+$credit;
-				$interest="";
-				$account_balance=$account_balance+(int)$maint_charges;
+			
+	$refrence_no=@$result_adhoc[0]["supplimentry_bill"]["receipt_id"]; 
+	$ledger_sub_account_id = @$result_adhoc[0]["supplimentry_bill"]["ledger_sub_account_id"];
+	$description = @$result_adhoc[0]["supplimentry_bill"]["description"];
+	$date = $result_adhoc[0]["supplimentry_bill"]["date"];	
+	$prepaired_by = (int)$result_adhoc[0]["supplimentry_bill"]["created_by"];
+			
+			
+               $maint_charges=$debit+$credit;
+			   $interest="";
+			   $account_balance=$account_balance+(int)$maint_charges;
 				}
+
+$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array(@$prepaired_by)));
+foreach ($user_dataaaa as $user_detailll) 
+{
+@$creater_name = @$user_detailll['user']['user_name'];
+}	
+@$dattt = date('d-m-Y',strtotime(@$date));	
+
+
+				
 				$total_maint_charges=$total_maint_charges+(int)$maint_charges;
 				$total_interest=$total_interest+(int)$interest;
 				$total_credits=$total_credits+(int)$credits;
 				?>
 					<tr>
 						<td><?php echo date("d-m-Y",$transaction_date); ?></td>
-						<td style="text-align:right;">
-						<?php if($table_name=="new_regular_bill"){
+						<td>
+						<?php if($table_name=="regular_bill"){
 							echo $refrence_no;
 						}
-						if($table_name=="new_cash_bank"){
+						if($table_name=="cash_bank"){
 							echo $refrence_no;
-						}
-if($table_name=="adhoc_bill")
-						{
+						} 
+						if($table_name=="supplimentry_bill"){
 						echo $refrence_no;	
 						}
 						?>
-						
 						</td>
 						<td>
-						<?php if($table_name=="new_regular_bill"){
-							echo "Regular_bill";
+						<?php if($table_name=="regular_bill"){
+						echo "Regular Bill";
 						}
-						if($table_name=="new_cash_bank"){
+						if($table_name=="cash_bank"){
 							echo "Bank Receipt";
 						}
-						if($table_name=="adhoc_bill")
+						if($table_name=="supplimentry_bill")
 						{
-						echo "Supplimentry Bill";
-						}						?>
+							echo "Supplimentry Bill";
+						}
+						?>
 						</td>
 						<td><?php echo $description; ?></td>
 						<td style="text-align:right;"><?php echo $maint_charges; ?></td>
 						<td style="text-align:right;"><?php echo $interest; ?></td>
 						<td style="text-align:right;"><?php echo $credits; ?></td>
 						<td style="text-align:right;"><?php echo $account_balance; ?></td>
+						
 					</tr>
 				
 			<?php } ?>
@@ -192,11 +179,10 @@ if($table_name=="adhoc_bill")
 						<td style="text-align:right;"><b><?php echo $total_maint_charges; ?></b></td>
 						<td style="text-align:right;"><b><?php echo $total_interest; ?></b></td>
 						<td style="text-align:right;"><b><?php echo $total_credits; ?></b></td>
-						<td style="text-align:right;"></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td colspan="7" align="right" style="color:#33773E;"><b>Closing Balance</b></td>
 						<td style="color:#33773E; text-align:right;"><b><?php echo $account_balance; ?></b></td>
-					</tr>
-		</table>
-	</div>
+					</tr> */ ?>
+                 </table>

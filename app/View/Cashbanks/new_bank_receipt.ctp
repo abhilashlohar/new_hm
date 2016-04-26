@@ -267,18 +267,11 @@ $(document).ready(function(){
 		}
 			
 		});
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		  if(allow=="no"){
+
+		if(allow=="no"){
 				e.preventDefault();
+			}else{
+			$("button[name=submit]").hide();	
 			}
 		
 	});

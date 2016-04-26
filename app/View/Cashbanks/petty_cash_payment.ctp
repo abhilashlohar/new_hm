@@ -116,7 +116,7 @@ $(document).ready(function(){
 	$('#main tbody tr:last input[name="transaction_date[]"]').datepicker();
 	}
 	
-	$("#add_row").on("click",function(){
+	$(".add_row").die().live("click",function(){
 		add_row();
 	})
 	$(".remove_row").die().live("click",function(){

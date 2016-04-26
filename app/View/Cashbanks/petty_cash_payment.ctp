@@ -270,6 +270,9 @@ var allow="yes";
      if(allow=="no"){
 			e.preventDefault();
 		}
+		else{
+		$("button[name=submit]").hide();
+	}
 });
 
 $('select[name="sundry_creditor[]"]').die().live("change",function(){

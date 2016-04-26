@@ -186,6 +186,8 @@ $("form").on("submit",function(e){
 			});
 			if(al==0){
 				allow="no";
+			}else{
+			$("button[name=submit]").hide();	
 			}
 		});
 		

@@ -139,17 +139,16 @@ foreach($result_ledger as $ledger_data){
 						 $table_show_receipt="petty_cash_receipt_html_view";
 						 $refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_id"];
 						 $prepaired_by = (int)$result_cash_bank[0]["cash_bank"]["prepaired_by"];	
-						 
+						 $date = $result_cash_bank[0]["cash_bank"]["current_date"];
 					 }else{
 						 $prepaired_by = (int)$result_cash_bank[0]["cash_bank"]["created_by"];
 						 $refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_number"];
 						 $table_show_receipt="bank_receipt_html_view";
+						 $date = $result_cash_bank[0]["cash_bank"]["created_on"];
 					 }
 				     
 					$ledger_sub_account_id = (int)@$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
 					$description = @$result_cash_bank[0]["cash_bank"]["narration"];
-					//$date = $result_cash_bank[0]["cash_bank"]["date"];	
-					
 					$interest="";
 					$maint_charges="";
 					$credits=$debit+$credit;

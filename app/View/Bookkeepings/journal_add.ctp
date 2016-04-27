@@ -52,7 +52,7 @@ $default_date = date('d-m-Y');
 </div>
  				
 <div id="succ">
-<div class="portlet box green" style="width:100%;">
+<div class="portlet box" style="width:100%;">
 <div class="portlet-title">
 <h4><i class="icon-reorder"></i>Create Journal Voucher</h4>
 </div>

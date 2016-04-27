@@ -12,7 +12,7 @@ foreach($result_ledger as $ledger_data){
 	$table_name=$ledger_data["ledger"]["table_name"];
 	$debit=$ledger_data["ledger"]["debit"];
 	$credit=$ledger_data["ledger"]["credit"];
-	$credit=$ledger_data["ledger"]["credit"];
+	//$credit=$ledger_data["ledger"]["credit"];
 	$arrear_int_type=@$ledger_data["ledger"]["arrear_int_type"];
 	if($table_name=="opening_balance"){
 		if($arrear_int_type=="YES"){
@@ -86,7 +86,7 @@ foreach($result_ledger as $ledger_data){
 				$element_id=$ledger_data["ledger"]["element_id"];
 				$debit=$ledger_data["ledger"]["debit"];
 				$credit=$ledger_data["ledger"]["credit"];
-				$credit=$ledger_data["ledger"]["credit"];
+				//$credit=$ledger_data["ledger"]["credit"];
 				$arrear_int_type=@$ledger_data["ledger"]["arrear_int_type"];
 				$intrest_on_arrears=@$ledger_data["ledger"]["intrest_on_arrears"];
 				if($table_name=="opening_balance"){
@@ -134,11 +134,21 @@ foreach($result_ledger as $ledger_data){
 					$element_id=$element_id;
 					
 					$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array($element_id)));
-	$refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_number"]; 
-	$ledger_sub_account_id = (int)@$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
-	$description = @$result_cash_bank[0]["cash_bank"]["narration"];
-	$date = $result_cash_bank[0]["cash_bank"]["date"];	
-	$prepaired_by = (int)$result_cash_bank[0]["cash_bank"]["created_by"];	
+					 $source_type=@$result_cash_bank[0]["cash_bank"]["source"]; 
+					 if($source_type=='petty_cash_receipt'){
+						 $table_show_receipt="petty_cash_receipt_html_view";
+						 $refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_id"];
+						 $prepaired_by = (int)$result_cash_bank[0]["cash_bank"]["prepaired_by"];	
+						 
+					 }else{
+						 $prepaired_by = (int)$result_cash_bank[0]["cash_bank"]["created_by"];
+						 $refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_number"];
+						 $table_show_receipt="bank_receipt_html_view";
+					 }
+				     
+					$ledger_sub_account_id = (int)@$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
+					$description = @$result_cash_bank[0]["cash_bank"]["narration"];
+					//$date = $result_cash_bank[0]["cash_bank"]["date"];	
 					
 					$interest="";
 					$maint_charges="";
@@ -182,7 +192,8 @@ foreach ($user_dataaaa as $user_detailll)
 							echo '<a class="tooltips" data-original-title="Click for view Source" data-placement="bottom" href="'.$this->webroot.'Incometrackers/regular_bill_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
 						}
 						if($table_name=="cash_bank"){
-							echo '<a class="tooltips" data-original-title="Click for view Source" data-placement="bottom" href="'.$this->webroot.'Cashbanks/bank_receipt_html_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
+							
+							echo '<a class="tooltips" data-original-title="Click for view Source" data-placement="bottom" href="'.$this->webroot.'Cashbanks/'.$table_show_receipt.'/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
 						} 
 						if($table_name=="supplimentry_bill")
 						{

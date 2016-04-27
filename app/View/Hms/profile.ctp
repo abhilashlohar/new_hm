@@ -56,15 +56,15 @@
 
                 <?php
                		
-          		foreach ($result_user as $collection)   
-              	 {
+					foreach($result_user as $collection){
 					$da_user_id = (int)$collection['user']['user_id'];
 					$c_name = $collection['user']['user_name'];
 					$c_email = $collection['user']['email'];
 					$c_mobile = $collection['user']['mobile'];
-					
+					@$profile_pic = @$collection['user']['profile_pic'];
 					$email_privacy = @$collection['user']['email_privacy'];
 					$mobile_privacy = @$collection['user']['mobile_privacy'];
+					
 					
 					$result_user_flat = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($da_user_id)));
 					 $c_wing_id = (int)@$result_user_flat[0]['user_flat']['wing'];

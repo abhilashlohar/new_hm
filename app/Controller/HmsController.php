@@ -17116,13 +17116,11 @@ $result_hobbies_cat=$this->hobbies_category->find('all',array('conditions'=>$con
 
 function profile() 
 {
-
-
-if($this->RequestHandler->isAjax()){
+		if($this->RequestHandler->isAjax()){
 		$this->layout='blank';
-	}else{
+		}else{
 		$this->layout='session';
-	}
+		}
 	$this->ath();
  $s_society_id=$this->Session->read('hm_society_id');
  $s_user_id=$this->Session->read('hm_user_id');

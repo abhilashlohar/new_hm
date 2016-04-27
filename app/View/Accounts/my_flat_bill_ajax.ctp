@@ -62,7 +62,7 @@ foreach($result_ledger as $ledger_data){
 				<th>Interest</th>
 				<th>Credits</th>
 				<th>Account Balance</th>
-				<th></th>
+				<th class="hide_at_print"></th>
 			</tr>
 			<?php 
 			if(sizeof($result_ledger)==0){
@@ -218,7 +218,7 @@ foreach ($user_dataaaa as $user_detailll)
 						<td style="text-align:right;"><?php echo $interest; ?></td>
 						<td style="text-align:right;"><?php echo $credits; ?></td>
 						<td style="text-align:right;"><?php echo $account_balance; ?></td>
-						<td>
+						<td class="hide_at_print">
 						<?php if(!empty($creater_name))
 						{
 							?>
@@ -235,12 +235,12 @@ foreach ($user_dataaaa as $user_detailll)
 						<td style="text-align:right;"><b><?php echo $total_interest; ?></b></td>
 						<td style="text-align:right;"><b><?php echo $total_credits; ?></b></td>
 						<td></td>
-						<td></td>
+						<td class="hide_at_print"></td>
 					</tr>
 					<tr>
 						<td colspan="7" align="right" style="color:#33773E;"><b>Closing Balance</b></td>
 						<td style="color:#33773E; text-align:right;"><b><?php echo $account_balance; ?></b></td>
-						<td></td>
+						<td class="hide_at_print"></td>
 					</tr>
                     </tbody>
 		</table>

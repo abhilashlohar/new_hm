@@ -1628,15 +1628,8 @@ foreach($result_societydattt as $dataaaaa)
 {
 $society_name = $dataaaaa['society']['society_name'];
 }
-$sss_namm = str_replace(' ','-',$society_name);	
-$filename="".$sss_namm."_My_Flat_Register_".$from."_".$to."";
-header ("Expires: 0");
-header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
-header ("Cache-Control: no-cache, must-revalidate");
-header ("Pragma: no-cache");
-header ("Content-type: application/vnd.ms-excel");
-header ("Content-Disposition: attachment; filename=".$filename.".xls");
-header ("Content-Description: Generated Report" );
+$this->set('society_name',$society_name);
+
 	
 	$this->loadmodel('society');
 	$conditions=array("society_id"=>$s_society_id);

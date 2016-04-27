@@ -1,18 +1,21 @@
 <?php 
-foreach($result_society as $data){
-	$society_name=$data["society"]["society_name"];
-	$society_reg_num=$data["society"]["society_reg_num"];
-	$society_address=$data["society"]["society_address"];
-	$society_email=$data["society"]["society_email"];
-	$society_phone=$data["society"]["society_phone"];
-}
+$sss_namm = str_replace(' ','-',$society_name);	
+$filename="".$sss_namm."_My_Flat_Register_".$from."_".$to."";
+
+header ("Expires: 0");
+header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+header ("Cache-Control: no-cache, must-revalidate");
+header ("Pragma: no-cache");
+header ("Content-type: application/vnd.ms-excel");
+header ("Content-Disposition: attachment; filename=".$filename.".xls");
+header ("Content-Description: Generated Report" );
 
 
 foreach($result_ledger as $ledger_data){
 	$table_name=$ledger_data["ledger"]["table_name"];
 	$debit=$ledger_data["ledger"]["debit"];
 	$credit=$ledger_data["ledger"]["credit"];
-	$credit=$ledger_data["ledger"]["credit"];
+	//$credit=$ledger_data["ledger"]["credit"];
 	$arrear_int_type=@$ledger_data["ledger"]["arrear_int_type"];
 	if($table_name=="opening_balance"){
 		if($arrear_int_type=="YES"){
@@ -22,11 +25,11 @@ foreach($result_ledger as $ledger_data){
 		}
 	}
 }
+
 ?>
-	
 	<table border="1">
+		<tr>
 			
-            <tr>
 				<th>Date</th>
 				<th>Reference</th>
 				<th>Type</th>
@@ -35,10 +38,10 @@ foreach($result_ledger as $ledger_data){
 				<th>Interest</th>
 				<th>Credits</th>
 				<th>Account Balance</th>
-			</tr>
-			            
+			
+		</tr>
 		<?php
-        /*
+       
 		$account_balance=0; $total_maint_charges=0; $total_interest=0; $total_credits=0;  $total_account_balance=0; 
 			foreach($result_ledger as $ledger_data){ 
 				$credits = "";
@@ -97,12 +100,21 @@ foreach($result_ledger as $ledger_data){
 					$element_id=$element_id;
 					
 					$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array($element_id)));
-	$refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_number"]; 
-	$ledger_sub_account_id = (int)@$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
-	$description = @$result_cash_bank[0]["cash_bank"]["narration"];
-	$date = $result_cash_bank[0]["cash_bank"]["date"];	
-	$prepaired_by = (int)$result_cash_bank[0]["cash_bank"]["created_by"];	
-					
+					 $source_type=@$result_cash_bank[0]["cash_bank"]["source"]; 
+					 if($source_type=='petty_cash_receipt'){
+						 $table_show_receipt="petty_cash_receipt_html_view";
+						 $refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_id"];
+						 $prepaired_by = (int)$result_cash_bank[0]["cash_bank"]["prepaired_by"];	
+						 $date = $result_cash_bank[0]["cash_bank"]["current_date"];
+					 }else{
+						 $prepaired_by = (int)$result_cash_bank[0]["cash_bank"]["created_by"];
+						 $refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_number"];
+						 $table_show_receipt="bank_receipt_html_view";
+						 $date = $result_cash_bank[0]["cash_bank"]["created_on"];
+					 }
+				     
+					$ledger_sub_account_id = (int)@$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
+					$description = @$result_cash_bank[0]["cash_bank"]["narration"];
 					$interest="";
 					$maint_charges="";
 					$credits=$debit+$credit;
@@ -184,5 +196,9 @@ foreach ($user_dataaaa as $user_detailll)
 					<tr>
 						<td colspan="7" align="right" style="color:#33773E;"><b>Closing Balance</b></td>
 						<td style="color:#33773E; text-align:right;"><b><?php echo $account_balance; ?></b></td>
-					</tr> */ ?>
-                 </table>
+					</tr> 
+		
+		
+		
+	</table>
+	

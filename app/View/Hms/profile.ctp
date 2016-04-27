@@ -73,7 +73,7 @@
 					
 					$medical_pro = @$result_user_profile[0]['user_profile']['medical_pro'];
 					
-					@$profile_pic = @$result_user_profile[0]['user_profile']['profile_pic'];
+					//@$profile_pic = @$result_user_profile[0]['user_profile']['profile_pic'];
 					@$f_profile_pic = @$result_user_profile[0]['user_profile']['f_profile_pic'];
 					@$g_profile_pic = @$result_user_profile[0]['user_profile']['g_profile_pic'];
 					$c_sex = (int)@$result_user_profile[0]['user_profile']['gender'];

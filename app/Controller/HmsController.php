@@ -17180,7 +17180,7 @@ if($this->request->is('post'))
  @$photo_name =$this->request->form['profile_photo']['name'];
  @$blood_group=htmlentities($this->request->data['blood_group']);
  @$contact_emergency=htmlentities($this->request->data['contact_emergency1']);	
- 
+ @$private_or_public=$this->request->data['sel_private'];
 
 if($blood_group==1)
 {

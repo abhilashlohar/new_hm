@@ -7,7 +7,7 @@ public $components = array(
 'Session','Cookie','RequestHandler'
 );
 var $name = 'Cashbanks';
-
+//Start validate_transaction_date//
 function validate_transaction_date($transaction_date=null){
 	$transaction_date=date("Y-m-d",strtotime($transaction_date));
 	$transaction_date=strtotime($transaction_date);
@@ -35,7 +35,8 @@ function validate_transaction_date($transaction_date=null){
 	}
 	
 }
-
+//End validate_transaction_date//
+//Start import_bank_receipts_csv// 
 function import_bank_receipts_csv(){
 	if($this->RequestHandler->isAjax()){
 		$this->layout='blank';
@@ -80,6 +81,7 @@ function import_bank_receipts_csv(){
 		$this->set("converted_per_im",($total_converted_records*100)/$total_records);
 	}
 }
+//End import_bank_receipts_csv// 
 //Start Upload_Bank_receipt_csv_file// 
 function Upload_Bank_receipt_csv_file(){
 	$s_society_id = $this->Session->read('hm_society_id');
@@ -149,7 +151,8 @@ function read_csv_file(){
 	$this->import_record->updateAll(array("step2" => 1),array("society_id" => $s_society_id, "module_name" => "BR"));
 	die(json_encode("READ"));
 }
-//End read_csv_file//
+//End Upload_Bank_receipt_csv_file//
+//End convert_imported_data//
 function convert_imported_data(){
 	$this->layout=null;
 	$s_society_id = $this->Session->read('hm_society_id');
@@ -252,10 +255,9 @@ function convert_imported_data(){
 		}
 	die(json_encode(array("again_call_ajax"=>$again_call_ajax,"converted_per"=>$converted_per)));
 }
-
+//Start convert_imported_data//
+//Start modify_bank_receipt_csv_data//
 function modify_bank_receipt_csv_data($page=null){
-	
-	
 	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
 	}else{
@@ -318,7 +320,8 @@ function modify_bank_receipt_csv_data($page=null){
 	$this->set('result_members',$result_members);
 			
 }
-
+//End modify_bank_receipt_csv_data//
+//Start cancle_bank_receipt_import// 
 function cancle_bank_receipt_import(){
 	$s_society_id = $this->Session->read('hm_society_id');
 	
@@ -336,7 +339,8 @@ function cancle_bank_receipt_import(){
 	
 	$this->redirect(array('controller' => 'Cashbanks','action' => 'import_bank_receipts_csv'));
 }
-
+//End cancle_bank_receipt_import//
+//Start check_bank_receipt_csv_validation// 
 function check_bank_receipt_csv_validation($page=null){
 	$this->layout=null;
 	
@@ -387,7 +391,8 @@ function check_bank_receipt_csv_validation($page=null){
 		
 	die(json_encode($v_result));
 }
-
+//End check_bank_receipt_csv_validation//
+//Start auto_save_bank_receipt//
 function auto_save_bank_receipt($record_id=null,$field=null,$value=null){
 	$this->layout=null;
 	
@@ -494,7 +499,8 @@ function auto_save_bank_receipt($record_id=null,$field=null,$value=null){
 	}
 	
 }
-
+//End auto_save_bank_receipt//
+//Start allow_import_bank_receipt//
 function allow_import_bank_receipt(){
 	$this->layout=null;
 	
@@ -539,7 +545,8 @@ function allow_import_bank_receipt(){
 	$this->loadmodel('import_record');
 	$this->import_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "BR"));
 }
-
+//End allow_import_bank_receipt//
+//Start final_import_bank_receipt_ajax// 
 function final_import_bank_receipt_ajax(){
 	$this->layout=null;
 	$s_society_id = $this->Session->read('hm_society_id');
@@ -631,7 +638,8 @@ function final_import_bank_receipt_ajax(){
 		die(json_encode(array("again_call_ajax"=>$again_call_ajax,"converted_per_im"=>$converted_per)));
 	}
 }
-
+//End final_import_bank_receipt_ajax// 
+//Start delete_bank_receipt_row//
 function delete_bank_receipt_row($record_id=null){
 	$this->layout=null;
 	$s_society_id = $this->Session->read('society_id');
@@ -641,6 +649,7 @@ function delete_bank_receipt_row($record_id=null){
 	$this->bank_receipt_csv_converted->deleteAll($conditions4);
 	echo "1";
 }
+//End delete_bank_receipt_row//
 //Start bank receipt View//
 function bank_receipt_view()
 {
@@ -1213,11 +1222,7 @@ $conditions=array("society_id" => $s_society_id,"source"=>"bank_payment");
 $order=array('cash_bank.transaction_date'=> 'ASC');
 $cursor2=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor2',$cursor2);
-		
-
-
 }
-
 //End Bank Payment Excel//
 //Start Petty cash Receipt (Accounts)//
 function petty_cash_receipt()
@@ -3263,14 +3268,6 @@ The Record Reversed Successfully
 </div>
 <?php
 }
-
-
-
-
-
-
-
-
 
 $this->loadmodel('fix_deposit');
 $conditions=array('society_id'=>$s_society_id,"matured_status"=>2);

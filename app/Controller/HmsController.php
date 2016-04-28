@@ -17181,7 +17181,7 @@ if($this->request->is('post'))
  @$blood_group=htmlentities($this->request->data['blood_group']);
  @$contact_emergency=htmlentities($this->request->data['contact_emergency1']);	
  @$private_or_public=$this->request->data['sel_private'];
-
+	
 if($blood_group==1)
 {
 $b_group="A+";
@@ -17214,17 +17214,12 @@ if($blood_group==8)
 {
 $b_group="O-";
 }
- if($medical==1)
- {
-	 
-	 $med_pro="Yes";
- }
- 
- if($medical==2)
- {
-	 
-	 $med_pro="No";
- }
+if($medical==1){
+ $med_pro="Yes";
+}
+if($medical==2){
+ $med_pro="No";
+}
  
 if($age==1)
 {
@@ -17280,10 +17275,8 @@ $age_group="65+";
  }
  
  
-if(empty($photo_name))
-{
-	$photo_name=$profile;
-	
+if(empty($photo_name)){
+$photo_name=$profile;
 }
 
 	$target = "profile/";
@@ -17900,7 +17893,7 @@ $this->set('count_yellow',sizeof($result));
 
 }
 
-/////////////////// End Contact handbook ////////////////////////////
+//End Contact handbook//
 function resident_directory(){
 	if($this->RequestHandler->isAjax()){
 			$this->layout='blank';
@@ -17918,7 +17911,7 @@ function resident_directory(){
 	$order=array('user.user_name'=>'ASC');	
 	$users=$this->user->find('all',array('conditions'=>$conditions,'order'=>$order));
 	foreach($users as $user_info){
-		 $user_id=$user_info["user"]["user_id"];
+		$user_id=$user_info["user"]["user_id"];
 		$user_name=$user_info["user"]["user_name"];
 		$profile_pic=@$user_info["user"]["profile_pic"];
 		$user_type=$user_info["user"]["user_type"];
@@ -17926,7 +17919,7 @@ function resident_directory(){
 		$email=$user_info["user"]["email"];
 		$validation_status=@$user_info["user"]["validation_status"];
 		$date=$user_info["user"]["date"];
-		
+
 		if($user_type=="member" or $user_type=="family_member"){
 			
 			$user_flat_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($user_id)));

@@ -17180,7 +17180,7 @@ if($this->request->is('post'))
  @$photo_name =$this->request->form['profile_photo']['name'];
  @$blood_group=htmlentities($this->request->data['blood_group']);
  @$contact_emergency=htmlentities($this->request->data['contact_emergency1']);	
-  
+ 
 
 if($blood_group==1)
 {
@@ -17901,13 +17901,6 @@ $this->set('count_yellow',sizeof($result));
 }
 
 /////////////////// End Contact handbook ////////////////////////////
-
-
-
-
-////////////////////////////////////////////////////   Resident Directory Start ////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 function resident_directory(){
 	if($this->RequestHandler->isAjax()){
 			$this->layout='blank';
@@ -17958,10 +17951,7 @@ function resident_directory(){
 				}
 				
 			} 
-			
-			
-			
-			
+				
 			$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"mobile"=>$mobile,"email"=>$email,"profile_pic"=>$profile_pic,"date"=>$date,"user_flat_id"=>$user_flat_id);
 			
 		}

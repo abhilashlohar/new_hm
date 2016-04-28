@@ -17167,7 +17167,6 @@ $this->set('hobbies_category',$this->hobbies_category->find('all'));
 
 if($this->request->is('post')) 
 {
-	
  @$name=htmlentities($this->request->data['name']);	
  @$medical=htmlentities($this->request->data['medical']);	
  @$mobile=htmlentities($this->request->data['mobile1']); 

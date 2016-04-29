@@ -110,7 +110,7 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 	$created_on = "";
 	$creater_name = "";	
 	$approver_name = "";
-	 	 
+		 
 	$debit=$data["ledger"]["debit"];
 	  $credit=$data["ledger"]["credit"];
 	    $transaction_date=$data["ledger"]["transaction_date"];
@@ -374,34 +374,37 @@ $creater_name = $ussrrr['user']['user_name'];
 			
 			if($subledger_id != 0)
 			{
-				if($ledger_id_type==1){
 				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_account_id)));
 				foreach($leddger_detaill as $ledger_datttaa)
 				{
 				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
-				}
-				}else{
-				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_account_id)));
-				foreach($leddger_detaill as $ledger_datttaa)
-				{
-				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
-				}	
 				}
 			}
 		else
 		{
+			if($credit==null){
 			 if($ledger_id_type==1){
 				$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($ledger_id_for_party_name)));
 				foreach($subleddger_detaill as $subledger_datttaa)
 				{
 				$user_name = $subledger_datttaa['ledger_sub_account']['name'];
 				}
-				}else{
-				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id_for_party_name)));
-				foreach($leddger_detaill as $ledger_datttaa)
-				{
-				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
-				}}
+		   }else{
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id_for_party_name)));
+			foreach($leddger_detaill as $ledger_datttaa)
+			{
+			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			}
+			
+		}
+			}else{
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_account_id)));
+			foreach($leddger_detaill as $ledger_datttaa)
+			{
+			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			}	
+				
+			}
 		}
 
 	}

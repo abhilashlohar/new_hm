@@ -181,6 +181,8 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 	$creater_name = $user_detailll['user']['user_name'];
 	}	
 		if($subledger_id != 0){
+			
+			if($credit==null){
 			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
 			foreach($subleddger_detaill as $subledger_datttaa){
 			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
@@ -198,6 +200,14 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 			foreach($subleddger_detaill as $subledger_datttaa){
 			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
 			}
+		}
+		}else{
+		
+		$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass'=> array($bank_id)));
+		foreach($subleddger_detaill as $subledger_datttaa){
+		$user_name = $subledger_datttaa['ledger_sub_account']['name'];
+		}	
+	
 		}
 		}
 		else

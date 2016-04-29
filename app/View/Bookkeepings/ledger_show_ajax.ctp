@@ -541,7 +541,7 @@ $creater_name = $ussrrr['user']['user_name'];
 		$expense_user_id = (int)$data['expense_tracker']['party_ac_head'];
 		$user_id22=(int)$data['expense_tracker']['user_id'];	
 		$current_datttt = $data['expense_tracker']['current_date'];	
-			
+		$ledger_id_for_view=$data['expense_tracker']['expense_head'];	
 		$result_user = $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($user_id22)));
 		$creater_name=$result_user[0]['user']['user_name'];	
 			
@@ -549,11 +549,11 @@ $creater_name = $ussrrr['user']['user_name'];
              if($subledger_id != 0)
 			 {
 				
-	$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
-	foreach($subleddger_detaill as $subledger_datttaa)
-	{
-	$user_name = $subledger_datttaa['ledger_sub_account']['name'];
-	} 
+		$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id_for_view)));
+			foreach($leddger_detaill as $ledger_datttaa)
+			{
+			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			}
  
 			 }
 			 else{

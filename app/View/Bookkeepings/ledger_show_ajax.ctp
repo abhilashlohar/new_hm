@@ -170,7 +170,7 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 	$approved_date=@$result_cash_bank[0]['cash_bank']['approved_date'];
 	$ledger_id_for_view=(int)@$result_cash_bank[0]['cash_bank']['ledger_sub_account_id'];
 	$description=substrwords($description,200,'...');
-	
+	$bank_id=(int)$result_cash_bank[0]['cash_bank']['deposited_in'];
 	$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($approved_by)));
 	foreach ($user_dataaaa as $user_detailll) {
 	$approver_name = @$user_detailll['user']['user_name'];
@@ -192,11 +192,13 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 			foreach($subleddger_detaill as $subledger_datttaa){
 			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
 			$ledger_id_forwingflat = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
-			}	
-				
 			}
-			
-			
+			}else{
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass'=> array($bank_id)));
+			foreach($subleddger_detaill as $subledger_datttaa){
+			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
+			}
+		}
 		}
 		else
 		{
@@ -356,7 +358,7 @@ $creater_name = $ussrrr['user']['user_name'];
         $current_date=$result_cash_bank[0]['cash_bank']['current_date'];	
 		$ledger_id_for_party_name=(int)$result_cash_bank[0]['cash_bank']['user_id'];
         $ledger_id_type=(int)$result_cash_bank[0]['cash_bank']['account_type'];
-       
+        $ledger_account_id=(int)$result_cash_bank[0]['cash_bank']['account_head'];
 
 		
 		$current_datttt = date('d-m-Y',strtotime($current_date));
@@ -372,10 +374,18 @@ $creater_name = $ussrrr['user']['user_name'];
 			
 			if($subledger_id != 0)
 			{
-				$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
-				foreach($subleddger_detaill as $subledger_datttaa)
+				if($ledger_id_type==1){
+				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_account_id)));
+				foreach($leddger_detaill as $ledger_datttaa)
 				{
-				$user_name = $subledger_datttaa['ledger_sub_account']['name'];
+				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+				}
+				}else{
+				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_account_id)));
+				foreach($leddger_detaill as $ledger_datttaa)
+				{
+				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+				}	
 				}
 			}
 		else
@@ -386,14 +396,12 @@ $creater_name = $ussrrr['user']['user_name'];
 				{
 				$user_name = $subledger_datttaa['ledger_sub_account']['name'];
 				}
-		}else{
-			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id_for_party_name)));
-			foreach($leddger_detaill as $ledger_datttaa)
-			{
-			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
-			}
-			
-		}
+				}else{
+				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id_for_party_name)));
+				foreach($leddger_detaill as $ledger_datttaa)
+				{
+				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+				}}
 		}
 
 	}
@@ -474,12 +482,6 @@ $creater_name = $ussrrr['user']['user_name'];
 			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
 			}
 		}
-		
-		
-		
-		
-		
-		
 		
 		}elseif($table_name=="opening_balance"){
 			$source="Opening Balance";
@@ -591,11 +593,8 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
 			}
 		}	
-
-			
-			}
-			
-		}
+	}
+}
 		
 
 		if($table_name=="fix_asset"){
@@ -609,8 +608,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 		    $current_datttt = $data['fix_asset']['current_date'];
             $ledger_id_for_view=$data['fix_asset']['asset_supplier_id'];
 		$user_detaill = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by_id)));
-		foreach($user_detaill as $data)
-		{
+		foreach($user_detaill as $data){
 		$creater_name = $data['user']['user_name'];
 		}
 		

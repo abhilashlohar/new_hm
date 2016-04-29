@@ -244,7 +244,7 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 		$tds = (int)$result_cash_bank[0]["cash_bank"]["tds_id"];		
 		$current_date = $result_cash_bank[0]['cash_bank']['current_date'];
 		$prepaired_by_id = (int)$result_cash_bank[0]['cash_bank']['prepaired_by'];
-		
+		$bank_id=(int)$result_cash_bank[0]['cash_bank']['account_head'];
 $current_datttt = date('d-m-Y',strtotime($current_date));									
 $ussr_dataa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by_id)));  
 foreach ($ussr_dataa as $ussrrr) 
@@ -254,7 +254,7 @@ $creater_name = $ussrrr['user']['user_name'];
 			
 			if($subledger_id != 0){
 				$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 
-				'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($vendor_id)));
+				'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($bank_id)));
 				foreach($subleddger_detaill as $subledger_datttaa){
 				$user_name=$subledger_datttaa['ledger_sub_account']['name'];
 				}

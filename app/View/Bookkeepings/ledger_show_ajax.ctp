@@ -607,7 +607,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			$expense_id=$data['fix_asset']['fix_receipt_id'];
 			$prepaired_by_id = (int)$data['fix_asset']['user_id'];	
 		    $current_datttt = $data['fix_asset']['current_date'];
-
+            $ledger_id_for_view=$data['fix_asset']['asset_supplier_id'];
 		$user_detaill = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by_id)));
 		foreach($user_detaill as $data)
 		{
@@ -625,10 +625,11 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 		}
 		else
 		{
-			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id)));
-			foreach($leddger_detaill as $ledger_datttaa)
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($ledger_id_for_view)));
+			foreach($subleddger_detaill as $subledger_datttaa)
 			{
-			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
+			$ledger_id_forwingflat = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
 			}
 		}		
 				

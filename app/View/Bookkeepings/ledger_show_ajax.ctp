@@ -397,10 +397,11 @@ $creater_name = $ussrrr['user']['user_name'];
 			$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_id"]; 
 			$prepaired_by = (int)$result_cash_bank[0]['cash_bank']['prepaired_by'];
 			$current_date = $result_cash_bank[0]['cash_bank']['current_date'];
-      
-	     $current_datttt = date('d-m-Y',strtotime($current_date));
-			
-		$result_gh = $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($prepaired_by)));
+            $ledger_account_id_for_view=(int)$result_cash_bank[0]['cash_bank']['user_id']; 
+	        $ledger_id_type=(int)$result_cash_bank[0]['cash_bank']['account_type'];
+		
+		$current_datttt = date('d-m-Y',strtotime($current_date));
+		$result_gh = $this->requestAction(array('controller' => 'hms','action'=> 'profile_picture'),array('pass'=>array($prepaired_by)));
 		foreach ($result_gh as $collection) 
 		{
 		$creater_name = $collection['user']['user_name'];
@@ -419,11 +420,21 @@ $creater_name = $ussrrr['user']['user_name'];
 			}
 			else
 			{
-			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id)));
+			
+			if($ledger_id_type==1){
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($ledger_account_id_for_view)));
+			foreach($subleddger_detaill as $subledger_datttaa)
+			{
+			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
+			}
+			}else{
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_account_id_for_view)));
 			foreach($leddger_detaill as $ledger_datttaa)
 			{
 			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
 			}
+			
+		}
 			}
 
 	}

@@ -166,8 +166,9 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 	$ledger_sub_account_id = (int)$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
 	$description = @$result_cash_bank[0]["cash_bank"]["narration"];
 	$creater_user_id =(int)@$result_cash_bank[0]['cash_bank']['prepaired_by'];
-	$approved_by = (int)@$result_cash_bank[0]['cash_bank']['approved_by'];
-	$approved_date = @$result_cash_bank[0]['cash_bank']['approved_date'];
+	$approved_by=(int)@$result_cash_bank[0]['cash_bank']['approved_by'];
+	$approved_date=@$result_cash_bank[0]['cash_bank']['approved_date'];
+	$ledger_id_for_view=(int)@$result_cash_bank[0]['cash_bank']['ledger_sub_account_id'];
 	$description=substrwords($description,200,'...');
 	
 	$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($approved_by)));
@@ -185,21 +186,29 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
 			$ledger_id_forwingflat = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
 			}
+			if($ledger_id_forwingflat != 34){
+			
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass'=> array($ledger_id_for_view)));
+			foreach($subleddger_detaill as $subledger_datttaa){
+			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
+			$ledger_id_forwingflat = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
+			}	
+				
+			}
+			
+			
 		}
 		else
 		{
-			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id)));
-			foreach($leddger_detaill as $ledger_datttaa)
-			{
-			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
-			}
+			
 		}		
 			
 
 
-			
+		$wing_flat="";	
 		
 	if(@$ledger_id_forwingflat == 34){
+		
 		$member_info=$this->requestAction(array('controller' => 'Fns','action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 		$wing_id = $member_info['wing_id'];
 		$flat_id = $member_info['flat_id'];

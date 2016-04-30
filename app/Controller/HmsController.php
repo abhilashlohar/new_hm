@@ -17165,8 +17165,7 @@ $this->loadmodel('hobbies_category');
 $this->set('hobbies_category',$this->hobbies_category->find('all'));
 
 
-if($this->request->is('post')) 
-{
+if($this->request->is('post')){
  @$name=htmlentities($this->request->data['name']);	
  @$medical=htmlentities($this->request->data['medical']);	
  @$mobile=htmlentities($this->request->data['mobile1']); 
@@ -17181,36 +17180,28 @@ if($this->request->is('post'))
  @$contact_emergency=htmlentities($this->request->data['contact_emergency1']);	
  @$private_or_public=$this->request->data['sel_private'];
 	
-if($blood_group==1)
-{
+if($blood_group==1){
 $b_group="A+";
 }
-if($blood_group==2)
-{
+if($blood_group==2){
 $b_group="B+";
 }
-if($blood_group==3)
-{
+if($blood_group==3){
 $b_group="AB+";
 }
-if($blood_group==4)
-{
+if($blood_group==4){
 $b_group="O+";
 }
- if($blood_group==5)
-{
+if($blood_group==5){
 $b_group="A-";
 }
-if($blood_group==6)
-{
+if($blood_group==6){
 $b_group="B-";
 }
-if($blood_group==7)
-{
+if($blood_group==7){
 $b_group="AB-";
 }
-if($blood_group==8)
-{
+if($blood_group==8){
 $b_group="O-";
 }
 if($medical==1){
@@ -17219,35 +17210,27 @@ if($medical==1){
 if($medical==2){
  $med_pro="No";
 }
- 
-if($age==1)
-{
+if($age==1){
 $age_group="18-24";
 }
-
-if($age==2)
-{
+if($age==2){
 $age_group="25-34";
 }
-
-
-if($age==3)
-{
+if($age==3){
 $age_group="35-44";
 }
-
-if($age==4)
-{
+if($age==4){
 $age_group="45-54";
 }
-if($age==5)
-{
+if($age==5){
 $age_group="55-64";
 }
- 
 if($age==6){
 $age_group="65+";
 }
+
+
+
 
  $result_user=$this->profile_picture($s_user_id);
  foreach($result_user as $data){
@@ -17438,19 +17421,15 @@ $reply=$from;
         </tbody>
 </table>';
 
-$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
-$this->Session->write('profile_status', 1);
-$this->response->header('Location', $this->webroot.'Hms/dashboard');
-	
+	$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+	$this->Session->write('profile_status', 1);
+	$this->response->header('Location', $this->webroot.'Hms/dashboard');
 }
-
-
-
-$this->loadmodel('user');
-$conditions=array("user_id" => $s_user_id);
-$this->set('result_user',$this->user->find('all',array('conditions'=>$conditions)));            
-$this->loadmodel('wing');
-$this->set('result1',$this->wing->find('all'));   
+	$this->loadmodel('user');
+	$conditions=array("user_id" => $s_user_id);
+	$this->set('result_user',$this->user->find('all',array('conditions'=>$conditions)));            
+	$this->loadmodel('wing');
+	$this->set('result1',$this->wing->find('all'));   
 }
 
 function profile_flat_ajax()

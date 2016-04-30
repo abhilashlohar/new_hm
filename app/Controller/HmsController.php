@@ -17245,23 +17245,17 @@ if($age==5)
 $age_group="55-64";
 }
  
-if($age==6)
-{
+if($age==6){
 $age_group="65+";
 }
 
  $result_user=$this->profile_picture($s_user_id);
- foreach($result_user as $data)
- {
+ foreach($result_user as $data){
 	  $email1=$data['user']['email'];
 	  $mobile1=$data['user']['mobile'];
-	 
  }
  
- if($email==$email && $mobile==$mobile1)
- {
-	
-	 
+ if($email==$email && $mobile==$mobile1){
  }
  else{
 	 

@@ -17528,9 +17528,10 @@ $this->check_user_privilages();
 
 	$s_society_id=$this->Session->read('hm_society_id'); 
 	$sco_n=$this->society_name($s_society_id);
-	foreach($sco_n as $data)
-	{
-	$sco= $data['society']['society_name'];
+	foreach($sco_n as $data){
+		$sco= $data['society']['society_name'];
+		$logo_data= $data['society']['logo'];
+		
 	}
 	$this->set('society_name',$sco);
 	if($this->request->is('post'))

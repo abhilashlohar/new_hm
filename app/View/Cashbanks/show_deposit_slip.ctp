@@ -15,7 +15,7 @@
 
 <button type="button" class=" printt btn green hide_at_print" onclick="window.print()" style="margin-left:80%;"><i class="icon-print"></i> Print</button></span>
 <br /><br />
-<div style="width:84%; background-color:#FFF; overflow:hidden;">
+<div style="width:84%; background-color:#FFF; overflow:hidden; border:solid 1px;">
 <br />
 <table style="background-color:#FFF;" width="94%" align="center">
 <tr>

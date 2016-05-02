@@ -4191,7 +4191,7 @@ function ledger_edit()
 {
 $this->layout='blank';
 
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$auto_id = (int)$this->request->query('t_id');
 	$edit = (int)$this->request->query('edit');
 	$this->set('edit',$edit);

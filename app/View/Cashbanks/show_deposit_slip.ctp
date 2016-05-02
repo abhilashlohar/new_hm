@@ -2,11 +2,11 @@
 		
 			#report_tb th{
 			padding:2px;
-			font-size: 12px;border:solid 1px #000;background-color:#FFF;
+			font-size: 12px;border:solid 1px #000;
 			}
 			#report_tb td{
 			padding:2px;
-			font-size: 12px;border:solid 1px #000;background-color:#FFF;
+			font-size: 12px;border:solid 1px #000;
 			}
 		</style>
 <a href="bank_receipt_deposit_slip" class="btn green hide_at_print">Back</a>
@@ -15,9 +15,9 @@
 
 <button type="button" class=" printt btn green hide_at_print" onclick="window.print()" style="margin-left:80%;"><i class="icon-print"></i> Print</button></span>
 <br /><br />
-<div style="width:84%; background-color:#FFF; overflow:hidden; border:solid 1px;">
+<div style="width:84%; background-color:#FBFCBC; overflow:hidden; border:solid 1px;">
 <br />
-<table style="background-color:#FFF;" width="94%" align="center">
+<table style="background-color:#FBFCBC;" width="94%" align="center">
 <tr>
 <th colspan="4" style="text-align:left;">Cheque Deposit Slip: Annexure
 <br /><br /> 
@@ -30,14 +30,14 @@
 </tr>
 </table>
 <br />
-<table style="background-color:#FFF;" width="94%" align="center">
+<table style="background-color:#FBFCBC;" width="94%" align="center">
 <tr>
 <td style="text-align:left;"><b>Name of Account Holder :</b>&nbsp;	
 <?php echo $society_name; ?></td><th style="text-align:right;">Mobile</th><th style="width:15%; text-align:left;">..................................</th>
 </tr>
 </table>
 <br />
-<table style="background-color:#FFF;" id="report_tb" width="94%" align="center">	
+<table style="background-color:#FEFEF3;" id="report_tb" width="94%" align="center">	
 <tr>
 <th width="5%;">Sr#</th>	
 <th width="20%;">Bank</th>

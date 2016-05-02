@@ -89,7 +89,7 @@ $society_sig = @$data['society']['signature'];
 <?php if(empty($society_logo)){ ?>
 <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 <?php }else{ ?>
-<img src="http://localhost/new_hm/logo/<?php echo $society_logo; ?>" alt="">
+<img src="<?php echo $webroot_path; ?>logo/<?php echo $society_logo; ?>" alt="">
 <?php } ?>
 </div>
 <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>

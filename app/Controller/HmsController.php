@@ -4399,19 +4399,35 @@ $this->layout='session';
 	$this->ath();
 	
 	
-	/*this code to run production system 
+	
+	$s_society_id=$this->Session->read('hm_society_id');	
+	
+		if(isset($this->request->data['sub'])){ 
 		
-	$s_society_id=$this->Session->read('society_id');	
-	$this->loadmodel('user');
-	$conditions=array('deactive'=>0,'society_id'=>$s_society_id);
-	$result_user=$this->user->find('all');
-	foreach($result_user as $data){
-		
-		 $user_id=$data['user']['user_id'];
-		  $society_id=$data['user']['society_id'];
-		 $tenant=$data['user']['tenant'];
-		 $wing=$data['user']['wing'];
-		 $flat=$data['user']['flat'];
+			 $password = $this->request->data['password'];
+			 $user_dat_id_new=$this->request->data['user_dat_id'];
+			  $validation_status = $this->request->data['validation_status'];
+			 $i=0;
+			foreach($user_dat_id_new as $user_dat_id){
+				 $user_dat_id=(int)$user_dat_id; 
+				 $pass=$password[$i]; 
+				 $validation_statu=$validation_status[$i]; 
+				 if($validation_statu=='done'){
+
+					 $this->loadmodel('user');
+					 $this->user->updateAll(array('password'=>$pass,'validation_status'=>'done','signup_random'=>''),array('user_id'=>(int)$user_dat_id));
+					
+				 }
+				$i++;
+			}
+	
+		}
+		$this->loadmodel('user');
+		$conditions=array('active'=>'yes','society_id'=>$s_society_id);
+		$result_user=$this->user->find('all',array('conditions'=>$conditions));
+		$this->set('result_user',$result_user);
+		 
+		/*this code to run production system 
 		 $multiple_flat=@$data['user']['multiple_flat'];
 		if(!empty($multiple_flat)){
 			
@@ -4452,7 +4468,7 @@ $this->layout='session';
 		
 	}
 	
-	*/
+	
 	echo $bill_html='<div style="margin: 0px;">
         <table style="padding:24px;background-color:#34495e" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" class="main_table">
             <tbody><tr>
@@ -4657,8 +4673,8 @@ $this->layout='session';
         </tbody></table>
                    
             </div>';
-	
-	exit; 
+	*/
+	//exit; 
 }
 
 

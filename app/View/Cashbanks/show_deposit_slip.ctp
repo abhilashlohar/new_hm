@@ -1,6 +1,5 @@
 		<style>
-		
-			#report_tb th{
+					#report_tb th{
 			padding:2px;
 			font-size: 12px;border:solid 1px #000;
 			}

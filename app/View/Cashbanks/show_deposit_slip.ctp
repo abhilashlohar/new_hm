@@ -1,5 +1,5 @@
 		<style>
-					#report_tb th{
+			#report_tb th{
 			padding:2px;
 			font-size: 12px;border:solid 1px #000;
 			}
@@ -14,7 +14,7 @@
 
 <button type="button" class=" printt btn green hide_at_print" onclick="window.print()" style="margin-left:80%;"><i class="icon-print"></i> Print</button></span>
 <br /><br />
-<div style="width:84%; background-color:#FBFCBC; overflow:hidden; border:solid 1px;">
+<div style="width:84%; background-color:#FBFCBC; overflow:hidden; border:solid 1px;" media="print">
 <br />
 <table style="background-color:#FBFCBC;" width="94%" align="center">
 <tr>

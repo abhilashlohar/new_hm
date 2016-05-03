@@ -110,7 +110,7 @@
 			$tds_id = (int)$tds_sub_arr[1];
 			$tds_tax=$tds_sub_arr[0];	
 			?>
-			<option value= "<?php echo $tds_tax; ?>" <?php if($tds_tax==$tds) { ?> selected="selected" <?php } ?>><?php echo $tds_tax; ?></option>
+			<option value= "<?php echo $tds_tax; ?>" <?php if($tds_tax==$tds) { ?> selected="selected" <?php } ?> charge="<?php echo $tds_tax; ?>"><?php echo $tds_tax; ?></option>
 			<?php } ?>                           
 			</select>
 			<?php
@@ -134,7 +134,7 @@
 			}			
 			?>
 			<input type="text"  class="m-wrap span6" 
-				  readonly="readonly" style="background-color:white !important; margin-top:2.5px;" value="<?php echo $total_tds_amount; ?>">
+				  readonly="readonly" style="background-color:white !important; margin-top:2.5px;" value="<?php echo $total_tds_amount; ?>" field="net_amt">
 			
 			
 			
@@ -540,7 +540,35 @@ var ledger_data=$(this).val();
 			}else{
 				$(this).closest('td').find(".er").remove();
 			}
+		var charge=parseInt($(this).closest("tr").find('select[field="tdss"] option:selected').attr('charge'));
+			var tds_charge=parseFloat((charge/100)*amount);
+				var total_amount=Math.round(amount-tds_charge);	
+	if($.isNumeric(total_amount)==false){ total_amount=amount; }						
+		$(this).closest("tr").find('input[field="net_amt"]').val(total_amount);	
+			
 		});
+
+
+$('select[field="tdss"]').die().live("change",function(){
+		var tds=parseInt($(this).val());
+			var amount=parseFloat($(this).closest("tr").find('input[field="amt"]').val());
+				var charge=parseInt($('option:selected',this).attr('charge'));
+					var tds_charge=parseFloat((charge/100)*amount);
+						var total_amount=Math.round(amount-tds_charge);	
+	if($.isNumeric(total_amount)==false){ total_amount=amount; }						
+		$(this).closest("tr").find('input[field="net_amt"]').val(total_amount);	
+});
+
+
+
+
+
+
+
+
+
+
+
 		
 });
 </script>

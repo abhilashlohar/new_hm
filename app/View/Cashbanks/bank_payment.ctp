@@ -302,7 +302,11 @@ var allow="yes";
 		}else{
 		$(this).val('');	
 		}
-			
+		var charge=parseInt($(this).closest("tr").find('select[name="tds[]"] option:selected').attr('charge'));
+			var tds_charge=parseFloat((charge/100)*amount);
+				var total_amount=Math.round(amount-tds_charge);	
+	if($.isNumeric(total_amount)==false){ total_amount=amount; }						
+		$(this).closest("tr").find('input[name="net_amount[]"]').val(total_amount);	
 		});
 
 

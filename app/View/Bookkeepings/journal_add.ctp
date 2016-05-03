@@ -417,12 +417,16 @@ $(document).ready(function() {
 				     }
 					
 				if(response.type=='succ'){
-				$('#test').hide();
-				$('#succes_show').show();
+				
+				  window.location.href = '<?php echo $webroot_path; ?>Bookkeepings/journal_view';
+				
+				
+				//$('#test').hide();
+				//$('#succes_show').show();
 				//$("#succ").html('<div class="alert alert-block alert-success fade in"><h4 class="alert-heading">Success!</h4><p>'+response.text+'</p><p><a class="btn green" href="<?php echo $webroot_path; ?>Bookkeepings/journal_view" rel="tab">OK</a></p></div>');
-				$("html, body").animate({
-					 scrollTop:0
-					 },"slow");
+				//$("html, body").animate({
+					 //scrollTop:0
+					// },"slow");
 			}
 				
 				$("#error_msg").html(output);

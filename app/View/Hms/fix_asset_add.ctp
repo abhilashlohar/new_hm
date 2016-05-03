@@ -214,8 +214,7 @@ $(document).ready(function() {
 			 $("#validdn").html('<div class="alert alert-error" style="color:red; font-weight:600; font-size:13px;">'+response.text+'</div>');
 			}
 		    if(response.type == 'success'){
-			  $("#shwd").show();
-			  $(".swwtxx").html(response.text);
+			  window.location.href = '<?php echo $webroot_path; ?>Hms/fix_asset_view';
 			}
 });			
 });

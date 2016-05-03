@@ -392,10 +392,7 @@ ar.push([posting_date,date_of_invoice,due_date,ex_head,invoice_ref,party_ac,amt_
 					//$("#output").html('');
 			}
 			if(response.report_type=='submit'){
-				$(".portal").remove();
-				$("#shwd").show();
-				$(".swwtxx").html(response.text);
-				$("#output").remove();
+		window.location.href = '<?php echo $webroot_path; ?>Expensetrackers/expense_tracker_view';	
 			}
 			$("html, body").animate({
 			scrollTop:0

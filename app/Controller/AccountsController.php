@@ -5671,8 +5671,8 @@ foreach($myArray as $child)
 	foreach($cursor as $collection){
 	$from = $collection['financial_year']['from'];
 	$to = $collection['financial_year']['to'];
-	$from1 = date('Y-m-d',$from->sec);
-	$to1 = date('Y-m-d',$to->sec);
+	$from1 = date('Y-m-d',($from));
+	$to1 = date('Y-m-d',($to));
 	$from2 = strtotime($from1);
 	$to2 = strtotime($to1);
 	$transaction1 = date('Y-m-d',strtotime($TransactionDate));

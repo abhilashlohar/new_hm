@@ -1978,24 +1978,29 @@ function griter_notification($id)
 	if($id=="financial_status"){
 		$this->Session->delete('financial_status');	
 	}
-	
-	
-	
-	
-	if($id=="bill_update")
-	{
+	if($id=="bill_update"){
 		$this->Session->delete('bill_update_status');
 	}
-	
-//////////////////// end ///////////////////////////
-
-if($id=="group_create")
-	{
+	if($id=="group_create"){
 		$this->Session->delete('group_status');
 	}
-
-////////////////// Start document /////////////////////////
-
+    if($id=="fix_deposit_reading"){
+		$this->Session->delete('fix_deposit_reading');
+	}
+	if($id=="fix_deposit_renew"){
+		$this->Session->delete('fix_deposit_renew');
+	}
+	if($id=="fix_deposit_edit"){
+		$this->Session->delete('fix_deposit_edit');
+	}
+	if($id=="fix_deposit_reverse"){
+		$this->Session->delete('fix_deposit_reverse');
+	}
+	
+	
+	
+	
+	
 	if($id==4)
 	{
 		$this->Session->delete('document_status');

@@ -211,10 +211,62 @@ $prepaired_by_name = $collection['user']['user_name'];
 		});
  </script>
 
+<script>
+$(document).ready(function() {
+	<?php	
+	$fix_deposit_reading=(int)$this->Session->read('fix_deposit_reading');
+	if($fix_deposit_reading==1)
+	{
+	?>
+	$.gritter.add({
+	title: 'Success',
+	text: '<p>Fixed Deposit Moved Successfully</p>',
+	sticky: false,
+	time: '10000',
+	});
+	<?php
+	$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('fix_deposit_reading')));
+	} ?>
+	});
+</script>   
 
+<script>
+$(document).ready(function() {
+	<?php	
+	$fix_deposit_renew=(int)$this->Session->read('fix_deposit_renew');
+	if($fix_deposit_renew==1)
+	{
+	?>
+	$.gritter.add({
+	title: 'Success',
+	text: '<p>Fixed Deposit Renewed Successfully</p>',
+	sticky: false,
+	time: '10000',
+	});
+	<?php
+	$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('fix_deposit_renew')));
+	} ?>
+	});
+</script> 
 
-
-
+<script>
+$(document).ready(function() {
+	<?php	
+	$fix_deposit_edit=(int)$this->Session->read('fix_deposit_edit');
+	if($fix_deposit_edit==1)
+	{
+	?>
+	$.gritter.add({
+	title: 'Success',
+	text: '<p>Fixed Deposit Updated Successfully</p>',
+	sticky: false,
+	time: '10000',
+	});
+	<?php
+	$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('fix_deposit_edit')));
+	} ?>
+	});
+</script> 
 
 
 

@@ -213,4 +213,31 @@ $tt_amt = $tt_amt + $amt;
 		});
  </script>
        
-        
+     
+<script>
+$(document).ready(function() {
+	<?php	
+	$fix_deposit_reverse=(int)$this->Session->read('fix_deposit_reverse');
+	if($fix_deposit_reverse==1)
+	{
+	?>
+	$.gritter.add({
+	title: 'Success',
+	text: '<p>Fixed Deposit Reversed Successfully</p>',
+	sticky: false,
+	time: '10000',
+	});
+	<?php
+	$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('fix_deposit_reverse')));
+	} ?>
+	});
+</script> 
+
+
+
+
+
+
+
+
+	 

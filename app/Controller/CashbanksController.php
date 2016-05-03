@@ -2573,12 +2573,11 @@ if($this->RequestHandler->isAjax()){
 		$this->layout='session';
 	}
 	
-$this->ath();
-$this->check_user_privilages();		
-
-$s_role_id=$this->Session->read('hm_role_id');
-$s_society_id = $this->Session->read('hm_society_id');
-$s_user_id=(int)$this->Session->read('hm_user_id');
+	$this->ath();
+		$this->check_user_privilages();		
+			$s_role_id=$this->Session->read('hm_role_id');
+				$s_society_id = $this->Session->read('hm_society_id');
+		$s_user_id=(int)$this->Session->read('hm_user_id');
 
 
 $rrrr = (int)$this->request->query('aa');
@@ -2587,18 +2586,8 @@ if(!empty($rrrr))
 $move_on_date = date('Y-m-d');	
 $this->loadmodel('fix_deposit');
 $this->fix_deposit->updateAll(array('matured_status'=>2,"move_by"=>$s_user_id,"move_on"=>$move_on_date),array('transaction_id'=>$rrrr,"society_id"=>$s_society_id));
-?>
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body">
-<h4><b>Thank You!</b></h4>
-The Record Updated Successfully
-</div>
-<div class="modal-footer">
-<a class="btn red" href="fix_deposit_view">OK</a>
-</div>
-</div>
-<?php
+
+	$this->Session->write('fix_deposit_reading',1);
 }
 
 $readinggg = (int)$this->request->query('rr');
@@ -3251,18 +3240,9 @@ if(!empty($rrrr))
 $move_on_date = date('Y-m-d');	
 $this->loadmodel('fix_deposit');
 $this->fix_deposit->updateAll(array('matured_status'=>1),array('transaction_id'=>$rrrr,"society_id"=>$s_society_id));
-?>
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body">
-<h4><b>Thank You!</b></h4>
-The Record Reversed Successfully
-</div>
-<div class="modal-footer">
-<a class="btn red" href="matured_deposit_view">OK</a>
-</div>
-</div>
-<?php
+
+$this->Session->write('fix_deposit_reverse',1);
+
 }
 
 $this->loadmodel('fix_deposit');
@@ -6635,18 +6615,9 @@ $this->fix_deposit->updateAll(array("bank_name" =>$bank_name,"bank_branch"=>$bra
 "maturity_date"=>strtotime($maturity_date),"interest_rate"=>$rate,"purpose"=>$remarks,
 "society_id"=>$s_society_id,"file_name"=>$file_name),array("transaction_id" => $transaction_id));
 
-?>
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body">
-<h4><b>Thank You!</b></h4>
-Fixed Deposit #<?php echo $receipt_iddd; ?> is updated successfully
-</div>
-<div class="modal-footer">
-<a href="fix_deposit_view" class="btn red">OK</a>
-</div>
-</div>
-<?php
+$this->Session->write('fix_deposit_edit',1);
+$this->redirect(array('controller' => 'Cashbanks','action'=>'fix_deposit_view'));
+
 }
 }
 //End active_deposit_edit//
@@ -6711,18 +6682,8 @@ $multipleRowData = Array( Array("transaction_id" => $l,"receipt_id"=>$rrrrr_iddd
 "auto_inc"=>"NO","renewal_id"=>$renewal_id,"prepaired_by"=>$s_user_id,"current_date"=>$current_date));
 $this->fix_deposit->saveAll($multipleRowData);
 
-?>
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body">
-<h4><b>Thank You!</b></h4>
-Fixed Deposit #<?php echo $receipt_idddd; ?> is renewed successfully
-</div>
-<div class="modal-footer">
-<a href="fix_deposit_view" class="btn red">OK</a>
-</div>
-</div>
-<?php
+$this->Session->write('fix_deposit_renew',1);
+$this->redirect(array('controller' => 'Cashbanks','action'=>'fix_deposit_view'));
 }
 }
 //End renewal_fixed_deposit//

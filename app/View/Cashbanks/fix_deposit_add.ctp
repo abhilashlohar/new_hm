@@ -232,8 +232,7 @@ $(document).ready(function(){
 					 },"slow");
 			}
 		    if(response.type == 'success'){
-			  $("#shwd").show();
-			  $(".swwtxx").html(response.text);
+			  window.location.href = '<?php echo $webroot_path; ?>Cashbanks/fix_deposit_add';
 			}
 });			
 });

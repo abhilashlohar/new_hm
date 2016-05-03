@@ -2473,46 +2473,42 @@ $this->set('cursor2',$cursor2);
 //Start Fix Deposit Add (Accounts)//
 function fix_deposit_add()
 {
-if($this->RequestHandler->isAjax()){
-$this->layout='blank';
-}else{
-$this->layout='session';
-}
-	
-$this->ath();
-$this->check_user_privilages();		
-	
-$s_role_id=$this->Session->read('role_id');
-$s_society_id = $this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
-
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	$this->ath();
+	$this->check_user_privilages();		
+		$s_role_id=$this->Session->read('role_id');
+			$s_society_id = $this->Session->read('society_id');
+				$s_user_id=$this->Session->read('user_id');
 $this->set('s_role_id',$s_role_id);
 
 if(isset($this->request->data['sub']))
 {
-$bank_name = $this->request->data['bank_name'];
-$branch = $this->request->data['branch'];
-$account_reference = $this->request->data['account_reference'];
-$principal_amount = $this->request->data['principal_amount'];
-$start_date = $this->request->data['start_date'];
-$maturity_date = $this->request->data['maturity_date'];
-$interest_rate = $this->request->data['interest_rate'];
-$remark = $this->request->data['remark'];
-$reminder = $this->request->data['reminder'];
-//$tds = $this->request->data['tds'];
-$name = $this->request->data['name'];
-$email = $this->request->data['email'];
-$mobile = $this->request->data['mobile'];
+	$bank_name = $this->request->data['bank_name'];
+	  $branch = $this->request->data['branch'];
+		$account_reference = $this->request->data['account_reference'];
+		  $principal_amount = $this->request->data['principal_amount'];
+		    $start_date = $this->request->data['start_date'];
+			  $maturity_date = $this->request->data['maturity_date'];
+				$interest_rate = $this->request->data['interest_rate'];
+				  $remark = $this->request->data['remark'];
+					$reminder = $this->request->data['reminder'];
+					  $name = $this->request->data['name'];
+						$email = $this->request->data['email'];
+						  $mobile = $this->request->data['mobile'];
 
-$current_date = date('d-m-Y');
-$current_date = date("Y-m-d", strtotime($current_date));
-$current_date = new MongoDate(strtotime($current_date));
+	$current_date = date('d-m-Y');
+		$current_date = date("Y-m-d", strtotime($current_date));
+			$current_date = new MongoDate(strtotime($current_date));
 
-$start_date = date("Y-m-d", strtotime($start_date));
-$start_date = new MongoDate(strtotime($start_date));
+	$start_date = date("Y-m-d", strtotime($start_date));
+		$start_date = new MongoDate(strtotime($start_date));
 
-$maturity_date = date("Y-m-d", strtotime($maturity_date));
-$maturity_date = new MongoDate(strtotime($maturity_date));
+	$maturity_date = date("Y-m-d", strtotime($maturity_date));
+		$maturity_date = new MongoDate(strtotime($maturity_date));
 
 $this->loadmodel('fix_deposit');
 $conditions=array("society_id" => $s_society_id);
@@ -3816,7 +3812,6 @@ $this->loadmodel('ledger');
 $multipleRowData = Array( Array("auto_id" => $l, "transaction_date"=> strtotime($TransactionDate), "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $account_id,"table_name" => "new_cash_bank","element_id" => $t1, "society_id" => $s_society_id,));
 $this->ledger->saveAll($multipleRowData);
 			
-//////////////////////////
 		$this->loadmodel('new_cash_bank');
 		$conditions=array("receipt_id" => $k,"society_id"=>$s_society_id,"receipt_source"=>1);
 		$cursor=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
@@ -4033,8 +4028,6 @@ foreach($result_society as $data_society){
 	$email_is_on_off=(int)@$data_society["society"]["account_email"];
 	$sms_is_on_off=(int)@$data_society["society"]["account_sms"];
    }
-//////////////////////////////////////////////////////////////////////////
-
 
 if($email_is_on_off==1){
 	$r_sms=$this->hms_sms_ip();
@@ -4043,9 +4036,7 @@ if($email_is_on_off==1){
 	$sms_allow=(int)$r_sms->sms_allow;
 
 $subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".date('d-M-Y',$d_date)." against Unit ".$wing_flat."";
-   //$subject="[".$society_name."]- Receipt, ".date('d-M-Y',$d_date)."";
-	
-	
+  
 	$this->send_email($to_email,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'donotreply@housingmatters.in');
 }
 

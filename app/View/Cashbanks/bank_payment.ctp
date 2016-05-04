@@ -372,13 +372,13 @@ $('input[name="transaction_date[]"]').die().live("keyup blur",function(){
 				}
 			});
 			if(al==0){
-			$(this).closest('td').find(".er").remove();
-			$(this).closest('td').append('<p class="er">Not in financial year</p>');	
+			$(this).closest('td').find(".err").remove();
+			$(this).closest('td').append('<p class="err">Not in financial year</p>');	
 			}else{
 				
-				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').find(".err").remove();
 			}
-		});
+		}); 
 	
 
 

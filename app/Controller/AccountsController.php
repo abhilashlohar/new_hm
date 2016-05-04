@@ -1561,7 +1561,7 @@ function my_flat_bill_ajax($from=null,$to=null,$ledger_sub_account_id=null){
 	 
 	$this->ath();
 	if($this->RequestHandler->isAjax()){
-	$this->layout='blank';
+	$this->layout='ajax_blank';
 	}else{
 	$this->layout='session';
 	}

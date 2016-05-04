@@ -4892,7 +4892,7 @@ function regular_bill_report_excel(){
 }
 
 function regular_bill_report($period=null){
-	$this->layout='blank';
+	$this->layout='ajax_blank';
 	$this->ath();
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');
@@ -6318,7 +6318,7 @@ $this->set('income_head_array',$income_head_array);
 ////////////////////// Start Supplimentry reports show ajax//////////////////////////
 function supplimentry_reports_show_ajax()
 {
-$this->layout='blank';
+$this->layout='ajax_blank';
 $this->ath();
 $s_role_id=$this->Session->read('hm_role_id');
 $s_society_id = (int)$this->Session->read('hm_society_id');
@@ -7557,7 +7557,7 @@ function account_statement(){
 
 function account_statement_for_flat_ajax($ledger_sub_account_id,$from,$to){
 	if($this->RequestHandler->isAjax()){
-	$this->layout='blank';
+	$this->layout='ajax_blank';
 	}else{
 	$this->layout='session';
 	}

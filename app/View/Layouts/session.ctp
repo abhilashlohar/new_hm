@@ -329,7 +329,7 @@ $("#menus_area>li").live('click',function(e){
          
          <!-- BEGIN PAGE CONTAINER-->
 		
-         <div class="container-fluid" id="ctp_content_area" style="overflow-y:scroll; height:620px;">
+         <div class="container-fluid" id="ctp_content_area">
 			<!-- BEGIN PAGE CONTENT-->
 			<div class="row-fluid">
 				<div  id="content">
@@ -381,3 +381,8 @@ $("#menus_area>li").live('click',function(e){
 </body>
 <!-- END BODY -->
 </html>
+<style>
+#ctp_content_area{
+overflow-y:scroll; height:620px;
+}
+</style>

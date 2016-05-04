@@ -4189,7 +4189,7 @@ $this->set('result_accounts_category',$result_accounts_category);
 //Start ledger Edit//
 function ledger_edit()
 {
-$this->layout='blank';
+$this->layout='ajax_blank';
 
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$auto_id = (int)$this->request->query('t_id');

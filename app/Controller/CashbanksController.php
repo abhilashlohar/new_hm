@@ -1661,7 +1661,7 @@ $this->set('s_role_id',$s_role_id);
 //Start Petty Cash Payment Show Ajax (Accounts)//
 function petty_cash_payment_show_ajax()
 {
-$this->layout='blank';
+$this->layout='ajax_blank';
 $this->ath();
 $s_role_id=$this->Session->read('hm_role_id');
 $s_society_id = $this->Session->read('hm_society_id');

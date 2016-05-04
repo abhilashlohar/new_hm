@@ -56,6 +56,7 @@ $(document).ready(function() {
 		else
 		{
 		$("#result").html('<div align="center" style="padding:10px;"><img src="<?php echo $webroot_path;?>as/loding.gif" />Loading....</div>').load("petty_cash_payment_show_ajax?date1=" +date1+ "&date2=" +date2+ "");
+		 $("#scrolllll").css("overflow","hidden");
 		}
 		
 	});

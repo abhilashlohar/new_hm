@@ -1,14 +1,14 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));
 ?>
-<td style="background-color:"			   
+<div style="overflow:scroll-y;"></div>			   
 <script>
 $(document).ready(function() {
 $("#fix<?php echo $id_current_page; ?>").removeClass("blue");
 $("#fix<?php echo $id_current_page; ?>").addClass("red");
 });
 </script>    
-<a style="background-color:#D9D1FA "
+
 <!--------Start Bank Receipt form Front End----------->
 <?php
 $current_date = date('Y-m-d');

@@ -200,7 +200,7 @@ $("#menus_area>li").live('click',function(e){
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
-<body class="fixed-top">
+<body class="fixed-top" style="overflow:hidden;">
    <!-- BEGIN HEADER -->
    <div class="header navbar navbar-inverse navbar-fixed-top hide_at_print">
       <!-- BEGIN TOP NAVIGATION BAR -->
@@ -323,20 +323,23 @@ $("#menus_area>li").live('click',function(e){
          <!-- END SIDEBAR MENU -->
       </div>
       <!-- END SIDEBAR -->
-      <!-- BEGIN PAGE -->  
+      <!-- BEGIN PAGE --> 
+ 	  
       <div class="page-content" style="background-color:white;">
          
          <!-- BEGIN PAGE CONTAINER-->
-         <div class="container-fluid" id="ctp_content_area">
+		
+         <div class="container-fluid" id="ctp_content_area" style="overflow-y:scroll; height:620px;">
 			<!-- BEGIN PAGE CONTENT-->
 			<div class="row-fluid">
 				<div  id="content">
+				
 					<?php echo $this->fetch('content'); ?>
 				</div>
 			</div>
 			<!-- END PAGE CONTENT-->        
          </div>
-         <!-- END PAGE CONTAINER-->
+		 <!-- END PAGE CONTAINER-->
       </div>
       <!-- END PAGE -->  
    </div>

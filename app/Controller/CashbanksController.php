@@ -700,7 +700,7 @@ function bank_receipt_excel()
 //Start bank_receipt_show_ajax// 
 function bank_receipt_show_ajax($from=null,$to=null)
 {
-	$this->layout='blank';
+	$this->layout='ajax_blank';
 
 	$this->ath();
 	$s_society_id = $this->Session->read('hm_society_id');
@@ -1124,7 +1124,7 @@ $this->set('s_role_id',$s_role_id);
 //End Bank Payment View (Accounts)//
 //Start Bank Payment Show Ajax (Accounts)//
 function bank_payment_show_ajax(){
-$this->layout='blank';
+$this->layout='ajax_blank';
 $s_role_id=$this->Session->read('role_id');
 $s_society_id = $this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');
@@ -1360,7 +1360,7 @@ $this->redirect(array('controller' => 'Cashbanks','action'=>'petty_cash_receipt_
 //Start Petty Cash Receipt Show Ajax (Accounts)//
 function petty_cash_receipt_show_ajax()
 {
-$this->layout='blank';
+$this->layout='ajax_blank';
 $s_role_id=$this->Session->read('hm_role_id');
 $s_society_id = $this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');

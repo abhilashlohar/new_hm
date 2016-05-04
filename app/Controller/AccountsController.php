@@ -1224,7 +1224,7 @@ function over_due_report()
 //Start over due report show ajax(Accounts)//
 function over_due_report_show_ajax()
 {
-	$this->layout = 'blank';
+	$this->layout = 'ajax_blank';
 	$s_role_id=$this->Session->read('role_id');
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');
@@ -3319,7 +3319,7 @@ function balance_sheet(){
 //End income_expenditure//
 //Start balance_sheet_ajax// 
 function balance_sheet_ajax($from=null){
-	$this->layout='blank';
+	$this->layout='ajax_blank';
 	$this->ath();
 		
 	$s_society_id = (int)$this->Session->read('hm_society_id');
@@ -3344,7 +3344,7 @@ function balance_sheet_ajax($from=null){
 //Start income_expenditure_ajax//
 function income_expenditure_ajax($from=null,$to=null){
 			
-	$this->layout='blank';
+	$this->layout='ajax_blank';
 	$this->ath();
 	
 	$s_role_id=$this->Session->read('role_id');
@@ -3561,7 +3561,7 @@ function trial_balance()
 //Start Trial Balance Ajax Show (Accounts)//
 function trial_balance_ajax_show($from=null,$to=null,$wise=null)
 {
-	$this->layout='blank';
+	$this->layout='ajax_blank';
 	$this->ath();
 
 	$s_society_id = (int)$this->Session->read('hm_society_id');
@@ -3686,7 +3686,7 @@ header ("Content-Description: Generated Report" );
 function trial_balance_ajax_show_sub_ledger($from=null,$to=null,$wise=null)
 {
 	
-	$this->layout='blank';
+	$this->layout='ajax_blank';
 	$this->ath();
 	
 	
@@ -3903,7 +3903,7 @@ $this->set('new_flats_for_bill',$new_flats_for_bill);
 //Start trial_balance_ajax_show_with_sub_ledger//
 function trial_balance_ajax_show_with_sub_ledger($from=null,$to=null,$wise=null)
 {
-$this->layout='blank';
+$this->layout='ajax_blank';
 	$this->ath();
 	
 	$s_role_id=$this->Session->read('role_id');
@@ -5150,7 +5150,7 @@ function tds_payment_report()
 //Start tds_payment_report_view_ajax//
 function tds_payment_report_view_ajax()
 {
-	$this->layout='blank';
+	$this->layout='ajax_blank';
 	$this->ath();
 	$s_role_id=$this->Session->read('role_id');
 	$s_society_id = (int)$this->Session->read('hm_society_id');
@@ -5262,7 +5262,7 @@ $s_user_id=$this->Session->read('user_id');
 //Start cash_book_report_show_ajax// 
 function cash_book_report_show_ajax()
 {
-$this->layout='blank';
+$this->layout='ajax_blank';
 $this->ath();
 		
 $bank_id=(int)$this->request->query('bank');
@@ -5323,7 +5323,7 @@ function bank_book_report()
 //Start bank_book_report_view_ajax//
 function bank_book_report_view_ajax()
 {
-$this->layout='blank';
+$this->layout='ajax_blank';
 $this->ath();
 	$bank_id=(int)$this->request->query('bank');
 	  $this->set('bank_id',$bank_id);	

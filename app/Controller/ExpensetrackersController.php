@@ -30,7 +30,7 @@ $s_user_id=$this->Session->read('hm_user_id');
 //Start Expense Tracker Pie Chart Ajax(Accounts)//
 function expense_tracker_pie_chart_ajax()
 {
-$this->layout = 'blank';
+$this->layout = 'ajax_blank';
 $s_role_id=$this->Session->read('hm_role_id');
 $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');	
@@ -405,7 +405,7 @@ function expense_tracker_view(){
 //Start expense_tracker_view_ajax// 
 function expense_tracker_view_ajax(){
 		if($this->RequestHandler->isAjax()){
-		$this->layout='blank';
+		$this->layout='ajax_blank';
 		}else{
 		$this->layout='session';
 		}

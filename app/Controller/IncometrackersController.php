@@ -7789,7 +7789,7 @@ $this->set('value',$user_id);
 ///////////////////////// Start Delete Terms ///////////////////////////////////////////////////////////////////
 function delete_terms()
 {
-$this->layout='blank';
+$this->layout='ajax_blank';
 $this->ath();
 
 
@@ -7833,7 +7833,7 @@ $this->society->updateAll(array('terms_conditions'=>$terms_arr2),array("society_
 //////////////////////// Start Edit Terms ////////////////////////////////////////////////////
 function edit_terms()
 {
-$this->layout='blank';
+$this->layout='ajax_blank';
 $this->ath();
 
 $s_society_id = (int)$this->Session->read('hm_society_id');

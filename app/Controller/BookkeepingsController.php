@@ -199,7 +199,7 @@ $s_user_id=$this->Session->read('hm_user_id');
 //Start Journal View Ajax(Accounts)//
 function journal_view_ajax($page=null,$from=null,$to=null){
 if($this->RequestHandler->isAjax()){
-		$this->layout='blank';
+		$this->layout='ajax_blank';
 		}else{
 		$this->layout='session';
 		}
@@ -488,7 +488,7 @@ $this->set("tds_arr",$tds_arr);
 // End Ledger Excel (Accounts)//
 //Start Ledger Show Ajax (Accounts)//
 function ledger_show_ajax($page=null,$ledger_account_id=null,$from=null,$to=null){
-	$this->layout='blank';
+	$this->layout='ajax_blank';
 	$this->ath();
 	$s_role_id=$this->Session->read('role_id');
 	$s_society_id = (int)$this->Session->read('hm_society_id');

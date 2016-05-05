@@ -1,11 +1,5 @@
-<style>
-#scroll_box{
-overflow-y:scroll; height:620px; padding-right:15px !important;
-}
-</style>
-<div id="scroll_box">
 <?php echo $this->fetch('content'); ?>
-</div>
+
 <script>
 $(document).ready(function() {
 var test = $("input[type=radio]:not(.toggle),input[type=checkbox]:not(.toggle)");

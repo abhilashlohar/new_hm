@@ -200,12 +200,12 @@ $("#menus_area>li").live('click',function(e){
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
-<body class="fixed-top" style="overflow:hidden;">
+<body class="fixed-top">
    <!-- BEGIN HEADER -->
    <div class="header navbar navbar-inverse navbar-fixed-top hide_at_print">
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="navbar-inner">
-         <div class="container-fluid" style="background-color: #333;">
+         <div class="container-fluid" style="background-color:#333;">
             <!-- BEGIN LOGO -->
             <a class="brand desktop" href="<?php echo $webroot_path; ?>Hms/Dashboard" style="margin-top: -3px;"> 
             <img src="<?php echo $webroot_path; ?>as/hm/housingmatterslogo.png" alt="HousingMatters" style="height: 30px;" />
@@ -381,8 +381,7 @@ $("#menus_area>li").live('click',function(e){
 </body>
 <!-- END BODY -->
 </html>
-<style>
-#ctp_content_area{
-overflow-y:scroll; height:620px;
-}
-</style>
+
+
+
+

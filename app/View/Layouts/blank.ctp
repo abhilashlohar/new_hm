@@ -1,6 +1,6 @@
 <style>
 #scroll_box{
-overflow-y:scroll; height:620px;
+overflow-y:scroll; height:620px; padding-right:15px !important;
 }
 </style>
 <div id="scroll_box">

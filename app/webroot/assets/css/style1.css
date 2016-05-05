@@ -42,7 +42,7 @@ h1.block, h2.block, h3.block, h4.block, h5.block, h6.block {
   padding-bottom: 10px;
 }
 
-a {
+a{
   text-shadow: none !important;
   color: #0d638f;
 }
@@ -1328,7 +1328,7 @@ Extended bootstrap dropdowns
 
 .dropdown-menu.extended li a:hover {
   background-image: none;
-  background-color: #f5f5f5;
+  background-color: #333;
   color: #000;
   filter:none;
 }

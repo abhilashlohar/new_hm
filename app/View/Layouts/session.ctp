@@ -205,7 +205,7 @@ $("#menus_area>li").live('click',function(e){
    <div class="header navbar navbar-inverse navbar-fixed-top hide_at_print">
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="navbar-inner">
-         <div class="container-fluid" style="background-color: #F5F8F9;">
+         <div class="container-fluid" style="background-color: #333;">
             <!-- BEGIN LOGO -->
             <a class="brand desktop" href="<?php echo $webroot_path; ?>Hms/Dashboard" style="margin-top: -3px;"> 
             <img src="<?php echo $webroot_path; ?>as/hm/housingmatterslogo.png" alt="HousingMatters" style="height: 30px;" />
@@ -236,7 +236,7 @@ $("#menus_area>li").live('click',function(e){
 		
 			if(!empty($society_name)){
 			?>
-			<a class="btn" href="#" role="button" style="color:black;background-color: rgb(245, 248, 249);font-size: 14px;font-weight: bold;cursor: default;"><?php echo $society_name; ?></a>
+			<a class="btn" href="#" role="button" style="color:white; background-color:#333;font-size: 14px;font-weight: bold;cursor: default;"><?php echo $society_name; ?></a>
 			<?php } ?>
             <!-- END LOGO -->
             <!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -271,12 +271,12 @@ $("#menus_area>li").live('click',function(e){
 						<td style="padding: 1px; font-weight: 600; font-size: 12px;">
 							 <table cellpadding="0" cellspacing="0" style="line-height: 14px;">
 							  <tr>
-								<td style="padding: 1px; font-size: 12px; color: black; font-weight: bold;">
+								<td style="padding: 1px; font-size: 12px; color: white; font-weight: bold;">
 								<?php echo $name; ?>
 								</td>
 							  </tr>
 							  <tr>
-								<td style="font-size: 12px;color:black !important;">
+								<td style="font-size: 12px;color:white !important;">
 								<?php echo @$role_name; ?>
 								</td>
 							  </tr>

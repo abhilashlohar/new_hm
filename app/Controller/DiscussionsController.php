@@ -72,6 +72,8 @@ function topic_show_type($type_list=null){
 }
 
 function submit_comment(){
+	
+	$this->ath();
 	$s_user_id=$this->Session->read('hm_user_id');
 	$s_society_id=$this->Session->read('hm_society_id');
 	$post_id=(int)$this->request->data['post_id'];

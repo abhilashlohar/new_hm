@@ -1,9 +1,9 @@
 <style>
-#scrolllll{
+#scroll_box{
 overflow-y:scroll; height:620px;
 }
 </style>
-<div id="scrolllll">
+<div id="scroll_box">
 <?php echo $this->fetch('content'); ?>
 </div>
 <script>

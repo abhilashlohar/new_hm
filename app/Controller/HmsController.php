@@ -7544,12 +7544,7 @@ function dashboard(){
 	  $s_user_id = $this->Session->read('hm_user_id'); 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	
-	$this->loadmodel("user");
-	$user_profile=$this->user_profile->find('all');
-		foreach($user_profile as $data){
-			
-			
-		}
+	
 	
 	
 //replace comma in amount

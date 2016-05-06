@@ -423,7 +423,7 @@ Page content
 .page-content {  
   margin-top: 0px;
   min-height: 800px;    
-  padding: 5px;
+  padding: 7px 0px;
   background-color: #F5F8F9; 
 }
 

@@ -2290,7 +2290,7 @@ function cronjob()
 		$message_web=$data['email_requests']['message_web'];
 		$reply=$data['email_requests']['reply'];
 		
-		//$mail_result=$this->smtpmailer($to,$from,$from_name,$subject,$message_web,$reply);
+		$mail_result=$this->smtpmailer($to,$from,$from_name,$subject,$message_web,$reply);
 		
 		if($mail_result = true){
 			$this->loadmodel('email_requests');
@@ -2374,7 +2374,7 @@ function send_email($to,$from,$from_name,$subject,$message_web,$reply)
 //$this->layout='session';
 $this->loadmodel('email_request');
 $er=$this->autoincrement('email_request','e_id');
-//$this->email_request->saveAll(array('e_id' => $er, 'to' => $to, 'from' => $from, 'from_name' => $from_name, 'subject' => $subject,'message_web' => $message_web, 'reply' => $reply, 'flag' => 0));
+$this->email_request->saveAll(array('e_id' => $er, 'to' => $to, 'from' => $from, 'from_name' => $from_name, 'subject' => $subject,'message_web' => $message_web, 'reply' => $reply, 'flag' => 0));
 }
 function logout() 
 {
@@ -7543,6 +7543,13 @@ function dashboard(){
 	  $s_society_id = $this->Session->read('hm_society_id');
 	  $s_user_id = $this->Session->read('hm_user_id'); 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
+	
+	$this->loadmodel("user");
+	$user_profile=$this->user_profile->find('all');
+		foreach($user_profile as $data){
+			
+			
+		}
 	
 	
 //replace comma in amount

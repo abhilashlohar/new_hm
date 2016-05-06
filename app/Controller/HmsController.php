@@ -6166,6 +6166,7 @@ function submit_login(){
 		$conditions =array( '$or' => array( 
 		array("email" => $username, "password" => $password),
 		array("mobile" => $username, "password" => $password),
+		array("mobile" => $username, "password" => (int)$password)
 	));
 	$result_user=$this->user->find('all',array('conditions'=>$conditions));
 	if(sizeof($result_user)==1){
@@ -7544,8 +7545,14 @@ function dashboard(){
 	  $s_user_id = $this->Session->read('hm_user_id'); 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	
-	
-	
+	/*$this->loadmodel("user");
+	$user_profile=$this->user->find('all');
+		foreach($user_profile as $data){
+			$user_id=(int)$data['user']['user_id'];
+			$mobile=(string)$data['user']['mobile'];
+			$this->user->updateAll(array('mobile'=>$mobile),array('user_id'=>$user_id));
+		}
+	*/
 	
 //replace comma in amount
 

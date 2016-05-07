@@ -18,7 +18,9 @@ $profile_pic=$result_user["profile_pic"];
 foreach($wing_flat as $data){
 	$wing_flat=$data;
 }
-
+if(empty($profile_pic)){
+$profile_pic="blank.jpg";	
+}
 	$visible_detail='';
 	if($visible=="all_users"){
 		
@@ -80,6 +82,7 @@ foreach($wing_flat as $data){
 <div style="text-align: justify;">
 	<?php echo $description; ?>
 </div>
+
 <?php if(!empty($file)){ ?>
 <div style="text-align: justify;">
 	<img src="<?php echo $webroot_path; ?>discussion_file/<?php echo $file; ?>" style="width:100%; ">

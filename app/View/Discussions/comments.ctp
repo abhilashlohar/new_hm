@@ -11,7 +11,12 @@
 	$wing_flat=$result_user["wing_flat"];
 	foreach($wing_flat as $data){
 		$wing_flat=$data;
-	}?>
+	}
+	if(empty($profile_pic)){
+		
+		$profile_pic="blank.jpg";
+	}
+	?>
 	<div style="background-color: #fafafa;border: 1px solid rgba(204, 204, 204, 0.27);margin-bottom: 4px;" comment_id="<?php echo $comment_id; ?>" id="comments<?php echo $comment_id; ?>">
 		<table width="100%" cellpadding="0" cellspacing="0">
 			<tr>

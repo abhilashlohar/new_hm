@@ -124,6 +124,25 @@ $(document).ready(function(){
 			$('#pp').hide();
 		});
 	
+			$(".delete_comments").die().live("click",function(){
+			var dt=$(this).attr('element_id');
+			
+			$('#delete_topic_result').html('<div id="pp"><div class="modal-backdrop fade in"></div><div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"><div class="modal-body" style="font-size:14px;"><i class="icon-warning-sign" style="color:#d84a38;"></i> Are you sure you want to delete the comments ? </div><div class="modal-footer"><a href="<?php echo $webroot_path; ?>Discussions/delete_comments?con='+dt+'" class="btn blue" id="yes">Yes</a><a href="#"  role="button" id="can" class="btn">No</a></div></div></div>');
+		});	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	$(".delete_per").die().live("click",function(){
 			var dp=$(this).attr('post_id');
 		$('#delete_topic_result').html('<div id="pp"><div class="modal-backdrop fade in"></div><div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"><div class="modal-body" style="font-size:14px;"><i class="icon-warning-sign" style="color:#d84a38;"></i> Sure, you want to delete the discussion permanently ?</div><div class="modal-footer"><a href="<?php echo $webroot_path; ?>Discussions/archive?con='+dp+'" class="btn blue" id="yes">Yes</a><a href="#" role="button" id="can" class="btn">No</a></div></div></div>');

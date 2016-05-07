@@ -137,13 +137,13 @@ function comments($post_id=null,$comment_id=null){
 	$this->set('s_user_id',$s_user_id);
 	if(empty($comment_id)){
 		$this->loadmodel('discussion_comment');
-		$conditions=array("discussion_post_id"=>(int)$post_id);
+		$conditions=array("discussion_post_id"=>(int)$post_id,"delete_id"=>0);
 		$order=array('discussion_comment.discussion_comment_id'=> 'ASC');
 		$comments=$this->discussion_comment->find('all',array('conditions'=>$conditions,'order'=>$order));
 		$this->set(compact("comments"));
 	}else{
 		$this->loadmodel('discussion_comment');
-		$conditions=array("discussion_post_id"=>(int)$post_id,"discussion_comment_id"=>array('$gt'=>(int)$comment_id));
+		$conditions=array("discussion_post_id"=>(int)$post_id,"discussion_comment_id"=>array('$gt'=>(int)$comment_id),"delete_id"=>0);
 		$order=array('discussion_comment.discussion_comment_id'=> 'ASC');
 		$comments=$this->discussion_comment->find('all',array('conditions'=>$conditions,'order'=>$order));
 		$this->set(compact("comments"));
@@ -335,7 +335,15 @@ function new_topic(){
 }
 
 
-
+function delete_comments()
+{
+$this->layout='blank';
+$s_society_id=$this->Session->read('hm_society_id'); 
+$con=(int)$this->request->query('con');
+$this->loadmodel('discussion_comment');
+$this->discussion_comment->updateAll(array("delete_id" =>1),array("discussion_comment_id" => $con));
+$this->redirect(array('controller' => 'Discussions','action' => 'index'));	
+}
 
 
 function delete_topic(){

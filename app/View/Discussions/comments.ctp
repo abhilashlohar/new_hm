@@ -21,7 +21,7 @@
 					<div class="btn-group  " style="float:right;">
 						<a class="badge ok_t  dropdown-toggle" data-toggle="dropdown" style="background-color: transparent;"><i class="icon-angle-down" style="font-size: 16px;color: rgb(175, 173, 173);"></i></a>
 						<ul class="dropdown-menu">
-							<li><a href="#" role="button" class="delete_comments" element_id="<?php echo $comment_id; ?>"><i class="icon-trash"></i> offensive</a></li>
+							<li><a href="#" role="button" class="delete_comments" element_id="<?php echo $comment_id; ?>"><i class="icon-trash"></i> Delete</a></li>
 						</ul>
 					</div>
                     <?php } ?>

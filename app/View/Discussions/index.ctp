@@ -135,14 +135,12 @@ $(document).ready(function(){
 		var t_id=$(this).attr("tems_id");
 		$("#tems_edit_content").load('<?php echo $this->webroot; ?>Discussions/delete_comments?con='+t_id+'&edit=1', function() {
 			$("#comments"+t_id).remove();
+			$(".edit_div").hide();
 		});	 
 	 
 	 });
 	
-	
-$("#close_edit").live('click',function(){
-$(".edit_div").hide();
-});		
+		
 	
 	
 	$(".delete_per").die().live("click",function(){

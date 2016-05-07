@@ -134,7 +134,7 @@ function comments($post_id=null,$comment_id=null){
 	$this->ath();
 	$s_user_id=$this->Session->read('hm_user_id');
 	$s_society_id=$this->Session->read('hm_society_id');
-	
+	$this->set('s_user_id',$s_user_id);
 	if(empty($comment_id)){
 		$this->loadmodel('discussion_comment');
 		$conditions=array("discussion_post_id"=>(int)$post_id);

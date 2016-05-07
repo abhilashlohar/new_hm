@@ -47,8 +47,10 @@
 <div id="delete_topic_result"></div>
 <script>
 $(document).ready(function(){
-	
+	var nn=0;
 	function load_comments(){
+		
+		 
 		var post_id=$("div[post_id]").attr("post_id");
 		var comment_id=$("#comments div[comment_id]:last").attr("comment_id");
 		if(!comment_id){ comment_id=0; }
@@ -59,6 +61,8 @@ $(document).ready(function(){
                 $("#comments").append(data);
             }
         });
+		 
+		nn=0;
 	};
 
 	$.ajax({
@@ -72,25 +76,28 @@ $(document).ready(function(){
 			},"slow");
 	   }
 	});
-
-	$(".topic").die().live("click",function(){
-		
+    
+	$(".topic").die().bind("click",function(){
+		nn++;
 		//clearInterval(interval);
 		$('.topic').each(function(i, obj) {
 			$(this).removeClass("run");
 		});
 		$(this).addClass("run");
 		var post_id=$(this).attr("post_id");
+		if(nn==1){
 		$.ajax({
 		   url: "<?php echo $webroot_path; ?>Discussions/topic_detail/"+post_id,
 		   success: function(data) {
-			   $("#topic_detail").html(data);
-			   load_comments();
-			   $("html, body").animate({
+			  $("#topic_detail").html(data);
+				   load_comments();
+			    $("html, body").animate({
 					scrollTop:0
 				},"slow");
+			
 		   }
 		});
+		}
 	});
 	
 	$(".select_type").die().live("click",function(){

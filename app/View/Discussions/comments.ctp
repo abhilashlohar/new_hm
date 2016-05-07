@@ -12,7 +12,7 @@
 	foreach($wing_flat as $data){
 		$wing_flat=$data;
 	}?>
-	<div style="background-color: #fafafa;border: 1px solid rgba(204, 204, 204, 0.27);margin-bottom: 4px;" comment_id="<?php echo $comment_id; ?>">
+	<div style="background-color: #fafafa;border: 1px solid rgba(204, 204, 204, 0.27);margin-bottom: 4px;" comment_id="<?php echo $comment_id; ?>" id="comments<?php echo $comment_id; ?>">
 		<table width="100%" cellpadding="0" cellspacing="0">
 			<tr>
 				<td style="padding:2px;" valign="top" width="10%"><img src="<?php echo $webroot_path; ?>profile/<?php echo $profile_pic; ?>" style="height:40px; width:40px;"></td>

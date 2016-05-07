@@ -125,22 +125,24 @@ $(document).ready(function(){
 		});
 	
 			$(".delete_comments").die().live("click",function(){
+			 $(".edit_div").show();
 			var dt=$(this).attr('element_id');
-			
-			$('#delete_topic_result').html('<div id="pp"><div class="modal-backdrop fade in"></div><div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"><div class="modal-body" style="font-size:14px;"><i class="icon-warning-sign" style="color:#d84a38;"></i> Are you sure you want to delete the comments ? </div><div class="modal-footer"><a href="<?php echo $webroot_path; ?>Discussions/delete_comments?con='+dt+'" class="btn blue" id="yes">Yes</a><a href="#"  role="button" id="can" class="btn">No</a></div></div></div>');
+	
+  $("#tems_edit_content").html('<div align="center" style="padding:20px;"><img src="<?php echo $this->webroot ; ?>/as/indicator_blue_small.gif" /><br/><h5>Please Wait</h5></div>').load('<?php echo $this->webroot; ?>Discussions/delete_comments?con='+dt+'&edit=0');
 		});	
 	
+	$(".delete_tems_btn").live('click',function(){
+		var t_id=$(this).attr("tems_id");
+		$("#tems_edit_content").load('<?php echo $this->webroot; ?>Discussions/delete_comments?con='+t_id+'&edit=1', function() {
+			$("#comments"+t_id).remove();
+		});	 
+	 
+	 });
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+$("#close_edit").live('click',function(){
+$(".edit_div").hide();
+});		
 	
 	
 	$(".delete_per").die().live("click",function(){
@@ -187,3 +189,10 @@ $(document).ready(function(){
 	font-weight: bold;
 }
 </style>
+
+<div class="edit_div"  style="display:none;">
+<div class="modal-backdrop fade in"></div>
+<div class="modal"  id="tems_edit_content">
+	
+</div>
+</div>

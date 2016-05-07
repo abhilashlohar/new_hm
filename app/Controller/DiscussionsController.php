@@ -340,9 +340,14 @@ function delete_comments()
 $this->layout='blank';
 $s_society_id=$this->Session->read('hm_society_id'); 
 $con=(int)$this->request->query('con');
+$edit=$this->request->query('edit');
+$this->set('con',$con);
+$this->set('edit',$edit);
+if($edit==1){
 $this->loadmodel('discussion_comment');
 $this->discussion_comment->updateAll(array("delete_id" =>1),array("discussion_comment_id" => $con));
-$this->redirect(array('controller' => 'Discussions','action' => 'index'));	
+
+}
 }
 
 

@@ -103,6 +103,7 @@ foreach($wing_flat as $data){
 <?php } ?>
 <script>
 $(document).ready(function(){
+	var nn=0;
 	function load_comments(){
 		var post_id=$("div[post_id]").attr("post_id");
 		var comment_id=$("#comments div[comment_id]:last").attr("comment_id");
@@ -116,10 +117,13 @@ $(document).ready(function(){
                 $("#comments").append(data);
             }
         });
+		nn=0;
 	};
 	
 	$("#idForm").on("submit",function(e){
+		nn++;
 		$('#sub').attr('disabled','disabled');
+		if(nn==1){
 		$.ajax({
 		   type: "POST",
 		   url: "<?php echo $webroot_path; ?>Discussions/submit_comment",
@@ -132,6 +136,7 @@ $(document).ready(function(){
 			   load_comments();
 		   }
 		});
+		}
 		e.preventDefault(); 
 	});
 });

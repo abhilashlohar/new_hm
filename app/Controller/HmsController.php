@@ -7545,7 +7545,22 @@ function dashboard(){
 	  $s_user_id = $this->Session->read('hm_user_id'); 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	
-	/*$this->loadmodel("user");
+
+		/*
+	$this->loadmodel("discussion_post");
+	$user_profile=$this->discussion_post->find('all');
+		foreach($user_profile as $data){
+				$discussion_post_id=(int)$data['discussion_post']['discussion_post_id'];
+				echo $date=$data['discussion_post']['date'];
+				
+				 $date2= date("d-m-y", strtotime($date)); 
+				 $date2= date("Y-m-d", strtotime($date2)); 
+				$dat1= strtotime($date2);
+				$this->discussion_post->updateAll(array('date'=>$dat1),array('discussion_post_id'=>$discussion_post_id));
+		} 
+
+
+	$this->loadmodel("user");
 	$user_profile=$this->user->find('all');
 		foreach($user_profile as $data){
 			$user_id=(int)$data['user']['user_id'];

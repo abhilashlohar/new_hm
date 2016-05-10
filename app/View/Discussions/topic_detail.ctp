@@ -60,7 +60,14 @@ $profile_pic="blank.jpg";
 			}
 		$visible_detail=implode(" , ",$wing_name);
 	}
-
+if($visible=="group_wise"){
+	
+	foreach($sub_visible as $group_id) {
+		$group_names=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_group_name_via_group_id'), array('pass' => array($group_id)));
+		 $group_name[]=$group_names;
+	}
+	$visible_detail=implode(" , ",$group_name);
+}
 
 
 ?>

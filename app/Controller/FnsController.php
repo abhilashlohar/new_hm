@@ -996,5 +996,13 @@ function check_wing_can_delete_or_not($wing_id=null){
 	return $this->flat->find('count',array('conditions'=>$conditions));
 }
 
+function fetch_group_name_via_group_id($group_id){
+	$s_society_id=$this->Session->read('hm_society_id');
+	$this->loadmodel('group');
+	$conditions=array("group_id"=>(int)$group_id,'society_id'=>$s_society_id);
+	$result_group=$this->group->find('all',array('conditions'=>$conditions));
+	return $result_group[0]['group']['group_name'];
+}
+
 }
 ?>

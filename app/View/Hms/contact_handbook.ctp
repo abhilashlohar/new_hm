@@ -346,7 +346,7 @@ $(".con_delete").click(function(){
 <script>
 $(document).ready(function(){
 <?php 
-	$contact_handbook=$this->session->read('contact_create');
+	$contact_handbook=$this->Session->read('contact_create');
 if($contact_handbook==1){
 ?>	
 	$.gritter.add({

@@ -176,11 +176,13 @@ Note: File size must be less than 2 MB and All extension are allowed.
 foreach ($result_users_new as $collection) 
 {
 $user_id=$collection["user"]["user_id"];
-$user_name=$collection["user"]["user_name"];
-$email=$collection["user"]["email"];
-$wing=$collection["user"]["wing"];
-$flat=$collection["user"]["flat"];
-$flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat)));
+$result_member=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($user_id)));
+		$user_name=$result_member['user_name'];
+		$email=$result_member['email'];
+		$wing_flat=$result_member['wing_flat'];
+		foreach($wing_flat as $flat){
+			
+		}
 
 ?>
 <option value="<?php echo $user_id; ?>"><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $flat; ?>,<?php echo $email; ?></option>
@@ -210,9 +212,6 @@ $group_id=$collection["group"]["group_id"];
 </label>
 <?php } ?> 
 <label report="multi_check" class="remove_report"></label>
-
-
-
 </div>
 
 <!--------------------------->

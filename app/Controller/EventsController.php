@@ -110,8 +110,10 @@ function event_submit(){
 	}elseif($visible=='wing_wise' and $sub_visible==0){
 		$report[]=array('label'=>'visible_wing', 'text' => 'Please select wing.');
 		$sub_visible=explode(",",$sub_visible);
+	}elseif($visible=='group_wise' and $sub_visible==0){
+		$report[]=array('label'=>'visible_wing', 'text' => 'Please select group.');
+		$sub_visible=explode(",",$sub_visible);
 	}
-	
 
 	if(sizeof($report)>0){
 		$output=json_encode(array('report_type'=>'error','report'=>$report));
@@ -124,7 +126,7 @@ function event_submit(){
 	foreach($recieve_info as $user_id=>$data){
 	$user_id_array[]=$user_id;	
 	}
-		
+	 
 	$event_id=$this->autoincrement('event','event_id');
 	$this->loadmodel('event');
 	$this->event->saveAll(array('event_id' => $event_id,'e_name' => $e_name, 'user_id' => $s_user_id, 'society_id' => $s_society_id, 'date_from' => $date_from , 'date_to' => $date_to, 'day_type' => $day_type, 'location' => $location,'description' => $description,'visible' => $visible,'sub_visible' => $sub_visible,'visible_user_id' =>$user_id_array,'date' => $date,'time'=>$e_time,'ask_no_of_member'=>$ask_no_of_member,'no_of_member'=>0));

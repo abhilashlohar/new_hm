@@ -1,4 +1,5 @@
 <?php
+
 App::import('Controller', 'Hms');
 class GovernancesController extends HmsController {
 var $helpers = array('Html', 'Form','Js');

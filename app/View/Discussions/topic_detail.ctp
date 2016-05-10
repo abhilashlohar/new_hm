@@ -18,7 +18,9 @@ $profile_pic=$result_user["profile_pic"];
 foreach($wing_flat as $data){
 	$wing_flat=$data;
 }
-
+if(empty($profile_pic)){
+$profile_pic="blank.jpg";	
+}
 	$visible_detail='';
 	if($visible=="all_users"){
 		
@@ -80,6 +82,7 @@ foreach($wing_flat as $data){
 <div style="text-align: justify;">
 	<?php echo $description; ?>
 </div>
+
 <?php if(!empty($file)){ ?>
 <div style="text-align: justify;">
 	<img src="<?php echo $webroot_path; ?>discussion_file/<?php echo $file; ?>" style="width:100%; ">
@@ -103,6 +106,7 @@ foreach($wing_flat as $data){
 <?php } ?>
 <script>
 $(document).ready(function(){
+	var nn=0;
 	function load_comments(){
 		var post_id=$("div[post_id]").attr("post_id");
 		var comment_id=$("#comments div[comment_id]:last").attr("comment_id");
@@ -116,10 +120,13 @@ $(document).ready(function(){
                 $("#comments").append(data);
             }
         });
+		nn=0;
 	};
 	
 	$("#idForm").on("submit",function(e){
+		nn++;
 		$('#sub').attr('disabled','disabled');
+		if(nn==1){
 		$.ajax({
 		   type: "POST",
 		   url: "<?php echo $webroot_path; ?>Discussions/submit_comment",
@@ -132,6 +139,7 @@ $(document).ready(function(){
 			   load_comments();
 		   }
 		});
+		}
 		e.preventDefault(); 
 	});
 });

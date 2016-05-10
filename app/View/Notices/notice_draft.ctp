@@ -45,7 +45,7 @@ $n_date=$data['notice']['n_date'];
 <script>
 
 <?php 
- $draft_notice_griter=$this->session->read('draft_notice');
+ $draft_notice_griter=$this->Session->read('draft_notice');
 if($draft_notice_griter==1){
  ?>	
 		$.gritter.add({

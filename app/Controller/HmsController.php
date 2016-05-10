@@ -646,11 +646,10 @@ function read_user_enrollment_csv(){
 				$mobile=$child_ar[4];
 				$owner_tenant=$child_ar[5];
 				$committee=$child_ar[6];
-				$user_modify_id=$child_ar[7];
 				$flat_name=str_pad($flat_name,10,"0",STR_PAD_LEFT);
 				$this->loadmodel('user_enrollment_info_csv');
 				$auto_id=$this->autoincrement('user_enrollment_info_csv','auto_id');
-				$this->user_enrollment_info_csv->saveAll(Array(Array("auto_id" => $auto_id, "name" => $name,"wing_name" => $wing_name, "flat_name" => $flat_name, "owner_tenant" => $owner_tenant, "email" => $email, "mobile" => $mobile,"society_id"=>$s_society_id,"committee"=>$committee,"user_modify_id"=>$user_modify_id,"is_converted"=>"NO")));
+				$this->user_enrollment_info_csv->saveAll(Array(Array("auto_id" => $auto_id, "name" => $name,"wing_name" => $wing_name, "flat_name" => $flat_name, "owner_tenant" => $owner_tenant, "email" => $email, "mobile" => $mobile,"society_id"=>$s_society_id,"committee"=>$committee,"is_converted"=>"NO")));
 			}
 	}
 		$this->loadmodel('import_user_enrollment_record');
@@ -674,7 +673,7 @@ function convert_user_enrollment_info_data(){
 		$committee=trim($import_record["user_enrollment_info_csv"]["committee"]);
 		$email=trim($import_record["user_enrollment_info_csv"]["email"]);
 		$mobile=trim($import_record["user_enrollment_info_csv"]["mobile"]);
-		$user_modify_id=$import_record["user_enrollment_info_csv"]["user_modify_id"];
+		
 				$committee=strtolower($committee);
 				$owner_tenant=strtolower($owner_tenant);
 				$this->loadmodel('wing'); 
@@ -702,9 +701,9 @@ function convert_user_enrollment_info_data(){
 				
 					$this->loadmodel('user_enrollment_csv_converted');
 					$auto_id=$this->autoincrement('user_enrollment_csv_converted','auto_id');
-					$this->user_enrollment_csv_converted->saveAll(Array( Array("auto_id" => $auto_id, "name" => $name,"society_id" => $s_society_id, "email" => $email, "mobile" => $mobile,"owner"=>$owner_tenant,"committee"=>$committee,"user_modify_id"=>$user_modify_id,"wing"=>$wing_id,"flat"=>$flat_id,"is_imported"=>"NO"))); 		
+					$this->user_enrollment_csv_converted->saveAll(Array( Array("auto_id" => $auto_id, "name" => $name,"society_id" => $s_society_id, "email" => $email, "mobile" => $mobile,"owner"=>$owner_tenant,"committee"=>$committee,"wing"=>$wing_id,"flat"=>$flat_id,"is_imported"=>"NO"))); 		
 				
-				$this->loadmodel('user_enrollment_info_csv');
+			$this->loadmodel('user_enrollment_info_csv');
 			$this->user_enrollment_info_csv->updateAll(array("is_converted" => "YES"),array("auto_id" => $user_info_csv_id));
 		}
 		
@@ -878,13 +877,7 @@ function auto_save_user_enrollment($record_id=null,$field=null,$value=null){
 				$this->user_enrollment_csv_converted->updateAll(array("mobile" => $value),array("auto_id" => $record_id));
 				echo "T";
 		}	
-		
-		if($field=="user_modify"){
-				$this->loadmodel('user_enrollment_csv_converted');
-				$this->user_enrollment_csv_converted->updateAll(array("user_modify_id" => (int)$value),array("auto_id" => $record_id));
-				echo "T";
-		}	
-		
+				
 		if($field=="flat"){
 			$wing_flat=explode(',',$value);
 			$wing_id=(int)$wing_flat[0];
@@ -1119,7 +1112,7 @@ function final_import_user_enrollment(){
 			$owner=strtolower($user_enrollment_converted["user_enrollment_csv_converted"]["owner"]);
 			$committee_n=strtolower($user_enrollment_converted["user_enrollment_csv_converted"]["committee"]);
 			$flat=(int)$user_enrollment_converted["user_enrollment_csv_converted"]["flat"];
-			$user_modify_id=(int)$user_enrollment_converted["user_enrollment_csv_converted"]["user_modify_id"];
+			
 				if($owner=="yes"){
 					$type = "yes";
 					$type_owner="Owner";
@@ -1162,7 +1155,7 @@ function final_import_user_enrollment(){
 		}
 	}
 	
-			$this->user->saveAll(array('user_id' => $i,'user_name' => $name,'email' => $email, 'password' => @$random, 'mobile' => $mobile,'society_id' => $s_society_id,'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes','user_type'=>'member','profile_pic'=>'blank.jpg','user_modify_id'=>$user_modify_id));	
+			$this->user->saveAll(array('user_id' => $i,'user_name' => $name,'email' => $email, 'password' => @$random, 'mobile' => $mobile,'society_id' => $s_society_id,'date' => $date, 'time' => $time,'signup_random'=>$random,'active'=>'yes','user_type'=>'member','profile_pic'=>'blank.jpg'));	
 			
 			$user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 			$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$s_society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no','owner'=>$type));
@@ -2290,7 +2283,7 @@ function cronjob()
 		$message_web=$data['email_requests']['message_web'];
 		$reply=$data['email_requests']['reply'];
 		
-		//$mail_result=$this->smtpmailer($to,$from,$from_name,$subject,$message_web,$reply);
+		$mail_result=$this->smtpmailer($to,$from,$from_name,$subject,$message_web,$reply);
 		
 		if($mail_result = true){
 			$this->loadmodel('email_requests');
@@ -2374,7 +2367,7 @@ function send_email($to,$from,$from_name,$subject,$message_web,$reply)
 //$this->layout='session';
 $this->loadmodel('email_request');
 $er=$this->autoincrement('email_request','e_id');
-//$this->email_request->saveAll(array('e_id' => $er, 'to' => $to, 'from' => $from, 'from_name' => $from_name, 'subject' => $subject,'message_web' => $message_web, 'reply' => $reply, 'flag' => 0));
+$this->email_request->saveAll(array('e_id' => $er, 'to' => $to, 'from' => $from, 'from_name' => $from_name, 'subject' => $subject,'message_web' => $message_web, 'reply' => $reply, 'flag' => 0));
 }
 function logout() 
 {
@@ -6166,6 +6159,7 @@ function submit_login(){
 		$conditions =array( '$or' => array( 
 		array("email" => $username, "password" => $password),
 		array("mobile" => $username, "password" => $password),
+		array("mobile" => $username, "password" => (int)$password)
 	));
 	$result_user=$this->user->find('all',array('conditions'=>$conditions));
 	if(sizeof($result_user)==1){
@@ -7544,6 +7538,29 @@ function dashboard(){
 	  $s_user_id = $this->Session->read('hm_user_id'); 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	
+
+		/*
+	$this->loadmodel("discussion_post");
+	$user_profile=$this->discussion_post->find('all');
+		foreach($user_profile as $data){
+				$discussion_post_id=(int)$data['discussion_post']['discussion_post_id'];
+				echo $date=$data['discussion_post']['date'];
+				
+				 $date2= date("d-m-y", strtotime($date)); 
+				 $date2= date("Y-m-d", strtotime($date2)); 
+				$dat1= strtotime($date2);
+				$this->discussion_post->updateAll(array('date'=>$dat1),array('discussion_post_id'=>$discussion_post_id));
+		} 
+
+
+	$this->loadmodel("user");
+	$user_profile=$this->user->find('all');
+		foreach($user_profile as $data){
+			$user_id=(int)$data['user']['user_id'];
+			$mobile=(string)$data['user']['mobile'];
+			$this->user->updateAll(array('mobile'=>$mobile),array('user_id'=>$user_id));
+		}
+	*/
 	
 //replace comma in amount
 

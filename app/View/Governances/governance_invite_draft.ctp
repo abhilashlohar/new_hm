@@ -42,7 +42,7 @@ foreach($result_gov_invite as $data){
 	$location= $data['governance_invite']['location'];
 	$meeting_type= $data['governance_invite']['meeting_type'];
 	$covering_note= $data['governance_invite']['covering_note'];
-	$any_other_note= $data['governance_invite']['any_other_note'];
+	$any_other_note= @$data['governance_invite']['any_other_note'];
 	$file= $data['governance_invite']['file'];
 
 }

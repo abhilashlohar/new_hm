@@ -23,7 +23,7 @@ Page header
 
 .header .nav .dropdown-toggle:hover, 
 .header .nav .dropdown.open .dropdown-toggle {
-  background-color:rgba(0, 136, 204, 0.58) !important;
+  background-color:#333 !important;
 }
 
 .header .nav li.dropdown .dropdown-toggle i {

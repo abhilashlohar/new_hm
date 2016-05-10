@@ -72,6 +72,8 @@ function topic_show_type($type_list=null){
 }
 
 function submit_comment(){
+	
+	$this->ath();
 	$s_user_id=$this->Session->read('hm_user_id');
 	$s_society_id=$this->Session->read('hm_society_id');
 	$post_id=(int)$this->request->data['post_id'];
@@ -132,16 +134,16 @@ function comments($post_id=null,$comment_id=null){
 	$this->ath();
 	$s_user_id=$this->Session->read('hm_user_id');
 	$s_society_id=$this->Session->read('hm_society_id');
-	
+	$this->set('s_user_id',$s_user_id);
 	if(empty($comment_id)){
 		$this->loadmodel('discussion_comment');
-		$conditions=array("discussion_post_id"=>(int)$post_id);
+		$conditions=array("discussion_post_id"=>(int)$post_id,"delete_id"=>0);
 		$order=array('discussion_comment.discussion_comment_id'=> 'ASC');
 		$comments=$this->discussion_comment->find('all',array('conditions'=>$conditions,'order'=>$order));
 		$this->set(compact("comments"));
 	}else{
 		$this->loadmodel('discussion_comment');
-		$conditions=array("discussion_post_id"=>(int)$post_id,"discussion_comment_id"=>array('$gt'=>(int)$comment_id));
+		$conditions=array("discussion_post_id"=>(int)$post_id,"discussion_comment_id"=>array('$gt'=>(int)$comment_id),"delete_id"=>0);
 		$order=array('discussion_comment.discussion_comment_id'=> 'ASC');
 		$comments=$this->discussion_comment->find('all',array('conditions'=>$conditions,'order'=>$order));
 		$this->set(compact("comments"));
@@ -333,7 +335,20 @@ function new_topic(){
 }
 
 
+function delete_comments()
+{
+$this->layout='blank';
+$s_society_id=$this->Session->read('hm_society_id'); 
+$con=(int)$this->request->query('con');
+$edit=$this->request->query('edit');
+$this->set('con',$con);
+$this->set('edit',$edit);
+if($edit==1){
+$this->loadmodel('discussion_comment');
+$this->discussion_comment->updateAll(array("delete_id" =>1),array("discussion_comment_id" => $con));
 
+}
+}
 
 
 function delete_topic(){

@@ -14,7 +14,7 @@ input.m-wrap[type="text"]{
 		<th>Mobile</th>
 		<th>Owner</th>
 		<th>Committee</th>
-		<th>user modify id</th>
+		
 		<th>Delete</th>
 	</tr>
 	</thead>
@@ -27,7 +27,7 @@ input.m-wrap[type="text"]{
 		$mobile=$user_enrollment_converted["user_enrollment_csv_converted"]["mobile"];
 		 $owner=$user_enrollment_converted["user_enrollment_csv_converted"]["owner"];
 		 $committee=$user_enrollment_converted["user_enrollment_csv_converted"]["committee"];
-		  $user_modify_id=(int)$user_enrollment_converted["user_enrollment_csv_converted"]["user_modify_id"];
+		 
 		$flat=(int)$user_enrollment_converted["user_enrollment_csv_converted"]["flat"];
 		
 		?>
@@ -82,11 +82,7 @@ input.m-wrap[type="text"]{
 				</select>
 			</div>
 		</td>
-		<td valign="top">
-			<div class="user_modify">
-				<input class="m-wrap span12"  style="background-color:white !important;" id="datt1" value="<?php echo $user_modify_id; ?>" type="text" placeholder="" record_id="<?php echo $auto_id; ?>" field="user_modify" />
-			</div>
-		</td>
+		
 		<td valign="top">
 			<a href="#" class="btn mini black delete_row" record_id="<?php echo $auto_id; ?>" role="button"><i class="icon-trash"></i></a>
 		</td>
@@ -113,6 +109,7 @@ for($ii=1;$ii<=$loop;$ii++){ ?>
 </ul>
 </div>
 <br/>
+
 <div align="center" id="submit_sec">
 <a class="btn purple " role="button" id="final_import">Import user enrollment <i class="m-icon-swapright m-icon-white"></i></a>	<a class="btn cancel_user">Cancel</a>					
 <div id="check_validation_result"></div>
@@ -155,7 +152,7 @@ $(document).ready(function() {
 	
 	$( "#final_import" ).click(function(){
 		var allow="yes";
-		
+		$("#enrollment_load").show();
 		//Start mobile number validation//
 		$('#report_tb tbody tr input[field=mobile]').each(function(i, obj){
 			var mobile=$(this).val();

@@ -1629,7 +1629,7 @@ if($post_data['post_type']==1){
 		
 		$this->loadmodel('notice');
 		$this->notice->save(array('notice_id' => $notice_id, 'user_id' => $s_user_id, 'society_id' => $s_society_id, 'n_category_id' => $category_id ,'n_subject' => $notice_subject , 'n_expire_date' => $notice_expire_date, 'n_attachment' => @$file_name, 'n_message' => $code,'n_date' => $date, 'n_time' => $time, 'n_delete_id' => 0,'n_draft_id' => 0,'visible' => $visible,'sub_visible' => $sub_visible,'visible_user_id' => $recieve_info,'allowed' => $allowed));
-		$this->Session->write('create_notice', 1);
+		$this->Session->write('create_notice',1);
 		$output = json_encode(array('type'=>'created', 'text' =>'Your notice has been created and sent via email to all users selected by you.'));
 		die($output);
 	

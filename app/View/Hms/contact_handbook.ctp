@@ -94,6 +94,7 @@ background-color:rgb(218, 236, 240);
 				$web=$collection['contact_handbook']["c_h_web"];
 				$service=$collection['contact_handbook']["c_h_service"];
 				$service_name="";$result_contact_handbook_service='';
+				
 				if(!empty($service)){
 				foreach($service as $data){
 				$result_contact_handbook_service[]=$this->requestAction(array('controller' => 'hms', 'action' => 'contact_handbook_service'),array('pass'=>array($data)));	
@@ -345,7 +346,7 @@ $(".con_delete").click(function(){
 <script>
 $(document).ready(function(){
 <?php 
-	$contact_handbook=$this->session->read('contact_create');
+	$contact_handbook=$this->Session->read('contact_create');
 if($contact_handbook==1){
 ?>	
 	$.gritter.add({

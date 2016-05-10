@@ -43,7 +43,7 @@
 							<span class="fileupload-exists">Change</span>
 							<input type="file" name="file" e_id="file" class="default"></span>
 							<a href="#" role='button' class="btn  fileupload-exists" data-dismiss="fileupload" >Remove</a>
-							<span>Allowed: jpg,gif</span>
+							<span>Allowed: JPG,JPEG,PNG,GIF</span>
 						</div>
 					</div>
 					<label id="file" ></label>
@@ -110,7 +110,7 @@ $(document).ready(function(){
 		maxlength: 500,
 	  },
 	  file: {
-		accept: "gif,jpg",
+		accept: "gif,jpg,jpeg,png",
 		filesize: 1048576
 	  },
 	 
@@ -120,7 +120,7 @@ $(document).ready(function(){
 					maxlength: "Maximum 100 characters only."
 				},
 				file: {
-					accept: "File extension must be gif or jpg",
+					accept: "File extension must be gif,jpg,jpeg or png",
 					filesize: "File size must be less than 1MB."
 				},
 				description: {

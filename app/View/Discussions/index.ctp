@@ -20,22 +20,22 @@
 		</div>
 		
 		<div class="span3" id="topic_list">
-		<div align="center" style="color: rgb(84, 83, 83); font-weight: 600;">ALL TOPICS</div>
+		<div align="center" style="color: rgb(84, 83, 83); font-weight: 600;" style="width:100%;">ALL TOPICS</div>
 		<?php foreach($posts as $post){
 			$discussion_post_id=$post["discussion_post"]["discussion_post_id"];
 			$topic=$post["discussion_post"]["topic"];
 			$date=$post["discussion_post"]["date"];
 			$result_count_comment=$this->requestAction(array('controller' => 'Discussions', 'action' => 'count_comment_via_discussion_post_id'), array('pass' => array($discussion_post_id)));
 			$time=$post["discussion_post"]["time"];?>
-			<div class="topic show_list" post_id="<?php echo $discussion_post_id; ?>">
+			<div class="topic show_list" post_id="<?php echo $discussion_post_id; ?>" style="width:100%;">
 				<div align="left" style="font-size: 12px;"><?php echo $topic; ?></div>
 				<div align="left" style="font-size: 10px;"><span >(<?php echo sizeof($result_count_comment); ?> Comments ) </span><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp; <?php echo $time; ?></div>
 			</div>
 		<?php } ?>
 		</div>
 		<div class="span3" >
-			<div  align="center" style="color: rgb(84, 83, 83); font-weight: 600;">Photo galery to be updated</div>
-				<div class="photo_galery" style="min-height:200px;font-size:12px;">
+			<div  align="center" style="color: rgb(84, 83, 83); font-weight: 600;" style="width:100%;">Photo galery to be updated</div>
+				<div class="photo_galery" style="min-height:200px;font-size:12px; width:100%;">
 					<center>
 						New features coming soon...
 					</center>
@@ -47,8 +47,10 @@
 <div id="delete_topic_result"></div>
 <script>
 $(document).ready(function(){
-	
+	var nn=0;
 	function load_comments(){
+		
+		 
 		var post_id=$("div[post_id]").attr("post_id");
 		var comment_id=$("#comments div[comment_id]:last").attr("comment_id");
 		if(!comment_id){ comment_id=0; }
@@ -59,6 +61,8 @@ $(document).ready(function(){
                 $("#comments").append(data);
             }
         });
+		 
+		nn=0;
 	};
 
 	$.ajax({
@@ -72,25 +76,28 @@ $(document).ready(function(){
 			},"slow");
 	   }
 	});
-
-	$(".topic").die().live("click",function(){
-		
+    
+	$(".topic").die().live("click",function(){ 
+		nn++;
 		//clearInterval(interval);
 		$('.topic').each(function(i, obj) {
 			$(this).removeClass("run");
 		});
 		$(this).addClass("run");
 		var post_id=$(this).attr("post_id");
+		if(nn==1){
 		$.ajax({
 		   url: "<?php echo $webroot_path; ?>Discussions/topic_detail/"+post_id,
 		   success: function(data) {
-			   $("#topic_detail").html(data);
-			   load_comments();
-			   $("html, body").animate({
+			  $("#topic_detail").html(data);
+				   load_comments();
+			    $("html, body").animate({
 					scrollTop:0
 				},"slow");
+			
 		   }
 		});
+		}
 	});
 	
 	$(".select_type").die().live("click",function(){
@@ -116,6 +123,25 @@ $(document).ready(function(){
 		$("#can").live('click',function(){
 			$('#pp').hide();
 		});
+	
+			$(".delete_comments").die().live("click",function(){
+			 $(".edit_div").show();
+			var dt=$(this).attr('element_id');
+	
+  $("#tems_edit_content").html('<div align="center" style="padding:20px;"><img src="<?php echo $this->webroot ; ?>/as/indicator_blue_small.gif" /><br/><h5>Please Wait</h5></div>').load('<?php echo $this->webroot; ?>Discussions/delete_comments?con='+dt+'&edit=0');
+		});	
+	
+	$(".delete_tems_btn").live('click',function(){
+		var t_id=$(this).attr("tems_id");
+		$("#tems_edit_content").load('<?php echo $this->webroot; ?>Discussions/delete_comments?con='+t_id+'&edit=1', function() {
+			$("#comments"+t_id).remove();
+			$(".edit_div").hide();
+		});	 
+	 
+	 });
+	
+		
+	
 	
 	$(".delete_per").die().live("click",function(){
 			var dp=$(this).attr('post_id');
@@ -161,3 +187,10 @@ $(document).ready(function(){
 	font-weight: bold;
 }
 </style>
+
+<div class="edit_div"  style="display:none;">
+<div class="modal-backdrop fade in"></div>
+<div class="modal"  id="tems_edit_content">
+	
+</div>
+</div>

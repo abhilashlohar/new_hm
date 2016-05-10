@@ -17,6 +17,7 @@ $category_name=$data['master_notice_category']['category_name'];
 <a href='<?php echo $webroot_path; ?>Notices/notice_publish?con=<?php echo $cat; ?>' rel='tab' <?php if(@$red_cat==$category_id) {  ?> class="btn yellow "<?php } else { ?> class="btn" <?php } ?>><?php echo $category_name; ?></a>
 <?php } ?>
 </div>
+
 <br/><br/>
 <div style="background-color:#fff;padding:10px;">
 <table class="table table-striped table-bordered" id="sample_1">
@@ -108,25 +109,20 @@ foreach($result_notice_publish as $data){
 <?php } }  ?> 
 </tbody>
 </table> 
-<?php //if(sizeof($result_notice_publish)==0){ echo '<div align="center">No Notices published yet</div>'; } ?>
+
 </div>
 
 
-
+<script src="<?php echo $webroot_path; ?>assets/js/jquery-1.8.3.min.js"></script>	
 <script>
 $(document).ready(function() {
-	$(".sel").live('click',function(){
-			$(".sel").removeClass("red");
-			$(".sel").addClass("blue");
-			$(this).removeClass("blue");
-			 $(this).addClass("red");
-			 });
-		<?php 
- $notice_create=$this->session->read('create_notice');
-if($notice_create==1){
+	
+<?php 
+$notice_create=$this->Session->read('create_notice');
+
+if($notice_create==1){ 
  ?>	
 		$.gritter.add({
-
 			title: '<i class="icon-bullhorn"></i> Notice',
 			text: '<p>Your notice has been created and sent via email to all users selected by you.</p>',
 			sticky: false,
@@ -134,13 +130,11 @@ if($notice_create==1){
 
 		});
 		
-<?php 
+<?php   
 $this->requestAction(array('controller' => 'hms', 'action' => 'griter_notification'), array('pass' => array('notice_create')));
-} ?>
+}  ?>
 
-	 });
-	 
-	 
+});
 </script>
 
 

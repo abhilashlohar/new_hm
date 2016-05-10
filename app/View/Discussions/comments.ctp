@@ -11,19 +11,25 @@
 	$wing_flat=$result_user["wing_flat"];
 	foreach($wing_flat as $data){
 		$wing_flat=$data;
-	}?>
-	<div style="background-color: #fafafa;border: 1px solid rgba(204, 204, 204, 0.27);margin-bottom: 4px;" comment_id="<?php echo $comment_id; ?>">
+	}
+	if(empty($profile_pic)){
+		
+		$profile_pic="blank.jpg";
+	}
+	?>
+	<div style="background-color: #fafafa;border: 1px solid rgba(204, 204, 204, 0.27);margin-bottom: 4px;" comment_id="<?php echo $comment_id; ?>" id="comments<?php echo $comment_id; ?>">
 		<table width="100%" cellpadding="0" cellspacing="0">
 			<tr>
 				<td style="padding:2px;" valign="top" width="10%"><img src="<?php echo $webroot_path; ?>profile/<?php echo $profile_pic; ?>" style="height:40px; width:40px;"></td>
 				<td valign="middle" width="90%">
+					<?php if($s_user_id==$user_id){ ?>
 					<div class="btn-group  " style="float:right;">
 						<a class="badge ok_t  dropdown-toggle" data-toggle="dropdown" style="background-color: transparent;"><i class="icon-angle-down" style="font-size: 16px;color: rgb(175, 173, 173);"></i></a>
 						<ul class="dropdown-menu">
-							<li><a href="#" role="button" onclick="offensive_delete(2,324)"><i class="icon-ban-circle"> </i> offensive</a></li>
+							<li><a href="#" role="button" class="delete_comments" element_id="<?php echo $comment_id; ?>"><i class="icon-trash"></i> Delete</a></li>
 						</ul>
 					</div>
-
+                    <?php } ?>
 					<span style="font-size:14px;color:<?php echo $color; ?>"><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $wing_flat; ?></span>
 					<span style="color:#ADABAB;font-size:12px;" class="pull-right"><?php echo date("d-m-Y",strtotime($date)); ?>&nbsp;&nbsp;<?php echo $time; ?> &nbsp; </span><br>
 					<span style="color:#000;font-size:12px;"><?php echo $comment; ?></span>

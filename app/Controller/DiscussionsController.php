@@ -194,6 +194,12 @@ function new_topic(){
 			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($send_to,$details)));
 			$sub_visible=$wings;
 		}
+		elseif($send_to=="group_wise"){
+			$groups=$this->request->data['groups'];
+			$details=implode(",",$groups);
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($send_to,$details)));
+			$sub_visible=$groups;
+		}
 		$users_have_access=array();
 		foreach($receivers as $user_id=>$user_info){
 			$users_have_access[]=$user_id;

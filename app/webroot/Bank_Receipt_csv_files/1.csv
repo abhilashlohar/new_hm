@@ -1,24 +1,51 @@
 Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Receipt Type,Amount,Narration 
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBBJ,neft,3534,25-01-2015,,,B L Naik,B,601,O,1953,Receipt for jan
-25-01-2015,SBBJ,pg,3534,25-01-2015,,,B L Naik,B,601,M,1953,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,M,5000,Receipt for jan
+1-4-2015,UCO Bank,Cheque,71536,1-4-2015,ACE Co-op Bank Ltd,N/A,Usha R Supekar,FLAT,503,M,10024,April 2015 Receipt
+1-4-2015,UCO Bank,Cheque,577092,1-4-2015,ICICI Bank,N/A,T.R. Ramanathan,FLAT,602,M,9075,April 2015 Receipt
+1-4-2015,UCO Bank,Cheque,335117,1-4-2015,PMC Bank,N/A,Bamabhahadur Yadav,SHOP,1,M,3580,April 2015 Receipt
+1-4-2015,UCO Bank,Cheque,1430,1-4-2015,ICICI Bank,N/A,Mohit Bhat,FLAT,303,M,10024,April 2015 Receipt
+4-4-2015,UCO Bank,NEFT ,999,4-4-2015,,,Mukhtar Elaskar,FLAT,1402,M,9975,April 2015 Receipt
+4-42015,UCO Bank,NEFT ,999,4-42015,,,Mukhtar Elaskar,FLAT,1402,M,48535,April 2015 Receipt
+5-4-2015,UCO Bank,NEFT ,999,5-4-2015,,,Mukhtar Elaskar,FLAT,1402,M,30000,April 2015 Receipt
+5-5-2015,UCO Bank,Cheque,168564,5-5-2015,ICICI Bank,N/A,Pradeep Rao Wagh,FLAT,802,M,9075,April 2015 Receipt
+6-4-2015,UCO Bank,NEFT ,999,6-4-2015,,,Arati kanade,FLAT,1203,M,11141,April 2015 Receipt
+13-4-2015,UCO Bank,Cheque,65,13-4-2015,HDFC Bank,N/A,Saeeda J. Sayed Jahangir,SHOP,5,M,5258,April 2015 Receipt
+15-4-2015,UCO Bank,Cheque,49,15-4-2015,HDFC Bank,N/A,Sanjay Sharma,FLAT,1003,M,10230,April 2015 Receipt
+16-4-2015,UCO Bank,Cheque,854659,16-4-2015,State Bank of India,N/A,Debi Prasad Rajgarhia,FLAT,1202,M,9075,April 2015 Receipt
+20-4-2015,UCO Bank,Cheque,854660,20-4-2015,State Bank of India,N/A,Mohammed Anis Dadani,FLAT,1401,M,11254,April 2015 Receipt
+20-4-2015,UCO Bank,Cheque,81134,20-4-2015,HDFC Bank,N/A,Sudha Ranganathan,FLAT,1102,M,11310,April 2015 Receipt
+21-4-2015,UCO Bank,Cheque,14158,21-4-2015,Axis Bank,N/A,Ananda Tahalkar,SHOP,9,M,18272,April 2015 Receipt
+22-4-2015,UCO Bank,Cheque,872739,22-4-2015,State Bank of India,N/A,Dr. D K Aswal,FLAT,1302,M,10264,April 2015 Receipt
+23-4-2015,UCO Bank,NEFT ,999,23-4-2015,,,Shashi Pandey,FLAT,701,M,10519,April 2015 Receipt
+25-4-2015,UCO Bank,Cheque,875825,25-4-2015,State Bank of India,N/A,Sulbha Parab,FLAT,1201,M,11254,April 2015 Receipt
+25-4-2015,UCO Bank,Cheque,310695,25-4-2015,Greater Bank,N/A,Rajesh Puri,FLAT,702,M,10264,April 2015 Receipt
+27-4-2015,UCO Bank,Cheque,18,27-4-2015,Kotak Mahindra Bank,N/A,Shagufta Khan,FLAT,1503,M,17160,April 2015 Receipt
+27-4-2015,UCO Bank,NEFT ,999,27-4-2015,,,Kienzla Parekh,FLAT,202,M,10258,April 2015 Receipt
+27-4-2015,UCO Bank,Cheque,465696,27-4-2015,ICICI Bank,N/A,Sunder Mahadevan,FLAT,801,M,10354,April 2015 Receipt
+27-4-2015,UCO Bank,Cheque,110,27-4-2015,Bank of Baroda,N/A,Gurmeet Singh,FLAT,601,M,10354,April 2015 Receipt
+30-4-2015,UCO Bank,NEFT ,999,30-4-2015,,,Sudha Ranganathan,FLAT,1102,M,11310,April 2015 Receipt Cash deposited
+1-5-2015,UCO Bank,Cheque,13,1-5-2015,HDFC Bank,N/A,Vikas P. Shinde,FLAT,1703,M,10024,May 2015 Receipt
+1-5-2015,UCO Bank,Cheque,293890,1-5-2015,Indusland Bank,N/A,Rajesh Merugu,FLAT,502,M,9364,May 2015 Receipt
+5-5-2015,UCO Bank,Cheque,878906,5-5-2015,PNB Bank,N/A,Lalit Mohan Pant,FLAT,501,M,11419,May 2015 Receipt
+6-5-2015,UCO Bank,NEFT ,999,6-5-2015,,,Shiv Prakash Yadav,FLAT,301,M,11419,May 2015 Receipt
+7-5-2015,UCO Bank,Cheque,138361,7-5-2015,State Bank of India,N/A,Sanjay Nakhate,FLAT,902,M,9664,Mayl 2015 Receipt
+7-5-2015,UCO Bank,Cheque,781608,7-5-2015,State Bank of India,N/A,D S Padmanabhan,FLAT,1501,M,10519,May 2015 Receipt
+8-5-2015,UCO Bank,Cheque,335479,8-5-2015,State Bank of India,N/A,Poonam Manish Shukla,FLAT,402,M,9075,May 2015 Receipt
+8-5-2015,UCO Bank,Cheque,566977,8-5-2015,Indian Overseas Bank,N/A,Ranjit & Gormej Kaur,FLAT,203,M,10552,May 2015 Receipt
+8-5-2015,UCO Bank,Cheque,566978,8-5-2015,Indian Overseas Bank,N/A,Ranjit & Gormej Kaur,FLAT,203,M,11048,May 2015 Receipt
+9-5-2015,UCO Bank,NEFT ,999,9-5-2015,,,Joseph Varghese,FLAT,302,M,9364,May 2015 Receipt
+9-5-2015,UCO Bank,Cheque,82473,9-5-2015,NKGS Bank,N/A,Rupinder Singh,SHOP,3,M,5258,May 2015 Receipt
+9-5-2015,UCO Bank,Cheque,52760,9-5-2015,IDBI Bank,N/A,Harish Pant,FLAT,901,M,11419,May 2015 Receipt
+10-5-2015,UCO Bank,Cheque,77382,10-5-2015,Axis Bank,N/A,Mahantesh Komanur,FLAT,401,M,20923,May 2015 Receipt
+11-5-2015,UCO Bank,Cheque,947062,11-5-2015,State Bank of India,N/A,Akhil Nair,FLAT,703,M,10024,May 2015 Receipt
+11-5-2015,UCO Bank,Cheque,889399,11-5-2015,State Bank of India,N/A,Asha R Daundakar,FLAT,903,M,10024,May 2015 Receipt
+11-5-2015,UCO Bank,Cheque,889399,11-5-2015,State Bank of India,N/A,Dinesh Chandra Agarwal ,SHOP,17,M,2572,May 2015 Receipt
+11-5-2015,UCO Bank,Cheque,49,11-5-2015,HDFC Bank,N/A,K. V. GopalaKrishnan,FLAT,1303,M,10024,May 2015 Receipt
+14-5-2015,UCO Bank,Cheque,41395,14-5-2015,State Bank of India,N/A,Gautam Das,FLAT,1101,M,10519,May 2015 Receipt
+15-5-2015,UCO Bank,Cheque,100139,15-5-2015,Abhyudaya Co-op Bank Ltd,N/A,Suryakant Deshmukh,FLAT,1502,M,10264,May 2015 Receipt
+1-6-2015,UCO Bank,Cheque,24009,1-6-2015,Central Bank of India,N/A,Dr. Kakoli Bose nee Ghosh,FLAT,1103,M,10924,June 2015 Receipt
+1-6-2015,UCO Bank,Cheque,4,1-6-2015,HDFC Bank,N/A,Paramit Kaur,FLAT,1001,M,11339,June 2015 Receipt
+2-6-2015,UCO Bank,NEFT ,999,2-6-2015,,,Anshu Singhal,FLAT,1403,M,34956,June 2015 Receipt
+3-6-2015,UCO Bank,Cheque,186284,3-6-2015,Indusland Bank,N/A,Anup Singh,SHOP,11,M,5048,June 2015 Receipt
+10-6-2015,UCO Bank,NEFT ,999,10-6-2015,,,Vinod Satpute,FLAT,1002,M,18350,June 2015 Receipt
+11-6-2015,UCO Bank,NEFT ,999,11-6-2015,,,Pankaj Kishor,FLAT,803,M,11278,June 2015 Receipt
+22-6-2015,UCO Bank,Cheque,60982,22-6-2015,HDFC Bank,N/A,Gaje Singh Chahal,FLAT,1701,M,10519,June 2015 Receipt

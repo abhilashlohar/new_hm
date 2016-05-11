@@ -725,7 +725,7 @@ function sending_options(){
 						</tr>
 					<?php } ?>
 					<tr>
-						<td >
+						<td>
 							<label id="requirecheck1"></label>
 						</td>
 					</tr>

@@ -250,6 +250,9 @@ $.validator.addMethod('requirecheck2', function (value, element) {
 	 return $('.requirecheck2:checked').size() > 0;
 }, 'Please check at least one wing.');
 
+$.validator.addMethod('requirecheck3', function (value, element) {
+	 return $('.requirecheck3:checked').size() > 0;
+}, 'Please check at least one group.');
 $(document).ready(function(){
 			var checkboxes = $('.requirecheck1');
 			var checkbox_names = $.map(checkboxes, function(e, i) {
@@ -261,6 +264,12 @@ $(document).ready(function(){
 			var checkbox_names2 = $.map(checkboxes2, function(e, i) {
 				return $(e).attr("name")
 			}).join(" ");
+			
+			var checkboxes3 = $('.requirecheck3');
+			var checkbox_names3 = $.map(checkboxes3, function(e, i) {
+				return $(e).attr("name")
+			}).join(" ");
+			
 			
 			$('.pol').bind('click',function(){
 			$('.pol').html('<i class="icon-question-sign"></i> Create Poll...');
@@ -276,7 +285,8 @@ $(document).ready(function(){
                     }, 
 	    groups: {
             asdfg: checkbox_names,
-			qwerty: checkbox_names2
+			qwerty: checkbox_names2,
+		    gr_check: checkbox_names3
         },
 		
 		

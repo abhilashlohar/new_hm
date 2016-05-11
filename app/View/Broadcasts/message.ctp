@@ -366,6 +366,10 @@ $.validator.addMethod('requirecheck2', function (value, element) {
 	 return $('.requirecheck2:checked').size() > 0;
 }, 'Please select at least one wing.');
 
+$.validator.addMethod('requirecheck3', function (value, element) {
+	 return $('.requirecheck3:checked').size() > 0;
+}, 'Please select at least one group.');
+
 $.validator.addMethod('filesize', function(value, element, param) {
     // param = size (en bytes) 
     // element = element to validate (<input>)

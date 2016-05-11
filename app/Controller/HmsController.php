@@ -11517,9 +11517,10 @@ echo "Sorry, you have used this link.This link is one time login link.";
 exit;
 }
 
-if ($this->request->is('POST')) 
+if($this->request->is('POST')) 
 {
 $pass=$this->request->data['pass'];
+$pass=htmlentities($pass);
 
 $this->loadmodel('user');
 $conditions=array('user_id'=> $user_id); 

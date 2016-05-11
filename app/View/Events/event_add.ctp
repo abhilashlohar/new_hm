@@ -263,6 +263,20 @@ $(document).ready(function() {
 				m_data.append( 'sub_visible', wing_wise);
 			}
 		}
+		
+		if(send_to=='group_wise')
+		{
+		var group_wise=[];
+			$('.requirecheck3:checked').each(function(){
+			group_wise.push($(this).val());
+			});	
+			if(group_wise.length==0){
+				m_data.append( 'sub_visible', 0);
+			}else{
+				m_data.append( 'sub_visible', group_wise);
+			}
+		}
+		
 		$("#cer_ev").hide();
 		
 		m_data.append( 'ask_no_of_member', $('input:checkbox[name=ask_no_of_member]:checked').val());

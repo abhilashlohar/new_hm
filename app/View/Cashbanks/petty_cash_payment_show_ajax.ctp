@@ -42,6 +42,7 @@ foreach ($cursor1 as $collection){
 		<th>Transaction Date</th>
 		<th>Paid To</th>
 		<th>Amount</th>
+		<th>Narration</th>
 		<th class="hide_at_print">Action </th>
 	</tr>
 </thead>
@@ -58,7 +59,7 @@ $account_type = (int)$collection['cash_bank']['account_type'];
 $user_id = (int)$collection['cash_bank']['user_id'];
 $date = $collection['cash_bank']['transaction_date'];
 $prepaired_by = (int)$collection['cash_bank']['prepaired_by'];   
-$narration = $collection['cash_bank']['narration'];
+$narration = @$collection['cash_bank']['narration'];
 $account_head = $collection['cash_bank']['account_head'];
 $amount = $collection['cash_bank']['amount'];
 $current_date = $collection['cash_bank']['current_date'];
@@ -95,6 +96,7 @@ $amount = number_format($amount);
 <td><?php echo $date; ?> </td>
 <td><?php echo $user_name; ?> </td>
 <td><?php echo $amount; ?></td>
+<td><?php echo $narration; ?></td>
 <td class="hide_at_print">
 <div class="btn-group" style="margin:0 !important;">
 <a class="btn blue mini" href="#" data-toggle="dropdown">
@@ -116,6 +118,7 @@ $amount = number_format($amount);
 <td><b><?php 
 $total_debit = number_format($total_debit);
 echo $total_debit; ?></b></td>
+<td></td>
 <td class="hide_at_print"></td>
 </tr>
 </tbody>

@@ -113,7 +113,6 @@ foreach($result_notice_publish as $data){
 </div>
 
 
-<script src="<?php echo $webroot_path; ?>assets/js/jquery-1.8.3.min.js"></script>	
 <script>
 $(document).ready(function() {
 	

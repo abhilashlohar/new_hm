@@ -88,31 +88,18 @@
 			<p style="font-size:14px;"> <span style="color:red;">* </span> If the mobile number shown above is incorrect, pls get in touch with your society office </p>
 	  </div>
 	  
-	     <!-- <div class="control-group">
-	  	<div class="controls">
-        	<div class="input-icon left"><i class="icon-lock"></i>
-			<input type="text"   class="m-wrap" placeholder="Mobile No*"style="font-size:16px;" maxlength="10" disabled name="mobile" value="<?php echo $mob ; ?>" >
-             </div>
-		</div>
-	  </div>-->
+	   
 	  <br>
       
      </form>
-    <!-- <form method='post'>
-		<div style="float:right;">
-        <button type="submit" name="sub" class="btn blue  " style=" value='task2' font-size:16px;"> Resend code</button>
-      </div>
-	  </form>-->
+  
 	   </fieldset> 
      
-    <!-- END LOGIN FORM -->        
+     
     
   </div>
-  <!-- END LOGIN -->
-  <!-- BEGIN COPYRIGHT -->
-  <div class="copyright">
-    HousingMatters.
-  </div>
+ 
+ 
  </div>
   <script>
 $(document).ready(function(){

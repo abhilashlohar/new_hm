@@ -149,7 +149,7 @@ $(document).ready(function(){
 	});
 	
 	
-		$('#search').keyup(function() {
+		$('#search').keyup(function(){
 			var $rows = $('.show_list');
 			var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
 			$rows.show().filter(function() {

@@ -122,7 +122,7 @@ $(document).ready(function(){
 				   url: url,
 				   data: $("#contact-form").serialize(), // serializes the form's elements.
 				   success: function(data){
-					 
+					 //alert(data);
 					   var obj = jQuery.parseJSON(data);
 					   
 					   if(obj.result=="success"){

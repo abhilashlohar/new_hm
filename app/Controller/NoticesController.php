@@ -1380,8 +1380,7 @@ function edit_notice($id=null){
 function submit_notice(){
 	$this->layout=null;
 	$post_data=$this->request->data;
-	
-	
+
 	$this->ath();
 	$s_society_id=$this->Session->read('hm_society_id');
 	$s_role_id=$this->Session->read('role_id'); 
@@ -1445,7 +1444,10 @@ function submit_notice(){
 	}elseif($post_data['visible']=="wing_wise" and empty($post_data['sub_visible'])){
 		$output = json_encode(array('type'=>'error', 'text' => 'Please select wing.'));
 		die($output);
-	}
+	}elseif($post_data['visible']=="group_wise" and empty($post_data['sub_visible'])){
+		$output = json_encode(array('type'=>'error', 'text' => 'Please select group.'));
+		die($output);
+	}	
 	
 	$category_id=(int)$post_data['notice_category'];
 	$notice_subject=htmlentities($post_data['notice_subject']);
@@ -1477,7 +1479,11 @@ if($post_data['post_type']==1){
 		
 			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
 			
+		}elseif($visible=="group_wise"){
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
+			
 		}
+	
 			$notice_id=$this->autoincrement('notice','notice_id');
 		
 		
@@ -1721,6 +1727,10 @@ function submit_notice_edit($id=null){
 			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_new)));
 			
 		}elseif($visible=="wing_wise"){
+		
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_new)));
+			
+		}elseif($visible=="group_wise"){
 		
 			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_new)));
 			

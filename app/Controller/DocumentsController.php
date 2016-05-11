@@ -74,6 +74,9 @@ function resource_add()
 			if($visible=='wing_wise'){
 			$sub_visible=$this->request->data['wings'];
 			}
+			if($visible=='group_wise'){
+			$sub_visible=$this->request->data['groups'];
+			}
 				
 							
 				$date=date("d-m-Y");
@@ -127,6 +130,10 @@ if($visible=='wing_wise'){
 $sub_visible=$this->request->data['wings'];
 $sub_visible_implode=implode(',',$sub_visible);
 }
+if($visible=='group_wise'){
+$sub_visible=$this->request->data['groups'];
+$sub_visible_implode=implode(',',$sub_visible);
+}
 $result_user=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'),array('pass'=>array((int)$s_user_id)));
 foreach($result_user as $data){
 	  @$c_email=@$data['user']['email'];
@@ -171,6 +178,10 @@ $send='Roll Wise';
 if($visible=='wing_wise')
 {
 $send='Wing Wise'; 
+}
+if($visible=='group_wise')
+{
+$send='Group Wise'; 
 }
 
 

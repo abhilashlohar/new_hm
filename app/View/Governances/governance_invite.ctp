@@ -476,6 +476,21 @@ $('form#contact-form').submit( function(ev){
 			}
 			
 		}
+		
+		if(visible=="group_wise"){
+			var allVals = [];
+			$('.requirecheck3:checked').each(function() {
+			allVals.push($(this).val());
+			});
+			
+			if(allVals.length==0){
+				m_data.append( 'sub_visible', 0);
+			}else{
+				m_data.append( 'sub_visible', allVals);
+			}
+			
+		}
+		
 		if(visible=="all_users"){
 			m_data.append( 'sub_visible', 0);
 		}
@@ -523,7 +538,7 @@ $('form#contact-form').submit( function(ev){
 			type: 'POST',
 			dataType:'json',
 			}).done(function(response) { 
-	
+	//alert(response);
 			$("#output").html(response);
 				if(response.type=='created'){
 					$(".portal").remove();

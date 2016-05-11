@@ -192,7 +192,13 @@ function poll_add(){
 			$details=implode(",",$wings);
 			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($send_to,$details)));
 			$sub_visible=$wings;
+		}elseif($send_to=="group_wise"){
+			$groups=$this->request->data['groups'];
+			$details=implode(",",$groups);
+			$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($send_to,$details)));
+			$sub_visible=$groups;
 		}
+		
 		$visible_user_id=array();
 		foreach($receivers as $user_id=>$user_info){
 			$visible_user_id[]=$user_id;

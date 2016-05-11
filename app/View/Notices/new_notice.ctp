@@ -20,7 +20,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 			<select class="span12 m-wrap " name="notice_category"   tabindex="1">
 			<option value="">--Please select any category--*</option>
 			<?php	foreach($result1 as $data){
-			echo $category_id=$data['master_notice_category']['category_id'];
+			$category_id=$data['master_notice_category']['category_id'];
 			$category_name=$data['master_notice_category']['category_name']; ?>
 				<option value="<?php echo $category_id; ?>" ><?php echo $category_name; ?> </option>
 			<?php } ?>
@@ -197,6 +197,19 @@ $(document).ready(function() {
 				m_data.append( 'sub_visible', allVals);
 			}
 		}
+		
+		if(visible=="group_wise"){
+			var allVals = [];
+			$('.requirecheck3:checked').each(function() {
+				allVals.push($(this).val());
+			});
+			if(allVals.length==0){
+				m_data.append( 'sub_visible', 0);
+			}else{
+				m_data.append( 'sub_visible', allVals);
+			}
+		}
+		
 		if(visible=="all_users"){
 			m_data.append( 'sub_visible', 0);
 		}
@@ -212,7 +225,7 @@ $(document).ready(function() {
 			type: 'POST',
 			dataType:'json',
 			}).done(function(response) {
-				
+			//	alert(response);
 			$("#output").html(response);
 			if(response.type=='approve'){
 				$(".portlet").remove();

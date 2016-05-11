@@ -1,5 +1,9 @@
 <h3>Welcome to Housingmatters</h3>
 <?php
+
+
+
+
 /*
 <table id="sample" border="1" >
 <thead>

@@ -538,7 +538,7 @@ $('form#contact-form').submit( function(ev){
 			type: 'POST',
 			dataType:'json',
 			}).done(function(response) { 
-	//alert(response);
+	
 			$("#output").html(response);
 				if(response.type=='created'){
 					$(".portal").remove();

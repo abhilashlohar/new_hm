@@ -1,51 +1,11 @@
 name,wing,flat,email,mobile,Owner,committee
-test user151,Wing D,401,,,yes,yes 
-test user152,Wing D,402,,,yes ,yes 
-test user153,Wing D,403,,,yes,yes 
-test user154,Wing D,404,,,yes ,yes 
-test user155,Wing D,405,,,yes,yes 
-test user156,Wing D,406,,,yes ,yes 
-test user157,Wing D,407,,,yes,yes 
-test user158,Wing D,408,,,yes ,yes 
-test user159,Wing D,409,,,yes,yes 
-test user160,Wing D,410,,,yes ,yes 
-test user161,Wing D,411,,,yes,yes 
-test user162,Wing D,412,,,yes ,yes 
-test user163,Wing D,413,,,yes,yes 
-test user164,Wing D,414,,,yes ,yes 
-test user165,Wing D,415,,,yes,yes 
-test user166,Wing D,416,,,yes ,yes 
-test user167,Wing D,417,,,yes,yes 
-test user168,Wing D,418,,,yes ,yes 
-test user169,Wing D,419,,,yes,yes 
-test user170,Wing D,420,,,yes ,yes 
-test user171,Wing D,421,,,yes,yes 
-test user172,Wing D,422,,,yes ,yes 
-test user173,Wing D,423,,,yes,yes 
-test user174,Wing D,424,,,yes ,yes 
-test user175,Wing D,425,,,yes,yes 
-test user176,Wing D,426,,,yes ,yes 
-test user177,Wing D,427,,,yes,yes 
-test user178,Wing D,428,,,yes ,yes 
-test user179,Wing D,429,,,yes,yes 
-test user180,Wing D,430,,,yes ,yes 
-test user181,Wing D,431,,,yes,yes 
-test user182,Wing D,432,,,yes ,yes 
-test user183,Wing D,433,,,yes,yes 
-test user184,Wing D,434,,,yes ,yes 
-test user185,Wing D,435,,,yes,yes 
-test user186,Wing D,436,,,yes ,yes 
-test user187,Wing D,437,,,yes,yes 
-test user188,Wing D,438,,,yes ,yes 
-test user189,Wing D,439,,,yes,yes 
-test user190,Wing D,440,,,yes ,yes 
-test user191,Wing D,441,,,yes,yes 
-test user192,Wing D,442,,,yes ,yes 
-test user193,Wing D,443,,,yes,yes 
-test user194,Wing D,444,,,yes ,yes 
-test user195,Wing D,445,,,yes,yes 
-test user196,Wing D,446,,,yes ,yes 
-test user197,Wing D,447,,,yes,yes 
-test user198,Wing D,448,,,yes ,yes 
-test user199,Wing D,449,,,yes,yes 
-test user200,Wing D,450,,,yes ,yes 
+raj,A,101,raj@gmail.com,9865478956,yes,yes
+aneema,A,102,aneema@gmail.com,,yes,yes
+rajesh,A,103,raj123@gmail.com,,yes,no
+nilesh,A,104,,8874586547,yes,yes
+gopesh,A,105,gopesh@gmail.com,,yes,yes
+dasu,A,106,,,yes,yes
+abhi,A,107,abhi@gmail.com,,yes,no
+rohit,A,108,,,yes,no
+ashish,A,109,ashish@gmail.com,,yes,no
+deepika,A,110,,,yes,no

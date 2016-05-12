@@ -27935,7 +27935,7 @@ if (isset($this->request->data['add']))
 	{
 		$group_id=$this->autoincrement('group','group_id');
 		$this->loadmodel('group');
-		$multipleRowData = Array( Array("group_id" => $group_id,"group_name"=>$group_name,"society_id"=>$s_society_id,"users"=>array()));
+		$multipleRowData = Array( Array("group_id" => $group_id,"delete_id"=>0,"group_name"=>$group_name,"society_id"=>$s_society_id,"users"=>array()));
 		$this->group->saveAll($multipleRowData); 
 		$this->response->header('Location', 'groupview/'.$group_id);
 		
@@ -27947,7 +27947,7 @@ if (isset($this->request->data['add']))
 }
 
 $this->loadmodel('group');
-$conditions=array("society_id"=>$s_society_id);
+$conditions=array("society_id"=>$s_society_id,'delete_id'=>0);
 $order=array('group.group_id'=>'DESC');
 $this->set('result_group',$this->group->find('all',array('conditions'=>$conditions,'order'=>$order))); 
 }
@@ -28014,7 +28014,7 @@ function group_delete(){
 	$s_user_id=$this->Session->read('hm_user_id'); 
 	$s_society_id=$this->Session->read('hm_society_id'); 
 	$this->loadmodel('group');
-	$this->group->deleteAll(array("group_id" => (int)$id));
+	$this->group->updateAll(array('delete_id'=>1),array("group_id" => (int)$id));
 	$this->response->header('Location', 'groups_new');
 	
 }

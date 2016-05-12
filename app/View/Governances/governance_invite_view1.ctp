@@ -119,6 +119,7 @@ foreach($user as $id){
 if($type==3){
 		$visible=$data['governance_invite']['visible'];
 		$sub_visible=$data['governance_invite']['sub_visible'];
+		
 		if($visible=="all_users"){
 			$show_visible="All Users";
 		}
@@ -129,7 +130,11 @@ if($type==3){
 			$show_visible="Wing Wise";
 		}
 		if($visible=="group_wise"){
-			$show_visible="Group Wise";
+			foreach($sub_visible as $data){
+			 $group_name[]=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_group_name_via_group_id'), array('pass' => array((int)$data)));
+			}
+			$show_visible=implode(',',$group_name);
+			//$show_visible="Group Wise";
 		}
 		
 		?>

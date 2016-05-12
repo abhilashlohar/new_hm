@@ -6529,6 +6529,7 @@ foreach ($result_flat as $collection)
 {
 $flat_name=$collection['flat']['flat_name'];
 }
+$flat_name = ltrim($flat_name,0);
 $wing_flat = $wing_name.'-'.$flat_name;
 
 $r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 

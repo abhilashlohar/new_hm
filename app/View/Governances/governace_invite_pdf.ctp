@@ -126,7 +126,11 @@ if($type==3){
 			$show_visible="Wing Wise";
 		}
 		if($visible=="group_wise"){
-			$show_visible="Group Wise";
+			foreach($sub_visible as $data){
+			 $group_name[]=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_group_name_via_group_id'), array('pass' => array((int)$data)));
+			}
+			$show_visible=implode(',',$group_name);
+			
 		}
 		$html.='<span>'.$show_visible.'</span>';
 		

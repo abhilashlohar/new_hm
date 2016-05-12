@@ -102,7 +102,7 @@ foreach($user as $id){
 	}
  
 }
-if($type==2){
+/*if($type==2){
 	
 	$group_id=$data['governance_invite']['group_id'];
 	foreach($group_id as $data){
@@ -114,7 +114,7 @@ if($type==2){
 	<?php
 	
 	}	
-}
+} */
 
 if($type==3){
 		$visible=$data['governance_invite']['visible'];
@@ -127,6 +127,9 @@ if($type==3){
 		}
 		if($visible=="wing_wise"){
 			$show_visible="Wing Wise";
+		}
+		if($visible=="group_wise"){
+			$show_visible="Group Wise";
 		}
 		
 		?>

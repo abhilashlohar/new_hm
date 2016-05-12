@@ -352,7 +352,7 @@ function governance_invite_submit()
 		
 		}
 		
-		
+		/*
 		if($Invitations_type==2)
 		{
 			    //$to=$post_data['Invite_user2'];
@@ -573,7 +573,7 @@ $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" 
 			
 			
 			
-		}
+		} */
 		
 		
 		
@@ -593,7 +593,7 @@ $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" 
 					if($post_data['sub_visible']==0)
 					{
 						
-						$report[]=array('label'=>'rol_wing', 'text' => 'Please select at-least one');
+						$report[]=array('label'=>'rol_wing', 'text' => 'Please select at-least one role');
 						
 					}
 					
@@ -605,7 +605,19 @@ $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" 
 					if($post_data['sub_visible']==0)
 					{
 						
-						$report[]=array('label'=>'rol_wing', 'text' => 'Please select at-least one');
+						$report[]=array('label'=>'rol_wing', 'text' => 'Please select at-least one wing');
+						
+					}
+					
+					
+				}
+				if($visible=="group_wise")
+				{
+					
+					if($post_data['sub_visible']==0)
+					{
+						
+						$report[]=array('label'=>'rol_wing', 'text' => 'Please select at-least one group');
 						
 					}
 					
@@ -627,6 +639,10 @@ $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" 
 				$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
 
 				}elseif($visible=="wing_wise"){
+
+				$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
+
+				}elseif($visible=="group_wise"){
 
 				$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
 
@@ -845,7 +861,7 @@ $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" 
 				$this->governance_invite->saveAll($multipleRowData); 
 		}
 		
-		if($Invitations_type==2)
+		/* if($Invitations_type==2)
 		{
 			    //$to=$post_data['Invite_user2'];
 				 $Invite_group=$post_data['Invite_group'];
@@ -894,7 +910,7 @@ $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" 
 			
 			
 			
-		}
+		} */
 		if($Invitations_type==3){
 			 $visible=$post_data['visible'];
 			$sub_visible=$post_data['sub_visible'];
@@ -902,14 +918,19 @@ $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" 
 			
 			//////////////////// validation //////////////
 			
-				if($visible==2){
+				if($visible=="role_wise"){
 					if($post_data['sub_visible']==0){
-						$report[]=array('label'=>'role_check', 'text' => 'Please select at-least one');
+						$report[]=array('label'=>'rol_wing', 'text' => 'Please select at-least one role');
 						}
 				}
-				if($visible==3){
+				if($visible=="wing_wise"){
 					if($post_data['sub_visible']==0){
-						$report[]=array('label'=>'wing_check', 'text' => 'Please select at-least one');
+						$report[]=array('label'=>'rol_wing', 'text' => 'Please select at-least one wing');
+					}
+				}
+				if($visible=="group_wise"){
+					if($post_data['sub_visible']==0){
+						$report[]=array('label'=>'rol_wing', 'text' => 'Please select at-least one group');
 					}
 				}
 				if(sizeof($report)>0){
@@ -928,6 +949,10 @@ $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" 
 				$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
 
 				}elseif($visible=="wing_wise"){
+
+				$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
+
+				}elseif($visible=="group_wise"){
 
 				$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
 
@@ -1827,7 +1852,7 @@ function governance_minute_submit()
 					}
 					
 			}
-			if($Invitations_type==2){
+			/*if($Invitations_type==2){
 				
 				$Invite_group=$post_data['Invite_group'];
 				$Invite_group=explode(",",$Invite_group);
@@ -1862,7 +1887,7 @@ function governance_minute_submit()
 				$user=array_unique($user);
 				$user_minute=array_values($user);
 				
-			}
+			} */
 			if($Invitations_type==3){
 					$visible=$post_data['visible'];
 					$sub_visible=$post_data['sub_visible'];
@@ -1871,14 +1896,19 @@ function governance_minute_submit()
 			//////////////////// validation //////////////
 
 			if($visible=="role_wise"){
-			if($post_data['sub_visible']==0){
-				$report[]=array('label'=>'wing_check', 'text' => 'Please select at-least one');
-				}
+				if($post_data['sub_visible']==0){
+					$report[]=array('label'=>'wing_check', 'text' => 'Please select at-least one role');
+					}
 			}
 			if($visible=="wing_wise"){
-			if($post_data['sub_visible']==0){
-					$report[]=array('label'=>'wing_check', 'text' => 'Please select at-least one');
-			  }
+				if($post_data['sub_visible']==0){
+						$report[]=array('label'=>'wing_check', 'text' => 'Please select at-least one wing');
+				  }
+			}
+			if($visible=="group_wise"){
+				if($post_data['sub_visible']==0){
+					$report[]=array('label'=>'wing_check', 'text' => 'Please select at-least one group');
+					}
 			}
 			if(sizeof($report)>0){
 			$output=json_encode(array('report_type'=>'error','report'=>$report));
@@ -1896,6 +1926,10 @@ function governance_minute_submit()
 				$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
 
 				}elseif($visible=="wing_wise"){
+
+				$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
+
+				}elseif($visible=="group_wise"){
 
 				$receivers= $this->requestAction(array('controller' => 'Fns', 'action' => 'sending_option_results'),array('pass'=>array($visible,$sub_visible)));
 

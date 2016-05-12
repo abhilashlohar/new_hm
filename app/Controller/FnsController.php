@@ -725,7 +725,7 @@ function sending_options(){
 						</tr>
 					<?php } ?>
 					<tr>
-						<td >
+						<td>
 							<label id="requirecheck1"></label>
 						</td>
 					</tr>
@@ -757,7 +757,20 @@ function sending_options(){
 		Group wise
 		</label>
 			<div style="padding-left:5%;display:none;" id="group_wise">
-			group_wise
+				<div style="background-color: rgb(252, 250, 250); padding: 2px; border: 1px solid rgba(204, 204, 204, 0.3);">
+				<?php
+				$this->loadmodel('group');
+				$conditions=array("society_id"=>$s_society_id);
+				$result_group=$this->group->find('all',array('conditions'=>$conditions));
+				foreach($result_group as $data5){
+					$group_id=$data5["group"]["group_id"];
+					$group_name=$data5["group"]["group_name"];?>
+					<label class="checkbox">
+					<div class="checker"><span><input class="requirecheck3" e_id="requirecheck3" value="<?php echo $group_id; ?>" type="checkbox" name="groups[]"></span></div> <?php echo $group_name; ?>
+					</label>
+				<?php } ?>
+				<label id="requirecheck3"></label>
+				</div>
 			</div>
 	</div>
 <script>
@@ -775,6 +788,7 @@ $(document).ready(function() {
 			$("#group_wise").hide();
 		}
 		if(send_to=="wing_wise"){
+		
 			$("#wing_wise").show();
 			$("#role_wise").hide();
 			$("#group_wise").hide();
@@ -933,6 +947,32 @@ function sending_option_results($send_to=null,$details=null){
 				}
 			}
 		}
+	}elseif($send_to=="group_wise"){
+		$details=explode(",",$details);
+		
+		foreach($details as $group_id){
+			$this->loadmodel('group');
+			$conditions=array("society_id"=>$s_society_id,"group_id"=>(int)$group_id);
+			$group_info=$this->group->find('all',array('conditions'=>$conditions));
+			$users=$group_info[0]["group"]["users"];
+			foreach($users as $user_id){
+				$user_ids[]=$user_id;
+			}
+		}
+		$user_ids=array_unique($user_ids);
+		
+		foreach($user_ids as $user_id){
+			$this->loadmodel('user');
+			$conditions=array("society_id"=>$s_society_id,"user_id"=>(int)$user_id);
+			$users=$this->user->find('all',array('conditions'=>$conditions));
+			foreach($users as $data){
+				$email=$data["user"]["email"];
+				$mobile=$data["user"]["mobile"];
+				$user_name=$data["user"]["user_name"];
+				
+				$arranged_array[$user_id]=array("email"=>$email,"mobile"=>$mobile,"user_name"=>$user_name);
+			}
+		}
 	}
 	
 	$this->loadmodel('user');
@@ -954,6 +994,14 @@ function check_wing_can_delete_or_not($wing_id=null){
 	$this->loadmodel('flat');
 	$conditions=array("wing_id"=>(int)$wing_id);
 	return $this->flat->find('count',array('conditions'=>$conditions));
+}
+
+function fetch_group_name_via_group_id($group_id){
+	$s_society_id=$this->Session->read('hm_society_id');
+	$this->loadmodel('group');
+	$conditions=array("group_id"=>(int)$group_id,'society_id'=>$s_society_id);
+	$result_group=$this->group->find('all',array('conditions'=>$conditions));
+	return $result_group[0]['group']['group_name'];
 }
 
 }

@@ -146,7 +146,10 @@ $visible=$this->request->data['send_to'];
 	$sub_visible=$this->request->data['wings'];	
 	$sub_visible=implode(',',$sub_visible);
 	}
-
+	if($visible=='group_wise'){
+	$sub_visible=$this->request->data['groups'];	
+	$sub_visible=implode(',',$sub_visible);
+	}
 
 $recieve_info=$this->requestAction(array('controller'=>'Fns','action'=>'sending_option_results'), array('pass'=>array($visible,$sub_visible)));
 	
@@ -426,6 +429,11 @@ $sub_visible=implode(',',$sub_visible);
 }	
 if($visible=="wing_wise"){
 $sub_visible=$this->request->data['wings'];
+$sub_visible=implode(',',$sub_visible);	
+}
+
+if($visible=="group_wise"){
+$sub_visible=$this->request->data['groups'];
 $sub_visible=implode(',',$sub_visible);	
 }
 

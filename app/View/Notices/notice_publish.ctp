@@ -86,6 +86,16 @@ foreach($result_notice_publish as $data){
 			}
 		$visible_detail=implode(" , ",$wing_name);
 	}
+	if($visible=="group_wise"){
+		unset($group_name);
+	   $visible_show="Group wise";
+		foreach($sub_visible as $group_id) {
+			$group_names=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_group_name_via_group_id'), array('pass' => array($group_id)));
+			 $group_name[]=$group_names;
+		}
+		$visible_detail=implode(" , ",$group_name);
+	}
+
 
 	if(strtotime($n_expire_date) >= strtotime($current_date)){
 
@@ -113,7 +123,6 @@ foreach($result_notice_publish as $data){
 </div>
 
 
-<script src="<?php echo $webroot_path; ?>assets/js/jquery-1.8.3.min.js"></script>	
 <script>
 $(document).ready(function() {
 	

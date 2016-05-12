@@ -6106,7 +6106,7 @@ $this->set('webroot_path',$webroot_path);
 		 }
 		
 	
-if ($this->request->is('post'))
+if($this->request->is('post'))
 {
 	
 	  $username=htmlentities($this->request->data["username"]);
@@ -6133,6 +6133,9 @@ if ($this->request->is('post'))
 		if($user_type=="hm_child"){
 			 $this->redirect(array('action' => 'set_default_hm_child_society'));
 		}
+      
+	
+	
 	
 	$this->Session->write('hm_society_id', $society_id);
 	if($signup_random==$password){
@@ -6210,6 +6213,14 @@ function submit_login(){
 					
 					 $role_id=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id'), array('pass' => array($user_id)));
 					$this->Session->write('role_id', $role_id);
+				
+				if(empty($role_id) || $role_id==""){
+					echo $output=json_encode(array('result' => 'error','message' => 'Please asign role'));
+					die();
+				
+				}
+				
+				
 				}
 				
 				
@@ -6237,6 +6248,9 @@ function submit_login(){
 				
 						echo $output=json_encode(array('url' => $webroot_path.'hms/dashboard','action' => 'redirect','result' => 'success'));
 				}
+	
+	
+	
 	}else{
 		echo $output=json_encode(array('result' => 'error','message' => 'Username and password is wrong.'));
 	}
@@ -6515,6 +6529,7 @@ foreach ($result_flat as $collection)
 {
 $flat_name=$collection['flat']['flat_name'];
 }
+$flat_name = ltrim($flat_name,0);
 $wing_flat = $wing_name.'-'.$flat_name;
 
 $r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
@@ -11517,9 +11532,10 @@ echo "Sorry, you have used this link.This link is one time login link.";
 exit;
 }
 
-if ($this->request->is('POST')) 
+if($this->request->is('POST')) 
 {
 $pass=$this->request->data['pass'];
+$pass=htmlentities($pass);
 
 $this->loadmodel('user');
 $conditions=array('user_id'=> $user_id); 
@@ -17555,7 +17571,7 @@ $this->check_user_privilages();
 	$sco_n=$this->society_name($s_society_id);
 	foreach($sco_n as $data){
 		$sco= $data['society']['society_name'];
-		$logo_data= $data['society']['logo'];
+		@$logo_data= @$data['society']['logo'];
 		
 	}
 	$this->set('society_name',$sco);

@@ -430,7 +430,7 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 		$conditions =array('society_id' =>$s_society_id,'status' =>1,'financial_year.from'=>array('$lte'=>$current_bill_start_date),'financial_year.to'=>array('$gte'=>$current_bill_start_date));
 		$financial_years=$this->financial_year->find('all',array('conditions'=>$conditions));
 		$last_bill_start_date=$financial_years[0]["financial_year"]["from"];
-		
+		$last_bill_start_date_for_ledger=$last_bill_start_date;
 		
 		$last_bill_amount=0;
 		$last_bill_maint_arrear=0;

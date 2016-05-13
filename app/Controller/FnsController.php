@@ -760,7 +760,7 @@ function sending_options(){
 				<div style="background-color: rgb(252, 250, 250); padding: 2px; border: 1px solid rgba(204, 204, 204, 0.3);">
 				<?php
 				$this->loadmodel('group');
-				$conditions=array("society_id"=>$s_society_id);
+				$conditions=array("society_id"=>$s_society_id,'delete_id'=>0);
 				$result_group=$this->group->find('all',array('conditions'=>$conditions));
 				foreach($result_group as $data5){
 					$group_id=$data5["group"]["group_id"];

@@ -7549,7 +7549,9 @@ function dashboard(){
 	  $s_user_id = $this->Session->read('hm_user_id'); 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	
-
+	
+				// $date2= date("Y-m-d", strtotime($date2)); 
+				//$dat1= strtotime($date2);
 		/*
 	$this->loadmodel("discussion_post");
 	$user_profile=$this->discussion_post->find('all');

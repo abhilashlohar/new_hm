@@ -558,8 +558,6 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 		$last_bill_amount=$bill_amount;
 	}
 	
-		$last_bill_arrear_intrest=$arrear_intrest+$intrest_on_arrears;
-	
 		$days=abs(floor(($last_trasanction_date-$current_bill_start_date)/(60*60*24)));
 		$new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
 		

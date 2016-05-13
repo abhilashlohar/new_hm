@@ -59,7 +59,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				$noc_charge=$data["regular_bill_temp"]["noc_charge"];
 				$other_charge=$data["regular_bill_temp"]["other_charge"];
 				$total=$data["regular_bill_temp"]["total"];
-				$arrear_maintenance=$data["regular_bill_temp"]["arrear_maintenance"];
+				$arrear_principle=$data["regular_bill_temp"]["arrear_principle"];
 				$arrear_intrest=$data["regular_bill_temp"]["arrear_intrest"];
 				$intrest_on_arrears=$data["regular_bill_temp"]["intrest_on_arrears"];
 				$credit_stock=$data["regular_bill_temp"]["credit_stock"];
@@ -77,7 +77,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 						echo '<th>'.$other_charge[$other_charge_id].'</th>';
 					} ?>
 					<td><?php echo $total; ?></td>
-					<td><?php echo $arrear_maintenance; ?></td>
+					<td><?php echo $arrear_principle; ?></td>
 					<td><?php echo $arrear_intrest; ?></td>
 					<td><?php echo $intrest_on_arrears; ?></td>
 					<td><?php echo $credit_stock; ?></td>

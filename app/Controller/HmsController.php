@@ -1,11 +1,7 @@
 <?php
-//ini_set('max_execution_time', 300); //300 seconds = 5 minutes
 class HmsController extends AppController {
 var $helpers = array('Html', 'Form','Js');
-/*$this->helpers['SocialSignIn.Facebook'] = array(
-	'app_id' => '1067899399889225',
-	'redirect_uri' => 'hmslogin.com');
-	*/
+
 public $components = array(
 'Paginator',
 'Session','Cookie','RequestHandler'

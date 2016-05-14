@@ -2,6 +2,7 @@
 <div class="portlet box">
 	<div class="portlet-body" >
 		<?php
+		$other_charge_ids=array();
 		foreach($regular_bills as $regular_bill){
 			$income_head_array=$regular_bill["regular_bill"]["income_head_array"];
 			foreach($income_head_array as $income_head_id=>$value){
@@ -9,7 +10,7 @@
 			}
 			$other_charge=$regular_bill["regular_bill"]["other_charge"];
 			if(sizeof(@$other_charge)==0){ $other_charge=array(); }
-			$other_charge_ids=array();
+			
 			foreach($other_charge as $other_charge_id=>$value){
 				$other_charge_ids[]=$other_charge_id;
 			}
@@ -79,7 +80,7 @@
 						} ?>
 						<td><?php echo $noc_charge; ?></td>
 						<?php foreach($other_charge_ids as $other_charge_id){
-							echo '<th>'.$other_charge[$other_charge_id].'</th>';
+							echo '<td>'.@(int)$other_charge[$other_charge_id].'</td>';
 						} ?>
 						<td><?php echo $total; ?></td>
 						<td><?php echo $arrear_principle; ?></td>

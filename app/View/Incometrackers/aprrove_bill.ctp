@@ -5,21 +5,27 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<form method="post" >
 	<div class="portlet-body" style="overflow-x: scroll;">
 	<?php 
+	$other_charge_ids=array();
 	if(sizeof(@$arranged_bills)==0){$arranged_bills=array(); echo 'No bills for approval.'; } 
 	foreach($arranged_bills as $start_date=>$arranged_bill){
-	
 		foreach($arranged_bill as $data){
 			$income_head_array=$data["regular_bill_temp"]["income_head_array"];
+			
 			foreach($income_head_array as $income_head_id=>$value){
+				
 				$income_head_ids[]=$income_head_id;
 			}
 			$other_charge=$data["regular_bill_temp"]["other_charge"];
-			$other_charge_ids=array();
+			
+			
 			foreach($other_charge as $other_charge_id=>$value){
 				$other_charge_ids[]=$other_charge_id;
+				
 			}
+			
 			$end_date=$data["regular_bill_temp"]["end_date"];
 		}
+		
 		$income_head_ids=array_unique($income_head_ids);
 		$other_charge_ids=array_unique($other_charge_ids);
 	
@@ -74,7 +80,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					} ?>
 					<td><?php echo $noc_charge; ?></td>
 					<?php foreach($other_charge_ids as $other_charge_id){
-						echo '<th>'.$other_charge[$other_charge_id].'</th>';
+						echo '<td>'.@(int)$other_charge[$other_charge_id].'</td>';
 					} ?>
 					<td><?php echo $total; ?></td>
 					<td><?php echo $arrear_principle; ?></td>

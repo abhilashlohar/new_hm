@@ -16,6 +16,7 @@ $filename = str_replace(' ', '-', $filename);
 ?>
 
 		<?php
+		$other_charge_ids=array();
 		foreach($regular_bills as $regular_bill){
 			$income_head_array=$regular_bill["regular_bill"]["income_head_array"];
 			foreach($income_head_array as $income_head_id=>$value){
@@ -23,7 +24,7 @@ $filename = str_replace(' ', '-', $filename);
 			}
 			$other_charge=$regular_bill["regular_bill"]["other_charge"];
 			if(sizeof(@$other_charge)==0){ $other_charge=array(); }
-			$other_charge_ids=array();
+			
 			foreach($other_charge as $other_charge_id=>$value){
 				$other_charge_ids[]=$other_charge_id;
 			}
@@ -75,7 +76,7 @@ $total_noc_charges=0; $total_total=0; $total_arrear_maintenance=0; $total_arrear
 					$noc_charge=$data["regular_bill"]["noc_charge"];
 					$other_charge=$data["regular_bill"]["other_charge"];
 					$total=$data["regular_bill"]["total"];
-					$arrear_maintenance=$data["regular_bill"]["arrear_maintenance"];
+					$arrear_principle=$data["regular_bill"]["arrear_principle"];
 					$arrear_intrest=$data["regular_bill"]["arrear_intrest"];
 					$intrest_on_arrears=$data["regular_bill"]["intrest_on_arrears"];
 					$credit_stock=$data["regular_bill"]["credit_stock"];
@@ -91,11 +92,11 @@ $total_noc_charges=0; $total_total=0; $total_arrear_maintenance=0; $total_arrear
 						} ?>
 						<td><?php echo $noc_charge; $total_noc_charges+=$noc_charge; ?></td>
 						<?php foreach($other_charge_ids as $other_charge_id){
-							echo '<th>'.$other_charge[$other_charge_id].'</th>';
+							echo '<th>'.@(int)$other_charge[$other_charge_id].'</th>';
 							$total_other_charges[$other_charge_id][]=$other_charge[$other_charge_id];
 						} ?>
 						<td><?php echo $total;  $total_total+=$total; ?></td>
-						<td><?php echo $arrear_maintenance; $total_arrear_maintenance+=$arrear_maintenance; ?></td>
+						<td><?php echo $arrear_principle; $total_arrear_maintenance+=$arrear_principle; ?></td>
 						<td><?php echo $arrear_intrest; $total_arrear_intrest+=$arrear_intrest; ?></td>
 						<td><?php echo $intrest_on_arrears; $total_intrest_on_arrears+=$intrest_on_arrears; ?></td>
 						<td><?php echo $credit_stock; $total_credit_stock+=$credit_stock; ?></td>

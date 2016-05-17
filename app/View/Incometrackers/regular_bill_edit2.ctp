@@ -14,12 +14,13 @@ $tax=(float)$society_info[0]["society"]["tax"];
 foreach($regular_bill_info as $regular_bill){
 	$ledger_sub_account_id=(int)$regular_bill["regular_bill"]["ledger_sub_account_id"];
 	$start_date=$regular_bill["regular_bill"]["start_date"];
+	$start_date=date("Y-m-d",$start_date); 
 	$due_date=$regular_bill["regular_bill"]["due_date"];
 	$bill_number=$regular_bill["regular_bill"]["bill_number"];
 	$income_head_array=$regular_bill["regular_bill"]["income_head_array"];
 	$total=$regular_bill["regular_bill"]["total"];
 	$intrest_on_arrears=$regular_bill["regular_bill"]["intrest_on_arrears"];
-	$arrear_maintenance=$regular_bill["regular_bill"]["arrear_maintenance"];
+	$arrear_principle=$regular_bill["regular_bill"]["arrear_principle"];
 	$arrear_intrest=$regular_bill["regular_bill"]["arrear_intrest"];
 	$due_for_payment=$regular_bill["regular_bill"]["due_for_payment"];
 	$credit_stock=$regular_bill["regular_bill"]["credit_stock"];
@@ -33,143 +34,23 @@ foreach($regular_bill_info as $regular_bill){
 	$flat_name=$member_info["flat_name"];
 	$wing_flat=$wing_name.' - '.$flat_name;
 		
-	//Arrears//
-	$result = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrears'),array('pass'=>array($ledger_sub_account_id)));
-	$arrear_maintenance=$result["arrear_principle"];
-	$arrear_interest=$result["arrear_interest"];
+	$result = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrears_and_interest_edit'),array('pass'=>array($ledger_sub_account_id,$start_date)));
 	
+	$maint_arrear=$result["maint_arrear"];
+			
+	$non_maint_arrear=$result["non_maint_arrear"];
+	$bill_amount=$result["bill_amount"];
 	
-	
-	
-	$last_bill_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'last_bill_info_for_bill_regeneration'),array('pass'=>array($ledger_sub_account_id)));
-	
-	if(sizeof($last_bill_info)==0){
-		$last_bill_arrear_principal=$arrear_maintenance;
-	}
-	
-	if(sizeof($last_bill_info)>0){
-		$last_bill_start_date=$last_bill_info[0]["regular_bill"]["start_date"];
-		$last_bill_due_date=$last_bill_info[0]["regular_bill"]["due_date"];
-		$last_bill_arrear_principal=$last_bill_info[0]["regular_bill"]["arrear_maintenance"];
-		$last_bill_arrear_intrest=$last_bill_info[0]["regular_bill"]["arrear_intrest"];
-		$last_bill_intrest_on_arrears=$last_bill_info[0]["regular_bill"]["intrest_on_arrears"];
-		$last_bill_total=$last_bill_info[0]["regular_bill"]["total"];
+	$arrear_principle=$maint_arrear+$non_maint_arrear+$bill_amount;
+	$maint_arrear=$maint_arrear+$bill_amount;
+	$arrear_interest=$result["arrear_intrest"];
 		
-		$last_bill_arrear_intrest=$last_bill_arrear_intrest+$last_bill_intrest_on_arrears;
-		$new_start_date=$last_bill_start_date;
-		$new_due_date=$last_bill_due_date;
-	}
+	$intrest_on_arrears=round($result["intrest_on_arrears"]);
+	$due_for_payment+=$arrear_principle;
+	$due_for_payment+=$arrear_interest;
+	$due_for_payment+=$intrest_on_arrears;
 	
-	//Interest computation start//
-	$interest_on_arrears=0;
-	if(sizeof($last_bill_info)>0){
-		$tax_factor=$tax/100;
-		$last_receipts_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'last_receipts_info_for_bill_regeneration'),array('pass'=>array($ledger_sub_account_id,$last_bill_start_date,$start_date)));
-		
-		if(sizeof($last_receipts_info)>0 && sizeof($last_bill_info)>0){
-			$i=0;
-			foreach($last_receipts_info as $receipts_info){ $i++;
-				$receipt_auto_id=$receipts_info["cash_bank"]["auto_id"];
-				$receipt_date=$receipts_info["cash_bank"]["transaction_date"];
-				$amount=$receipts_info["cash_bank"]["amount"];
-				
-				//receipt minus//
-				if($last_bill_arrear_intrest!=0){
-					$reminder=$last_bill_arrear_intrest-$amount;
-					
-					$days=abs(floor(($new_start_date-$receipt_date)/(60*60*24)));
-					$interest_on_arrears+=$last_bill_arrear_principal*$tax_factor*($days/365);
-					$new_start_date=$receipt_date;
-					
-					if($receipt_date>$new_due_date){
-						$days=abs(floor(($new_due_date-$receipt_date)/(60*60*24)));
-						$interest_on_arrears+=$last_bill_total*$tax_factor*($days/365);
-						$new_due_date=$receipt_date;
-					}
-					
-					if($reminder>=0){
-						$last_bill_arrear_intrest=$reminder;
-					}else{
-						$last_bill_arrear_intrest=0;
-						$last_bill_arrear_principal=$last_bill_arrear_principal-abs($reminder);
-						if($last_bill_arrear_principal<0){
-							$last_bill_total=$last_bill_total-abs($last_bill_arrear_principal);
-							$last_bill_arrear_principal=0;
-							if($last_bill_total<0){
-								$last_bill_arrear_principal=$last_bill_total;
-								$last_bill_total=0;
-							}
-						}
-						
-					}
-					
-				}elseif($last_bill_arrear_principal!=0){
-					$reminder=$last_bill_arrear_principal-$amount;
-					
-					$days=abs(floor(($new_start_date-$receipt_date)/(60*60*24)));
-					$interest_on_arrears+=$last_bill_arrear_principal*$tax_factor*($days/365);
-					$new_start_date=$receipt_date;
-					
-					if($receipt_date>$new_due_date){
-						$days=abs(floor(($new_due_date-$receipt_date)/(60*60*24)));
-						$interest_on_arrears+=$last_bill_total*$tax_factor*($days/365);
-						$new_due_date=$receipt_date;
-					}
-					
-					if($reminder>=0){
-						$last_bill_arrear_principal=$reminder;
-					}else{
-						$last_bill_arrear_principal=0;
-						$last_bill_total=$last_bill_total-abs($reminder);
-						if($last_bill_total<0){
-							$last_bill_arrear_principal=$last_bill_total;
-							$last_bill_total=0;
-						}
-						
-					}
-				}elseif($last_bill_total!=0){
-					$reminder=$last_bill_total-$amount;
-					
-					if($receipt_date>$new_due_date){
-						
-						$days=abs(floor(($new_due_date-$receipt_date)/(60*60*24)));
-						$interest_on_arrears+=$last_bill_total*$tax_factor*($days/365);
-						$new_due_date=$receipt_date;
-					}
-					
-					if($reminder>=0){
-						$last_bill_total=$reminder;
-					}else{
-						$last_bill_total=0;
-						$last_bill_arrear_principal=$reminder;
-						
-					}
-					
-				}
-					
-			}
-			if($last_bill_arrear_principal>0){
-				 $days=abs(floor(($new_start_date-$start_date)/(60*60*24)));
-				 $interest_on_arrears+=$last_bill_arrear_principal*$tax_factor*($days/365);
-			}
-			
-			if($last_bill_total>0){
-				$days=abs(floor(($new_due_date-$start_date)/(60*60*24)));
-				$interest_on_arrears+=$last_bill_total*$tax_factor*($days/365);
-			}
-			
-			
-		}elseif(sizeof($last_bill_info)>0){
-			$days=abs(floor(($new_start_date-$start_date)/(60*60*24)));
-			$interest_on_arrears+=$last_bill_arrear_principal*$tax_factor*($days/365);
-			
-			$days=abs(floor(($new_due_date-$start_date)/(60*60*24)));
-			$interest_on_arrears+=$last_bill_total*$tax_factor*($days/365);
-		}
-	}
-		$new_arrear_principal=@$last_bill_total+$last_bill_arrear_principal;
-		if($interest_on_arrears<0){ $interest_on_arrears=0; }
-		$interest_on_arrears=round($interest_on_arrears);
+	if($intrest_on_arrears<0){$intrest_on_arrears=0; }
 }; ?>
 <div class="portlet box blue">
 	<div class="portlet-title">
@@ -185,7 +66,7 @@ foreach($regular_bill_info as $regular_bill){
 			</tr>
 			<tr>
 				<td width="10%">Bill Date:</td>
-				<td><?php echo date("d-M-Y",$start_date); ?></td>
+				<td><?php echo date("d-M-Y",strtotime($start_date)); ?></td>
 				<td width="10%">Due Date:</td>
 				<td><?php echo date("d-M-Y",$due_date); ?></td>
 			</tr>
@@ -238,20 +119,20 @@ foreach($regular_bill_info as $regular_bill){
 					</tr>
 					<tr>
 						<td style="text-align: right;">Interest on arrears</td>
-						<td><input type="text" class="m-wrap textbx call_calculation" value="<?php echo $interest_on_arrears; ?>" name="interest_on_arrears" />
-						<?php $due_for_payment+=$interest_on_arrears; ?>
+						<td><input type="text" class="m-wrap textbx call_calculation" value="<?php echo $intrest_on_arrears; ?>" name="interest_on_arrears" />
+						<?php $due_for_payment+=$intrest_on_arrears; ?>
 						</td>
 					</tr>
 					<tr>
 						<td style="text-align: right;">Arrears   (Maint.)</td>
-						<td><input type="text" class="m-wrap textbx call_calculation" value="<?php echo $new_arrear_principal; ?>" name="arrear_maintenance" readonly />
-						<?php $due_for_payment+=$new_arrear_principal; ?>
+						<td><input type="text" class="m-wrap textbx call_calculation" value="<?php echo $arrear_principle; ?>" name="arrear_maintenance" readonly />
+						<?php $due_for_payment+=$arrear_principle; ?>
 						</td>
 					</tr>
 					<tr>
 						<td style="text-align: right;">Arrears   (Int.)</td>
-						<td><input type="text" class="m-wrap textbx call_calculation" value="<?php echo $arrear_intrest; ?>" name="arrear_intrest" readonly />
-						<?php $due_for_payment+=$arrear_intrest; ?>
+						<td><input type="text" class="m-wrap textbx call_calculation" value="<?php echo $arrear_interest; ?>" name="arrear_intrest" readonly />
+						<?php $due_for_payment+=$arrear_interest; ?>
 						</td>
 					</tr>
 					<tr>
@@ -272,6 +153,8 @@ foreach($regular_bill_info as $regular_bill){
 					</tr>
 				</tbody>
 			</table>
+			<input type="hidden" value="<?php echo $maint_arrear; ?>" name="maint_arrear"/>
+			<input type="hidden" value="<?php echo $non_maint_arrear; ?>" name="non_maint_arrear"/>
 			<a href="#" role="button" class="btn green submit_button">UPDATE BILL</a>
 		</div>
 		

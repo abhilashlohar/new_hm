@@ -102,7 +102,7 @@ if(sizeof($other_charge_ih_ids)>0){
 			<th><?php echo $income_head_name; ?></th>
 			<?php } ?>
 			<th>Total</th>
-			<th>Arrear maintenance</th>
+			<th>Arrear Principle</th>
 			<th>Arrear intrest</th>
 			<th>Intrest on arrears</th>
 			<th>Credit stock</th>
@@ -119,7 +119,7 @@ if(sizeof($other_charge_ih_ids)>0){
 	$noc_charge=$regular_bill["regular_bill_temp"]["noc_charge"];
 	$other_charge=$regular_bill["regular_bill_temp"]["other_charge"];
 	$total=$regular_bill["regular_bill_temp"]["total"];
-	$arrear_maintenance=$regular_bill["regular_bill_temp"]["arrear_maintenance"];
+	$arrear_principle=$regular_bill["regular_bill_temp"]["arrear_principle"];
 	$arrear_intrest=$regular_bill["regular_bill_temp"]["arrear_intrest"];
 	$intrest_on_arrears=$regular_bill["regular_bill_temp"]["intrest_on_arrears"];
 	$credit_stock=$regular_bill["regular_bill_temp"]["credit_stock"];
@@ -149,8 +149,8 @@ if(sizeof($other_charge_ih_ids)>0){
 			<input type="text" value="0" class="auto_save_other" ledger_sub_account_id="<?php echo $ledger_sub_account_id; ?>" income_head_id="<?php echo $other_charge_ih_id; ?>" row_id="<?php echo $row_id; ?>" auto_id="<?php echo $auto_id; ?>" /></td>
 			<?php }} ?>
 			<td><input type="text" value="<?php echo $total; ?>" readonly class="total_<?php echo $row_id; ?> total_column" row_id="<?php echo $row_id; ?>"/></td>
-			<td><input type="text" value="<?php echo $arrear_maintenance; ?>" class="arrear_maintenance" readonly row_id="<?php echo $row_id; ?>" />
-			<?php $total_arrear_maintenance+=$arrear_maintenance; ?>
+			<td><input type="text" value="<?php echo $arrear_principle; ?>" class="arrear_principle" readonly row_id="<?php echo $row_id; ?>" />
+			<?php $total_arrear_maintenance+=$arrear_principle; ?>
 			</td>
 			<td><input type="text" value="<?php echo $arrear_intrest; ?>" class="arrear_intrest" readonly row_id="<?php echo $row_id; ?>" />
 			<?php $total_arrear_intrest+=$arrear_intrest; ?>
@@ -162,7 +162,7 @@ if(sizeof($other_charge_ih_ids)>0){
 			<?php $total_credit_stock+=$credit_stock; ?>
 			</td>
 			<td>
-			<?php $due_for_payment=$total+$arrear_maintenance+$arrear_intrest+$intrest_on_arrears+$credit_stock; ?>
+			<?php $due_for_payment=$total+$arrear_principle+$arrear_intrest+$intrest_on_arrears+$credit_stock; ?>
 			<input type="text" value="<?php echo $due_for_payment; ?>" class="due_for_payment" readonly row_id="<?php echo $row_id; ?>" />
 			<?php $total_due_for_payment+=$due_for_payment; ?>
 			</td>
@@ -308,7 +308,7 @@ $(document).ready(function(){
 		});
 		$(".total_"+row_id).val(r_total);
 		
-		var q=parseInt($('.arrear_maintenance[row_id='+row_id+']').val());
+		var q=parseInt($('.arrear_principle[row_id='+row_id+']').val());
 		due_total+=r_total+q;
 		var q=parseInt($('.arrear_intrest[row_id='+row_id+']').val());
 		due_total+=q;

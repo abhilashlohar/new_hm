@@ -653,6 +653,7 @@ function journal_validation(){
 	$q=$this->request->query('q');
 	
 	$q = html_entity_decode($q);
+	
 	$tra_date = $this->request->query('b');
 	$tra_date = json_decode($tra_date, true);
 	$tra_date = date('Y-m-d',strtotime($tra_date));
@@ -694,13 +695,13 @@ function journal_validation(){
 		
 			
 		$myArray = json_decode($q, true);
-		
 		$c=0;
 		$total_debit = 0;
 		$total_credit = 0;
 		
 foreach($myArray as $child){
 	$c++;
+			
 	if(empty($child[0])){
 	$output = json_encode(array('type'=>'error', 'text' => 'Ledger Account is Required in row '.$c));
 	die($output);
@@ -722,11 +723,27 @@ foreach($myArray as $child){
 	 $total_credit = $total_credit + $child[2];
 
 		
-	
+	        $ledger_validation_for_bill = $child[0];
+			$ledger_sub_acc_for_bill = explode(',',$ledger_validation_for_bill);
+			$type_member = (int)$ledger_sub_acc_for_bill[1];
+			if($type_member==1){
+				$ledger_sub_acc_for_bill=(int)$ledger_sub_acc_for_bill[0];
+				$this->loadmodel('regular_bill');
+				$conditions=array('society_id'=>$s_society_id,'ledger_sub_account_id'=>$ledger_sub_acc_for_bill,'start_date'=>array('$gte'=>$transaction_date));
+				$order=array('regular_bill.start_date'=>'DESC');
+				$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1)); 
+				
+				if(sizeof($result_regular_bill)==1){
+					$output = json_encode(array('type'=>'error', 'text' => 'Jv is not generated before bill generation date'));
+					die($output);
+				}
+				
+			}
   
 
 }	
-	if($total_debit != $total_credit){
+
+	 if($total_debit != $total_credit){
 			$output = json_encode(array('type'=>'error', 'text' => 'Total Debit Should be Match with Total Credit'));
 			die($output);
 		}
@@ -761,7 +778,7 @@ else
 $ledger = (int)$ledgerr_arrr[0];
 $ledger_sub_account2=null;	
 }	
-			
+		
 			
 			$debit = $child[1];
 			$credit = $child[2];

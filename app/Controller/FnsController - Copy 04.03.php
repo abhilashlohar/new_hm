@@ -425,18 +425,18 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 	//$start_date=date('Y-m-d', strtotime('-1 day', strtotime($start_date)));
 	$current_bill_start_date=strtotime($start_date);
 	if($bill_count==0){
+		
 		$this->loadmodel('financial_year');
 		$conditions =array('society_id' =>$s_society_id,'status' =>1,'financial_year.from'=>array('$lte'=>$current_bill_start_date),'financial_year.to'=>array('$gte'=>$current_bill_start_date));
 		$financial_years=$this->financial_year->find('all',array('conditions'=>$conditions));
 		$last_bill_start_date=$financial_years[0]["financial_year"]["from"];
-		$last_bill_start_date_for_ledger=$last_bill_start_date;
+		
 		
 		$last_bill_amount=0;
 		$last_bill_maint_arrear=0;
 		$last_bill_non_maint_arrear=0;
 		$last_bill_arrear_intrest=0;
 		$last_bill_intrest_on_arrears=0;
-		$credit_stock=0;
 	}else{
 		
 		$this->loadmodel('regular_bill');
@@ -444,8 +444,8 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 		$order=array('regular_bill.auto_id'=>'DESC');
 		$last_bill_info=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1));
 		$last_bill_start_date=$last_bill_info[0]["regular_bill"]["start_date"];
-		$last_bill_start_date_for_ledger=date('Y-m-d', strtotime('+1 day', $last_bill_start_date));
-		$last_bill_start_date_for_ledger=strtotime($last_bill_start_date_for_ledger);
+		$last_bill_start_date=date('Y-m-d', strtotime('+1 day', $last_bill_start_date));
+		$last_bill_start_date=strtotime($last_bill_start_date);
 		$last_bill_due_date=$last_bill_info[0]["regular_bill"]["due_date"];
 		
 		$last_bill_amount=$last_bill_info[0]["regular_bill"]["total"];
@@ -453,12 +453,10 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 		$last_bill_non_maint_arrear=$last_bill_info[0]["regular_bill"]["non_maint_arrear"];
 		$last_bill_arrear_intrest=$last_bill_info[0]["regular_bill"]["arrear_intrest"];
 		$last_bill_intrest_on_arrears=$last_bill_info[0]["regular_bill"]["intrest_on_arrears"];
-		$last_bill_credit_stock=$last_bill_info[0]["regular_bill"]["credit_stock"];
-		$last_bill_maint_arrear=$last_bill_maint_arrear+$last_bill_credit_stock;
 	}
 	
 	$bill_amount=$last_bill_amount;
-	$maint_arrear=$last_bill_maint_arrear;
+	$maint_arrear=$last_bill_maint_arrear; 
 	$non_maint_arrear=$last_bill_non_maint_arrear;
 	$arrear_intrest=$last_bill_arrear_intrest;
 	$intrest_on_arrears=$last_bill_intrest_on_arrears;
@@ -466,7 +464,7 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 	$new_interest=0;
 	
 	$this->loadmodel('ledger');
-	$conditions =array('society_id' =>$s_society_id,'ledger_account_id' =>34,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'ledger.transaction_date'=>array('$gte'=>$last_bill_start_date_for_ledger,'$lte'=>$current_bill_start_date),"table_name"=>array('$ne'=>"regular_bill"));
+	$conditions =array('society_id' =>$s_society_id,'ledger_account_id' =>34,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'ledger.transaction_date'=>array('$gte'=>$last_bill_start_date,'$lte'=>$current_bill_start_date),"table_name"=>array('$ne'=>"regular_bill"));
 	$order=array('ledger.transaction_date'=>'ASC');
 	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
 	
@@ -560,183 +558,7 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 		$last_bill_amount=$bill_amount;
 	}
 	
-		$last_bill_arrear_intrest=$arrear_intrest+$intrest_on_arrears;
-	
 		$days=abs(floor(($last_trasanction_date-$current_bill_start_date)/(60*60*24)));
-		
-		$new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
-		
-		if($current_bill_start_date>$last_due_date && $bill_count>0){
-			
-			$days=abs(floor(($last_due_date-$current_bill_start_date)/(60*60*24)));
-			$new_interest+=($last_bill_amount*$days*$tax_factor)/365;
-			
-			$last_due_date=$current_transaction_date;
-			
-		}
-		
-		return array("maint_arrear"=>$last_bill_maint_arrear,"non_maint_arrear"=>$last_bill_non_maint_arrear,"bill_amount"=>$last_bill_amount,"arrear_intrest"=>$last_bill_arrear_intrest,"intrest_on_arrears"=>$new_interest);
-}
-
-
-
-function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date){
-	$s_society_id=$this->Session->read('hm_society_id');
-	
-	$this->requestAction(array('controller' => 'Hms', 'action' => 'ath'));
-	
-	$this->loadmodel('society');
-	$condition=array('society_id'=>$s_society_id);
-	$society_result=$this->society->find('all',array('conditions'=>$condition));
-	$tax=(float)$society_result[0]["society"]["tax"];
-	$tax_factor=$tax/100;
-	
-	$this->loadmodel('regular_bill');
-	$conditions =array('society_id' =>$s_society_id,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'start_date'=>array('$lt'=>strtotime($start_date)));
-	$bill_count=$this->regular_bill->find('count',array('conditions'=>$conditions));
-	
-	//$start_date=date('Y-m-d', strtotime('-1 day', strtotime($start_date)));
-	$current_bill_start_date=strtotime($start_date);
-	if($bill_count==0){
-		$this->loadmodel('financial_year');
-		$conditions =array('society_id' =>$s_society_id,'status' =>1,'financial_year.from'=>array('$lte'=>$current_bill_start_date),'financial_year.to'=>array('$gte'=>$current_bill_start_date));
-		$financial_years=$this->financial_year->find('all',array('conditions'=>$conditions));
-		$last_bill_start_date=$financial_years[0]["financial_year"]["from"];
-		$last_bill_start_date_for_ledger=$last_bill_start_date;
-		
-		$last_bill_amount=0;
-		$last_bill_maint_arrear=0;
-		$last_bill_non_maint_arrear=0;
-		$last_bill_arrear_intrest=0;
-		$last_bill_intrest_on_arrears=0;
-		$credit_stock=0;
-	}else{
-		
-		$this->loadmodel('regular_bill');
-		$conditions =array('society_id' =>$s_society_id,'ledger_sub_account_id' =>(int)$ledger_sub_account_id);
-		$order=array('regular_bill.auto_id'=>'DESC');
-		$last_bill_info=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1));
-		$last_bill_start_date=$last_bill_info[0]["regular_bill"]["start_date"];
-		$last_bill_start_date_for_ledger=date('Y-m-d', strtotime('+1 day', $last_bill_start_date));
-		$last_bill_start_date_for_ledger=strtotime($last_bill_start_date_for_ledger);
-		$last_bill_due_date=$last_bill_info[0]["regular_bill"]["due_date"];
-		
-		$last_bill_amount=$last_bill_info[0]["regular_bill"]["total"];
-		$last_bill_maint_arrear=$last_bill_info[0]["regular_bill"]["maint_arrear"];
-		$last_bill_non_maint_arrear=$last_bill_info[0]["regular_bill"]["non_maint_arrear"];
-		$last_bill_arrear_intrest=$last_bill_info[0]["regular_bill"]["arrear_intrest"];
-		$last_bill_intrest_on_arrears=$last_bill_info[0]["regular_bill"]["intrest_on_arrears"];
-		$last_bill_credit_stock=$last_bill_info[0]["regular_bill"]["credit_stock"];
-		$last_bill_maint_arrear=$last_bill_maint_arrear+$last_bill_credit_stock;
-	}
-	
-	$bill_amount=$last_bill_amount;
-	$maint_arrear=$last_bill_maint_arrear;
-	$non_maint_arrear=$last_bill_non_maint_arrear;
-	$arrear_intrest=$last_bill_arrear_intrest;
-	$intrest_on_arrears=$last_bill_intrest_on_arrears;
-	
-	$new_interest=0;
-	
-	$this->loadmodel('ledger');
-	$conditions =array('society_id' =>$s_society_id,'ledger_account_id' =>34,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'ledger.transaction_date'=>array('$gte'=>$last_bill_start_date_for_ledger,'$lte'=>$current_bill_start_date),"table_name"=>array('$ne'=>"regular_bill"));
-	$order=array('ledger.transaction_date'=>'ASC');
-	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
-	
-	$last_trasanction_date=$last_bill_start_date;
-	$last_due_date=@$last_bill_due_date;
-	if(sizeof($result_ledger)==0){
-		$current_transaction_date=$current_bill_start_date;
-	}
-	foreach($result_ledger as $transaction){
-		
-		$current_transaction_date=$transaction["ledger"]["transaction_date"];
-		$table_name=$transaction["ledger"]["table_name"];
-		$ledger_intrest=@$transaction["ledger"]["intrest_on_arrears"];
-		
-		$debit=$transaction["ledger"]["debit"];
-		$credit=$transaction["ledger"]["credit"];
-		
-		$days=abs(floor(($last_trasanction_date-$current_transaction_date)/(60*60*24)));
-		$new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
-		
-		if($current_transaction_date>$last_due_date && $bill_count>0){
-			$days=abs(floor(($last_due_date-$current_transaction_date)/(60*60*24)));
-			$new_interest+=($last_bill_amount*$days*$tax_factor)/365;
-			
-			$last_due_date=$current_transaction_date;
-		}
-		
-		$last_trasanction_date=$current_transaction_date;
-		
-		//Allocation
-		if($table_name=="opening_balance"){
-			if($ledger_intrest=="YES"){
-				$arrear_intrest+=$debit;
-			}else{
-				if(!empty($debit) && empty($credit)){
-					$maint_arrear+=$debit;
-				}
-				if(empty($debit) && !empty($credit)){
-					$maint_arrear-=$credit;
-				}
-			}
-			
-		}else{
-			if(!empty($debit) && empty($credit)){
-				$non_maint_arrear+=$debit;
-			}
-			if(empty($debit) && !empty($credit)){
-				$reminder=$last_bill_non_maint_arrear-$credit;
-				if($reminder>=0){
-					$non_maint_arrear=$reminder;
-				}else{
-					$non_maint_arrear=0;
-					$reminder=abs($reminder);
-					$reminder=$last_bill_arrear_intrest-$reminder;
-					if($reminder>=0){
-						$arrear_intrest=$reminder;
-					}else{
-						$arrear_intrest=0;
-						$reminder=abs($reminder);
-						$reminder=$last_bill_intrest_on_arrears-$reminder;
-						if($reminder>=0){
-							$intrest_on_arrears=$reminder;
-						}else{
-							$intrest_on_arrears=0;
-							$reminder=abs($reminder);
-							$reminder=$last_bill_maint_arrear-$reminder;
-							if($reminder>=0){
-								$maint_arrear=$reminder;
-							}else{
-								$maint_arrear=0;
-								$reminder=abs($reminder);
-								$reminder=$last_bill_amount-$reminder;
-								if($reminder>=0){
-									$bill_amount=$reminder;
-								}else{
-									$bill_amount=0;
-									$maint_arrear=$maint_arrear+$reminder;
-								}
-							}
-						}
-					}
-				}
-				
-				
-			}
-		}
-		$last_bill_non_maint_arrear=$non_maint_arrear;
-		$last_bill_arrear_intrest=$arrear_intrest+$intrest_on_arrears;
-		$last_bill_intrest_on_arrears=$intrest_on_arrears;
-		$last_bill_maint_arrear=$maint_arrear;
-		$last_bill_amount=$bill_amount;
-	}
-	
-		$last_bill_arrear_intrest=$arrear_intrest+$intrest_on_arrears;
-	
-		$days=abs(floor(($last_trasanction_date-$current_bill_start_date)/(60*60*24)));
-		
 		$new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
 		
 		if($current_bill_start_date>$last_due_date && $bill_count>0){

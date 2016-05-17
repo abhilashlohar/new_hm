@@ -27,7 +27,7 @@ function opening_balance_import()
 	}else{
 	$this->layout='session';
 	}
-$this->ath();
+	$this->ath();
 	$this->check_user_privilages();
 	$s_society_id=(int)$this->Session->read('hm_society_id');
 	
@@ -579,7 +579,7 @@ function final_import_opening_balance()
 	$this->layout=null;
 	$s_society_id = $this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');
-	
+	$this->ath();
 	$this->loadmodel('import_ob_record');
 	$conditions=array("society_id" => $s_society_id,"module_name" => "OB");
 	$result_import_record = $this->import_ob_record->find('all',array('conditions'=>$conditions));

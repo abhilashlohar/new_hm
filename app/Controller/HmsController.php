@@ -1,11 +1,7 @@
 <?php
-//ini_set('max_execution_time', 300); //300 seconds = 5 minutes
 class HmsController extends AppController {
 var $helpers = array('Html', 'Form','Js');
-/*$this->helpers['SocialSignIn.Facebook'] = array(
-	'app_id' => '1067899399889225',
-	'redirect_uri' => 'hmslogin.com');
-	*/
+
 public $components = array(
 'Paginator',
 'Session','Cookie','RequestHandler'
@@ -7553,7 +7549,9 @@ function dashboard(){
 	  $s_user_id = $this->Session->read('hm_user_id'); 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	
-
+	
+				// $date2= date("Y-m-d", strtotime($date2)); 
+				//$dat1= strtotime($date2);
 		/*
 	$this->loadmodel("discussion_post");
 	$user_profile=$this->discussion_post->find('all');

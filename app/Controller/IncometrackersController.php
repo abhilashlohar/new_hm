@@ -6503,7 +6503,10 @@ function regular_bill_edit2($auto_id=null){
 	$billing_cycle=$regular_bill_info[0]["regular_bill"]["billing_cycle"];
 	$created_by=$regular_bill_info[0]["regular_bill"]["created_by"];
 	
-	
+	$this->loadmodel('regular_bill');
+	$conditions=array("ledger_sub_account_id"=>$ledger_sub_account_id,'start_date'=>array('$gt'=>$start_date));
+	$count=$this->regular_bill->find('count',array('conditions'=>$conditions));
+	$this->set("count",$count);
 	
 	$this->loadmodel('society');
 	$conditions=array("society_id"=>$s_society_id);

@@ -17,7 +17,7 @@ foreach($result_cash_bank as $receipt){
 				$transaction_date=$receipt["cash_bank"]["transaction_date"];
 				$received_from=$receipt["cash_bank"]["received_from"];
 				if($received_from == "residential"){				
-				$receipt_type=$receipt["cash_bank"]["receipt_type"];
+				$receipt_type="Residential";
 				$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];
 				 $date=date("d-m-Y",$transaction_date);
 				$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($ledger_sub_account_id))); 

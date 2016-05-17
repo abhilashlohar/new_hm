@@ -137,14 +137,14 @@ function read_csv_file(){
 			$member_name=$child_ar[7];
 			$wing=$child_ar[8];
 			$flat=$child_ar[9];
-			$receipt_type=$child_ar[10];
-			$amount=$child_ar[11];  
+			//$receipt_type=$child_ar[10];
+			$amount=$child_ar[10];  
 			$amount = str_replace(',', '', $amount); 
-			$narration=$child_ar[12];
+			$narration=$child_ar[11];
 			
 			$this->loadmodel('bank_receipt_csv');
 			$auto_id=$this->autoincrement('bank_receipt_csv','auto_id');
-			$this->bank_receipt_csv->saveAll(Array(Array("auto_id" => $auto_id, "trajection_date" => $trajection_date,"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_or_reference_no" => $cheque_or_reference_no, "date" => $date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"member_name"=>$member_name,"wing"=>$wing,"flat"=>$flat,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"is_converted"=>"NO")));
+			$this->bank_receipt_csv->saveAll(Array(Array("auto_id" => $auto_id, "trajection_date" => $trajection_date,"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_or_reference_no" => $cheque_or_reference_no, "date" => $date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"member_name"=>$member_name,"wing"=>$wing,"flat"=>$flat,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"is_converted"=>"NO")));
 		}
 	}
 	$this->loadmodel('import_record');
@@ -173,7 +173,7 @@ function convert_imported_data(){
 		$wing=trim($import_record["bank_receipt_csv"]["wing"]);
 		$flat=(int)trim($import_record["bank_receipt_csv"]["flat"]);
 		$flat=str_pad($flat,10,"0",STR_PAD_LEFT);
-		$receipt_type=trim(strtolower($import_record["bank_receipt_csv"]["receipt_type"]));
+		//$receipt_type=trim(strtolower($import_record["bank_receipt_csv"]["receipt_type"]));
 		$amount=trim($import_record["bank_receipt_csv"]["amount"]);
 		$narration=trim($import_record["bank_receipt_csv"]["narration"]);
 		
@@ -220,18 +220,11 @@ function convert_imported_data(){
 			$ledger_sub_account_id = 0;
 		}
 		
-		if($receipt_type=="m"){
-			$receipt_type="maintenance";
-		}
-		elseif($receipt_type=="o"){
-			$receipt_type="other";
-		}else{
-			$receipt_type="";
-		}
+		
 
 		$this->loadmodel('bank_receipt_csv_converted');
 		$auto_id=$this->autoincrement('bank_receipt_csv_converted','auto_id');
-		$this->bank_receipt_csv_converted->saveAll(Array(Array("auto_id" => $auto_id, "trajection_date" => $trajection_date,"deposited_in" => $bank_id, "receipt_mode" => $receipt_mode, "cheque_or_reference_no" => $cheque_or_reference_no, "date" => $date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"is_imported"=>"NO")));
+		$this->bank_receipt_csv_converted->saveAll(Array(Array("auto_id" => $auto_id, "trajection_date" => $trajection_date,"deposited_in" => $bank_id, "receipt_mode" => $receipt_mode, "cheque_or_reference_no" => $cheque_or_reference_no,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"is_imported"=>"NO")));
 		
 		$this->loadmodel('bank_receipt_csv');
 		$this->bank_receipt_csv->updateAll(array("is_converted" => "YES"),array("auto_id" => $bank_receipt_csv_id));

@@ -9,6 +9,9 @@ input[readonly=""]{
 }
 </style>
 <a href="<?php echo $webroot_path; ?>Incometrackers/in_head_report" role="button" rel="tab" class="btn"><i class="icon-arrow-left"></i> Back</a>
+<?php if($count>0){
+	echo "<br/>You can not edit this bill."; exit;
+} ?>
 <?php 
 $tax=(float)$society_info[0]["society"]["tax"];
 foreach($regular_bill_info as $regular_bill){

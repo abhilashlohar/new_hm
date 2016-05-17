@@ -277,9 +277,6 @@ function modify_bank_receipt_csv_data($page=null){
 	$financial_year_string=implode(',',$financial_year_array);
 	$this->set(compact("financial_year_string"));
 	
-	
-	
-	
 	$this->loadmodel('import_record');
 	$conditions=array("society_id" => $s_society_id,"module_name" => "BR");
 	$result_import_record = $this->import_record->find('all',array('conditions'=>$conditions));
@@ -500,6 +497,7 @@ function allow_import_bank_receipt(){
 	$this->ath();
 	$s_society_id = $this->Session->read('hm_society_id');
 	
+	
 	$this->loadmodel('bank_receipt_csv_converted'); 
 	$conditions=array("society_id"=>(int)$s_society_id);
 	$order=array('bank_receipt_csv_converted.auto_id'=>'ASC');
@@ -509,7 +507,34 @@ function allow_import_bank_receipt(){
 		$ledger_sub_account_id=$receipt_converted["bank_receipt_csv_converted"]["ledger_sub_account_id"];
 		$amount=(float)$receipt_converted["bank_receipt_csv_converted"]["amount"];
 		$trajection_date=$receipt_converted["bank_receipt_csv_converted"]["trajection_date"];
+        $transaction_date_for_regular_bill=date('Y-m-d',strtotime($trajection_date)); 
+	    $transaction_date_for_regular_bill=strtotime($transaction_date_for_regular_bill);
+	$nn=0;
+	$this->loadmodel('regular_bill'); 
+	$order=array('regular_bill.start_date'=>'DESC');
+	$conditions=array("society_id"=>(int)$s_society_id,"ledger_sub_account_id"=>(int)$ledger_sub_account_id);
+	$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>2));
+	foreach($result_regular_bill as $data){
+	$start_date=$data['regular_bill']['start_date'];	
+	$nn++;
+	}
+	
+   if($nn==1 || $nn==0){
+		$regular_bill_date_valid="not_match";   
+   }
+   else
+   {
+		if($transaction_date_for_regular_bill <= $start_date)
+		{
+		$regular_bill_date_valid="match";  
+		}
+		else
+		{
+		$regular_bill_date_valid="not_match";  
+		}   
+   }	
 
+		
 		$this->loadmodel('financial_year');
 		$conditions=array("society_id" => $s_society_id,"status"=>1);
 		$cursor = $this->financial_year->find('all',array('conditions'=>$conditions));
@@ -529,7 +554,7 @@ function allow_import_bank_receipt(){
 					}	
 		}
 
-		if(empty($deposited_in) or empty($ledger_sub_account_id) or empty($amount) or $abc==555){
+		if(empty($deposited_in) or empty($ledger_sub_account_id) or empty($amount) or $abc==555 or $regular_bill_date_valid=="match"){
 			die("not_validate");
 		}
 	}
@@ -576,7 +601,7 @@ function final_import_bank_receipt_ajax(){
 			$ledger_sub_account_id=$import_converted["bank_receipt_csv_converted"]["ledger_sub_account_id"];
 			$amount=$import_converted["bank_receipt_csv_converted"]["amount"];
 			$narration=$import_converted["bank_receipt_csv_converted"]["narration"];
-			$receipt_type=$import_converted["bank_receipt_csv_converted"]["receipt_type"];
+			//$receipt_type=$import_converted["bank_receipt_csv_converted"]["receipt_type"];
 			
 			
 			
@@ -586,7 +611,7 @@ function final_import_bank_receipt_ajax(){
 				$this->loadmodel('cash_bank');
 				$auto_id=$this->autoincrement('cash_bank','transaction_id');
 				$receipt_number=$this->autoincrement_with_society_ticket('cash_bank','receipt_number');
-				$this->cash_bank->saveAll(Array( Array("transaction_id" => $auto_id, "transaction_date" => $trajection_date,"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_or_reference_no,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number,"created_on"=>$current_date))); 
+				$this->cash_bank->saveAll(Array( Array("transaction_id" => $auto_id, "transaction_date" => $trajection_date,"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_or_reference_no,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number,"created_on"=>$current_date))); 
 				
 				
 				$this->loadmodel('ledger');
@@ -594,7 +619,7 @@ function final_import_bank_receipt_ajax(){
 				$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> $trajection_date, "debit" => $amount, "credit" =>null, "ledger_account_id" => 33, "ledger_sub_account_id" => $deposited_in,"table_name" => "cash_bank","element_id" => $auto_id, "society_id" => $s_society_id))); 
 
 				$ledger_id=$this->autoincrement('ledger','auto_id');
-				$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> $trajection_date, "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name" => "cash_bank","element_id" => $auto_id, "society_id" => $s_society_id,"receipt_type" =>$receipt_type)));
+				$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> $trajection_date, "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name" => "cash_bank","element_id" => $auto_id,"society_id"=>$s_society_id)));
 				
 				$this->loadmodel('bank_receipt_csv_converted');
 				$this->bank_receipt_csv_converted->updateAll(array("is_imported" => "YES"),array("auto_id" => $bank_receipt_csv_id));

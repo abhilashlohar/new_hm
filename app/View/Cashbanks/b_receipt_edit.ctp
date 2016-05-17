@@ -1,34 +1,32 @@
 <?php
 foreach($cursor1 as $data){
-$receipt_id=$data["cash_bank"]["receipt_number"];
-$transaction_date=$data["cash_bank"]["transaction_date"];
-$transaction_date=date("d-m-Y",($transaction_date));
-$receipt_mode=$data["cash_bank"]["receipt_mode"];
-if($receipt_mode == "Cheque" || $receipt_mode == "cheque" ){
-$cheque_number=@$data["cash_bank"]["cheque_number"];
-$which_bank=@$data["cash_bank"]["drown_in_which_bank"];
-$receipt_date1=@$data["cash_bank"]["date"];
-$branch_of_bank=@$data["cash_bank"]["branch_of_bank"];
-}
-else
-{
-$refrence_utr = @$data["cash_bank"]["cheque_number"];
-$receipt_date2 = @$data["cash_bank"]["date"];	
-}
+		$transaction_id=(int)$data['cash_bank']['transaction_id'];
+		$receipt_id=$data["cash_bank"]["receipt_number"];
+		$transaction_date=$data["cash_bank"]["transaction_date"];
+		$transaction_date=date("d-m-Y",($transaction_date));
+		$receipt_mode=$data["cash_bank"]["receipt_mode"];
+		if($receipt_mode == "Cheque" || $receipt_mode == "cheque" ){
+		$cheque_number=@$data["cash_bank"]["cheque_number"];
+		$which_bank=@$data["cash_bank"]["drown_in_which_bank"];
+		$receipt_date1=@$data["cash_bank"]["date"];
+		$branch_of_bank=@$data["cash_bank"]["branch_of_bank"];
+	}
+	else
+	{
+		$refrence_utr = @$data["cash_bank"]["cheque_number"];
+		$receipt_date2 = @$data["cash_bank"]["date"];	
+	}
+	$member_type = @$data["cash_bank"]["received_from"];
+	if($member_type=='residential')
+	{
+	//$receipt_type = @$data["cash_bank"]["receipt_type"];	
+	$ledger_sub_account_id=(int)@$data["cash_bank"]["ledger_sub_account_id"];	
+	$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+					$user_name=$member_info["user_name"];
+					$wing_name=$member_info["wing_name"];
+					$flat_name=$member_info["flat_name"];
 
-$member_type = @$data["cash_bank"]["received_from"];
-if($member_type == 'residential')
-{
-$receipt_type = @$data["cash_bank"]["receipt_type"];	
-$ledger_sub_account_id=(int)@$data["cash_bank"]["ledger_sub_account_id"];	
-
-$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
-				$user_name=$member_info["user_name"];
-				$wing_name=$member_info["wing_name"];
-				$flat_name=$member_info["flat_name"];
-
-
-}
+	}
 else
 {
 $ledger_sub_account_id=(int)@$data["cash_bank"]["ledger_sub_account_id"];
@@ -48,6 +46,7 @@ $narration = @$data["cash_bank"]["narration"];
 ?>
 <input type="hidden" value="<?php echo $financial_year_string; ?>" id="f_y"/>
 <form method="post">
+<input type="hidden" name="transaction_id" value="<?php echo $transaction_id; ?>">
 <div class="portlet box blue">
 	<div class="portlet-title">
 	<h4 class="block"><i class="icon-reorder"></i>Edit Receipt - <?php echo $receipt_id; ?></h4>
@@ -154,18 +153,18 @@ font-size: 11px;"></p></td></tr></table>
 <?php if($member_type == 'residential') { ?>		
 <h5><b>Receipt For : Residential</b></h5>	
 <input type="hidden" name="member_type" value="residential" />	
+<br>
 
-<?php if($receipt_type=='maintenance') { ?>
-<h5><b>Receipt type: Maintanance</b></h5>	
-<input type="hidden" name="receipt_type" value="maintenance" />
-<?php } else { ?>
-<h5><b>Receipt type: Other</b></h5>	
-<input type="hidden" name="receipt_type" value="other" />
-	
-<?php }  ?>
-<h5><b>Resident Name: <?php echo $user_name.' ('.$wing_name.' - '.$flat_name.')'; ?></b></h5>	
-<input type="hidden" name="ledger_sub_account" value="<?php echo $ledger_sub_account_id; ?>" />	
-<br />
+	<label style="font-size:14px;">Select Resident<span style="color:red;">*</span></label>
+	<select name="ledger_sub_account" class="m-wrap large chosen" style="width:200px;">
+	<option value="" style="display:none;">--member--</option>
+	<?php foreach($members_for_billing as $ledger_sub_account_ids){
+	$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_ids))); ?>
+	<option value="<?php echo $ledger_sub_account_id; ?>" <?php if($ledger_sub_account_id== $ledger_sub_account_ids){ ?> selected="selected" <?php } ?>><?php echo $member_info["user_name"]; echo $member_info["wing_name"]; echo ltrim($member_info["flat_name"]); ?></option>
+	<?php } ?>
+	</select>
+
+<br/><br/>
 <?php
 } else { ?>
 <h5><b>Receipt For : Non-Residential</b></h5>

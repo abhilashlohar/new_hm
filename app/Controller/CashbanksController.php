@@ -1925,14 +1925,42 @@ function b_receipt_edit($transaction_id=null){
 	$financial_year_string=implode(',',$financial_year_array);
 	$this->set(compact("financial_year_string"));
 	
-	
+	$this->loadmodel('ledger_sub_account');
+        $condition=array('society_id'=>$s_society_id,'ledger_id'=>34);
+        $members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
+        foreach($members as $data3){
+            $ledger_sub_account_ids[]=$data3["ledger_sub_account"]["auto_id"];
+        }
+       
+       
+        $this->loadmodel('wing');
+        $condition=array('society_id'=>$s_society_id);
+        $order=array('wing.wing_name'=>'ASC');
+        $wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+        foreach($wings as $data){
+			$wing_id=$data["wing"]["wing_id"];
+			$this->loadmodel('flat');
+			$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+			$order=array('flat.flat_name'=>'ASC');
+			$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+			foreach($flats as $data2){
+				$flat_id=$data2["flat"]["flat_id"];
+				$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+				if(!empty($ledger_sub_account_id)){
+					if (in_array($ledger_sub_account_id, $ledger_sub_account_ids)){
+						$members_for_billing[]=$ledger_sub_account_id;
+					}
+				}
+			}
+		}
+		$this->set(compact("members_for_billing"));
 	
 	if(isset($this->request->data['bank_receipt_update'])){
+		$transaction_id=(int)$this->request->data['transaction_id'];
 		$tranjection_date=$this->request->data['transaction_date']; 
 		$tranjection_date=date('Y-m-d',strtotime($tranjection_date));
 		$deposited_bank_id=(int)$this->request->data['deposited_bank_id'];
 		$receipt_mode=$this->request->data['receipt_mode'];
-		
 		$cheque_number = null;
 		$cheque_date = null;
 		$drawn_on_which_bank = null;
@@ -1954,10 +1982,8 @@ function b_receipt_edit($transaction_id=null){
 		$receipt_type = null;
 		$ledger_sub_account_id = null;
 		if($member_type=='residential'){
-			$receipt_type = @$this->request->data['receipt_type'];
-			if($receipt_type=='other'){
-			 $ledger_sub_account_id=(int)@$this->request->data['ledger_sub_account'];
-			}
+			//$receipt_type = @$this->request->data['receipt_type'];
+		$ledger_sub_account_id=(int)@$this->request->data['ledger_sub_account'];
 		}
 		if($member_type=='non_residential'){
 			 $ledger_sub_account_id=@$this->request->data['ledger_sub_account'];
@@ -1965,8 +1991,49 @@ function b_receipt_edit($transaction_id=null){
 		}
 		 $amount = @$this->request->data['amount'];
 		 $narration = @$this->request->data['description'];
-		$current_date = date('Y-m-d');
+		 $current_date = date('Y-m-d');
 				
+	if($member_type=='residential'){
+	
+		$this->loadmodel('cash_bank');
+		$conditions=array("society_id"=>$s_society_id,"transaction_id"=>$transaction_id);
+		$result_cash_bank=$this->cash_bank->find('all',array('conditions'=>$conditions));
+		foreach($result_cash_bank as $data){
+			$ledger_sub_account_id_old=(int)$data['cash_bank']['ledger_sub_account_id'];	
+		}
+	
+			if($ledger_sub_account_id_old == $ledger_sub_account_id){
+			
+
+
+			
+				
+			}
+	        else
+			{
+				
+				
+				
+			}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	}
+	
+	
+	exit;
+	
+	
+	
+	
+	
+/*	
 	$this->loadmodel('cash_bank');
 	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number"=> $cheque_number,"date"=>$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"bill_reference"=>$bill_reference),Array('auto_id'=>(int)$transaction_id)); 
 

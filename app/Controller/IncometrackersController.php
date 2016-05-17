@@ -6984,27 +6984,29 @@ function regular_bill_edit2($auto_id=null){
 	}
 }
 
-function print_all_bill($last_one_time_id=null){
+function print_all_bill($period=null){
 	$this->layout='session';
 	
 	$this->ath();
 	
 	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('user_id');
 
-	$last_one_time_id=(int)$last_one_time_id; 
-	
-	$this->loadmodel('new_regular_bill');
-	$conditions=array("one_time_id"=>$last_one_time_id,'society_id'=>$s_society_id,'new_regular_bill.edit_status'=>array('$ne'=>"YES"));
-	$result_new_regular_bill=$this->new_regular_bill->find('all',array('conditions'=>$conditions));
-	$this->set('result_new_regular_bill',$result_new_regular_bill);
+	$period=explode('-',$period);
+	$start_date=(int)$period[0];
+	$end_date=(int)$period[1];
 	
 	$this->loadmodel('society');
 	$conditions=array("society_id" => $s_society_id);
 	$result_society=$this->society->find('all',array('conditions'=>$conditions));
 	$this->set('result_society',$result_society);
 	
+	$this->loadmodel('regular_bill');
+	$conditions=array('society_id'=>$s_society_id,'start_date'=>$start_date,'end_date'=>$end_date,'edited'=>"no");
+	$order=array('regular_bill.bill_number'=>'ASC');
+	$regular_bills=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order)); 
+	$this->set(compact('regular_bills'));
 	
 $this->loadmodel('society');
 $conditions=array("society_id" => $s_society_id);

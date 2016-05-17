@@ -26,7 +26,6 @@
 
 
 			foreach($result_new_regular_bill as $data){
-				
 					$auto_id=$data["regular_bill"]["auto_id"];
 					$bill_number=$data["regular_bill"]["bill_number"];
 					$edit_text=@$data["regular_bill"]["edit_text"];

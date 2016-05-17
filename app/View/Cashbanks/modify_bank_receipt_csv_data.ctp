@@ -13,7 +13,6 @@ input.m-wrap[type="text"]{
 		<th>Receipt Mode</th>
 		<th>Member</th>
 		<th>Amount Applied</th>
-		<th>Receipt Type</th>
 		<th>Narration</th>
 		<th>Delete</th>
 	</tr>
@@ -30,7 +29,7 @@ input.m-wrap[type="text"]{
 		$branch_of_bank=$receipt_converted["bank_receipt_csv_converted"]["branch_of_bank"];
 		$ledger_sub_account_id=(int)$receipt_converted["bank_receipt_csv_converted"]["ledger_sub_account_id"];
 		$amount=$receipt_converted["bank_receipt_csv_converted"]["amount"];
-		$receipt_type=$receipt_converted["bank_receipt_csv_converted"]["receipt_type"];
+		//$receipt_type=$receipt_converted["bank_receipt_csv_converted"]["receipt_type"];
 		$narration=$receipt_converted["bank_receipt_csv_converted"]["narration"];
 		?>
 	<tr id="<?php echo $auto_id; ?>">
@@ -136,15 +135,7 @@ input.m-wrap[type="text"]{
 			<input type="text" class="m-wrap span12" maxlength="10" style="text-align:right;" placeholder="Amount" value="<?php echo $amount; ?>" record_id="<?php echo $auto_id; ?>" field="amount" />
 			</div>
 		</td>
-		<td valign="top">
-			<div class="r_type">
-			<select class="span12 m-wrap"  record_id="<?php echo $auto_id; ?>" field="receipt_type" >
-				<option value="" style="display:none;">Select...</option>
-				<option value="maintenance" <?php if($receipt_type=="maintenance"){ echo 'selected="selected"'; } ?> >Maintanace</option>
-				<option value="other" <?php if($receipt_type=="other"){ echo 'selected="selected"'; } ?> >Other</option>
-			</select>
-			</div>
-		</td>
+		
 		<td valign="top">
 			<input class="m-wrap span12" type="text" placeholder="Narration" value="<?php echo $narration; ?>" record_id="<?php echo $auto_id; ?>" field="narration" />
 		</td>
@@ -292,10 +283,37 @@ $(document).ready(function() {
 				$(this).closest('td').find(".er").remove();
 			}
 		});
+		
+		$('#report_tb tbody tr input[field="trajection_date"]').die().each(function(ii, obj){
+			var transaction_date=$(this).val();
+			var ledger_sub_account_id=$('#report_tb tbody tr:eq('+ii+') select[field="ledger_sub_account_id"]').val();
+			
+			
+			var result=""; 
+		$.ajax({
+			url:"<?php echo $webroot_path; ?>Cashbanks/bank_receipt_date_validation/"+transaction_date+"/"+ledger_sub_account_id, 
+			async: false,
+			success: function(data){
+			result=data;
+			}
+		});
+		
+		if(result=="match"){
+		 allow="no";
+			$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').find(".er").remove();
+			$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').append('<p class="er">Regular bill date error</p>');
+		}
+		if(result=="not_match"){
+		$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').find(".er").remove();	
+		}
+			
+	});
+		
 		if(allow=="yes"){
 			$.ajax({
 				url: "<?php echo $webroot_path; ?>Cashbanks/allow_import_bank_receipt",
 			}).done(function(response){
+				//alert(response);
 				if(response=="not_validate"){
 					$("#submit_sec").find(".alert-error").remove();
 					$("#final_import").before('<div class="alert alert-error" style="width: 50%;">There are errors on other pages.</div>');

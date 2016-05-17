@@ -134,7 +134,7 @@ $( document ).ready(function() {
 function final_import_bank_receipt_ajax(){
 	$( document ).ready(function() {
 		$.ajax({
-			url: "final_import_bank_receipt_ajax",
+			url: "<?php echo $webroot_path; ?>Cashbanks/final_import_bank_receipt_ajax",
 			dataType: 'json'
 		}).done(function(response){
 			if(response.again_call_ajax=="YES"){

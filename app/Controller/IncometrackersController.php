@@ -653,7 +653,7 @@ function generate_bills(){
 											</tr>
 											<tr>
 												<td align="right">Arrears-Principal:</td>
-												<td align="right" style="padding: 0 5px 0 0;">'.$arrear_maintenance.'</td>
+												<td align="right" style="padding: 0 5px 0 0;">'.$arrear_principle.'</td>
 											</tr>
 											<tr>
 												<td align="right">Arrears-Interest:</td>
@@ -4775,7 +4775,7 @@ function regular_bill_report($period=null){
 	
 	$this->loadmodel('regular_bill');
 	$conditions=array('society_id'=>$s_society_id,'start_date'=>$start_date,'end_date'=>$end_date,'edited'=>"no");
-	$order=array('regular_bill.auto_id'=>'ASC');
+	$order=array('regular_bill.bill_number'=>'ASC');
 	$regular_bills=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order)); 
 	$this->set(compact('regular_bills'));
 }
@@ -6540,7 +6540,9 @@ function regular_bill_edit2($auto_id=null){
 		$other_charges_array=@$this->request->data['other_charges'];
 		$total=$this->request->data['total'];
 		$interest_on_arrears=$this->request->data['interest_on_arrears'];
-		$arrear_maintenance=$this->request->data['arrear_maintenance'];
+		$arrear_principle=$this->request->data['arrear_maintenance'];
+		$maint_arrear=$this->request->data['maint_arrear'];
+		$non_maint_arrear=$this->request->data['non_maint_arrear'];
 		$arrear_intrest=$this->request->data['arrear_intrest'];
 		$credit_stock=$this->request->data['credit_stock'];
 		$due_for_payment=$this->request->data['due_for_payment'];
@@ -6556,11 +6558,12 @@ function regular_bill_edit2($auto_id=null){
 		$this->loadmodel('ledger');
 		$this->ledger->deleteAll(array('table_name'=>"regular_bill", "element_id"=>$auto_id));
 		
+		$current_date = date('Y-m-d');
+		
 		$reg_auto_id=$this->autoincrement('regular_bill','auto_id');
-		$this->regular_bill->saveAll(array("auto_id"=>$reg_auto_id,"bill_number"=>$bill_number,"ledger_sub_account_id"=>$ledger_sub_account_id,"income_head_array"=>$income_head_array,"noc_charge"=>$non_occupancy_charges,"other_charge"=>$other_charges_array,"total"=>$total,"arrear_maintenance"=>$arrear_maintenance,"arrear_intrest"=>$arrear_intrest,"intrest_on_arrears"=>$interest_on_arrears,"credit_stock"=>$credit_stock,"due_for_payment"=>$due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"end_date"=>$end_date,"edited"=>"no","description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by));
+		$this->regular_bill->saveAll(array("auto_id"=>$reg_auto_id,"bill_number"=>$bill_number,"ledger_sub_account_id"=>$ledger_sub_account_id,"income_head_array"=>$income_head_array,"noc_charge"=>$non_occupancy_charges,"other_charge"=>$other_charges_array,"total"=>$total,"arrear_principle"=>$arrear_principle,"maint_arrear"=> $maint_arrear,"non_maint_arrear"=> $non_maint_arrear,"arrear_intrest"=>$arrear_intrest,"intrest_on_arrears"=>$interest_on_arrears,"credit_stock"=>$credit_stock,"due_for_payment"=>$due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"end_date"=>$end_date,"edited"=>"no","description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by,"current_date"=>strtotime($current_date),'edit_text'=>"-R"));
 		
-		
-		
+		$edit_text="-R";
 		//LEDGER CODE START//
 		foreach($income_head_array as $income_head_id=>$income_head_amount){
 			if(!empty($income_head_amount)){
@@ -6716,7 +6719,7 @@ function regular_bill_edit2($auto_id=null){
 								</tr>
 								<tr>
 									<td style="padding: 0px 0 0 5px;"><b>Bill No.:</b></td>
-									<td>'.$bill_number.'</td>
+									<td>'.$bill_number.$edit_text.'</td>
 									<td><b>Area ('.$area_scale_text.'):</b></td>
 									<td>'.$flat_area.'</td>
 								</tr>
@@ -6814,7 +6817,7 @@ function regular_bill_edit2($auto_id=null){
 											</tr>
 											<tr>
 												<td align="right">Arrears-Principal:</td>
-												<td align="right" style="padding: 0 5px 0 0;">'.$arrear_maintenance.'</td>
+												<td align="right" style="padding: 0 5px 0 0;">'.$arrear_principle.'</td>
 											</tr>
 											<tr>
 												<td align="right">Arrears-Interest:</td>

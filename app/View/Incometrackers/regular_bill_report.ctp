@@ -57,6 +57,7 @@
 				<?php foreach($regular_bills as $data){
 					$auto_id=$data["regular_bill"]["auto_id"];
 					$bill_number=$data["regular_bill"]["bill_number"];
+					$edit_text=@$data["regular_bill"]["edit_text"];
 					$ledger_sub_account_id=$data["regular_bill"]["ledger_sub_account_id"];
 					$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 					$flat_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'flat_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
@@ -74,7 +75,7 @@
 						<td><?php echo $member_info["wing_name"].'-'.$member_info["flat_name"]; ?></td>
 						<td><?php echo $member_info["user_name"]; ?></td>
 						<td><?php echo $flat_area; ?></td>
-						<td><?php echo $bill_number; ?></td>
+						<td><?php echo $bill_number.$edit_text; ?></td>
 						<?php foreach($income_head_ids as $income_head_id){
 							echo '<td>'.@$income_head_array[$income_head_id].'</td>';
 						} ?>

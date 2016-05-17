@@ -142,7 +142,7 @@ $(document).ready(function(){
 			if(al==0){
 				allow="no";
 			}
-		
+			
 	 var account_group=$('select[name="account_group"]').val();
 	  if(account_group==""){
 			$("#group").html('Required');	
@@ -184,6 +184,27 @@ $(document).ready(function(){
 				$("#amount").html('');
 			}	
 	
+	        var transaction_date=$('input[name="transaction_date"]').val();
+			var ledger_sub_account_id=$('select[name="ledger_sub_account"]').val();	
+	        var ledger_type=$('select[name="account_group"]').val();
+			
+			if(ledger_type==1){
+			var result=""; 
+		$.ajax({
+			url:"<?php echo $webroot_path; ?>Cashbanks/petty_cash_receipt_date_validation/"+transaction_date+"/"+ledger_sub_account_id, 
+			async: false,
+			success: function(data){
+			result=data;
+			}
+		});
+		if(result=="match"){
+		 allow="no";
+		 $("#date").html('Regular bill date error');	
+		}
+		if(result=="not_match"){
+		$("#date").html('');
+		}
+			}
 	
 	
 	 if(allow=="no"){

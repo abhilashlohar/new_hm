@@ -187,7 +187,7 @@ $("form").on("submit",function(e){
 			if(al==0){
 				allow="no";
 			}else{
-			$("button[name=submit]").hide();	
+				
 			}
 		});
 		
@@ -258,6 +258,42 @@ $('#main tbody tr input[name="amount[]"]').each(function(i, obj) {
 				$(this).closest('td').find(".er").remove();
 			}
 		});
+	
+	$('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj){
+			var transaction_date=$(this).val();
+			var ledger_sub_account_id=$('#main tbody tr:eq('+ii+') select[name="ledger_sub_account[]"]').val();
+			var ledger_type=$('#main tbody tr:eq('+ii+') select[name="account_group[]"]').val();
+			if(ledger_type==1){
+			var result=""; 
+		$.ajax({
+			url:"<?php echo $webroot_path; ?>Cashbanks/petty_cash_receipt_date_validation/"+transaction_date+"/"+ledger_sub_account_id, 
+			async: false,
+			success: function(data){
+			result=data;
+			}
+		});
+		if(result=="match"){
+		 allow="no";
+			$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
+			$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').append('<p class="er">Regular bill date error</p>');
+		}
+		if(result=="not_match"){
+		$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();	
+		}
+			}
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	if(allow=="no"){
 			e.preventDefault();

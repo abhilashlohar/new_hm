@@ -83,10 +83,6 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 						echo '<option value='.$ledger_sub_account_id.'>'.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
 					} ?>
 				</select>
-				<select name="receipt_type[]" class="m-wrap span12" style="width:200px;">
-					<option value="maintenance">Maintenance Receipt</option>
-					<option value="other">Other Receipt</option>
-				</select>
 			</div>
 			<div id="non_residential" style="display:none;">
 		<select name="non_member_ledger_sub_account[]" class="m-wrap" style="width:200px;">
@@ -157,6 +153,7 @@ $(document).ready(function(){
 	
 	$("form").die().on("submit",function(e){
 		var allow="yes";
+		
 		$('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj){
 			var transaction_date=$(this).val();
 			transaction_date=transaction_date.split('-').reverse().join('');
@@ -267,6 +264,42 @@ $(document).ready(function(){
 		}
 			
 		});
+		
+		
+		$('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj){
+			var transaction_date=$(this).val();
+			var ledger_sub_account_id=$('#main tbody tr:eq('+ii+') select[name="ledger_sub_account[]"]').val();
+			var ledger_type=$('#main tbody tr:eq('+ii+') select[name="received_from[]"]').val();
+			if(ledger_type=="residential"){
+			
+			var result=""; 
+		$.ajax({
+			url:"<?php echo $webroot_path; ?>Cashbanks/bank_receipt_date_validation/"+transaction_date+"/"+ledger_sub_account_id, 
+			async: false,
+			success: function(data){
+			result=data;
+			}
+		});
+		if(result=="match"){
+		 allow="no";
+			$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
+			$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').append('<p class="er">Regular bill date error</p>');
+		}
+		if(result=="not_match"){
+		$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();	
+		}
+			}	
+	});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		if(allow=="no"){
 				e.preventDefault();

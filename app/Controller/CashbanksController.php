@@ -5253,7 +5253,7 @@ function new_bank_receipt(){
 			$non_members_ledger_sub_account_ids=$this->request->data['non_member_ledger_sub_account'];
 			$bill_references=$this->request->data['bill_reference'];
 			$ledger_sub_accounts = $this->request->data['ledger_sub_account'];
-			$receipt_types = $this->request->data['receipt_type'];
+			//$receipt_types = $this->request->data['receipt_type'];
 			$amounts = $this->request->data['amount'];
 			$narrations = $this->request->data['narration'];
 			
@@ -5271,14 +5271,14 @@ function new_bank_receipt(){
 				$received_from=$received_froms[$i];
 				if($received_from == 'residential'){
 				$ledger_sub_account_id=(int)$ledger_sub_accounts[$i];
-				$receipt_type=$receipt_types[$i];	
+				//$receipt_type=$receipt_types[$i];	
 				$ledger_sub_account_id_for_insertion=$ledger_sub_account_id;
 				$bill_reference=null;
 				}else{
 				 $non_members_ledger_sub_account_id=(int)$non_members_ledger_sub_account_ids[$i];
 				 $bill_reference=$bill_references[$i];
 				 $ledger_sub_account_id_for_insertion=$non_members_ledger_sub_account_id;
-				 $receipt_type=null;
+				 //$receipt_type=null;
 				}
 				$amount=$amounts[$i];
 				$narration=$narrations[$i];
@@ -5287,7 +5287,7 @@ function new_bank_receipt(){
 					$this->loadmodel('cash_bank');
 					$auto_id=$this->autoincrement('cash_bank','transaction_id');
 					$receipt_number=$this->autoincrement_with_society_ticket('cash_bank','receipt_number');
-					$this->cash_bank->saveAll(Array( Array("transaction_id"=>$auto_id, "transaction_date" => strtotime($transaction_date),"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$received_from,"ledger_sub_account_id"=>$ledger_sub_account_id_for_insertion,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number,"bill_reference"=>$bill_reference,"created_on"=>$created_on))); 
+					$this->cash_bank->saveAll(Array( Array("transaction_id"=>$auto_id, "transaction_date" => strtotime($transaction_date),"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$received_from,"ledger_sub_account_id"=>$ledger_sub_account_id_for_insertion,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number,"bill_reference"=>$bill_reference,"created_on"=>$created_on))); 
 					$receipt_array_num[]=$receipt_number;
 					
 					$this->loadmodel('ledger');
@@ -5296,10 +5296,10 @@ function new_bank_receipt(){
                     
 					if($received_from == "residential"){
 					$ledger_id=$this->autoincrement('ledger','auto_id');
-					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name"=>"cash_bank","element_id" => $auto_id, "society_id" => $s_society_id,"receipt_type" =>$receipt_type)));
+					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name"=>"cash_bank","element_id" => $auto_id, "society_id" => $s_society_id)));
 				    }else{
 					$ledger_id=$this->autoincrement('ledger','auto_id');
-					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "credit" => $amount,"debit" =>null,"ledger_account_id" => 112, "ledger_sub_account_id" => $non_members_ledger_sub_account_id,"table_name"=>"cash_bank","element_id" => $auto_id, "society_id" => $s_society_id,"receipt_type" =>$receipt_type)));	
+					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "credit" => $amount,"debit" =>null,"ledger_account_id" => 112, "ledger_sub_account_id" => $non_members_ledger_sub_account_id,"table_name"=>"cash_bank","element_id" => $auto_id, "society_id" => $s_society_id)));	
 					}
 				
 				// start Email & Sms code
@@ -5382,7 +5382,7 @@ function new_bank_receipt(){
 
 									
 									$html_receipt.='<tr>
-										<td style="padding:0px 0 2px 5px"  colspan="4">'.$receipt_type.'</td>
+										<td style="padding:0px 0 2px 5px"  colspan="4">'.$received_from.'</td>
 										
 									</tr>
 									
@@ -8641,8 +8641,75 @@ $s_society_id = $this->Session->read('hm_society_id');
 	$this->redirect(array('controller' => 'Cashbanks','action' => 'bank_payment_import_csv'));	
 	
 }
-
-
 //End cancle_bank_payment_import//
+//Start bank_receipt_date_validation//
+function bank_receipt_date_validation($transaction_date=null,$ledger_sub_account_id=null)
+{
+	$this->ath();
+$s_society_id = $this->Session->read('hm_society_id');	
+$transaction_date=date('Y-m-d',strtotime($transaction_date));
+$transaction_date=strtotime($transaction_date);
+	$nn=0;
+	$this->loadmodel('regular_bill'); 
+	$order=array('regular_bill.start_date'=>'DESC');
+	$conditions=array("society_id"=>(int)$s_society_id,"ledger_sub_account_id"=>(int)$ledger_sub_account_id);
+	$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>2));
+	foreach($result_regular_bill as $data){
+	$start_date=$data['regular_bill']['start_date'];	
+	$nn++;
+	}
+	
+   if($nn==1){
+		echo "not_match";   
+   }
+   else
+   {
+		if($transaction_date <= $start_date)
+		{
+		echo "match";  
+		}
+		else
+		{
+		echo "not_match";  
+		}   
+   }
+}
+//End bank_receipt_date_validation//
+//Start petty_cash_receipt_date_validation//
+function petty_cash_receipt_date_validation($transaction_date=null,$ledger_sub_account_id=null)
+{
+	$this->ath();
+$s_society_id = $this->Session->read('hm_society_id');	
+$transaction_date=date('Y-m-d',strtotime($transaction_date));
+$transaction_date=strtotime($transaction_date);
+	$nn=0;
+	$this->loadmodel('regular_bill'); 
+	$order=array('regular_bill.start_date'=>'DESC');
+	$conditions=array("society_id"=>(int)$s_society_id,"ledger_sub_account_id"=>(int)$ledger_sub_account_id);
+	$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>2));
+	foreach($result_regular_bill as $data){
+	$start_date=$data['regular_bill']['start_date'];	
+	$nn++;
+	}
+	
+   if($nn==1){
+		echo "not_match";   
+   }
+   else
+   {
+		if($transaction_date <= $start_date)
+		{
+		echo "match";  
+		}
+		else
+		{
+		echo "not_match";  
+		}   
+   }	
+	
+	
+}
+//End petty_cash_receipt_date_validation//
+
 }
 ?>

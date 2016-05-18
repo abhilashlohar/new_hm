@@ -595,7 +595,7 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 	$conditions =array('society_id' =>$s_society_id,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'start_date'=>array('$lt'=>strtotime($start_date)));
 	$bill_count=$this->regular_bill->find('count',array('conditions'=>$conditions));
 	
-	//$start_date=date('Y-m-d', strtotime('-1 day', strtotime($start_date)));
+
 	$current_bill_start_date=strtotime($start_date);
 	if($bill_count==0){
 		$this->loadmodel('financial_year');
@@ -611,11 +611,11 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 		$last_bill_intrest_on_arrears=0;
 		$credit_stock=0;
 	}else{
-		
 		$this->loadmodel('regular_bill');
-		$conditions =array('society_id' =>$s_society_id,'ledger_sub_account_id' =>(int)$ledger_sub_account_id);
+		$conditions =array('society_id' =>$s_society_id,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'start_date'=>array('$lt'=>strtotime($start_date)));
 		$order=array('regular_bill.auto_id'=>'DESC');
 		$last_bill_info=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1));
+		
 		$last_bill_start_date=$last_bill_info[0]["regular_bill"]["start_date"];
 		$last_bill_start_date_for_ledger=date('Y-m-d', strtotime('+1 day', $last_bill_start_date));
 		$last_bill_start_date_for_ledger=strtotime($last_bill_start_date_for_ledger);

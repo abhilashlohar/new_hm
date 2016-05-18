@@ -17,7 +17,7 @@
 			</div>
 			<div class="modal-footer">
 				<a href="#" role="button" class="btn close_popup">Cancel</a>
-				<button type="submit" href="#" role="button" class="btn red ok_cancel hide" name="cancel_submit">Ok</button>
+				<button type="submit" href="#" role="button" class="btn red ok_cancel hide" name="cancel_submit">Cancel Receipt</button>
 			</div>
 		
 		</div>

@@ -2393,10 +2393,10 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 			</tbody>
 		</table>';	
 
+                   ////Start Email Sms Code////
+			
 
-
-
-
+				   ////Start Email Sms Code////
 
 
 

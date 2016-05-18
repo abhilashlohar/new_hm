@@ -2443,7 +2443,7 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 				   
 				  if($email_is_on_off==1){
 			    	if(!empty($old_user_email_id)){
-					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$transaction_date." against Unit ".old_$wing_flat."";
+					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$transaction_date." against Unit ".$old_wing_flat."";
 				
 					$this->send_email($old_user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$email_message,'donotreply@housingmatters.in');
 				}

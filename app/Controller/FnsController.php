@@ -1348,5 +1348,36 @@ function fetch_group_name_via_group_id($group_id){
 	return $result_group[0]['group']['group_name'];
 }
 
+function bank_receipt_cancel_button_show_or_hide($transaction_date=null,$ledger_sub_account_id=null)
+{
+	//$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');	
+	$transaction_date=date('Y-m-d',strtotime($transaction_date));
+	$transaction_date=strtotime($transaction_date);
+	$nn=0;
+	$this->loadmodel('regular_bill'); 
+	$order=array('regular_bill.start_date'=>'DESC');
+	$conditions=array("society_id"=>(int)$s_society_id,"ledger_sub_account_id"=>(int)$ledger_sub_account_id);
+	$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>2));
+	foreach($result_regular_bill as $data){
+	$start_date=$data['regular_bill']['start_date'];	
+	$nn++;
+	}
+   if($nn==1 || $nn==0){
+		$result="not_match";   
+   }
+   else
+   {
+		if($transaction_date <= $start_date)
+		{
+		$result="match";  
+		}
+		else
+		{
+		$result="not_match";  
+		}   
+   }
+	return $result;  
+}
 }
 ?>

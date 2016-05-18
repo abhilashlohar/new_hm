@@ -34,6 +34,7 @@
 				$auto_id=$receipt["cash_bank"]["transaction_id"];
 				$receipt_number=$receipt["cash_bank"]["receipt_number"];
 				$transaction_date=$receipt["cash_bank"]["transaction_date"];
+				$transaction_date_for_cancel=$transaction_date;
 				$received_from = $receipt['cash_bank']['received_from'];
 				if($received_from == "residential")
 				{
@@ -53,10 +54,7 @@
 				{
 				$user_name = $data['ledger_sub_account']['name'];	
 				}
-				
-				
-				
-				
+
 				}
 				$created_by = $receipt['cash_bank']['created_by'];
 				$created_on = @$receipt['cash_bank']['created_on'];
@@ -96,9 +94,15 @@
 							</a>
 							<ul class="dropdown-menu" style="min-width:80px !important;left:-53px;padding: 3px 0px; box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3); font-size: 12px;">
 							<li><a href="bank_receipt_html_view/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i>View</a></li>
-							<?php if($receipt_type!="maintenance"){ ?>
 							<li><a href="b_receipt_edit/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i>Edit</a></li>
-							<?php } ?>
+							<?php
+				$result_date=$this->requestAction(array('controller'=>'Fns','action'=>'bank_receipt_cancel_button_show_or_hide'),array('pass'=>array($transaction_date_for_cancel,(int)$ledger_sub_account_id)));
+									
+							?>
+				<li><a href="#" target="_blank" role="button" onclick="cancel_receipt(<?php echo $auto_id; ?>)"><i class="icon-search"></i><?php echo $result_date; ?></a></li>
+							
+							
+							
 							</ul>
 						</div>
 						<i class="icon-info-sign tooltips " data-placement="left" data-original-title="Created by: <?php echo $creator_name; ?> On: <?php echo $created_on; ?>" style="cursor: default;"></i>
@@ -117,6 +121,15 @@
 		</table>
 	</div>
 </div>
+<script>
+
+	function cancel_receipt(tt){
+		alert(tt);
+		
+	}
+
+
+</script>
 <script>
 $(document).ready(function(){
 	/* var tr=1; 

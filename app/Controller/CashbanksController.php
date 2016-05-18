@@ -701,6 +701,23 @@ function bank_receipt_view()
 	$conditions4=array("element_id"=>(int)$transaction_id);
 	$this->ledger->deleteAll($conditions4);
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	}		
 		
 }
@@ -2044,7 +2061,7 @@ function b_receipt_edit($transaction_id=null){
 	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"debit"=>$amount, "credit"=>null,"ledger_account_id"=>33,"ledger_sub_account_id"=>$deposited_bank_id,"table_name"=>"cash_bank"),Array("element_id"=>$transaction_id,"credit"=>null)); 
 				
 	$this->loadmodel('ledger');
-	$this->ledger->saveAll(Array("transaction_date"=>strtotime($tranjection_date),"credit"=>$amount,"ledger_account_id"=>34,"ledger_sub_account_id"=>$ledger_sub_account_id,"table_name"=>"cash_bank"),Array("element_id"=>$transaction_id,"debit"=>null));
+	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"credit"=>$amount,"ledger_account_id"=>34,"ledger_sub_account_id"=>$ledger_sub_account_id,"table_name"=>"cash_bank"),Array("element_id"=>$transaction_id,"debit"=>null));
 	
 	if($ledger_sub_account_id_old == $ledger_sub_account_id){
 	   $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));

@@ -7547,11 +7547,83 @@ function dashboard(){
 		$this->layout='session';
 	}
 	$this->ath();
-	  $s_society_id = $this->Session->read('hm_society_id');
-	  $s_user_id = $this->Session->read('hm_user_id'); 
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id = $this->Session->read('hm_user_id'); 
+	$role_id = $this->Session->read('role_id'); 
+	$this->set('role_id',$role_id);
+	$this->set('s_society_id',$s_society_id);
+
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	
 	
+	   
+		//////////////Help-desk  last 3 tickets///////////////// 
+		$this->loadmodel('help_desk');
+		if($role_id==3) { 
+		$conditions=array("society_id" => $s_society_id);
+		}
+
+		if($role_id!=3) { 
+		$conditions=array("society_id" => $s_society_id,"user_id" => $s_user_id);
+		}
+
+		$order=array('help_desk.ticket_id'=> 'DESC');
+		$result_help_desk=$this->help_desk->find('all',array('conditions'=>$conditions,'order' =>$order,'limit' =>3));
+		$this->set('result_help_desk',$result_help_desk);
+		
+		//////////////Help-desk  last 3 tickets///////////////// 
+				
+		//////////////discussion  last 3 topic///////////////// 
+		$this->loadmodel('discussion_post');
+		$conditions =array('society_id' =>$s_society_id,'delete' =>'no','users_have_access' =>$s_user_id);
+		$order=array('discussion_post.discussion_post_id'=>'DESC');
+		$this->set('result_discussion_topics',$this->discussion_post->find('all',array('conditions'=>$conditions,'order'=>$order,'limit' =>3)));
+		//////////////discussion  last 3 topic///////////////// 
+
+		
+		//////////////event  last 3///////////////// 
+		$this->loadmodel('event');
+		$conditions=array("society_id" => $s_society_id,"visible_user_id" =>array('$in' => array($s_user_id)));
+		$order=array('event.event_id'=>'DESC');
+		$this->set('result_event_last',$this->event->find('all', array('conditions' => $conditions,'order' => $order,'limit' =>3)));
+		//////////////event  last 3 topic///////////////// 
+				
+			
+	//////////////polls  last 3///////////////// 
+	$current_date3=date("Y-m-d");
+	$current_date3 = new MongoDate(strtotime($current_date3)); 
+	$this->loadmodel('poll');
+	$conditions=array("society_id" => $s_society_id,"visible_user_id" =>array('$in' => array($s_user_id)),"deleted" => 0,'close_date' => array('$gt' => $current_date3));
+	$order=array('poll.poll_id'=>'DESC');
+	$this->set('result_poll_last',$this->poll->find('all', array('conditions' => $conditions,'order' => $order,'limit' =>3)));
+
+	//////////////polls  last 3///////////////// 
+
+	
+
+		//////////////documents  last 3///////////////// 
+		$this->loadmodel('resource');
+	
+		$conditions=array('society_id'=>$s_society_id,'user_access'=>$s_user_id);
+	
+		$order=array('resource.resource_id'=>'DESC');
+		$result_resource_last=$this->resource->find('all',array('conditions'=>$conditions,'order' => $order,'limit' =>3));
+		$this->set('result_resource_last',$result_resource_last);
+		
+		//////////////documents  last 3///////////////// 
+
+		//////////////notice///////////////// 
+		$current_date2=date("Y-m-d");
+    	$current_date2 = new MongoDate(strtotime($current_date2)); 
+		$this->loadmodel('notice');
+		$result_notice_visible_last=array();
+		$conditions=array("n_draft_id" => 0, "n_delete_id" => 0,"society_id"=> $s_society_id,'n_expire_date' => array('$gte'=>$current_date2),'visible_user_id'=>$s_user_id);
+		$order=array('notice.notice_id'=>'DESC');
+		$result_notice_visible_last=$this->notice->find('all', array('conditions' => $conditions,'order' => $order,'limit' =>3));
+
+		$this->set('result_notice_visible_last',$result_notice_visible_last);
+		
+	    //////////////notice  last 3///////////////// 
 				// $date2= date("Y-m-d", strtotime($date2)); 
 				//$dat1= strtotime($date2);
 		/*

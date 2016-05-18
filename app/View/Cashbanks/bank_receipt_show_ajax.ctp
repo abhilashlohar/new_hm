@@ -124,14 +124,21 @@
 <script>
 
 	function cancel_receipt(tt){
-		alert(tt);
+			$("#cancel_popup").load("<?php echo $webroot_path; ?>Cashbanks/bank_receipt_cancel");
 		
 	}
 
 
 </script>
+
+<div id="cancel_popup"></div>
+
 <script>
 $(document).ready(function(){
+	$(".close_popup").live("click",function(){	
+		$(".popup_cancel").hide();
+	});
+	
 	/* var tr=1; 
 	$('#receiptmain thead tr th').each(function(i, obj) {
 		var total=0;
@@ -162,3 +169,9 @@ $(document).ready(function(){
 
  </script>	
 
+
+ 
+ 
+ 	
+	
+	

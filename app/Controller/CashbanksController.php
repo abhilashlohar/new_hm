@@ -683,6 +683,24 @@ function bank_receipt_view()
 		$s_society_id = $this->Session->read('hm_society_id');
 		$s_user_id=$this->Session->read('hm_user_id');
 
+		
+	if($this->request->is('post'))	
+	{
+	echo $cancel_type=$this->request->data['cancel'];
+	echo $transaction_id=(int)$this->request->data['transaction_id_for_cancel'];
+	exit;	
+		
+	}		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 }
 //End Bank receipt View//
 //Start bank_receipt_excel//
@@ -737,13 +755,14 @@ function bank_receipt_show_ajax($from=null,$to=null)
 	$conditions=array('society_id'=>$s_society_id,"source"=>"bank_receipt",	'cash_bank.transaction_date'=>array('$gte'=>$from,'$lte'=>$to));
 	$order=array('cash_bank.transaction_date'=> 'ASC');
 	$receipts=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
-	
 	$this->set('receipts',$receipts);
 	
 	$this->loadmodel('society');
 	$conditions=array('society_id'=>$s_society_id);
 	$society_info=$this->society->find('all',array('conditions'=>$conditions));
 	$this->set('society_info',$society_info);
+
+	
 }
 //End bank_receipt_show_ajax// 
 //Start cancel_receipt_due_to_check_bounce//
@@ -8961,11 +8980,21 @@ function testing_sample()
 	 $this->set('society_reg_no',$society_reg_no);
 	  $this->set('society_address',$society_address);
 	   $this->set('sig_title',$sig_title);
- 
-	  
-	  
-	
 }
 //End testing_sampe//
+//Start bank_receipt_cancel//
+function bank_receipt_cancel($transaction_id=null)
+{
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	echo $transaction_id;
+	exit;
+    $this->set('transaction_id',$transaction_id);
+
+}
+//End bank_receipt_cancel//
 }
 ?>

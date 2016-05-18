@@ -2002,6 +2002,19 @@ function b_receipt_edit($transaction_id=null){
 	$ledger_sub_account_id_old=(int)$data['cash_bank']['ledger_sub_account_id'];	
 	$ignore_receipt_number=$data['cash_bank']['receipt_number'];
 	}
+	$old_user_data=$this->requestAction(array('controller'=>'Fns','action'=>'member_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id_old)));
+	$old_user_name=$old_user_data['user_name'];		
+	$old_wing=$old_user_data['wing_name'];
+	$old_flat=$old_user_data['flat_name'];
+	$old_user_email_id=$old_user_data['email'];
+	$old_user_mobile=$old_user_data['mobile'];
+	$old_wing_flat=$old_wing.'-'.$old_flat;
+	
+	
+	
+	
+	
+	
 	$edit_text=$ignore_receipt_number."-R";	
 	$this->loadmodel('cash_bank');
 	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number" =>@$cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"edit_text"=>$edit_text),Array("transaction_id"=>$transaction_id)); 
@@ -2023,6 +2036,8 @@ function b_receipt_edit($transaction_id=null){
 		$society_reg_no=$dataa['society']['society_reg_num']; 
 		$society_address=$dataa['society']['society_address'];
 		$sig_title=$dataa['society']['sig_title'];
+		$email_is_on_off=(int)@$dataa["society"]["account_email"];
+		$sms_is_on_off=(int)@$dataa['society']['account_sms'];
 		}
 	
 	$this->loadmodel('cash_bank'); 
@@ -2059,6 +2074,7 @@ $user_name=$user_data['user_name'];
 $wing=$user_data['wing_name'];
 $flat=$user_data['flat_name'];
 $user_email_id=$user_data['email'];
+$user_mobile=$user_data['mobile'];
 
 $wing_flat=$wing.'-'.$flat;
 $am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));
@@ -2198,13 +2214,40 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 			</tbody>
 		</table>';	
 		
+				////Start Email Sms Code////
+			if($email_is_on_off==1){
+			    	if(!empty($user_email_id)){
+					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$transaction_date." against Unit ".$wing_flat."";
+				
+					$this->send_email($user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$email_message,'donotreply@housingmatters.in');
+				}
+			}		
+				
+			if($email_is_on_off==1){
+			    	if(!empty($user_email_id)){
+					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$transaction_date." against Unit ".$wing_flat."";
+				
+					$this->send_email($user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'donotreply@housingmatters.in');
+				}
+			}	
 		
-		
-			
-			
-			
-			
-	
+				if($sms_is_on_off==1){
+						if(!empty($user_mobile)){
+								$r_sms=$this->requestAction(array('controller'=>'Fns','action'=> 'hms_sms_ip')); 
+								$working_key=$r_sms->working_key;
+								$sms_sender=$r_sms->sms_sender; 
+								$sms_allow=(int)$r_sms->sms_allow;
+							if($sms_allow==1){
+									$user_name_short=$this->check_charecter_name($user_name);
+									$sms="Dear ".$user_name_short." ,we have received Rs ".$amount." on ".$transaction_date." towards Society Maint. dues. Cheques are subject to realization,".$society_name;
+									$sms1=str_replace(' ', '+', $sms);
+
+									$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$user_mobile.'&message='.$sms1.''); 
+							}
+						}	
+					}
+
+				   ////Start Email Sms Code////	
 	}
 	else
 	{
@@ -2218,6 +2261,8 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 		$society_reg_no=$dataa['society']['society_reg_num']; 
 		$society_address=$dataa['society']['society_address'];
 		$sig_title=$dataa['society']['sig_title'];
+		$email_is_on_off=(int)@$dataa["society"]["account_email"];
+		$sms_is_on_off=(int)@$dataa['society']['account_sms'];
 		}
 	
 	$this->loadmodel('cash_bank'); 
@@ -2254,6 +2299,7 @@ $user_name=$user_data['user_name'];
 $wing=$user_data['wing_name'];
 $flat=$user_data['flat_name'];
 $user_email_id=$user_data['email'];
+$user_mobile=$user_data['mobile'];
 
 $wing_flat=$wing.'-'.$flat;
 $am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));
@@ -2394,18 +2440,43 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 		</table>';	
 
                    ////Start Email Sms Code////
-			
+				   
+				  if($email_is_on_off==1){
+			    	if(!empty($old_user_email_id)){
+					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$transaction_date." against Unit ".old_$wing_flat."";
+				
+					$this->send_email($old_user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$email_message,'donotreply@housingmatters.in');
+				}
+			}		 
+				   
+				   
+				   
+				   
+			if($email_is_on_off==1){
+			    	if(!empty($user_email_id)){
+					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$transaction_date." against Unit ".$wing_flat."";
+				
+					$this->send_email($user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'donotreply@housingmatters.in');
+				}
+			}	
+		
+				if($sms_is_on_off==1){
+						if(!empty($user_mobile)){
+								$r_sms=$this->requestAction(array('controller'=>'Fns','action'=> 'hms_sms_ip')); 
+								$working_key=$r_sms->working_key;
+								$sms_sender=$r_sms->sms_sender; 
+								$sms_allow=(int)$r_sms->sms_allow;
+							if($sms_allow==1){
+									$user_name_short=$this->check_charecter_name($user_name);
+									$sms="Dear ".$user_name_short." ,we have received Rs ".$amount." on ".$transaction_date." towards Society Maint. dues. Cheques are subject to realization,".$society_name;
+									$sms1=str_replace(' ', '+', $sms);
+
+									$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$user_mobile.'&message='.$sms1.''); 
+							}
+						}	
+					}
 
 				   ////Start Email Sms Code////
-
-
-
-
-
-
-
-	
-		
 		
 	}
 	

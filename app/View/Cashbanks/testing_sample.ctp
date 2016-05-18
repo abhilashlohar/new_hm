@@ -40,6 +40,25 @@ $am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' 
 
  $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
 
+ 
+ 	$html_receipt='<table width="80%" class="hmlogobox">
+		<tr>
+		<td width="50%" style="padding: 10px 0px 0px 10px;"><img src="'.$ip.$this->webroot.'/as/hm/hm-logo.png" style="max-height: 60px; " height="60px" /></td>
+		<td width="50%" align="right" valign="middle"  style="padding: 7px 10px 0px 0px;">
+		<a href="https://www.facebook.com/HousingMatters.co.in"><img src="'.$ip.$this->webroot.'/as/hm/SMLogoFB.png" style="max-height: 30px; height: 30px; width: 30px; max-width: 30px;" height="30px" width="30px" /></a>
+		</td>
+		</tr>
+								</table>';
+ 
+ 
+ 
+ echo $html_receipt;
+ 
+ 
+ 
+ 
+ /*
+ 
  $html_receipt='<table style="padding:24px;background-color:#34495e" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
 				<tbody><tr>
 					<td>
@@ -175,9 +194,9 @@ $am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' 
 
 
 
+*/
 
 
-echo $html_receipt;
 
 
 

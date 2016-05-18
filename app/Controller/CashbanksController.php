@@ -2026,8 +2026,27 @@ function b_receipt_edit($transaction_id=null){
 	$this->ledger->saveAll(Array("transaction_date"=>strtotime($tranjection_date),"credit"=>$amount,"ledger_account_id"=>34,"ledger_sub_account_id"=>$ledger_sub_account_id,"table_name"=>"cash_bank"),Array("element_id"=>$transaction_id,"debit"=>null));
 	
 	if($ledger_sub_account_id_old == $ledger_sub_account_id){
-	    $email_message="Please Ignore Receipt-(".$ignore_receipt_number.").";
+	   
+	$email_message='<table width="80%" class="hmlogobox">
+		<tr>
+		<td width="50%" style="padding: 10px 0px 0px 10px;"><img src="'.$ip.$this->webroot.'/as/hm/hm-logo.png" style="max-height: 60px; " height="60px" /></td>
+		<td width="50%" align="right" valign="middle"  style="padding: 7px 10px 0px 0px;">
+		<a href="https://www.facebook.com/HousingMatters.co.in"><img src="'.$ip.$this->webroot.'/as/hm/SMLogoFB.png" style="max-height: 30px; height: 30px; width: 30px; max-width: 30px;" height="30px" width="30px" /></a>
+		</td>
+		</tr>
+		</table><br/><br/>';
 
+	   $email_message.="Please Ignore Receipt-(".$ignore_receipt_number.").";
+
+		$email_message.="<br/><br/> Thank You <br/>
+	HousingMatters (Support Team)<br/>
+			www.housingmatters.in";
+		
+		
+		
+		
+		
+		
 		$this->loadmodel('society'); 
 		$conditions=array("society_id"=>$s_society_id);
 		$cursor1=$this->society->find('all',array('conditions'=>$conditions));
@@ -2251,7 +2270,24 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 	}
 	else
 	{
-	$email_message="Please Ignore Receipt-(".$ignore_receipt_number.") as it was errorneouly sent to you.";			
+		
+	$email_message='<table width="80%" class="hmlogobox">
+		<tr>
+		<td width="50%" style="padding: 10px 0px 0px 10px;"><img src="'.$ip.$this->webroot.'/as/hm/hm-logo.png" style="max-height: 60px; " height="60px" /></td>
+		<td width="50%" align="right" valign="middle"  style="padding: 7px 10px 0px 0px;">
+		<a href="https://www.facebook.com/HousingMatters.co.in"><img src="'.$ip.$this->webroot.'/as/hm/SMLogoFB.png" style="max-height: 30px; height: 30px; width: 30px; max-width: 30px;" height="30px" width="30px" /></a>
+		</td>
+		</tr>
+		</table><br/><br/>';	
+		
+	$email_message.="Please Ignore Receipt-(".$ignore_receipt_number.") as it was errorneouly sent to you.";			
+	
+	$email_message.="<br/><br/> Thank You <br/>
+	HousingMatters (Support Team)<br/>
+			www.housingmatters.in";
+	
+	
+	
 	
 		$this->loadmodel('society'); 
 		$conditions=array("society_id"=>$s_society_id);

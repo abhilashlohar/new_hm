@@ -187,8 +187,11 @@ $('select[name="bill_type[]"]').die().live("change",function(){
 
 </script>
 <script>
+
+
 $("form").on("submit",function(e){
 var allow="yes";
+	
 $('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj){
 			var transaction_date=$(this).val();
 			transaction_date=transaction_date.split('-').reverse().join('');
@@ -218,6 +221,31 @@ $('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj
 			}
 		});
 
+/*$('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj){
+	   var transaction_date=$(this).val();
+	   var type_member=$('#main tbody tr:eq('+ii+') select[name="bill_type[]"]').val();
+	   if(type_member=='resident'){
+		  var ledger_sub_account_id=$('#main tbody tr:eq('+ii+') select[name="resident[]"]').val();
+		   $.ajax({
+			url:"<?php echo $webroot_path; ?>Incometrackers/it_supplimentry_bill_validation/"+transaction_date+"/"+ledger_sub_account_id, 
+			async: false,
+			success: function(data){
+			 result_data=data;
+			}
+		});
+		
+		if(result_data=="not"){
+		   allow="no";
+		   $('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
+		   $('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').append('<p class="er">Regular bill date error</p>');	
+		}else{
+			 $('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
+		}
+	   }
+	});		
+		*/
+
+		
 		$('#main tbody tr input[name="payment_due_date[]"]').die().each(function(i, obj){
 			var payment_due_date=$(this).val();
 				if(payment_due_date==""){
@@ -437,10 +465,6 @@ $('input[name="transaction_date[]"]').die().live("keyup blur",function(){
 			}
 		});
 	
-
-
-
-
 
 $(document).ready(function() {
 	<?php	

@@ -1925,14 +1925,42 @@ function b_receipt_edit($transaction_id=null){
 	$financial_year_string=implode(',',$financial_year_array);
 	$this->set(compact("financial_year_string"));
 	
-	
+	$this->loadmodel('ledger_sub_account');
+        $condition=array('society_id'=>$s_society_id,'ledger_id'=>34);
+        $members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
+        foreach($members as $data3){
+            $ledger_sub_account_ids[]=$data3["ledger_sub_account"]["auto_id"];
+        }
+       
+       
+        $this->loadmodel('wing');
+        $condition=array('society_id'=>$s_society_id);
+        $order=array('wing.wing_name'=>'ASC');
+        $wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+        foreach($wings as $data){
+			$wing_id=$data["wing"]["wing_id"];
+			$this->loadmodel('flat');
+			$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+			$order=array('flat.flat_name'=>'ASC');
+			$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+			foreach($flats as $data2){
+				$flat_id=$data2["flat"]["flat_id"];
+				$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+				if(!empty($ledger_sub_account_id)){
+					if (in_array($ledger_sub_account_id, $ledger_sub_account_ids)){
+						$members_for_billing[]=$ledger_sub_account_id;
+					}
+				}
+			}
+		}
+		$this->set(compact("members_for_billing"));
 	
 	if(isset($this->request->data['bank_receipt_update'])){
+		$transaction_id=(int)$this->request->data['transaction_id'];
 		$tranjection_date=$this->request->data['transaction_date']; 
 		$tranjection_date=date('Y-m-d',strtotime($tranjection_date));
 		$deposited_bank_id=(int)$this->request->data['deposited_bank_id'];
 		$receipt_mode=$this->request->data['receipt_mode'];
-		
 		$cheque_number = null;
 		$cheque_date = null;
 		$drawn_on_which_bank = null;
@@ -1954,10 +1982,8 @@ function b_receipt_edit($transaction_id=null){
 		$receipt_type = null;
 		$ledger_sub_account_id = null;
 		if($member_type=='residential'){
-			$receipt_type = @$this->request->data['receipt_type'];
-			if($receipt_type=='other'){
-			 $ledger_sub_account_id=(int)@$this->request->data['ledger_sub_account'];
-			}
+			//$receipt_type = @$this->request->data['receipt_type'];
+		$ledger_sub_account_id=(int)@$this->request->data['ledger_sub_account'];
 		}
 		if($member_type=='non_residential'){
 			 $ledger_sub_account_id=@$this->request->data['ledger_sub_account'];
@@ -1965,367 +1991,535 @@ function b_receipt_edit($transaction_id=null){
 		}
 		 $amount = @$this->request->data['amount'];
 		 $narration = @$this->request->data['description'];
-		$current_date = date('Y-m-d');
+		 $current_date = date('Y-m-d');
 				
+	if($member_type=='residential'){
+		
 	$this->loadmodel('cash_bank');
-	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number"=> $cheque_number,"date"=>$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"bill_reference"=>$bill_reference),Array('auto_id'=>(int)$transaction_id)); 
-
-		$this->loadmodel('ledger');
-		$this->ledger->updateAll(Array("transaction_date"=> strtotime($tranjection_date), "debit"=>$amount,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$deposited_bank_id),Array("table_name"=>"cash_bank","element_id"=>(int)$transaction_id,"society_id"=>$s_society_id,"credit"=>null)); 
-                    
-	if($member_type=="residential"){
-		$this->loadmodel('ledger');
-		$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date), "credit"=>$amount,"ledger_account_id"=>34,"ledger_sub_account_id"=>(int)$ledger_sub_account_id),Array("table_name"=>"cash_bank","element_id"=>(int)$transaction_id,"society_id"=>$s_society_id,"debit"=>null));
-				    }else{
-		$this->loadmodel('ledger');			
-		$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date), "credit"=>$amount,"ledger_account_id"=>112,"ledger_sub_account_id"=> (int)$ledger_sub_account_id),Array("table_name"=>"cash_bank","element_id"=>(int)$transaction_id,"society_id"=>$s_society_id,"debit"=>null));	
+	$conditions=array("society_id"=>$s_society_id,"transaction_id"=>$transaction_id);
+	$result_cash_bank=$this->cash_bank->find('all',array('conditions'=>$conditions));
+	foreach($result_cash_bank as $data){
+	$ledger_sub_account_id_old=(int)$data['cash_bank']['ledger_sub_account_id'];	
+	$ignore_receipt_number=$data['cash_bank']['receipt_number'];
 	}
-
-	$this->Session->write('bank_eddd', 1);
-	$this->response->header('Location', $this->webroot.'Cashbanks/bank_receipt_view');
-
-		
-		
-	/*	
-		
-		exit;
-		
-		
-		$this->loadmodel('new_cash_bank');
-		$this->new_cash_bank->updateAll(array('edit_status'=>'YES'),array("transaction_id"=>(int)$transaction_id));	
-		
-		$this->loadmodel('new_cash_bank');
-		$new_new_cash_bank_auto_id=$this->autoincrement('new_cash_bank','transaction_id');
-		$this->new_cash_bank->saveAll(array('transaction_id'=>$new_new_cash_bank_auto_id,'receipt_date'=>strtotime($tranjection_date),"deposited_bank_id"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number"=>$cheque_number,"cheque_date"=>$cheque_date,"drawn_on_which_bank"=>$drawn_on_which_bank,"member_type"=>$member_type,"receipt_type"=>$receipt_type,"flat_id"=>$resident_flat_id,"amount"=>$amount,"narration"=>$narration,"reference_utr"=>$reference_utr,"party_name_id"=>$party_name,"bill_reference"=>$bill_reference,"current_date"=>$current_date,"society_id"=>$s_society_id,"receipt_id"=>$receipt_id,"receipt_source"=>1,"bill_one_time_id"=>$bill_one_time_id,"edit_status"=>"NO","prepaired_by"=>$s_user_id));
-		
-		
-		$result_ledger_sub_account = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch3'),array('pass'=>array($resident_flat_id)));
-		foreach($result_ledger_sub_account as $ledger_sub_account){
-			$ledger_sub_account_id = (int)$ledger_sub_account['ledger_sub_account']['auto_id'];
-		}
-		
-		
-		//LEDGER POSTING
-		$this->loadmodel('ledger');
-		$conditions4=array('society_id'=>$s_society_id,"table_name"=>"new_cash_bank","element_id"=>(int)$transaction_id);
-		$this->ledger->deleteAll($conditions4);
-		
-		$this->loadmodel('ledger');
-		$auto_id=$this->autoincrement('ledger','auto_id');
-		$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 33,"ledger_sub_account_id" => $deposited_bank_id,"debit"=>$amount,"credit"=>null,"table_name"=>"new_cash_bank","element_id"=>$new_new_cash_bank_auto_id,"society_id"=>$s_society_id,"transaction_date"=>strtotime($tranjection_date)));
-		
-		$this->loadmodel('ledger');
-		$auto_id=$this->autoincrement('ledger','auto_id');
-		$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id,"debit"=>null,"credit"=>$amount,"table_name"=>"new_cash_bank","element_id"=>$new_new_cash_bank_auto_id,"society_id"=>$s_society_id,"transaction_date"=>strtotime($tranjection_date)));
-		
-		
-		if($member_type==1 && $receipt_type==1){
-			
-		//APPLY RECEIPT
-		$this->loadmodel('new_cash_bank');
-		$condition=array('society_id'=>$s_society_id,"flat_id"=>$resident_flat_id,"bill_one_time_id"=>$bill_one_time_id,"edit_status"=>"NO");
-		$result_new_cash_bank=$this->new_cash_bank->find('all',array('conditions'=>$condition));
-		
-		$q=0; foreach($result_new_cash_bank as $cash_bank){ $q++;
-			$amount=$cash_bank["new_cash_bank"]["amount"];
-			
-			
-			$this->loadmodel('new_regular_bill');
-			$condition=array("flat_id"=>$resident_flat_id,"edit_status"=>"NO","one_time_id"=>$bill_one_time_id);
-			$result_new_regular_bill=$this->new_regular_bill->find('all',array('conditions'=>$condition)); 
-			
-			 foreach($result_new_regular_bill as $bill_data){ 
-				$bill_auto_id=$bill_data["new_regular_bill"]["auto_id"];
+	$old_user_data=$this->requestAction(array('controller'=>'Fns','action'=>'member_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id_old)));
+	$old_user_name=$old_user_data['user_name'];		
+	$old_wing=$old_user_data['wing_name'];
+	$old_flat=$old_user_data['flat_name'];
+	$old_user_email_id=$old_user_data['email'];
+	$old_user_mobile=$old_user_data['mobile'];
+	$old_wing_flat=$old_wing.'-'.$old_flat;
+	
+	
+	
+	
+	
+	
+	$edit_text=$ignore_receipt_number."-R";	
+	$this->loadmodel('cash_bank');
+	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number" =>@$cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"edit_text"=>$edit_text),Array("transaction_id"=>$transaction_id)); 
+					
+	$this->loadmodel('ledger');
+	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"debit"=>$amount, "credit"=>null,"ledger_account_id"=>33,"ledger_sub_account_id"=>$deposited_bank_id,"table_name"=>"cash_bank"),Array("element_id"=>$transaction_id,"credit"=>null)); 
 				
-				if($q==1){
-					$arrear_intrest=$bill_data["new_regular_bill"]["arrear_intrest"];
-					$intrest_on_arrears=$bill_data["new_regular_bill"]["intrest_on_arrears"];
-					$total=$bill_data["new_regular_bill"]["total"];
-					$arrear_maintenance=$bill_data["new_regular_bill"]["arrear_maintenance"];
-				}else{
-					$arrear_intrest=$bill_data["new_regular_bill"]["new_arrear_intrest"];
-					$intrest_on_arrears=$bill_data["new_regular_bill"]["new_intrest_on_arrears"];
-					$total=$bill_data["new_regular_bill"]["new_total"];
-					$arrear_maintenance=$bill_data["new_regular_bill"]["new_arrear_maintenance"];
-				}
-				
-			}
-			
-			$amount_after_arrear_intrest=$amount-$arrear_intrest;
-			if($amount_after_arrear_intrest<0)
-			{
-			$new_arrear_intrest=abs($amount_after_arrear_intrest);
-			$new_intrest_on_arrears=$intrest_on_arrears;
-			$new_arrear_maintenance=$arrear_maintenance;
-			$new_total=$total;
-			}
-			else
-			{
-			$new_arrear_intrest=0;
-			$amount_after_intrest_on_arrears=$amount_after_arrear_intrest-$intrest_on_arrears;
-				if($amount_after_intrest_on_arrears<0)
-				{
-				$new_intrest_on_arrears=abs($amount_after_intrest_on_arrears);
-				$new_arrear_maintenance=$arrear_maintenance;
-				$new_total=$total;
-				}
-				else
-				{
-				$new_intrest_on_arrears=0;
-				$amount_after_arrear_maintenance=$amount_after_intrest_on_arrears-$arrear_maintenance;
-					if($amount_after_arrear_maintenance<0){
-					$new_arrear_maintenance=abs($amount_after_arrear_maintenance);
-					$new_total=$total;
-					}else{
-					$new_arrear_maintenance=0;
-					$amount_after_total=$amount_after_arrear_maintenance-$total; 
-					if($amount_after_total>0){
-					$new_total=0;
-					$new_arrear_maintenance=-$amount_after_total;
-					}else{
-								$new_total=abs($amount_after_total);
-								
-						}
-					}
-				}
-			}
-			
-			$this->loadmodel('new_regular_bill');
-			$this->new_regular_bill->updateAll(array('new_arrear_intrest'=>$new_arrear_intrest,"new_intrest_on_arrears"=>$new_intrest_on_arrears,"new_arrear_maintenance"=>$new_arrear_maintenance,"new_total"=>$new_total),array('auto_id'=>$bill_auto_id));
-		}
+	$this->loadmodel('ledger');
+	$this->ledger->saveAll(Array("transaction_date"=>strtotime($tranjection_date),"credit"=>$amount,"ledger_account_id"=>34,"ledger_sub_account_id"=>$ledger_sub_account_id,"table_name"=>"cash_bank"),Array("element_id"=>$transaction_id,"debit"=>null));
+	
+	if($ledger_sub_account_id_old == $ledger_sub_account_id){
+	   $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
+	$email_message='<table width="80%" class="hmlogobox">
+		<tr>
+		<td width="50%" style="padding: 10px 0px 0px 10px;"><img src="'.$ip.$this->webroot.'/as/hm/hm-logo.png" style="max-height: 60px; " height="60px" /></td>
+		<td width="50%" align="right" valign="middle"  style="padding: 7px 10px 0px 0px;">
+		<a href="https://www.facebook.com/HousingMatters.co.in"><img src="'.$ip.$this->webroot.'/as/hm/SMLogoFB.png" style="max-height: 30px; height: 30px; width: 30px; max-width: 30px;" height="30px" width="30px" /></a>
+		</td>
+		</tr>
+		</table><br/><br/>';
+
+	   $email_message.="Please Ignore Receipt-(".$ignore_receipt_number.").";
+
+		$email_message.="<br/><br/> Thank You <br/>
+	HousingMatters (Support Team)<br/>
+			www.housingmatters.in";
 		
-////////////////////////////////////////	
-$this->loadmodel('new_cash_bank');
-$conditions=array("transaction_id"=>$new_new_cash_bank_auto_id,"receipt_source"=>1);
-$cursor=$this->new_cash_bank->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
-$receipt_no = (int)$collection['new_cash_bank']['receipt_id'];
-$d_date = $collection['new_cash_bank']['receipt_date'];
-$today = date("d-M-Y");
-$flat_id = (int)$collection['new_cash_bank']['flat_id'];
-$amount = $collection['new_cash_bank']['amount'];
-$society_id = (int)$collection['new_cash_bank']['society_id'];
-$bill_reference = $collection['new_cash_bank']['reference_utr'];
-$narration = $collection['new_cash_bank']['narration'];
-$member = (int)$collection['new_cash_bank']['member_type'];
-$receiver_name = @$collection['new_cash_bank']['receiver_name'];
-$receipt_mode = $collection['new_cash_bank']['receipt_mode'];
-$cheque_number = @$collection['new_cash_bank']['cheque_number'];
-$which_bank = @$collection['new_cash_bank']['drawn_on_which_bank'];
-$reference_number = @$collection['new_cash_bank']['reference_number'];
-$cheque_date = @$collection['new_cash_bank']['cheque_date'];
-$sub_account = (int)$collection['new_cash_bank']['deposited_bank_id'];
-$sms_date=date("d-m-Y",($d_date));
-$amount = str_replace( ',', '', $amount );
+		
+		
+		
+		
+		
+		$this->loadmodel('society'); 
+		$conditions=array("society_id"=>$s_society_id);
+		$cursor1=$this->society->find('all',array('conditions'=>$conditions));
+		foreach($cursor1 as $dataa){
+		$society_name=$dataa['society']['society_name'];	
+		$society_reg_no=$dataa['society']['society_reg_num']; 
+		$society_address=$dataa['society']['society_address'];
+		$sig_title=$dataa['society']['sig_title'];
+		$email_is_on_off=(int)@$dataa["society"]["account_email"];
+		$sms_is_on_off=(int)@$dataa['society']['account_sms'];
+		}
+	
+	$this->loadmodel('cash_bank'); 
+	$conditions=array("society_id"=>$s_society_id,"transaction_id"=>$transaction_id);
+	$cursor=$this->cash_bank->find('all',array('conditions'=>$conditions));
+	foreach($cursor as $data){
+       $receipt_number=$data['cash_bank']['receipt_number']; 	   
+	   $transaction_id=$data['cash_bank']['transaction_id'];
+		$transaction_date=$data['cash_bank']['transaction_date'];
+		$deposited_bank_id=$data['cash_bank']['deposited_in'];
+		$receipt_mode=$data['cash_bank']['receipt_mode'];
+		if($receipt_mode=="Cheque" || $receipt_mode=="cheque"){
+			 $cheque_number=$data['cash_bank']['cheque_number'];
+			 $cheque_date=$data['cash_bank']['date'];
+			 $drown_in_which_bank=$data['cash_bank']['drown_in_which_bank'];
+			 $branch_of_bank=$data['cash_bank']['branch_of_bank'];
+		}
+		if($receipt_mode=="NEFT" || $receipt_mode=="PG" || $receipt_mode=="neft" || $receipt_mode=="pg"){
+			 $cheque_number = $data['cash_bank']['cheque_number'];
+			 $cheque_date = $data['cash_bank']['date'];
+		}
+		 $member_type = $data['cash_bank']['received_from'];
+		if($member_type=='residential'){
+			$ledger_sub_account_id=$data['cash_bank']['ledger_sub_account_id'];
+		}
+		 $amount = $data['cash_bank']['amount'];
+		 $narration = $data['cash_bank']['narration'];
+		 $current_date = date('Y-m-d');	
+}
+$transaction_date=date('d-m-Y',$transaction_date);
+
+$user_data=$this->requestAction(array('controller'=>'Fns','action'=>'member_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id)));
+$user_name=$user_data['user_name'];		
+$wing=$user_data['wing_name'];
+$flat=$user_data['flat_name'];
+$user_email_id=$user_data['email'];
+$user_mobile=$user_data['mobile'];
+
+$wing_flat=$wing.'-'.$flat;
 $am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));
 
-$this->loadmodel('society');
-$conditions=array("society_id" => $s_society_id);
-$cursor2=$this->society->find('all',array('conditions'=>$conditions));
-foreach ($cursor2 as $collection) 
-{
-$society_name = $collection['society']['society_name'];
-$society_reg_no = $collection['society']['society_reg_num'];
-$society_address = $collection['society']['society_address'];
-$sig_title = $collection['society']['sig_title'];
-}
-if($member == 2)
-{
-$user_name = $receiver_name;
-$wing_flat = "";
-}
-else
-{
-$flatt_datta = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
-foreach ($flatt_datta as $fltt_datttaa) 
-{
-$wnngg_idddd = (int)$fltt_datttaa['flat']['wing_id'];
-}
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
 
-$result_lsa = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_user_info_via_flat_id'),array('pass'=>array($wnngg_idddd,$flat_id)));
-foreach ($result_lsa as $collection) 
-{
-$wing_id = $collection['user']['wing'];  
-$flat_id = (int)$collection['user']['flat'];
-$tenant = (int)$collection['user']['tenant'];
-$user_name = $collection['user']['user_name'];
-$to_mobile = $collection['user']['mobile'];
-$to_email = $collection['user']['email'];
-}
-$wing_flat = $this->requestAction(array('controller' => 'hms', 'action'=>'wing_flat'),array('pass'=>array($wing_id,$flat_id)));									
-}  
-$result2 = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($sub_account))); 
-foreach($result2 as $collection)
-{
-$bank_name = $collection['ledger_sub_account']['name'];
-}
-                                    
-$ip=$this->hms_email_ip();
-$date=date("d-m-Y",($d_date));
-
-$html_receipt='<table style="padding:24px;background-color:#34495e" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
-            <tbody><tr>
-                <td>
-                    <table style="padding:38px 30px 30px 30px;background-color:#fafafa" align="center" border="0" cellpadding="0" cellspacing="0" width="540">
-                        <tbody>
-						<tr>
-							<td height="10">
-							<table width="100%" class="hmlogobox">
-<tr>
-<td width="50%" style="padding: 10px 0px 0px 10px;"><img src="'.$ip.$this->webroot.'/as/hm/hm-logo.png" style="max-height: 60px; " height="60px" /></td>
-<td width="50%" align="right" valign="middle"  style="padding: 7px 10px 0px 0px;">
-<a href="https://www.facebook.com/HousingMatters.co.in"><img src="'.$ip.$this->webroot.'/as/hm/SMLogoFB.png" style="max-height: 30px; height: 30px; width: 30px; max-width: 30px;" height="30px" width="30px" /></a>
-</td>
-</tr>
-							</table>
-							</td>
-						</tr>
-						<tr>
-							<td height="10"></td>
-						</tr>
-                        <tr>
-                            <td colspan="2" style="font-size:12px;line-height:1.4;font-family:Arial,Helvetica,sans-serif;color:#34495e;border:solid 1px #767575">
-							<table style="font-size:12px" width="100%" cellspacing="0">
-								<tbody><tr>
-									<td style="padding:2px;background-color:rgb(0,141,210);color:#fff" align="center" width="100%"><b>'.strtoupper($society_name).'</b></td>
-								</tr>
-							</tbody></table>
-							<table style="font-size:12px" width="100%" cellspacing="0">
-								<tbody>
-								<tr>
-									<td style="padding:5px;border-bottom:solid 1px #767575;border-top:solid 1px #767575" width="100%" align="center">
-									<span style="color:rgb(100,100,99)">Regn# &nbsp; '.$society_reg_no.'</span><br>
-									<span style="color:rgb(100,100,99)">'.$society_address.'</span><br
-									</td>
-								</tr>
-								</tbody>
-							</table>
-							<table style="font-size:12px;border-bottom:solid 1px #767575;" width="100%" cellspacing="0">
-								<tbody><tr>
-									<td style="padding:0px 0 2px 5px" colspan="2">Receipt No: '.$receipt_no.'-R</td>
-									
-									<td colspan="2" align="right" style="padding:0px 5px 0 0px"><b>Date:</b> '.$date.' </td>
-									
-								</tr>
-								<tr>
-									<td style="padding:0px 0 2px 5px" colspan="2"> Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b></td>
-																		
-								</tr>
-								<tr>
-									<td style="padding:0px 0 2px 5px"  colspan="4">Rupees '.$am_in_words.' Only </td>
-									
-								</tr>';
-								
-							if($receipt_mode=="Cheque"){
-							$receipt_mode_type='Via '.$receipt_mode.'-'.$cheque_number.' drawn on '.$which_bank.' dated '.$cheque_date;
-							}
-							else{
-							$receipt_mode_type='Via '.$receipt_mode.'-'.$reference_number.' dated '.$cheque_date;
-							}
-
-								
-								$html_receipt.='<tr>
-									<td style="padding:0px 0 2px 5px"  colspan="4">'.$receipt_mode_type.'</td>
-									
-								</tr>
-								
-								<tr>
-									<td style="padding:0px 0 2px 5px" colspan="4">Payment of previous bill</td>
-									
-								</tr>
-								
-							</tbody></table>
-							
-							
-							
-							<table style="font-size:12px;" width="100%" cellspacing="0">
-								<tbody><tr>
-									<td width="50%" style="padding:5px" valign="top">
-									<span style="font-size:16px;"> <b>Rs '.$amount.'</b></span><br>';
-									if($receipt_mode=="Cheque"){
-									$receipt_title_cheq='Subject to realization of Cheque(s)';
-									}
-																		
-									$html_receipt.='<span>'.@$receipt_title_cheq.'</span></td>
-									<td align="center" width="50%" style="padding:5px" valign="top">
-									For  <b>'.$society_name.'</b><br><br><br>
-									<div><span style="border-top:solid 1px #424141">'.$sig_title.'</span></div>
-									</td>
-								</tr>
-							</tbody></table>
-												
-							
-                            </td>
-                        </tr>
-                        
-                        <tr>
-                            <td colspan="2">
-                                <table style="background-color:#008dd2;font-size:11px;color:#fff;border:solid 1px #767575;border-top:none" width="100%" cellspacing="0">
-                                 <tbody>
-								 
+ $html_receipt='<table style="padding:24px;background-color:#34495e" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tbody><tr>
+					<td>
+						<table style="padding:38px 30px 30px 30px;background-color:#fafafa" align="center" border="0" cellpadding="0" cellspacing="0" width="540">
+							<tbody>
+							<tr>
+								<td height="10">
+								<table width="100%" class="hmlogobox">
+		<tr>
+		<td width="50%" style="padding: 10px 0px 0px 10px;"><img src="'.$ip.$this->webroot.'/as/hm/hm-logo.png" style="max-height: 60px; " height="60px" /></td>
+		<td width="50%" align="right" valign="middle"  style="padding: 7px 10px 0px 0px;">
+		<a href="https://www.facebook.com/HousingMatters.co.in"><img src="'.$ip.$this->webroot.'/as/hm/SMLogoFB.png" style="max-height: 30px; height: 30px; width: 30px; max-width: 30px;" height="30px" width="30px" /></a>
+		</td>
+		</tr>
+								</table>
+								</td>
+							</tr>
+							<tr>
+								<td height="10"></td>
+							</tr>
+							<tr>
+								<td colspan="2" style="font-size:12px;line-height:1.4;font-family:Arial,Helvetica,sans-serif;color:#34495e;border:solid 1px #767575">
+								<table style="font-size:12px" width="100%" cellspacing="0">
+									<tbody><tr>
+										<td style="padding:2px;background-color:rgb(0,141,210);color:#fff" align="center" width="100%"><b>'.strtoupper($society_name).'</b></td>
+									</tr>
+								</tbody></table>
+								<table style="font-size:12px" width="100%" cellspacing="0">
+									<tbody>
 									<tr>
-                                        <td align="center" colspan="7"><b>
-										Your Society is empowered by HousingMatters - <b> <i>"Making Life Simpler"</i>
-										</b></b></td>
-                                    </tr>
+										<td style="padding:5px;border-bottom:solid 1px #767575;border-top:solid 1px #767575" width="100%" align="center">
+										<span style="color:rgb(100,100,99)">Regn# &nbsp; '.$society_reg_no.'</span><br>
+										<span style="color:rgb(100,100,99)">'.$society_address.'</span><br
+										</td>
+									</tr>
+									</tbody>
+								</table>
+								<table style="font-size:12px;border-bottom:solid 1px #767575;" width="100%" cellspacing="0">
+									<tbody><tr>
+										<td style="padding:0px 0 2px 5px" colspan="2">Receipt No: '.$receipt_number.'-R</td>
+										
+										<td colspan="2" align="right" style="padding:0px 5px 0 0px"><b>Date:</b> '.$transaction_date.' </td>
+										
+									</tr>
 									<tr>
-                                        <td width="50" align="right" style="font-size: 10px;"><b>Email :</b></td>
-                                        <td width="120" style="color:#fff!important;font-size: 10px;"> 
-										<a href="mailto:support@housingmatters.in" style="color:#fff!important" target="_blank"><b>support@housingmatters.in</b></a>
-                                        </td>
-										<td align="center" style="font-size: 10px;"></td>
-                                        <td align="right" style="font-size: 10px;"><b>Phone :</b></td>
-                                        <td width="84" style="color:#fff!important;text-decoration:none;font-size:10px;"><b>022-41235568</b></td>
-										<td align="center" style="font-size: 10px;"></td>
-                                        <td width="100" style="padding-right:10px;text-decoration:none"> <a href="http://www.housingmatters.in" style="color:#fff!important" target="_blank"><b>www.housingmatters.in</b></a></td>
-                                    </tr>
-                                    
-                                    
-                                </tbody>
-							</table>
-                            </td>
-                        </tr>
-                        <tr>
-							<td align="center"><div class="hmlogobox" ><a href="mailto:Support@housingmatters.in">Do not miss important e-mails from HousingMatters,  add us to your address book</a></div></td>
-						</tr>
-                    </tbody></table>
-                </td>
-            </tr>
-        </tbody>
-</table>';
-////////////////my Email//////////////
-}		
-$this->loadmodel('society');
-$condition=array('society_id'=>$s_society_id);
-$result_society=$this->society->find('all',array('conditions'=>$condition)); 
-$this->set('result_society',$result_society);
-foreach($result_society as $data_society){
-	$society_name=$data_society["society"]["society_name"];
-	$email_is_on_off=(int)@$data_society["society"]["account_email"];
-	$sms_is_on_off=(int)@$data_society["society"]["account_sms"];
-   }
+										<td style="padding:0px 0 2px 5px" colspan="2"> Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b></td>
+																			
+									</tr>
+									<tr>
+										<td style="padding:0px 0 2px 5px"  colspan="4">Rupees '.$am_in_words.' Only </td>
+										
+									</tr>';
+									
+								if($receipt_mode=="cheque"){
+								$receipt_type='Via '.$receipt_mode.'-'.$cheque_number.' drawn on '.$drown_in_which_bank.' dated '.$cheque_date;
+								}
+								else{
+								$receipt_type='Via '.$receipt_mode.'-'.$cheque_number.' dated '.$cheque_date;
+								}
 
+									
+									$html_receipt.='<tr>
+										<td style="padding:0px 0 2px 5px"  colspan="4">'.$member_type.'</td>
+										
+									</tr>
+									
+									<tr>
+										<td style="padding:0px 0 2px 5px" colspan="4">Payment of previous bill</td>
+										
+									</tr>
+									
+								</tbody></table>
+								
+								
+								
+								<table style="font-size:12px;" width="100%" cellspacing="0">
+									<tbody><tr>
+										<td width="50%" style="padding:5px" valign="top">
+										<span style="font-size:16px;"> <b>Rs '.$amount.'</b></span><br>';
+										$receipt_title_cheq="";
+										if($receipt_mode=="cheque"){
+											$receipt_title_cheq='Subject to realization of Cheque(s)';
+										}
+																			
+										$html_receipt.='<span>'.@$receipt_title_cheq.' </span></td>
+										<td align="center" width="50%" style="padding:5px" valign="top">
+										For  <b>'.$society_name.'</b><br><br><br>
+										<div><span style="border-top:solid 1px #424141">'.$sig_title.'</span></div>
+										</td>
+									</tr>
+								</tbody></table>
+													
+								
+								</td>
+							</tr>
+							
+							<tr>
+								<td colspan="2">
+									<table style="background-color:#008dd2;font-size:11px;color:#fff;border:solid 1px #767575;border-top:none" width="100%" cellspacing="0">
+									 <tbody>
+									 
+										<tr>
+											<td align="center" colspan="7"><b>
+											Your Society is empowered by HousingMatters - <b> <i>"Making Life Simpler"</i>
+											</b></b></td>
+										</tr>
+										<tr>
+											<td width="50" align="right" style="font-size: 10px;"><b>Email :</b></td>
+											<td width="120" style="color:#fff!important;font-size: 10px;"> 
+											<a href="mailto:support@housingmatters.in" style="color:#fff!important" target="_blank"><b>support@housingmatters.in</b></a>
+											</td>
+											<td align="center" style="font-size: 10px;"></td>
+										   
+											<td align="right" width="50"><b><a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end"><img src="'.$ip.$this->webroot.'/as/hm/whatsup.png"  width="18px" /></a></b></td>
+											<td width="104" style="color:#FFF !important;text-decoration: none;"><b>+91-9869157561</b></td>
+											<td align="center" style="font-size: 10px;"></td>
+											<td width="100" style="padding-right:10px;text-decoration:none"> <a href="http://www.housingmatters.in" style="color:#fff!important" target="_blank"><b>www.housingmatters.in</b></a></td>
+										</tr>
+										
+										
+									</tbody>
+								</table>
+								</td>
+							</tr>
+							<tr>
+								<td align="center"><div class="hmlogobox" ><a href="mailto:Support@housingmatters.in">Do not miss important e-mails from HousingMatters,  add us to your address book</a></div></td>
+							</tr>
+						</tbody></table>
+					</td>
+				</tr>
+			</tbody>
+		</table>';	
+		
+				////Start Email Sms Code////
+			if($email_is_on_off==1){
+			    	if(!empty($user_email_id)){
+					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$transaction_date." against Unit ".$wing_flat."";
+				
+					$this->send_email($user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$email_message,'donotreply@housingmatters.in');
+				}
+			}		
+				
+			if($email_is_on_off==1){
+			    	if(!empty($user_email_id)){
+					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$transaction_date." against Unit ".$wing_flat."";
+				
+					$this->send_email($user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'donotreply@housingmatters.in');
+				}
+			}	
+		
+				if($sms_is_on_off==1){
+						if(!empty($user_mobile)){
+								$r_sms=$this->requestAction(array('controller'=>'Fns','action'=> 'hms_sms_ip')); 
+								$working_key=$r_sms->working_key;
+								$sms_sender=$r_sms->sms_sender; 
+								$sms_allow=(int)$r_sms->sms_allow;
+							if($sms_allow==1){
+									$user_name_short=$this->check_charecter_name($user_name);
+									$sms="Dear ".$user_name_short." ,we have received Rs ".$amount." on ".$transaction_date." towards Society Maint. dues. Cheques are subject to realization,".$society_name;
+									$sms1=str_replace(' ', '+', $sms);
 
+									$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$user_mobile.'&message='.$sms1.''); 
+							}
+						}	
+					}
 
-if($email_is_on_off==1){
-////email code//
+				   ////Start Email Sms Code////	
+	}
+	else
+	{
+	$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));	
+	$email_message='<table width="80%" class="hmlogobox">
+		<tr>
+		<td width="50%" style="padding: 10px 0px 0px 10px;"><img src="'.$ip.$this->webroot.'/as/hm/hm-logo.png" style="max-height: 60px; " height="60px" /></td>
+		<td width="50%" align="right" valign="middle"  style="padding: 7px 10px 0px 0px;">
+		<a href="https://www.facebook.com/HousingMatters.co.in"><img src="'.$ip.$this->webroot.'/as/hm/SMLogoFB.png" style="max-height: 30px; height: 30px; width: 30px; max-width: 30px;" height="30px" width="30px" /></a>
+		</td>
+		</tr>
+		</table><br/><br/>';	
+		
+	$email_message.="Please Ignore Receipt-(".$ignore_receipt_number.") as it was errorneouly sent to you.";			
+	
+	$email_message.="<br/><br/> Thank You <br/>
+	HousingMatters (Support Team)<br/>
+			www.housingmatters.in";
+	
+	
+	
+	
+		$this->loadmodel('society'); 
+		$conditions=array("society_id"=>$s_society_id);
+		$cursor1=$this->society->find('all',array('conditions'=>$conditions));
+		foreach($cursor1 as $dataa){
+		$society_name=$dataa['society']['society_name'];	
+		$society_reg_no=$dataa['society']['society_reg_num']; 
+		$society_address=$dataa['society']['society_address'];
+		$sig_title=$dataa['society']['sig_title'];
+		$email_is_on_off=(int)@$dataa["society"]["account_email"];
+		$sms_is_on_off=(int)@$dataa['society']['account_sms'];
+		}
+	
+	$this->loadmodel('cash_bank'); 
+	$conditions=array("society_id"=>$s_society_id,"transaction_id"=>$transaction_id);
+	$cursor=$this->cash_bank->find('all',array('conditions'=>$conditions));
+	foreach($cursor as $data){
+       $receipt_number=$data['cash_bank']['receipt_number']; 	   
+	   $transaction_id=$data['cash_bank']['transaction_id'];
+		$transaction_date=$data['cash_bank']['transaction_date'];
+		$deposited_bank_id=$data['cash_bank']['deposited_in'];
+		$receipt_mode=$data['cash_bank']['receipt_mode'];
+		if($receipt_mode=="Cheque" || $receipt_mode=="cheque"){
+			 $cheque_number=$data['cash_bank']['cheque_number'];
+			 $cheque_date=$data['cash_bank']['date'];
+			 $drown_in_which_bank=$data['cash_bank']['drown_in_which_bank'];
+			 $branch_of_bank=$data['cash_bank']['branch_of_bank'];
+		}
+		if($receipt_mode=="NEFT" || $receipt_mode=="PG" || $receipt_mode=="neft" || $receipt_mode=="pg"){
+			 $cheque_number = $data['cash_bank']['cheque_number'];
+			 $cheque_date = $data['cash_bank']['date'];
+		}
+		 $member_type = $data['cash_bank']['received_from'];
+		if($member_type=='residential'){
+			$ledger_sub_account_id=$data['cash_bank']['ledger_sub_account_id'];
+		}
+		 $amount = $data['cash_bank']['amount'];
+		 $narration = $data['cash_bank']['narration'];
+		 $current_date = date('Y-m-d');	
+}
+$transaction_date=date('d-m-Y',$transaction_date);
 
-$r_sms=$this->hms_sms_ip();
-$working_key=$r_sms->working_key;
-$sms_sender=$r_sms->sms_sender; 
-$sms_allow=(int)$r_sms->sms_allow;
+$user_data=$this->requestAction(array('controller'=>'Fns','action'=>'member_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id)));
+$user_name=$user_data['user_name'];		
+$wing=$user_data['wing_name'];
+$flat=$user_data['flat_name'];
+$user_email_id=$user_data['email'];
+$user_mobile=$user_data['mobile'];
 
-$subject="[".$society_name."]- Revised Receipt of Rs ".$amount." on ".date('d-M-Y',$d_date)." against Unit ".$wing_flat."";
-//$subject = "[".$society_name."]- Receipt,"date('d-M-Y',$d_date).""; 
+$wing_flat=$wing.'-'.$flat;
+$am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));
 
-$this->send_email($to_email,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'donotreply@housingmatters.in');
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
 
-}		
+ $html_receipt='<table style="padding:24px;background-color:#34495e" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tbody><tr>
+					<td>
+						<table style="padding:38px 30px 30px 30px;background-color:#fafafa" align="center" border="0" cellpadding="0" cellspacing="0" width="540">
+							<tbody>
+							<tr>
+								<td height="10">
+								<table width="100%" class="hmlogobox">
+		<tr>
+		<td width="50%" style="padding: 10px 0px 0px 10px;"><img src="'.$ip.$this->webroot.'/as/hm/hm-logo.png" style="max-height: 60px; " height="60px" /></td>
+		<td width="50%" align="right" valign="middle"  style="padding: 7px 10px 0px 0px;">
+		<a href="https://www.facebook.com/HousingMatters.co.in"><img src="'.$ip.$this->webroot.'/as/hm/SMLogoFB.png" style="max-height: 30px; height: 30px; width: 30px; max-width: 30px;" height="30px" width="30px" /></a>
+		</td>
+		</tr>
+								</table>
+								</td>
+							</tr>
+							<tr>
+								<td height="10"></td>
+							</tr>
+							<tr>
+								<td colspan="2" style="font-size:12px;line-height:1.4;font-family:Arial,Helvetica,sans-serif;color:#34495e;border:solid 1px #767575">
+								<table style="font-size:12px" width="100%" cellspacing="0">
+									<tbody><tr>
+										<td style="padding:2px;background-color:rgb(0,141,210);color:#fff" align="center" width="100%"><b>'.strtoupper($society_name).'</b></td>
+									</tr>
+								</tbody></table>
+								<table style="font-size:12px" width="100%" cellspacing="0">
+									<tbody>
+									<tr>
+										<td style="padding:5px;border-bottom:solid 1px #767575;border-top:solid 1px #767575" width="100%" align="center">
+										<span style="color:rgb(100,100,99)">Regn# &nbsp; '.$society_reg_no.'</span><br>
+										<span style="color:rgb(100,100,99)">'.$society_address.'</span><br
+										</td>
+									</tr>
+									</tbody>
+								</table>
+								<table style="font-size:12px;border-bottom:solid 1px #767575;" width="100%" cellspacing="0">
+									<tbody><tr>
+										<td style="padding:0px 0 2px 5px" colspan="2">Receipt No: '.$receipt_number.'-R</td>
+										
+										<td colspan="2" align="right" style="padding:0px 5px 0 0px"><b>Date:</b> '.$transaction_date.' </td>
+										
+									</tr>
+									<tr>
+										<td style="padding:0px 0 2px 5px" colspan="2"> Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b></td>
+																			
+									</tr>
+									<tr>
+										<td style="padding:0px 0 2px 5px"  colspan="4">Rupees '.$am_in_words.' Only </td>
+										
+									</tr>';
+									
+								if($receipt_mode=="cheque"){
+								$receipt_type='Via '.$receipt_mode.'-'.$cheque_number.' drawn on '.$drown_in_which_bank.' dated '.$cheque_date;
+								}
+								else{
+								$receipt_type='Via '.$receipt_mode.'-'.$cheque_number.' dated '.$cheque_date;
+								}
 
-/////////////////////////////////////////		
-		} */
-	   
+									
+									$html_receipt.='<tr>
+										<td style="padding:0px 0 2px 5px"  colspan="4">'.$member_type.'</td>
+										
+									</tr>
+									
+									<tr>
+										<td style="padding:0px 0 2px 5px" colspan="4">Payment of previous bill</td>
+										
+									</tr>
+									
+								</tbody></table>
+								
+								
+								
+								<table style="font-size:12px;" width="100%" cellspacing="0">
+									<tbody><tr>
+										<td width="50%" style="padding:5px" valign="top">
+										<span style="font-size:16px;"> <b>Rs '.$amount.'</b></span><br>';
+										$receipt_title_cheq="";
+										if($receipt_mode=="cheque"){
+											$receipt_title_cheq='Subject to realization of Cheque(s)';
+										}
+																			
+										$html_receipt.='<span>'.@$receipt_title_cheq.' </span></td>
+										<td align="center" width="50%" style="padding:5px" valign="top">
+										For  <b>'.$society_name.'</b><br><br><br>
+										<div><span style="border-top:solid 1px #424141">'.$sig_title.'</span></div>
+										</td>
+									</tr>
+								</tbody></table>
+													
+								
+								</td>
+							</tr>
+							
+							<tr>
+								<td colspan="2">
+									<table style="background-color:#008dd2;font-size:11px;color:#fff;border:solid 1px #767575;border-top:none" width="100%" cellspacing="0">
+									 <tbody>
+									 
+										<tr>
+											<td align="center" colspan="7"><b>
+											Your Society is empowered by HousingMatters - <b> <i>"Making Life Simpler"</i>
+											</b></b></td>
+										</tr>
+										<tr>
+											<td width="50" align="right" style="font-size: 10px;"><b>Email :</b></td>
+											<td width="120" style="color:#fff!important;font-size: 10px;"> 
+											<a href="mailto:support@housingmatters.in" style="color:#fff!important" target="_blank"><b>support@housingmatters.in</b></a>
+											</td>
+											<td align="center" style="font-size: 10px;"></td>
+										   
+											<td align="right" width="50"><b><a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end"><img src="'.$ip.$this->webroot.'/as/hm/whatsup.png"  width="18px" /></a></b></td>
+											<td width="104" style="color:#FFF !important;text-decoration: none;"><b>+91-9869157561</b></td>
+											<td align="center" style="font-size: 10px;"></td>
+											<td width="100" style="padding-right:10px;text-decoration:none"> <a href="http://www.housingmatters.in" style="color:#fff!important" target="_blank"><b>www.housingmatters.in</b></a></td>
+										</tr>
+										
+										
+									</tbody>
+								</table>
+								</td>
+							</tr>
+							<tr>
+								<td align="center"><div class="hmlogobox" ><a href="mailto:Support@housingmatters.in">Do not miss important e-mails from HousingMatters,  add us to your address book</a></div></td>
+							</tr>
+						</tbody></table>
+					</td>
+				</tr>
+			</tbody>
+		</table>';	
+
+                   ////Start Email Sms Code////
+				   
+				  if($email_is_on_off==1){
+			    	if(!empty($old_user_email_id)){
+					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$transaction_date." against Unit ".$old_wing_flat."";
+				
+					$this->send_email($old_user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$email_message,'donotreply@housingmatters.in');
+				}
+			}		 
+				   
+				   
+				   
+				   
+			if($email_is_on_off==1){
+			    	if(!empty($user_email_id)){
+					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$transaction_date." against Unit ".$wing_flat."";
+				
+					$this->send_email($user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'donotreply@housingmatters.in');
+				}
+			}	
+		
+				if($sms_is_on_off==1){
+						if(!empty($user_mobile)){
+								$r_sms=$this->requestAction(array('controller'=>'Fns','action'=> 'hms_sms_ip')); 
+								$working_key=$r_sms->working_key;
+								$sms_sender=$r_sms->sms_sender; 
+								$sms_allow=(int)$r_sms->sms_allow;
+							if($sms_allow==1){
+									$user_name_short=$this->check_charecter_name($user_name);
+									$sms="Dear ".$user_name_short." ,we have received Rs ".$amount." on ".$transaction_date." towards Society Maint. dues. Cheques are subject to realization,".$society_name;
+									$sms1=str_replace(' ', '+', $sms);
+
+									$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$user_mobile.'&message='.$sms1.''); 
+							}
+						}	
+					}
+
+				   ////Start Email Sms Code////
+		
+				}
+			}
+	
+$this->Session->write('bank_receipt_updated',1);
+$this->redirect(array('controller'=>'Cashbanks','action'=>'bank_receipt_view'));
+
 	}
 }
 //End b_receipt_edit//
@@ -8724,10 +8918,42 @@ $transaction_date=strtotime($transaction_date);
 		echo "not_match";  
 		}   
    }	
-	
-	
 }
 //End petty_cash_receipt_date_validation//
+//Start testing_sampe//
+function testing_sample()
+{
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	$this->ath();
 
+	$s_society_id=(int)$this->Session->read('hm_society_id');	
+	$this->loadmodel('cash_bank'); 
+	$conditions=array("society_id"=>$s_society_id,"transaction_id"=>1);
+	$cursor=$this->cash_bank->find('all',array('conditions'=>$conditions));
+	$this->set('cursor',$cursor);
+
+	$this->loadmodel('society'); 
+	$conditions=array("society_id"=>$s_society_id);
+	$cursor1=$this->society->find('all',array('conditions'=>$conditions));
+	foreach($cursor1 as $dataa){
+	$society_name=$dataa['society']['society_name'];	
+	$society_reg_no=$dataa['society']['society_reg_num']; 
+	$society_address=$dataa['society']['society_address'];
+	$sig_title=$dataa['society']['sig_title'];
+	}
+    $this->set('society_name',$society_name);
+	 $this->set('society_reg_no',$society_reg_no);
+	  $this->set('society_address',$society_address);
+	   $this->set('sig_title',$sig_title);
+ 
+	  
+	  
+	
+}
+//End testing_sampe//
 }
 ?>

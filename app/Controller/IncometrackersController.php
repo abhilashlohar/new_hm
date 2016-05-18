@@ -6507,6 +6507,7 @@ function regular_bill_edit2($auto_id=null){
 	$this->layout='session';
 	}
 	$this->ath();
+	$webroot_path=$this->requestAction(array('controller' => 'Hms', 'action' => 'webroot_path'));
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');
 	$auto_id=(int)$auto_id;

@@ -282,18 +282,7 @@ $('#main tbody tr input[name="amount[]"]').each(function(i, obj) {
 		}
 			}
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	if(allow=="no"){
 			e.preventDefault();

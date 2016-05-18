@@ -686,20 +686,22 @@ function bank_receipt_view()
 		
 	if($this->request->is('post'))	
 	{
-	echo $cancel_type=$this->request->data['cancel'];
-	echo $transaction_id=(int)$this->request->data['transaction_id_for_cancel'];
-	exit;	
+	 $cancel_type=$this->request->data['cancel'];
+	 $transaction_id=(int)$this->request->data['transaction_id_for_cancel'];
+		if($cancel_type==1){
+		$narration="Due to Cheque Bounce";		
+		}else{
+		$narration=" Due to duplicacy";
+		}
 		
+	$this->loadmodel('cash_bank');
+	$this->cash_bank->updateAll(Array("amount"=>0,"narration"=>$narration),Array("transaction_id"=>$transaction_id));	
+		
+	$this->loadmodel('ledger');
+	$conditions4=array("element_id"=>(int)$transaction_id);
+	$this->ledger->deleteAll($conditions4);
+	
 	}		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 }
 //End Bank receipt View//
@@ -8990,9 +8992,8 @@ function bank_receipt_cancel($transaction_id=null)
 	}else{
 	$this->layout='session';
 	}
-	echo $transaction_id;
-	exit;
-    $this->set('transaction_id',$transaction_id);
+	
+	$this->set('transaction_id',$transaction_id);
 
 }
 //End bank_receipt_cancel//

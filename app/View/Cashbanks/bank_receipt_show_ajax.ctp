@@ -124,7 +124,7 @@
 <script>
 
 	function cancel_receipt(tt){
-			$("#cancel_popup").load("<?php echo $webroot_path; ?>Cashbanks/bank_receipt_cancel");
+			$("#cancel_popup").load("<?php echo $webroot_path; ?>Cashbanks/bank_receipt_cancel/"+tt);
 		
 	}
 

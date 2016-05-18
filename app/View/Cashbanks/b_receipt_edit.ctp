@@ -10,12 +10,12 @@ foreach($cursor1 as $data){
 		$which_bank=@$data["cash_bank"]["drown_in_which_bank"];
 		$receipt_date1=@$data["cash_bank"]["date"];
 		$branch_of_bank=@$data["cash_bank"]["branch_of_bank"];
-	}
-	else
-	{
+		}
+		else
+		{
 		$refrence_utr = @$data["cash_bank"]["cheque_number"];
-		$receipt_date2 = @$data["cash_bank"]["date"];	
-	}
+		$receipt_date1 = @$data["cash_bank"]["date"];	
+		}
 	$member_type = @$data["cash_bank"]["received_from"];
 	if($member_type=='residential')
 	{
@@ -140,7 +140,7 @@ font-size: 11px;"></p>
 <label style="font-size:14px;">Reference/UTR #<span style="color:red;">*</span><span style="margin-left:15%;">Date<span style="color:red;">*</span></span></label>
 <div class="controls">
 <input type="text"  name="reference_number" class="m-wrap span4 nefftt1 ignore" placeholder="Reference/UTR #" style="background-color:white !important;" id="reff" value="<?php echo @$refrence_utr; ?>">&nbsp;&nbsp;
-<input type="text"  name="neft_date" class="m-wrap span3 date-picker nefftt2 ignore" placeholder="Date" data-date-format="dd-mm-yyyy" style="background-color:white !important;" id="dtt" value="<?php //echo @$receipt_date2; ?>">
+<input type="text"  name="neft_date" class="m-wrap span3 date-picker nefftt2 ignore" placeholder="Date" data-date-format="dd-mm-yyyy" style="background-color:white !important;" id="dtt" value="<?php echo @$receipt_date1; ?>">
 <table border="0" width="80%"><tr><td style="width:44%;"><p class="reference" style="color: rgb(198, 4, 4);
 font-size: 11px;"></p></td><td><p class="date2" style="color: rgb(198, 4, 4);
 font-size: 11px;"></p></td></tr></table>
@@ -176,9 +176,9 @@ font-size: 11px;"></p></td></tr></table>
 	<select name="non_member_ledger_sub_account" class="m-wrap large chosen">
 	<option value="" style="display:none;">--non member--</option>
 	<?php foreach($non_members as $ledger_sub_account_data){
-	$ledger_sub_account_id = $ledger_sub_account_data['ledger_sub_account']['auto_id'];
+	$ledger_sub_account_idss = $ledger_sub_account_data['ledger_sub_account']['auto_id'];
 	$non_member_name = $ledger_sub_account_data['ledger_sub_account']['name']; ?>
-	<option value="<?php echo $ledger_sub_account_id; ?>"><?php echo $non_member_name; ?></option>
+	<option value="<?php echo $ledger_sub_account_idss; ?>" <?php if($ledger_sub_account_idss==$ledger_sub_account_id){ ?> selected="selected" <?php } ?>><?php echo $non_member_name; ?></option>
 	<?php } ?>
 	</select>
 	<br/><br/>

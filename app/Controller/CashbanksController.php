@@ -702,24 +702,20 @@ function bank_receipt_view()
 	$this->ledger->deleteAll($conditions4);
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	 
+
+
+
+	 //if($email_is_on_off==1){
+			    	//if(!empty($old_user_email_id)){
+					//$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$transaction_date." against Unit ".$old_wing_flat."";
+				
+					//$this->send_email($old_user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$email_message,'donotreply@housingmatters.in');
+				//}
+			//}		 
+
 	
 	}		
-		
 }
 //End Bank receipt View//
 //Start bank_receipt_excel//

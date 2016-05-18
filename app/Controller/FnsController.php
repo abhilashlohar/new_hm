@@ -306,7 +306,7 @@ function member_info_via_ledger_sub_account_id($ledger_sub_account_id){
 	@$wing_name=@$result4[0]["wing"]["wing_name"];
 	
 	$this->loadmodel('flat');
-	$conditions=array("flat_id" => $flat);
+	$conditions=array("flat_id"=>$flat);
 	$result5=$this->flat->find('all',array('conditions'=>$conditions));
 	@$flat_name=ltrim(@$result5[0]["flat"]["flat_name"],'0');
 	$flat_area=@$result5[0]["flat"]["flat_area"];

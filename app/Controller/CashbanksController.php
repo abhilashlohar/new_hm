@@ -2036,11 +2036,11 @@ function b_receipt_edit($transaction_id=null){
 		</tr>
 		</table><br/><br/>';
 
-	   $email_message.="Please Ignore Receipt-(".$ignore_receipt_number.").";
+	   $email_message.='Please Ignore Receipt-'.$ignore_receipt_number.' as it was errorneouly sent to you';
 
-		$email_message.="<br/><br/> Thank You <br/>
+		$email_message.='<br/><br/> Thank You <br/>
 	HousingMatters (Support Team)<br/>
-			www.housingmatters.in";
+			www.housingmatters.in';
 		
 		
 		
@@ -2280,11 +2280,11 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 		</tr>
 		</table><br/><br/>';	
 		
-	$email_message.="Please Ignore Receipt-(".$ignore_receipt_number.") as it was errorneouly sent to you.";			
+	$email_message.='Please Ignore Receipt-'.$ignore_receipt_number.' as it was errorneouly sent to you.';			
 	
-	$email_message.="<br/><br/> Thank You <br/>
+	$email_message.='<br/><br/> Thank You <br/>
 	HousingMatters (Support Team)<br/>
-			www.housingmatters.in";
+			www.housingmatters.in';
 	
 	
 	

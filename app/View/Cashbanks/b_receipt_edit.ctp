@@ -169,11 +169,19 @@ font-size: 11px;"></p></td></tr></table>
 } else { ?>
 <h5><b>Receipt For : Non-Residential</b></h5>
 <input type="hidden" name="member_type" value="non_residential"/>
+<br>
 
 
-<h5><b>Party Name: <?php echo $user_name; ?></b></h5>
-<input type="hidden" name="ledger_sub_account" value="<?php echo $ledger_sub_account_id; ?>"/>
-<br />
+	<label style="font-size:14px;">Select Non Member<span style="color:red;">*</span></label>
+	<select name="non_member_ledger_sub_account" class="m-wrap large chosen">
+	<option value="" style="display:none;">--non member--</option>
+	<?php foreach($non_members as $ledger_sub_account_data){
+	$ledger_sub_account_id = $ledger_sub_account_data['ledger_sub_account']['auto_id'];
+	$non_member_name = $ledger_sub_account_data['ledger_sub_account']['name']; ?>
+	<option value="<?php echo $ledger_sub_account_id; ?>"><?php echo $non_member_name; ?></option>
+	<?php } ?>
+	</select>
+	<br/><br/>
 
 <label style="font-size:14px;">Bill Reference<span style="color:red;">*</span></label>
 <div class="controls">

@@ -1926,6 +1926,11 @@ function b_receipt_edit($transaction_id=null){
 	$this->set(compact("financial_year_string"));
 	
 	$this->loadmodel('ledger_sub_account');
+	$conditions=array("society_id"=>$s_society_id,"ledger_id"=>112);
+	$non_members = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$this->set(compact("non_members"));
+	
+	$this->loadmodel('ledger_sub_account');
         $condition=array('society_id'=>$s_society_id,'ledger_id'=>34);
         $members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
         foreach($members as $data3){
@@ -1986,7 +1991,7 @@ function b_receipt_edit($transaction_id=null){
 		$ledger_sub_account_id=(int)@$this->request->data['ledger_sub_account'];
 		}
 		if($member_type=='non_residential'){
-			 $ledger_sub_account_id=@$this->request->data['ledger_sub_account'];
+			 $non_member_ledger_sub_account_id=(int)@$this->request->data['non_member_ledger_sub_account'];
 			 $bill_reference=@$this->request->data['bill_reference'];
 		}
 		 $amount = @$this->request->data['amount'];
@@ -2010,11 +2015,6 @@ function b_receipt_edit($transaction_id=null){
 	$old_user_mobile=$old_user_data['mobile'];
 	$old_wing_flat=$old_wing.'-'.$old_flat;
 	
-	
-	
-	
-	
-	
 	$edit_text=$ignore_receipt_number."-R";	
 	$this->loadmodel('cash_bank');
 	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number" =>@$cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"edit_text"=>$edit_text),Array("transaction_id"=>$transaction_id)); 
@@ -2036,7 +2036,7 @@ function b_receipt_edit($transaction_id=null){
 		</tr>
 		</table><br/><br/>';
 
-	   $email_message.='Please Ignore Receipt-'.$ignore_receipt_number.' as it was errorneouly sent to you';
+	   $email_message.='Please Ignore Receipt-'.$ignore_receipt_number.' as it was errorneouly sent to you.';
 
 		$email_message.='<br/><br/> Thank You <br/>
 	HousingMatters (Support Team)<br/>
@@ -2516,6 +2516,19 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 		
 				}
 			}
+			else{
+		
+	$this->loadmodel('cash_bank');
+	$this->cash_bank->updateAll(Array("transaction_id"=>$auto_id,"transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$non_member_ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"bill_reference"=>$bill_reference),Array("transaction_id"=>$transaction_id)); 
+					
+	$this->loadmodel('ledger');
+	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"debit"=>$amount, "ledger_account_id"=>33,"ledger_sub_account_id"=>$deposited_in),Array("element_id"=>$transaction_id,"credit"=>null)); 
+
+	$this->loadmodel('ledger');
+	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"credit"=>$amount,"ledger_account_id"=>112,"ledger_sub_account_id"=>$non_member_ledger_sub_account_id),Array("element_id"=>$transaction_id,"debit"=>null));	
+			
+				
+}
 	
 $this->Session->write('bank_receipt_updated',1);
 $this->redirect(array('controller'=>'Cashbanks','action'=>'bank_receipt_view'));

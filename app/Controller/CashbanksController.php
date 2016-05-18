@@ -1994,27 +1994,42 @@ function b_receipt_edit($transaction_id=null){
 		 $current_date = date('Y-m-d');
 				
 	if($member_type=='residential'){
+		
+	$this->loadmodel('cash_bank');
+	$conditions=array("society_id"=>$s_society_id,"transaction_id"=>$transaction_id);
+	$result_cash_bank=$this->cash_bank->find('all',array('conditions'=>$conditions));
+	foreach($result_cash_bank as $data){
+	$ledger_sub_account_id_old=(int)$data['cash_bank']['ledger_sub_account_id'];	
+	$ignore_receipt_number=$data['cash_bank']['receipt_number'];
+	}
+	$edit_text=$ignore_receipt_number."-R";	
+	$this->loadmodel('cash_bank');
+	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number" =>@$cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"edit_text"=>$edit_text),Array("transaction_id"=>$transaction_id)); 
+					
+	$this->loadmodel('ledger');
+	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"debit"=>$amount, "credit"=>null,"ledger_account_id"=>33,"ledger_sub_account_id"=>$deposited_bank_id,"table_name"=>"cash_bank"),Array("element_id"=>$transaction_id,"credit"=>null)); 
+				
+	$this->loadmodel('ledger');
+	$this->ledger->saveAll(Array("transaction_date"=>strtotime($tranjection_date),"credit"=>$amount,"ledger_account_id"=>34,"ledger_sub_account_id"=>$ledger_sub_account_id,"table_name"=>"cash_bank"),Array("element_id"=>$transaction_id,"debit"=>null));
 	
-		$this->loadmodel('cash_bank');
-		$conditions=array("society_id"=>$s_society_id,"transaction_id"=>$transaction_id);
-		$result_cash_bank=$this->cash_bank->find('all',array('conditions'=>$conditions));
-		foreach($result_cash_bank as $data){
-			$ledger_sub_account_id_old=(int)$data['cash_bank']['ledger_sub_account_id'];	
-		}
+	if($ledger_sub_account_id_old == $ledger_sub_account_id){
+			
+    $email_message="Please Ignore Receipt-(".$ignore_receipt_number.").";
+
+			
+			
+			
+			
+			
 	
-			if($ledger_sub_account_id_old == $ledger_sub_account_id){
-			
-
-
-			
+	}
+	else
+	{
+	$email_message="Please Ignore Receipt-(".$ignore_receipt_number.") as it was errorneouly sent to you.";			
 				
-			}
-	        else
-			{
-				
-				
-				
-			}
+		
+		
+	}
 	
 	
 	
@@ -2034,8 +2049,8 @@ function b_receipt_edit($transaction_id=null){
 	
 	
 /*	
-	$this->loadmodel('cash_bank');
-	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number"=> $cheque_number,"date"=>$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"bill_reference"=>$bill_reference),Array('auto_id'=>(int)$transaction_id)); 
+$this->loadmodel('cash_bank');
+$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number"=> $cheque_number,"date"=>$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"bill_reference"=>$bill_reference),Array('auto_id'=>(int)$transaction_id)); 
 
 		$this->loadmodel('ledger');
 		$this->ledger->updateAll(Array("transaction_date"=> strtotime($tranjection_date), "debit"=>$amount,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$deposited_bank_id),Array("table_name"=>"cash_bank","element_id"=>(int)$transaction_id,"society_id"=>$s_society_id,"credit"=>null)); 
@@ -2158,7 +2173,7 @@ function b_receipt_edit($transaction_id=null){
 			}
 			
 			$this->loadmodel('new_regular_bill');
-			$this->new_regular_bill->updateAll(array('new_arrear_intrest'=>$new_arrear_intrest,"new_intrest_on_arrears"=>$new_intrest_on_arrears,"new_arrear_maintenance"=>$new_arrear_maintenance,"new_total"=>$new_total),array('auto_id'=>$bill_auto_id));
+$this->new_regular_bill->updateAll(array('new_arrear_intrest'=>$new_arrear_intrest,"new_intrest_on_arrears"=>$new_intrest_on_arrears,"new_arrear_maintenance"=>$new_arrear_maintenance,"new_total"=>$new_total),array('auto_id'=>$bill_auto_id));
 		}
 		
 ////////////////////////////////////////	
@@ -8791,10 +8806,42 @@ $transaction_date=strtotime($transaction_date);
 		echo "not_match";  
 		}   
    }	
-	
-	
 }
 //End petty_cash_receipt_date_validation//
+//Start testing_sampe//
+function testing_sample()
+{
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	$this->ath();
 
+	$s_society_id=(int)$this->Session->read('hm_society_id');	
+	$this->loadmodel('cash_bank'); 
+	$conditions=array("society_id"=>$s_society_id,"transaction_id"=>1);
+	$cursor=$this->cash_bank->find('all',array('conditions'=>$conditions));
+	$this->set('cursor',$cursor);
+
+	$this->loadmodel('society'); 
+	$conditions=array("society_id"=>$s_society_id);
+	$cursor1=$this->society->find('all',array('conditions'=>$conditions));
+	foreach($cursor1 as $dataa){
+	$society_name=$dataa['society']['society_name'];	
+	$society_reg_no=$dataa['society']['society_reg_num']; 
+	$society_address=$dataa['society']['society_address'];
+	$sig_title=$dataa['society']['sig_title'];
+	}
+    $this->set('society_name',$society_name);
+	 $this->set('society_reg_no',$society_reg_no);
+	  $this->set('society_address',$society_address);
+	   $this->set('sig_title',$sig_title);
+ 
+	  
+	  
+	
+}
+//End testing_sampe//
 }
 ?>

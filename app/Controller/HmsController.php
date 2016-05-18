@@ -7626,18 +7626,22 @@ function dashboard(){
 	    //////////////notice  last 3///////////////// 
 				// $date2= date("Y-m-d", strtotime($date2)); 
 				//$dat1= strtotime($date2);
-		/*
-	$this->loadmodel("discussion_post");
-	$user_profile=$this->discussion_post->find('all');
-		foreach($user_profile as $data){
-				$discussion_post_id=(int)$data['discussion_post']['discussion_post_id'];
-				echo $date=$data['discussion_post']['date'];
-				
-				 $date2= date("d-m-y", strtotime($date)); 
-				 $date2= date("Y-m-d", strtotime($date2)); 
-				$dat1= strtotime($date2);
-				$this->discussion_post->updateAll(array('date'=>$dat1),array('discussion_post_id'=>$discussion_post_id));
-		} 
+/*		
+	$this->loadmodel("financial_year");
+	$result_financial_years=$this->financial_year->find('all');
+		foreach($result_financial_years as $data){
+				$auto_id=(int)$data['financial_year']['auto_id'];
+				$from=$data['financial_year']['from'];
+				$to=$data['financial_year']['to'];
+				$from1=date('Y-m-d',$from->sec) ;
+				$to1=date('Y-m-d',$to->sec) ;
+				$from2=strtotime($from1);
+				$to2=strtotime($to1);
+//$date2= date("d-m-y", strtotime($date)); 
+				// $date2= date("Y-m-d", strtotime($date2)); 
+				//$dat1= strtotime($date2);
+			$this->financial_year->updateAll(array('from'=>$from2,'to'=>$to2),array('auto_id'=>$auto_id));
+		}  
 
 
 	$this->loadmodel("user");

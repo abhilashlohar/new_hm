@@ -83,18 +83,18 @@ $this->requestAction(array('controller' => 'hms', 'action' => 'griter_notificati
 <script>
 $(document).ready(function() {
 <?php	
-$status5=(int)$this->Session->read('bank_eddd');
+$status5=(int)$this->Session->read('bank_receipt_updated');
 if($status5==1)
 {
 ?>
 $.gritter.add({
-title: ' Bank Receipt ',
-text: '<p>Thank you.</p><p>The Bank Receipt Updated Successfully.</p>',
+	title: 'Success',
+	text: '<p>Bank Receipt Updated Successfully.</p>',
 sticky: false,
 time: '10000',
 });
 <?php
-$this->requestAction(array('controller' => 'hms', 'action' => 'griter_notification'), array('pass' => array(5511)));
+$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass'=>array('bank_receipt_updated')));
 } ?>
 });
 </script>

@@ -1930,7 +1930,9 @@ function griter_notification($id)
 	if($id=="bank_receipt"){
 		$this->Session->delete('bank_receipt');
 	}
-	
+	if($id=="bank_receipt_updated"){
+		$this->Session->delete('bank_receipt_updated');
+	}
 	if($id=="notice_create"){
 		$this->Session->delete('create_notice');
 	}

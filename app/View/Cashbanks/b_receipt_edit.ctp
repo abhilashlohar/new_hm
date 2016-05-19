@@ -298,7 +298,7 @@ $("form").on("submit",function(e){
 			result=data;
 			}
 			});	
-				alert(result);
+				
 			if(result=="not_match"){
 			allow="no";
 			$(".date").html('Not in financial year');

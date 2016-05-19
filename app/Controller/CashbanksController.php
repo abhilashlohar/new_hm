@@ -2071,10 +2071,10 @@ function b_receipt_edit($transaction_id=null){
 	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number" =>@$cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"edit_text"=>$edit_text),Array("transaction_id"=>$transaction_id)); 
 					
 	$this->loadmodel('ledger');
-	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"debit"=>$amount, "credit"=>null,"ledger_account_id"=>33,"ledger_sub_account_id"=>$deposited_bank_id,"table_name"=>"cash_bank"),Array("element_id"=>$transaction_id,"credit"=>null)); 
+	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"debit"=>$amount, "credit"=>null,"ledger_account_id"=>33,"ledger_sub_account_id"=>$deposited_bank_id),Array("element_id"=>$transaction_id,"credit"=>null,"table_name"=>"cash_bank")); 
 				
 	$this->loadmodel('ledger');
-	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"credit"=>$amount,"ledger_account_id"=>34,"ledger_sub_account_id"=>$ledger_sub_account_id,"table_name"=>"cash_bank"),Array("element_id"=>$transaction_id,"debit"=>null));
+	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"credit"=>$amount,"ledger_account_id"=>34,"ledger_sub_account_id"=>$ledger_sub_account_id),Array("element_id"=>$transaction_id,"debit"=>null,"table_name"=>"cash_bank"));
 	
 	if($ledger_sub_account_id_old == $ledger_sub_account_id){
 	   $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
@@ -2573,10 +2573,10 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$non_member_ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"bill_reference"=>$bill_reference),Array("transaction_id"=>$transaction_id)); 
 					
 	$this->loadmodel('ledger');
-	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"debit"=>$amount, "ledger_account_id"=>33,"ledger_sub_account_id"=>$deposited_bank_id),Array("element_id"=>$transaction_id,"credit"=>null)); 
+	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"debit"=>$amount, "ledger_account_id"=>33,"ledger_sub_account_id"=>$deposited_bank_id),Array("element_id"=>$transaction_id,"credit"=>null,"table_name"=>"cash_bank")); 
 
 	$this->loadmodel('ledger');
-	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"credit"=>$amount,"ledger_account_id"=>112,"ledger_sub_account_id"=>$non_member_ledger_sub_account_id),Array("element_id"=>$transaction_id,"debit"=>null));	
+	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"credit"=>$amount,"ledger_account_id"=>112,"ledger_sub_account_id"=>$non_member_ledger_sub_account_id),Array("element_id"=>$transaction_id,"debit"=>null,"table_name"=>"cash_bank"));	
 				
 }
 	

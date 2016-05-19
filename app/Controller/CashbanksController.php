@@ -2570,7 +2570,15 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 			else{
 		
 	$this->loadmodel('cash_bank');
-	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$non_member_ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"bill_reference"=>$bill_reference),Array("transaction_id"=>$transaction_id)); 
+	$conditions=array("society_id"=>$s_society_id,"transaction_id"=>$transaction_id);
+	$result_cash_bank=$this->cash_bank->find('all',array('conditions'=>$conditions));
+	foreach($result_cash_bank as $data){
+	$ignore_receipt_number=$data['cash_bank']['receipt_number'];
+	}
+    $ignore_receipt_number=$ignore_receipt_number.'-R';
+		
+	$this->loadmodel('cash_bank');
+	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$non_member_ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"bill_reference"=>$bill_reference,"edit_text"=>$ignore_receipt_number),Array("transaction_id"=>$transaction_id)); 
 					
 	$this->loadmodel('ledger');
 	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"debit"=>$amount, "ledger_account_id"=>33,"ledger_sub_account_id"=>$deposited_bank_id),Array("element_id"=>$transaction_id,"credit"=>null,"table_name"=>"cash_bank")); 

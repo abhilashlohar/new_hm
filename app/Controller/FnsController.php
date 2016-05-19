@@ -1350,7 +1350,7 @@ function fetch_group_name_via_group_id($group_id){
 
 function bank_receipt_cancel_button_show_or_hide($transaction_date=null,$ledger_sub_account_id=null)
 {
-	//$this->ath();
+	$this->requestAction(array('controller' => 'Hms', 'action' => 'ath'));
 	$s_society_id = $this->Session->read('hm_society_id');	
 	//$transaction_date=date('Y-m-d',strtotime($transaction_date));
 	//$transaction_date=strtotime($transaction_date);

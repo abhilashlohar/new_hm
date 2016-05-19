@@ -8925,7 +8925,7 @@ $transaction_date=strtotime($transaction_date);
 	$nn=0;
 	$this->loadmodel('regular_bill'); 
 	$order=array('regular_bill.start_date'=>'DESC');
-	$conditions=array("society_id"=>(int)$s_society_id,"ledger_sub_account_id"=>(int)$ledger_sub_account_id);
+	$conditions=array("society_id"=>(int)$s_society_id,"ledger_sub_account_id"=>(int)$ledger_sub_account_id,"edited"=>"no");
 	$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>2));
 	foreach($result_regular_bill as $data){
 	$start_date=$data['regular_bill']['start_date'];	
@@ -8984,7 +8984,7 @@ $transaction_date=strtotime($transaction_date);
 	$nn=0;
 	$this->loadmodel('regular_bill'); 
 	$order=array('regular_bill.start_date'=>'DESC');
-	$conditions=array("society_id"=>(int)$s_society_id,"ledger_sub_account_id"=>(int)$ledger_sub_account_id);
+	$conditions=array("society_id"=>(int)$s_society_id,"ledger_sub_account_id"=>(int)$ledger_sub_account_id,"edited"=>"no");
 	$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>2));
 	foreach($result_regular_bill as $data){
 	$start_date=$data['regular_bill']['start_date'];	

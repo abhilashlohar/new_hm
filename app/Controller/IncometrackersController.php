@@ -51,7 +51,7 @@ function it_supplimentry_bill_validation($transaction_date=null,$ledger_sub_acco
 	$transaction_date=strtotime($transaction_date);
 	$ledger_sub_account_id=(int)$ledger_sub_account_id;
 	$this->loadmodel('regular_bill');
-	$conditions=array('society_id'=>$s_society_id,'ledger_sub_account_id'=>$ledger_sub_account_id,'start_date'=>array('$gte'=>$transaction_date));
+	$conditions=array('society_id'=>$s_society_id,'ledger_sub_account_id'=>$ledger_sub_account_id,'start_date'=>array('$gte'=>$transaction_date),"edited"=>"no");
 	$order=array('regular_bill.start_date'=>'DESC');
 	$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1)); 
 		if(sizeof($result_regular_bill)==1){

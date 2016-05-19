@@ -8982,7 +8982,32 @@ $transaction_date=strtotime($transaction_date);
 function petty_cash_receipt_date_validation($transaction_date=null,$ledger_sub_account_id=null)
 {
 	$this->ath();
-$s_society_id = $this->Session->read('hm_society_id');	
+	$s_society_id = $this->Session->read('hm_society_id');
+		$this->loadmodel('financial_year');
+		$conditions=array("society_id" => $s_society_id,"status"=>1);
+		$cursor = $this->financial_year->find('all',array('conditions'=>$conditions));
+		$abc = 555;
+		foreach($cursor as $collection){
+				$from = $collection['financial_year']['from'];
+				$to = $collection['financial_year']['to'];
+				$from1 = date('Y-m-d',$from);
+				$to1 = date('Y-m-d',$to);
+				$from2 = strtotime($from1);
+				$to2 = strtotime($to1);
+				$transaction1 = date('Y-m-d',strtotime($transaction_date));
+				$transaction2 = strtotime($transaction1);
+					if($transaction2 <= $to2 && $transaction2 >= $from2){
+					$abc = 5;
+					break;
+					}	
+		}
+		if($abc==555)
+		{
+		echo "financial_year";	
+		}
+        else{
+
+	
 $transaction_date=date('Y-m-d',strtotime($transaction_date));
 $transaction_date=strtotime($transaction_date);
 	$nn=0;
@@ -9008,7 +9033,8 @@ $transaction_date=strtotime($transaction_date);
 		{
 		echo "not_match";  
 		}   
-   }	
+   }
+}   
 }
 //End petty_cash_receipt_date_validation//
 //Start testing_sampe//
@@ -9055,5 +9081,40 @@ function bank_receipt_cancel($transaction_id=null)
 
 }
 //End bank_receipt_cancel//
+//Start financial_year_validation//
+function financial_year_validation($transaction_date=null)
+{
+$this->ath();
+$s_society_id=$this->Session->read('hm_society_id');	
+
+		$this->loadmodel('financial_year');
+		$conditions=array("society_id" => $s_society_id,"status"=>1);
+		$cursor = $this->financial_year->find('all',array('conditions'=>$conditions));
+		$abc = 555;
+		foreach($cursor as $collection){
+				$from = $collection['financial_year']['from'];
+				$to = $collection['financial_year']['to'];
+				$from1 = date('Y-m-d',$from);
+				$to1 = date('Y-m-d',$to);
+				$from2 = strtotime($from1);
+				$to2 = strtotime($to1);
+				$transaction1 = date('Y-m-d',strtotime($transaction_date));
+				$transaction2 = strtotime($transaction1);
+					if($transaction2 <= $to2 && $transaction2 >= $from2){
+					$abc = 5;
+					break;
+					}	
+		}
+	
+		if($abc==5)
+		{
+		echo "match";	
+		}
+        else{
+		echo "not_match";	
+		}
+
+}
+//Start financial_year_validation//
 }
 ?>

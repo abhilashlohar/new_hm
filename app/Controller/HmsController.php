@@ -20,6 +20,88 @@ $dd=explode(' ',$name);
 	}
 }
 
+function regular_bill_echo(){
+	$this->layout=null;
+	?>
+	<table border="1">
+		<tr>
+			<th>auto_id</th>
+			<th>bill_number</th>
+			<th>edit_text</th>
+			<th>ledger_sub_account_id</th>
+			<th>noc_charge</th>
+			<th>total</th>
+			<th>intrest_on_arrears</th>
+			<th>credit_stock</th>
+			<th>due_for_payment</th>
+			<th>society_id</th>
+			<th>start_date</th>
+			<th>due_date</th>
+			<th>end_date</th>
+			<th>edited</th>
+			<th>description</th>
+			<th>billing_cycle</th>
+			<th>created_by</th>
+			<th>current_date</th>
+		</tr>
+	<?php
+	$this->loadmodel('new_regular_bill');
+	$conditions=array("edit_status" => "NO");
+	$bills = $this->new_regular_bill->find('all',array('conditions'=>$conditions));
+	foreach($bills as $bill){
+		$auto_id=$bill["new_regular_bill"]["auto_id"];
+		$bill_no=$bill["new_regular_bill"]["bill_no"];
+		$bill_no=explode('-',$bill_no);
+		if(sizeof($bill_no)==2){ $edit_text="-R"; }else{ $edit_text=""; }
+		
+		$flat_id=(int)$bill["new_regular_bill"]["flat_id"];
+			$this->loadmodel('ledger_sub_account');
+			$conditions=array("flat_id" => $flat_id);
+			$ledger_sub_accounts = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+			$ledger_sub_account_id=$ledger_sub_accounts[0]['ledger_sub_account']['auto_id'];
+			
+		$noc_charge=$bill["new_regular_bill"]["noc_charges"];
+		$total=$bill["new_regular_bill"]["total"];
+		$intrest_on_arrears=$bill["new_regular_bill"]["intrest_on_arrears"];
+		$credit_stock=$bill["new_regular_bill"]["credit_stock"];
+		$due_for_payment=$bill["new_regular_bill"]["due_for_payment"];
+		$society_id=$bill["new_regular_bill"]["society_id"];
+		$society_id=$bill["new_regular_bill"]["society_id"];
+		$start_date=$bill["new_regular_bill"]["bill_start_date"];
+		$due_date=$bill["new_regular_bill"]["due_date"];
+		$bill_end_date=$bill["new_regular_bill"]["bill_end_date"];
+		$description=$bill["new_regular_bill"]["description"];
+		$description=$bill["new_regular_bill"]["description"];
+		$created_by=@$bill["new_regular_bill"]["created_by"];
+		$current_date=@$bill["new_regular_bill"]["current_date"];
+		?>
+		<tr>
+			<td><?php echo $auto_id; ?></td>
+			<td><?php echo $bill_no[0]; ?></td>
+			<td><?php echo $edit_text; ?></td>
+			<td><?php echo $ledger_sub_account_id; ?></td>
+			<td><?php echo $noc_charge; ?></td>
+			<td><?php echo $total; ?></td>
+			<td><?php echo $intrest_on_arrears; ?></td>
+			<td><?php echo $credit_stock; ?></td>
+			<td><?php echo $due_for_payment; ?></td>
+			<td><?php echo $society_id; ?></td>
+			<td><?php echo $start_date; ?></td>
+			<td><?php echo $due_date; ?></td>
+			<td><?php echo $bill_end_date; ?></td>
+			<td>no</td>
+			<td><?php echo $description; ?></td>
+			<td>3</td>
+			<td><?php echo $created_by; ?></td>
+			<td><?php echo $current_date; ?></td>
+		</tr>
+		<?php
+	}
+	?>
+	</table>
+	<?php
+}
+
 
 function change_role_member(){
 	if($this->RequestHandler->isAjax()){

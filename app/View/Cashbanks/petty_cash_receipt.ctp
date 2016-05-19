@@ -321,58 +321,6 @@ $('input[name="amount[]"]').die().live("keyup blur",function(){
 		}
 	});
 	
-	$('input[name="transaction_date[]"]').die().live("keyup blur",function(){
-			var transaction_date=$(this).val();
-			var ledger_sub_account_id=$('#main tbody tr:eq('+ii+') select[name="ledger_sub_account[]"]').val();
-			var ledger_type=$('#main tbody tr:eq('+ii+') select[name="account_group[]"]').val();
-			if(ledger_type==1){
-			var result=""; 
-			$.ajax({
-			url:"<?php echo $webroot_path; ?>Cashbanks/petty_cash_receipt_date_validation/"+transaction_date+"/"+ledger_sub_account_id, 
-			async: false,
-			success: function(data){
-			result=data;
-			}
-		});
-		if(result=="financial_year"){
-			allow="no";
-			$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
-			$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').append('<p class="er">Not in financial year</p>');
-		}else if(result=="match"){
-		 allow="no";
-			$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
-			$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').append('<p class="er">Regular bill date error</p>');
-		}else{
-		$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();		
-		}
-		
-		
-		
-			}else{
-				
-			var result=""; 
-			$.ajax({
-			url:"<?php echo $webroot_path; ?>Cashbanks/financial_year_validation/"+transaction_date, 
-			async: false,
-			success: function(data){
-			result=data;
-			}
-			});	
-				
-			if(result=="not_match"){
-		 allow="no";
-			$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
-			$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').append('<p class="er">Not in financial year</p>');
-		}
-		if(result=="match"){
-		$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();	
-		}	
-    	}
-		});
-	
-	
-	
-	
 </script>
 <style>
 input,select{

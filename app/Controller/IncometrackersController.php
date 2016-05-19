@@ -22,6 +22,31 @@ function it_supplimentry_bill_validation($transaction_date=null,$ledger_sub_acco
 	
 	$this->ath();
 	$s_society_id = $this->Session->read('hm_society_id');	
+	
+		$this->loadmodel('financial_year');
+		$conditions=array("society_id" => $s_society_id,"status"=>1);
+		$cursor = $this->financial_year->find('all',array('conditions'=>$conditions));
+		$abc = 555;
+		foreach($cursor as $collection){
+				$from = $collection['financial_year']['from'];
+				$to = $collection['financial_year']['to'];
+				$from1 = date('Y-m-d',$from);
+				$to1 = date('Y-m-d',$to);
+				$from2 = strtotime($from1);
+				$to2 = strtotime($to1);
+				$transaction1 = date('Y-m-d',strtotime($transaction_date));
+				$transaction2 = strtotime($transaction1);
+					if($transaction2 <= $to2 && $transaction2 >= $from2){
+					$abc = 5;
+					break;
+					}	
+		}
+		if($abc==555)
+		{
+		echo "financial_year";	
+		}
+        else{
+
 	$transaction_date=date('Y-m-d',strtotime($transaction_date));
 	$transaction_date=strtotime($transaction_date);
 	$ledger_sub_account_id=(int)$ledger_sub_account_id;
@@ -34,7 +59,7 @@ function it_supplimentry_bill_validation($transaction_date=null,$ledger_sub_acco
 			}else{
 				echo'ok';
 			}
-		
+		}		
 	
 }
 

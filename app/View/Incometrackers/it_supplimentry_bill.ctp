@@ -203,8 +203,11 @@ $('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj
 			 result_data=data;
 			}
 		});
-		
-		if(result_data=="not"){
+		if(result_data=="financial_year"){
+			 allow="no";
+		   $('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
+		   $('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').append('<p class="er">Not in financial year</p>');
+		}else if(result_data=="not"){
 		   allow="no";
 		   $('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
 		   $('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').append('<p class="er">Regular bill date error</p>');	

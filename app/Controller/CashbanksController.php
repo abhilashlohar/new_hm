@@ -8993,7 +8993,7 @@ $transaction_date=strtotime($transaction_date);
 	$nn++;
 	}
 	
-   if($nn==1){
+   if($nn==1 || $nn==0){
 		echo "not_match";   
    }
    else

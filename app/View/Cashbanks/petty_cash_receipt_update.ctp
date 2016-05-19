@@ -174,7 +174,6 @@ $(document).ready(function(){
 			result=data;
 			}
 		});
-		alert(result);
 		if(result=="financial_year"){
 			allow="no";
 			 $("#date").html('Not in financial year');

@@ -44,7 +44,6 @@ $narration = @$data["cash_bank"]["narration"];
 }
 	
 ?>
-<input type="hidden" value="<?php echo $financial_year_string; ?>" id="f_y"/>
 <form method="post">
 <input type="hidden" name="transaction_id" value="<?php echo $transaction_id; ?>">
 <div class="portlet box blue">
@@ -262,32 +261,53 @@ $("form").on("submit",function(e){
 		var allow="yes";
 
 		$('input[name="transaction_date"]').die().each(function(ii, obj){
-			var transaction_date=$(this).val();
-			transaction_date=transaction_date.split('-').reverse().join('');
 			
-			var f_y=$("#f_y").val();
-			var f_y2=f_y.split(',');
-			var al=0;
-			$.each(f_y2, function( index, value ) {
-				var f_y3=value.split('/');
-				var from=f_y3[0];
-				from=from.split('-').reverse().join('');
-				var to=f_y3[1];
-				to=to.split('-').reverse().join('');
-				
-				if(transaction_date>=from && transaction_date<=to){
-					$('.date').html('');
-					al=al+1;
-				}else{
-					$('.date').html('not in Financial year');
-					al=al+0;
-					
-				}
-			});
-			if(al==0){
-				allow="no";
+			var transaction_date=$(this).val();
+			var ledger_sub_account_id=$('select[name="ledger_sub_account"]').val();
+			var ledger_type=$('input[name="member_type"]').val();
+			
+			
+			if(ledger_type=="residential"){
+			
+			var result=""; 
+		$.ajax({
+			url:"<?php echo $webroot_path; ?>Cashbanks/bank_receipt_date_validation/"+transaction_date+"/"+ledger_sub_account_id, 
+			async: false,
+			success: function(data){
+			result=data;
 			}
 		});
+		
+		if(result=="financial_year"){
+		 allow="no";
+		
+			$(".date").html('Not in financial year');	
+		}else if(result=="match"){
+		 allow="no";
+			$(".date").html('Regular bill date error');
+		}else{
+			$(".date").html('');
+		}
+			}else{
+				
+			var result=""; 
+			$.ajax({
+			url:"<?php echo $webroot_path; ?>Cashbanks/financial_year_validation/"+transaction_date, 
+			async: false,
+			success: function(data){
+			result=data;
+			}
+			});	
+				alert(result);
+			if(result=="not_match"){
+			allow="no";
+			$(".date").html('Not in financial year');
+			}
+			if(result=="match"){
+			$(".date").html('');	
+			}	
+		}	
+	});
 
 		$('select[name="deposited_bank_id"]').die().each(function(ii, obj){
 				var bankk=$(this).val();

@@ -10,9 +10,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </center>
 
 <?php $current_date= date('d-m-Y'); ?>
-<input type="text" value="<?php echo $financial_year_string; ?>" id="f_y" style="display:none;"/>
 <div class="portlet box">
-	<div class="portlet-body" >
+	<div class="portlet-body">
 	<form method="post" id="myForm">
 		<table class="table table-condensed table-bordered" id="main">
 			<thead>
@@ -154,34 +153,7 @@ $(document).ready(function(){
 	$("form").die().on("submit",function(e){
 		var allow="yes";
 		
-		$('#main tbody tr input[name="transaction_date[]"]').die().each(function(ii, obj){
-			var transaction_date=$(this).val();
-			transaction_date=transaction_date.split('-').reverse().join('');
-			
-			var f_y=$("#f_y").val();
-			var f_y2=f_y.split(',');
-			var al=0;
-			$.each(f_y2, function( index, value ) {
-				var f_y3=value.split('/');
-				var from=f_y3[0];
-				from=from.split('-').reverse().join('');
-				var to=f_y3[1];
-				to=to.split('-').reverse().join('');
-				
-				if(transaction_date>=from && transaction_date<=to){
-					$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
-					al=al+1;
-				}else{
-					$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
-					$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').append('<p class="er">Not in financial year</p>');
-					al=al+0;
-					
-				}
-			});
-			if(al==0){
-				allow="no";
-			}
-		});
+		
 		
 		$('#main tbody tr select[name="deposited_in[]"]').die().each(function(i, obj){
 			var deposited_in=$(this).val();
@@ -280,14 +252,39 @@ $(document).ready(function(){
 			result=data;
 			}
 		});
-		if(result=="match"){
+		if(result=="financial_year"){
+		 allow="no";
+			$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
+			$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').append('<p class="er">Not in financial year</p>');	
+		}else if(result=="match"){
 		 allow="no";
 			$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
 			$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').append('<p class="er">Regular bill date error</p>');
-		}
-		if(result=="not_match"){
+		}else{
+		
 		$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();	
 		}
+			}else{
+				
+			var result=""; 
+			$.ajax({
+			url:"<?php echo $webroot_path; ?>Cashbanks/financial_year_validation/"+transaction_date, 
+			async: false,
+			success: function(data){
+			result=data;
+			}
+			});	
+				
+			if(result=="not_match"){
+			allow="no";
+			$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();
+			$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').append('<p class="er">Not in financial year</p>');
+		}
+		if(result=="match"){
+			$('#main tbody tr:eq('+ii+') input[name="transaction_date[]"]').closest('td').find(".er").remove();		
+		}	
+				
+				
 			}	
 	});
 		

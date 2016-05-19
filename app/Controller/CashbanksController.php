@@ -5448,20 +5448,6 @@ function new_bank_receipt(){
 			$s_society_id = (int)$this->Session->read('hm_society_id');
 				$s_user_id = (int)$this->Session->read('hm_user_id');
 	
-	$this->loadmodel('financial_year');
-	$conditions=array("society_id" => $s_society_id,"status"=>1);
-	$financial_years=$this->financial_year->find('all',array('conditions'=>$conditions));
-	$financial_year_array=array();
-	foreach($financial_years as $financial_year){
-		$from=date("d-m-Y",$financial_year["financial_year"]["from"]);
-		$to=date("d-m-Y",$financial_year["financial_year"]["to"]);
-		$pair=array($from,$to);
-		$pair=implode('/',$pair);
-		$financial_year_array[]=$pair;
-	}
-	$financial_year_string=implode(',',$financial_year_array);
-	$this->set(compact("financial_year_string"));
-	
 	$this->loadmodel('ledger_sub_account');
 	$conditions=array("society_id"=>$s_society_id,"ledger_id"=>112);
 	$non_members = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
@@ -8923,6 +8909,31 @@ function bank_receipt_date_validation($transaction_date=null,$ledger_sub_account
 {
 	$this->ath();
 $s_society_id = $this->Session->read('hm_society_id');	
+
+		$this->loadmodel('financial_year');
+		$conditions=array("society_id" => $s_society_id,"status"=>1);
+		$cursor = $this->financial_year->find('all',array('conditions'=>$conditions));
+		$abc = 555;
+		foreach($cursor as $collection){
+				$from = $collection['financial_year']['from'];
+				$to = $collection['financial_year']['to'];
+				$from1 = date('Y-m-d',$from);
+				$to1 = date('Y-m-d',$to);
+				$from2 = strtotime($from1);
+				$to2 = strtotime($to1);
+				$transaction1 = date('Y-m-d',strtotime($transaction_date));
+				$transaction2 = strtotime($transaction1);
+					if($transaction2 <= $to2 && $transaction2 >= $from2){
+					$abc = 5;
+					break;
+					}	
+		}
+		if($abc==555)
+		{
+		echo "financial_year";	
+		}
+        else{
+
 $transaction_date=date('Y-m-d',strtotime($transaction_date));
 $transaction_date=strtotime($transaction_date);
 	$nn=0;
@@ -8949,6 +8960,7 @@ $transaction_date=strtotime($transaction_date);
 		echo "not_match";  
 		}   
    }
+}
 }
 //End bank_receipt_date_validation//
 //Start petty_cash_receipt_date_validation//

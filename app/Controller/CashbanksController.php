@@ -693,7 +693,17 @@ function bank_receipt_view()
 		}else{
 		$narration=" Due to duplicacy";
 		}
-		
+	
+		$this->loadmodel('cash_bank');
+		$conditions=array("society_id"=>$s_society_id,"transaction_id"=>$transaction_id);
+		$result_cash_bank=$this->cash_bank->find('all',array('conditions'=>$conditions));
+		foreach($result_cash_bank as $data){
+		$ledger_sub_account_id_old=(int)$data['cash_bank']['ledger_sub_account_id'];	
+		$ignore_receipt_number=$data['cash_bank']['receipt_number'];
+		$amount=$data['cash_bank']['amount'];
+		$transaction_date=$data['cash_bank']['transaction_date'];
+		}
+        $transaction_date=date('d-m-Y',($transaction_date));
 	$this->loadmodel('cash_bank');
 	$this->cash_bank->updateAll(Array("amount"=>0,"narration"=>$narration),Array("transaction_id"=>$transaction_id));	
 		
@@ -702,18 +712,53 @@ function bank_receipt_view()
 	$this->ledger->deleteAll($conditions4);
 	
 	
+	$old_user_data=$this->requestAction(array('controller'=>'Fns','action'=>'member_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id_old)));
+	$old_user_name=$old_user_data['user_name'];		
+	$old_wing=$old_user_data['wing_name'];
+	$old_flat=$old_user_data['flat_name'];
+	$old_user_email_id=$old_user_data['email'];
+	$old_user_mobile=$old_user_data['mobile'];
+	$old_wing_flat=$old_wing.'-'.$old_flat;
 	 
+	$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
+	$email_message='<table width="80%" class="hmlogobox">
+		<tr>
+		<td width="50%" style="padding: 10px 0px 0px 10px;"><img src="'.$ip.$this->webroot.'/as/hm/hm-logo.png" style="max-height: 60px; " height="60px" /></td>
+		<td width="50%" align="right" valign="middle"  style="padding: 7px 10px 0px 0px;">
+		<a href="https://www.facebook.com/HousingMatters.co.in"><img src="'.$ip.$this->webroot.'/as/hm/SMLogoFB.png" style="max-height: 30px; height: 30px; width: 30px; max-width: 30px;" height="30px" width="30px" /></a>
+		</td>
+		</tr>
+		</table><br/><br/>';
 
+		if($cancel_type==1){
+		$email_message.='Receipt- '.$ignore_receipt_number.' is cancelled due to cheque bounce.';
+    	}else{
+		$email_message.='Receipt- '.$ignore_receipt_number.' is cancelled due to duplicacy.';
+		}
+		$email_message.='<br/><br/> Thank You <br/>
+		HousingMatters (Support Team)<br/>
+			www.housingmatters.in';
+		
+		$this->loadmodel('society'); 
+		$conditions=array("society_id"=>$s_society_id);
+		$cursor1=$this->society->find('all',array('conditions'=>$conditions));
+		foreach($cursor1 as $dataa){
+		$society_name=$dataa['society']['society_name'];	
+		$society_reg_no=$dataa['society']['society_reg_num']; 
+		$society_address=$dataa['society']['society_address'];
+		$sig_title=$dataa['society']['sig_title'];
+		$email_is_on_off=(int)@$dataa["society"]["account_email"];
+		$sms_is_on_off=(int)@$dataa['society']['account_sms'];
+		}
 
-
-	 //if($email_is_on_off==1){
-			    	//if(!empty($old_user_email_id)){
-					//$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$transaction_date." against Unit ".$old_wing_flat."";
+	 if($email_is_on_off==1){
+			    	if(!empty($old_user_email_id)){
+					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$transaction_date." against Unit ".$old_wing_flat."";
 				
-					//$this->send_email($old_user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$email_message,'donotreply@housingmatters.in');
-				//}
-			//}		 
-
+					$this->send_email($old_user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$email_message,'donotreply@housingmatters.in');
+				}
+			}		 
+	$this->Session->write('bank_receipt_cancel',1);		
 	
 	}		
 }

@@ -8,7 +8,6 @@
 	<a href="<?php echo $webroot_path; ?>Cashbanks/bank_receipt_approve" class="btn" rel='tab'>Approve Receipts</a>
 </div>
 
-<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
 <?php
 $c_date = date('d-m-Y');
 $b_date = date('1-m-Y');
@@ -119,6 +118,23 @@ $this->requestAction(array('controller' => 'hms', 'action' => 'griter_notificati
 });
 </script>
 
-
+<script>
+$(document).ready(function() {
+<?php	
+$status5=(int)$this->Session->read('bank_receipt_cancel');
+if($status5==1)
+{
+?>
+	$.gritter.add({
+		title: 'Success',
+		text: '<p>Bank Receipt Cancelled Successfully.</p>',
+	sticky: false,
+	time: '10000',
+	});
+<?php
+$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass'=>array('bank_receipt_cancel')));
+} ?>
+});
+</script>
 
 

@@ -1927,6 +1927,10 @@ $this->loadmodel('user');
 function griter_notification($id)
 {	
 
+	if($id=="bank_receipt_cancel"){
+		$this->Session->delete('bank_receipt_cancel');
+	}
+
 	if($id=="bank_receipt"){
 		$this->Session->delete('bank_receipt');
 	}

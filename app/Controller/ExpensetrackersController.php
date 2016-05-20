@@ -919,7 +919,7 @@ $this->layout=null;
 			$invoice_ref=@$child_ar[4];
 			$expense_head=@$child_ar[5];
 			$amount=@$child_ar[6];
-			$description = @$child[7];
+			$description = @$child_ar[7];
 			
 			$this->loadmodel('expense_tracker_csv');
 			$auto_id=$this->autoincrement('expense_tracker_csv','auto_id');

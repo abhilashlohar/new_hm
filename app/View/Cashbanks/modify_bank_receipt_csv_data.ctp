@@ -211,48 +211,6 @@ $(document).ready(function() {
 	$( "#final_import" ).click(function() {
 		var allow="yes";
 		
-		$('#report_tb tbody tr input[field="trajection_date"]').die().each(function(ii, obj){
-			
-			var trajection_date=$(this).val();
-			trajection_date=trajection_date.split('-').reverse().join('');
-			
-			var f_y=$("#f_y").val();
-			var f_y2=f_y.split(',');
-			var al=0;
-			$.each(f_y2, function( index, value ) {
-				var f_y3=value.split('/');
-				var from2=f_y3[0];
-				from2=from2.split('-').reverse().join('');
-				var to=f_y3[1];
-				to=to.split('-').reverse().join('');
-				if(trajection_date>=from2 && trajection_date<=to){
-					
-					//$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').find(".er").remove();
-					al=al+1;
-					
-				}else{
-					//$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').find(".er").remove();
-					//$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').append('<p class="er">Not in financial year</p>');
-					al=al+0;
-					
-				}
-			});
-			if(al==0){
-					$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').find(".er").remove();
-					$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').append('<p class="er">Not in financial year</p>');
-				allow="no";
-			}
-			else{
-				$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').find(".er").remove();
-			}
-		}); 
-		
-		
-		
-		
-		
-		
-		
 		$('#report_tb tbody tr select[field=deposited_in]').each(function(i, obj) {
 			var deposited_in=$(this).val();
 			if(deposited_in==""){
@@ -263,7 +221,7 @@ $(document).ready(function() {
 				$(this).closest('td').find(".er").remove();
 			}
 		});
-		$('#report_tb tbody tr select[field=ledger_sub_account_id]').each(function(i, obj) {
+		$('#report_tb tbody tr select[field=ledger_sub_account_id]').each(function(i, obj){
 			var deposited_in=$(this).val();
 			if(deposited_in==""){
 				$(this).closest('td').find(".er").remove();

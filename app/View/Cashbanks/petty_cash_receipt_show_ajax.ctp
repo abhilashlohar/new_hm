@@ -57,11 +57,11 @@ foreach ($cursor1 as $collection){
 	$account_type = (int)$collection['cash_bank']['account_type'];			  
 	$d_user_id = (int)$collection['cash_bank']['ledger_sub_account_id'];
 	$date = $collection['cash_bank']['transaction_date'];
-	$prepaired_by = (int)$collection['cash_bank']['prepaired_by'];   
+	$prepaired_by = (int)$collection['cash_bank']['created_by'];   
 	$narration = $collection['cash_bank']['narration'];
 	$account_head = $collection['cash_bank']['account_head'];
 	$amount = $collection['cash_bank']['amount'];
-	$prepaired_by = (int)$collection['cash_bank']['prepaired_by'];   
+	$prepaired_by = (int)$collection['cash_bank']['created_by'];   
 	$current_date = $collection['cash_bank']['created_on'];
 	$creation_date = date('d-m-Y',strtotime($current_date));
 	

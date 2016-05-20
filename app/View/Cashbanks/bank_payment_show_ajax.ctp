@@ -63,7 +63,7 @@ foreach ($cursor2 as $collection){
 $receipt_no=$collection['cash_bank']['receipt_id'];
 $transaction_id=(int)$collection['cash_bank']['transaction_id'];	
 $date=$collection['cash_bank']['transaction_date'];
-$prepaired_by_id=(int)$collection['cash_bank']['prepaired_by'];
+$prepaired_by_id=(int)$collection['cash_bank']['created_by'];
 $user_id=(int)$collection['cash_bank']['sundry_creditor_id'];   
 $invoice_reference=$collection['cash_bank']['invoice_reference'];
 $description=$collection['cash_bank']['narration'];

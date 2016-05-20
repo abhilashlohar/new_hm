@@ -102,6 +102,129 @@ function regular_bill_echo(){
 	<?php
 }
 
+function cash_bank_echo(){
+	$this->layout=null;
+	?>
+	<table border="1">
+		<tr>
+			<th>transaction_id</th>
+			<th>source</th>
+			<th>transaction_date</th>
+			<th>deposited_in</th>
+			<th>receipt_mode</th>
+			<th>cheque_number</th>
+			<th>date</th>
+			<th>drown_in_which_bank</th>
+			<th>branch_of_bank</th>
+			<th>received_from</th>
+			<th>ledger_sub_account_id</th>
+			<th>amount</th>
+			<th>narration</th>
+			<th>society_id</th>
+			<th>created_by</th>
+			<th>receipt_number</th>
+			<th>edit_text</th>
+			<th>bill_reference</th>
+			<th>created_on</th>
+		</tr>
+	<?php
+	$this->loadmodel('new_cash_bank');
+	$conditions=array('edit_status'=>"NO");
+	$receipts = $this->new_cash_bank->find('all',array('conditions'=>$conditions));
+	foreach($receipts as $receipt){
+		$transaction_id=$receipt["new_cash_bank"]["transaction_id"];
+		$receipt_source=(int)$receipt["new_cash_bank"]["receipt_source"];
+		$amount=$receipt["new_cash_bank"]["amount"];
+		$narration=@$receipt["new_cash_bank"]["narration"];
+		$society_id=(int)$receipt["new_cash_bank"]["society_id"];
+		$created_by=(int)@$receipt["new_cash_bank"]["prepaired_by"];
+		$receipt_id=$receipt["new_cash_bank"]["receipt_id"];
+		$receipt_id=explode('-',$receipt_id);
+		if(sizeof($receipt_id)==2){ $edit_text="-R"; }else{ $edit_text=""; }
+		$current_date=$receipt["new_cash_bank"]["current_date"];
+		
+		if($receipt_source==1){
+			$source="bank_receipt";
+			$transaction_date=(int)$receipt["new_cash_bank"]["receipt_date"];
+			$deposited_in=(int)$receipt["new_cash_bank"]["deposited_bank_id"];
+			$receipt_mode=strtolower($receipt["new_cash_bank"]["receipt_mode"]);
+			$cheque_number=$receipt["new_cash_bank"]["cheque_number"];
+			$cheque_date=$receipt["new_cash_bank"]["cheque_date"];
+			$drown_in_which_bank=@$receipt["new_cash_bank"]["drawn_on_which_bank"];
+			$bank_branch=@$receipt["new_cash_bank"]["bank_branch"];
+			$member_type=(int)$receipt["new_cash_bank"]["member_type"];
+			
+			
+			if($member_type==1){
+				$received_from="residential";
+			}
+			if($member_type==2){
+				$received_from="non_residential";
+			}
+			$flat_id=(int)$receipt["new_cash_bank"]["flat_id"];
+			
+			$this->loadmodel('ledger_sub_account');
+			$conditions=array("flat_id" => $flat_id);
+			$ledger_sub_accounts = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+			$ledger_sub_account_id=$ledger_sub_accounts[0]['ledger_sub_account']['auto_id'];
+			
+			$bill_reference=@$receipt["new_cash_bank"]["bill_reference"];
+		}
+		if($receipt_source==2){
+			$source="bank_payment";
+			$transaction_date=(int)$receipt["new_cash_bank"]["transaction_date"];
+			$deposited_in="";
+			$receipt_mode=strtolower($receipt["new_cash_bank"]["receipt_mode"]);
+			$cheque_number="";
+			$cheque_date="";
+			$drown_in_which_bank="";
+			$bank_branch="";
+			$received_from="";
+			$ledger_sub_account_id="";
+			$bill_reference="";
+		}
+		if($receipt_source==3){$source="petty_cash_receipt";}
+		if($receipt_source==4){
+			$source="petty_cash_payment";
+			$transaction_date=(int)$receipt["new_cash_bank"]["transaction_date"];
+			$deposited_in="";
+			$receipt_mode="";
+			$cheque_number="";
+			$cheque_date="";
+			$drown_in_which_bank="";
+			$bank_branch="";
+			$received_from="";
+			$ledger_sub_account_id="";
+			$bill_reference="";
+		}
+		?>
+		<tr>
+			<td><?php echo $transaction_id; ?></td>
+			<td><?php echo $source; ?></td>
+			<td><?php echo $transaction_date; ?></td>
+			<td><?php echo $deposited_in; ?></td>
+			<td><?php echo $receipt_mode; ?></td>
+			<td><?php echo $cheque_number; ?></td>
+			<td><?php echo $cheque_date; ?></td>
+			<td><?php echo $drown_in_which_bank; ?></td>
+			<td><?php echo $bank_branch; ?></td>
+			<td><?php echo $received_from; ?></td>
+			<td><?php echo $ledger_sub_account_id; ?></td>
+			<td><?php echo $amount; ?></td>
+			<td><?php echo $narration; ?></td>
+			<td><?php echo $society_id; ?></td>
+			<td><?php echo $created_by; ?></td>
+			<td><?php echo $receipt_id[0]; ?></td>
+			<td><?php echo $edit_text; ?></td>
+			<td><?php echo $bill_reference; ?></td>
+			<td><?php echo $current_date; ?></td>
+		</tr>
+		<?php
+	}
+	?>
+	</table>
+	<?php
+}
 
 function change_role_member(){
 	if($this->RequestHandler->isAjax()){

@@ -418,6 +418,7 @@ function generate_bills(){
 		$income_head_array=$regular_bill["regular_bill_temp"]["income_head_array"];
 		$noc_charge=$regular_bill["regular_bill_temp"]["noc_charge"];
 		$other_charge=$regular_bill["regular_bill_temp"]["other_charge"];
+		
 		$total=$regular_bill["regular_bill_temp"]["total"];
 		$arrear_principle=$regular_bill["regular_bill_temp"]["arrear_principle"];
 		$maint_arrear=$regular_bill["regular_bill_temp"]["maint_arrear"];
@@ -458,7 +459,7 @@ function generate_bills(){
 		
 		
 		foreach($other_charge as $key=>$vlaue){
-			if(!empty($value)){
+			if(!empty($vlaue)){
 				$this->loadmodel('ledger');
 				$auto_id=$this->autoincrement('ledger','auto_id');
 				$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => $key,"ledger_sub_account_id" => null,"debit"=>null,"credit"=>$vlaue,"table_name"=>"regular_bill","element_id"=>$regular_bill_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));

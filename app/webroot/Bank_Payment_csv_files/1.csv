@@ -1,3 +1,6 @@
 Transaction Date,Ledger A/c,Amount,TDS in Percentage,Mode of Payment,Instrument/UTR,Bank Account,Invoice Reference,Narration 
-12-10-2015,Share Capital,10000,2,NEFT,HHHG4455,SBI,for marketing,narration 
-12-10-2015,Raju,10000,2,NEFT,HHHG4455,SBI,for marketing,narration 
+1-1-2016,Ram Shinde,500,,Cheque,55,SBBJ,N/A,
+1-2-2016,Jay,200,25,Cheque,14,SBBJ,N/A,
+2-1-2016,MSEDCL,140,14,Cheque,56,SBBJ,N/A,
+5-1-2016,Raj Stationary ,320,,Cheque,12,SBBJ,N/A,
+7-1-2016,Sanjay Pohal  ,150,,Cheque,26,SBBJ,N/A,

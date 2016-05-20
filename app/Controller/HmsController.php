@@ -7749,6 +7749,77 @@ function tenant_access(){
 	$this->layout='without_session';	
 	
 }
+
+function supplimentry_bill_table(){
+	
+	$this->layout='blank';	
+	$this->ath();
+	?>
+	<table border="1">
+	<tr>
+	  <th>supplimentry_bill_id</th>
+		<th>receipt_id</th>
+		<th>company_name</th>
+		<th>ledger_sub_account_id</th>
+		<th>description</th>
+		<th>date</th>
+		<th>society_id</th>
+		<th>total_amount</th>
+		<th>income_head</th>
+		<th>created_by</th>
+		<th>due_date</th>
+		<th>supplimentry_bill_type</th>
+		<th>transaction_date</th>
+		
+	</tr>
+	<?php
+		$this->loadmodel("adhoc_bill");
+		$result_adhoc_bill=$this->adhoc_bill->find('all');
+		foreach($result_adhoc_bill as $data){
+		$supplimentry_bill_id=(int)$data['adhoc_bill']['adhoc_bill_id'];
+		$receipt_id=$data['adhoc_bill']['receipt_id'];
+		$company_name=$data['adhoc_bill']['company_name'];
+		$description=$data['adhoc_bill']['description'];
+		$date=$data['adhoc_bill']['date'];
+		$society_id=$data['adhoc_bill']['society_id'];
+		$g_total=$data['adhoc_bill']['g_total'];
+		$income_head=$data['adhoc_bill']['income_head'];
+		$created_by=@$data['adhoc_bill']['created_by'];
+		$due_date=@$data['adhoc_bill']['due_date'];
+		$bill_daterange_from=@$data['adhoc_bill']['bill_daterange_from'];
+		
+		if(!empty($due_date)){
+			$due_date= date("Y-m-d", strtotime($due_date)); 
+			$due_date= strtotime($due_date);
+		}
+		$flat_id=$data['adhoc_bill']['person_name'];
+		$this->loadmodel("ledger_sub_account");
+		$result_ledger_sub_accounts=$this->ledger_sub_account->find('all',array('conditions'=>array('flat_id'=>$flat_id)));
+		$ledger_sub_account_id=(int)$result_ledger_sub_accounts[0]['ledger_sub_account']['auto_id'];
+	?>
+	<tr>
+	<td> <?php echo $supplimentry_bill_id; ?></td>
+	<td> <?php echo $receipt_id; ?></td>
+	<td> <?php echo $company_name; ?></td>
+	<td> <?php echo $ledger_sub_account_id; ?></td>
+	<td> <?php echo $description; ?></td>
+	<td> <?php echo $date; ?></td>
+	<td> <?php echo $society_id; ?></td>
+	<td> <?php echo $g_total; ?></td>
+	<td> <?php echo $income_head; ?></td>
+	<td> <?php echo $created_by; ?></td>
+	<td> <?php echo $due_date; ?></td>
+	<td> resident</td>
+	<td> <?php echo $bill_daterange_from; ?></td>
+	</tr>
+	<?php
+	}
+	?>
+	</table>
+	<?php
+}
+
+
 function dashboard(){
 	if($this->RequestHandler->isAjax()){
 		$this->layout='blank';

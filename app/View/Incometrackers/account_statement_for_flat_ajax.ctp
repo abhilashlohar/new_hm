@@ -147,6 +147,20 @@ foreach($result_ledger as $ledger_data){
 					$credits=$debit+$credit;
 					$account_balance=$account_balance-(int)$credits;
 				} 
+				
+	if($table_name=="journal"){
+			
+			$source="Journal";
+			
+			$result_journal=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_journal_table'), array('pass' => array($element_id)));
+			foreach($result_journal as $data){
+				$description=$data['journal']['remark'];
+				$journal_id=$data['journal']['journal_id'];
+				$refrence_no=$data['journal']['voucher_id'];
+			}
+
+		}
+				
 	if($table_name=='supplimentry_bill')
 	{
 	$element_id=(int)$element_id;	
@@ -184,6 +198,9 @@ foreach($result_ledger as $ledger_data){
 						if($table_name=="cash_bank"){
 							echo '<a class="tooltips" data-original-title="Click for view Source" data-placement="bottom" href="'.$this->webroot.'Cashbanks/bank_receipt_html_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
 						}
+						if($table_name=="journal"){
+							echo '<a href="'.$this->webroot.'Bookkeepings/journal_voucher_view/'.$refrence_no.'" target="_blank">'.$refrence_no.'</a>';
+						}
                         if($table_name=="supplimentry_bill")
 						{
 						echo '<a class="tooltips" data-original-title="Click for view Source" data-placement="bottom" href="'.$this->webroot.'Incometrackers/supplimentry_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';	
@@ -196,6 +213,9 @@ foreach($result_ledger as $ledger_data){
 						}
 						if($table_name=="cash_bank"){
 							echo "Bank Receipt";
+						}
+						if($table_name=="journal"){
+							echo "journal";
 						}
 						if($table_name=="supplimentry_bill")
 						{

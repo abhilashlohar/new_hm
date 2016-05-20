@@ -4791,7 +4791,6 @@ function regular_bill_report_excel(){
 	$order=array('regular_bill.auto_id'=>'ASC');
 	$regular_bills=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order)); 
 	$this->set(compact('regular_bills'));
-	
 }
 
 function regular_bill_report($period=null){
@@ -4810,9 +4809,8 @@ function regular_bill_report($period=null){
 	$regular_bills=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order)); 
 	$this->set(compact('regular_bills'));
 }
-///////////////////////// End In head report (Accounts)//////////////////////////
-
-/////////////////////// Start It Reports Supplimentry Bill (Accounts)///////////////
+//End In head report (Accounts)//
+//Start It Reports Supplimentry Bill (Accounts)//
 
 function it_reports_supplimentry()
 {

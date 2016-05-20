@@ -1201,7 +1201,7 @@ if(empty($amount)){ $amount_v = 1;  }else{ $amount_v = 0;  }
 		
 if(is_numeric($amount)){ $amount_vv = 0;  }else{ $amount_vv = 1; }
 		
-echo $posting_v;
+echo $financial_v;
 		
 	
 		

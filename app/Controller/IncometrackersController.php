@@ -6264,8 +6264,8 @@ $this->layout="";
 $this->ath();
 
 $s_role_id=$this->Session->read('role_id');
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');	
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');	
 
 $from = $this->request->query('f');
 $to = $this->request->query('t');
@@ -6300,10 +6300,12 @@ $this->set('from',$from);
 $this->set('to',$to);
 $this->set('tp',$tp);
 
-$this->loadmodel('adhoc_bill');
+$this->loadmodel('supplimentry_bill');
+$order=array('supplimentry_bill.transaction_date'=> 'ASC');
 $conditions=array("society_id"=> $s_society_id);
-$cursor1=$this->adhoc_bill->find('all',array('conditions'=>$conditions));
+$cursor1=$this->supplimentry_bill->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor1',$cursor1);
+
 
 }
 ///////////////////// End supplimentry Bill Excel/////////////////////////////////

@@ -509,6 +509,7 @@ function allow_import_bank_receipt(){
 		$trajection_date=$receipt_converted["bank_receipt_csv_converted"]["trajection_date"];
         $transaction_date_for_regular_bill=date('Y-m-d',strtotime($trajection_date)); 
 	    $transaction_date_for_regular_bill=strtotime($transaction_date_for_regular_bill);
+	
 	$nn=0;
 	$this->loadmodel('regular_bill'); 
 	$order=array('regular_bill.start_date'=>'DESC');
@@ -554,6 +555,8 @@ function allow_import_bank_receipt(){
 					}	
 		}
 
+		
+		
 		if(empty($deposited_in) or empty($ledger_sub_account_id) or empty($amount) or $abc==555 or $regular_bill_date_valid=="match"){
 			die("not_validate");
 		}
@@ -8982,7 +8985,6 @@ function petty_cash_receipt_date_validation($transaction_date=null,$ledger_sub_a
 		echo "financial_year";	
 		}
         else{
-
 	
 $transaction_date=date('Y-m-d',strtotime($transaction_date));
 $transaction_date=strtotime($transaction_date);

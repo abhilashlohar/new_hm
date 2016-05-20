@@ -7,7 +7,7 @@
 			$amount = $collection['cash_bank']['amount'];
 			  $society_id = (int)$collection['cash_bank']['society_id'];
 				$narration = @$collection['cash_bank']['narration'];
-				  $user_id = (int)@$collection['cash_bank']['user_id'];
+				  $user_id = (int)@$collection['cash_bank']['sundry_creditor_id'];
 					$account_type = (int)@$collection['cash_bank']['account_type'];
 					  $sub_account = (int)$collection['cash_bank']['account_head'];
 				$transaction_date = date('d-m-Y');

@@ -55,7 +55,7 @@ foreach ($cursor1 as $collection){
 	$receipt_no = @$collection['cash_bank']['receipt_id'];
 	$transaction_id = (int)$collection['cash_bank']['transaction_id'];	
 	$account_type = (int)$collection['cash_bank']['account_type'];			  
-	$d_user_id = (int)$collection['cash_bank']['user_id'];
+	$d_user_id = (int)$collection['cash_bank']['ledger_sub_account_id'];
 	$date = $collection['cash_bank']['transaction_date'];
 	$prepaired_by = (int)$collection['cash_bank']['prepaired_by'];   
 	$narration = $collection['cash_bank']['narration'];

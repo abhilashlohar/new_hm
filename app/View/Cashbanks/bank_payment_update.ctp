@@ -2,7 +2,7 @@
 foreach($result_cash_bank as $data){
 	$transaction_date=$data['cash_bank']['transaction_date'];
 	  @$invoice_reference=@$data['cash_bank']['invoice_reference'];
-		$ledger_id=(int)$data['cash_bank']['user_id'];
+		$ledger_id=(int)$data['cash_bank']['sundry_creditor_id'];
 		  @$narration=@$data['cash_bank']['narration'];
 			$receipt_mode=$data['cash_bank']['receipt_mode'];
 			  $receipt_instruction=$data['cash_bank']['receipt_instruction'];

@@ -6,7 +6,7 @@ foreach($cursor1 as $data){
 	$amount=$data['cash_bank']['amount'];
 	$society_id=(int)$data['cash_bank']['society_id'];
 	$narration=@$data['cash_bank']['narration'];
-	$user_id=(int)@$data['cash_bank']['user_id'];
+	$user_id=(int)@$data['cash_bank']['ledger_sub_account_id'];
 	$account_type=(int)@$data['cash_bank']['account_type'];
 	$sub_account=(int)$data['cash_bank']['account_head'];
 	$auto_id=(int)$data['cash_bank']['transaction_id'];

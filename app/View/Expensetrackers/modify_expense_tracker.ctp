@@ -207,7 +207,7 @@ $( document ).ready(function() {
 		$("#check_validation_result").html("");
 		alert("Your Data Is Not Valid.");
 		}else{
-			change_page_automatically("<?php echo $webroot_path; ?>Expensetrackers/expense_tracker_import");
+			//change_page_automatically("<?php echo $webroot_path; ?>Expensetrackers/expense_tracker_import");
 		}
 		});
 	});	

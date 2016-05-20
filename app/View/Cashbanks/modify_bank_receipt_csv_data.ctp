@@ -245,8 +245,6 @@ $(document).ready(function() {
 		$('#report_tb tbody tr input[field="trajection_date"]').die().each(function(ii, obj){
 			var transaction_date=$(this).val();
 			var ledger_sub_account_id=$('#report_tb tbody tr:eq('+ii+') select[field="ledger_sub_account_id"]').val();
-			
-			
 			var result=""; 
 		$.ajax({
 			url:"<?php echo $webroot_path; ?>Cashbanks/bank_receipt_date_validation/"+transaction_date+"/"+ledger_sub_account_id, 
@@ -255,8 +253,11 @@ $(document).ready(function() {
 			result=data;
 			}
 		});
-		
-		if(result=="match"){
+		if(result=="financial_year"){
+			allow="no";
+			$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').find(".er").remove();
+			$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').append('<p class="er">Not in financial year</p>');
+		}else if(result=="match"){
 		 allow="no";
 			$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').find(".er").remove();
 			$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').append('<p class="er">Regular bill date error</p>');

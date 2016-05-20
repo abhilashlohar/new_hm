@@ -1107,7 +1107,7 @@ $this->loadmodel('financial_year');
 	$bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','bank_payment');
 	$receipt_array[]=$bbb;
 	$this->loadmodel('cash_bank');
-	$multipleRowData=Array(Array("transaction_id"=>$i,"receipt_id"=>$bbb,"current_date"=>$current_date, 
+	$multipleRowData=Array(Array("transaction_id"=>$i,"receipt_id"=>$bbb,"created_on"=>$current_date, 
 	"transaction_date"=>strtotime($transaction_date),"prepaired_by"=>$s_user_id, 
 	"user_id"=>$ledger_account_id,"invoice_reference"=>@$invoice_reference,"narration"=>$narration, "receipt_mode"=>$mode,"receipt_instruction"=>$instrument,"account_head"=>$bank_account,  
 	"amount"=>$amount,"society_id"=>$s_society_id,"tds_id" =>$tds,"account_type"=>$ledger_account_type,"source"=>"bank_payment","auto_inc"=>"YES"));
@@ -1401,7 +1401,7 @@ $i=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','petty_cash
 $receipt_array[]=$i;
 $this->loadmodel('cash_bank');
 $multipleRowData = Array( Array("transaction_id"=>$auto,"receipt_id" =>$i,"user_id"=>$party_ac, 
-"current_date"=>$current_date,"account_type"=>$account_group,"transaction_date"=>strtotime($transaction_date),"prepaired_by"=>$s_user_id,"narration"=>$narration,"account_head"=>$account_head_id,"amount"=>$amount,"society_id"=>$s_society_id,"source"=>"petty_cash_receipt","auto_inc"=>"YES"));
+"created_on"=>$current_date,"account_type"=>$account_group,"transaction_date"=>strtotime($transaction_date),"prepaired_by"=>$s_user_id,"narration"=>$narration,"account_head"=>$account_head_id,"amount"=>$amount,"society_id"=>$s_society_id,"source"=>"petty_cash_receipt","auto_inc"=>"YES"));
 $this->cash_bank->saveAll($multipleRowData);  
 
 if($account_group == 1){
@@ -1689,7 +1689,7 @@ $this->set('cursor2',$cursor2);
 		$auto=$this->autoincrement('cash_bank','transaction_id');
 		$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','petty_cash_payment');
 		$this->loadmodel('cash_bank');
-		$multipleRowData=Array(Array("transaction_id"=>$auto,"receipt_id"=>$i,"user_id"=>$expense_party,"current_date"=>$current_date,"account_type"=>$account_group_id,"transaction_date"=>strtotime($transaction_date),"prepaired_by"=>$s_user_id,"narration"=>$narration,"account_head"=>$paid_from_id,"amount"=>$amount,"society_id"=>$s_society_id,"source"=>"petty_cash_payment","auto_inc"=>"YES"));
+		$multipleRowData=Array(Array("transaction_id"=>$auto,"receipt_id"=>$i,"user_id"=>$expense_party,"created_on"=>$current_date,"account_type"=>$account_group_id,"transaction_date"=>strtotime($transaction_date),"prepaired_by"=>$s_user_id,"narration"=>$narration,"account_head"=>$paid_from_id,"amount"=>$amount,"society_id"=>$s_society_id,"source"=>"petty_cash_payment","auto_inc"=>"YES"));
 		$this->cash_bank->saveAll($multipleRowData);  
         $receipt_array[]=$i;
 	if($account_group_id == 1){
@@ -2578,7 +2578,7 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
     $ignore_receipt_number=$ignore_receipt_number.'-R';
 		
 	$this->loadmodel('cash_bank');
-	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$non_member_ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"bill_reference"=>$bill_reference,"edit_text"=>$ignore_receipt_number),Array("transaction_id"=>$transaction_id)); 
+	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode" => $receipt_mode,"cheque_number"=>$cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$non_member_ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"bill_reference"=>$bill_reference,"edit_text"=>$ignore_receipt_number),Array("transaction_id"=>$transaction_id)); 
 					
 	$this->loadmodel('ledger');
 	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"debit"=>$amount, "ledger_account_id"=>33,"ledger_sub_account_id"=>$deposited_bank_id),Array("element_id"=>$transaction_id,"credit"=>null,"table_name"=>"cash_bank")); 
@@ -3039,11 +3039,9 @@ $i=$this->autoincrement('cash_bank','transaction_id');
 $bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','bank_payment');
 $rr_arr[] = $bbb;
 $this->loadmodel('new_cash_bank');
-$multipleRowData = Array( Array("transaction_id" => $i, "receipt_id" => $bbb,"current_date" => $current_date, 
-"transaction_date" => strtotime($transaction_date), "prepaired_by" => $s_user_id, 
-"user_id" => $ledger_acc,"invoice_reference" => @$invoice,"narration" => $narration, "receipt_mode" => $mode,
-"receipt_instruction" => $instrument, "account_head" => $bank_ac,  
-"amount" => $amount,"society_id" => $s_society_id, "tds_id" =>$tds_id,"account_type"=>$acc_type,"source"=>"bank_payment","auto_inc"=>"YES"));
+$multipleRowData = Array( Array("transaction_id" => $i,"receipt_id"=>$bbb,"created_on"=> $current_date,"transaction_date"=>strtotime($transaction_date), "prepaired_by" => $s_user_id, 
+"user_id" => $ledger_acc,"invoice_reference" => @$invoice,"narration" => $narration, "receipt_mode" => $mode,"receipt_instruction" => $instrument,"account_head" => $bank_ac,  
+"amount" => $amount,"society_id" => $s_society_id,"tds_id"=>$tds_id,"account_type"=>$acc_type,"source"=>"bank_payment","auto_inc"=>"YES"));
 $this->cash_bank->saveAll($multipleRowData);  
 
 $this->loadmodel('reference');
@@ -4700,7 +4698,6 @@ function bank_payment_update($auto_id=null)
 	$this->loadmodel('cash_bank');
 	$this->cash_bank->updateAll(array("transaction_date"=>strtotime($transaction_date),"user_id"=>$ledger_account_id,"invoice_reference"=>@$invoice_reference,"narration"=>$narration,"receipt_mode"=>$mode_of_payment,"receipt_instruction"=>$instrument_utr,"account_head"=>$bank_account,"amount"=>$amount,"tds_id"=>$tds_id,"account_type"=>$ledger_account_type),array("society_id"=>$s_society_id,"transaction_id"=>$element_id));
 	
-
 	$this->loadmodel('reference');
 	$conditions=array("auto_id"=>3);
 	$cursor4=$this->reference->find('all',array('conditions'=>$conditions));
@@ -8745,9 +8742,9 @@ $i=$this->autoincrement('cash_bank','transaction_id');
 $bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','bank_payment');
 $rr_arr[] = $bbb;
 $this->loadmodel('cash_bank');
-$multipleRowData = Array( Array("transaction_id"=>$i, "receipt_id" => $bbb,  "current_date" => $current_date, 
-"transaction_date" => strtotime($transaction_date), "prepaired_by" => $s_user_id, 
-"user_id" => $ledger_acc,"invoice_reference" => @$invoice,"narration" => $narration, "receipt_mode" => $mode,
+$multipleRowData = Array( Array("transaction_id"=>$i,"receipt_id" =>$bbb,"created_on"=>$current_date, 
+"transaction_date" => strtotime($transaction_date),"prepaired_by" => $s_user_id, 
+"user_id" => $ledger_acc,"invoice_reference" => @$invoice,"narration" => $narration,"receipt_mode" => $mode,
 "receipt_instruction" => $instrument, "account_head" => $bank_ac,  
 "amount" => $amount,"society_id" => $s_society_id, "tds_id" =>$tdsss_idd,"account_type"=>$acc_type,"source"=>"bank_payment","auto_inc"=>"YES"));
 $this->cash_bank->saveAll($multipleRowData);  

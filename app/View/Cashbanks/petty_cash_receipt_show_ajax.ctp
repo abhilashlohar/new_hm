@@ -62,7 +62,7 @@ foreach ($cursor1 as $collection){
 	$account_head = $collection['cash_bank']['account_head'];
 	$amount = $collection['cash_bank']['amount'];
 	$prepaired_by = (int)$collection['cash_bank']['prepaired_by'];   
-	$current_date = $collection['cash_bank']['current_date'];
+	$current_date = $collection['cash_bank']['created_on'];
 	$creation_date = date('d-m-Y',strtotime($current_date));
 	
 	$result_gh = $this->requestAction(array('controller'=>'hms','action'=>'profile_picture'),array('pass'=>array($prepaired_by)));

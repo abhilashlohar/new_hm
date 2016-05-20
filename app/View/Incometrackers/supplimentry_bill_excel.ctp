@@ -11,8 +11,8 @@ header ("Content-Description: Generated Report" );
 $m_from = date("Y-m-d", strtotime($from));
 $m_to = date("Y-m-d", strtotime($to));
 
-$frommm = strtotime($m_from);
-$tooo = strtotime($m_to);
+$date_renge_from = strtotime($m_from);
+$date_renge_to = strtotime($m_to);
 ?>
 
 <?php
@@ -36,83 +36,78 @@ if($tp == 1)
 <th>Bill Amount</th>
 <th>Narration</th>
 </tr>
-<?php
-$grand_total = 0;
-$i=0;
-foreach ($cursor1 as $collection) 
-{
-$adhoc_bill= (int)$collection['adhoc_bill']["adhoc_bill_id"];
-$receipt_id = $collection['adhoc_bill']['receipt_id'];
-$date=$collection['adhoc_bill']["date"];
-$residential=$collection['adhoc_bill']["residential"];
-$g_total=$collection['adhoc_bill']["g_total"];
-$html_bill = $collection['adhoc_bill']['html_bill'];
-$bill_date_from = $collection['adhoc_bill']['bill_daterange_from'];
-$description = $collection['adhoc_bill']['description'];
-$bill_date_from2 = date('d-m-Y',($bill_date_from));
-if($residential=="y")
-{
-$flat_id = (int)$collection['adhoc_bill']['person_name'];	
+
+<?php $grand_total=0; $i=0;
+foreach($cursor1 as $collection){
+$creater_name="";
+$supplimentry_bill_id=(int)$collection['supplimentry_bill']["supplimentry_bill_id"];
+$receipt_id=$collection['supplimentry_bill']['receipt_id'];
+$date=$collection['supplimentry_bill']["date"];
+$supplimentry_bill_type=$collection['supplimentry_bill']["supplimentry_bill_type"];
+$total_amount=$collection['supplimentry_bill']["total_amount"];
+$transaction_date=$collection['supplimentry_bill']['transaction_date'];
+$description=$collection['supplimentry_bill']['description'];
+$current_date=date('d-m-Y',strtotime($date));	
+$transaction_date_for_view = date('d-m-Y',($transaction_date));
+$creater_id=(int)$collection['supplimentry_bill']['created_by']; 
+	$user_detail = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array((int)$creater_id)));
+	foreach($user_detail as $user_detailll){
+	$creater_name=$user_detailll['user']['user_name'];
 	
-$flat_detailll = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
-foreach ($flat_detailll as $data) 
-{
-$wing_id = (int)$data['flat']['wing_id'];  
+	}
+if($supplimentry_bill_type=="resident"){
+$ledger_sub_account_id=(int)$collection['supplimentry_bill']['ledger_sub_account_id'];
+	$ledger_sub_account_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+	foreach($ledger_sub_account_detail as $ledger_sub_account_data) {
+	$user_name=$ledger_sub_account_data['ledger_sub_account']['name'];
+	$user_flat_id=$ledger_sub_account_data['ledger_sub_account']['user_flat_id'];
+	}
+	$result_user_flat=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_flat_id'),array('pass'=>array($user_flat_id)));	
+	foreach($result_user_flat as $collection){	
+	$flat_id = (int)$collection['user_flat']['flat'];
+	}
+$flat_detaill=$this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),
+array('pass'=>array($flat_id)));				
+foreach($flat_detaill as $flat_dataaa){
+$wing_id = (int)$flat_dataaa['flat']['wing_id'];
 }
-
-$ledger_subacc_detaill = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_subLedger_detail_via_flat_id'),array('pass'=>array($flat_id)));
-foreach ($ledger_subacc_detaill as $dataaa) 
-{
-$user_name = $dataaa['ledger_sub_account']['name'];  
+$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new')
+,array('pass'=>array($wing_id,$flat_id)));	
+$supplimentry_bill_type_for_view="Residential";
 }
-	
-$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array($wing_id,$flat_id)));									
-$bill_for = $wing_flat;
-$bill_type = "Residential";
+if($supplimentry_bill_type=="non_resident"){
+$ledger_sub_account_id=(int)$collection['supplimentry_bill']['ledger_sub_account_id'];
+$ledger_sub_account_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+foreach ($ledger_sub_account_detail as $ledger_sub_account_date) {
+$user_name = $ledger_sub_account_date['ledger_sub_account']['name'];
 }
-
-if($residential=="n")
-{
-$flat_id = (int)$collection['adhoc_bill']['person_name'];	
-$ledger_subacc_detaill = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($flat_id)));
-foreach ($ledger_subacc_detaill as $dataaa) 
-{
-$user_name = $dataaa['ledger_sub_account']['name'];  
-}	
-
-$bill_type = "Non-residential";
-$wing_flat = "";
+$supplimentry_bill_type_for_view="Non-Residential";
+$wing_flat="";
 }
-
-if($frommm <= $bill_date_from && $tooo >= $bill_date_from)
+if($date_renge_from<=$transaction_date && $date_renge_to>=$transaction_date)
 {
 $i++;
-$date = date('d-m-Y',strtotime($date));
-$grand_total = $grand_total + $g_total;
-?>									
-
-<tr>
-<td><?php echo $i; ?></td>
-<td><?php echo $receipt_id; ?></td>
-<td><?php echo $date; ?></td>
-<td><?php echo $bill_type; ?></td>
-<td><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $wing_flat; ?> </td>
-<td><?php echo $bill_date_from2; ?></td>
-<td style="text-align:right;"><?php 
-$g_total = number_format($g_total);
-echo $g_total; ?></td>
-<td><?php echo $description; ?></td>
-</tr>
-<?php 
-}} 
+$grand_total=$grand_total+$total_amount;
 ?>
 <tr>
-<td colspan="6" style="text-align:right;"><b>Total</b></td>
-<td style="text-align:right;"><b><?php 
-$grand_total = number_format($grand_total);
-echo $grand_total; ?></b></td>
-<td></td>
+<td><?php echo $i;?></td>
+<td><?php echo $receipt_id;?></td>
+<td><?php echo $current_date;?></td>
+<td><?php echo $supplimentry_bill_type_for_view;?></td>
+<td><?php echo @$user_name;?>&nbsp;&nbsp;<?php echo @$wing_flat;?> </td>
+<td><?php echo $transaction_date_for_view;?></td>
+<td style="text-align:right;"><?php $g_total=number_format($total_amount); echo $g_total;?></td>
+<td><?php echo $description;?></td>
+
 </tr>
+<?php }} ?>
+<tr>
+	<td colspan="6" style="text-align:right;"><b>Total</b></td>
+	<td style="text-align:right;"><b><?php $grand_total = number_format($grand_total); echo $grand_total;?></b></td>
+	<td></td>
+	
+</tr>
+</tbody>
 </table>
 <?php
 }
@@ -140,63 +135,74 @@ if($tp == 2)
 <?php
 $grand_total = 0;
 $i=0;
-foreach ($cursor1 as $collection) 
+foreach($cursor1 as $collection) 
 {
-$adhoc_bill= (int)$collection['adhoc_bill']["adhoc_bill_id"];
-$receipt_id = $collection['adhoc_bill']['receipt_id'];
-$pay_status=$collection['adhoc_bill']["pay_status"];
-$date=$collection['adhoc_bill']["date"];
-$residential=$collection['adhoc_bill']["residential"];
-$g_total=$collection['adhoc_bill']["g_total"];
-$html_bill = $collection['adhoc_bill']['html_bill'];
-$bill_date_from = $collection['adhoc_bill']['bill_daterange_from'];
-$bill_date_from2 = date('d-m-Y',($bill_date_from));
-$description = $collection['adhoc_bill']['description'];
-if($residential=="y")
+$creater_name = "";
+$supplimentry_bill_id= (int)$collection['supplimentry_bill']["supplimentry_bill_id"];
+$receipt_id = $collection['supplimentry_bill']['receipt_id'];
+$date=$collection['supplimentry_bill']["date"];
+$residential=$collection['supplimentry_bill']["supplimentry_bill_type"];
+$total_amount=$collection['supplimentry_bill']["total_amount"];
+$transaction_date = $collection['supplimentry_bill']['transaction_date'];
+$description = $collection['supplimentry_bill']['description']; 
+$transaction_date_for_view = date('d-m-Y',($transaction_date));
+$creater_id = (int)$collection['supplimentry_bill']['created_by'];
+$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($creater_id)));
+foreach ($user_dataaaa as $user_detailll) 
 {
-$flat_id = (int)$collection['adhoc_bill']['person_name'];	
-	
-$flat_detailll = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat_id)));
-foreach ($flat_detailll as $data) 
-{
-$wing_id = (int)$data['flat']['wing_id'];  
+$creater_name = $user_detailll['user']['user_name'];
 }
-
-$ledger_subacc_detaill = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_subLedger_detail_via_flat_id'),array('pass'=>array($flat_id)));
-foreach ($ledger_subacc_detaill as $dataaa) 
+$current_date = date('d-m-Y',strtotime($date));	
+if($residential=="resident")
 {
-$user_name = $dataaa['ledger_sub_account']['name'];  
-}
-	
-$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new'),array('pass'=>array($wing_id,$flat_id)));									
+$ledger_sub_account_id = (int)$collection['supplimentry_bill']['ledger_sub_account_id'];	
+	$ledger_sub_account_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+	foreach ($ledger_sub_account_detail as $ledger_sub_account_data) {
+	$user_name = $ledger_sub_account_data['ledger_sub_account']['name'];
+	$user_flat_id=$ledger_sub_account_data['ledger_sub_account']['user_flat_id'];
+	}
+	$result_user_flat=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_flat_id'),array('pass'=>array($user_flat_id)));	
+	foreach($result_user_flat as $collection){	
+	$flat_id = (int)$collection['user_flat']['flat'];
+	}
+	$flat_detaill = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_wing_id_via_flat_id'),
+	array('pass'=>array($flat_id)));				
+	foreach($flat_detaill as $flat_dataaa){
+	$wing_id = (int)$flat_dataaa['flat']['wing_id'];
+	}
+	$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat_new')
+,array('pass'=>array($wing_id,$flat_id)));									
 $bill_for = $wing_flat;
 $bill_type = "Residential";
-
-if($frommm <= $bill_date_from && $tooo >= $bill_date_from)
+	
+if($date_renge_from <= $transaction_date && $date_renge_to >= $transaction_date)
 {
 $i++;
 $date = date('d-m-Y',strtotime($date));
-$grand_total = $grand_total + $g_total;
+$grand_total = $grand_total + $total_amount;
+
+
 ?>
 <tr>
-<td><?php echo $i; ?></td>
-<td><?php echo $receipt_id; ?></td>
-<td><?php echo $date; ?></td>
-<td><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $wing_flat; ?> </td>
-<td><?php echo $bill_date_from2; ?></td>
-<td style="text-align:right;"><?php
-$g_total = number_format($g_total);
- echo $g_total; ?></td>
- <td><?php echo $description; ?></td>
+<td><?php echo $i;?></td>
+<td><?php echo $receipt_id;?></td>
+<td><?php echo $current_date;?></td>
+<td><?php echo @$user_name;?>&nbsp;&nbsp;<?php echo @$wing_flat;?> </td>
+<td><?php echo $transaction_date_for_view;?></td>
+<td style="text-align:right;"><?php $g_total=number_format($total_amount); echo $g_total;?></td>
+<td><?php echo $description;?></td>
+
 </tr>
-<?php }}} ?>
+<?php }}}?>
 <tr>
 <td colspan="5" style="text-align:right;"><b>Total</b></td>
 <td style="text-align:right;"><b><?php 
 $grand_total = number_format($grand_total);
 echo $grand_total; ?></b></td>
 <td></td>
+
 </tr>
+</tbody>
 </table>
 
 <?php
@@ -228,48 +234,51 @@ if($tp == 3)
 <?php
 $grand_total = 0;
 $i=0;
-foreach ($cursor1 as $collection) 
+foreach($cursor1 as $collection) 
 {
-$adhoc_bill= (int)$collection['adhoc_bill']["adhoc_bill_id"];
-$receipt_id = $collection['adhoc_bill']['receipt_id'];
-$pay_status=$collection['adhoc_bill']["pay_status"];
-$date=$collection['adhoc_bill']["date"];
-$residential=$collection['adhoc_bill']["residential"];
-$g_total=$collection['adhoc_bill']["g_total"];
-$html_bill = $collection['adhoc_bill']['html_bill'];
-$bill_date_from = $collection['adhoc_bill']['bill_daterange_from'];
-$description = $collection['adhoc_bill']['description'];
-$bill_date_from2 = date('d-m-Y',($bill_date_from));
-if($residential=="n")
-{
-$flat_id = (int)$collection['adhoc_bill']['person_name'];	
-$ledger_subacc_detaill = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($flat_id)));
-foreach ($ledger_subacc_detaill as $dataaa) 
-{
-$user_name = $dataaa['ledger_sub_account']['name'];  
-}	
+$creater_name = "";
+$supplimentry_bill_id= (int)$collection['supplimentry_bill']["supplimentry_bill_id"];
+$receipt_id = $collection['supplimentry_bill']['receipt_id'];
+$date=$collection['supplimentry_bill']["date"];
+$residential=$collection['supplimentry_bill']["supplimentry_bill_type"];
+$g_total=$collection['supplimentry_bill']["total_amount"];
+$transaction_date = $collection['supplimentry_bill']['transaction_date'];
+$description = $collection['supplimentry_bill']['description'];
+$transaction_date_for_view = date('d-m-Y',($transaction_date));
+$creater_id = (int)$collection['supplimentry_bill']['created_by'];
 
+$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($creater_id)));
+foreach($user_dataaaa as $user_detailll) 
+{
+$creater_name = $user_detailll['user']['user_name'];
+}
+
+$current_date = date('d-m-Y',strtotime($date));	
+if($residential=="non_resident")
+{
+$ledger_sub_account_id = (int)$collection['supplimentry_bill']['ledger_sub_account_id'];	
+$ledger_sub_account_detail = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+foreach ($ledger_sub_account_detail as $ledger_sub_account_date){
+$user_name = $ledger_sub_account_date['ledger_sub_account']['name'];
+}
 $bill_type = "Non-residential";
 $wing_flat = "";
-if($frommm <= $bill_date_from && $tooo >= $bill_date_from)
+if($date_renge_from <= $transaction_date && $date_renge_to >= $transaction_date)
 {
 $i++;
 $date = date('d-m-Y',strtotime($date));
-$grand_total = $grand_total + $g_total;
-
-?>
+$grand_total = $grand_total + $g_total; ?>
 <tr>
 <td><?php echo $i; ?></td>
 <td><?php echo $receipt_id; ?></td>
 <td><?php echo $date; ?></td>
 <td><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $wing_flat; ?> </td>
-<td><?php echo $bill_date_from2; ?></td>
-<td style="text-align:right;"><?php 
-$g_total = number_format($g_total);
-echo $g_total; ?></td>
+<td><?php echo $transaction_date_for_view; ?></td>
+<td style="text-align:right;"><?php $g_total = number_format($g_total); echo $g_total; ?></td>
 <td><?php echo $description; ?></td>
+
 </tr>
-<?php }}} ?>
+<?php }}}	 ?>
 <tr>
 <td colspan="5" style="text-align:right;"><b>Total</b></td>
 <td style="text-align:right;"><b><?php 
@@ -277,7 +286,8 @@ $grand_total = number_format($grand_total);
 echo $grand_total; ?></b></td>
 <td></td>
 </tr>
+</tbody>
 </table>
-<?php
-}
+<?php }
+
 ?>

@@ -202,12 +202,12 @@ $( document ).ready(function() {
 		url: "<?php echo $webroot_path; ?>Expensetrackers/allow_import_expense_tracker",
 		}).done(function(response){
 		response = response.replace(/\s+/g,' ').trim();
-		alert(response);
+		//alert(response);
 		if(response=="F"){
 		$("#check_validation_result").html("");
 		alert("Your Data Is Not Valid.");
 		}else{
-			//change_page_automatically("<?php echo $webroot_path; ?>Expensetrackers/expense_tracker_import");
+			change_page_automatically("<?php echo $webroot_path; ?>Expensetrackers/expense_tracker_import");
 		}
 		});
 	});	

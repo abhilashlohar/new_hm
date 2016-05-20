@@ -90,12 +90,13 @@ $supplimentry_bill_type=$collection['supplimentry_bill']["supplimentry_bill_type
 $total_amount=$collection['supplimentry_bill']["total_amount"];
 $transaction_date=$collection['supplimentry_bill']['transaction_date'];
 $description=$collection['supplimentry_bill']['description'];
+$current_date=date('d-m-Y',strtotime($date));	
+$transaction_date_for_view = date('d-m-Y',($transaction_date));
 $creater_id=(int)$collection['supplimentry_bill']['created_by']; 
 	$user_detail = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array((int)$creater_id)));
 	foreach($user_detail as $user_detailll){
 	$creater_name=$user_detailll['user']['user_name'];
-	$current_date=date('d-m-Y',strtotime($date));	
-	$transaction_date_for_view = date('d-m-Y',($transaction_date));
+	
 	}
 if($supplimentry_bill_type=="resident"){
 $ledger_sub_account_id=(int)$collection['supplimentry_bill']['ledger_sub_account_id'];

@@ -1223,6 +1223,7 @@ $this->import_expense_tracker_record->updateAll(array("step4" => 1),array("socie
 function final_import_expense_tracker()
 {
 $this->layout=null;
+$this->ath();
 $s_society_id = $this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');	
 

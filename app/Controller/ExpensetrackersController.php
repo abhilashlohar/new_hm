@@ -1119,8 +1119,8 @@ $this->layout=null;
 	echo "T";	
 	}
 }
-///////////////// End auto_save_expense_tracker //////////////////////////////////
-////////////////// Start allow_import_expense_tracker /////////////////////////////
+//End auto_save_expense_tracker//
+//Start allow_import_expense_tracker//
 function allow_import_expense_tracker()
 {
 $this->layout=null;
@@ -1201,7 +1201,10 @@ if(empty($amount)){ $amount_v = 1;  }else{ $amount_v = 0;  }
 		
 if(is_numeric($amount)){ $amount_vv = 0;  }else{ $amount_vv = 1; }
 		
-
+echo $posting_v;
+		
+	
+		
 $v_result[]=array($posting_v,$financial_v,$invoice_date_v,$due_v,$date_v,$party_v,$invoice_v,$expense_v,$amount_v,$amount_vv);
 }
 
@@ -1212,11 +1215,14 @@ if(array_sum($data)==0) { $tt ="T"; }else{ $tt="F"; break;  }
 
 if($tt == "T")
 {
-	
 $this->loadmodel('import_expense_tracker_record');
 $this->import_expense_tracker_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "ET"));	
 		    
-}else{ echo "F"; die; }
+}else{ //echo "F"; die; 
+}
+
+
+
 }
 //End allow_import_expense_tracker//
 //Start final_import_expense_tracker//

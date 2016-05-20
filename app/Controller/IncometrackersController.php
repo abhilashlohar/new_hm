@@ -7469,6 +7469,19 @@ function account_statement(){
 	$this->set('result_ledger_sub_account',$result_ledger_sub_account);
 }
 
+function account_statement_for_flat_ajax1($ledger_sub_account_id,$from,$to){
+	if($this->RequestHandler->isAjax()){
+	$this->layout='ajax_blank';
+	}else{
+	$this->layout='session';
+	}
+	
+	$this->ath();
+	$this->set("ledger_sub_account_id",$ledger_sub_account_id);
+	
+}
+
+
 function account_statement_for_flat_ajax($ledger_sub_account_id,$from,$to){
 	if($this->RequestHandler->isAjax()){
 	$this->layout='ajax_blank';

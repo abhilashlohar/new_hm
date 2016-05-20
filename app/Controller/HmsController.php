@@ -126,11 +126,17 @@ function cash_bank_echo(){
 			<th>edit_text</th>
 			<th>bill_reference</th>
 			<th>created_on</th>
+			<th>sundry_creditor_id</th>
+			<th>invoice_reference</th>
+			<th>receipt_instruction</th>
+			<th>account_head</th>
+			<th>tds_tax_amount</th>
+			<th>account_type</th>
 		</tr>
 	<?php
 	$this->loadmodel('new_cash_bank');
-	$conditions=array('edit_status'=>"NO");
-	$receipts = $this->new_cash_bank->find('all',array('conditions'=>$conditions));
+	
+	$receipts = $this->new_cash_bank->find('all');
 	foreach($receipts as $receipt){
 		$transaction_id=$receipt["new_cash_bank"]["transaction_id"];
 		$receipt_source=(int)$receipt["new_cash_bank"]["receipt_source"];
@@ -154,6 +160,10 @@ function cash_bank_echo(){
 			$bank_branch=@$receipt["new_cash_bank"]["bank_branch"];
 			$member_type=(int)$receipt["new_cash_bank"]["member_type"];
 			
+			$edit_status=$receipt["new_cash_bank"]["edit_status"];
+			if($edit_status=="YES"){
+				continue;
+			}
 			
 			if($member_type==1){
 				$received_from="residential";
@@ -169,6 +179,12 @@ function cash_bank_echo(){
 			$ledger_sub_account_id=$ledger_sub_accounts[0]['ledger_sub_account']['auto_id'];
 			
 			$bill_reference=@$receipt["new_cash_bank"]["bill_reference"];
+			$sundry_creditor_id="";
+			$invoice_reference="";
+			$receipt_instruction="";
+			$account_head="";
+			$tds_tax_amount="";
+			$account_type="";
 		}
 		if($receipt_source==2){
 			$source="bank_payment";
@@ -182,6 +198,12 @@ function cash_bank_echo(){
 			$received_from="";
 			$ledger_sub_account_id="";
 			$bill_reference="";
+			$sundry_creditor_id=$receipt["new_cash_bank"]["user_id"];
+			$invoice_reference=$receipt["new_cash_bank"]["invoice_reference"];
+			$receipt_instruction=$receipt["new_cash_bank"]["receipt_instruction"];
+			$account_head=$receipt["new_cash_bank"]["account_head"];
+			$tds_tax_amount=$receipt["new_cash_bank"]["tds_tax_amount"];
+			$account_type=$receipt["new_cash_bank"]["account_type"];
 		}
 		if($receipt_source==3){$source="petty_cash_receipt";}
 		if($receipt_source==4){
@@ -196,6 +218,12 @@ function cash_bank_echo(){
 			$received_from="";
 			$ledger_sub_account_id="";
 			$bill_reference="";
+			$sundry_creditor_id=$receipt["new_cash_bank"]["user_id"];
+			$invoice_reference="";
+			$receipt_instruction="";
+			$account_head=$receipt["new_cash_bank"]["account_head"];
+			$tds_tax_amount="";
+			$account_type=$receipt["new_cash_bank"]["account_type"];
 		}
 		?>
 		<tr>
@@ -218,6 +246,12 @@ function cash_bank_echo(){
 			<td><?php echo $edit_text; ?></td>
 			<td><?php echo $bill_reference; ?></td>
 			<td><?php echo $current_date; ?></td>
+			<td><?php echo $sundry_creditor_id; ?></td>
+			<td><?php echo $invoice_reference; ?></td>
+			<td><?php echo $receipt_instruction; ?></td>
+			<td><?php echo $account_head; ?></td>
+			<td><?php echo $tds_tax_amount; ?></td>
+			<td><?php echo $account_type; ?></td>
 		</tr>
 		<?php
 	}

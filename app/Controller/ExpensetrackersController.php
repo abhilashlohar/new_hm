@@ -1171,7 +1171,6 @@ if(empty($posting_date2)){ $posting_v = 1; }else {  $posting_v = 0;  }
 				
 				$from = $collection['financial_year']['from'];
 				$to = $collection['financial_year']['to'];
-				
 				$from1 = date('Y-m-d',$from);
 				$to1 = date('Y-m-d',$to);
 				$from2 = strtotime($from1);
@@ -1201,13 +1200,8 @@ if(empty($amount)){ $amount_v = 1;  }else{ $amount_v = 0;  }
 		
 if(is_numeric($amount)){ $amount_vv = 0;  }else{ $amount_vv = 1; }
 		
-echo $financial_v;
-		
-	
-		
 $v_result[]=array($posting_v,$financial_v,$invoice_date_v,$due_v,$date_v,$party_v,$invoice_v,$expense_v,$amount_v,$amount_vv);
 }
-
 
 foreach($v_result as $data){
 if(array_sum($data)==0) { $tt ="T"; }else{ $tt="F"; break;  }
@@ -1218,7 +1212,7 @@ if($tt == "T")
 $this->loadmodel('import_expense_tracker_record');
 $this->import_expense_tracker_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "ET"));	
 		    
-}else{ //echo "F"; die; 
+}else{ echo "F"; die; 
 }
 
 

@@ -29,17 +29,13 @@ $transaction_id = (int)$collection['cash_bank']['transaction_id'];
 $account_type = (int)$collection['cash_bank']['account_type'];
 $user_id = (int)$collection['cash_bank']['sundry_creditor_id'];
 $date = $collection['cash_bank']['transaction_date'];
-$prepaired_by = (int)$collection['cash_bank']['prepaired_by'];   
+//$prepaired_by = (int)$collection['cash_bank']['created_by'];   
 @$narration = @$collection['cash_bank']['narration'];
 $account_head = $collection['cash_bank']['account_head'];
 $amount = $collection['cash_bank']['amount'];
 $current_date = $collection['cash_bank']['created_on'];
 $creation_date = date('d-m-Y',strtotime($current_date));
-$result_gh = $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($prepaired_by)));
-foreach ($result_gh as $collection) 
-{
-$prepaired_by_name = $collection['user']['user_name'];
-}			
+		
 if($account_type == 1)
 {
 	$result_lsa = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($user_id)));
@@ -55,7 +51,16 @@ else if($account_type == 2)
 	{
 	$user_name = $collection['ledger_account']['ledger_name'];	  
 	}
-}      
+}
+if($account_type == 3){
+		$result_la = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_amount'),array('pass'=>array($user_id)));
+		foreach ($result_la as $collection) 
+		{
+		$user_name = $collection['ledger_account']['ledger_name'];	  
+		}	
+	
+}
+      
 if($date >= $m_from && $date <= $m_to)
 {
 $date = date('d-m-Y',($date));	   

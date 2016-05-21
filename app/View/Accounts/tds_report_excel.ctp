@@ -38,20 +38,9 @@ $user_id = (int)$dataaa['cash_bank']['sundry_creditor_id'];
 $account_type = (int)$dataaa['cash_bank']['account_type'];
 $amount = $dataaa['cash_bank']['amount'];
 $instrument_utr = $dataaa['cash_bank']['receipt_instruction'];
-$tds_id = (int)@$dataaa['cash_bank']['tds_id']; 
+$tds_amount=@$dataaa['cash_bank']['tds_tax_amount']; 
 
-	foreach($tds_arr as $tds_ddd)
-	{
-		$tdsss_taxxx = (int)$tds_ddd[0];  
-		$tds_iddd = (int)$tds_ddd[1];  
-		if($tds_iddd == $tds_id) 
-		{
-		$tds_tax = $tdsss_taxxx;   
-		}
-	}
-	
-	$tds_amount = (round(($tds_tax/100)*$amount));
-	$total_tds_amount = ($amount - $tds_amount);
+$total_tds_amount=$amount-$tds_amount;
 	
 	
 	if($account_type == 1)
@@ -87,7 +76,7 @@ else
 	$user_name = $collection['ledger_account']['ledger_name'];  
 	}		
 }
-if($tds_id != 0){
+if($tds_amount != 0){
 $total = $total+$amount;
 $total_tds = $total_tds + $tds_amount;
 $net_amt = $net_amt + $total_tds_amount;

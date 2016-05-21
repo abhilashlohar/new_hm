@@ -8638,7 +8638,7 @@ function final_import_bank_payment_ajax()
 $this->layout=null;
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id= (int)$this->Session->read('hm_user_id');
-	
+	$this->ath();
 	$this->loadmodel('import_payment_record');
 	$conditions=array("society_id" => $s_society_id,"module_name" => "BP");
 	$result_import_record = $this->import_payment_record->find('all',array('conditions'=>$conditions));
@@ -8665,43 +8665,17 @@ $this->layout=null;
 			$acc_type=(int)$import_converted["payment_csv_converted"]["type"];
 			$invoice=$import_converted["payment_csv_converted"]["invoice_ref"];
 			$amount=$import_converted["payment_csv_converted"]["amount"];
-			$tds_id=(int)$import_converted["payment_csv_converted"]["tds"];
+			$tds_id=$import_converted["payment_csv_converted"]["tds"];
 			$mode=$import_converted["payment_csv_converted"]["mode"];
 			$instrument=$import_converted["payment_csv_converted"]["instrument"];
 			$bank_ac=(int)$import_converted["payment_csv_converted"]["bank"];
 			$narration=$import_converted["payment_csv_converted"]["narration"];
 			$transaction_date = date('Y-m-d',strtotime($transaction_date));
-			
-$this->loadmodel('reference');
-$conditions=array("auto_id" => 3);
-$cursor4=$this->reference->find('all',array('conditions'=>$conditions));
-foreach($cursor4 as $collection)
-{
-$tds_arr = $collection['reference']['reference'];	
-}
-$tdsss_idd="";
-if(!empty($tds_id))
-{
-for($r=0; $r<sizeof($tds_arr); $r++)
-{
-$tds_sub_arr = $tds_arr[$r];
-$tds_id2=(int)$tds_sub_arr[1];
-$tdss_rate=$tds_sub_arr[0];
-if($tdss_rate == $tds_id)
-{
-$tdsss_idd=$tds_id2;
-$tds_rate = $tds_sub_arr[0];
-break;
-}
-}
-$tds_amount = (round(($tds_rate/100)*$amount));
-$total_tds_amount = ($amount - $tds_amount);
-}
-else
-{
-$total_tds_amount = $amount;
-$tds_amount = 0;
-}	
+	
+	$tds_amount=round($tds_id);
+	$total_tds_amount=$amount-$tds_amount;
+
+	
 		
 $current_date = date('Y-m-d');		
 $i=$this->autoincrement('cash_bank','transaction_id');
@@ -8712,7 +8686,7 @@ $multipleRowData = Array( Array("transaction_id"=>$i,"receipt_id" =>$bbb,"create
 "transaction_date" => strtotime($transaction_date),"created_by" => $s_user_id, 
 "sundry_creditor_id"=>$ledger_acc,"invoice_reference" => @$invoice,"narration" => $narration,"receipt_mode" => $mode,
 "receipt_instruction" => $instrument, "account_head" => $bank_ac,  
-"amount" => $amount,"society_id" => $s_society_id, "tds_id" =>$tdsss_idd,"account_type"=>$acc_type,"source"=>"bank_payment","auto_inc"=>"YES"));
+"amount" => $amount,"society_id" => $s_society_id,"tds_tax_amount"=>$tds_amount,"account_type"=>$acc_type,"source"=>"bank_payment","auto_inc"=>"YES"));
 $this->cash_bank->saveAll($multipleRowData);  
 
 

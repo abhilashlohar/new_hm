@@ -17962,7 +17962,7 @@ $this->check_user_privilages();
 	foreach($sco_n as $data){
 		$sco= $data['society']['society_name'];
 		@$logo_data= @$data['society']['logo'];
-		
+		@$logo_data= @$data['society']['logo'];
 	}
 	$this->set('society_name',$sco);
 	if($this->request->is('post'))
@@ -17978,8 +17978,7 @@ $this->check_user_privilages();
 	$logo=$_FILES['logo']['name'];
     $sig=$_FILES['sig']['name'];	
 	
-
-
+	
 $target = "logo/";
 $target = $target . basename( $_FILES['logo']['name']) ;
 move_uploaded_file($_FILES['logo']['tmp_name'], $target);

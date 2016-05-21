@@ -4980,8 +4980,8 @@ $this->ath();
 			$s_user_id = (int)$this->Session->read('user_id');
 
 
-$excel = "Transaction Date,Ledger A/c,Amount,TDS in Percentage,Mode of Payment,Instrument/UTR,Bank Account,Invoice Reference,Narration \n";
-$excel.="12-10-2015,Sinking Fund,10000,2,NEFT,HHHG4455,SBI,for marketing,narration \n";
+$excel = "Transaction Date,Ledger A/c,Amount,TDS Amount,Mode of Payment,Instrument/UTR,Bank Account,Invoice Reference,Narration \n";
+$excel.="12-10-2015,Sinking Fund,10000,200,NEFT,HHHG4455,SBI,for marketing,narration \n";
 echo $excel;
 
 }
@@ -8302,7 +8302,7 @@ $bank_id = (int)$collection['ledger_sub_account']['auto_id'];
 
 		$this->loadmodel('payment_csv_converted');
 		$auto_id=$this->autoincrement('payment_csv_converted','auto_id');
-		$this->payment_csv_converted->saveAll(Array(Array("auto_id" => $auto_id, "trajection_date" => $trajection_date,"ledger_ac"=>$ledger_id,"type"=>$typppp,"amount"=>$amount,"tds" => $tds, "mode" => $mode,"instrument"=>$instrument,"bank"=>$bank_id,"invoice_ref"=>$invoice_ref,"narration"=>$narration,"society_id"=>$s_society_id,"is_imported"=>"NO")));
+		$this->payment_csv_converted->saveAll(Array(Array("auto_id" => $auto_id, "trajection_date" => $trajection_date,"ledger_ac"=>$ledger_id,"type"=>$typppp,"amount"=>$amount,"tds"=>$tds, "mode" => $mode,"instrument"=>$instrument,"bank"=>$bank_id,"invoice_ref"=>$invoice_ref,"narration"=>$narration,"society_id"=>$s_society_id,"is_imported"=>"NO")));
 		
 		$this->loadmodel('bank_payment_csv');
 		$this->bank_payment_csv->updateAll(array("is_converted" => "YES"),array("auto_id" => $bank_payment_csv_id));

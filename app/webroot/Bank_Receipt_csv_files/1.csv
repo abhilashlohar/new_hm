@@ -1,34 +1,3 @@
 Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Amount,Narration 
-<<<<<<< HEAD
-1-1-2016,SBBJ,Cheque ,5564,1-1-2016,SBI,Udaipur,Abhi lohar,A,101,500,Receipt for jan
-8-1-2016,SBBJ,Cheque ,5565,8-1-2016,BOI,Udaipur,ranjit,A,104,550,Receipt for jan
-12-1-2016,SBBJ,Cheque ,5566,12-1-2016,BOB,Udaipur,Gopesh Singh Parihar,B,201,600,Receipt for jan
-15-1-2016,SBBJ,Neft,9999,15-1-2016,KANARA BANk,Udaipur,Dsu Menaria,B,202,650,Receipt for jan
-15-1-2016,SBBJ,Neft,9998,15-1-2016,HDFC,Udaipur,nikhil,C,301,700,Receipt for jan
+1-1-2016,SBBJ,Neft,9998,15-1-2016,HDFC,Udaipur,nikhil,C,301,700,Receipt for jan
 16-1-2016,SBBJ,Neft,9997,16-1-2016,ICICI,Udaipur,yaswant,C,302,750,Receipt for jan
-=======
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,5000,Receipt for jan
-25-01-2015,SBBJ,neft,3534,25-01-2015,,,B L Naik,B,601,1953,Receipt for jan
-25-01-2015,SBBJ,pg,3534,25-01-2015,,,B L Naik,B,601,1953,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,5000,Receipt for jan
-25-01-2015,SBBJ,neft,3534,25-01-2015,,,B L Naik,B,601,1953,Receipt for jan
-25-01-2015,SBBJ,pg,3534,25-01-2015,,,B L Naik,B,601,1953,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,5000,Receipt for jan
-25-01-2015,SBBJ,neft,3534,25-01-2015,,,B L Naik,B,601,1953,Receipt for jan
-25-01-2015,SBBJ,pg,3534,25-01-2015,,,B L Naik,B,601,1953,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,5000,Receipt for jan
-25-01-2015,SBBJ,neft,3534,25-01-2015,,,B L Naik,B,601,1953,Receipt for jan
-25-01-2015,SBBJ,pg,3534,25-01-2015,,,B L Naik,B,601,1953,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,5000,Receipt for jan
-25-01-2015,SBBJ,neft,3534,25-01-2015,,,B L Naik,B,601,1953,Receipt for jan
-25-01-2015,SBBJ,pg,3534,25-01-2015,,,B L Naik,B,601,1953,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,5000,Receipt for jan
-25-01-2015,SBBJ,neft,3534,25-01-2015,,,B L Naik,B,601,1953,Receipt for jan
-25-01-2015,SBBJ,pg,3534,25-01-2015,,,B L Naik,B,601,1953,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,5000,Receipt for jan
-25-01-2015,SBBJ,neft,3534,25-01-2015,,,B L Naik,B,601,1953,Receipt for jan
-25-01-2015,SBBJ,pg,3534,25-01-2015,,,B L Naik,B,601,1953,Receipt for jan
-25-01-2015,SBI,cheque,12345,25-01-2015,Allahabad Bank,Sec-4,Anupam Tagore,A,101,5000,Receipt for jan
-25-01-2015,SBBJ,neft,3534,25-01-2015,,,B L Naik,B,601,1953,Receipt for jan
-25-01-2015,SBBJ,pg,3534,25-01-2015,,,B L Naik,B,601,1953,Receipt for jan
->>>>>>> e20280bf2d7938530efac88878400119cd25d80e

@@ -1,39 +1,5 @@
-Tranjection Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drown In Which Bank?,Branch of Bank,Member Name,Wing,Flat,Receipt Tpye,Amount,Narration 
-    10-12-2015    ,    SBI     ,    Cheque   ,2456555,   10-12-2015   ,uco     ,HIRAN,abhilash,   A   ,101,    MAINTANACE   ,500,test
-10-12-2015,SBI,CHEQUE,2456555,10-12-2015,uco     ,HIRAN,abhilash,    A,101,MAINTANACE,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,     uco,HIRAN,abhilash,A,101,MAINTANACE,500,test
-    10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,MAINTANACE,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,MAINTANACE,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A   ,101,MAINTANACE,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,maintanace,500,test
-10-12-2015,SBI,NEFT,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,maintanace,500,test
-10-12-2015,SBI,neft,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,maintanace,500,test
-     10-12-2015,SBI,pg,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,maintanace,500,test
-10-12-2015,SBI,PG,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
-10-12-2015,SBI,Cheque,2456555,10-12-2015,uco,HIRAN,abhilash,A,101,Maintanace,500,test
+Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Amount,Narration 
+1-1-2016,SBBJ,cheque,9952,1-1-2016,SBI,Sec-4,Yash,Office,101,1328,Receipt for jan
+15-1-2016,SBBJ,cheque,1234,15-1-2016,UCO,Sec-5,Jay vyas ,Office,102,1300,Receipt for jan
+16-1-2016,SBBJ,cheque,5523,16-1-2016,BOI,Sec-6,Rohit Joshi ,Shop,501,1983,Receipt for jan
+20-1-2016,SBBJ,cheque,3365,20-1-2016,ICICI,Sec-7,Abhilash Lohar,Shop,502,1150,Receipt for jan

@@ -4678,6 +4678,7 @@ function bank_payment_update($auto_id=null)
 		}else{
 		$this->layout='session';
 		}
+		$this->ath();
 	$s_role_id=(int)$this->Session->read('role_id');
 		$s_society_id=(int)$this->Session->read('hm_society_id');
 			$s_user_id=(int)$this->Session->read('hm_user_id');	

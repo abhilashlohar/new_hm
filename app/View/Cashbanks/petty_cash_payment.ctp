@@ -45,6 +45,7 @@ $default_date = date('d-m-Y');
 			<option value="" style="display:none;">Select</option>
 			<option value="1">Sundry Creditors Control A/c</option>
 			<option value="2">All Expenditure A/cs</option>
+			<option value="3">Liability</option>
 			</select></td>
 
 			<td>
@@ -81,6 +82,18 @@ $default_date = date('d-m-Y');
 				<?php }} ?>
 				</select>
 			</div>
+			<div class="hide" id="tax_select_box">
+				<select class="m-wrap medium" name="tax[]">
+				<option value="" style="display:none;">Select</option>
+				<option value="16">Tax deducted at source (TDS payable)</option>
+				</select>
+			</div>
+			
+			
+			
+			
+			
+			
 			</td>
 
 			<td><select name="paid_from[]" class="m-wrap span12">
@@ -114,6 +127,7 @@ $(document).ready(function(){
 	$('#main tbody tr:last select[name="sundry_creditor[]"]').chosen();
 	$('#main tbody tr:last select[name="expenditure[]"]').chosen();
 	$('#main tbody tr:last input[name="transaction_date[]"]').datepicker();
+	$('#main tbody tr:last select[name="tax[]"]').chosen();
 	}
 	
 	$(".add_row").die().live("click",function(){
@@ -133,10 +147,18 @@ $('select[name="account_group[]"]').die().live("change",function(){
 			$(this).parent().next('td').find("#default_select_box").hide();
 			$(this).parent().next('td').find("#expenditure_select_box").hide();
 			$(this).parent().next('td').find("#sundry_creditors_select_box").show();
-		}else{
+			$(this).parent().next('td').find("#tax_select_box").hide();
+		}else if(account_group=='2'){
 			$(this).parent().next('td').find("#default_select_box").hide();
 			$(this).parent().next('td').find("#expenditure_select_box").show();
 			$(this).parent().next('td').find("#sundry_creditors_select_box").hide();
+			$(this).parent().next('td').find("#tax_select_box").hide();
+		}
+		else{
+			$(this).parent().next('td').find("#default_select_box").hide();
+			$(this).parent().next('td').find("#expenditure_select_box").hide();
+			$(this).parent().next('td').find("#sundry_creditors_select_box").hide();
+			$(this).parent().next('td').find("#tax_select_box").show();
 		}
 		if(account_group==""){
 			$(this).closest('td').find(".er").remove();
@@ -218,19 +240,28 @@ var allow="yes";
 			}else{
 				$(this).parent().next('td').find(".er").remove();
 			}
-			}
-			else
-			{
-				
-			var other_income=$(this).closest("tr").find('select[name="expenditure[]"]').val();
+			}else if(deposited_in==2){
 			
+			var other_income=$(this).closest("tr").find('select[name="expenditure[]"]').val();
 			if(other_income==""){
 				$(this).parent().next('td').find(".er").remove();
 				$(this).parent().next('td').append('<span class="er">Required</span>');
 				allow="no";
 			}else{
 				$(this).parent().next('td').find(".er").remove();
-			}	
+			}		
+			}
+			else
+			{
+			var tax=$(this).closest("tr").find('select[name="tax[]"]').val();
+			if(tax==""){
+				$(this).parent().next('td').find(".er").remove();
+				$(this).parent().next('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).parent().next('td').find(".er").remove();
+			}		
+			
 				
 			}
 			

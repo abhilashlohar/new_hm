@@ -64,7 +64,7 @@ $(document).ready(function() {
 		var to=$("#to").val();
 		$("#result_statement").show();
 		$.ajax({
-		   url: '<?php echo $webroot_path; ?>Accounts/my_flat_bill_ajax/'+from+'/'+to+'/'+ledger_sub_account_id,
+		   url: '<?php echo $webroot_path; ?>Accounts/my_flat_bill_ajax1/'+from+'/'+to+'/'+ledger_sub_account_id,
 		   success: function(data){
 			   $("#result_statement").html(data);
 		   }

@@ -1605,6 +1605,67 @@ $order=array('ledger.transaction_date'=>'ASC');
 $result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('result_ledger',$result_ledger);
 }
+
+
+function my_flat_bill_ajax1($from=null,$to=null,$ledger_sub_account_id=null){
+	 
+	$this->ath();
+	if($this->RequestHandler->isAjax()){
+	$this->layout='ajax_blank';
+	}else{
+	$this->layout='session';
+	}
+	
+	$from=date("Y-m-d",strtotime($from));
+	$this->set("from",$from);
+	$to=date("Y-m-d",strtotime($to));
+	$this->set("to",$to);
+
+	$this->set("ledger_sub_account_id",$ledger_sub_account_id);
+
+	$this->ath();
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=(int)$this->Session->read('hm_user_id');
+	$this->set("s_user_id",$s_user_id);
+
+	
+	$member_detail=$this->requestAction(array('controller'=>'Fns','action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id)));	
+	$wing_id = $member_detail['wing_id'];
+	$flat_id = $member_detail['flat_id'];
+    $user_id = $member_detail['user_id']; 	
+    $user_name = $member_detail['user_name'];
+	$this->set('user_name',$user_name);
+	
+	$wing_flat=$this->requestAction(array('controller' => 'Fns', 'action' => 'wing_flat_via_wing_id_and_flat_id'), array('pass' => array($wing_id,$flat_id)));
+	$this->set('wing_flat',$wing_flat);
+
+	$this->loadmodel('society');
+	$conditions=array("society_id" => $s_society_id);
+	$result_societydattt=$this->society->find('all',array('conditions'=>$conditions));
+	foreach($result_societydattt as $dataaaaa)
+	{
+	$society_name = $dataaaaa['society']['society_name'];
+	}
+	
+	$result_ledger_sub_account=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'), array('pass' => array((int)$ledger_sub_account_id)));
+	foreach($result_ledger_sub_account as $data){
+	$user_flat_id = $data['ledger_sub_account']['user_flat_id'];	
+	}	
+	$this->set('user_flat_id',$user_flat_id);	
+	
+	
+	$this->loadmodel('society');
+	$conditions=array("society_id" => $s_society_id);
+	$result_society=$this->society->find('all',array('conditions'=>$conditions));
+	$this->set('result_society',$result_society);
+		
+$this->loadmodel('ledger');
+$conditions=array("society_id"=>$s_society_id,"ledger_account_id"=>34,"ledger_sub_account_id" => (int)$ledger_sub_account_id,'transaction_date'=> array('$gte' => strtotime($from),'$lte' => strtotime($to)));
+$order=array('ledger.transaction_date'=>'ASC');
+$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
+$this->set('result_ledger',$result_ledger);
+}
+
 //End My Flat Bill Ajax//
 //Start my_flat_bill_excel_export// 
 function my_flat_bill_excel_export($from=null,$to=null,$ledger_sub_account_id=null)
@@ -1636,6 +1697,53 @@ $this->set('society_name',$society_name);
 	$result_society=$this->society->find('all',array('conditions'=>$conditions));
 	$this->set('result_society',$result_society);
 		
+	$this->loadmodel('ledger');
+	$conditions=array("society_id"=>$s_society_id,"ledger_account_id"=>34,"ledger_sub_account_id"=>(int)$ledger_sub_account_id,'transaction_date'=> array('$gte'=> strtotime($from),'$lte'=>strtotime($to)));
+	$order=array('ledger.transaction_date'=>'ASC');
+	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
+	$this->set('result_ledger',$result_ledger);	
+	
+}
+
+function my_flat_bill_excel_export1($from=null,$to=null,$ledger_sub_account_id=null)
+{
+	$this->layout=null;
+	$this->ath();
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$this->set("s_user_id",$s_user_id);		
+
+	$from=date("Y-m-d",strtotime($from));
+	$this->set("from",$from);
+	$to=date("Y-m-d",strtotime($to));
+	$this->set("to",$to);
+	$this->set("ledger_sub_account_id",$ledger_sub_account_id);
+	
+$this->loadmodel('society');
+$conditions=array("society_id"=>$s_society_id);
+$result_societydattt=$this->society->find('all',array('conditions'=>$conditions));
+foreach($result_societydattt as $dataaaaa)
+{
+$society_name = $dataaaaa['society']['society_name'];
+}
+$this->set('society_name',$society_name);
+
+	
+	$this->loadmodel('society');
+	$conditions=array("society_id"=>$s_society_id);
+	$result_society=$this->society->find('all',array('conditions'=>$conditions));
+	$this->set('result_society',$result_society);
+		
+		$member_detail=$this->requestAction(array('controller'=>'Fns','action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id)));	
+	$wing_id = $member_detail['wing_id'];
+	$flat_id = $member_detail['flat_id'];
+    $user_id = $member_detail['user_id']; 	
+    $user_name = $member_detail['user_name'];
+	$this->set('user_name',$user_name);
+	
+	$wing_flat=$this->requestAction(array('controller' => 'Fns', 'action' => 'wing_flat_via_wing_id_and_flat_id'), array('pass' => array($wing_id,$flat_id)));
+	$this->set('wing_flat',$wing_flat);
+	
 	$this->loadmodel('ledger');
 	$conditions=array("society_id"=>$s_society_id,"ledger_account_id"=>34,"ledger_sub_account_id"=>(int)$ledger_sub_account_id,'transaction_date'=> array('$gte'=> strtotime($from),'$lte'=>strtotime($to)));
 	$order=array('ledger.transaction_date'=>'ASC');

@@ -61,7 +61,7 @@ $(document).ready(function(){
 		var to=$("#to").val();
 		$("#result_statement").show();
 		$("#result_statement").html('<div align="center"><h4>Loading...</h4></div>')
-		.load('<?php echo $webroot_path; ?>Incometrackers/account_statement_for_flat_ajax/'+ledger_sub_account_id+'/'+from+'/'+to);
+		.load('<?php echo $webroot_path; ?>Incometrackers/account_statement_for_flat_ajax1/'+ledger_sub_account_id+'/'+from+'/'+to);
 	});
 });
 </script>

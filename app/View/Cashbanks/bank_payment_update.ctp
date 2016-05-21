@@ -66,6 +66,7 @@ foreach($result_cash_bank as $data){
 		?>
 		<option value="<?php echo $auto_id; ?>,2" <?php if($account_type==2 && $ledger_id==$auto_id) { ?> selected="selected" <?php } ?>><?php echo $name; ?></option>
 		<?php }} ?>
+		<option value="32,2" <?php if($account_type==2 && $ledger_id==32) { ?> selected="selected" <?php } ?>>Cash-in-hand</option>
 		</select>
 		<label id="ledger_account" class="validation"></label>
 <br>					

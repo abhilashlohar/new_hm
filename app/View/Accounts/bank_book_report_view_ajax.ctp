@@ -71,7 +71,7 @@ $payment_amount=$dataaa['cash_bank']['amount'];
 $receipt_amount="";
 $receipt_amount2="";
 $type=(int)$dataaa['cash_bank']['account_type'];
-$account_head_id=(int)$dataaa['cash_bank']['user_id'];
+$account_head_id=(int)$dataaa['cash_bank']['sundry_creditor_id'];
 	if($type == 1){
 		$subleddger_detaill=$this->requestAction(array('controller' => 'Hms', 'action' => 'ledger_sub_account_fetch'), array('pass' => array($account_head_id)));
 		foreach($subleddger_detaill as $subledger_datttaa){

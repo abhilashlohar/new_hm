@@ -38,7 +38,7 @@ $tomm = strtotime($to2);
 foreach($cursor1 as $dataaa){
 $transaction_date = $dataaa['cash_bank']['transaction_date'];	
 $payment_date = date('d-m-Y',($transaction_date));
-$user_id = (int)$dataaa['cash_bank']['user_id'];
+$user_id = (int)$dataaa['cash_bank']['sundry_creditor_id'];
 $account_type = (int)$dataaa['cash_bank']['account_type'];
 $amount = $dataaa['cash_bank']['amount'];
 $instrument_utr = $dataaa['cash_bank']['receipt_instruction'];

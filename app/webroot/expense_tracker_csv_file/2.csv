@@ -1,7 +1,7 @@
 Posting Date,Date of invoice,Due Date,Party account head,Invoice Reference,Expense Head,Amount of invoice, Description 
-01-02-2016,01-02-2016,01-02-2016,Sanjay Pohal,test,Staff welfare expenses,100,diwali gift
-02-02-2016,02-02-2016,02-02-2016,Ram Chandra Shinde,test,House Keeping Charges ,500,paid housekeeping Salary
-05-02-2016,05-02-2016,05-02-2016,Ashok Creation,test,Electricity Expenses,300,Paid Electrical Bill 
-05-02-2016,05-02-2016,05-02-2016,Ashok Sringane,test,Printing & Stationery charges,200,Paid Security Guard salary
-07-02-2016,07-02-2016,07-02-2016,Ajit B Patil,test,Plumbing - R&M,100,Paid sanjay Pohal For Drange Cleaning
-14-02-2016,14-02-2016,14-02-2016,Krispo and Kleen Well ,test,Electricity Expenses,179,Paid Electrical Bill 
+1-2-2016,1-2-2016,1-2-2016,Sanjay Pohal,N/A,Staff welfare expenses,100,description
+2-2-2016,2-2-2016,2-2-2016,Ajit B patil ,N/A,House keeping Charges ,20,description
+2-2-2016,2-2-2016,2-2-2016,Ashok Sringane,N/A,Security Charges ,50,description
+5-2-2016,5-2-2016,5-2-2016,ashok Creation,N/A,Electricity Expenses ,60,description
+6-2-2016,6-2-2016,6-2-2016,Ram chandra Shinde,N/A,Staff welfare expenses,40,description
+6-2-2016,6-2-2016,6-2-2016,secure & security sevices,N/A,Printing & Stationery charges,120,description

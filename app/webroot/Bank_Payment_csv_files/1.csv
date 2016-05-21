@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Transaction Date,Ledger A/c,Amount,TDS in Percentage,Mode of Payment,Instrument/UTR,Bank Account,Invoice Reference,Narration 
 <<<<<<< HEAD
 1-1-2016,Ram Shinde,500,,Cheque,55,SBBJ,N/A,
@@ -8,3 +9,7 @@ Transaction Date,Ledger A/c,Amount,TDS in Percentage,Mode of Payment,Instrument/
 =======
 12-10-2015,Sinking Fund,10000,2,NEFT,HHHG4455,SBI,for marketing,narration 
 >>>>>>> d50eddb114875cd69b6d4a3fb961b87f6a27dcf7
+=======
+Transaction Date,Ledger A/c,Amount,TDS Amount,Mode of Payment,Instrument/UTR,Bank Account,Invoice Reference,Narration 
+12-10-2015,Sinking Fund,10000,200,NEFT,HHHG4455,SBI,for marketing,narration 
+>>>>>>> 4f59ec387091df9d992937aed30752f1beaaad4e

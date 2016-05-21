@@ -7481,10 +7481,6 @@ function account_statement_for_flat_ajax1($ledger_sub_account_id,$from,$to){
 	$to=date("Y-m-d",strtotime($to));
 	$this->set("to",$to);
 	
-	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('hm_society_id');
-	$s_user_id=$this->Session->read('hm_user_id');	
-	
 	$member_detail=$this->requestAction(array('controller'=>'Fns','action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id)));	
 	$wing_id = $member_detail['wing_id'];
 	$flat_id = $member_detail['flat_id'];
@@ -7494,6 +7490,13 @@ function account_statement_for_flat_ajax1($ledger_sub_account_id,$from,$to){
 	
 	$wing_flat=$this->requestAction(array('controller' => 'Fns', 'action' => 'wing_flat_via_wing_id_and_flat_id'), array('pass' => array($wing_id,$flat_id)));
 	$this->set('wing_flat',$wing_flat);
+
+	
+	
+	$s_role_id=$this->Session->read('role_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');	
+	
 
 	$this->loadmodel('society');
 	$conditions=array("society_id" => $s_society_id);

@@ -45,8 +45,6 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy" 
 			value="<?php echo $default_date; ?>" 
 			style="background-color:white !important; margin-top:2.5px;" name="transaction_date[]">
-		 
-			
 		 </td>
 		 <td>
 					<select class="m-wrap span12" name="ledger_account[]">
@@ -98,17 +96,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		 </td>
 		 <td>
 		  <input type="text" class="m-wrap span12" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="10" Placeholder="Amount" name="amount[]">
-		  
-			<select class="m-wrap span6" name="tds[]">
-			<option value="" style="display:none;">Select</option>
-			<?php for($k=0; $k<sizeof($tds_arr); $k++){
-			$tds_sub_arr = $tds_arr[$k];	
-			$tds_id = (int)$tds_sub_arr[1];
-			$tds_tax = $tds_sub_arr[0];	
-			?>
-			<option value= "<?php echo $tds_id; ?>" charge="<?php echo $tds_tax; ?>"><?php echo $tds_tax; ?></option>
-			<?php } ?>                           
-			</select>
+			<input type="text" class="m-wrap span6" name="tds[]" Placeholder="TDS Amount">
+			
 		    <input type="text"  class="m-wrap span6" 
 			readonly="readonly" style="background-color:white !important; margin-top:2.5px;" Placeholder="Net Amount" name="net_amount[]">
 		 </td>
@@ -163,12 +152,10 @@ $(document).ready(function(){
 </script>
 
 <script>
-$('select[name="tds[]"]').die().live("change",function(){
+$('input[name="tds[]"]').die().live("keyup blur",function(){
 		var tds=parseInt($(this).val());
 			var amount=parseFloat($(this).closest("tr").find('input[name="amount[]"]').val());
-				var charge=parseInt($('option:selected',this).attr('charge'));
-					var tds_charge=parseFloat((charge/100)*amount);
-						var total_amount=Math.round(amount-tds_charge);	
+				var total_amount=Math.round(amount-tds);	
 	if($.isNumeric(total_amount)==false){ total_amount=amount; }						
 		$(this).closest("tr").find('input[name="net_amount[]"]').val(total_amount);
 });
@@ -303,9 +290,9 @@ var allow="yes";
 		}else{
 		$(this).val('');	
 		}
-		var charge=parseInt($(this).closest("tr").find('select[name="tds[]"] option:selected').attr('charge'));
-			var tds_charge=parseFloat((charge/100)*amount);
-				var total_amount=Math.round(amount-tds_charge);	
+		var tds=parseFloat($(this).closest("tr").find('input[name="tds[]"]').val());
+		
+				var total_amount=Math.round(amount-tds);	
 	if($.isNumeric(total_amount)==false){ total_amount=amount; }						
 		$(this).closest("tr").find('input[name="net_amount[]"]').val(total_amount);	
 		});

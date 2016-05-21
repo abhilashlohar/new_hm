@@ -240,19 +240,28 @@ var allow="yes";
 			}else{
 				$(this).parent().next('td').find(".er").remove();
 			}
-			}
-			else
-			{
-				
-			var other_income=$(this).closest("tr").find('select[name="expenditure[]"]').val();
+			}else if(deposited_in==2){
 			
+			var other_income=$(this).closest("tr").find('select[name="expenditure[]"]').val();
 			if(other_income==""){
 				$(this).parent().next('td').find(".er").remove();
 				$(this).parent().next('td').append('<span class="er">Required</span>');
 				allow="no";
 			}else{
 				$(this).parent().next('td').find(".er").remove();
-			}	
+			}		
+			}
+			else
+			{
+			var tax=$(this).closest("tr").find('select[name="tax[]"]').val();
+			if(tax==""){
+				$(this).parent().next('td').find(".er").remove();
+				$(this).parent().next('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).parent().next('td').find(".er").remove();
+			}		
+			
 				
 			}
 			

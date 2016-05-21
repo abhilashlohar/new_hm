@@ -136,19 +136,19 @@ $net_amount=$amount-$tds_amount;
 </form>
 
 <script>
-$(document).ready(function(){
-	$("form").on("submit",function(e){
-	var allow="yes";
-		var transaction_date=$('input[name="transaction_date"]').val();
-			transaction_date=transaction_date.split('-').reverse().join('');
-			var f_y=$("#f_y").val();
+	$(document).ready(function(){
+		$("form").on("submit",function(e){
+			var allow="yes";
+				var transaction_date=$('input[name="transaction_date"]').val();
+				transaction_date=transaction_date.split('-').reverse().join('');
+				var f_y=$("#f_y").val();
 				var f_y2=f_y.split(',');
 					var al=0;
-			$.each(f_y2, function( index, value ) {
+				$.each(f_y2, function( index, value ) {
 				var f_y3=value.split('/');
 					var from=f_y3[0];
 						from=from.split('-').reverse().join('');
-							var to=f_y3[1];
+						var to=f_y3[1];
 				to=to.split('-').reverse().join('');
 				if(transaction_date>=from && transaction_date<=to){
 					$("#date").html('');
@@ -162,23 +162,24 @@ $(document).ready(function(){
 				allow="no";
 			}
 		
-	 var ledger_account=$('select[name="ledger_account"]').val();
-	  if(ledger_account==""){
+	
+		var ledger_account=$('select[name="ledger_account"]').val();
+		if(ledger_account==""){
 			$("#ledger_account").html('Required');	
 				allow="no";
 			}else{
 				$("#ledger_account").html('');
 			}
-	 var instrument=$('input[name="instrument"]').val();
-	  if(instrument==""){
+		var instrument=$('input[name="instrument"]').val();
+		if(instrument==""){
 			$("#instrument").html('Required');	
 				allow="no";
 			}else{
 				$("#instrument").html('');
 			}
 	 
-	 var payment_mode=$('select[name="payment_mode"]').val();
-	  if(payment_mode==""){
+		var payment_mode=$('select[name="payment_mode"]').val();
+		if(payment_mode==""){
 			$("#mode").html('Required');	
 				allow="no";
 			}else{
@@ -236,6 +237,15 @@ $(document).ready(function(){
 			else{ $("#date").html('');  }
 	});
 	
+
+
+	$('input[name="tds"]').die().live("keyup blur",function(){
+      var tds_amount=parseFloat($(this).val());
+			var amount=parseFloat($('input[name="amount"]').val());
+				var total_amount=Math.round(amount-tds_amount);	
+					if($.isNumeric(total_amount)==false){ total_amount=amount; }
+		$('input[name="net_amount"]').val(total_amount);
+	});
 	
 $('select[name="ledger_account"]').die().live("change",function(){
 		var ledger_account=$(this).val();
@@ -276,6 +286,14 @@ $('input[name="amount"]').die().live("keyup blur",function(){
 		}else{
 			$('input[name="amount"]').val('');
 		}
+		var tds=parseFloat($('input[name="tds"]').val());	
+		var total_amount=Math.round(amount-tds);	
+	if($.isNumeric(total_amount)==false){ total_amount=amount; }						
+		$('input[name="net_amount"]').val(total_amount);
+		
+		
+		
+		
 	
 });	
 $('select[name="bank_account"]').die().live("change",function(){

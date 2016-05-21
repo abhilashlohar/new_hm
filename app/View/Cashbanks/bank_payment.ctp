@@ -153,7 +153,7 @@ $(document).ready(function(){
 
 <script>
 $('input[name="tds[]"]').die().live("keyup blur",function(){
-		var tds=parseInt($(this).val());
+		var tds=parseFloat($(this).val());
 			var amount=parseFloat($(this).closest("tr").find('input[name="amount[]"]').val());
 				var total_amount=Math.round(amount-tds);	
 	if($.isNumeric(total_amount)==false){ total_amount=amount; }						
@@ -240,9 +240,6 @@ var allow="yes";
 			
 			
 		});
-  
- 
-  
       	
    $('#main tbody tr select[name="bank_account[]"]').die().each(function(i, obj){
 			var deposited_in=$(this).val();

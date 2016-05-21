@@ -77,6 +77,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					?>
 					<option value="<?php echo $auto_id; ?>,2" ><?php echo $name; ?></option>
 					<?php }} ?>
+					<option value="32,2">Cash-in-hand</option>
 					</select>
 					<input type="text" class="m-wrap span12" 
 			style="background-color:white !important; margin-top:2.5px;" Placeholder="Invoice Reference"

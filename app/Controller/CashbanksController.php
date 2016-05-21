@@ -8302,7 +8302,7 @@ $bank_id = (int)$collection['ledger_sub_account']['auto_id'];
 
 		$this->loadmodel('payment_csv_converted');
 		$auto_id=$this->autoincrement('payment_csv_converted','auto_id');
-		$this->payment_csv_converted->saveAll(Array(Array("auto_id" => $auto_id, "trajection_date" => $trajection_date,"ledger_ac"=>$ledger_id,"type"=>$typppp,"amount"=>$amount,"tds" => $tds, "mode" => $mode,"instrument"=>$instrument,"bank"=>$bank_id,"invoice_ref"=>$invoice_ref,"narration"=>$narration,"society_id"=>$s_society_id,"is_imported"=>"NO")));
+		$this->payment_csv_converted->saveAll(Array(Array("auto_id" => $auto_id, "trajection_date" => $trajection_date,"ledger_ac"=>$ledger_id,"type"=>$typppp,"amount"=>$amount,"tds"=>$tds, "mode" => $mode,"instrument"=>$instrument,"bank"=>$bank_id,"invoice_ref"=>$invoice_ref,"narration"=>$narration,"society_id"=>$s_society_id,"is_imported"=>"NO")));
 		
 		$this->loadmodel('bank_payment_csv');
 		$this->bank_payment_csv->updateAll(array("is_converted" => "YES"),array("auto_id" => $bank_payment_csv_id));

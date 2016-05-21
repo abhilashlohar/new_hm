@@ -912,7 +912,6 @@ $this->layout=null;
 	foreach($test as $child){ $i++;
 		if($i>1){
 			$child_ar=explode(',',$child[0]);
-			
 			$posting_date=trim(@$child_ar[0]);
 			$invoice_date=trim(@$child_ar[1]);
 			$due_date=trim(@$child_ar[2]);
@@ -921,7 +920,6 @@ $this->layout=null;
 			$expense_head=trim(@$child_ar[5]);
 			$amount=trim(@$child_ar[6]);
 			$description =trim(@$child_ar[7]);
-			
 			$this->loadmodel('expense_tracker_csv');
 			$auto_id=$this->autoincrement('expense_tracker_csv','auto_id');
 			$this->expense_tracker_csv->saveAll(Array(Array("auto_id" => $auto_id, "posting_date" => $posting_date,"invoice_date"=>$invoice_date,"due_date"=>$due_date, "party_ac" => $party_ac, "invoice_ref" => $invoice_ref,"expense_head"=>$expense_head,"amount"=>$amount,"description"=>$description,"society_id"=>$s_society_id,"is_converted"=>"NO")));

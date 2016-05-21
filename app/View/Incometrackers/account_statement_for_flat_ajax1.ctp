@@ -98,9 +98,9 @@ foreach($result_society as $data){
 					//$refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_number"]; 
 					$ledger_sub_account_id = (int)@$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
 					$description = @$result_cash_bank[0]["cash_bank"]["narration"];
-					$receipt_source = $result_cash_bank[0]["cash_bank"]["source"];  
-					$date = $result_cash_bank[0]["cash_bank"]["created_on"];	
-					$prepaired_by = (int)$result_cash_bank[0]["cash_bank"]["created_by"];	
+					$receipt_source = @$result_cash_bank[0]["cash_bank"]["source"];  
+					$date = @$result_cash_bank[0]["cash_bank"]["created_on"];	
+					$prepaired_by = (int)@$result_cash_bank[0]["cash_bank"]["created_by"];	
 						if($receipt_source=='bank_receipt'){
 								$source="Receipt";
 								$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_number"]; 

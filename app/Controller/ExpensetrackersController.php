@@ -912,14 +912,15 @@ $this->layout=null;
 	foreach($test as $child){ $i++;
 		if($i>1){
 			$child_ar=explode(',',$child[0]);
-			$posting_date=@$child_ar[0];
-			$invoice_date=@$child_ar[1];
-			$due_date=@$child_ar[2];
-			$party_ac=@$child_ar[3];
-			$invoice_ref=@$child_ar[4];
-			$expense_head=@$child_ar[5];
-			$amount=@$child_ar[6];
-			$description = @$child_ar[7];
+			
+			$posting_date=trim(@$child_ar[0]);
+			$invoice_date=trim(@$child_ar[1]);
+			$due_date=trim(@$child_ar[2]);
+			$party_ac=trim(@$child_ar[3]);
+			$invoice_ref=trim(@$child_ar[4]);
+			$expense_head=trim(@$child_ar[5]);
+			$amount=trim(@$child_ar[6]);
+			$description =trim(@$child_ar[7]);
 			
 			$this->loadmodel('expense_tracker_csv');
 			$auto_id=$this->autoincrement('expense_tracker_csv','auto_id');

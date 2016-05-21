@@ -60,6 +60,7 @@ jQuery('.tooltips').tooltip();
 <tbody id="table">								
 <?php $total_credit = 0; $total_debit = 0;
 foreach ($cursor2 as $collection){
+	$tds_amount=0;
 $receipt_no=$collection['cash_bank']['receipt_id'];
 $transaction_id=(int)$collection['cash_bank']['transaction_id'];	
 $date=$collection['cash_bank']['transaction_date'];
@@ -73,18 +74,8 @@ $account_id=(int)$collection['cash_bank']['account_head'];
 $amount=$collection['cash_bank']['amount'];
 $current_date=$collection['cash_bank']['created_on'];		
 $ac_type=(int)$collection['cash_bank']['account_type'];
-$tds_id=(int)$collection['cash_bank']['tds_id']; 
-$total_tds_amount=$amount;	
-	foreach($tds_arr as $tds_ddd){
-	$tdsss_taxxx = (int)$tds_ddd[0];  
-	$tds_iddd = (int)$tds_ddd[1];  
-		if($tds_iddd == $tds_id){
-		$tds_tax = $tdsss_taxxx;   
-		$tds_amount=(round((@$tds_tax/100)*$amount));
-		$total_tds_amount=($amount - $tds_amount);
-		}
-	}
-	
+$tds_amount=$collection['cash_bank']['tds_tax_amount']; 
+$total_tds_amount=$amount-$tds_amount;
 $creation_date=date('d-m-Y',strtotime($current_date));											
 	$ussr_dataa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by_id)));  
 	foreach ($ussr_dataa as $ussrrr){

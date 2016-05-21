@@ -1,21 +1,22 @@
 <?php
 foreach($result_cash_bank as $data){
-	$transaction_date=$data['cash_bank']['transaction_date'];
-	  @$invoice_reference=@$data['cash_bank']['invoice_reference'];
-		$ledger_id=(int)$data['cash_bank']['sundry_creditor_id'];
-		  @$narration=@$data['cash_bank']['narration'];
-			$receipt_mode=$data['cash_bank']['receipt_mode'];
-			  $receipt_instruction=$data['cash_bank']['receipt_instruction'];
-				$account_head=(int)$data['cash_bank']['account_head'];
-				  $amount=$data['cash_bank']['amount'];
-					$tds_id_via_table=(int)$data['cash_bank']['tds_id'];
-					  $account_type=(int)$data['cash_bank']['account_type'];
-                        $transaction_id=(int)$data['cash_bank']['transaction_id'];
-                          $receipt_id=$data['cash_bank']['receipt_id'];
-	$transaction_date=date('d-m-Y',($transaction_date));					  
+	$tds_amount=0;
+		$transaction_date=$data['cash_bank']['transaction_date'];
+		  @$invoice_reference=@$data['cash_bank']['invoice_reference'];
+			$ledger_id=(int)$data['cash_bank']['sundry_creditor_id'];
+			  @$narration=@$data['cash_bank']['narration'];
+				$receipt_mode=$data['cash_bank']['receipt_mode'];
+				  $receipt_instruction=$data['cash_bank']['receipt_instruction'];
+					$account_head=(int)$data['cash_bank']['account_head'];
+					  $amount=$data['cash_bank']['amount'];
+						$tds_amount=(int)$data['cash_bank']['tds_tax_amount'];
+						  $account_type=(int)$data['cash_bank']['account_type'];
+							$transaction_id=(int)$data['cash_bank']['transaction_id'];
+							  $receipt_id=$data['cash_bank']['receipt_id'];
+		$transaction_date=date('d-m-Y',($transaction_date));					  
 	
 }
-
+$net_amount=$amount-$tds_amount;
 
 ?>
 <form method="post">
@@ -94,23 +95,14 @@ foreach($result_cash_bank as $data){
 	<input type="text" class="m-wrap span6" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="10" Placeholder="Amount" name="amount" value="<?php echo $amount; ?>">
 	<label id="amount" class="validation"></label>
 <br>
-			<label style="font-size:14px;">TDS%</label>	
-			<select class="m-wrap span6 chosen" name="tds">
-			<option value="" style="display:none;">Select</option>
-			<?php for($k=0; $k<sizeof($tds_arr); $k++){
-			$tds_sub_arr = $tds_arr[$k];	
-			$tds_id = (int)$tds_sub_arr[1];
-			$tds_tax = $tds_sub_arr[0];	
-			?>
-			<option value= "<?php echo $tds_id; ?>" charge="<?php echo $tds_tax; ?>" <?php if($tds_id==$tds_id_via_table){ ?> selected="selected" <?php } ?>><?php echo $tds_tax; ?></option>
-			<?php } ?>                           
-			</select>
+			<label style="font-size:14px;">TDS Amount</label>	
+			<input type="text" class="m-wrap span6" name="tds" value="<?php echo $tds_amount; ?>">
 			<br><br>
 			
 			
 			<label style="font-size:14px;">Net Amount</label>
 		    <input type="text"  class="m-wrap span6" 
-			readonly="readonly" style="background-color:white !important; margin-top:2.5px;" Placeholder="Net Amount" name="net_amount">		
+			readonly="readonly" style="background-color:white !important; margin-top:2.5px;" Placeholder="Net Amount" name="net_amount" value="<?php echo $net_amount; ?>">		
 			<br><br>
 		
 				<label style="font-size:14px;">Bank Account<span style="color:red;">*</span></label>
@@ -144,19 +136,19 @@ foreach($result_cash_bank as $data){
 </form>
 
 <script>
-$(document).ready(function(){
-	$("form").on("submit",function(e){
-	var allow="yes";
-		var transaction_date=$('input[name="transaction_date"]').val();
-			transaction_date=transaction_date.split('-').reverse().join('');
-			var f_y=$("#f_y").val();
+	$(document).ready(function(){
+		$("form").on("submit",function(e){
+			var allow="yes";
+				var transaction_date=$('input[name="transaction_date"]').val();
+				transaction_date=transaction_date.split('-').reverse().join('');
+				var f_y=$("#f_y").val();
 				var f_y2=f_y.split(',');
 					var al=0;
-			$.each(f_y2, function( index, value ) {
+				$.each(f_y2, function( index, value ) {
 				var f_y3=value.split('/');
 					var from=f_y3[0];
 						from=from.split('-').reverse().join('');
-							var to=f_y3[1];
+						var to=f_y3[1];
 				to=to.split('-').reverse().join('');
 				if(transaction_date>=from && transaction_date<=to){
 					$("#date").html('');
@@ -170,23 +162,24 @@ $(document).ready(function(){
 				allow="no";
 			}
 		
-	 var ledger_account=$('select[name="ledger_account"]').val();
-	  if(ledger_account==""){
+	
+		var ledger_account=$('select[name="ledger_account"]').val();
+		if(ledger_account==""){
 			$("#ledger_account").html('Required');	
 				allow="no";
 			}else{
 				$("#ledger_account").html('');
 			}
-	 var instrument=$('input[name="instrument"]').val();
-	  if(instrument==""){
+		var instrument=$('input[name="instrument"]').val();
+		if(instrument==""){
 			$("#instrument").html('Required');	
 				allow="no";
 			}else{
 				$("#instrument").html('');
 			}
 	 
-	 var payment_mode=$('select[name="payment_mode"]').val();
-	  if(payment_mode==""){
+		var payment_mode=$('select[name="payment_mode"]').val();
+		if(payment_mode==""){
 			$("#mode").html('Required');	
 				allow="no";
 			}else{
@@ -244,6 +237,15 @@ $(document).ready(function(){
 			else{ $("#date").html('');  }
 	});
 	
+
+
+	$('input[name="tds"]').die().live("keyup blur",function(){
+      var tds_amount=parseFloat($(this).val());
+			var amount=parseFloat($('input[name="amount"]').val());
+				var total_amount=Math.round(amount-tds_amount);	
+					if($.isNumeric(total_amount)==false){ total_amount=amount; }
+		$('input[name="net_amount"]').val(total_amount);
+	});
 	
 $('select[name="ledger_account"]').die().live("change",function(){
 		var ledger_account=$(this).val();
@@ -284,6 +286,14 @@ $('input[name="amount"]').die().live("keyup blur",function(){
 		}else{
 			$('input[name="amount"]').val('');
 		}
+		var tds=parseFloat($('input[name="tds"]').val());	
+		var total_amount=Math.round(amount-tds);	
+	if($.isNumeric(total_amount)==false){ total_amount=amount; }						
+		$('input[name="net_amount"]').val(total_amount);
+		
+		
+		
+		
 	
 });	
 $('select[name="bank_account"]').die().live("change",function(){

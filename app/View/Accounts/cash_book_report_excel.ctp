@@ -40,7 +40,7 @@ $narration = $dataaa['cash_bank']['narration'];
 
 if($receipt_source=="petty_cash_receipt")
 {
-$account_id = (int)$dataaa['cash_bank']['user_id'];
+$account_id = (int)$dataaa['cash_bank']['ledger_sub_account_id'];
 $account_type = (int)$dataaa['cash_bank']['account_type'];
 $receipt_amount = $dataaa['cash_bank']['amount'];
 $payment_amount = "";
@@ -79,7 +79,7 @@ else
 	$wing_flat = "";
 $payment_amount = $dataaa['cash_bank']['amount'];	
 $account_type = (int)$dataaa['cash_bank']['account_type'];
-$account_id = (int)$dataaa['cash_bank']['user_id'];
+$account_id = (int)$dataaa['cash_bank']['sundry_creditor_id'];
 $receipt_amount = "";
 $receipt_amount2 = "";
 

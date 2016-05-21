@@ -1096,7 +1096,7 @@ $this->loadmodel('financial_year');
 			       $instrument=$instruments[$n];
 			         $mode=$modes[$n];
 			           $amount=$amounts[$n];
-						 $tds=(int)$tdss[$n];
+						 $tds=$tdss[$n];
 						   $net_amount=$net_amounts[$n];
 							 $bank_account=(int)$bank_accounts[$n];
 						       $narration=$narrations[$n];
@@ -1112,8 +1112,8 @@ $this->loadmodel('financial_year');
 	$this->loadmodel('cash_bank');
 	$multipleRowData=Array(Array("transaction_id"=>$i,"receipt_id"=>$bbb,"created_on"=>$current_date, 
 	"transaction_date"=>strtotime($transaction_date),"created_by"=>$s_user_id, 
-	"sundry_creditor_id"=>$ledger_account_id,"invoice_reference"=>@$invoice_reference,"narration"=>$narration, "receipt_mode"=>$mode,"receipt_instruction"=>$instrument,"account_head"=>$bank_account,  
-	"amount"=>$amount,"society_id"=>$s_society_id,"tds_id" =>$tds,"account_type"=>$ledger_account_type,"source"=>"bank_payment","auto_inc"=>"YES"));
+	"sundry_creditor_id"=>$ledger_account_id,"invoice_reference"=>@$invoice_reference,"narration"=>$narration, "receipt_mode"=>$mode,"receipt_instruction"=>$instrument,"account_head"=>$bank_account, 
+	"amount"=>$amount,"society_id"=>$s_society_id,"tds_id" =>$tds,"account_type"=>$ledger_account_type,"source"=>"bank_payment","auto_inc"=>"YES","tds_tax_amount"=>$tds));
 	$this->cash_bank->saveAll($multipleRowData);  
 
 	if($ledger_account_type==1){
@@ -1128,29 +1128,8 @@ $this->loadmodel('financial_year');
 			$this->ledger->saveAll($multipleRowData); 
     }
 
-		$this->loadmodel('reference');
-		$conditions=array("auto_id" => 3);
-		$cursor4=$this->reference->find('all',array('conditions'=>$conditions));
-			foreach($cursor4 as $collection){
-			$tds_arr = $collection['reference']['reference'];	
-			}
-		if(!empty($tds)){
-			for($r=0; $r<sizeof($tds_arr); $r++){
-			$tds_sub_arr = $tds_arr[$r];
-			$tds_id2 = (int)$tds_sub_arr[1];
-				if($tds_id2 == $tds){
-				$tds_rate = $tds_sub_arr[0];
-				break;
-				}
-			}
-			$tds_amount = (round(($tds_rate/100)*$amount));
-			$total_tds_amount=($amount - $tds_amount);
-			
-		}else{
-		$total_tds_amount=$amount;
-		$tds_amount = 0;
-	    }
-	
+			$tds_amount=round($tds);
+			$total_tds_amount=$amount-$tds_amount;
 			$l=$this->autoincrement('ledger','auto_id');
 			$this->loadmodel('ledger');
 			$multipleRowData=Array(Array("auto_id"=>$l,"transaction_date"=>strtotime($transaction_date),"debit"=>null,"credit"=>$total_tds_amount,"ledger_account_id" =>33, 
@@ -1158,8 +1137,7 @@ $this->loadmodel('financial_year');
 			"society_id"=>$s_society_id));
 			$this->ledger->saveAll($multipleRowData); 
 
-
-		if($tds_amount > 0){
+			if($tds_amount > 0){
 			
 			$l=$this->autoincrement('ledger','auto_id');
 			$this->loadmodel('ledger');
@@ -4695,7 +4673,7 @@ function bank_payment_update($auto_id=null)
 	          $ledger_account=$this->request->data['ledger_account'];
 		        $instrument_utr=$this->request->data['instrument'];
 		          $mode_of_payment=$this->request->data['payment_mode'];
-		            $tds_id=(int)$this->request->data['tds'];
+		            $tds_id=$this->request->data['tds'];
 		              $bank_account=(int)$this->request->data['bank_account'];
 			            $amount=$this->request->data['amount'];
 			              $narration=$this->request->data['narration'];
@@ -4704,30 +4682,10 @@ function bank_payment_update($auto_id=null)
 		    $ledger_account_type=(int)$ledger_account_array[1];
 
 	$this->loadmodel('cash_bank');
-	$this->cash_bank->updateAll(array("transaction_date"=>strtotime($transaction_date),"sundry_creditor_id"=>$ledger_account_id,"invoice_reference"=>@$invoice_reference,"narration"=>$narration,"receipt_mode"=>$mode_of_payment,"receipt_instruction"=>$instrument_utr,"account_head"=>$bank_account,"amount"=>$amount,"tds_id"=>$tds_id,"account_type"=>$ledger_account_type),array("society_id"=>$s_society_id,"transaction_id"=>$element_id));
-	
-	$this->loadmodel('reference');
-	$conditions=array("auto_id"=>3);
-	$cursor4=$this->reference->find('all',array('conditions'=>$conditions));
-		foreach($cursor4 as $collection){
-			$tds_arr = $collection['reference']['reference'];	
-	}
-	if(!empty($tds_id)){
-		for($r=0; $r<sizeof($tds_arr); $r++){
-			$tds_sub_arr=$tds_arr[$r];
-			$tds_id2=(int)$tds_sub_arr[1];
-			if($tds_id2==$tds_id){
-				$tds_rate=$tds_sub_arr[0];
-				break;
-		}
-	}
-	$tds_amount=(round(($tds_rate/100)*$amount));
-	$total_tds_amount=($amount-$tds_amount);
-}
-else{
-	$total_tds_amount = $amount;
-	$tds_amount=0;
-}
+	$this->cash_bank->updateAll(array("transaction_date"=>strtotime($transaction_date),"sundry_creditor_id"=>$ledger_account_id,"invoice_reference"=>@$invoice_reference,"narration"=>$narration,"receipt_mode"=>$mode_of_payment,"receipt_instruction"=>$instrument_utr,"account_head"=>$bank_account,"amount"=>$amount,"account_type"=>$ledger_account_type,"tds_tax_amount"=>$tds_id),array("society_id"=>$s_society_id,"transaction_id"=>$element_id));
+    $tds_amount=round($tds_id);
+	$total_tds_amount=$amount-$tds_amount;
+
 
 if($ledger_account_type == 1){
 	$this->loadmodel('ledger');

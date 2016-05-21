@@ -1669,6 +1669,7 @@ $this->set('cursor2',$cursor2);
 		$account_groups=$this->request->data['account_group'];
 		$sundry_creditors=$this->request->data['sundry_creditor'];
 		$expenditures=$this->request->data['expenditure'];
+		$taxs=$this->request->data['tax'];
 		$paid_froms=$this->request->data['paid_from'];
 		$amounts=$this->request->data['amount'];
 		$narrations=$this->request->data['narration']; 
@@ -1679,10 +1680,13 @@ $this->set('cursor2',$cursor2);
 				  if($account_group_id==1){
 					 $sundry_creditor_id=(int)$sundry_creditors[$n];
 					 $expense_party=(int)$sundry_creditor_id;
-				  }else{
+				  }else if($account_group_id==2){
 					 $expenditure_id=(int)$expenditures[$n]; 
 					 $expense_party=(int)$expenditure_id;
-				  }
+				  }else{
+					 $tax_id=(int)$taxs[$n]; 
+					 $expense_party=(int)$tax_id;  
+				 }
 			   $paid_from_id=(int)$paid_froms[$n];
 			   $amount=$amounts[$n];
 			   $narration=$narrations[$n];

@@ -84,7 +84,15 @@ else if($account_type == 2)
 	{
 	$user_name = $collection['ledger_account']['ledger_name'];	  
 	}
-}      
+} 
+if($account_type == 3){
+	$result_la = $this->requestAction(array('controller' => 'hms', 'action' => 'fetch_amount'),array('pass'=>array($user_id)));
+	foreach ($result_la as $collection) 
+	{
+	$user_name = $collection['ledger_account']['ledger_name'];	  
+	}	
+	
+}     
 if($date >= $m_from && $date <= $m_to)
 {
 $date = date('d-m-Y',($date));	   

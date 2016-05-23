@@ -1280,13 +1280,8 @@ header ("Content-Description: Generated Report" );
 			$society_name = $collection['society']['society_name'];
 	}
 		$this->set('society_name',$society_name);
-	$this->loadmodel('reference');
-	$conditions=array("auto_id"=>3);
-	$cursor = $this->reference->find('all',array('conditions'=>$conditions));
-		foreach($cursor as $collection){
-			$tds_arr = $collection['reference']['reference'];
-	}
-		$this->set('tds_arr',$tds_arr);
+	
+		
 $this->loadmodel('cash_bank');
 $conditions=array("society_id" => $s_society_id,"source"=>"bank_payment");
 $order=array('cash_bank.transaction_date'=> 'ASC');

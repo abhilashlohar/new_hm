@@ -1107,7 +1107,7 @@ $this->loadmodel('financial_year');
 	          	$current_date=date('Y-m-d');	
 	
 	$i=$this->autoincrement('cash_bank','transaction_id');
-	$bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','bank_payment');
+	$bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_number','bank_payment');
 	$receipt_array[]=$bbb;
 	$this->loadmodel('cash_bank');
 	$multipleRowData=Array(Array("transaction_id"=>$i,"receipt_number"=>$bbb,"created_on"=>$current_date, 
@@ -1370,7 +1370,7 @@ if(isset($this->request->data['submit'])){
     $current_date=date('Y-m-d');
 	
 $auto=$this->autoincrement('cash_bank','transaction_id');
-$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','petty_cash_receipt');
+$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_number','petty_cash_receipt');
 $receipt_array[]=$i;
 $this->loadmodel('cash_bank');
 $multipleRowData = Array( Array("transaction_id"=>$auto,"receipt_number" =>$i,"ledger_sub_account_id"=>$party_ac, 
@@ -1664,7 +1664,7 @@ $this->set('cursor2',$cursor2);
 			$current_date = date('Y-m-d');
 
 		$auto=$this->autoincrement('cash_bank','transaction_id');
-		$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','petty_cash_payment');
+		$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_number','petty_cash_payment');
 		$this->loadmodel('cash_bank');
 		$multipleRowData=Array(Array("transaction_id"=>$auto,"receipt_number"=>$i,"sundry_creditor_id"=>$expense_party,"created_on"=>$current_date,"account_type"=>$account_group_id,"transaction_date"=>strtotime($transaction_date),"created_by"=>$s_user_id,"narration"=>$narration,"account_head"=>$paid_from_id,"amount"=>$amount,"society_id"=>$s_society_id,"source"=>"petty_cash_payment","auto_inc"=>"YES"));
 		$this->cash_bank->saveAll($multipleRowData);  
@@ -8671,7 +8671,7 @@ $this->layout=null;
 		
 $current_date = date('Y-m-d');		
 $i=$this->autoincrement('cash_bank','transaction_id');
-$bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','bank_payment');
+$bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_number','bank_payment');
 $rr_arr[] = $bbb;
 $this->loadmodel('cash_bank');
 $multipleRowData = Array( Array("transaction_id"=>$i,"receipt_number"=>$bbb,"created_on"=>$current_date, 

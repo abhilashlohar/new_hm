@@ -64,7 +64,7 @@ $narration = $dataaa['cash_bank']['narration'];
 	array('pass'=>array(@$wing_id,@$flat_id)));
 }
 else if($receipt_source == "bank_payment"){
-	$receipt_id = $dataaa['cash_bank']['receipt_id'];
+	$receipt_id = $dataaa['cash_bank']['receipt_number'];
 $transaction_date=$dataaa['cash_bank']['transaction_date'];	
 $transaction_date2=date('d-m-Y',($transaction_date));		
 $payment_amount=$dataaa['cash_bank']['amount'];	

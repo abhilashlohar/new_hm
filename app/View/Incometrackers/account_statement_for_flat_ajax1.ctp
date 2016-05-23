@@ -107,16 +107,16 @@ foreach($result_society as $data){
 							}
 							if($receipt_source=='bank_payment'){
 								$source="Bank payment";
-								$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_id"]; 
+								$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_number"]; 
 							}
 							if($receipt_source=='petty_cash_receipt'){
 								$source="Petty Cash Receipt";
-								$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_id"];
+								$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_number"];
 							}
 							if($receipt_source == "petty_cash_payment")
 							{
 								$source="Petty Cash Payment";
-								$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_id"];
+								$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_number"];
 							}		
 				}
 				

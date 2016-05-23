@@ -1230,19 +1230,11 @@ $cursor1=$this->bank_payment->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
 
 $this->loadmodel('cash_bank');
-$conditions=array("society_id" => $s_society_id,"source"=>"bank_payment");
+$conditions=array("society_id"=>$s_society_id,"source"=>"bank_payment");
 $order=array('cash_bank.transaction_date'=> 'ASC');
 $cursor2=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor2',$cursor2);
 
-$this->loadmodel('reference');
-$conditions=array("auto_id"=>3);
-$cursor = $this->reference->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
-$tds_arr = $collection['reference']['reference'];
-}
-$this->set("tds_arr",$tds_arr);	
 }
 //End Bank Payment Show Ajax (Accounts)//
 //Start Bank Payment Excel//

@@ -23,6 +23,7 @@ jQuery('.tooltips').tooltip();
 		if($transaction_date >= $m_from && $transaction_date <= $m_to){
 			$nnn = 555;	
 }} ?>
+
 <?php if($nnn == 555){ ?>
 
 <div class="portlet box">
@@ -60,9 +61,9 @@ jQuery('.tooltips').tooltip();
 <tbody id="table">								
 <?php $total_credit = 0; $total_debit = 0;
 foreach ($cursor2 as $collection){
-	$tds_amount=0;
-$receipt_no=$collection['cash_bank']['receipt_id'];
-$transaction_id=(int)$collection['cash_bank']['transaction_id'];	
+$tds_amount=0;
+$receipt_no=$collection['cash_bank']['receipt_number'];
+$transaction_id=(int)$collection['cash_bank']['transaction_id'];
 $date=$collection['cash_bank']['transaction_date'];
 $prepaired_by_id=(int)$collection['cash_bank']['created_by'];
 $user_id=(int)$collection['cash_bank']['sundry_creditor_id'];   
@@ -76,6 +77,7 @@ $current_date=$collection['cash_bank']['created_on'];
 $ac_type=(int)$collection['cash_bank']['account_type'];
 $tds_amount=$collection['cash_bank']['tds_tax_amount']; 
 $total_tds_amount=$amount-$tds_amount;
+
 $creation_date=date('d-m-Y',strtotime($current_date));											
 	$ussr_dataa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by_id)));  
 	foreach ($ussr_dataa as $ussrrr){

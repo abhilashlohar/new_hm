@@ -1110,7 +1110,7 @@ $this->loadmodel('financial_year');
 	$bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','bank_payment');
 	$receipt_array[]=$bbb;
 	$this->loadmodel('cash_bank');
-	$multipleRowData=Array(Array("transaction_id"=>$i,"receipt_id"=>$bbb,"created_on"=>$current_date, 
+	$multipleRowData=Array(Array("transaction_id"=>$i,"receipt_number"=>$bbb,"created_on"=>$current_date, 
 	"transaction_date"=>strtotime($transaction_date),"created_by"=>$s_user_id, 
 	"sundry_creditor_id"=>$ledger_account_id,"invoice_reference"=>@$invoice_reference,"narration"=>$narration, "receipt_mode"=>$mode,"receipt_instruction"=>$instrument,"account_head"=>$bank_account, 
 	"amount"=>$amount,"society_id"=>$s_society_id,"tds_id" =>$tds,"account_type"=>$ledger_account_type,"source"=>"bank_payment","auto_inc"=>"YES","tds_tax_amount"=>$tds));
@@ -1373,7 +1373,7 @@ $auto=$this->autoincrement('cash_bank','transaction_id');
 $i=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','petty_cash_receipt');
 $receipt_array[]=$i;
 $this->loadmodel('cash_bank');
-$multipleRowData = Array( Array("transaction_id"=>$auto,"receipt_id" =>$i,"ledger_sub_account_id"=>$party_ac, 
+$multipleRowData = Array( Array("transaction_id"=>$auto,"receipt_number" =>$i,"ledger_sub_account_id"=>$party_ac, 
 "created_on"=>$current_date,"account_type"=>$account_group,"transaction_date"=>strtotime($transaction_date),"created_by"=>$s_user_id,"narration"=>$narration,"account_head"=>$account_head_id,"amount"=>$amount,"society_id"=>$s_society_id,"source"=>"petty_cash_receipt","auto_inc"=>"YES"));
 $this->cash_bank->saveAll($multipleRowData);  
 
@@ -1666,7 +1666,7 @@ $this->set('cursor2',$cursor2);
 		$auto=$this->autoincrement('cash_bank','transaction_id');
 		$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','petty_cash_payment');
 		$this->loadmodel('cash_bank');
-		$multipleRowData=Array(Array("transaction_id"=>$auto,"receipt_id"=>$i,"sundry_creditor_id"=>$expense_party,"created_on"=>$current_date,"account_type"=>$account_group_id,"transaction_date"=>strtotime($transaction_date),"created_by"=>$s_user_id,"narration"=>$narration,"account_head"=>$paid_from_id,"amount"=>$amount,"society_id"=>$s_society_id,"source"=>"petty_cash_payment","auto_inc"=>"YES"));
+		$multipleRowData=Array(Array("transaction_id"=>$auto,"receipt_number"=>$i,"sundry_creditor_id"=>$expense_party,"created_on"=>$current_date,"account_type"=>$account_group_id,"transaction_date"=>strtotime($transaction_date),"created_by"=>$s_user_id,"narration"=>$narration,"account_head"=>$paid_from_id,"amount"=>$amount,"society_id"=>$s_society_id,"source"=>"petty_cash_payment","auto_inc"=>"YES"));
 		$this->cash_bank->saveAll($multipleRowData);  
         $receipt_array[]=$i;
 	if($account_group_id == 1){
@@ -8674,7 +8674,7 @@ $i=$this->autoincrement('cash_bank','transaction_id');
 $bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','bank_payment');
 $rr_arr[] = $bbb;
 $this->loadmodel('cash_bank');
-$multipleRowData = Array( Array("transaction_id"=>$i,"receipt_id" =>$bbb,"created_on"=>$current_date, 
+$multipleRowData = Array( Array("transaction_id"=>$i,"receipt_number"=>$bbb,"created_on"=>$current_date, 
 "transaction_date" => strtotime($transaction_date),"created_by" => $s_user_id, 
 "sundry_creditor_id"=>$ledger_acc,"invoice_reference" => @$invoice,"narration" => $narration,"receipt_mode" => $mode,
 "receipt_instruction" => $instrument, "account_head" => $bank_ac,  

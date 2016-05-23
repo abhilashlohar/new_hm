@@ -26,7 +26,7 @@
 <?php $total_credit = 0; $total_debit = 0;
 foreach ($cursor2 as $collection){
 	$tds_amount=0;
-$receipt_no=$collection['cash_bank']['receipt_id'];
+$receipt_no=$collection['cash_bank']['receipt_number'];
 $transaction_id=(int)$collection['cash_bank']['transaction_id'];	
 $date=$collection['cash_bank']['transaction_date'];
 $prepaired_by_id=(int)$collection['cash_bank']['created_by'];

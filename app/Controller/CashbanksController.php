@@ -9025,7 +9025,7 @@ $s_society_id=(int)$this->Session->read('hm_society_id');
 $this->ath();		
 	
 	$this->loadmodel('ledger');
-	$conditions=array("table_name"=>"new_cash_bank");
+	$conditions=array("table_name"=>"new_regular_bill");
 	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions));
 	foreach($result_ledger as $data){
 	$auto_id=(int)$data['ledger']['auto_id'];	
@@ -9033,7 +9033,7 @@ $this->ath();
 		
 	
 	$this->loadmodel('ledger');
-	$this->ledger->updateAll(array("table_name"=>"cash_bank","element_id"=>(int)$element_id),array("auto_id"=>$auto_id));
+	$this->ledger->updateAll(array("table_name"=>"regular_bill","element_id"=>(int)$element_id),array("auto_id"=>$auto_id));
 
 	}	
 	

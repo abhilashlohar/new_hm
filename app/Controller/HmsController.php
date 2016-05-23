@@ -43,6 +43,8 @@ function regular_bill_echo(){
 			<th>billing_cycle</th>
 			<th>created_by</th>
 			<th>current_date</th>
+			<th>arrear_principle</th>
+			<th>arrear_intrest</th>
 		</tr>
 	<?php
 	$this->loadmodel('new_regular_bill');
@@ -74,6 +76,8 @@ function regular_bill_echo(){
 		$description=$bill["new_regular_bill"]["description"];
 		$created_by=@$bill["new_regular_bill"]["created_by"];
 		$current_date=@$bill["new_regular_bill"]["current_date"];
+		$arrear_maintenance=@$bill["new_regular_bill"]["arrear_maintenance"];
+		$arrear_intrest=@$bill["new_regular_bill"]["arrear_intrest"];
 		?>
 		<tr>
 			<td><?php echo $auto_id; ?></td>
@@ -94,6 +98,8 @@ function regular_bill_echo(){
 			<td>3</td>
 			<td><?php echo $created_by; ?></td>
 			<td><?php echo $current_date; ?></td>
+			<td><?php echo $arrear_maintenance; ?></td>
+			<td><?php echo $arrear_intrest; ?></td>
 		</tr>
 		<?php
 	}

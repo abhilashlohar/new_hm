@@ -9015,8 +9015,30 @@ $s_society_id=$this->Session->read('hm_society_id');
         else{
 		echo "not_match";	
 		}
-
 }
 //Start financial_year_validation//
+//Start modify_database//
+function modify_database()
+{
+$this->layout="blank";
+$s_society_id=(int)$this->Session->read('hm_society_id');	
+$this->ath();		
+	
+	$this->loadmodel('ledger');
+	$conditions=array("table_name"=>"new_cash_bank");
+	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions));
+	foreach($result_ledger as $data){
+	$auto_id=(int)$data['ledger']['auto_id'];	
+	$element_id=(int)$data['ledger']['element_id'];	
+		
+	
+	$this->loadmodel('ledger');
+	$this->ledger->updateAll(array("table_name"=>"cash_bank","element_id"=>(int)$element_id),array("auto_id"=>$auto_id));
+
+	}	
+	
+	
+}
+//End modify_database//
 }
 ?>

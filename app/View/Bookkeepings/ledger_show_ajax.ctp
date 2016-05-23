@@ -140,7 +140,7 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 	
 		$user_dataaaa = $this->requestAction(array('controller'=>'hms','action'=>'user_fetch'),array('pass'=>array($prepaired_by)));
 		foreach ($user_dataaaa as $user_detailll){
-			$creater_name = @$user_detailll['user']['user_name'];
+		$creater_name = @$user_detailll['user']['user_name'];
 		}	
 		$user_id1 = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 		
@@ -772,23 +772,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 </table>
 </div>
 
-<?php if(empty($page)){ $page=1;} ?>
-<div class="hide_at_print">
-	<span>Showing page:</span><span> <?php echo $page; ?></span> <br/>
-	<span>Total entries: <?php echo ($count_bank_receipt_converted); ?></span>
-</div>
-<div class="pagination pagination-medium hide_at_print">
-<ul>
-<?php 
-$loop=(int)($count_bank_receipt_converted/20);
-if($count_bank_receipt_converted%20>0){
-	$loop++;
-}
-for($ii=1;$ii<=$loop;$ii++){ ?>
-	<li><a href="#" onclick="paginttion2(<?php echo $ii; ?>)" role="button" ><?php echo $ii; ?></a></li>
-<?php } ?>
-</ul>
-</div>
+
 
 <script>
   var $rows = $('#table tr');

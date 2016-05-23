@@ -108,6 +108,20 @@ function regular_bill_echo(){
 	<?php
 }
 
+function update_regular_bills(){
+	$this->loadmodel('new_regular_bill');
+	$conditions=array("edit_status" => "NO");
+	$bills = $this->new_regular_bill->find('all',array('conditions'=>$conditions));
+	foreach($bills as $bill){
+		$auto_id=(int)$bill["new_regular_bill"]["auto_id"];
+		$income_head_array=$bill["new_regular_bill"]["income_head_array"];
+		$other_charges_array=$bill["new_regular_bill"]["other_charges_array"];
+		
+		$this->loadmodel('regular_bill');
+		$this->regular_bill->updateAll(array("income_head_array"=>$income_head_array,"other_charge"=>$other_charges_array),array("auto_id"=>$auto_id));
+	}
+}
+
 function cash_bank_echo(){
 	$this->layout=null;
 	?>

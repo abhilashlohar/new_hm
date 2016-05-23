@@ -50,7 +50,7 @@ $total_tds_amount=$amount-$tds_amount;
 		foreach ($result_lsa as $collection) 
 		{
 		$user_name = $collection['ledger_sub_account']['name']; 
-        $service_provider_id = (int)$collection['ledger_sub_account']['sp_id'];  
+        $service_provider_id = (int)@$collection['ledger_sub_account']['sp_id'];  
 		}	
 
 

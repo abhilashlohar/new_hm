@@ -77,11 +77,11 @@
 			<label id="expenditure" class="validation"></label>
 		</div>
 			<div <?php if($account_type==2 || $account_type==1){ ?> class="hide" <?php } ?> id="liability_dropdown">
-				<select class="m-wrap medium chosen" name="tax[]">
+				<select class="m-wrap medium chosen" name="tax">
 				<option value="" style="display:none;">Select</option>
 				<option value="16" <?php if($account_type==3 && $user_id==16){ ?> selected="selected"    <?php } ?>>Tax deducted at source (TDS payable)</option>
 				</select>
-			<label id="sundry_creditor" class="validation"></label>
+			  <label id="tax_valid" class="validation"></label>
 			</div>
 <br>
 
@@ -194,8 +194,7 @@ $(document).ready(function(){
 			}else{
 				$("#sundry_creditor").html('');
 			}
-		}else{
-			
+		}else if(account_group==2){
 			var expenditure=$('select[name="expenditure"]').val();	
 			 if(expenditure==""){
 			$("#expenditure").html('Required');	
@@ -203,7 +202,15 @@ $(document).ready(function(){
 			}else{
 				$("#expenditure").html('');
 			}
-		}
+		}else{
+			var expenditure=$('select[name="tax"]').val();	
+			 if(expenditure==""){
+			$("#tax_valid").html('Required');	
+				allow="no";
+			}else{
+				$("#tax_valid").html('');
+			}
+     	}
 		 var paid_from=$('select[name="paid_from"]').val();
 			if(paid_from==""){
 			$("#paid_from").html('Required');	

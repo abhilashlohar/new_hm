@@ -19,7 +19,15 @@ $process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
 			<h5>Upload CSV file in given format to import user enrollment.</h5>
 			<input name="file" class="default" id="image-file" type="file">
 			<label id="vali"></label>
-			<a href="<?php echo $webroot_path; ?>new_user_enrollment_csv/user_enrollment_file.csv" download=""><b>Click here for sample format</b></a><br/><br/>
+			<a href="<?php echo $webroot_path; ?>new_user_enrollment_csv/user_enrollment_file.csv" download=""><b>Click here for sample format</b></a>
+			<br/>
+			<h4>Instruction set to import users</h4>
+			<ol>
+			<li>Wing and Flat name be valid as per society setting.</li>
+			<li>Email ID should be correct as all the further communication will be send to this email id. No duplicate Email is allowed.</li>
+			<li>Mobile number should be 10 digits. No Duplicate Mobile No is allowed.</li>
+			<li>Owner,Committee,Residing should be only "Yes" or "No".</li>
+			</ol><br/>
 			<h5 id="submit_element" >
 			<button type="submit" class="btn blue">IMPORT </button>
 			</h5>

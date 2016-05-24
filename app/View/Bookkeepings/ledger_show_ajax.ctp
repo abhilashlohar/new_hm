@@ -245,34 +245,39 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 		$current_date = $result_cash_bank[0]['cash_bank']['created_on'];
 		$prepaired_by_id = (int)$result_cash_bank[0]['cash_bank']['created_by'];
 		$bank_id=(int)$result_cash_bank[0]['cash_bank']['account_head'];
-$current_datttt = date('d-m-Y',strtotime($current_date));									
-$ussr_dataa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by_id)));  
-foreach ($ussr_dataa as $ussrrr) 
-{
-$creater_name = $ussrrr['user']['user_name'];  
-}		
+		$current_datttt = date('d-m-Y',strtotime($current_date));									
+		$ussr_dataa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by_id)));  
+		foreach ($ussr_dataa as $ussrrr) 
+		{
+		$creater_name = $ussrrr['user']['user_name'];  
+		}		
 			
-			if($subledger_id != 0){
-				$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 
-				'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($bank_id)));
-				foreach($subleddger_detaill as $subledger_datttaa){
-				$user_name=$subledger_datttaa['ledger_sub_account']['name'];
-				}
+		if($subledger_id != 0){
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 
+			'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($bank_id)));
+			foreach($subleddger_detaill as $subledger_datttaa){
+			$user_name=$subledger_datttaa['ledger_sub_account']['name'];
+		}
 
-				$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 
-				'action'=>'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
-				foreach($subleddger_detaill as $subledger_datttaa){
-				$tds_ledger_id = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
-				}
+		$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 
+		'action'=>'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
+		foreach($subleddger_detaill as $subledger_datttaa){
+		$tds_ledger_id = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
+		}
              if($tds_ledger_id == 33)
 			 {
 			   if($account_type==2){
-				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($vendor_id)));
-				foreach($leddger_detaill as $ledger_datttaa)
-				{
-				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
-				 }
-				 }
+					$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($vendor_id)));
+					foreach($leddger_detaill as $ledger_datttaa)
+					{
+					$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+					}
+				 }else{
+					$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 
+					'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($vendor_id)));
+					foreach($subleddger_detaill as $subledger_datttaa){
+					$user_name=$subledger_datttaa['ledger_sub_account']['name'];
+					} }
 			}
 			if($tds_ledger_id == 15)
 			{

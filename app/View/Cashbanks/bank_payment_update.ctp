@@ -12,7 +12,7 @@ foreach($result_cash_bank as $data){
 						$tds_amount=(int)$data['cash_bank']['tds_tax_amount'];
 						  $account_type=(int)$data['cash_bank']['account_type'];
 							$transaction_id=(int)$data['cash_bank']['transaction_id'];
-							  $receipt_id=$data['cash_bank']['receipt_id'];
+							  $receipt_id=$data['cash_bank']['receipt_number'];
 		$transaction_date=date('d-m-Y',($transaction_date));					  
 	
 }

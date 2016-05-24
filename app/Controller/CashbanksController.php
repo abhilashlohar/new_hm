@@ -4696,13 +4696,7 @@ $this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),
 $this->redirect(array('controller' => 'Cashbanks','action' => 'bank_payment_view'));
 }		
 
-	$this->loadmodel('reference');
-	$conditions=array("auto_id"=>3);
-	$cursor = $this->reference->find('all',array('conditions'=>$conditions));
-		foreach($cursor as $collection){
-			$tds_arr = $collection['reference']['reference'];
-	}
-	$this->set("tds_arr",$tds_arr);
+	
 		$transaction_id=(int)$auto_id;
 			$this->ath();
 	

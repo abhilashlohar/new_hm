@@ -4577,14 +4577,22 @@ function petty_cash_payment_update($auto_id=null)
 				if($account_group==1){
 					 $sundry_creditor_id=(int)$this->request->data['sundry_creditor'];
 				     $expense_party=(int)$sundry_creditor_id;
-				}else{
+				}else if($account_group==2){
 					 $expenditure_id=(int)$this->request->data['expenditure'];
+					 $expense_party=(int)$expenditure_id;
+				}else{
+					 $expenditure_id=(int)$this->request->data['tax'];
 					 $expense_party=(int)$expenditure_id;
 				}
 			 $paid_from_id=(int)$this->request->data['paid_from'];
 			 $amount=$this->request->data['amount'];
 			 $narration=$this->request->data['narration'];		   
 
+			 
+			 
+			 
+		 
+			 
 $this->loadmodel('cash_bank');
 $this->cash_bank->updateAll(array("sundry_creditor_id"=>$expense_party,"account_type" =>$account_group,"transaction_date"=>strtotime($transaction_date),"narration"=>$narration,"account_head" =>$paid_from_id,"amount"=>$amount),array('society_id'=>$s_society_id,"transaction_id"=>$element_id));		
 	

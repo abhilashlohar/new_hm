@@ -11,9 +11,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <a href="<?php echo $webroot_path; ?>Cashbanks/bank_payment_import_csv" class="btn purple" role="button"  style="float:right; margin-right:8px;" rel="tab"><i class="fa fa-database"></i> Import csv</a>
 </center>
 
-
 <?php $default_date = date('d-m-Y'); ?>
-<input type="hidden" value="<?php echo $financial_year_string; ?>" id="f_y"/>
 <div class="portlet box">
 <div class="portlet-body">
 	<form method="post">

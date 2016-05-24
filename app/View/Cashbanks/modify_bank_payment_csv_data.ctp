@@ -201,37 +201,25 @@ $(document).ready(function(){
 		
 		$('#report_tb tbody tr input[field="transaction_date"]').die().each(function(ii, obj){
 			var transaction_date=$(this).val();
-		transaction_date=transaction_date.split('-').reverse().join('');
-			
-			var f_y=$("#f_y").val();
-			var f_y2=f_y.split(',');
-			var al=0;
-			$.each(f_y2, function( index, value ){
-				var f_y3=value.split('/');
-				var from=f_y3[0];
-				from=from.split('-').reverse().join('');
-				var to=f_y3[1];
-				to=to.split('-').reverse().join('');
+			var result=""; 
+			$.ajax({
+			url:"<?php echo $webroot_path; ?>Cashbanks/financial_year_validation/"+transaction_date, 
+			async: false,
+			success: function(data){
+			result=data;
+			}
+			});	
 				
-				if(transaction_date>=from && transaction_date<=to){
-					//$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').find(".er").remove();
-					al=al+1;
-				}else{
-					//$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').find(".er").remove();
-					//$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').append('<p class="er">Not in financial year</p>');
-					al=al+0;
-					
-				}
-			});
-			if(al==0){
-					$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').find(".er").remove();
-					$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').append('<p class="er">Not in financial year</p>');
-				allow="no";
-			}
-			else{
-				$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').find(".er").remove();
-			}
-		}); 
+			if(result=="not_match"){
+		   allow="no";
+			$(this).closest('td').find(".er").remove();
+			 $(this).closest('td').append('<p class="er">Not in financial year</p>');
+		}
+		if(result=="match"){
+			$(this).closest('td').find(".er").remove();
+		}	
+	});
+
 		
 		$('#report_tb tbody tr select[field=ledger_data]').each(function(i, obj){
 			var ledger_data=$(this).val();

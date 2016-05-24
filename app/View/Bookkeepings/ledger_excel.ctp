@@ -133,7 +133,7 @@ $user_id = (int)$result_income_head2[0]['ledger_sub_account']['user_id'];
 	
 		$user_dataaaa = $this->requestAction(array('controller'=>'hms','action'=>'user_fetch'),array('pass'=>array($prepaired_by)));
 		foreach ($user_dataaaa as $user_detailll){
-			$creater_name = @$user_detailll['user']['user_name'];
+		$creater_name = @$user_detailll['user']['user_name'];
 		}	
 		$user_id1 = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 		
@@ -224,7 +224,7 @@ $user_id = (int)$result_income_head2[0]['ledger_sub_account']['user_id'];
     }
 	if($receipt_source == "bank_payment")
 	{
-		$tds="";
+		$tds_amount=0;
 		$tds_array_for_bank_payment = array();
 		$source="Bank payment";
 		$trans_id = (int)$result_cash_bank[0]["cash_bank"]["transaction_id"];  
@@ -234,59 +234,50 @@ $user_id = (int)$result_income_head2[0]['ledger_sub_account']['user_id'];
 		$vendor_id = (int)$result_cash_bank[0]["cash_bank"]["sundry_creditor_id"];
 		$account_type = (int)$result_cash_bank[0]["cash_bank"]["account_type"];	
 		$amttt = $result_cash_bank[0]["cash_bank"]["amount"];			
-		$tds = (int)$result_cash_bank[0]["cash_bank"]["tds_id"];		
+		$tds_amount = $result_cash_bank[0]["cash_bank"]["tds_tax_amount"];		
 		$current_date = $result_cash_bank[0]['cash_bank']['created_on'];
 		$prepaired_by_id = (int)$result_cash_bank[0]['cash_bank']['created_by'];
 		$bank_id=(int)$result_cash_bank[0]['cash_bank']['account_head'];
-$current_datttt = date('d-m-Y',strtotime($current_date));									
-$ussr_dataa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by_id)));  
-foreach ($ussr_dataa as $ussrrr) 
-{
-$creater_name = $ussrrr['user']['user_name'];  
-}		
+		$current_datttt = date('d-m-Y',strtotime($current_date));									
+		$ussr_dataa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by_id)));  
+		foreach ($ussr_dataa as $ussrrr) 
+		{
+		$creater_name = $ussrrr['user']['user_name'];  
+		}		
 			
-			if($subledger_id != 0){
-				$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 
-				'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($bank_id)));
-				foreach($subleddger_detaill as $subledger_datttaa){
-				$user_name=$subledger_datttaa['ledger_sub_account']['name'];
-				}
+		if($subledger_id != 0){
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 
+			'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($bank_id)));
+			foreach($subleddger_detaill as $subledger_datttaa){
+			$user_name=$subledger_datttaa['ledger_sub_account']['name'];
+		}
 
-				$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 
-				'action'=>'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
-				foreach($subleddger_detaill as $subledger_datttaa){
-				$tds_ledger_id = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
-				}
+		$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 
+		'action'=>'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
+		foreach($subleddger_detaill as $subledger_datttaa){
+		$tds_ledger_id = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
+		}
              if($tds_ledger_id == 33)
 			 {
 			   if($account_type==2){
-				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($vendor_id)));
-				foreach($leddger_detaill as $ledger_datttaa)
-				{
-				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
-				 }
-				 }
+					$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($vendor_id)));
+					foreach($leddger_detaill as $ledger_datttaa)
+					{
+					$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+					}
+				 }else{
+					$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 
+					'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($vendor_id)));
+					foreach($subleddger_detaill as $subledger_datttaa){
+					$user_name=$subledger_datttaa['ledger_sub_account']['name'];
+					} }
 			}
 			if($tds_ledger_id == 15)
 			{
-						if(!empty($tds)){	
-							foreach($tds_arr as $tds_ddd)
-							{
-							$tdsss_taxxx = (int)$tds_ddd[0];  
-							$tds_iddd = (int)$tds_ddd[1];  
-							   if($tds_iddd == $tds) 
-							   {
-								$tds_tax = $tdsss_taxxx;   
-							   }
-							}
-							
-			$tds_amount = (round(($tds_tax/100)*$debit));
-			$total_tds_amount = ($debit - $tds_amount);				
-						}
-						else{
-						$total_tds_amount=$debit;	
-						}
-			if(!empty($tds)){
+						
+			$total_tds_amount=$debit-$tds_amount;				
+						
+			if(!empty($tds_amount)){
 			$tds_array_for_bank_payment[] = array($tds_amount,"tds payable",$creater_name,$current_datttt);
 			}
 		   $tds_array_for_bank_payment[] = array($total_tds_amount,$description,$creater_name,$current_datttt);			
@@ -325,28 +316,13 @@ $creater_name = $ussrrr['user']['user_name'];
 			{
 			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
 			}
-				if(!empty($tds)){
-                foreach($tds_arr as $tds_ddd)
-							{
-							$tdsss_taxxx = (int)$tds_ddd[0];  
-							$tds_iddd = (int)$tds_ddd[1];  
-							   if($tds_iddd == $tds) 
-							   {
-								$tds_tax = $tdsss_taxxx;   
-							   }
-							}
-							
-			$tds_amount = (round(($tds_tax/100)*$debit));
-			$total_tds_amount = ($debit - $tds_amount);				
-			}
-						else{
-						$total_tds_amount=$debit;	
-						}
-			if(!empty($tds)){
+			
+			$total_tds_amount=$debit-$tds_amount;	
+				
+			if(!empty($tds_amount)){
 			$tds_array_for_bank_payment[] = array($tds_amount,"tds payable",$creater_name,$current_datttt);
 			}
             $tds_array_for_bank_payment[] = array($total_tds_amount,$description,$creater_name,$current_datttt);	
-
 			}
 		}
 	}
@@ -720,11 +696,11 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			<td><?php echo $source; ?></td>
           	<td><?php
            if($receipt_source == "bank_payment") { 
-		   echo $refrence_no; } ?>
+		   echo '<a href="'.$this->webroot.'Cashbanks/bank_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } ?>
            </td>
             <td style="text-align:right;"><?php echo $amttt; ?></td>
 			<td style="text-align:right;"><?php echo $credit; ?></td>
-		  </tr>
+		</tr>
 			<?php
 		  } 		  
 		}
@@ -739,20 +715,20 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			<td><?php echo $source; ?></td>
             <td>
 			<?php if($table_name=="regular_bill"){
-				echo $refrence_no;
+				echo '<a href="'.$this->webroot.'Incometrackers/regular_bill_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
 			}
 			if($table_name=="cash_bank"){
 				if($receipt_source == "bank_receipt")
 				{
-				echo $refrence_no;
-			}else if($receipt_source == "bank_payment") { echo $refrence_no; } else if($receipt_source == "petty_cash_payment") { echo $refrence_no; }else if($receipt_source == "petty_cash_receipt"){
-				 echo $refrence_no; } } ?>
+				echo '<a href="'.$this->webroot.'Cashbanks/bank_receipt_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>';
+			}else if($receipt_source == "bank_payment") { echo '<a href="'.$this->webroot.'Cashbanks/bank_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } else if($receipt_source == "petty_cash_payment") { echo '<a href="'.$this->webroot.'Cashbanks/petty_cash_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; }else if($receipt_source == "petty_cash_receipt"){
+				 echo '<a href="'.$this->webroot.'Cashbanks/petty_cash_receipt_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } } ?>
 				 
 			<?php if($table_name=="journal"){
-				echo $journal_voucher_id;
+				echo '<a href="'.$this->webroot.'Bookkeepings/journal_voucher_view/'.$journal_voucher_id.'" target="_blank">'.$journal_voucher_id.'</a>';
 			}?>
 				<?php if($table_name=="supplimentry_bill"){
-				echo $supplimentry_receipt;
+				echo '<a href="'.$this->webroot.'Incometrackers/supplimentry_view/'.$adhoc_id.'" target="_blank">'.$supplimentry_receipt.'</a>';
 			}?> 
 			
 			<?php if($table_name=="expense_tracker"){

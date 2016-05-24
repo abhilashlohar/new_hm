@@ -9,7 +9,7 @@ public $components = array(
 var $name = 'Bookkeepings';
 
 function ledger_detail_for_pagination($element_id,$from,$to)
-{
+{           
 	    $this->loadmodel('ledger');
 		$conditions=array("ledger_account_id"=>16,
 		"ledger_sub_account_id"=>null,"element_id"=>(int)$element_id,"table_name"=>"cash_bank",
@@ -473,16 +473,6 @@ $this->set('ledger_sub_account_id',$ledger_sub_account_id);
 		}
 		$this->set('account_name',$account_name);
 	}
-
-///////////////////////////////////////
-$this->loadmodel('reference');
-$conditions=array("auto_id"=>3);
-$cursor = $this->reference->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
-$tds_arr = $collection['reference']['reference'];
-}
-$this->set("tds_arr",$tds_arr);	
 	
 }
 // End Ledger Excel (Accounts)//

@@ -7883,7 +7883,7 @@ function dashboard(){
 	$this->ath();
 	$s_society_id = $this->Session->read('hm_society_id');
 	$s_user_id = $this->Session->read('hm_user_id'); 
-	$role_id = $this->Session->read('role_id'); 
+	$role_id = $this->Session->read('role_id');
 	$this->set('role_id',$role_id);
 	$this->set('s_society_id',$s_society_id);
 
@@ -7893,11 +7893,12 @@ function dashboard(){
 	   
 		//////////////Help-desk  last 3 tickets///////////////// 
 		$this->loadmodel('help_desk');
-		if($role_id==3) { 
+		if($role_id==1) { 
 		$conditions=array("society_id" => $s_society_id);
 		}
 
-		if($role_id!=3) { 
+		if($role_id!=1) {
+		
 		$conditions=array("society_id" => $s_society_id,"user_id" => $s_user_id);
 		}
 

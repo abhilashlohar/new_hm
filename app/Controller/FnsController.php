@@ -848,9 +848,9 @@ function member_info_via_user_id($user_id){
 	$this->loadmodel('user');
 	$conditions=array("user_id"=>$user_id);
 	$userresult=$this->user->find('all',array('conditions'=>$conditions));
-	$user_name=$userresult[0]["user"]["user_name"];
-	$email=$userresult[0]["user"]["email"];
-	$mobile=$userresult[0]["user"]["mobile"];
+	@$user_name=@$userresult[0]["user"]["user_name"];
+	@$email=@$userresult[0]["user"]["email"];
+	@$mobile=@$userresult[0]["user"]["mobile"];
 	$profile_pic=@$userresult[0]["user"]["profile_pic"];
 	
 	$this->loadmodel('user_flat');

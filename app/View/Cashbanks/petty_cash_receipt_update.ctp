@@ -1,6 +1,6 @@
 <?php
 foreach($cursor1 as $data){
-	$receipt_no=$data['cash_bank']['receipt_id'];
+	$receipt_no=$data['cash_bank']['receipt_number'];
 	$d_date=$data['cash_bank']['transaction_date'];
 	$today=date("d-M-Y");
 	$amount=$data['cash_bank']['amount'];

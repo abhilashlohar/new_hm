@@ -1,7 +1,7 @@
 <?php 
 	foreach ($cursor1 as $collection){
 	$transaction_id=(int)$collection['cash_bank']['transaction_id'];	
-	  $receipt_no = $collection['cash_bank']['receipt_id'];
+	  $receipt_no = $collection['cash_bank']['receipt_number'];
 		$d_date = $collection['cash_bank']['transaction_date'];
 		  $today = date("d-M-Y");
 			$amount = $collection['cash_bank']['amount'];

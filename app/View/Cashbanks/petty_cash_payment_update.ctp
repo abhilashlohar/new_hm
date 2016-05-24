@@ -39,12 +39,13 @@
 	<option value="" style="display:none;">Select</option>
 	<option value="1" <?php if($account_type == 1) { ?> selected="selected" <?php } ?>>Sundry Creditors Control A/c</option>
 	<option value="2" <?php if($account_type == 2) { ?> selected="selected" <?php } ?>>All Expenditure A/cs</option>
+	<option value="3" <?php if($account_type == 3) { ?> selected="selected" <?php } ?>>Liability</option>
 	</select>
    <label id="group" class="validation"></label>
 <br />
 
 		<label style="font-size:14px;">Expense/Party A/c<span style="color:red;">*</span></label>	
-		<div <?php if($account_type==2){ ?> class="hide" <?php } ?> id="sundry_creditors_select_box">
+		<div <?php if($account_type==2 || $account_type==3){ ?> class="hide" <?php } ?> id="sundry_creditors_select_box">
 			<select class="m-wrap medium chosen" name="sundry_creditor">
 			<option value="" style="display:none;">Select</option>
 			<?php foreach ($cursor4 as $collection){
@@ -57,7 +58,7 @@
 			<label id="sundry_creditor" class="validation"></label>
 		</div>
 	
-		<div <?php if($account_type==1){ ?> class="hide" <?php } ?> id="expenditure_select_box">
+		<div <?php if($account_type==1 || $account_type==3){ ?> class="hide" <?php } ?> id="expenditure_select_box">
 			<select class="m-wrap medium chosen" name="expenditure">
 			<option value="" style="display:none;">Select</option>
 			<?php
@@ -75,7 +76,13 @@
 			</select>
 			<label id="expenditure" class="validation"></label>
 		</div>
-
+			<div <?php if($account_type==2 || $account_type==1){ ?> class="hide" <?php } ?> id="liability_dropdown">
+				<select class="m-wrap medium chosen" name="tax[]">
+				<option value="" style="display:none;">Select</option>
+				<option value="16" <?php if($account_type==3 && $user_id==16){ ?> selected="selected"    <?php } ?>>Tax deducted at source (TDS payable)</option>
+				</select>
+			<label id="sundry_creditor" class="validation"></label>
+			</div>
 <br>
 
 </div>
@@ -121,10 +128,19 @@ $('select[name="account_group"]').die().live("change",function(){
 		if(account_group=='1'){
 			$("#expenditure_select_box").hide();
 			$("#sundry_creditors_select_box").show();
-		}else{
+			$("#liability_dropdown").hide();
+		}else if(account_group=='2'){
 			$("#expenditure_select_box").show();
 			$("#sundry_creditors_select_box").hide();
+			$("#liability_dropdown").hide();
 		}
+		else{
+			$("#expenditure_select_box").hide();
+			$("#sundry_creditors_select_box").hide();
+			$("#liability_dropdown").show();
+		}
+		
+		
 		if(account_group==""){
 			$("#group").html('Required');
 		}else{

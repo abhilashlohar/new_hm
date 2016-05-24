@@ -51,7 +51,7 @@ if($account_type == 1){
 	,array('pass'=>array($user_id)));  
 	foreach ($result_lsa as $collection){
 	$user_name = $collection['ledger_sub_account']['name']; 
-	$service_provider_id = (int)$collection['ledger_sub_account']['sp_id'];  
+	$service_provider_id = (int)@$collection['ledger_sub_account']['sp_id'];  
 	}	
 	$service_provider_dataa = $this->requestAction(array('controller' => 'hms', 'action' => 'service_provider_detail')
 	,array('pass'=>array($service_provider_id)));  

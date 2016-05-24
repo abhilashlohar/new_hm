@@ -1107,10 +1107,10 @@ $this->loadmodel('financial_year');
 	          	$current_date=date('Y-m-d');	
 	
 	$i=$this->autoincrement('cash_bank','transaction_id');
-	$bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','bank_payment');
+	$bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_number','bank_payment');
 	$receipt_array[]=$bbb;
 	$this->loadmodel('cash_bank');
-	$multipleRowData=Array(Array("transaction_id"=>$i,"receipt_id"=>$bbb,"created_on"=>$current_date, 
+	$multipleRowData=Array(Array("transaction_id"=>$i,"receipt_number"=>$bbb,"created_on"=>$current_date, 
 	"transaction_date"=>strtotime($transaction_date),"created_by"=>$s_user_id, 
 	"sundry_creditor_id"=>$ledger_account_id,"invoice_reference"=>@$invoice_reference,"narration"=>$narration, "receipt_mode"=>$mode,"receipt_instruction"=>$instrument,"account_head"=>$bank_account, 
 	"amount"=>$amount,"society_id"=>$s_society_id,"tds_id" =>$tds,"account_type"=>$ledger_account_type,"source"=>"bank_payment","auto_inc"=>"YES","tds_tax_amount"=>$tds));
@@ -1230,19 +1230,11 @@ $cursor1=$this->bank_payment->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
 
 $this->loadmodel('cash_bank');
-$conditions=array("society_id" => $s_society_id,"source"=>"bank_payment");
+$conditions=array("society_id"=>$s_society_id,"source"=>"bank_payment");
 $order=array('cash_bank.transaction_date'=> 'ASC');
 $cursor2=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor2',$cursor2);
 
-$this->loadmodel('reference');
-$conditions=array("auto_id"=>3);
-$cursor = $this->reference->find('all',array('conditions'=>$conditions));
-foreach($cursor as $collection)
-{
-$tds_arr = $collection['reference']['reference'];
-}
-$this->set("tds_arr",$tds_arr);	
 }
 //End Bank Payment Show Ajax (Accounts)//
 //Start Bank Payment Excel//
@@ -1288,13 +1280,8 @@ header ("Content-Description: Generated Report" );
 			$society_name = $collection['society']['society_name'];
 	}
 		$this->set('society_name',$society_name);
-	$this->loadmodel('reference');
-	$conditions=array("auto_id"=>3);
-	$cursor = $this->reference->find('all',array('conditions'=>$conditions));
-		foreach($cursor as $collection){
-			$tds_arr = $collection['reference']['reference'];
-	}
-		$this->set('tds_arr',$tds_arr);
+	
+		
 $this->loadmodel('cash_bank');
 $conditions=array("society_id" => $s_society_id,"source"=>"bank_payment");
 $order=array('cash_bank.transaction_date'=> 'ASC');
@@ -1378,10 +1365,10 @@ if(isset($this->request->data['submit'])){
     $current_date=date('Y-m-d');
 	
 $auto=$this->autoincrement('cash_bank','transaction_id');
-$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','petty_cash_receipt');
+$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_number','petty_cash_receipt');
 $receipt_array[]=$i;
 $this->loadmodel('cash_bank');
-$multipleRowData = Array( Array("transaction_id"=>$auto,"receipt_id" =>$i,"ledger_sub_account_id"=>$party_ac, 
+$multipleRowData = Array( Array("transaction_id"=>$auto,"receipt_number" =>$i,"ledger_sub_account_id"=>$party_ac, 
 "created_on"=>$current_date,"account_type"=>$account_group,"transaction_date"=>strtotime($transaction_date),"created_by"=>$s_user_id,"narration"=>$narration,"account_head"=>$account_head_id,"amount"=>$amount,"society_id"=>$s_society_id,"source"=>"petty_cash_receipt","auto_inc"=>"YES"));
 $this->cash_bank->saveAll($multipleRowData);  
 
@@ -1672,9 +1659,9 @@ $this->set('cursor2',$cursor2);
 			$current_date = date('Y-m-d');
 
 		$auto=$this->autoincrement('cash_bank','transaction_id');
-		$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','petty_cash_payment');
+		$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_number','petty_cash_payment');
 		$this->loadmodel('cash_bank');
-		$multipleRowData=Array(Array("transaction_id"=>$auto,"receipt_id"=>$i,"sundry_creditor_id"=>$expense_party,"created_on"=>$current_date,"account_type"=>$account_group_id,"transaction_date"=>strtotime($transaction_date),"created_by"=>$s_user_id,"narration"=>$narration,"account_head"=>$paid_from_id,"amount"=>$amount,"society_id"=>$s_society_id,"source"=>"petty_cash_payment","auto_inc"=>"YES"));
+		$multipleRowData=Array(Array("transaction_id"=>$auto,"receipt_number"=>$i,"sundry_creditor_id"=>$expense_party,"created_on"=>$current_date,"account_type"=>$account_group_id,"transaction_date"=>strtotime($transaction_date),"created_by"=>$s_user_id,"narration"=>$narration,"account_head"=>$paid_from_id,"amount"=>$amount,"society_id"=>$s_society_id,"source"=>"petty_cash_payment","auto_inc"=>"YES"));
 		$this->cash_bank->saveAll($multipleRowData);  
         $receipt_array[]=$i;
 	if($account_group_id == 1){
@@ -8679,10 +8666,10 @@ $this->layout=null;
 		
 $current_date = date('Y-m-d');		
 $i=$this->autoincrement('cash_bank','transaction_id');
-$bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_id','bank_payment');
+$bbb=$this->autoincrement_with_receipt_source('cash_bank','receipt_number','bank_payment');
 $rr_arr[] = $bbb;
 $this->loadmodel('cash_bank');
-$multipleRowData = Array( Array("transaction_id"=>$i,"receipt_id" =>$bbb,"created_on"=>$current_date, 
+$multipleRowData = Array( Array("transaction_id"=>$i,"receipt_number"=>$bbb,"created_on"=>$current_date, 
 "transaction_date" => strtotime($transaction_date),"created_by" => $s_user_id, 
 "sundry_creditor_id"=>$ledger_acc,"invoice_reference" => @$invoice,"narration" => $narration,"receipt_mode" => $mode,
 "receipt_instruction" => $instrument, "account_head" => $bank_ac,  
@@ -9028,8 +9015,30 @@ $s_society_id=$this->Session->read('hm_society_id');
         else{
 		echo "not_match";	
 		}
-
 }
 //Start financial_year_validation//
+//Start modify_database//
+function modify_database()
+{
+$this->layout="blank";
+$s_society_id=(int)$this->Session->read('hm_society_id');	
+$this->ath();		
+	
+	$this->loadmodel('ledger');
+	$conditions=array("table_name"=>"new_regular_bill");
+	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions));
+	foreach($result_ledger as $data){
+	$auto_id=(int)$data['ledger']['auto_id'];	
+	$element_id=(int)$data['ledger']['element_id'];	
+		
+	
+	$this->loadmodel('ledger');
+	$this->ledger->updateAll(array("table_name"=>"regular_bill","element_id"=>(int)$element_id),array("auto_id"=>$auto_id));
+
+	}	
+	
+	
+}
+//End modify_database//
 }
 ?>

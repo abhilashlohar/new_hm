@@ -24,7 +24,7 @@ $total_debit = 0;
 $total_credit = 0;
 foreach ($cursor1 as $collection) 
 {
-$receipt_no = (int)@$collection['cash_bank']['receipt_id'];
+$receipt_no = (int)@$collection['cash_bank']['receipt_number'];
 $transaction_id = (int)$collection['cash_bank']['transaction_id'];	
 $account_type = (int)$collection['cash_bank']['account_type'];
 $user_id = (int)$collection['cash_bank']['sundry_creditor_id'];

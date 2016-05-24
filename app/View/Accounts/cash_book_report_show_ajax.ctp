@@ -41,7 +41,7 @@ $nnn = 5555;
 foreach($cursor2 as $dataaa){
 $transaction_date = $dataaa['cash_bank']['transaction_date'];	
 $transaction_date2 = date('d-m-Y',($transaction_date));	
-$receipt_id = $dataaa['cash_bank']['receipt_id'];	
+$receipt_id = $dataaa['cash_bank']['receipt_number'];	
 $receipt_source = $dataaa['cash_bank']['source'];
 if($receipt_source=='petty_cash_receipt'){
 	$narration=$dataaa['cash_bank']['narration'];	

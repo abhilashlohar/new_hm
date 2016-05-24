@@ -43,6 +43,8 @@ function regular_bill_echo(){
 			<th>billing_cycle</th>
 			<th>created_by</th>
 			<th>current_date</th>
+			<th>arrear_principle</th>
+			<th>arrear_intrest</th>
 		</tr>
 	<?php
 	$this->loadmodel('new_regular_bill');
@@ -74,6 +76,8 @@ function regular_bill_echo(){
 		$description=$bill["new_regular_bill"]["description"];
 		$created_by=@$bill["new_regular_bill"]["created_by"];
 		$current_date=@$bill["new_regular_bill"]["current_date"];
+		$arrear_maintenance=@$bill["new_regular_bill"]["arrear_maintenance"];
+		$arrear_intrest=@$bill["new_regular_bill"]["arrear_intrest"];
 		?>
 		<tr>
 			<td><?php echo $auto_id; ?></td>
@@ -94,12 +98,28 @@ function regular_bill_echo(){
 			<td>3</td>
 			<td><?php echo $created_by; ?></td>
 			<td><?php echo $current_date; ?></td>
+			<td><?php echo $arrear_maintenance; ?></td>
+			<td><?php echo $arrear_intrest; ?></td>
 		</tr>
 		<?php
 	}
 	?>
 	</table>
 	<?php
+}
+
+function update_regular_bills(){
+	$this->loadmodel('new_regular_bill');
+	$conditions=array("edit_status" => "NO");
+	$bills = $this->new_regular_bill->find('all',array('conditions'=>$conditions));
+	foreach($bills as $bill){
+		$auto_id=(int)$bill["new_regular_bill"]["auto_id"];
+		$income_head_array=$bill["new_regular_bill"]["income_head_array"];
+		$other_charges_array=$bill["new_regular_bill"]["other_charges_array"];
+		
+		$this->loadmodel('regular_bill');
+		$this->regular_bill->updateAll(array("income_head_array"=>$income_head_array,"other_charge"=>$other_charges_array),array("auto_id"=>$auto_id));
+	}
 }
 
 function cash_bank_echo(){

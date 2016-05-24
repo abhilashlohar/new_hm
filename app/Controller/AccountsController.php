@@ -5,7 +5,7 @@ var $helpers = array('Html', 'Form','Js');
 public $components = array(
 'Paginator',
 'Session','Cookie','RequestHandler'
-);
+);                     
 var $name = 'Accounts';
 //Start Master Ledger Sub Account Ajax//
 function master_ledger_sub_account_ajax()
@@ -1265,7 +1265,7 @@ function over_due_report_show_ajax()
 	$conditions=array("society_id"=> $s_society_id);
 	$cursor1=$this->regular_bill->find('all',array('conditions'=>$conditions));
 	$this->set('cursor1',$cursor1);	
-	
+		
 }
 //End over due report show ajax(Accounts)//
 //Start OverDue Excel//
@@ -5289,13 +5289,7 @@ function tds_payment_report_view_ajax()
 	
 	
 	
-	$this->loadmodel('reference');
-	$conditions=array("auto_id"=>3);
-	$cursor = $this->reference->find('all',array('conditions'=>$conditions));
-	foreach($cursor as $collection){
-	$tds_arr = $collection['reference']['reference'];
-	}
-	$this->set("tds_arr",$tds_arr);		
+		
 }
 //End tds_payment_report_view_ajax//
 //Start tds_report_excel//
@@ -5338,15 +5332,7 @@ $to_strtotime = strtotime($tomm);
 	'cash_bank.transaction_date'=>array('$gte'=>$from_strtotime,'$lte'=>$to_strtotime));
 	$cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions,'order'=>$order));
 	$this->set('cursor1',$cursor1);	
-	
-	
-	$this->loadmodel('reference');
-	$conditions=array("auto_id"=>3);
-	$cursor = $this->reference->find('all',array('conditions'=>$conditions));
-		foreach($cursor as $collection){
-		$tds_arr = $collection['reference']['reference'];
-	}
-$this->set("tds_arr",$tds_arr);	
+
 }
 //End tds_report_excel//
 //Start Cash Book Report//

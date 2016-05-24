@@ -4,6 +4,7 @@ $from_date_renge=strtotime($from_date_renge);
 $to_date_renge=date("Y-m-d", strtotime($to));
 $to_date_renge=strtotime($to_date_renge);  ?>
 <?php $nnn = 55; ?>
+
 <?php  if($wise == 2){ 
 foreach($cursor1 as $collection){
 $ledger_sub_account_id_via_regular_bill=$collection['regular_bill']['ledger_sub_account_id'];
@@ -118,10 +119,13 @@ $new_total = @$collection['regular_bill']['new_total'];
     $total_debit=$total_debit+$debit;
 	$total_credit=$total_credit+$credit;
 	}
+	
 	$due_amt=$total_debit-$total_credit;
-$total_amount=$total_amt;
-$bill_start_date_for_view=date('d-M-Y',($date_from));
-$due_date_for_view=date('d-M-Y',($due_date));
+	$total_amount=$total_amt;
+	$bill_start_date_for_view=date('d-M-Y',($date_from));
+	$due_date_for_view=date('d-M-Y',($due_date));
+
+
 
 	$result_flat = $this->requestAction(array('controller' => 'Fns', 'action' => 'flat_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id_via_regular_bill)));				
 	foreach ($result_flat as $data){

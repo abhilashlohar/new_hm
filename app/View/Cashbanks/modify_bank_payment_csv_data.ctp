@@ -201,37 +201,25 @@ $(document).ready(function(){
 		
 		$('#report_tb tbody tr input[field="transaction_date"]').die().each(function(ii, obj){
 			var transaction_date=$(this).val();
-		transaction_date=transaction_date.split('-').reverse().join('');
-			
-			var f_y=$("#f_y").val();
-			var f_y2=f_y.split(',');
-			var al=0;
-			$.each(f_y2, function( index, value ){
-				var f_y3=value.split('/');
-				var from=f_y3[0];
-				from=from.split('-').reverse().join('');
-				var to=f_y3[1];
-				to=to.split('-').reverse().join('');
+			var result=""; 
+			$.ajax({
+			url:"<?php echo $webroot_path; ?>Cashbanks/financial_year_validation/"+transaction_date, 
+			async: false,
+			success: function(data){
+			result=data;
+			}
+			});	
 				
-				if(transaction_date>=from && transaction_date<=to){
-					//$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').find(".er").remove();
-					al=al+1;
-				}else{
-					//$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').find(".er").remove();
-					//$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').append('<p class="er">Not in financial year</p>');
-					al=al+0;
-					
-				}
-			});
-			if(al==0){
-					$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').find(".er").remove();
-					$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').append('<p class="er">Not in financial year</p>');
-				allow="no";
-			}
-			else{
-				$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').find(".er").remove();
-			}
-		}); 
+			if(result=="not_match"){
+		   allow="no";
+			$(this).closest('td').find(".er").remove();
+			 $(this).closest('td').append('<p class="er">Not in financial year</p>');
+		}
+		if(result=="match"){
+			$(this).closest('td').find(".er").remove();
+		}	
+	});
+
 		
 		$('#report_tb tbody tr select[field=ledger_data]').each(function(i, obj){
 			var ledger_data=$(this).val();
@@ -342,30 +330,7 @@ $( document ).ready(function() {
 });
 
 </script>
-
 			  
-<script>	/*		  
-$(document).ready(function() {
-$( "#final_import" ).click(function() {
-$("#check_validation_result").html('<img src="<?php echo $webroot_path; ?>as/loding.gif" /><span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Importing Receipts.</span>');
-
-$.ajax({
-url: "<?php echo $webroot_path; ?>Cashbanks/allow_import_bank_payment",
-}).done(function(response){
-	
-	response = response.replace(/\s+/g,' ').trim();
-	
-if(response=="F"){
-$("#check_validation_result").html("");
-alert("Your Data Is Not Valid.");
-}else{
-	
-change_page_automatically("<?php echo $webroot_path; ?>Cashbanks/bank_payment_import_csv");
-}
-});
-});	
-});	 */ 
-</script>			  
 <script>			  
 	$( document ).ready(function() {
     $.ajax({
@@ -438,38 +403,7 @@ font-size: 11px;
 
 <script>
 $(document).ready(function(){
-	$('input[field="transaction_date"]').die().live("keyup blur",function(ii, obj){
-			var transaction_date=$(this).val();
-		transaction_date=transaction_date.split('-').reverse().join('');
-		 var f_y=$("#f_y").val();
-			var f_y2=f_y.split(',');
-			var al=0;
-			$.each(f_y2, function( index, value ){
-				var f_y3=value.split('/');
-				var from=f_y3[0];
-				from=from.split('-').reverse().join('');
-				var to=f_y3[1];
-				to=to.split('-').reverse().join('');
-				
-				if(transaction_date>=from && transaction_date<=to){
-					//$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').find(".er").remove();
-					al=al+1;
-				}else{
-					//$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').find(".er").remove();
-					//$('#report_tb tbody tr:eq('+ii+') input[field="transaction_date"]').closest('td').append('<p class="er">Not in financial year</p>');
-					al=al+0;
-					
-				}
-			});
-			if(al==0){
-					$(this).closest('td').find(".er").remove();
-					$(this).closest('td').append('<p class="er">Not in financial year</p>');
-				allow="no";
-			}
-			else{
-				$(this).closest('td').find(".er").remove();
-			}
-		}); 	
+		
 	
 $('select[field=ledger_data]').die().live("change",function(i, obj){
 var ledger_data=$(this).val();
@@ -532,17 +466,6 @@ $('input[field="tdss"]').die().live("keyup blur",function(){
 		$(this).closest("tr").find('input[field="net_amt"]').val(total_amount);	
 });
 
-
-
-
-
-
-
-
-
-
-
-		
 });
 </script>
 

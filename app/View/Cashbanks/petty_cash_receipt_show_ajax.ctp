@@ -52,7 +52,7 @@ $m_from = date("Y-m-d", strtotime($from));
 <tbody id="table">
 <?php $n=1; $total_credit = 0; $total_debit = 0;
 foreach ($cursor1 as $collection){
-	$receipt_no = @$collection['cash_bank']['receipt_id'];
+	$receipt_no = @$collection['cash_bank']['receipt_number'];
 	$transaction_id = (int)$collection['cash_bank']['transaction_id'];	
 	$account_type = (int)$collection['cash_bank']['account_type'];			  
 	$d_user_id = (int)$collection['cash_bank']['ledger_sub_account_id'];

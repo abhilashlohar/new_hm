@@ -26,7 +26,7 @@ function substrwords($text, $maxchar, $end='...') {
 <div style="background-color: rgb(255, 255, 255); padding: 0px 20px; border: 1px solid rgb(233, 231, 231);">
 <table cellpadding="0" cellspacing="0" width="100%">
 	<tbody><tr>
-		<td><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-book"></i> Resident Directory</span></td>
+		<td><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-book"></i> Resident Directory </span> (<?php echo sizeof($arranged_users); ?>)</td>
 		<td align="right">
 			   <input class="m-wrap medium"  placeholder="Search" id="search" type="text" style="margin-top: 5px; margin-bottom: 5px;">
 		</td>
@@ -68,6 +68,8 @@ foreach($arranged_users as $user_info){
 	$user_name=substrwords($user_name,20,'...');
 	$wing_flats=$user_info["wing_flat"];
 	$profile_pic=$user_info["profile_pic"];
+	$g_profile_pic=$user_info["g_profile_pic"];
+	$f_profile_pic=$user_info["f_profile_pic"];
 	foreach($wing_flats as $user_flat_id=>$wing_flat){?>
 	
 	<div class="r_d">

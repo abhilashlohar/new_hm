@@ -109,16 +109,97 @@ function regular_bill_echo(){
 }
 
 function update_regular_bills(){
-	$this->loadmodel('new_regular_bill');
-	$conditions=array("edit_status" => "NO");
-	$bills = $this->new_regular_bill->find('all',array('conditions'=>$conditions));
+	$this->layout=null;
+	
+	$this->loadmodel('regular_bill');
+	$conditions=array("start_date" => 1459449000);
+	$bills = $this->regular_bill->find('all',array('conditions'=>$conditions));
 	foreach($bills as $bill){
-		$auto_id=(int)$bill["new_regular_bill"]["auto_id"];
-		$income_head_array=$bill["new_regular_bill"]["income_head_array"];
-		$other_charges_array=$bill["new_regular_bill"]["other_charges_array"];
+		$auto_id=$bill["regular_bill"]["auto_id"];
+		$ledger_sub_account_id=$bill["regular_bill"]["ledger_sub_account_id"];
 		
-		$this->loadmodel('regular_bill');
-		$this->regular_bill->updateAll(array("income_head_array"=>$income_head_array,"other_charge"=>$other_charges_array),array("auto_id"=>$auto_id));
+		$this->loadmodel('ledger');
+		$conditions=array('transaction_date'=>array('$lt'=>1459449000),'ledger_sub_account_id'=>$ledger_sub_account_id);
+		$ledger_result = $this->ledger->find('all',array('conditions'=>$conditions));
+		$total_maint=0;
+		$total_non_maint=0;
+		$total_interest=0;
+		$total_receipt=0;
+		foreach($ledger_result as $data){
+			$debit=$data["ledger"]["debit"];
+			$credit=$data["ledger"]["credit"];
+			$table_name=$data["ledger"]["table_name"];
+			$intrest_on_arrears=@$data["ledger"]["intrest_on_arrears"];
+			if(($table_name=="regular_bill" and $intrest_on_arrears!="YES") or ($table_name=="opening_balance" and $intrest_on_arrears!="YES")){
+				$total_maint+=$debit-$credit;
+			}
+			if(($table_name=="regular_bill" and $intrest_on_arrears=="YES") or ($table_name=="opening_balance" and $intrest_on_arrears=="YES")){
+				$total_interest+=$debit-$credit;
+			}
+			if($table_name=="supplimentry_bill" or $table_name=="journal"){
+				$total_non_maint+=$debit-$credit;
+			}
+			if($table_name=="cash_bank"){
+				$total_receipt+=$debit-$credit;
+			}
+		}
+		$total_receipt=abs($total_receipt);
+		if($total_non_maint<0){
+			$total_non_maint=abs($total_non_maint);
+			$reminder=$total_non_maint-$total_interest;
+			if($reminder<=0){
+				$total_non_maint=0;
+				$total_interest=abs($reminder);
+			}else{
+				$total_non_maint=abs($reminder);
+				$total_interest=0;
+				
+				$reminder=$total_non_maint-$total_maint;
+				if($reminder<=0){
+					$total_non_maint=0;
+					$total_maint=abs($reminder);
+				}else{
+					$total_non_maint=abs($reminder);
+					$total_maint=0;
+					
+					$total_receipt=$total_receipt+$reminder;
+				}
+			}
+		}
+		
+		$reminder=$total_receipt-$total_non_maint;
+		if($reminder<=0){
+			$total_receipt=0;
+			$total_non_maint=abs($reminder);
+		}else{
+			$total_non_maint=0;
+			$total_receipt=abs($reminder);
+			
+			$reminder=$total_receipt-$total_interest;
+			if($reminder<=0){
+				$total_receipt=0;
+				$total_interest=abs($reminder);
+			}else{
+				$total_interest=0;
+				$total_receipt=abs($reminder);
+				
+				$reminder=$total_receipt-$total_maint;
+				if($reminder<=0){
+					$total_receipt=0;
+					$total_maint=abs($reminder);
+				}else{
+					$total_receipt=abs($reminder);
+					$total_maint=0;
+					
+					$total_maint=-$total_receipt;
+				}
+			}
+		}
+		
+		
+		
+		//$this->loadmodel('regular_bill');
+		//$this->regular_bill->updateAll(array('maint_arrear'=>$total_maint,'non_maint_arrear'=>$total_non_maint),array('auto_id'=>(int)$auto_id));
 	}
 }
 

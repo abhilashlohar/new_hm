@@ -26,7 +26,7 @@ function substrwords($text, $maxchar, $end='...') {
 <div style="background-color: rgb(255, 255, 255); padding: 0px 20px; border: 1px solid rgb(233, 231, 231);">
 <table cellpadding="0" cellspacing="0" width="100%">
 	<tbody><tr>
-		<td><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-book"></i> Resident Directory </span> (<?php echo sizeof($arranged_users); ?>)</td>
+		<td><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-book"></i> Resident Directory </span> (<span id="show_resident">0</span>) </td>
 		<td align="right">
 			   <input class="m-wrap medium"  placeholder="Search" id="search" type="text" style="margin-top: 5px; margin-bottom: 5px;">
 		</td>
@@ -62,6 +62,7 @@ color:#FFF;
 <div id="main" style="overflow: auto;">
 <?php 
 
+$cou=0;
 foreach($arranged_users as $user_info){ 
 	$user_flat_id=(int)$user_info["user_flat_id"];
 	$user_name=$user_info["user_name"];
@@ -70,7 +71,7 @@ foreach($arranged_users as $user_info){
 	$profile_pic=$user_info["profile_pic"];
 	$g_profile_pic=$user_info["g_profile_pic"];
 	$f_profile_pic=$user_info["f_profile_pic"];
-	foreach($wing_flats as $user_flat_id=>$wing_flat){?>
+	foreach($wing_flats as $user_flat_id=>$wing_flat){ $cou++ ; ?>
 	
 	<div class="r_d">
 		<a href="member_profile/<?php echo $user_flat_id; ?>" role="button" rel='tab'>
@@ -99,8 +100,9 @@ foreach($arranged_users as $user_info){
 	</div>
 		
 	<?php } ?>
-<?php } ?>
+<?php }  ?>
 </div>
+<input type="hidden" id="resident_count" value="<?php echo $cou; ?>">
 <style>
 .profile_pic{
 	float:left;max-width:25%;width:50px;height:60px;
@@ -108,6 +110,9 @@ foreach($arranged_users as $user_info){
 </style>
 <script type="text/javascript">
 
+	var re=$("#resident_count").val();
+	$("#show_resident").text(re);
+	
 	 var $rows = $('#main div');
 	 $('#search').keyup(function() {
 		var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();

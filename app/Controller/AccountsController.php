@@ -623,9 +623,6 @@ function final_import_opening_balance()
 	$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_id,"debit"=>$penalty,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date),"intrest_on_arrears"=>"YES"));   
 	}
 	
-	
-	
-	
 		if(($group_id==34 && (!empty($debit) || !empty($credit))) && ($debit!=0 || $credit!=0)){
 
 		$this->loadmodel('ledger');

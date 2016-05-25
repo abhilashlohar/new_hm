@@ -60,7 +60,7 @@ foreach($result_society as $data){
 			foreach($result_ledger as $ledger_data){ 
 			
 				$transaction_date=$ledger_data["ledger"]["transaction_date"];
-				$table_name=$ledger_data["ledger"]["table_name"];
+				echo $table_name=$ledger_data["ledger"]["table_name"];
 				$element_id=$ledger_data["ledger"]["element_id"];
 				$debit=$ledger_data["ledger"]["debit"];
 				$credit=$ledger_data["ledger"]["credit"];
@@ -119,7 +119,7 @@ foreach($result_society as $data){
 								$source="Petty Cash Payment";
 								$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_number"];
 							}		
-				}
+				} 
 				
 			if($table_name=="journal"){
 					

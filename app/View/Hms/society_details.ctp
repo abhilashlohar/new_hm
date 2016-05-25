@@ -67,7 +67,11 @@ $society_sig = @$data['society']['signature'];
 <div class="controls">
 <div class="fileupload fileupload-new" data-provides="fileupload">
 <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+<?php if(empty($society_logo)){ ?>
 <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+<?php }else{ ?>
+<img src="<?php echo $webroot_path; ?>sig/<?php echo $society_sig; ?>" alt="">
+<?php } ?>
 </div>
 <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
 <div>
@@ -96,7 +100,7 @@ $society_sig = @$data['society']['signature'];
 <div>
 <span class="btn btn-file"><span class="fileupload-new">Select image</span>
 <span class="fileupload-exists">Change</span>
-<input type="file" class="default" name="logo"></span>
+<input type="file" class="default" name="logo" value=""></span>
 <a href="#" class="btn fileupload-exists rem" data-dismiss="fileupload">Remove</a>
 </div>
 </div>
@@ -126,7 +130,6 @@ $society_sig = @$data['society']['signature'];
 </div>
 <br />
 
-
 <label style="font-size:14px;">Society E-mail</label>
 <div class="controls">
 <input type="text" class="m-wrap span9" name="society_email" value="<?php echo $society_email; ?>" />
@@ -138,11 +141,6 @@ $society_sig = @$data['society']['signature'];
 <input type="text" class="m-wrap span9" name="title" value="<?php echo @$sig_title; ?>" />
 </div>
 <br />
-
-
-
-
-
 
 </div>
 </div>
@@ -222,3 +220,34 @@ $(document).ready(function(){
 }); 
 
 </script>
+
+<script>
+$(document).ready(function() {
+	<?php	
+	$society_detail=(int)$this->Session->read('society_detail');
+	if($society_detail==1)
+	{
+	?>
+	$.gritter.add({
+	title: 'Success',
+	text: '<p>Society Detail Updated Successfully</p>',
+	sticky: false,
+	time: '10000',
+	});
+	<?php
+	$this->requestAction(array('controller'=>'hms','action'=>'griter_notification'),array('pass' => array('society_detail')));
+	} ?>
+	});
+</script>  
+
+
+
+
+
+
+
+
+
+
+
+

@@ -23,7 +23,7 @@ header ("Content-Description: Generated Report" );
 				<th>Description</th>
 				<th>Source</th>
 				<th>Debit</th>
-				<th>Credits</th>
+				<th>Credit</th>
 				
 			</tr>
 			<?php 

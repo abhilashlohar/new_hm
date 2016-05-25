@@ -39,7 +39,7 @@ foreach($result_society as $data){
 				<th>Description</th>
 				<th>Source</th>
 				<th>Debit</th>
-				<th>Credits</th>
+				<th>Credit</th>
 				
 			</tr>
 			<?php 

@@ -93,7 +93,7 @@ foreach($result_society as $data){
 				}
 				if($table_name=="cash_bank"){
 					
-					$element_id=$element_id;
+					echo $element_id=$element_id;
 					
 					$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'bank_receipt_info_via_auto_id'), array('pass' => array($element_id)));
 					//$refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_number"]; 

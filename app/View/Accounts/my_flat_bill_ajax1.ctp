@@ -60,8 +60,8 @@ foreach($result_society as $data){
 			foreach($result_ledger as $ledger_data){ 
 			
 				$transaction_date=$ledger_data["ledger"]["transaction_date"];
-				echo $table_name=$ledger_data["ledger"]["table_name"];
-				$element_id=$ledger_data["ledger"]["element_id"];
+				$table_name=$ledger_data["ledger"]["table_name"];
+				echo $element_id=$ledger_data["ledger"]["element_id"];
 				$debit=$ledger_data["ledger"]["debit"];
 				$credit=$ledger_data["ledger"]["credit"];
 				

@@ -2184,7 +2184,11 @@ $this->loadmodel('user');
 
 
 function griter_notification($id)
-{	
+{
+
+	if($id=="society_detail"){
+		$this->Session->delete('society_detail');
+	}	
 
 	if($id=="bank_receipt_cancel"){
 		$this->Session->delete('bank_receipt_cancel');
@@ -17965,10 +17969,8 @@ $s_user_id=$this->Session->read('hm_user_id');
 
 
 }
-/////////////////////////// ////////////////////////////// /End Profile ///////////////////////////////////////////////////////
-
-
-/////////////////////////// start Content modaration  //////////////////////////////
+//End Profile//
+//start Content modaration//
 
 function society_details()
 {
@@ -18005,33 +18007,43 @@ $this->check_user_privilages();
 	$logo=$_FILES['logo']['name'];
     $sig=$_FILES['sig']['name'];	
 	
+if(!empty($logo) && !empty($sig)){	
+			$target = "logo/";
+			$target = $target . basename( $_FILES['logo']['name']) ;
+			move_uploaded_file($_FILES['logo']['tmp_name'], $target);
+
+			$target = "sig/";
+			$target = $target . basename($_FILES['sig']['name']) ;
+			move_uploaded_file($_FILES['sig']['tmp_name'], $target);	
+
+	$this->loadmodel('society');
+	$this->society->updateAll(array('pan'=>$pan,'tex_number'=>$s_tax,'society_address'=>$address,'society_reg_num'=>$s_number,"society_phone"=>$society_phone,"society_email"=>$society_email,"signature"=>@$sig,"logo"=>$logo,"sig_title"=>$sig_title),array('society_id'=>$s_society_id));			
+		
+}else if(!empty($sig) && empty($logo)){
 	
-$target = "logo/";
-$target = $target . basename( $_FILES['logo']['name']) ;
-move_uploaded_file($_FILES['logo']['tmp_name'], $target);
+	$target = "sig/";
+	$target = $target . basename($_FILES['sig']['name']) ;
+	move_uploaded_file($_FILES['sig']['tmp_name'], $target);	
 
+	$this->loadmodel('society');
+	$this->society->updateAll(array('pan'=>$pan,'tex_number'=>$s_tax,'society_address'=>$address,'society_reg_num'=>$s_number,"society_phone"=>$society_phone,"society_email"=>$society_email,"signature"=>@$sig,"sig_title"=>$sig_title),array('society_id'=>$s_society_id));	
 
-$target = "sig/";
-$target = $target . basename($_FILES['sig']['name']) ;
-move_uploaded_file($_FILES['sig']['tmp_name'], $target);	
+}else if(!empty($logo) && empty($sig)){
+			$target = "logo/";
+			$target = $target . basename( $_FILES['logo']['name']) ;
+			move_uploaded_file($_FILES['logo']['tmp_name'], $target);	
 
-$this->loadmodel('society');
-$this->society->updateAll(array('pan'=>$pan,'tex_number'=>$s_tax,'society_address'=>$address,'society_reg_num'=>$s_number,"society_phone"=>$society_phone,"society_email"=>$society_email,"signature"=>@$sig,"logo"=>@$logo,"sig_title"=>$sig_title),array('society_id'=>$s_society_id));
+		$this->loadmodel('society');
+		$this->society->updateAll(array('pan'=>$pan,'tex_number'=>$s_tax,'society_address'=>$address,'society_reg_num'=>$s_number,"society_phone"=>$society_phone,"society_email"=>$society_email,"logo"=>@$logo,"sig_title"=>$sig_title),array('society_id'=>$s_society_id));	
+}
+else if(empty($logo) && empty($sig)){
+		$this->loadmodel('society');
+		$this->society->updateAll(array('pan'=>$pan,'tex_number'=>$s_tax,'society_address'=>$address,'society_reg_num'=>$s_number,"society_phone"=>$society_phone,"society_email"=>$society_email,"sig_title"=>$sig_title),array('society_id'=>$s_society_id));
+	
+}	
 
-?>
-
-<!----alert-------------->
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body" style="font-size:16px;">
-Society details updated successfully.
-</div> 
-<div class="modal-footer">
-<a href="society_details" class="btn green">OK</a>
-</div>
-</div>
-<!----alert-------------->
-<?php		
+	$this->Session->write('society_detail',1);
+		
 }
 $this->loadmodel('society');
 $conditions=array('society_id'=>$s_society_id);

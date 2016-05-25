@@ -327,7 +327,7 @@ $this->set('cursor2',$cursor2);
 }
 /////////////////////////////////// End Journal Add Row (Accounts)/////////////////
 
-//////////////////////////////////////////////////////////// Start Show Ledger Type Journal(Accounts) ///////////////////////////////////////////////////
+//Start Show Ledger Type Journal(Accounts)//
 function show_ledger_type()
 {
 $this->layout='blank';
@@ -374,7 +374,7 @@ $collection = $m->selectCollection('accounts', 'ledger_account');
 $cursor = $collection->find();
 
 $this->loadmodel('ledger_account');
-$conditions = array( '$or' => array(array('society_id' =>$s_society_id),array('society_id' =>0)));
+$conditions = array('$or' => array(array('society_id' =>$s_society_id),array('society_id' =>0)));
 $cursor1=$this->ledger_account->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
 

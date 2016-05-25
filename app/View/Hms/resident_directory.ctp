@@ -116,7 +116,6 @@ foreach($arranged_users as $user_info){
 	 var $rows = $('#main div');
 	 $('#search').keyup(function() {
 		var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-		
 		$rows.show().filter(function() {
 			var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
 			return !~text.indexOf(val);

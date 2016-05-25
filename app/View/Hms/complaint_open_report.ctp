@@ -55,15 +55,15 @@ $help_desk_id=$collection['help_desk']['help_desk_id'];
 		{
 			$ticket_priority="Normal";
 		}
-	$result_user = $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($d_user_id)));
-	foreach ($result_user as $collection) 
-	{
-		$name=$collection['user']['user_name'];
-		$wing=$collection['user']['wing'];
-		$flat=$collection['user']['flat'];
-}
-$flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'),array('pass'=>array($wing,$flat)));
+	$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($d_user_id)));
+	$name=$result_member_info['user_name'];
+	$profile_pic= @$result_member_info['profile_pic'];
+	$result_wing_flat=$result_member_info['wing_flat'];
+	foreach($result_wing_flat as $data){
 
+		$flat=$data;
+		
+	}
 $help_desk_category_name = $this->requestAction(array('controller' => 'hms', 'action' => 'help_desk_category_name'),array('pass'=>array($complain_type_id)));
 	
  

@@ -6484,6 +6484,12 @@ function submit_login(){
 				
 				}
 				
+				date_default_timezone_set('Asia/kolkata');
+				$date=date("d-m-Y");
+				$time=date('h:i:a',time());
+				$this->loadmodel('log');
+				$i=$this->autoincrement('log','log_id');
+				$this->log->save(array('log_id'=>$i,'user_id'=>$user_id,'society_id'=>$society_id,'date'=>$date,'time'=>$time,'status'=>0));
 				
 				$this->Session->write('hm_user_id', $user_id);
 				$this->Session->write('hm_user_flat_id', $user_flat_id);

@@ -93,11 +93,11 @@ foreach($result_society as $data){
 				}
 				if($table_name=="cash_bank"){
 					
-					echo $element_id=$element_id;
+					$element_id=(int)$element_id;
 					
 					$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'bank_receipt_info_via_auto_id'), array('pass' => array($element_id)));
 					//$refrence_no=@$result_cash_bank[0]["cash_bank"]["receipt_number"]; 
-					echo $ledger_sub_account_id = (int)@$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
+					 $ledger_sub_account_id = (int)@$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
 					$description = @$result_cash_bank[0]["cash_bank"]["narration"];
 					$receipt_source = $result_cash_bank[0]["cash_bank"]["source"];  
 					$date = $result_cash_bank[0]["cash_bank"]["created_on"];	

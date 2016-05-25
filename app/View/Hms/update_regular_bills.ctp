@@ -1,1 +1,0 @@
-update_regular_bills

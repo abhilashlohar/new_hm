@@ -449,8 +449,8 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 		$last_bill_due_date=$last_bill_info[0]["regular_bill"]["due_date"];
 		
 		$last_bill_amount=$last_bill_info[0]["regular_bill"]["total"];
-		$last_bill_maint_arrear=$last_bill_info[0]["regular_bill"]["maint_arrear"];
-		$last_bill_non_maint_arrear=$last_bill_info[0]["regular_bill"]["non_maint_arrear"];
+		$last_bill_maint_arrear=@$last_bill_info[0]["regular_bill"]["maint_arrear"];
+		$last_bill_non_maint_arrear=@$last_bill_info[0]["regular_bill"]["non_maint_arrear"];
 		$last_bill_arrear_intrest=$last_bill_info[0]["regular_bill"]["arrear_intrest"];
 		$last_bill_intrest_on_arrears=$last_bill_info[0]["regular_bill"]["intrest_on_arrears"];
 		$last_bill_credit_stock=$last_bill_info[0]["regular_bill"]["credit_stock"];

@@ -691,11 +691,7 @@ function bank_receipt_view()
 	{
 	 $cancel_type=$this->request->data['cancel'];
 	 $transaction_id=(int)$this->request->data['transaction_id_for_cancel'];
-		if($cancel_type==1){
-		$narration="Due to Cheque Bounce";		
-		}else{
-		$narration=" Due to duplicacy";
-		}
+		
 	
 		$this->loadmodel('cash_bank');
 		$conditions=array("society_id"=>$s_society_id,"transaction_id"=>$transaction_id);
@@ -706,7 +702,15 @@ function bank_receipt_view()
 		$amount=$data['cash_bank']['amount'];
 		$transaction_date=$data['cash_bank']['transaction_date'];
 		}
-        $transaction_date=date('d-m-Y',($transaction_date));
+		
+		if($cancel_type==1){
+		$narration="Due to cheque bounce the receipt cancelled of amount ".$amount."";		
+		}else{
+		$narration="Due to duplicacy the receipt cancelled of amount ".$amount."";
+		}
+		
+		
+    $transaction_date=date('d-m-Y',($transaction_date));
 	$this->loadmodel('cash_bank');
 	$this->cash_bank->updateAll(Array("amount"=>0,"narration"=>$narration),Array("transaction_id"=>$transaction_id));	
 		

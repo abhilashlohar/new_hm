@@ -8049,10 +8049,22 @@ function dashboard(){
 
 		$this->set('result_notice_visible_last',$result_notice_visible_last);
 		
+		
+		
+		
 	    //////////////notice  last 3///////////////// 
 				// $date2= date("Y-m-d", strtotime($date2)); 
 				//$dat1= strtotime($date2);
-/*		
+/*		$this->loadmodel("journal");
+		$result_journal=$this->journal->find('all');
+		foreach($result_journal as $data){
+			$auto_id=(int)$data['journal']['journal_id'];
+			 echo $current_date=$data['journal']['current_date'];
+			//echo $date2= date("d-m-Y",$current_date); 
+			
+			echo"<br/>";
+		}
+		exit;
 	$this->loadmodel("financial_year");
 	$result_financial_years=$this->financial_year->find('all');
 		foreach($result_financial_years as $data){

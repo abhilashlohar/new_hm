@@ -200,8 +200,8 @@ function it_regular_bill(){
 			$due_for_payment+=$arrear_interest;
 			$due_for_payment+=$intrest_on_arrears;
 			
-			if($intrest_on_arrears<0){$intrest_on_arrears=0; }
-			
+			if($intrest_on_arrears<0){$intrest_on_arrears=0;}
+			if($panalty=="no"){$intrest_on_arrears=0;}
 			
 			$current_date = date('Y-m-d');
 			

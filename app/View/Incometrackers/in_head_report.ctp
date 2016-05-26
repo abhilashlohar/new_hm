@@ -33,6 +33,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </div>
 <script>
 $(document).ready(function(){
+	
 	$("#go").on("click",function(){
 		var period=$("#period option:selected").val();
 		if(period!=""){
@@ -40,8 +41,10 @@ $(document).ready(function(){
 				url: "<?php echo $webroot_path; ?>Incometrackers/regular_bill_report/"+period,
 			}).done(function(response){
 				$("#ajax_result").html(response);
+				
 			});
 		}
+		
 	});
 });
 </script>

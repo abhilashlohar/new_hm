@@ -6534,6 +6534,7 @@ function regular_bill_edit2($auto_id=null){
 	$end_date=$regular_bill_info[0]["regular_bill"]["end_date"];
 	$billing_cycle=$regular_bill_info[0]["regular_bill"]["billing_cycle"];
 	$created_by=$regular_bill_info[0]["regular_bill"]["created_by"];
+	$created_on=$regular_bill_info[0]["regular_bill"]["current_date"];
 	
 	$this->loadmodel('regular_bill');
 	$conditions=array("ledger_sub_account_id"=>$ledger_sub_account_id,'start_date'=>array('$gt'=>$start_date));
@@ -6596,7 +6597,7 @@ function regular_bill_edit2($auto_id=null){
 		$current_date = date('Y-m-d');
 		
 		$reg_auto_id=$this->autoincrement('regular_bill','auto_id');
-		$this->regular_bill->saveAll(array("auto_id"=>$reg_auto_id,"bill_number"=>$bill_number,"ledger_sub_account_id"=>$ledger_sub_account_id,"income_head_array"=>$income_head_array,"noc_charge"=>$non_occupancy_charges,"other_charge"=>$other_charges_array,"total"=>$total,"arrear_principle"=>$arrear_principle,"maint_arrear"=> $maint_arrear,"non_maint_arrear"=> $non_maint_arrear,"arrear_intrest"=>$arrear_intrest,"intrest_on_arrears"=>$interest_on_arrears,"credit_stock"=>$credit_stock,"due_for_payment"=>$due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"end_date"=>$end_date,"edited"=>"no","description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by,"current_date"=>strtotime($current_date),'edit_text'=>"-R"));
+		$this->regular_bill->saveAll(array("auto_id"=>$reg_auto_id,"bill_number"=>$bill_number,"ledger_sub_account_id"=>$ledger_sub_account_id,"income_head_array"=>$income_head_array,"noc_charge"=>$non_occupancy_charges,"other_charge"=>$other_charges_array,"total"=>$total,"arrear_principle"=>$arrear_principle,"maint_arrear"=> $maint_arrear,"non_maint_arrear"=> $non_maint_arrear,"arrear_intrest"=>$arrear_intrest,"intrest_on_arrears"=>$interest_on_arrears,"credit_stock"=>$credit_stock,"due_for_payment"=>$due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"end_date"=>$end_date,"edited"=>"no","description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by,"current_date"=>$created_on,'edit_text'=>"-R","edited_by"=>$s_user_id,"edited_on"=>$current_date));
 		
 		$edit_text="-R";
 		//LEDGER CODE START//

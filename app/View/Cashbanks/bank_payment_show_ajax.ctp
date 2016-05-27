@@ -78,11 +78,19 @@ $ac_type=(int)$collection['cash_bank']['account_type'];
 $tds_amount=$collection['cash_bank']['tds_tax_amount']; 
 $total_tds_amount=$amount-$tds_amount;
 
-$creation_date=date('d-m-Y',strtotime($current_date));											
+	@$edited_by=@$collection['cash_bank']['edited_by'];
+	@$edited_on=@$collection['cash_bank']['edited_on'];
+	$creation_date=date('d-m-Y',strtotime($current_date));											
 	$ussr_dataa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by_id)));  
 	foreach ($ussr_dataa as $ussrrr){
 	$creater_name = $ussrrr['user']['user_name'];  
 	}	
+
+		if(!empty($edited_by)){
+		$creator_info=$this->requestAction(array('controller'=>'Fns','action'=> 'member_info_via_user_id'),array('pass'=>array((int)$edited_by)));
+		$edited_by=$creator_info["user_name"];
+		$edited_on=date('d-m-Y',strtotime($edited_on));
+		}
 
 if($ac_type == 1){
 	$result_lsaaaa = $this->requestAction(array('controller' => 'Hms', 'action' => 'ledger_sub_account_fetch')
@@ -132,7 +140,7 @@ $total_tds_amount = number_format($total_tds_amount); ?>
 		</ul>
 	</div> 
 		<i class="icon-info-sign tooltips" data-placement="left" data-original-title="Created by: <?php echo $creater_name; ?> 
-		on: <?php echo $creation_date; ?>"></i>
+		on: <?php echo $creation_date; ?>,<?php if(!empty($edited_by)){ ?> Edited_by: <?php echo $edited_by; ?> On: <?php echo $edited_on; ?> <?php } ?>"></i>
 	</td>
 </tr>
 <?php }} ?>

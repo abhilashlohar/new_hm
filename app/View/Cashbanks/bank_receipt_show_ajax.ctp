@@ -36,7 +36,10 @@
 				$transaction_date=$receipt["cash_bank"]["transaction_date"];
 				$transaction_date_for_cancel=$transaction_date;
 				$received_from = $receipt['cash_bank']['received_from'];
-				if($received_from == "residential")
+				@$edited_by=@$receipt['cash_bank']['edited_by'];
+				@$edited_on=@$receipt['cash_bank']['edited_on'];
+			
+    			if($received_from == "residential")
 				{
 				$receipt_type="Residential";
 				$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];
@@ -56,10 +59,21 @@
 				}
 
 				}
+				$edited_by="";
+				$edited_on="";
 				$created_by = $receipt['cash_bank']['created_by'];
 				$created_on = @$receipt['cash_bank']['created_on'];
+				@$edited_by=@$receipt['cash_bank']['edited_by'];
+				@$edited_on=@$receipt['cash_bank']['edited_on'];
 				$creator_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($created_by)));
 				$creator_name=$creator_info["user_name"];
+				
+				if(!empty($edited_by)){
+				$creator_info=$this->requestAction(array('controller'=>'Fns','action'=> 'member_info_via_user_id'),array('pass'=>array((int)$edited_by)));
+				$edited_by=$creator_info["user_name"];
+				$edited_on=date('d-m-Y',strtotime($edited_on));
+				}
+				
 				
 				$deposited_in=$receipt["cash_bank"]["deposited_in"];
 				$deposited_in_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($deposited_in)));
@@ -96,8 +110,8 @@
 							<li><a href="bank_receipt_html_view/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i>View</a></li>
 				<?php
 				$result_date=$this->requestAction(array('controller'=>'Fns','action'=>'bank_receipt_cancel_button_show_or_hide'),array('pass'=>array($transaction_date_for_cancel,(int)$ledger_sub_account_id)));
-				if($result_date=="not_match"){					
-				?>
+				if($result_date=="not_match"){
+     			?>
 							
 							<li><a href="b_receipt_edit/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i>Edit</a></li>
 					
@@ -107,7 +121,7 @@
 							
 							</ul>
 						</div>
-						<i class="icon-info-sign tooltips " data-placement="left" data-original-title="Created by: <?php echo $creator_name; ?> On: <?php echo $created_on; ?>" style="cursor: default;"></i>
+						<i class="icon-info-sign tooltips " data-placement="left" data-original-title="Created by: <?php echo $creator_name; ?> On: <?php echo $created_on; ?>,<?php if(!empty($edited_by)){ ?> Edited_by: <?php echo $edited_by; ?> On: <?php echo $edited_on; ?> <?php } ?>" style="cursor: default;"></i>
 					</td>
 				</tr>
 			<?php } ?>

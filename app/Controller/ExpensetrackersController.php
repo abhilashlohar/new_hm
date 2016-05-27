@@ -786,7 +786,7 @@ foreach($myArray as $child){
 			
 
 $this->loadmodel('expense_tracker');
-$this->expense_tracker->updateAll(array('posting_date'=>$posting_date,'due_date'=>$payment_due_date,'date_of_invoice'=>$date_of_invoice,'expense_head'=>$expense_head,'invoice_reference'=>$invoice_ref,'party_ac_head'=>$part_ac,'ammount_of_invoice'=>$amt_inv,'description'=>$description),array("society_id" => (int)$s_society_id, "expense_tracker_id" => (int)$auto_id));	
+$this->expense_tracker->updateAll(array('posting_date'=>$posting_date,'due_date'=>$payment_due_date,'date_of_invoice'=>$date_of_invoice,'expense_head'=>$expense_head,'invoice_reference'=>$invoice_ref,'party_ac_head'=>$part_ac,'ammount_of_invoice'=>$amt_inv,'description'=>$description,'edited_by'=>$s_user_id,'edited_on'=>$current_date),array("society_id" => (int)$s_society_id, "expense_tracker_id" => (int)$auto_id));	
 			
 
 			

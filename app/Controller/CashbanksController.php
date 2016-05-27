@@ -1373,7 +1373,7 @@ $i=$this->autoincrement_with_receipt_source('cash_bank','receipt_number','petty_
 $receipt_array[]=$i;
 $this->loadmodel('cash_bank');
 $multipleRowData = Array( Array("transaction_id"=>$auto,"receipt_number" =>$i,"ledger_sub_account_id"=>$party_ac, 
-"created_on"=>$current_date,"account_type"=>$account_group,"transaction_date"=>strtotime($transaction_date),"created_by"=>$s_user_id,"narration"=>$narration,"account_head"=>$account_head_id,"amount"=>$amount,"society_id"=>$s_society_id,"source"=>"petty_cash_receipt","auto_inc"=>"YES"));
+"created_on"=>$current_date,"account_type"=>$account_group,"transaction_date"=>strtotime($transaction_date),"created_by"=>$s_user_id,"narration"=>$narration,"account_head"=>$account_head_id,"amount"=>$amount,"society_id"=>$s_society_id,"source"=>"petty_cash_receipt","auto_inc"=>"YES","created_by"=>$created_by,"created_on"=>$));
 $this->cash_bank->saveAll($multipleRowData);  
 
 if($account_group == 1){
@@ -1993,6 +1993,7 @@ function b_receipt_edit($transaction_id=null){
 		$tranjection_date=date('Y-m-d',strtotime($tranjection_date));
 		$deposited_bank_id=(int)$this->request->data['deposited_bank_id'];
 		$receipt_mode=$this->request->data['receipt_mode'];
+		$edited_date=date('Y-m-d');
 		$cheque_number = null;
 		$cheque_date = null;
 		$drawn_on_which_bank = null;
@@ -2044,7 +2045,7 @@ function b_receipt_edit($transaction_id=null){
 	
 	$edit_text=$ignore_receipt_number."-R";	
 	$this->loadmodel('cash_bank');
-	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number" =>@$cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"edit_text"=>$edit_text),Array("transaction_id"=>$transaction_id)); 
+	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number" =>@$cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"edit_text"=>$edit_text,"edited_by"=>$s_user_id,"edited_on"=>$edited_date),Array("transaction_id"=>$transaction_id)); 
 					
 	$this->loadmodel('ledger');
 	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"debit"=>$amount, "credit"=>null,"ledger_account_id"=>33,"ledger_sub_account_id"=>$deposited_bank_id),Array("element_id"=>$transaction_id,"credit"=>null,"table_name"=>"cash_bank")); 
@@ -2554,7 +2555,7 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
     $ignore_receipt_number=$ignore_receipt_number.'-R';
 		
 	$this->loadmodel('cash_bank');
-	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode" => $receipt_mode,"cheque_number"=>$cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$non_member_ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"bill_reference"=>$bill_reference,"edit_text"=>$ignore_receipt_number),Array("transaction_id"=>$transaction_id)); 
+	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode" => $receipt_mode,"cheque_number"=>$cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$non_member_ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"bill_reference"=>$bill_reference,"edit_text"=>$ignore_receipt_number,"edited_by"=>$s_user_id,"edited_on"=>$edited_date),Array("transaction_id"=>$transaction_id)); 
 					
 	$this->loadmodel('ledger');
 	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"debit"=>$amount, "ledger_account_id"=>33,"ledger_sub_account_id"=>$deposited_bank_id),Array("element_id"=>$transaction_id,"credit"=>null,"table_name"=>"cash_bank")); 
@@ -4679,9 +4680,11 @@ function bank_payment_update($auto_id=null)
 		$ledger_account_array=explode(',',$ledger_account);			  
           $ledger_account_id=(int)$ledger_account_array[0];
 		    $ledger_account_type=(int)$ledger_account_array[1];
-
+				$edited_on=date('Y-m-d');
+		   
+		   
 	$this->loadmodel('cash_bank');
-	$this->cash_bank->updateAll(array("transaction_date"=>strtotime($transaction_date),"sundry_creditor_id"=>$ledger_account_id,"invoice_reference"=>@$invoice_reference,"narration"=>$narration,"receipt_mode"=>$mode_of_payment,"receipt_instruction"=>$instrument_utr,"account_head"=>$bank_account,"amount"=>$amount,"account_type"=>$ledger_account_type,"tds_tax_amount"=>$tds_id),array("society_id"=>$s_society_id,"transaction_id"=>$element_id));
+	$this->cash_bank->updateAll(array("transaction_date"=>strtotime($transaction_date),"sundry_creditor_id"=>$ledger_account_id,"invoice_reference"=>@$invoice_reference,"narration"=>$narration,"receipt_mode"=>$mode_of_payment,"receipt_instruction"=>$instrument_utr,"account_head"=>$bank_account,"amount"=>$amount,"account_type"=>$ledger_account_type,"tds_tax_amount"=>$tds_id,"edited_by"=>$s_user_id,"edited_on"=>$edited_on),array("society_id"=>$s_society_id,"transaction_id"=>$element_id));
     $tds_amount=round($tds_id);
 	$total_tds_amount=$amount-$tds_amount;
 
@@ -4704,7 +4707,7 @@ $sub_account_id_t = 16;
 $this->loadmodel('ledger');
 $this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"credit"=>$tds_amount,"ledger_sub_account_id"=>null),array("society_id"=>$s_society_id,"element_id"=>$element_id,"debit"=>null,"ledger_account_id"=>16));
 }
- $this->Session->write('bank_payment_update', 1);
+$this->Session->write('bank_payment_update', 1);
 $this->redirect(array('controller' => 'Cashbanks','action' => 'bank_payment_view'));
 }		
 

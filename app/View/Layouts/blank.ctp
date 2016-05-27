@@ -51,6 +51,6 @@ $('.scroller').each(function () {
 		disableFadeOut: true
 	});
 });
-jQuery('.popovers').popover();
+jQuery('.popovers').popover({html: true});
 });
 </script>

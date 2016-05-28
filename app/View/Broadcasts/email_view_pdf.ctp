@@ -75,8 +75,8 @@ foreach($groups_id as $group)
 $tcpdf->writeHTML('<br/><br/><strong>Subject:</strong>');
 $tcpdf->writeHTML('<div style="font-size: 14px;">'.$subject.'</div>	');
 
-$tcpdf->writeHTML('<br/><br/><strong>Message:</strong>');
-$tcpdf->writeHTML('<div style="font-size: 14px;">'.$message_web.'</div>	');
+//$tcpdf->writeHTML('<br/><br/><strong>Message:</strong>');
+//$tcpdf->writeHTML('<div style="font-size: 14px;">'.$message_web.'</div>	');
 
 // ... 
 // etc. 

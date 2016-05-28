@@ -179,11 +179,9 @@ The request has been approved and the User has been notified.
 </td>
 <!--popup start -->
 <div id="del<?php echo $i; ?>" class="modal hide " tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true" style="display: none;">
-<div class="modal-header" >
-<h4 id="myModalLabel3"><b>Conformation</b></h4>
-</div>
+
 <div class="modal-body">
-<span style="color:red;"><i class="icon-warning-sign"></i></span> &nbsp;<b style="font-size:16px; font-family:'Times New Roman', Times, serif;">Are you sure to Delete</b>
+<span style="color:red;"><i class="icon-warning-sign"></i></span> &nbsp;<b style="font-size:16px; font-family:'Times New Roman', Times, serif;">Are you sure you want to reject approval ?</b>
 </div>
 <div class="modal-footer">
 <a href="resident_approve_reject?con=<?php echo $email; ?> &con1=<?php echo $user_id ;?>"   class="btn blue" >Yes</a>

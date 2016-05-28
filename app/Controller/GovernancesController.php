@@ -807,10 +807,11 @@ $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" 
         </tbody>
 </table>';
 					
-					
-				@$title.= '['. $society_name . ']  - '.'Notice of '.$moc.' Meeting scheduled'.'  on   '.''.$date.'';
-				$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,$reply);
-				$title="";
+				if(!empty($to)){	
+					@$title.= '['. $society_name . ']  - '.'Notice of '.$moc.' Meeting scheduled'.'  on   '.''.$date.'';
+					$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,$reply);
+					$title="";
+				}
 			}
 			
 			/////////////////////  End code /////////////////////////////
@@ -1301,10 +1302,11 @@ function governance_invite_submit_draft(){
 
         </tbody>
 </table>';
-						
-			 @$title.= '['. $society_name . ']  - '.'Notice of '.$moc.' Meeting scheduled'.'  on   '.''.$date.'';	
-					$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,$reply);
-					$title="";
+			if(!empty($to)){			
+				@$title.= '['. $society_name . ']  - '.'Notice of '.$moc.' Meeting scheduled'.'  on   '.''.$date.'';	
+				$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,$reply);
+				$title="";
+			}		
 }
 			
 		//////////////////////// End email code //////////////////////////////////////
@@ -1760,10 +1762,11 @@ foreach($user as $id){
         </tbody>
 </table>';
 
-
-	@$title.= '['. $society_name . ']  - '.'Minutes of Agenda'; 
-	$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,$reply);		
-	$title="";
+	if(!empty($to)){
+		@$title.= '['. $society_name . ']  - '.'Minutes of Agenda'; 
+		$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,$reply);		
+		$title="";
+	}
 }
 
 //// end code 
@@ -2070,6 +2073,7 @@ function governance_assign_user()
 	$conditions2=array("society_id"=>$s_society_id,'active'=>'yes');
 	$result_user=$this->user->find('all',array('conditions'=>$conditions2));
 	//pr($result_user);
+	
 	foreach($result_user as $data){
 				$user_id=$data['user']['user_id'];
 				$user_name=$data['user']['user_name'];
@@ -2102,7 +2106,9 @@ function governance_assign_user()
 				}
 				
 	}
-
+	if(empty($result_users_com)){
+			$result_users_com=array();
+	}
 	$this->set('result_users_com',$result_users_com); 
 	$this->loadmodel('governance_designation');
 	$conditions=array("society_id" => $s_society_id);

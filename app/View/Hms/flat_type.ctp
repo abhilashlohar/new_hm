@@ -197,7 +197,7 @@ $(document).ready(function() {
 			</ol>
 		</div>
 		<div class="modal-footer">
-			<a href="" rel="tab"><button type="button" class="btn" id="import_close">Cancel </button></a>
+			<a href="" ><button type="button" class="btn" id="import_close">Cancel </button></a>
 			<button type="submit" class="btn blue import_btn" id="imppp">Import</button>
 		</div>
 		

@@ -6516,7 +6516,17 @@ function submit_login(){
 		$society_id=(int)@$result_user[0]["user"]["society_id"];
 		$user_type=@$result_user[0]["user"]["user_type"];
 		$signup_random=@$result_user[0]["user"]["signup_random"]; 
+		$verify_set_new_password=(int)@$result_user[0]["user"]["verify_set_new_password"]; 
 		
+		
+			if($verify_set_new_password==0){
+				
+					$de_user_id=$this->encode($user_id,'housingmatters');
+					$random=$de_user_id.'/'.$password;
+
+					echo $output=json_encode(array('url' => $webroot_path.'hms/set_new_password?q='.$random.'','action' => 'redirect','result' => 'success'));
+					exit;
+			}
 		
 		
 		
@@ -6797,8 +6807,9 @@ $user=(int)$this->request->query['user'];
 $this->set('user_id', $user);
 $this->loadmodel('society');
 $this->set('result', $this->society->find('all'));
-		if($this->request->is('post')) 
-		{ 
+if($this->request->is('post')){ 
+		
+		
 			$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 			
 		$society_id=(int)$this->request->data['society'];
@@ -6811,6 +6822,62 @@ $this->set('result', $this->society->find('all'));
 	$wing=(int)$this->request->data['wing'];
 	$flat=(int)$this->request->data['flat'];
 	
+///// flat alerdy exits
+	
+	$this->loadmodel('flat');
+	$conditions=array("flat_id" =>$flat);
+	$result_flat = $this->flat->find('all',array('conditions'=>$conditions));
+	foreach($result_flat as $data_flat){
+	  $flat_type = (int)$data_flat['flat']['noc_ch_tp'];	
+	}
+	if($flat_type == 1)
+		{
+			if($owner == 'no')
+			{
+			 	
+			   $this->set('tenant_allow','Flat is self Occupied');
+				goto a;
+			}
+			
+		}
+		
+
+$this->loadmodel('user_flat');
+$conditions2=array('flat'=>$flat,'society_id'=>$society_id);
+ $result_user=$this->user_flat->find('all',array('conditions'=>$conditions2));
+  $n5=sizeof($result_user); 
+if($n5==1){
+	 $tenant_database=$result_user[0]['user_flat']['owner'];
+	if($tenant_database=='yes'){
+		if($tenant_database==$owner){
+			
+			$this->set('tenant_allow','Flat is Already Exist owner.');
+			goto a;
+			
+		}
+		
+		
+	}else{
+		
+		if($tenant_database==$owner){
+			
+			$this->set('tenant_allow','Flat is Already Exist tenant.');
+			goto a;
+			
+		}
+		
+		
+		
+	}
+	
+}
+if($n5==2){
+	$this->set('tenant_allow','Flat is Already Exist.');
+	goto a;
+	
+}
+	
+////end validation	
 	
 $this->loadmodel('user_temp');
 $this->user_temp->updateAll(array("society_id" => $society_id,"committee" => $committe, 
@@ -7153,7 +7220,7 @@ $this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
 	
 $this->response->header('Location', 'r_ack');
 
-
+a:
 
 }
 }
@@ -8001,7 +8068,7 @@ function dashboard(){
 				
 		//////////////discussion  last 3 topic///////////////// 
 		$this->loadmodel('discussion_post');
-		$conditions =array('society_id' =>$s_society_id,'delete' =>'no','users_have_access' =>$s_user_id);
+		$conditions =array('society_id' =>$s_society_id,'delete' =>'no',"status"=>0,'users_have_access' =>$s_user_id);
 		$order=array('discussion_post.discussion_post_id'=>'DESC');
 		$this->set('result_discussion_topics',$this->discussion_post->find('all',array('conditions'=>$conditions,'order'=>$order,'limit' =>3)));
 		//////////////discussion  last 3 topic///////////////// 
@@ -12019,6 +12086,7 @@ $randm=$q_new[1];
 
 		$result_user=$this->profile_picture($user_id);
 		$tenant=@$result_user[0]['user']['tenant'];
+		$old_password=@$result_user[0]['user']['password'];
 		$society_id=@$result_user[0]['user']['society_id'];
 		$result_society=$this->society_name($society_id);
 		$access_tenant=@$result_society[0]['society']['access_tenant'];
@@ -12032,6 +12100,7 @@ $this->loadmodel('user');
 $conditions =array( '$or' => array( 
 array('user_id'=> $user_id,'signup_random'=>$q),
 array('user_id'=> $user_id,'signup_random'=>$randm),
+array('user_id'=> $user_id,'password'=>$old_password),
 ));
 $result_check=$this->user->find('all',array('conditions'=>$conditions));
 $n= sizeof($result_check);
@@ -12070,7 +12139,7 @@ $user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'u
 	$this->Session->write('hm_user_flat_id', $user_flat_id);
 	$this->Session->write('hm_society_id', $society_id);
 $this->loadmodel('user');
-$this->user->updateAll(array('password'=>$pass,'signup_random'=>'','validation_status'=>'done'),array('user.user_id'=>$user_id));
+$this->user->updateAll(array('password'=>$pass,'signup_random'=>'','validation_status'=>'done','verify_set_new_password'=>1),array('user.user_id'=>$user_id));
 $this->redirect(array('action' => 'dashboard'));
 }
 

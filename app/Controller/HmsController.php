@@ -6832,7 +6832,7 @@ if($this->request->is('post')){
 	}
 	if($flat_type == 1)
 		{
-			if($owner == 'no')
+			if($tenant == 'no')
 			{
 			 	
 			   $this->set('tenant_allow','Flat is self Occupied');
@@ -6849,7 +6849,7 @@ $conditions2=array('flat'=>$flat,'society_id'=>$society_id);
 if($n5==1){
 	 $tenant_database=$result_user[0]['user_flat']['owner'];
 	if($tenant_database=='yes'){
-		if($tenant_database==$owner){
+		if($tenant_database==$tenant){
 			
 			$this->set('tenant_allow','Flat is Already Exist owner.');
 			goto a;
@@ -6859,7 +6859,7 @@ if($n5==1){
 		
 	}else{
 		
-		if($tenant_database==$owner){
+		if($tenant_database==$tenant){
 			
 			$this->set('tenant_allow','Flat is Already Exist tenant.');
 			goto a;

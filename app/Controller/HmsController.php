@@ -8116,7 +8116,17 @@ function dashboard(){
 
 		$this->set('result_notice_visible_last',$result_notice_visible_last);
 		
-		
+		/*$this->loadmodel("discussion_comment");
+		$result_discussion_comment=$this->discussion_comment->find('all');
+		foreach($result_discussion_comment as $data){
+				$auto_id=(int)$data['discussion_comment']['discussion_comment_id'];
+				$current_date=$data['discussion_comment']['date']; 
+				$date2= date("d-m-y",strtotime($current_date)); 
+				$date23= date("Y-m-d",strtotime($date2));
+				$this->loadmodel("discussion_comment");
+				$this->discussion_comment->updateAll(array('date'=>$date23),array('discussion_comment_id'=>$auto_id));
+    		}
+		exit;
 		
 		
 	    //////////////notice  last 3///////////////// 

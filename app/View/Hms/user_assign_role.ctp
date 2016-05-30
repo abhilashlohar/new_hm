@@ -55,7 +55,6 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 
 <label style="margin-left:30%;">Select User Name</label>
 
-
  <span style="margin-left:10%;">
 		<select class="span12 chosen" name="user" id="user"  data-placeholder="Type User Name" tabindex="1" onchange="role(this.value)">
 			<option value="" style="display:none;"></option>
@@ -63,11 +62,15 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 			
 			foreach ($result_user as $collection){
 				
-				$user_id = $collection['user']['user_id'];
-				$user_name=$collection['user']["user_name"];
-				
+				$user_id = $collection['user_id'];
+				$user_name=$collection["user_name"];
+				$wing_flat=$collection["wing_flat"];
+					foreach($wing_flat as $flat){
+						
+					}
+
 			?>
-					<option value="<?php echo $user_id; ?>" ><?php echo $user_name; ?> &nbsp;&nbsp;<?php //echo $wing_flat ; ?></option>
+					<option value="<?php echo $user_id; ?>" ><?php echo $user_name; ?> &nbsp;&nbsp;(<?php echo $flat ; ?>)</option>
 			<?php } ?>
 		 </select>
  </span>

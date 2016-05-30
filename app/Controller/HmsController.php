@@ -13279,10 +13279,48 @@ function user_assign_role(){
 			}
 	$this->ath();
 	$this->check_user_privilages();
+	/*$this->loadmodel('user');
+	$conditions1=array('society_id'=>$s_society_id,'active'=>"yes");
+	$order=array('user.user_name'=>'Asc');
+	$result=$this->user->find('all',array('conditions'=>$conditions1,'order'=>$order));
+	$this->set('result_user',$result); */
+	
 	$this->loadmodel('user');
 	$conditions1=array('society_id'=>$s_society_id,'active'=>"yes");
-	$result=$this->user->find('all',array('conditions'=>$conditions1));
-	$this->set('result_user',$result);
+	$order=array('user.user_name'=>'Asc');
+	$userresults=$this->user->find('all',array('conditions'=>$conditions1,'order'=>$order));
+	foreach($userresults as $userresult){
+			@$user_id=@$userresult["user"]["user_id"];
+			@$user_name=@$userresult["user"]["user_name"];
+			@$email=@$userresult["user"]["email"];
+			@$mobile=@$userresult["user"]["mobile"];
+			$profile_pic=@$userresult["user"]["profile_pic"];
+			
+			$this->loadmodel('user_flat');
+			$conditions=array("user_id"=>$user_id, "exited"=>"no");
+			$result=$this->user_flat->find('all',array('conditions'=>$conditions));
+			$flats=array();
+			foreach($result as $data){
+				$user_flat_id=$data["user_flat"]["user_flat_id"];
+				$wing=@$data["user_flat"]["wing"];
+				$flat=@$data["user_flat"]["flat"];
+				
+				$this->loadmodel('wing');
+				$conditions=array("wing_id"=>$wing);
+				$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
+				@$wing_name=$wing_info[0]["wing"]["wing_name"];
+				
+				$this->loadmodel('flat');
+				$conditions=array("flat_id"=>$flat);
+				$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+				@$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
+				
+				$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
+			}
+			$result_member[]=array("user_name"=>$user_name,"wing_flat"=>$flats,"email"=>$email,"mobile"=>$mobile,"profile_pic"=>$profile_pic,'user_id'=>$user_id);
+	}	
+	
+	$this->set('result_user',$result_member);
 		
 }
 

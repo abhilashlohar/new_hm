@@ -27,7 +27,7 @@ foreach ($cursor1 as $collection){
 <?php if($nnn == 555) { ?>
 <div class="portlet box">
 <div class="portlet-body">
-	<div align="center"><?php echo strtoupper($society_name); ?> Bank Payment Register From : <?php echo $from;?> To : <?php echo $to;?>
+	<div align="center"><?php echo strtoupper($society_name); ?> Petty Cash Payment Register From : <?php echo $from;?> To : <?php echo $to;?>
 		<span class="hide_at_print">
 			<input class="m-wrap medium pull-right" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
 			<a href="petty_cash_payment_excel?f=<?php echo $from; ?>&t=<?php echo $to; ?>" class="btn blue mini pull-right" style="margin-right:1%;"><i class="icon-download"></i></a>

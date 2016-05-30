@@ -30,7 +30,7 @@ if($type_list=="my"){ ?>
 			$result_count_comment=$this->requestAction(array('controller' => 'Discussions', 'action' => 'count_comment_via_discussion_post_id'), array('pass' => array($discussion_post_id)));
 			$time=$post["discussion_post"]["time"];?>
 			
-				<div class="topic" post_id="<?php echo $discussion_post_id; ?>" style="width:100%;">
+				<div class="topic show_list" post_id="<?php echo $discussion_post_id; ?>" style="width:100%;">
 				
 				<div style="margin-top: -4px; margin-right: -5px;" class="pull-right">
 				<span class="btn mini pull-right move_archive tooltips" data-placement="top" post_id="<?php echo $discussion_post_id; ?>" style="" data-original-title="close topics" >
@@ -38,7 +38,7 @@ if($type_list=="my"){ ?>
 				</span>
 				</div>
 				
-				<div class="show_list" style="width:100%;">
+				<div class="" style="width:100%;">
 				
 				
 					<div align="left" style="font-size: 12px;"><?php echo $topic; ?></div>

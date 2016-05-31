@@ -4594,13 +4594,13 @@ function petty_cash_payment_update($auto_id=null)
 			 $amount=$this->request->data['amount'];
 			 $narration=$this->request->data['narration'];		   
 
-			 
+			 $edited_on=date('Y-m-d'); 
 			 
 			 
 		 
 			 
 $this->loadmodel('cash_bank');
-$this->cash_bank->updateAll(array("sundry_creditor_id"=>$expense_party,"account_type" =>$account_group,"transaction_date"=>strtotime($transaction_date),"narration"=>$narration,"account_head" =>$paid_from_id,"amount"=>$amount),array('society_id'=>$s_society_id,"transaction_id"=>$element_id));		
+$this->cash_bank->updateAll(array("sundry_creditor_id"=>$expense_party,"account_type" =>$account_group,"transaction_date"=>strtotime($transaction_date),"narration"=>$narration,"account_head" =>$paid_from_id,"amount"=>$amount,"edited_by"=>$s_user_id,"edited_on"=>$edited_on),array('society_id'=>$s_society_id,"transaction_id"=>$element_id));		
 	
 	
 	if($account_group == 1){
@@ -6820,7 +6820,7 @@ $transaction_id = (int)$this->request->data['ttrcidd'];
 
 $start_date = date('Y-m-d',strtotime($start_date));
 $maturity_date = date('Y-m-d',strtotime($maturity_date));
-
+ $edited_on=date('Y-m-d');
 $target = "fix_deposit/";
 $target = $target . basename($_FILES['file2']['name']);
 move_uploaded_file($_FILES['file2']['tmp_name'], $target);
@@ -6829,7 +6829,7 @@ $this->loadmodel('fix_deposit');
 $this->fix_deposit->updateAll(array("bank_name" =>$bank_name,"bank_branch"=>$branch,
 "account_reference"=>$reference, "principal_amount"=>$amount,"start_date"=>strtotime($start_date),
 "maturity_date"=>strtotime($maturity_date),"interest_rate"=>$rate,"purpose"=>$remarks,
-"society_id"=>$s_society_id,"file_name"=>$file_name),array("transaction_id" => $transaction_id));
+"society_id"=>$s_society_id,"file_name"=>$file_name,"edited_by"=>$s_user_id,"edited_on"=>$edited_on),array("transaction_id" => $transaction_id));
 
 $this->Session->write('fix_deposit_edit',1);
 $this->redirect(array('controller' => 'Cashbanks','action'=>'fix_deposit_view'));

@@ -95,8 +95,8 @@ $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' =
 		}
 
 ?>
-
-
+<div style="padding-left: 2px;">
+<a href="<?php echo $webroot_path ; ?>hms/resident_directory" role="button" rel='tab' class="btn blue" > Back </a> </div>
 <center>
 <div class="portlet-body" style="width:65%; background-color: #FFF;">
 	<table class="table  table-bordered table-advance table-hover">

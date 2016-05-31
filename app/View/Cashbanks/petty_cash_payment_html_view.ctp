@@ -1,16 +1,16 @@
 <?php 
 foreach ($cursor1 as $collection) 
 {
-$receipt_no = (int)$collection['cash_bank']['receipt_id'];
+$receipt_no = (int)$collection['cash_bank']['receipt_number'];
 $d_date = $collection['cash_bank']['transaction_date'];
 $today = date("d-M-Y");
 $amount = $collection['cash_bank']['amount'];
 $society_id = (int)$collection['cash_bank']['society_id'];
 $narration = @$collection['cash_bank']['narration'];
-$user_id = (int)@$collection['cash_bank']['user_id'];
+$user_id = (int)@$collection['cash_bank']['sundry_creditor_id'];
 $account_type = (int)@$collection['cash_bank']['account_type'];
 $sub_account = (int)$collection['cash_bank']['account_head'];
-$prepaired_by = (int)$collection['cash_bank']['prepaired_by'];
+$prepaired_by = (int)$collection['cash_bank']['created_by'];
 }
 $amount = str_replace( ',', '', $amount );
 $am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));

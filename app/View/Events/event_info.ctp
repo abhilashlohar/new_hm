@@ -124,7 +124,7 @@ $description=$data["event"]["description"];
 		<?php if(sizeof($rsvp)>0) { ?>
 			<div class="span6">
 			<h5 style="font-weight: bold;">
-			users who accept invitation </h5>
+			users who accepted invitation</h5>
 			<!-------content----------->
 			<?php foreach($rsvp as $data1)
 			{
@@ -150,7 +150,7 @@ $description=$data["event"]["description"];
 			</div> <?php } ?>
 			<?php if(sizeof($not_in_rsvp)>0) { ?>
 			<div class="span6">
-			<h5 style="font-weight: bold;">users who decile invitation </h5>
+			<h5 style="font-weight: bold;">users who declined invitation</h5>
 			<!-------content----------->
 			<?php foreach($not_in_rsvp as $data2)
 			{

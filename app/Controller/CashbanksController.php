@@ -1373,7 +1373,7 @@ $i=$this->autoincrement_with_receipt_source('cash_bank','receipt_number','petty_
 $receipt_array[]=$i;
 $this->loadmodel('cash_bank');
 $multipleRowData = Array( Array("transaction_id"=>$auto,"receipt_number" =>$i,"ledger_sub_account_id"=>$party_ac, 
-"created_on"=>$current_date,"account_type"=>$account_group,"transaction_date"=>strtotime($transaction_date),"created_by"=>$s_user_id,"narration"=>$narration,"account_head"=>$account_head_id,"amount"=>$amount,"society_id"=>$s_society_id,"source"=>"petty_cash_receipt","auto_inc"=>"YES","created_by"=>$created_by));
+"created_on"=>$current_date,"account_type"=>$account_group,"transaction_date"=>strtotime($transaction_date),"created_by"=>$s_user_id,"narration"=>$narration,"account_head"=>$account_head_id,"amount"=>$amount,"society_id"=>$s_society_id,"source"=>"petty_cash_receipt","auto_inc"=>"YES"));
 $this->cash_bank->saveAll($multipleRowData);  
 
 if($account_group == 1){

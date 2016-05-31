@@ -9037,16 +9037,29 @@ $this->layout="blank";
 $s_society_id=(int)$this->Session->read('hm_society_id');	
 $this->ath();		
 	
-	$this->loadmodel('ledger');
-	$conditions=array("table_name"=>"new_regular_bill");
-	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions));
+	$this->loadmodel('my_flat_receipt_update');
+	$result_ledger=$this->my_flat_receipt_update->find('all');
 	foreach($result_ledger as $data){
-	$auto_id=(int)$data['ledger']['auto_id'];	
-	$element_id=(int)$data['ledger']['element_id'];	
-		
+	$auto_id=$data['my_flat_receipt_update']['auto_id'];	
+	$receipt_date=$data['my_flat_receipt_update']['receipt_date'];	
+	$receipt_mode=$data['my_flat_receipt_update']['receipt_mode'];
+    $cheque_number=$data['my_flat_receipt_update']['cheque_number'];
+    $cheque_date=$data['my_flat_receipt_update']['cheque_date'];
+    $drawn_bank_name=$data['my_flat_receipt_update']['drawn_on_which_bank'];
+	$reference_utr=$data['my_flat_receipt_update']['reference_utr'];	
+	$deposited_bank_id=$data['my_flat_receipt_update']['deposited_bank_id'];
+    $member_type=$data['my_flat_receipt_update']['member_type'];
+    $flat_id=$data['my_flat_receipt_update']['party_name_id'];
+	$receipt_type=$data['my_flat_receipt_update']['receipt_type'];
+	$amount=$data['my_flat_receipt_update']['amount'];
+	$current_date=$data['my_flat_receipt_update']['current_date'];
+	$society_id=$data['my_flat_receipt_update']['society_id'];
+	$narration=$data['my_flat_receipt_update']['narration'];
+	$created_by=$data['my_flat_receipt_update']['prepaired_by'];
+	$branch=$data['my_flat_receipt_update']['bank_branch'];
 	
-	$this->loadmodel('ledger');
-	$this->ledger->updateAll(array("table_name"=>"regular_bill","element_id"=>(int)$element_id),array("auto_id"=>$auto_id));
+	
+	
 
 	}	
 	

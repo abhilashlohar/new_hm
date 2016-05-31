@@ -38,7 +38,7 @@ foreach ($cursor1 as $collection){
 	if($account_type == 1){				
 		$user_id1 = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($d_user_id)));
 		foreach ($user_id1 as $collection){
-		$user_id = $collection['ledger_sub_account']['user_id'];
+		
 		$user_flat_id=(int)$collection['ledger_sub_account']['user_flat_id'];
 		}
 
@@ -46,6 +46,7 @@ foreach ($cursor1 as $collection){
 		$user_flat_detail=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_flat_id'),array('pass'=>array($user_flat_id)));
 		foreach($user_flat_detail as $user_flat_detail){
 		$wing=$user_flat_detail["user_flat"]["wing"];
+		$user_id=$user_flat_detail["user_flat"]["user_id"];
 		$flat_id=$user_flat_detail["user_flat"]["flat"];
 		} 
 			$result = $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($user_id)));

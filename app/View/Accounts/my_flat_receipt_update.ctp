@@ -136,7 +136,7 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 				<td>
 				<select class="m-wrap span12" disabled="disabled">
 				<option value="" style="display:none;">Select Receipt Type</option>
-				<option value="1" selected="selected">Maintanace Receipt</option>
+				<option value="1" selected="selected">Maintenance Receipt</option>
 				<option value="2">Other Receipt</option>
 				</select>
 				</td>

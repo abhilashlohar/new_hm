@@ -4507,7 +4507,7 @@ if(isset($this->request->data['submit']))
      $edited_on=date('Y-m-d');
 	 
 	$this->loadmodel('cash_bank');
-	$this->cash_bank->updateAll(array("ledger_sub_account_id"=>$party_acc,"account_type"=>$account_group,"transaction_date"=> strtotime($transaction_date),"narration"=>$narration,"account_head"=>$account_head_id,"amount"=>$amount,"edited_by"=>$s_user_id,"edited_on"=>),array('society_id'=>$s_society_id,"transaction_id"=>$element_id));
+	$this->cash_bank->updateAll(array("ledger_sub_account_id"=>$party_acc,"account_type"=>$account_group,"transaction_date"=> strtotime($transaction_date),"narration"=>$narration,"account_head"=>$account_head_id,"amount"=>$amount,"edited_by"=>$s_user_id,"edited_on"=>$edited_on),array('society_id'=>$s_society_id,"transaction_id"=>$element_id));
 	
 	
 	$this->loadmodel('ledger');

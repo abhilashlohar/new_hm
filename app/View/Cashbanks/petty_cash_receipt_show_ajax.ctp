@@ -52,6 +52,8 @@ $m_from = date("Y-m-d", strtotime($from));
 <tbody id="table">
 <?php $n=1; $total_credit = 0; $total_debit = 0;
 foreach ($cursor1 as $collection){
+	$edited_by="";
+	$edited_on="";
 	$receipt_no = @$collection['cash_bank']['receipt_number'];
 	$transaction_id = (int)$collection['cash_bank']['transaction_id'];	
 	$account_type = (int)$collection['cash_bank']['account_type'];			  
@@ -64,6 +66,16 @@ foreach ($cursor1 as $collection){
 	$prepaired_by = (int)$collection['cash_bank']['created_by'];   
 	$current_date = $collection['cash_bank']['created_on'];
 	$creation_date = date('d-m-Y',strtotime($current_date));
+	@$edited_by=@$collection['cash_bank']['edited_by'];
+	@$edited_on=@$collection['cash_bank']['edited_on'];
+		
+		if(!empty($edited_by)){
+		$creator_info=$this->requestAction(array('controller'=>'Fns','action'=> 'member_info_via_user_id'),array('pass'=>array((int)$edited_by)));
+		$edited_by=$creator_info["user_name"];
+		$edited_on=date('d-m-Y',strtotime($edited_on));
+		}
+	
+	
 	
 	$result_gh = $this->requestAction(array('controller'=>'hms','action'=>'profile_picture'),array('pass'=>array($prepaired_by)));
 	foreach ($result_gh as $collection){
@@ -108,6 +120,9 @@ $prepaired_by_name = $collection['user']['user_name'];
 $society_id = $collection['user']['society_id'];  	
 }	
 
+
+
+
 			
 if($date >= $from_strto && $date <= $to_strto)
 {
@@ -134,7 +149,7 @@ $amount = number_format($amount);
 	</ul>
 	</div>
 
-  <i class="icon-info-sign tooltips" data-original-title="Created by: <?php echo $prepaired_by_name; ?>  on: <?php echo $creation_date; ?>"  data-placement="left">
+  <i class="icon-info-sign tooltips" data-original-title="Created by: <?php echo $prepaired_by_name; ?>  on: <?php echo $creation_date; ?>,<?php if(!empty($edited_by)){ ?> Edited_by: <?php echo $edited_by; ?> On: <?php echo $edited_on; ?> <?php } ?>"  data-placement="left">
   </i>
 </td>
 </tr>

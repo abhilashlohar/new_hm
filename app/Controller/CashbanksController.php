@@ -7891,38 +7891,38 @@ foreach($temp_cash_bank_datas as $data){
 	$amount=$data['temp_cash_bank']['amount'];
 	$narration=$data['temp_cash_bank']['narration'];
 	@$cheque_date=@$date;
-	
-
+	@$created_by=@$data['temp_cash_bank']['prepaired_by'];
+	@$created_on=@$data['temp_cash_bank']['current_date'];
 if($receipt_type=="maintenance"){
-					$this->loadmodel('cash_bank');
-					$auto_id=$this->autoincrement('cash_bank','auto_id');
-					$receipt_number=$this->autoincrement_with_society_ticket('cash_bank','receipt_number');
-					$this->cash_bank->saveAll(Array( Array("auto_id" => $auto_id,"transaction_date" => strtotime($transaction_date),"deposited_in" => $deposited_in, "receipt_mode" => $receipt_mode, "cheque_number" => $cheque_number,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>$received_from,"ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>$receipt_type,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$s_user_id,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number))); 
 					
-					
-					$this->loadmodel('ledger');
-					$ledger_id=$this->autoincrement('ledger','auto_id');
-					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" => $amount, "credit" =>null, "ledger_account_id" => 33, "ledger_sub_account_id" => $deposited_in,"table_name" => "cash_bank","element_id" => $auto_id, "society_id" => $s_society_id))); 
+	$this->loadmodel('cash_bank');
+	$auto_id=$this->autoincrement('cash_bank','transaction_id');
+	$receipt_number=$this->autoincrement_with_society_ticket('cash_bank','receipt_number');
+	$this->cash_bank->saveAll(Array( Array("transaction_id"=>$auto_id,"transaction_date"=>strtotime($transaction_date),"deposited_in" => $deposited_in, "receipt_mode"=>$receipt_mode, "cheque_number" => $cheque_number,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$created_by,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number,"bill_reference"=>$bill_reference,"created_on"=>$created_on))); 
+	//$receipt_array_num[]=$receipt_number;
 
-					$ledger_id=$this->autoincrement('ledger','auto_id');
-					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name"=>"cash_bank","element_id" => $auto_id, "society_id" => $s_society_id,"receipt_type" =>$receipt_type)));
-				}
-				
-				// start Email & Sms code
-				
-					$amount = str_replace( ',', '', $amount );
-					$am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));
+$this->loadmodel('ledger');
+$ledger_id=$this->autoincrement('ledger','auto_id');
+$this->ledger->saveAll(Array( Array("auto_id"=>$ledger_id,"transaction_date"=> strtotime($transaction_date),"debit" => $amount,"credit"=>null,"ledger_account_id"=>33, "ledger_sub_account_id" => $deposited_in,"table_name"=>"cash_bank","element_id"=>$auto_id, "society_id"=>$s_society_id))); 
+	
+$ledger_id=$this->autoincrement('ledger','auto_id');
+$this->ledger->saveAll(Array( Array("auto_id"=>$ledger_id,"transaction_date"=>strtotime($transaction_date),"credit"=>$amount,"debit"=>null,"ledger_account_id"=>34,"ledger_sub_account_id" => $ledger_sub_account_id,"table_name"=>"cash_bank","element_id"=>$auto_id,"society_id" => $s_society_id)));
+
+}
+			
+	$amount = str_replace( ',', '', $amount );
+	$am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));
 					
-				$date=date("d-m-Y",strtotime($transaction_date));
-				$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array(($ledger_sub_account_id)))); 
-				
-						 $user_name=$result_member_info["user_name"];
-						 $wing_name=$result_member_info["wing_name"];
-						 $flat_name=$result_member_info["flat_name"];
-						 $wing_flat=$wing_name.'-'.$flat_name;
-						 $email=$result_member_info["email"];
-						 $mobile=$result_member_info["mobile"];
-						 $wing_id=$result_member_info["wing_id"];
+	$date=date("d-m-Y",strtotime($transaction_date));
+	$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array(($ledger_sub_account_id)))); 
+
+		$user_name=$result_member_info["user_name"];
+		$wing_name=$result_member_info["wing_name"];
+		$flat_name=$result_member_info["flat_name"];
+		$wing_flat=$wing_name.'-'.$flat_name;
+		$email=$result_member_info["email"];
+		$mobile=$result_member_info["mobile"];
+		$wing_id=$result_member_info["wing_id"];
 				
 $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 				
 				

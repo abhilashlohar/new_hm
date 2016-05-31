@@ -5632,7 +5632,7 @@ $this->layout='session';
 $this->ath();
 $this->check_user_privilages();	
 
-$s_role_id=$this->Session->read('hm_role_id');
+$s_role_id=$this->Session->read('role_id');
 $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=(int)$this->Session->read('hm_user_id');	
 $this->set('s_user_id',$s_user_id);
@@ -5643,6 +5643,8 @@ $this->set('s_user_id',$s_user_id);
 	foreach($members as $data3){
 	$ledger_sub_account_ids[]=$data3["ledger_sub_account"]["auto_id"];
 	}
+	
+	
 		$this->loadmodel('wing');
         $condition=array('society_id'=>$s_society_id);
         $order=array('wing.wing_name'=>'ASC');
@@ -5668,7 +5670,7 @@ $this->set('s_user_id',$s_user_id);
 
 
 $this->loadmodel('ledger_sub_account');
-$conditions=array("ledger_id" => 33,"society_id"=>$s_society_id);
+$conditions=array("ledger_id"=>33,"society_id"=>$s_society_id);
 $bank_detail=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 $this->set('bank_detail',$bank_detail);
 }

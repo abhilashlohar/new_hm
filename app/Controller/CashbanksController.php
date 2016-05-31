@@ -7893,12 +7893,14 @@ foreach($temp_cash_bank_datas as $data){
 	@$cheque_date=@$date;
 	@$created_by=@$data['temp_cash_bank']['prepaired_by'];
 	@$created_on=@$data['temp_cash_bank']['current_date'];
+	$approved_on=date('Y-m-d');
+	
 if($receipt_type=="maintenance"){
 					
 	$this->loadmodel('cash_bank');
 	$auto_id=$this->autoincrement('cash_bank','transaction_id');
 	$receipt_number=$this->autoincrement_with_society_ticket('cash_bank','receipt_number');
-	$this->cash_bank->saveAll(Array( Array("transaction_id"=>$auto_id,"transaction_date"=>strtotime($transaction_date),"deposited_in" => $deposited_in, "receipt_mode"=>$receipt_mode, "cheque_number" => $cheque_number,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$created_by,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number,"bill_reference"=>$bill_reference,"created_on"=>$created_on))); 
+	$this->cash_bank->saveAll(Array( Array("transaction_id"=>$auto_id,"transaction_date"=>strtotime($transaction_date),"deposited_in" => $deposited_in, "receipt_mode"=>$receipt_mode, "cheque_number" => $cheque_number,"date"=>$date,"drown_in_which_bank"=>$drown_in_which_bank,"branch_of_bank"=>$branch_of_bank,"received_from"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,"narration"=>$narration,"society_id"=>$s_society_id,"created_by"=>$created_by,"source"=>"bank_receipt","applied"=>"no","receipt_number"=>$receipt_number,"bill_reference"=>@$bill_reference,"created_on"=>$created_on,"approved_by"=>$s_user_id,"approved_on"=>$approved_on))); 
 	//$receipt_array_num[]=$receipt_number;
 
 $this->loadmodel('ledger');

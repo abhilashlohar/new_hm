@@ -375,12 +375,12 @@ function default_role_name_via_user_id($user_id){
 	$this->loadmodel('user_role');
 	$conditions=array("user_id" => $user_id,"default"=>"yes");
 	$result=$this->user_role->find('all',array('conditions'=>$conditions));
-	$role_id=$result[0]["user_role"]["role_id"];
+	@$role_id=@$result[0]["user_role"]["role_id"];
 	
 	$this->loadmodel('role');
 	$conditions=array("society_id" => $s_society_id,"role_id"=>$role_id);
 	$result=$this->role->find('all',array('conditions'=>$conditions));
-	return $result[0]["role"]["role_name"];
+	return @$result[0]["role"]["role_name"];
 }
 
 function calculate_arrears($ledger_sub_account_id){

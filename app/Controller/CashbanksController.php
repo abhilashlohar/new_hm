@@ -9031,6 +9031,7 @@ $s_society_id=$this->Session->read('hm_society_id');
 }
 //Start financial_year_validation//
 //Start modify_database//
+/*
 function modify_database()
 {
 $this->layout="blank";
@@ -9040,31 +9041,36 @@ $this->ath();
 	$this->loadmodel('my_flat_receipt_update');
 	$result_ledger=$this->my_flat_receipt_update->find('all');
 	foreach($result_ledger as $data){
-	$auto_id=$data['my_flat_receipt_update']['auto_id'];	
+	$flat_id="";
+	$auto_id=(int)$data['my_flat_receipt_update']['auto_id'];	
 	$receipt_date=$data['my_flat_receipt_update']['receipt_date'];	
 	$receipt_mode=$data['my_flat_receipt_update']['receipt_mode'];
     $cheque_number=$data['my_flat_receipt_update']['cheque_number'];
     $cheque_date=$data['my_flat_receipt_update']['cheque_date'];
     $drawn_bank_name=$data['my_flat_receipt_update']['drawn_on_which_bank'];
 	$reference_utr=$data['my_flat_receipt_update']['reference_utr'];	
-	$deposited_bank_id=$data['my_flat_receipt_update']['deposited_bank_id'];
+	$deposited_bank_id=(int)$data['my_flat_receipt_update']['deposited_bank_id'];
     $member_type=$data['my_flat_receipt_update']['member_type'];
-    $flat_id=$data['my_flat_receipt_update']['party_name_id'];
+    $flat_id=(int)$data['my_flat_receipt_update']['party_name_id'];
 	$receipt_type=$data['my_flat_receipt_update']['receipt_type'];
 	$amount=$data['my_flat_receipt_update']['amount'];
 	$current_date=$data['my_flat_receipt_update']['current_date'];
-	$society_id=$data['my_flat_receipt_update']['society_id'];
+	$society_id=(int)$data['my_flat_receipt_update']['society_id'];
 	$narration=$data['my_flat_receipt_update']['narration'];
-	$created_by=$data['my_flat_receipt_update']['prepaired_by'];
+	$created_by=(int)$data['my_flat_receipt_update']['prepaired_by'];
 	$branch=$data['my_flat_receipt_update']['bank_branch'];
-	
-	
-	
+    $status=$data['my_flat_receipt_update']['approval_id']; 
+if($status==1){	
 
-	}	
+	$ledger_sub_account_id=$this->requestAction(array('controller'=>'Cashbanks','action'=> 'get_ledger_sub_account_id'),array('pass'=>array($flat_id)));
+
 	
-	
+	$this->loadmodel('temp_cash_bank');
+	$multipleRowData = Array( Array("auto_id"=>$auto_id,"receipt_date" => $receipt_date,"receipt_mode" => $receipt_mode,"cheque_number" =>@$cheque_number,"cheque_date" =>@$cheque_date,"drawn_on_which_bank" =>@$drawn_bank_name,"reference_utr" => @$reference_utr,"deposited_bank_id"=>$deposited_bank_id,"member_type"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>"maintenance","amount"=>$amount,"current_date"=>$current_date,"society_id"=>$society_id,"narration"=>$narration,"prepaired_by"=>$created_by,"bank_branch"=>@$branch));
+	$this->temp_cash_bank->saveAll($multipleRowData);
+  }
 }
+} */
 //End modify_database//
 }
 ?>

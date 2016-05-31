@@ -86,7 +86,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
                     <tr style="background-color:#E8EAE8;">
                             <th style="width:20%;">Posting date</th>
                             <th style="width:20%;">Date of Invoice</th>
-                            <th style="width:20%;">Due Date</th>
+                            <th style="width:20%;">Due Date (Optional)</th>
                             <th style="width:20%;">Party Account Head
 							<a id="new_party_acc" class="btn blue mini" style="float:right;">
 							<i class="icon-plus"></i>

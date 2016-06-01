@@ -204,6 +204,11 @@ function it_regular_bill(){
 			if($panalty=="no"){$intrest_on_arrears=0;}
 			
 			$current_date = date('Y-m-d');
+			$total=round($total);
+			$arrear_principle=round($arrear_principle);
+			$arrear_interest=round($arrear_interest);
+			$intrest_on_arrears=round($intrest_on_arrears);
+			$due_for_payment=round($due_for_payment);
 			
 			$this->loadmodel('regular_bill_temp');
 			$auto_id=$this->autoincrement('regular_bill_temp','auto_id');

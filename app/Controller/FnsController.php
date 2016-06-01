@@ -341,9 +341,9 @@ function calculate_other_charges($ledger_sub_account_id,$billing_cycle){
 		$amount=$data["other_charge"]["amount"];
 		$charge_type=(int)$data["other_charge"]["charge_type"];
 		if($charge_type==1){
-			$other_charge[$income_head_id]=$amount;
+			$other_charge[$income_head_id]=round($amount);
 		}else{
-			$other_charge[$income_head_id]=$amount*$billing_cycle;
+			$other_charge[$income_head_id]=round($amount*$billing_cycle);
 		}
 		
 	}

@@ -12139,7 +12139,7 @@ if($n>0)
 foreach ($result_user as $collection) 
 {
 $user_id=$collection['user']["user_id"];
-$society_id=$collection['user']["society_id"];
+$society_id=@$collection['user']["society_id"];
 $user_name=$collection['user']["user_name"];
 }
 $user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));

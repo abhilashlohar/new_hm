@@ -74,7 +74,7 @@ foreach($cursor1 as $collection){
 		$narration = @$collection['cash_bank']['narration'];
 			if($member_type == "residential"){
 			$ledger_sub_account_id=(int)$collection['cash_bank']['ledger_sub_account_id'];
-			$receipt_type = $collection['cash_bank']['receipt_type'];
+			//$receipt_type = $collection['cash_bank']['receipt_type'];
 
 			$member_info=$this->requestAction(array('controller'=>'Fns','action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 			$flat_id = $member_info['flat_id'];

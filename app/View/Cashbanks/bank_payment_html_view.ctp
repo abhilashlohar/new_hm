@@ -5,7 +5,7 @@ $receipt_no = (int)$collection['cash_bank']['receipt_number'];
 $d_date = $collection['cash_bank']['transaction_date'];
 $today = date("d-M-Y");
 $receipt_mode = $collection['cash_bank']['receipt_mode'];
-$user_id = $collection['cash_bank']['user_id']; 
+$user_id = $collection['cash_bank']['sundry_creditor_id']; 
 $amount = (int)$collection['cash_bank']['amount'];
 $society_id = (int)$collection['cash_bank']['society_id'];
 $account_type = (int)$collection['cash_bank']['account_type'];
@@ -13,21 +13,11 @@ $narration = @$collection['cash_bank']['narration'];
 $sub_account = (int)$collection['cash_bank']['account_head'];
 $invoice_ref = $collection['cash_bank']['invoice_reference'];
 $instrument_utr = $collection['cash_bank']['receipt_instruction']; 
-$prepaired_by_id = (int)$collection['cash_bank']['prepaired_by']; 
-$tds_id = (int)$collection['cash_bank']['tds_id']; 
+$prepaired_by_id = (int)$collection['cash_bank']['created_by']; 
+$tds_amount = $collection['cash_bank']['tds_tax_amount']; 
 
-	foreach($tds_arr as $tds_ddd)
-	{
-	$tdsss_taxxx = (int)$tds_ddd[0];  
-	$tds_iddd = (int)$tds_ddd[1];  
-	if($tds_iddd == $tds_id) 
-	{
-	$tds_tax = $tdsss_taxxx;   
-	}
-	}
-	
-	$tds_amount = (round((@$tds_tax/100)*$amount));
-	$total_tds_amount = ($amount - $tds_amount);
+	//$tds_amount = (round((@$tds_tax/100)*$amount));
+	$total_tds_amount=$amount-$tds_amount;
 
 
 

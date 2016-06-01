@@ -327,7 +327,7 @@ foreach($regular_bills as $data){
 	//End Bill html 
 					
 	 echo $bill_html;
-					
+	 echo '<DIV style="page-break-after:always"></DIV>';
 }
 ?>
 <style>

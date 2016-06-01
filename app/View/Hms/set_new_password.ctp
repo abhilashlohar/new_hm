@@ -9,7 +9,7 @@
     <form id="contact-form" method="post" class="form-vertical login-form"  />
     <fieldset>
        
-   
+   <center><b><h5>Set new password</h5></b></center>
       <div style="color:red;"><?php echo @$wrong; echo @$right;?></div>
       <div class="control-group">
 	  	<div class="controls">

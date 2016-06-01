@@ -6410,7 +6410,7 @@ $this->set('webroot_path',$webroot_path);
 			$this->loadmodel('user');
 			$conditions=array("email" => $fb_user_name);
 			$result_user=$this->user->find('all',array('conditions'=>$conditions));
-			$count=sizeof($result_user);
+			$count=sizeof($result_user); 
 			if($count>0){
 				foreach($result_user as $data){
 					$user_id=(int)$data['user']['user_id'];
@@ -6441,8 +6441,7 @@ $this->set('webroot_path',$webroot_path);
 					$this->Session->write('hm_user_flat_id', $user_flat_id);
 					$this->Session->write('hm_society_id', $society_id);
 					$this->redirect(array('action' => 'dashboard'));
-			}
-		}else{
+			}else{
 			 if($source=="f"){
 				 $this->set('wrong_fb', 'It seems you have not sign up with HousingMatters or your Facebook email is not matching with our system.'); 
 			 }
@@ -6450,6 +6449,7 @@ $this->set('webroot_path',$webroot_path);
 				 $this->set('wrong_fb', 'It seems you have not sign up with HousingMatters or your Google email is not matching with our system.'); 
 			 }
 		 }
+		}
 		
 	
 if($this->request->is('post'))

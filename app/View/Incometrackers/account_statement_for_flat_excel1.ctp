@@ -53,7 +53,7 @@ foreach($result_ledger as $ledger_data){
                 <tbody id="table">
 		<?php	
 		
-		   $total_credit=0; $total_debit=0;
+		   $total_credit=0; $total_debit=0; $closing_balance="";
 			foreach($result_ledger as $ledger_data){ 
 			
 				$transaction_date=$ledger_data["ledger"]["transaction_date"];
@@ -184,13 +184,17 @@ foreach($result_ledger as $ledger_data){
 					</tr>
 				
 			<?php } ?>
+			<?php $closing_balance=$total_credit-$total_debit; ?>
 					<tr>
-						<td colspan="4" align="right"><b>Total</b></td>
+						<td colspan="4" style="text-align:right;"><b>Total</b></td>
 						<td style="text-align:right;"><b><?php echo $total_debit; ?></b></td>
 						<td style="text-align:right;"><b><?php echo $total_credit; ?></b></td>
 						
 					</tr>
-				
+					<tr>
+	                <td colspan="4" style="text-align:right;"><b>Closing Balance</b></td>
+					<td colspan="2" style="text-align:right;"><b><?php echo $closing_balance; ?></b></td>					
+     				</tr>
                     </tbody>
 		</table>
 

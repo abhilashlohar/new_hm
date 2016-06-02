@@ -69,10 +69,10 @@ $default_date = date('d-m-Y');
 				</tr>
                 <tr style="background-color:#E8EAE8;">
   		   
-			   <th colspan="2">Warranty Period</th> 
-			   <th>Asset Description</th> 
-			   <th>Maintanance Schedule</th> 
-			   <th>File</th> 
+			   <th colspan="2">Warranty Period (Optional)</th> 
+			   <th>Asset Description (Optional)</th> 
+			   <th>Maintanance Schedule (Optional)</th> 
+			   <th>File (Optional)</th> 
 			   </tr>
 
                 <tr style="background-color:#E8F3FF;">

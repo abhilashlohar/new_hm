@@ -40,7 +40,7 @@ function ledger_detail_for_pagination($element_id,$from,$to)
 	function bank_receipt_info_via_auto_id($auto_id){
 		$auto_id=(int)$auto_id;
 		$this->loadmodel('cash_bank');
-		$conditions = array('$or'=>array(array('auto_id'=>$auto_id,'source'=>'bank_receipt'),array('transaction_id'=>$auto_id,'source'=>'bank_receipt')));
+		$conditions=array('transaction_id'=>$auto_id);
 		return $this->cash_bank->find('all',array('conditions'=>$conditions)); 
 	}
 	

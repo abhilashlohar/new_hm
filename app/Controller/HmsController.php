@@ -2724,7 +2724,7 @@ $this->redirect(array('action' => 'index'));
 
 function beforeFilter()
 {
-//Configure::write('debug', 0);
+Configure::write('debug', 0);
 }
 
 
@@ -6410,11 +6410,12 @@ $this->set('webroot_path',$webroot_path);
 			$this->loadmodel('user');
 			$conditions=array("email" => $fb_user_name);
 			$result_user=$this->user->find('all',array('conditions'=>$conditions));
-			$count=sizeof($result_user);
+			$count=sizeof($result_user); 
 			if($count>0){
 				foreach($result_user as $data){
 					$user_id=(int)$data['user']['user_id'];
 					$society_id=$data['user']['society_id'];
+					$user_type=$data['user']['user_type'];
 					
 				}
 				
@@ -6434,6 +6435,12 @@ $this->set('webroot_path',$webroot_path);
 					$i=$this->autoincrement('log','log_id');
 					$this->log->save(array('log_id'=>$i,'user_id'=>$user_id,'society_id'=>$society_id,'date'=>$date,'time'=>$time,'status'=>0));
 					
+					if($user_type=="third_party" or $user_type=="member" or $user_type=="family_member"){
+
+						$role_id=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id'), array('pass' => array($user_id)));
+						$this->Session->write('role_id', $role_id);
+					}
+					
 					$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));
 					$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
 
@@ -6441,8 +6448,7 @@ $this->set('webroot_path',$webroot_path);
 					$this->Session->write('hm_user_flat_id', $user_flat_id);
 					$this->Session->write('hm_society_id', $society_id);
 					$this->redirect(array('action' => 'dashboard'));
-			}
-		}else{
+			}else{
 			 if($source=="f"){
 				 $this->set('wrong_fb', 'It seems you have not sign up with HousingMatters or your Facebook email is not matching with our system.'); 
 			 }
@@ -6450,6 +6456,7 @@ $this->set('webroot_path',$webroot_path);
 				 $this->set('wrong_fb', 'It seems you have not sign up with HousingMatters or your Google email is not matching with our system.'); 
 			 }
 		 }
+		}
 		
 	
 if($this->request->is('post'))
@@ -12141,9 +12148,16 @@ foreach ($result_user as $collection)
 $user_id=$collection['user']["user_id"];
 $society_id=@$collection['user']["society_id"];
 $user_name=$collection['user']["user_name"];
+$user_type=$collection['user']["user_type"];
 }
 $user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));
 	$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
+	
+	if($user_type=="third_party" or $user_type=="member" or $user_type=="family_member"){
+					
+		$role_id=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id'), array('pass' => array($user_id)));
+		$this->Session->write('role_id', $role_id);
+	   }
 	
 	$this->Session->write('hm_user_id', $user_id);
 	$this->Session->write('hm_user_flat_id', $user_flat_id);

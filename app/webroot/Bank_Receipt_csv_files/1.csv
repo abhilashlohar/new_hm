@@ -1,3 +1,2 @@
 Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Amount,Narration 
-1-1-2016,SBBJ,Neft,9998,15-1-2016,HDFC,Udaipur,nikhil,C,301,700,Receipt for jan
-16-1-2016,SBBJ,Neft,9997,16-1-2016,ICICI,Udaipur,yaswant,C,302,750,Receipt for jan
+01-04-2016,SBI,cheque,12345,01-04-2016,Allahabad Bank,Sec-4,Anupam Tagore,A,101,5000,Receipt for jan

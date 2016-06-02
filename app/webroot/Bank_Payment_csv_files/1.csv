@@ -1,15 +1,7 @@
-<<<<<<< HEAD
-Transaction Date,Ledger A/c,Amount,TDS in Percentage,Mode of Payment,Instrument/UTR,Bank Account,Invoice Reference,Narration 
-<<<<<<< HEAD
-1-1-2016,Ram Shinde,500,,Cheque,55,SBBJ,N/A,
-1-2-2016,Jay,200,25,Cheque,14,SBBJ,N/A,
-2-1-2016,MSEDCL,140,14,Cheque,56,SBBJ,N/A,
-5-1-2016,Raj Stationary ,320,,Cheque,12,SBBJ,N/A,
-7-1-2016,Sanjay Pohal  ,150,,Cheque,26,SBBJ,N/A,
-=======
-12-10-2015,Sinking Fund,10000,2,NEFT,HHHG4455,SBI,for marketing,narration 
->>>>>>> d50eddb114875cd69b6d4a3fb961b87f6a27dcf7
-=======
 Transaction Date,Ledger A/c,Amount,TDS Amount,Mode of Payment,Instrument/UTR,Bank Account,Invoice Reference,Narration 
-12-10-2015,Sinking Fund,10000,200,NEFT,HHHG4455,SBI,for marketing,narration 
->>>>>>> 4f59ec387091df9d992937aed30752f1beaaad4e
+20-4-2016,Sanjay,1000,130,NEFT,HHHG4455,SBBJ,for marketing,erfvg
+20-4-2016,Jay,1500,,NEFT,HHHG4456,SBBJ,for marketing,rghjk
+20-4-2016,Ajit Patil ,1400,159,NEFT,HHHG4457,SBBJ,for marketing,dfgn
+20-4-2016,Kone Elevator,1300,187,NEFT,HHHG4458,SBBJ,for marketing,jhgfd
+20-4-2016,Abhilash,1200,,NEFT,HHHG4459,SBBJ,for marketing,sdf
+20-4-2016,Vicky,13645,669,NEFT,HHHG4460,SBBJ,for marketing,kjhgf

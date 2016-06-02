@@ -1,5 +1,6 @@
 Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Amount,Narration 
-1-1-2016,SBBJ,cheque,9952,1-1-2016,SBI,Sec-4,Yash,Office,101,1328,Receipt for jan
-15-1-2016,SBBJ,cheque,1234,15-1-2016,UCO,Sec-5,Jay vyas ,Office,102,1300,Receipt for jan
-16-1-2016,SBBJ,cheque,5523,16-1-2016,BOI,Sec-6,Rohit Joshi ,Shop,501,1983,Receipt for jan
-20-1-2016,SBBJ,cheque,3365,20-1-2016,ICICI,Sec-7,Abhilash Lohar,Shop,502,1150,Receipt for jan
+25-01-2016,SBBJ,cheque,55,25-01-2016,SBI,SEC 4,abhi,Wing A,102,500,Receipt for jan
+25-01-2016,SBBJ,cheque,57,25-01-2016,ICICI,SEC 5,dsu,Wing A,104,540,Receipt for jan
+25-01-2016,SBBJ,cheque,56,25-01-2016,ICICI,SEC 6,kavish,Wing A,109,550,Receipt for jan
+25-01-2016,SBBJ,cheque,54,25-01-2016,BOI,SEC 7,rohit,Wing A,101,650,Receipt for jan
+25-01-2016,SBBJ,cheque,58,25-01-2016,ICICI,SEC 8,yashraj,Wing A,107,780,Receipt for jan

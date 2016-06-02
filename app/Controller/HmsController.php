@@ -6535,7 +6535,14 @@ function submit_login(){
 					exit;
 			}
 		
-		
+		if($rememberme==1){
+				$this->Cookie->write('username',$username,3600);
+				$this->Cookie->write('password',$password,3600);
+			}
+			else{
+				$this->Cookie->delete('username');
+				$this->Cookie->delete('password');
+			}
 		
 		$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));
 		$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 

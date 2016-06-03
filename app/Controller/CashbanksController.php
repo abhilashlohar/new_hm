@@ -171,8 +171,9 @@ function convert_imported_data(){
 		$branch_of_bank=trim($import_record["bank_receipt_csv"]["branch_of_bank"]);
 		$member_name=$import_record["bank_receipt_csv"]["member_name"];
 		$wing=trim($import_record["bank_receipt_csv"]["wing"]);
-		$flat=(int)trim($import_record["bank_receipt_csv"]["flat"]);
-		$flat=str_pad($flat,10,"0",STR_PAD_LEFT);
+		 $flat=trim($import_record["bank_receipt_csv"]["flat"]);
+		 $flat=str_pad($flat,10,"0",STR_PAD_LEFT);
+		
 		//$receipt_type=trim(strtolower($import_record["bank_receipt_csv"]["receipt_type"]));
 		$amount=trim($import_record["bank_receipt_csv"]["amount"]);
 		$narration=trim($import_record["bank_receipt_csv"]["narration"]);

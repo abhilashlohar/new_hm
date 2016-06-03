@@ -96,7 +96,7 @@ if($visible=="group_wise"){
 </div>
 <?php } ?>
 
-<div id="comments">
+<div id="comments" style="padding-top: 5px;">
 	
 </div>
 <?php if($status!=1){ ?>

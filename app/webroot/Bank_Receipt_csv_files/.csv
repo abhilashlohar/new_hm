@@ -1,0 +1,42 @@
+Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Amount,Narration 
+29-04-2016,Federal Bank,CHEQUE,126703,29-04-2016,ICICI,N/A,Varsha Madhukar Katkar,A,103,12810,Apr-June 2016 Qtr Payment
+24-05-2016,Federal Bank,CHEQUE,377447,22-05-2016,ICICI,N/A,Seemant Shrivastav,A,202,12835,Apr-June 2016 Qtr Payment
+23-04-2016,Federal Bank,CHEQUE,740546,21-04-2016,SBI,N/A,Shyamlal Bhagwate,A,203,12835,Apr-June 2016 Qtr Payment
+23-04-2016,Federal Bank,CHEQUE,145093,21-04-2016,ICICI,N/A,Shyamlal Bhagwate,A,204,12835,Apr-June 2016 Qtr Payment
+10-05-2016,Federal Bank,NEFT,999,10-05-2016,,N/A,Hemant Niwrutti Hande,A,301,12810,Apr-June 2016 Qtr Payment
+27-05-2016,Federal Bank,CHEQUE,1967,01-05-2016,ICICI,N/A,Girija N. Satpathy,A,303,12810,Apr-June 2016 Qtr Payment
+23-04-2016,Federal Bank,CHEQUE,145094,21-04-2016,ICICI,N/A,Amitabh S. Bhagwate,A,304,14807,Apr-June 2016 Qtr Payment
+12-05-2016,Federal Bank,CHEQUE,19,11-05-2016,BOI,N/A,Satvik Shanbhag,A,401,12835,Apr-June 2016 Qtr Payment
+14-05-2016,Federal Bank,CHEQUE,125512,13-05-2016,IDBI,N/A,Manish Goel,A,402,12835,Apr-June 2016 Qtr Payment
+25-04-2016,Federal Bank,NEFT,999,25-04-2016,FBL,N/A,Kishor Datta P.,A,403,12835,Apr-June 2016 Qtr Payment
+15-05-2015,Federal Bank,CHEQUE,144964,15-05-2016,ICICI,N/A,Maheshwari Kant Verma,A,501,12810,Apr-June 2016 Qtr Payment
+26-05-2016,Federal Bank,NEFT,999,26-05-2016,FBL,N/A,Devendra Shingote,A,502,13935,Apr-June 2016 Qtr Payment
+30-04-2016,Federal Bank,CHEQUE,135,26-04-2016,BOB,N/A,Fuaz W. Mithani,A,503,13948,Apr-June 2016 Qtr Payment
+30-04-2016,Federal Bank,CHEQUE,134,26-04-2016,BOB,N/A,Fuaz W. Mithani,A,504,14048,Apr-June 2016 Qtr Payment
+06-05-2016,Federal Bank,NEFT,999,06-05-2016,,N/A,Madhur Mittal,A,602,14050,Apr-June 2016 Qtr Payment
+27-05-2016,Federal Bank,NEFT,999,27-05-2016,FBL,N/A,Anujkumar Chakraborti,A,701,13948,Apr-June 2016 Qtr Payment
+15-05-2016,Federal Bank,CHEQUE,404751,15-05-2016,ICICI,N/A,D.K Bhandari,A,702,12969,Apr-June 2016 Qtr Payment
+07-05-2016,Federal Bank,CHEQUE,81344,05-05-2016,ICICI,N/A,Shantidevi Prajapati,A,703,12910,Apr-June 2016 Qtr Payment
+20-05-2016,Federal Bank,CHEQUE,6,16-05-2016,HDFC,N/A,Pratima Chopda,A,704,12972,Apr-June 2016 Qtr Payment
+08-05-2016,Federal Bank,CHEQUE,386336,08-05-2016,ICICI,N/A,S. Jayasankar,A,802,12810,Apr-June 2016 Qtr Payment
+16-05-2016,Federal Bank,NEFT,999,16-05-2016,FBL,N/A,Vikrant Shukla,A,803,12000,Apr-June 2016 Qtr Payment
+12-05-2016,Federal Bank,CHEQUE,485950,09-05-2016,SBP,N/A,Poonam Choudhary,A,901,13948,Apr-June 2016 Qtr Payment
+23-05-2016,Federal Bank,NEFT,999,23-05-2016,BOI,N/A,A.K. Misra,A,903,14048,Apr-June 2016 Qtr Payment
+14-05-2016,Federal Bank,CHEQUE,198800,10-05-2016,ICICI,N/A,P.V. Raman Rao,A,904,12810,Apr-June 2016 Qtr Payment
+07-05-2016,Federal Bank,CHEQUE,160756,07-05-2016,ABL,N/A,Shyam Vasta Patel,A,1003,12835,Apr-June 2016 Qtr Payment
+07-05-2016,Federal Bank,CHEQUE,244139,06-05-2016,ICICI,N/A,Amit Bhowmik,A,1004,14157,Apr-June 2016 Qtr Payment
+25-05-2016,Federal Bank,CHEQUE,281,25-05-2016,KMBL,N/A,Dinesh Kumar Singh,A,1101,12884,Apr-June 2016 Qtr Payment
+26-04-2016,Federal Bank,CHEQUE,25,26-04-2016,HDFC,N/A,Delzad M. Dalal,A,1102,12810,Apr-June 2016 Qtr Payment
+25-05-2016,Federal Bank,CHEQUE,225655,23-05-2016,ICICI,N/A,Suresh Maheshwari,A,1104,13948,Apr-June 2016 Qtr Payment
+16-05-2016,Federal Bank,NEFT,999,16-05-2016,BOI,N/A,Rajni Goutam,A,1201,13973,Apr-June 2016 Qtr Payment
+30-04-2016,Federal Bank,CHEQUE,56,30-04-2016,HDFC,N/A,Anuj Narain Mathur,A,1202,12835,Apr-June 2016 Qtr Payment
+09-05-2016,Federal Bank,NEFT,999,09-05-2016,FBL,N/A,Parvathi Sankaran,A,1203,13975,Apr-June 2016 Qtr Payment
+04-05-2016,Federal Bank,NEFT,999,04-05-2016,FBL,N/A,The Federal Bank Ltd,A,1301,12810,Apr-June 2016 Qtr Payment
+07-05-2016,Federal Bank,CHEQUE,141775,06-05-2016,CBI,N/A,Dr.Anuradha Chakrbarati,A,1302,13975,Apr-June 2016 Qtr Payment
+23-05-2016,Federal Bank,CHEQUE,798808,15-05-2016,ICICI,N/A,Rakesh Rathi,A,1303,12810,Apr-June 2016 Qtr Payment
+27-05-2016,Federal Bank,CHEQUE,470793,05-05-2016,ICICI,N/A,Ashish Rathi,A,1304,12810,Apr-June 2016 Qtr Payment
+04-05-2016,Federal Bank,NEFT,999,04-05-2016,FBL,N/A,The Federal Bank Ltd,A,1401,12835,Apr-June 2016 Qtr Payment
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,

@@ -5665,6 +5665,7 @@ function new_bank_receipt(){
 			$amounts = $this->request->data['amount'];
 			$narrations = $this->request->data['narration'];
 			
+			
 			$created_on=date("d-m-Y");
 			
 			$i=0;
@@ -5689,7 +5690,8 @@ function new_bank_receipt(){
 				 //$receipt_type=null;
 				}
 				$amount=$amounts[$i];
-				$narration=$narrations[$i];
+				$narration=htmlspecialchars($narrations[$i]);
+				
 				$cheque_date=$date;
 				
 					$this->loadmodel('cash_bank');

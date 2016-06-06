@@ -65,8 +65,8 @@ function substrwords($text, $maxchar, $end='...') {
 					<tr>
 						<th style="background-color:#C3DEEB;font-weight: 500;">
 						<span class="label label-info"><i class=" icon-comments"></i></span> Discussion Forum
-						<a href="<?php echo $this->webroot; ?>Discussions/index" rel='tab' class="pull-right" style="font-size: 12px;" ><i class="icon-search" style="text-decoration: none;font-size: 14px;"></i></a>
-						<a href="<?php echo $this->webroot; ?>Discussions/new_topic" rel='tab' class="pull-right"><i class="icon-plus" style="text-decoration: none;font-size: 14px;padding: 0px 5px 0px 0px;"></i></a>
+						<a href="<?php echo $this->webroot; ?>Discussions/index" rel='tab' class="pull-right" style="font-size: 12px;" ><i class="icon-search" style="text-decoration: none;font-size: 14px;"></i></a>  
+						<a href="<?php echo $this->webroot; ?>Discussions/new_topic" rel='tab' style="margin-right: 5px;"  class="pull-right"><i class="icon-plus" style="text-decoration: none;font-size: 14px;padding: 0px 5px 0px 0px;"></i></a>
 						</th>
 					</tr>
 				</thead>
@@ -141,7 +141,7 @@ function substrwords($text, $maxchar, $end='...') {
 						 <?php 
 						 $result_role_security_dashboard_sub=$this->requestAction(array('controller' => 'hms', 'action' => 'role_security_dashboard_sub'), array('pass' => array($s_society_id,$role_id,6,17)));
 							if(sizeof($result_role_security_dashboard_sub)>0){ ?>
-								<a href="<?php echo $this->webroot; ?>Events/event_add" rel='tab' class="pull-right"><i class="icon-plus" style="text-decoration: none;font-size: 14px;padding: 0px 5px 0px 0px;"></i></a>
+								<a href="<?php echo $this->webroot; ?>Events/event_add" rel='tab' style="margin-right: 5px;"  class="pull-right"><i class="icon-plus" style="text-decoration: none;font-size: 14px;padding: 0px 5px 0px 0px;"></i></a>
 							<?php } ?>
 						
 						</th>
@@ -223,7 +223,7 @@ function substrwords($text, $maxchar, $end='...') {
 						<?php 
 						 $result_role_security_dashboard_sub=$this->requestAction(array('controller' => 'hms', 'action' => 'role_security_dashboard_sub'), array('pass' => array($s_society_id,$role_id,1,3)));
 						 if(sizeof($result_role_security_dashboard_sub)>0){ ?>
-							<a href="<?php echo $this->webroot; ?>Helpdesks/help_desk_genarate_ticket" rel='tab' class="pull-right"><i class="icon-plus" style="text-decoration: none;font-size: 14px;padding: 0px 5px 0px 0px;"></i></a>
+							<a href="<?php echo $this->webroot; ?>Helpdesks/help_desk_genarate_ticket" style="margin-right: 5px;"  rel='tab' class="pull-right"><i class="icon-plus" style="text-decoration: none;font-size: 14px;padding: 0px 5px 0px 0px;"></i></a>
 						<?php } ?>
 						</th>
 					</tr>
@@ -316,11 +316,11 @@ function substrwords($text, $maxchar, $end='...') {
 					<tr >
 						<th style="background-color:#F3DDD8;font-weight: 500;">
 						<span class="label label-important"><i class="icon-bullhorn"></i></span> Notices
-						<a href="<?php echo $webroot_path; ?>Notices/<?php echo $url_see_all; ?>" rel='tab' class="pull-right" style="font-size: 12px;" ><i class="icon-search" style="text-decoration: none;font-size: 14px;"></i></a>
+						<a href="<?php echo $webroot_path; ?>Notices/<?php echo $url_see_all; ?>" rel='tab' class="pull-right" style="font-size: 12px;" ><i class="icon-search" style="text-decoration: none;font-size: 14px;    "></i></a>
 						 <?php 
 						 $result_role_security_dashboard_sub=$this->requestAction(array('controller' => 'hms', 'action' => 'role_security_dashboard_sub'), array('pass' => array($s_society_id,$role_id,2,5)));
 						 if(sizeof($result_role_security_dashboard_sub)>0){ ?>
-							<a href="<?php echo $webroot_path; ?>Notices/new_notice" rel='tab' class="pull-right"><i class="icon-plus" style="text-decoration: none;font-size: 14px;padding: 0px 5px 0px 0px;"></i></a>
+							<a href="<?php echo $webroot_path; ?>Notices/new_notice" rel='tab' style="margin-right: 5px;" class="pull-right"><i class="icon-plus" style="text-decoration: none;font-size: 14px;padding: 0px 5px 0px 0px;"></i></a>
 						<?php } ?>
 						
 					</tr>
@@ -398,7 +398,7 @@ function substrwords($text, $maxchar, $end='...') {
 						<?php 
 						$result_role_security_dashboard_sub=$this->requestAction(array('controller'=>'hms','action'=>'role_security_dashboard_sub'),array('pass'=>array($s_society_id,$role_id,7,19)));
 						  if(sizeof($result_role_security_dashboard_sub)>0){ ?>
-							<a href="<?php echo $this->webroot ; ?>Polls/poll_add" rel='tab' class="pull-right"><i class="icon-plus" style="text-decoration: none;font-size: 14px;padding: 0px 5px 0px 0px;"></i></a>
+							<a href="<?php echo $this->webroot ; ?>Polls/poll_add" rel='tab' style="margin-right: 5px;" class="pull-right"><i class="icon-plus" style="text-decoration: none;font-size: 14px;padding: 0px 5px 0px 0px;"></i></a>
 						 <?php } ?>
 						</th>
 					</tr>
@@ -470,7 +470,7 @@ function substrwords($text, $maxchar, $end='...') {
 						<?php 
 						$result_role_security_dashboard_sub=$this->requestAction(array('controller'=>'hms','action'=>'role_security_dashboard_sub'),array('pass'=>array($s_society_id,$role_id,4,14)));
 						 if(sizeof($result_role_security_dashboard_sub)>0){ ?>
-							<a href="<?php echo $this->webroot ; ?>Documents/resource_add" rel='tab' class="pull-right"><i class="icon-plus" style="text-decoration: none;font-size: 14px;padding: 0px 5px 0px 0px;"></i></a>
+							<a href="<?php echo $this->webroot ; ?>Documents/resource_add" rel='tab' style="margin-right: 5px;" class="pull-right"><i class="icon-plus" style="text-decoration: none;font-size: 14px;padding: 0px 5px 0px 0px;"></i></a>
 						 <?php }  ?>
 						
 						</th>

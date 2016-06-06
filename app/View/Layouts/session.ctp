@@ -46,7 +46,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 <link href="<?php echo $webroot_path; ?>as/bootstrap.min.css" rel="stylesheet">
 <link href="<?php echo $webroot_path; ?>as/animate.css" rel="stylesheet" />
 <link href="<?php echo $webroot_path; ?>as/demo-styles.css" rel="stylesheet" />
-
+<link href="<?php echo $webroot_path; ?>assets/css/mobile_responsive.css" rel="stylesheet" />
 		<style>
 		label.error {
 			color: red;

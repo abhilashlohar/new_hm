@@ -1,0 +1,33 @@
+
+
+@media (min-width: 480px) and (max-width: 580px) { 
+div.mobile_responsive {
+		      width: 90% !important;
+				left: 58% !important;	
+		}
+
+
+}
+
+@media (min-width: 360px) and (max-width: 480px) {
+   div.mobile_responsive {
+			width: 85% !important;
+			left: 75% !important;	
+		}
+}
+
+@media (min-width: 320px) and (max-width: 360px) {
+div.mobile_responsive {
+			width: 100% !important;
+			left:70% !  important;	
+		}
+}
+
+@media (max-width: 320px)  {
+	 div.mobile_responsive {
+			width: 100% !important;
+			    left: 90% !important;	
+		}
+	
+}
+

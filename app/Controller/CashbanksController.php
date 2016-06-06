@@ -1295,7 +1295,7 @@ $this->loadmodel('financial_year');
 						 $tds=$tdss[$n];
 						   $net_amount=$net_amounts[$n];
 							 $bank_account=(int)$bank_accounts[$n];
-						       $narration=$narrations[$n];
+						       $narration=htmlspecialchars($narrations[$n]);
 							   
 						$ledger_account_array=explode(',',$ledger_account);
 						  $ledger_account_id=(int)$ledger_account_array[0];
@@ -1557,7 +1557,7 @@ if(isset($this->request->data['submit'])){
 		}
     $account_head_id=(int)$account_heads[$n];
 	$amount=$amounts[$n];
-	$narration=$narrations[$n];
+	$narration=htmlspecialchars($narrations[$n]);
     $current_date=date('Y-m-d');
 	
 $auto=$this->autoincrement('cash_bank','transaction_id');
@@ -1850,7 +1850,7 @@ $this->set('cursor2',$cursor2);
 				 }
 			   $paid_from_id=(int)$paid_froms[$n];
 			   $amount=$amounts[$n];
-			   $narration=$narrations[$n];
+			   $narration=htmlspecialchars($narrations[$n]);
 			
 			$current_date = date('Y-m-d');
 
@@ -2939,18 +2939,18 @@ $this->set('s_role_id',$s_role_id);
 
 if(isset($this->request->data['sub']))
 {
-	$bank_name = $this->request->data['bank_name'];
-	  $branch = $this->request->data['branch'];
-		$account_reference = $this->request->data['account_reference'];
-		  $principal_amount = $this->request->data['principal_amount'];
-		    $start_date = $this->request->data['start_date'];
-			  $maturity_date = $this->request->data['maturity_date'];
-				$interest_rate = $this->request->data['interest_rate'];
-				  $remark = $this->request->data['remark'];
-					$reminder = $this->request->data['reminder'];
-					  $name = $this->request->data['name'];
-						$email = $this->request->data['email'];
-						  $mobile = $this->request->data['mobile'];
+	$bank_name = htmlspecialchars($this->request->data['bank_name']);
+	$branch = htmlspecialchars($this->request->data['branch']);
+	$account_reference = htmlspecialchars($this->request->data['account_reference']);
+	$principal_amount = $this->request->data['principal_amount'];
+	$start_date = $this->request->data['start_date'];
+	$maturity_date = $this->request->data['maturity_date'];
+	$interest_rate = $this->request->data['interest_rate'];
+	$remark = $this->request->data['remark'];
+	$reminder = $this->request->data['reminder'];
+	$name = $this->request->data['name'];
+	$email = $this->request->data['email'];
+	$mobile = $this->request->data['mobile'];
 
 	$current_date = date('d-m-Y');
 		$current_date = date("Y-m-d", strtotime($current_date));
@@ -5665,6 +5665,7 @@ function new_bank_receipt(){
 			$amounts = $this->request->data['amount'];
 			$narrations = $this->request->data['narration'];
 			
+			
 			$created_on=date("d-m-Y");
 			
 			$i=0;
@@ -5689,7 +5690,8 @@ function new_bank_receipt(){
 				 //$receipt_type=null;
 				}
 				$amount=$amounts[$i];
-				$narration=$narrations[$i];
+				$narration=htmlspecialchars($narrations[$i]);
+				
 				$cheque_date=$date;
 				
 					$this->loadmodel('cash_bank');

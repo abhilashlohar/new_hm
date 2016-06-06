@@ -1,18 +1,16 @@
 <style >
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 580px) {
    div.mobile_responsive {
 			width: 100% !important;
-			left: 60% !important;	
-			
+				
 		}
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (max-width: 768px) {
    div.mobile_responsive {
 			width: 90% !important;
-			left: 50% !important;	
-			
+		
 		}
 }
 

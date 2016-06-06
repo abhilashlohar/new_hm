@@ -1,13 +1,12 @@
 <style >
-@media only screen and (min-device-width: 480px) {
-		mobile_responsive {
-		width: 90% !important;
+
+@media only screen and (max-width: 480px) {
+   div.mobile_responsive {
+			width: 90% !important;
 			left: 60% !important;	
-			 background-color: red;
+			
 		}
-
-	}
-
+}
 
 </style>
 

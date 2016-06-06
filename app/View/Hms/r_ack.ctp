@@ -1,9 +1,17 @@
 <style >
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 480px) {
    div.mobile_responsive {
 			width: 100% !important;
 			left: 60% !important;	
+			
+		}
+}
+
+@media only screen and (min-width: 600px) {
+   div.mobile_responsive {
+			width: 90% !important;
+			left: 50% !important;	
 			
 		}
 }

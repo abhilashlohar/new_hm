@@ -1,8 +1,8 @@
 <style>
 @media only screen and (max-device-width: 480px) {
 		mobile_responsive{
-		width: 90%;
-			left: 60%;	
+		width: 90% !important;
+			left: 60% !important;	
 		}
 
 	}

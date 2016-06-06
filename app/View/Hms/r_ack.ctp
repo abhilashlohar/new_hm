@@ -1,17 +1,34 @@
 <style >
 
-@media only screen and (max-width: 580px) {
+@media (min-width: 480px) and (max-width: 580px) { 
+div.mobile_responsive {
+		      width: 90% !important;
+				left: 57% !important;	
+		}
+
+
+}
+
+@media only screen and (max-width: 480px) {
    div.mobile_responsive {
 			width: 100% !important;
 				
 		}
 }
 
-@media only screen and (max-width: 768px) {
-   div.mobile_responsive {
-			width: 90% !important;
-		
+@media (min-width: 320px) and (max-width: 480px) {
+div.mobile_responsive {
+			width: 80% !important;
+			left:70% !  important;	
 		}
+}
+
+@media (max-width: 320px) {
+	 div.mobile_responsive {
+			width: 100% !important;
+			    left: 90% !important;	
+		}
+	
 }
 
 </style>

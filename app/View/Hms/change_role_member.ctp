@@ -1,7 +1,9 @@
 <div class="portlet box green">
                      <div class="portlet-title">
-                        <h4><i class="icon-reorder"></i>Change Role</h4>
-                      
+                        <h4><i class="icon-reorder"></i>
+						<span class="hidden-phone">Change Role</span>
+                           <span class="visible-phone">Role</span>
+						   </h4>
                      </div>
                      <div class="portlet-body form">
                         

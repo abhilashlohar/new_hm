@@ -87,10 +87,10 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 
                                             <th>Unit</th>
                                             <th>Status</th>
-                                            <th class="hidden-phone">Mobile</th>
-                                            <th class="hidden-phone">Reply</th>
-                                            <th class="hidden-phone">Approve</th>
-                                            <th class="hidden-phone">Reject</th>
+                                            <th class="">Mobile</th>
+                                            <th class="">Reply</th>
+                                            <th class="">Approve</th>
+                                            <th class="">Reject</th>
 										</tr>
 									</thead>
 									<tbody>

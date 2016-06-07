@@ -131,7 +131,7 @@ foreach ($result_user_temp as $collection)
 
 
 <!--POP UP BOX-->
-<div id="<?php echo $i; ?>" class="modal hide " tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true" style="display: none; " align="center">
+<div id="<?php echo $i; ?>" class="modal hide " tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true" style="display: none;z-index:99999999999; " align="center">
 <div class="resident_reply_responce">
 <div class="modal-header">
 

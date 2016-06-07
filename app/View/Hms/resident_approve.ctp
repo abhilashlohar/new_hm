@@ -1,6 +1,8 @@
 <?php
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
+
+
 <script type="text/javascript">
    var xobj;
    //modern browers
@@ -39,7 +41,9 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 			 xobj.send(null);
 		  }
 </script>
-			<!-- BEGIN PAGE CONTAINER-->
+
+
+	<!-- BEGIN PAGE CONTAINER-->
 <div class="container-fluid" style="padding:0px; ">
 				<!-- BEGIN PAGE HEADER-->
                 
@@ -59,7 +63,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
               Approval
 </div>-->
 				
-                <div class="portlet-body" style="padding:10px;";>
+                <div class="portlet-body " style="padding:10px;";>
 									<!--BEGIN TABS-->
 									<div class="tabbable tabbable-custom">
 										<ul class="nav nav-tabs">
@@ -73,7 +77,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 												
 											<div class="portlet box ">
 							
-							<div class="portlet-body">
+							<div class="portlet-body mobile_responce">
 								<table class="table table-striped table-bordered" id="">
 									<thead>
 										<tr>
@@ -128,6 +132,7 @@ foreach ($result_user_temp as $collection)
 
 <!--POP UP BOX-->
 <div id="<?php echo $i; ?>" class="modal hide " tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true" style="display: none; " align="center">
+<div class="resident_reply_responce">
 <div class="modal-header">
 
 <h3 id="myModalLabel2"><b>Reply</b></h3>
@@ -149,6 +154,7 @@ foreach ($result_user_temp as $collection)
 
 </div>
 </div>
+</div>
 <!--END OF POP UP BOX-->          
 </td>
 
@@ -156,7 +162,7 @@ foreach ($result_user_temp as $collection)
                                              
                                              
 
-<td><a href="#ap<?php echo $i; ?>" role="button" class="btn mini green" data-toggle="modal"><i class="icon-ok"></i>Approve</a>
+<td><a href="#ap<?php echo $i; ?>" role="button" class="btn mini green" data-toggle="modal"><i class="icon-ok mobile_responce"></i>Approve</a>
 
 
 
@@ -175,7 +181,7 @@ The request has been approved and the User has been notified.
 </div>
 <!--END OF POP UP BOX-->          
 </td>
-<td><a href="#del<?php echo $i; ?>" class="btn mini red" data-toggle="modal"><i class=" icon-remove" ></i> Reject</a>
+<td><a href="#del<?php echo $i; ?>" class="btn mini red" data-toggle="modal"><i class=" icon-remove mobile_responce" ></i> Reject</a>
 </td>
 <!--popup start -->
 <div id="del<?php echo $i; ?>" class="modal hide " tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true" style="display: none;">

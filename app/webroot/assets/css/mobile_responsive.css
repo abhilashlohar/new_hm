@@ -1,3 +1,6 @@
+/***
+login poup sucess message
+***/
 
 
 @media (min-width: 480px) and (max-width: 580px) { 
@@ -30,4 +33,35 @@ div.mobile_responsive {
 		}
 	
 }
+/***
+end login poup sucess message
+***/
+
+/***
+resident approve screen
+***/
+
+
+
+@media (max-width: 640px)  {
+	 div.mobile_responce {
+			overflow-x:auto !important;
+		}
+		div.resident_reply_responce {
+			overflow-x:auto !important;
+			overflow-y:auto !important;
+		}
+		
+}
+	@media (max-width: 720px)  {
+	 i.mobile_responce {
+			    display: none !important;
+		}
+	}
+
+/***
+end resident approve screen
+***/
+
+
 

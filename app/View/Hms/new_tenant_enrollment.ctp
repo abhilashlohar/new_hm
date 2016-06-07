@@ -6,7 +6,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 table th {font-size: 12px !important; }
 </style>
 <form id="form" method="post" enctype="multipart/form-data">
-<div class="portlet-body" style="background-color:#fff;">
+<div class="portlet-body mobile_responce" style="background-color:#fff;">
 <div style="padding: 10px;">
 <span class="label label-important">NOTE</span><span> No need to save this form. The system will automatically save updated data. </span>
 </div>

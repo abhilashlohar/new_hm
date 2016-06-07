@@ -53,7 +53,7 @@ if(($owner=="yes" and $family_member==1 and $member_type=="member") or ($owner==
 										<br>
 										
 			<div>
-<form method="post" id="contact-form">
+<form method="post" id="contact-form" >
 			
 	<input type="hidden" value="1" id="hid" name="hid_id">
 	<table class="table_1" width="100%" cellpadding="0"  class="table table-bordered" style="background-color:white;" bordered >

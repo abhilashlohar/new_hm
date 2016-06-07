@@ -12,7 +12,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 
 </div> 
 <div class="portlet box">
-	<div class="portlet-body">
+	<div class="portlet-body mobile_responce">
 	<div align="center" style="font-size:15px;padding-bottom: 5px;"> 
 		<?php echo $result_society_name; ?> 
 	</div>
@@ -75,12 +75,12 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 								echo '<td rowspan='.sizeof($wing_flats).'>'.$validation_status.'</td>';
 							} ?>
 							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $date; ?></td>
-							<td><a href="#" role="button" class="btn red mini exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign"></i> Exit</a></td>
+							<td><a href="#" role="button" class="btn red mini exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign mobile_responce"></i> Exit</a></td>
 						</tr>
 					<?php }else{ ?>
 						<tr>
 							<td><?php echo $wing_flat; ?></td>
-							<td><a href="#" role="button" class="btn red mini exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign"></i> Exit</a></td>
+							<td><a href="#" role="button" class="btn red mini exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign mobile_responce"></i> Exit</a></td>
 						</tr>
 					<?php } ?>
 					
@@ -110,7 +110,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 							echo '<td>'.$validation_status.'</td>';
 						} ?>
 						<td><?php echo $date; ?></td>
-						<td><a href="#" role="button" class="btn red mini exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign"></i> Exit</a></td>
+						<td><a href="#" role="button" class="btn red mini exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign mobile_responce"></i> Exit</a></td>
 					</tr>
 				<?php } ?>
 			<?php } ?>

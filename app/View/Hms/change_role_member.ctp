@@ -2,7 +2,7 @@
                      <div class="portlet-title">
                         <h4><i class="icon-reorder"></i>
 						<span class="hidden-phone">Change Role</span>
-                           <span class="visible-phone">Role</span>
+                           <span class="visible-phone">Change Role</span>
 						   </h4>
                      </div>
                      <div class="portlet-body form">

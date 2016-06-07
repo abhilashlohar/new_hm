@@ -1,4 +1,7 @@
 <style>
+
+
+
 .div_adjesment{
 	
 	width:30% !important;

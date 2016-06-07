@@ -91,7 +91,7 @@ View
             <td><?php echo $t_end_date; ?></td>
 			 <td><?php echo $t_agreement; ?></td> 
 			  <td><?php echo $t_police; ?></td>
-            <td class="hidden-phone"><?php echo $verification; ?></td>
+            <td class=""><?php echo $verification; ?></td>
              <td width="20%"><?php echo $t_address; ?></td>
 			 <td>
 			<?php if(!empty($t_file)){?> <a href="<?php echo $webroot_path ?>tenant_upload/<?php echo $t_file ; ?>" target="_blank" class="" download="download"> <i class=" icon-download-alt"></i> </a> <?php } ?>

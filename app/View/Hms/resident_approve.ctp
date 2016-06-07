@@ -170,10 +170,7 @@ foreach ($result_user_temp as $collection)
 
 
 <!--POP UP BOX-->
-
-<div id="ap1"><div class="modal-backdrop fade in"></div><div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"><div class="modal-body" style="font-size:14px;"><i class="icon-warning-sign" style="color:#d84a38;"></i> Are you sure you want to archive the topic & close it for further discussion ? </div><div class="modal-footer"><a href="" class="btn blue" id="yes">Yes</a><a href="#"  role="button" id="can" class="btn">No</a></div></div></div>
-
-<div id="apx<?php echo $i; ?>" class="modal " tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true" style="display: none;z-index:2146755767756757675677yy !important; " align="center">
+<div id="ap<?php echo $i; ?>" class="modal " tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true" style="display: none;z-index:2146755767756757675677yy !important; " align="center">
 <div class="modal-header">
 </div>
 <div class="modal-body" >

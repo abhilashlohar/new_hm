@@ -5,10 +5,7 @@
                      <div class="portlet-title">
                         <h4><i class="icon-reorder"></i>Color Pickers</h4>
                         <div class="tools">
-                           <a href="javascript:;" class="collapse"></a>
-                           <a href="#portlet-config" data-toggle="modal" class="config"></a>
-                           <a href="javascript:;" class="reload"></a>
-                           <a href="javascript:;" class="remove"></a>
+                          
                         </div>
                      </div>
                      <div class="portlet-body form">

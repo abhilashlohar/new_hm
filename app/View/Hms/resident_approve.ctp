@@ -155,6 +155,8 @@ foreach ($result_user_temp as $collection)
 </div>
 </div>
 </div>
+
+
 <!--END OF POP UP BOX-->          
 </td>
 
@@ -167,7 +169,7 @@ foreach ($result_user_temp as $collection)
 
 
 <!--POP UP BOX-->
-<div id="ap<?php echo $i; ?>" class="modal hide " tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true" style="display: none; " align="center">
+<div id="ap<?php echo $i; ?>" class="modal " tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true" style="display: none; " align="center">
 <div class="modal-header">
 </div>
 <div class="modal-body" >

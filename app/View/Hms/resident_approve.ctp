@@ -77,7 +77,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 												
 											<div class="portlet box ">
 							
-							<div class="portlet-body mobile_responce">
+							<div class="portlet-body mobile_responce" style="overflow-x:auto;">
 								<table class="table table-striped table-bordered" id="">
 									<thead>
 										<tr>

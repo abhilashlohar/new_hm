@@ -17826,7 +17826,67 @@ $result_hobbies_cat=$this->hobbies_category->find('all',array('conditions'=>$con
 		return $data['hobbies_category']['hobbies_name'];
 	}
 }
+	
+
+
+function profile_test(){
+	
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+		}else{
+		$this->layout='session';
+		}
+	$this->ath();
+ $s_society_id=$this->Session->read('hm_society_id');
+ $s_user_id=$this->Session->read('hm_user_id');
+
+$r=$this->request->query('try');
+
+$this->seen_alert(101,$s_user_id);
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
+
+if(!empty($r)){
+$this->loadmodel('user');
+$this->user->updateAll(array('profile_status'=>2),array('user_id'=>$s_user_id));
+$this->redirect(array('action' => 'profile'));
+}
+
+	
+
+$result_user_profile = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_profile_info_via_user_id'),array('pass'=>array($s_user_id)));
+$profile=@$result_user_profile[0]['user_profile']['profile_pic'];
+
+			$this->loadmodel('user_flat');
+			$conditions=array('user_id'=>$s_user_id);
+			$result=$this->user_flat->find('all',array('conditions'=>$conditions));
+			foreach($result as $data){
+				$tenant=@$data['user_flat']['owner'];
+			}
+
+		$result_member_type= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'),array('pass'=>array($s_user_id)));
+		$this->set('owner',$tenant);
+		$this->set('member_type',$result_member_type);
+
+	$result_society=$this->society_name($s_society_id);
+		foreach($result_society as $data){
+			$society_name2=$data['society']['society_name'];
+			@$family_member=$data['society']['family_member'];
+			@$family_member_tenant=$data['society']['family_member_tenant'];
+		}
+		$this->set('family_member',$family_member);
+		$this->set('family_member_tenant',$family_member_tenant);	
 		
+$this->loadmodel('hobbies_category');
+$this->set('hobbies_category',$this->hobbies_category->find('all'));
+if($this->request->is('post')){
+	echo"hello"; exit;
+	
+}
+$this->loadmodel('user');
+	$conditions=array("user_id" => $s_user_id);
+	$this->set('result_user',$this->user->find('all',array('conditions'=>$conditions)));  	
+}
+	
 
 function profile() 
 {

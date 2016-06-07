@@ -47,7 +47,7 @@ if(($owner=="yes" and $family_member==1 and $member_type=="member") or ($owner==
 <li class=""><a href="profile" rel='tab' >Basic</a></li>
 <li class="active"><a href="family_member_view" rel='tab' >Family Members</a></li> 
 										</ul>
-										<div class="tab-content">
+										<div class="tab-content" style="overflow-x:auto;">
 										<br>
 										<div id="error_msg"></div>
 										<br>

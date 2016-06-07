@@ -1,3 +1,5 @@
+<div class="row-fluid">
+               <div class="span12">
 <div class="portlet box green">
                      <div class="portlet-title">
                         <h4><i class="icon-reorder"></i>
@@ -42,4 +44,6 @@
                         </form>
                         <!-- END FORM-->
                      </div>
+                  </div>
+				     </div>
                   </div>

@@ -3536,9 +3536,9 @@ $z=0;
 foreach($myArray as $child)
 {
 $z++;
-$bank_name = $child[0];
-$branch = $child[1];
-$ac_reference = $child[2];
+$bank_name = htmlspecialchars($child[0]);
+$branch = htmlspecialchars($child[1]);
+$ac_reference = htmlspecialchars($child[2]);
 $principal_amt = $child[3];
 $start_date = $child[4];
 $maturity_date = $child[5];
@@ -6999,9 +6999,9 @@ $this->set('kendo_implode2',@$kendo_implode2);
 
 if(isset($this->request->data['subbb']))
 {
-$bank_name = $this->request->data['bank_name'];
-$branch = $this->request->data['branch'];
-$reference = $this->request->data['reference'];
+$bank_name = htmlspecialchars($this->request->data['bank_name']);
+$branch = htmlspecialchars($this->request->data['branch']);
+$reference = htmlspecialchars($this->request->data['reference']);
 $amount = $this->request->data['amount'];
 $start_date = $this->request->data['start_date'];
 $maturity_date = $this->request->data['maturity_date'];

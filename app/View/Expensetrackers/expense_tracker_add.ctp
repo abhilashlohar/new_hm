@@ -418,13 +418,3 @@ ar.push([posting_date,date_of_invoice,due_date,ex_head,invoice_ref,party_ac,amt_
 </div>
 </div>
 </div> 
-
-
-
-
-
-
-
-
-
-

@@ -6587,7 +6587,7 @@ function regular_bill_edit2($auto_id=null){
 		$arrear_intrest=$this->request->data['arrear_intrest'];
 		$credit_stock=$this->request->data['credit_stock'];
 		$due_for_payment=$this->request->data['due_for_payment'];
-		$description=$this->request->data['description'];
+		$description=htmlspecialchars($this->request->data['description']);
 		
 		if(sizeof(@$other_charges_array)==0){$other_charges_array=array();}
 		

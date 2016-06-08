@@ -2,7 +2,7 @@
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
 
-<div style="background-color:#fff;padding:10px;">
+<div style="background-color:#fff;padding:10px;" class="mobile_responce">
 <label class="m-wrap pull-right">Search: <input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;"></label>
 <table class="table table-striped table-bordered dataTable" >
 

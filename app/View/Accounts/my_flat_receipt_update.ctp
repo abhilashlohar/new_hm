@@ -8,7 +8,7 @@ $default_date = date('d-m-Y');
 ?>
 
 <div style="overflow-x:auto;">
-<form method="POST">
+<form method="POST" class="">
 <div class="portlet box blue">
 <div class="portlet-title">
 <h4 class="block">Update My Receipt</h4>

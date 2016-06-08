@@ -3,6 +3,7 @@
 	$transaction_id=(int)$collection['cash_bank']['transaction_id'];	
 	  $receipt_no = $collection['cash_bank']['receipt_number'];
 		$d_date = $collection['cash_bank']['transaction_date'];
+		$transaction_date_modify=date('d-m-Y',($d_date));
 		  $today = date("d-M-Y");
 			$amount = $collection['cash_bank']['amount'];
 			  $society_id = (int)$collection['cash_bank']['society_id'];
@@ -28,7 +29,7 @@
 <input type="hidden" name="receipt_no" value="<?php echo $receipt_no; ?>">
 
 	<label style="font-size:14px;">Transaction Date<span style="color:red;">*</span></label>
-	<input type="text" class="date-picker m-wrap span6" data-date-format="dd-mm-yyyy" value="<?php echo $transaction_date; ?>" name="transaction_date">
+	<input type="text" class="date-picker m-wrap span6" data-date-format="dd-mm-yyyy" value="<?php echo $transaction_date_modify; ?>" name="transaction_date">
     <label id="date" class="validation"></label>
 
 <br />

@@ -185,10 +185,10 @@ function expense_tracker_json(){
 		$payment_due_date = strtotime($payment_due_date1);
 		
 		$part_ac = (int)$child[3];
-		$invoice_ref = $child[4];
+		$invoice_ref = htmlspecialchars($child[4]);
 		$expense_head = (int)$child[5];
 		$amt_inv = $child[6];
-		$description = $child[7];
+		$description = htmlspecialchars($child[7]);
 		
 ////////////////   Validation code ///////////////////////////////		
 		if(empty($child[0])){
@@ -326,11 +326,11 @@ foreach($myArray as $child){
 			$payment_due_date=null;
 		}
 		$part_ac = (int)$child[3];
-		$invoice_ref = $child[4];
+		$invoice_ref = htmlspecialchars($child[4]);
 			
 		$expense_head = (int)$child[5];
 		$amt_inv = $child[6];
-		$description = $child[7];
+		$description = htmlspecialchars($child[7]);
 		//$file_name = $child[8];
 		
 		
@@ -630,10 +630,10 @@ $this->layout='blank';
 		$payment_due_date = strtotime($payment_due_date1);
 		
 		$part_ac = (int)$child[3];
-		$invoice_ref = $child[4];
+		$invoice_ref = htmlspecialchars($child[4]);
 		$expense_head = (int)$child[5];
 		$amt_inv = $child[6];
-		$description = $child[7];
+		$description = htmlspecialchars($child[7]);
 		
 ////////////////   Validation code ///////////////////////////////		
 		if(empty($child[0])){
@@ -666,23 +666,7 @@ $this->layout='blank';
 		die($output);
 	}					
 				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				/*if(empty($child[1])){
-					
-						$output=json_encode(array('report_type'=>'error','text'=>'Please Select Due Date in row'.$c));
-						die($output);
-				} */
+		
 				if(empty($child[1])){
 					
 						$output=json_encode(array('report_type'=>'error','text'=>'Invoice Date is Required'));
@@ -707,11 +691,6 @@ $this->layout='blank';
 	die($output);	
 	}
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -773,11 +752,11 @@ foreach($myArray as $child){
 			$payment_due_date=null;
 		}
 		$part_ac = (int)$child[3];
-		$invoice_ref = $child[4];
+		$invoice_ref = htmlspecialchars($child[4]);
 			
 		$expense_head = (int)$child[5];
 		$amt_inv = $child[6];
-		$description = $child[7];
+		$description = htmlspecialchars($child[7]);
 	   $auto_id = (int)$child[8];
 			
 		

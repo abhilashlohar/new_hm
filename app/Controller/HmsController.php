@@ -22466,11 +22466,11 @@ foreach($myArray as $child)
  $purchase_date = $child[1];
  $assert_supplier_id = (int)$child[2];
  $cost_of_purchase = $child[3];
- $asset_name = $child[4];
+ $asset_name = htmlspecialchars($child[4]);
  $warranty_from = $child[5];
  $warranty_to = $child[6];
- $description = $child[7];
- $maintanance_schedule = $child[8]; 
+ $description = htmlspecialchars($child[7]);
+ $maintanance_schedule = htmlspecialchars($child[8]); 
  $current_date = date('d-m-Y');
  
  $file_name=@$_FILES["file".$z]["name"];

@@ -379,7 +379,11 @@ function change_role_member(){
 			$this->loadmodel('user_role');
 			$this->user_role->updateAll(array("default"=>""),array("user_id"=>$s_user_id));
 			$this->user_role->updateAll(array("default"=>"yes"),array("auto_id"=>$auto_id));
-			$this->Session->write('role_id', $auto_id);
+			
+			$this->loadmodel('user_role');
+			$result_user_roles=$this->user_role->find('all',array('conditions'=>array('auto_id'=>$auto_id)));
+			$role_id=$result_user_roles[0]['user_role']['role_id'];
+			$this->Session->write('role_id', $role_id);
 			$this->redirect(array('action' => 'dashboard'));
 		}
 	
@@ -2725,7 +2729,7 @@ $this->redirect(array('action' => 'index'));
 
 function beforeFilter()
 {
-Configure::write('debug', 0);
+//Configure::write('debug', 0);
 }
 
 

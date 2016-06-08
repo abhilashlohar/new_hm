@@ -7,7 +7,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 $default_date = date('d-m-Y');
 ?>
 
-
+<div style="overflow-x:auto;">
 <form method="POST">
 <div class="portlet box blue">
 <div class="portlet-title">
@@ -164,7 +164,7 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 </div>
 </div>
 </form>
-
+</div>
 
 <script>
 $(document).ready(function() { 

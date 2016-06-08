@@ -379,6 +379,7 @@ function change_role_member(){
 			$this->loadmodel('user_role');
 			$this->user_role->updateAll(array("default"=>""),array("user_id"=>$s_user_id));
 			$this->user_role->updateAll(array("default"=>"yes"),array("auto_id"=>$auto_id));
+			$this->Session->write('role_id', $auto_id);
 			$this->redirect(array('action' => 'dashboard'));
 		}
 	

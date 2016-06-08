@@ -1,4 +1,5 @@
 Posting Date,Date of invoice,Due Date,Party account head,Invoice Reference,Expense Head,Amount of invoice, Description 
+<<<<<<< HEAD
 20-4-2016,20-4-2016,20-4-2016,Vicky,22,Security charges,500,Electric Bill Paid 2015
 20-4-2016,20-4-2016,20-4-2016,sanjay,225,House keeping charges,200,Electric Bill Paid 2015
 20-4-2016,20-4-2016,20-4-2016,kappy ,58,Power back & generator - R&M,300,Paid House Keeping  Matenal Bill And Electric Matenal Bill  
@@ -6,3 +7,6 @@ Posting Date,Date of invoice,Due Date,Party account head,Invoice Reference,Expen
 20-4-2016,20-4-2016,20-4-2016,Kone Elevators ,252,Water charges,120,Paid House keeping Salary For March 2015
 20-4-2016,20-4-2016,20-4-2016,Ram Shinde,55,Security charges,540,Paid AMC Charges For Intercom System
 20-4-2016,20-4-2016,20-4-2016,Kone Elevators ,55,House keeping charges,700, Paid Water Bill to Cidco Ltd For Feb March 2105
+=======
+6/3/2016,6/3/2016,6/3/2016,Ajit B Patil,N/A,professional charges ,6000,Paid Ajit B Patil Tds Filling And income tax Professional Fees
+>>>>>>> 494192a48739a2238242be0159b3c9ff2a817799

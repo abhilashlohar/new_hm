@@ -64,4 +64,17 @@ end resident approve screen
 ***/
 
 
+/***
+ member profile view
+***/
 
+@media (max-width: 650px) {
+   div.profile_responsive {
+			width:auto !important;
+				
+		}
+}
+
+/***
+end member profile view
+***/

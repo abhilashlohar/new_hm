@@ -95,15 +95,32 @@ $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' =
 		}
 
 ?>
+
+
 <div style="padding-left: 2px;">
 <a href="<?php echo $webroot_path ; ?>hms/resident_directory" role="button" rel='tab' class="btn blue" > Back </a> </div>
 <center>
-<div class="portlet-body" style="width:65%; background-color: #FFF;">
+<div class="portlet-body profile_responsive" style="width:65%; background-color: #FFF;">
+	<div class="controls controls-row visible-phone">
+		<div class="span12" >
+			<div style="width:50%">
+				<?php if(!empty($profile_pic) and $profile_pic!="blank.jpg"){ ?>
+					<img src="<?php echo $webroot_path ; ?>/profile/<?php echo $profile_pic; ?>" style="width:100%; height:160px;">
+					<?php } elseif(!empty($f_profile_pic)){ ?>
+					<img src="<?php echo $f_profile_pic ; ?>" style="width:100%; height:160px;">
+
+					<?php } elseif(!empty($g_profile_pic)){ ?>
+					<img src="<?php echo $g_profile_pic ; ?>" style="width:100%; height:160px;">
+					<?php } elseif(empty($g_profile_pic) and empty($f_profile_pic)){ if(empty($profile_pic)){ $profile_pic="blank.jpg"; } ?>
+					<img src="<?php echo $webroot_path ; ?>/profile/<?php echo $profile_pic; ?>" style="width:100%; height:160px;"> <?php } ?>  
+			</div>
+		</div>
+	</div>
 	<table class="table  table-bordered table-advance table-hover">
 
 		<tbody>
 			<tr>
-				<td rowspan="4" width="30%"  valign="top">
+				<td rowspan="4" width="30%"  valign="top" class="hidden-phone">
 
 
 					<?php if(!empty($profile_pic) and $profile_pic!="blank.jpg"){ ?>
@@ -117,28 +134,28 @@ $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' =
 					<img src="<?php echo $webroot_path ; ?>/profile/<?php echo $profile_pic; ?>" style="width:100%; height:160px;"> <?php } ?>         
 
 				</td>
-				<td>
+				<td style="border-left: 1px solid #ddd;">
 					<label>Name</label>
 				</td>
-				<td class="hidden-phone">&nbsp&nbsp<?php echo $user_name; ?></td>
+				<td class="">&nbsp&nbsp<?php echo $user_name; ?></td>
 
 
 			</tr>
 			<tr>
 				<td><label>Unit</label></td>
-				<td class="hidden-phone">&nbsp&nbsp<?php echo $wing_flat ; ?></td>
+				<td class="">&nbsp&nbsp<?php echo $wing_flat ; ?></td>
 
 			</tr>
 
 			<tr>
 				<td><label>Mobile</label></td>
-				<td class="hidden-phone">&nbsp&nbsp<?php echo  $mobile; ?></td>
+				<td class="">&nbsp&nbsp<?php echo  $mobile; ?></td>
 
 			</tr>
 
 			<tr>
 				<td><label>Email</label></td>
-				<td class="hidden-phone">&nbsp&nbsp<?php echo $email; ?> </td>
+				<td class="">&nbsp&nbsp<?php echo $email; ?> </td>
 
 			</tr>
 
@@ -161,7 +178,7 @@ $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' =
 				</td>
 				<td width="20%">
 				</td>
-				<td class="hidden-phone" width="30%">
+				<td class="" width="30%">
 				<?php echo $commitee ; ?>
 				</td>
 
@@ -175,7 +192,7 @@ $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' =
 					</td>
 					<td width="20%">
 					</td>
-					<td class="hidden-phone" width="30%">
+					<td class="" width="30%">
 						<?php echo $owner ; ?>
 					</td>
 
@@ -190,7 +207,7 @@ $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' =
 				</td>
 				<td width="20%">
 				</td>
-				<td class="hidden-phone" width="30%">
+				<td class="" width="30%">
 					<?php echo $society_name ; ?>
 				</td>
 
@@ -205,7 +222,7 @@ $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' =
 				</td>
 				<td width="20%">
 				</td>
-				<td class="hidden-phone" width="30%">
+				<td class="" width="30%">
 					<?php echo @$age_group ; ?>
 				</td>
 
@@ -221,7 +238,7 @@ $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' =
 					</td>
 					<td width="20%">
 					</td>	
-					<td class="hidden-phone" width="30%">
+					<td class="" width="30%">
 						<?php echo $per_address; ?>
 					</td>
 
@@ -236,7 +253,7 @@ $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' =
 				</td>
 				<td width="20%">
 				</td>
-				<td class="hidden-phone" width="30%">
+				<td class="" width="30%">
 					<?php echo $com_address; ?>
 				</td>
 
@@ -251,7 +268,7 @@ $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' =
 				</td>
 				<td width="20%">
 				</td>
-				<td class="hidden-phone" width="30%">
+				<td class="" width="30%">
 					<?php echo $hobbies; ?>
 				</td>
 
@@ -267,7 +284,7 @@ $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' =
 				</td>
 				<td width="20%">
 				</td>
-				<td class="hidden-phone" width="30%">
+				<td class="" width="30%">
 					<?php echo @$medical; ?>
 				</td>
 

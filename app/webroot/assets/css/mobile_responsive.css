@@ -57,6 +57,7 @@ resident approve screen
 	 i.mobile_responce {
 			    display: none !important;
 		}
+		
 	}
 
 /***
@@ -79,6 +80,12 @@ end resident approve screen
 end member profile view
 ***/
 
+
+/***
+ Group 
+***/
+
+
 @media (max-width: 650px) {
    div.group_responsive {
 			width:auto !important;
@@ -86,13 +93,26 @@ end member profile view
 		}
 }
 
+
 /***
- Group 
+end Group
 ***/
 
 
 
+/***
+ Notice 
+***/
+
+
+@media (max-width: 648px)  {
+	 span.notice_text_mobile {
+			    display: none !important;
+				
+		}
+	}
+
 
 /***
-end Group
+end Notice
 ***/

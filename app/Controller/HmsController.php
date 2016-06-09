@@ -17917,8 +17917,7 @@ $this->redirect(array('action' => 'profile'));
 
 	
 
-$result_user_profile = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_profile_info_via_user_id'),array('pass'=>array($s_user_id)));
-$profile=@$result_user_profile[0]['user_profile']['profile_pic'];
+
 
 			$this->loadmodel('user_flat');
 			$conditions=array('user_id'=>$s_user_id);
@@ -18009,12 +18008,11 @@ $age_group="65+";
 }
 
 
-
-
  $result_user=$this->profile_picture($s_user_id);
  foreach($result_user as $data){
 	  $email1=$data['user']['email'];
 	  $mobile1=$data['user']['mobile'];
+	  $profile=@$data['user']['profile_pic'];
  }
  
  if($email==$email && $mobile==$mobile1){
@@ -18029,7 +18027,9 @@ $age_group="65+";
 		$this->profile_log->saveAll(array('profile_log_id'=>$op,'user_id'=>$s_user_id,'society_id'=>$s_society_id,'email'=>$email1,'mobile'=>$mobile1,'new_email'=>$email,'new_mobile'=>$mobile,'date'=>$date,'time'=>$time));
  }
  
- 
+ echo $photo_name;
+ echo $profile;
+ exit;
 if(empty($photo_name)){
 $photo_name=$profile;
 }

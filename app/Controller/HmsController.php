@@ -18027,9 +18027,6 @@ $age_group="65+";
 		$this->profile_log->saveAll(array('profile_log_id'=>$op,'user_id'=>$s_user_id,'society_id'=>$s_society_id,'email'=>$email1,'mobile'=>$mobile1,'new_email'=>$email,'new_mobile'=>$mobile,'date'=>$date,'time'=>$time));
  }
  
- echo $photo_name;
- echo $profile;
- exit;
 if(empty($photo_name)){
 $photo_name=$profile;
 }

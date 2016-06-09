@@ -78,3 +78,21 @@ end resident approve screen
 /***
 end member profile view
 ***/
+
+@media (max-width: 650px) {
+   div.group_responsive {
+			width:auto !important;
+				
+		}
+}
+
+/***
+ Group 
+***/
+
+
+
+
+/***
+end Group
+***/

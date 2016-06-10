@@ -19,7 +19,8 @@ $category = $this->requestAction(array('controller' => 'hms', 'action' => 'resou
 
 ?>
 
-
+<div style="padding-left: 2px;">
+<a href="<?php echo $webroot_path ; ?>Documents/resource_view" role="button" rel='tab' class="btn blue" > Back </a> </div>  
 
 <div class="row-fluid document_responsive" style="width:70%; margin-left:15%;">
                <div class="span12">
@@ -32,7 +33,7 @@ $category = $this->requestAction(array('controller' => 'hms', 'action' => 'resou
                      <div class="portlet-body form">
                         <!-- BEGIN FORM-->
                        <form  id="contact-form" class="form-horizontal" method="post" enctype="multipart/form-data">
-                          
+                        
 					<div class="control-group ">
                               <div class="controls">
                                <label class="" style="font-size:14px;" >Title <span style="color:red;">*</span> <span style="font-size:12px; color:#999;">(Maximum 100 characters.)</span></label>

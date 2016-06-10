@@ -1,7 +1,7 @@
 <?php
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
-<div class="row-fluid" style="padding:2px;">
+<div class="row-fluid mobile_responce" style="padding:2px;">
 	<div class="span6">
 		
 		
@@ -55,7 +55,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 		
 		
 	</div>
-	<div class="span6">
+	<div class="span6 responsive">
 		<div id="calendar_div" ></div>
 	</div>
 	

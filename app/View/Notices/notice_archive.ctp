@@ -5,7 +5,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 
 <div align="center">
 
-<a href='notice_archive' rel='tab' <?php if(empty($blue_cat)){ ?> class="btn yellow " <?php } else { ?> class="btn  "  <?php } ?>>All</a>
+<a href='notice_archive' rel='tab' <?php if(empty($blue_cat)){ ?> class="btn yellow " <?php } else { ?> class="btn  "  <?php } ?> style="margin-bottom: 2px;">All</a>
 
 <?php
 foreach($result1 as $data)
@@ -15,11 +15,11 @@ $cat=$this->requestAction(array('controller' => 'hms', 'action' => 'encode'), ar
 $category_name=$data['master_notice_category']['category_name'];
 ?>
 
-<a href='notice_archive?con=<?php echo @$cat; ?>' rel='tab' <?php if(@$red_cat==$category_id) {  ?> class="btn yellow "<?php } else { ?> class="btn  " <?php } ?>><?php echo $category_name; ?></a>
+<a href='notice_archive?con=<?php echo @$cat; ?>' rel='tab' <?php if(@$red_cat==$category_id) {  ?> class="btn yellow "<?php } else { ?> class="btn  " <?php } ?> style="margin-bottom: 2px;"><?php echo $category_name; ?></a>
 <?php } ?>
 </div>
 <br/><br/>
-<div style="background-color:#fff;padding:10px;">
+<div style="background-color:#fff;padding:10px;" class="mobile_responce">
 <table class="table table-striped table-bordered" id="sample_2">
 <thead>
     <tr>
@@ -104,7 +104,7 @@ $i++;
     <td><?php echo $n_date; ?></td>
 	 <td><?php echo $n_expire_date; ?></td>
 	 <td><a class="tooltips" style="cursor: default;" data-placement="bottom" data-original-title="<?php echo @$visible_detail; ?>"><?php echo $visible_show; ?></a></td>
-    <td><a  rel='tab'  href="notice_publish_view/<?php echo $notice_id; ?>"  class="btn mini yellow " ><i class="icon-search"></i> View Notice</a></td>
+    <td><a  rel='tab'  href="notice_publish_view/<?php echo $notice_id; ?>"  class="btn mini yellow " ><i class="icon-search"></i> <span class="notice_text_mobile"> View Notice </span> </a></td>
 	
 </tr>
 <?php }  ?> 

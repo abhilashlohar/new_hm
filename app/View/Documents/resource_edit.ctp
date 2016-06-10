@@ -26,7 +26,7 @@ $category = $this->requestAction(array('controller' => 'hms', 'action' => 'resou
                   <!-- BEGIN PORTLET-->   
                   <div class="portlet box green">
                      <div class="portlet-title">
-                       <h4><i class="icon-reorder"></i> Resources Add</h4>
+                       <h4><i class="icon-reorder"></i> Document Add</h4>
                        
                      </div>
                      <div class="portlet-body form">

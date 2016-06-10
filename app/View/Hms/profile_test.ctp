@@ -1,5 +1,8 @@
+
+
 <div class="row-fluid ">
 					<div class="span12">
+					
 						<!-- BEGIN INLINE TABS PORTLET-->
 						<div class="portlet box green">
 							<div class="portlet-title">

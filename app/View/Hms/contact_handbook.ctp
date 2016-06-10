@@ -252,9 +252,11 @@ $(".con_delete").click(function(){
 </script>
 
 </div>
+
+
 <div style="float:right; display:none;" id="contact_hand">
 
-<div class="container-fluid">
+
 				<!-- BEGIN PAGE HEADER-->
 			
        
@@ -354,7 +356,6 @@ $(".con_delete").click(function(){
 			</div>
 			
 
-</div>
 <div id="edit_contact">
 </div>		
 	<input type="hidden" id="new_text"value="1"	>	

@@ -17,7 +17,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </div>
 <br/>
 <?php $i=0;
-echo $role_id;
+
 foreach ($result_resource as $collection){
 	$i++;
 	$title=$collection['resource']["resource_title"];

@@ -23,7 +23,7 @@ width:auto !important;
 background-color:rgb(218, 236, 240);
 }
 </style>
-
+<div class="container-fluid">
 
 <div style="background-color: rgb(255, 255, 255); padding: 0px 20px; border: 1px solid rgb(233, 231, 231);">
 <table cellpadding="0" cellspacing="0" width="100%">
@@ -252,8 +252,6 @@ $(".con_delete").click(function(){
 </script>
 
 </div>
-
-
 <div style="float:right; display:none;" id="contact_hand">
 
 
@@ -356,10 +354,11 @@ $(".con_delete").click(function(){
 			</div>
 			
 
+
 <div id="edit_contact">
 </div>		
 	<input type="hidden" id="new_text"value="1"	>	
-	
+</div>	
 <script>
 $(document).ready(function(){
 <?php 

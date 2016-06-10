@@ -116,3 +116,21 @@ end Group
 /***
 end Notice
 ***/
+
+
+/***
+ Document  
+***/
+
+@media (max-width: 650px) {
+   div.document_responsive {
+			width:auto !important;
+			 margin:0px !important;
+		}
+		
+		
+		
+}
+/***
+end document
+***/

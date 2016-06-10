@@ -19,6 +19,8 @@ $category = $this->requestAction(array('controller' => 'hms', 'action' => 'resou
 
 ?>
 
+
+
 <div class="row-fluid document_responsive" style="width:70%; margin-left:15%;">
                <div class="span12">
                   <!-- BEGIN PORTLET-->   
@@ -65,7 +67,7 @@ $category = $this->requestAction(array('controller' => 'hms', 'action' => 'resou
                               <label class="" style="font-size:14px;">Attachment  <span style="font-size:12px; color:#999; margin:2%">(Limit 2MB)</span></label>
                                  <div class="fileupload fileupload-new" data-provides="fileupload"><input type="hidden">
                                     <div class="input-append">
-                                       <div class="uneditable-input">
+                                       <div class="uneditable-input document_add_with">
                                           <i class="icon-file fileupload-exists"></i> 
                                           <span class="fileupload-preview"><?php if(empty($name)) { ?>Select <?php }  echo $name; ?></span>
                                        </div>

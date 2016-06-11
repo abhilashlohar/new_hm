@@ -138,3 +138,20 @@ end Notice
 /***
 end document
 ***/
+
+
+/***
+ Help desk  
+***/
+
+@media (max-width: 650px) {
+   div.help_desk_responsive {
+			width:auto !important;
+			 margin:0px !important;
+		}
+}
+
+/***
+end Help desk 
+***/
+

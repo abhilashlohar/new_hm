@@ -1,11 +1,11 @@
 <input type="hidden" value="<?php echo $hd_id; ?>" id="hd_id">
 <link href="<?php echo $webroot_path ; ?>/as/reply.css" rel="stylesheet" />
 
-<div style="float:left;">
-<a href="<?php echo $this->webroot;?>Helpdesks/help_desk_r_all_ticket" rel="tab" class="btn  green hide_at_print"><i class="icon-caret-left"></i> Back</a>
-</div>
 
-<div style="border:solid 2px #269abc; width:80%; margin-left:10%;overflow:auto;">
+<a href="<?php echo $this->webroot;?>Helpdesks/help_desk_r_all_ticket" rel="tab" style="margin-bottom:2px;" class="btn  green hide_at_print"><i class="icon-caret-left"></i> Back</a>
+
+<br>
+<div style="border:solid 2px #269abc; width:80%; margin-left:10%;overflow:auto;" class="help_desk_responsive">
 <div style="border-bottom:solid 2px #269abc; color:white; background-color: #39b3d7; padding:4px; font-size:20px;" align="center">Ticket# <?php echo $ticket_id; ?>-<?php echo $help_desk_category_name; ?></div>
 
 <div style="padding:10px;">
@@ -57,7 +57,7 @@
 
 
 <br/>
-<div style="border:solid 2px #d58512; width:80%; margin-left:10%;">
+<div style="border:solid 2px #d58512; width:80%; margin-left:10%;" class="help_desk_responsive">
 <div style="border-bottom:solid 2px #d58512; color:white; background-color: #ed9c28; padding:4px; font-size:20px;" align="center">Conversation History</div>
 
 <div style="padding:10px; overflow: auto;">

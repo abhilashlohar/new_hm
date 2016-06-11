@@ -158,7 +158,7 @@ end document
 		}
 		div.help-desk-remove {
 			width:auto !important;
-			
+			float:left;
 		}
 }
 

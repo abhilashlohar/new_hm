@@ -156,6 +156,10 @@ end document
 		table.service-category-responsive {
 			font-size:12px;
 		}
+		div.help-desk-remove {
+			width:auto !important;
+			
+		}
 }
 
 /***

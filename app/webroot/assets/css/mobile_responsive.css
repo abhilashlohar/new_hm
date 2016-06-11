@@ -141,13 +141,20 @@ end document
 
 
 /***
- Help desk  
+ Help desk  and service provider
 ***/
 
 @media (max-width: 650px) {
    div.help_desk_responsive {
 			width:auto !important;
 			 margin:0px !important;
+		}
+		a.space-responsive{
+			margin-bottom:2px !important;
+		}
+		
+		table.service-category-responsive {
+			font-size:12px;
 		}
 }
 

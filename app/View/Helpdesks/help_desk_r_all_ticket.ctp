@@ -2,17 +2,17 @@
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
 <div align="center">
-<a href="help_desk_r_open_ticket" rel='tab' class="btn blue"><i class="icon-folder-open"></i> Open Tickets</a>
-<a href="help_desk_r_close_ticket" rel='tab' class="btn blue"><i class="icon-folder-close"></i> Closed Tickets</a>
-<a href="help_desk_r_all_ticket" rel='tab' class="btn red"><i class="icon-globe"></i> All Tickets</a>
-<a href="help_desk_r_draft_ticket" rel='tab' class="btn blue"><i class="icon-briefcase"></i>  Draft Ticket</a>
+<a href="help_desk_r_open_ticket" rel='tab' class="btn blue space-responsive"><i class="icon-folder-open"></i> Open Tickets</a>
+<a href="help_desk_r_close_ticket" rel='tab' class="btn blue space-responsive"><i class="icon-folder-close"></i> Closed Tickets</a>
+<a href="help_desk_r_all_ticket" rel='tab' class="btn red space-responsive"><i class="icon-globe"></i> All Tickets</a>
+<a href="help_desk_r_draft_ticket" rel='tab' class="btn blue space-responsive"><i class="icon-briefcase"></i>  Draft Ticket</a>
 </div>
 <!-- BEGIN EXAMPLE TABLE PORTLET-->
 <div class="portlet box">
 <!--<div class="portlet-title">
 
 </div>-->
-<div class="portlet-body">
+<div class="portlet-body mobile_responce">
 <table class="table table-striped table-bordered" id="sample_1">
 	<thead>
 		<tr>

@@ -59,7 +59,7 @@ table th { font-size:12px !important ; }
  
 <div class="portlet box " >
 							
-							<div class="portlet-body">
+							<div class="portlet-body mobile_responce">
 									<div align="right" class="hide_at_print">
 									<a href="service_provider_excel" class="btn blue mini"><i class="fa fa-file-excel-o"></i> </a>
 									<a class="btn green mini" onclick="window.print()"><i class="icon-print"></i>  </a>

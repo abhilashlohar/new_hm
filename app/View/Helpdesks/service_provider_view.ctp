@@ -56,9 +56,9 @@ table th { font-size:12px !important ; }
 	
 <div id="st" class="h_d"> 
  </div>
-  <div class="container-fluid" >
- <div class="row-fluid" >
  
+ <div class="row-fluid" >
+  <div class="span12" >
 <div class="portlet box " >
 							
 							<div class="portlet-body mobile_responce">

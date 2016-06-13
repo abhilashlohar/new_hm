@@ -56,6 +56,7 @@ table th { font-size:12px !important ; }
 	
 <div id="st" class="h_d"> 
  </div>
+  <div class="container-fluid" >
  <div class="row-fluid" >
  
 <div class="portlet box " >
@@ -255,7 +256,7 @@ table th { font-size:12px !important ; }
 				<!-- END PAGE CONTENT-->
 			</div>
 			<!-- END PAGE CONTAINER-->	
-	
+	</div>
 		<!-- END PAGE -->	 	
 	
 	

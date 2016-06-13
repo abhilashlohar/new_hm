@@ -2,7 +2,7 @@
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
 				   
-<div align="center">
+<div align="center" class="mobile-align">
 <a href="help_desk_sm_open_ticket"  rel='tab' class="btn blue tooltips space-responsive"  data-placement="bottom" data-original-title="Click to view tickets which are not yet resolved"><i class="icon-folder-open"></i> Open Tickets</a>
 <a href="help_desk_sm_close_ticket"  rel='tab' class="btn red  tooltips space-responsive"  data-placement="bottom" data-original-title="Click to view old tickets resolved and closed"><i class="icon-folder-close"></i> Closed Tickets</a>
 <a href="help_desk_sm_all_ticket" rel='tab' class="btn blue tooltips space-responsive"  data-placement="bottom" data-original-title="View all your open and closed tickets"><i class="icon-globe"></i> All Tickets</a>

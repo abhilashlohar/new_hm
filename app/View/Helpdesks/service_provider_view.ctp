@@ -2,7 +2,7 @@
 <?php
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
-<div align="center">
+<div align="center" class="mobile-align">
 <a href="service_provider_view" class="btn red" rel='tab' > View</a>
 <a href="service_provider_add" class="btn blue" rel='tab' > Add</a>
 </div>

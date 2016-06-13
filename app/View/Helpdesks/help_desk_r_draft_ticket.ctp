@@ -6,7 +6,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 	margin-bottom:2px;
 }
 </style>					   
-<div align="center">
+<div align="center" class="mobile-align">
 <a href="help_desk_r_open_ticket" rel='tab' class="btn blue space-responsive"><i class="icon-folder-open"></i> Open Tickets</a>
 <a href="help_desk_r_close_ticket" rel='tab' class="btn blue space-responsive"><i class="icon-folder-close"></i> Closed Tickets</a>
 <a href="help_desk_r_all_ticket" rel='tab' class="btn blue space-responsive"><i class="icon-globe"></i> All Tickets</a>

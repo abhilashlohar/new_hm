@@ -4389,7 +4389,7 @@ if($user_type == "hm_child"){
 		$cursor=$this->role_privilege->find('all',array('conditions'=>$conditions));
 		sort($cursor);
 		if(sizeof($cursor)>1){
-			echo '<div align="center">';
+			echo '<div align="center" class="mobile-align">';
 			foreach ($cursor as $collection){
 				$sub_module_id=$collection["role_privilege"]["sub_module_id"];
 

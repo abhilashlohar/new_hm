@@ -160,6 +160,11 @@ end document
 			width:auto !important;
 			float:left;
 		}
+		div.mobile-align {
+			text-align:left !important;
+			
+		}
+		
 }
 
 /***

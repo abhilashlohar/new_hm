@@ -57,6 +57,8 @@ table th { font-size:12px !important ; }
 <div id="st" class="h_d"> 
  </div>
  
+ <div id="1"><div class="modal-backdrop fade in "></div><div   class="modal "  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"><div class="modal-body" style="font-size:14px;"><i class="icon-warning-sign" style="color:#d84a38;"></i> Are you sure you want to archive the topic & close it for further discussion ? </div><div class="modal-footer"><a href="" class="btn blue" id="yes">Yes</a><a href="#"  role="button" id="can" class="btn">No</a></div></div></div>
+ 
 <div class="portlet box " >
 							
 							<div class="portlet-body mobile_responce">

@@ -171,3 +171,17 @@ end document
 end Help desk 
 ***/
 
+
+/***
+ Family member 
+***/
+
+@media (max-width: 650px) {
+	table.mobile_table_responsive td{
+		width:auto !important;
+		float:left !important;
+	}
+}
+/***
+end Family member
+***/

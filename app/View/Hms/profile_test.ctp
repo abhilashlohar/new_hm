@@ -6,7 +6,7 @@
 						<!-- BEGIN INLINE TABS PORTLET-->
 						<div class="portlet box green">
 							<div class="portlet-title">
-								<h4><i class="icon-reorder"></i>Inline Tabs</h4>
+								<h4><i class="icon-reorder"></i>Family Members</h4>
 								<div class="tools">
 									<a href="javascript:;" class="collapse"></a>
 									<a href="#portlet-config" data-toggle="modal" class="config"></a>
@@ -18,18 +18,21 @@
 										<!--BEGIN TABS-->
 										<div class="tabbable tabbable-custom">
 											<ul class="nav nav-tabs">
-												<li class="active"><a href="#tab_1_1" data-toggle="tab">Section 1</a></li>
-												
+												<li class=""><a href="profile" rel='tab' >Basic</a></li>
+												<li class="active"><a href="family_member_view" rel='tab' >Family Members</a></li> 
 											</ul>
 											<div class="tab-content">
+											 <form method="post" enctype="multipart/form-data" id="contact-form1"> 
+											 <input type="hidden" value="1" id="hid" name="hid_id">
 												<div class="tab-pane active" id="">
+													<div class="table_1">
 													
-													<p>
-														Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat.
-													</p>
+													
+													</div>
+													
 												</div>
 												
-												
+											  </form>
 											</div>
 										</div>
 										<!--END TABS-->

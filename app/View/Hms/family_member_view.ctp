@@ -1,3 +1,4 @@
+
 <script>
 $(document).ready(function(){
 $(".add").bind("click",function(){
@@ -31,15 +32,21 @@ $('#hid').val(c);
 </script>
 <?php 
 if(($owner=="yes" and $family_member==1 and $member_type=="member") or ($owner=="no" and $family_member_tenant==1 and $member_type=="member")){	?>
-<div class="container-fluid">
+
 				<!-- BEGIN PAGE HEADER-->
 				<div class="row-fluid">
 					<div class="span12">
 						<!-- BEGIN PAGE TITLE & BREADCRUMB-->		
-						<h3 style="color:#999;">Family Members</h3>
+						
 						<!-- END PAGE TITLE & BREADCRUMB-->
-					</div>
-				</div>
+							<div class="portlet box blue">
+							<div class="portlet-title" style="background-color: rgb(134, 171, 196);">
+								<h4><i class="icon-reorder"></i>Family Members</h4>
+								
+							</div>
+				<div class="portlet-body">
+								<div class="row-fluid">
+									<div class="span12">
 
 <div class="tabbable tabbable-custom">
 										<ul class="nav nav-tabs">
@@ -49,14 +56,14 @@ if(($owner=="yes" and $family_member==1 and $member_type=="member") or ($owner==
 										</ul>
 										<div class="tab-content" style="overflow-x:auto;">
 										<br>
-										<div id="error_msg"></div>
-										<br>
+
 										
-			<div>
-<form method="post" id="contact-form" >
 			
+<form method="post" id="contact-form" >
+	<div id="error_msg"></div>
+	<br>	
 	<input type="hidden" value="1" id="hid" name="hid_id">
-	<table class="table_1" width="100%" cellpadding="0"  class="table table-bordered" style="background-color:white;" bordered >
+	<table class="table_1 mobile_table_responsive" width="100%" cellpadding="0"  class="table table-bordered" style="background-color:white;" bordered >
 	
 	<tr >
 	<td  width="20%">
@@ -242,10 +249,14 @@ if(($owner=="yes" and $family_member==1 and $member_type=="member") or ($owner==
 	<br><br>
   </div>
 </div>
+ </div>
+</div>
 
+</div>
+ </div>
+</div>										
 										
-										
-</div>	
+
 
 
 <?php } ?>
@@ -276,11 +287,12 @@ $(document).ready(function() {
 		var myJsonString = JSON.stringify(ar);
 		
 	}
+	
 	$.ajax({
 			url: "family_member_valid?q="+myJsonString,
 			dataType:'json',
 			}).done(function(response) {
-			///alert(response);
+			
 				if(response.type == 'error'){  
 					output = '<div class="alert alert-error">'+response.text+'</div>';
 					$("#submit").removeClass("disabled").text("submit");

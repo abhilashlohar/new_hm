@@ -146,7 +146,7 @@ if(($owner=="yes" and $family_member==1 and $member_type=="member") or ($owner==
 										
 								<div id="show"></div>				
 										
-									<div style="width:100%;overflow-x:auto;">	
+									<div style="width:100%;" class="mobile_responce">	
 										<table width="100%" class="table  table-bordered" id="sample_2">
 											<thead>                                               
 											   <tr>

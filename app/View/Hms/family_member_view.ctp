@@ -218,7 +218,7 @@ if(($owner=="yes" and $family_member==1 and $member_type=="member") or ($owner==
 											Action
 
 											</a>
-											<ul class="dropdown-menu">
+											<ul class="dropdown-menu" style="min-width:70px !important;">
 											<li><a href="family_member_add_ajax?con=<?php echo $user_id ; ?>" ><i class="icon-pencil"></i> Edit</a></li>
 
 											<!--<li><a href="#1" role="button" class="dec" atid="<?php echo $user_id ; ?>" ><i class="icon-trash"></i> Deactive</a></li>-->

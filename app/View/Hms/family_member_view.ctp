@@ -38,7 +38,7 @@ if(($owner=="yes" and $family_member==1 and $member_type=="member") or ($owner==
    <div class="span12">
 	 <div class="portlet box blue">
 		<div class="portlet-title" style="background-color: rgb(134, 171, 196);">
-			<h4><i class="icon-reorder"></i>Family Members</h4>
+			<h4>Family Members</h4>
 								
 		</div>
 		<div class="portlet-body">

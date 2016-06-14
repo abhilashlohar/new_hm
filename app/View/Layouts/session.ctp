@@ -258,161 +258,192 @@ $("#menus_area>li").live('click',function(e){
             <!-- BEGIN TOP NAVIGATION MENU -->              
             <ul class="nav pull-right">
 				
-					<li class="dropdown open" id="header_inbox_bar">
+					<li class="dropdown" id="header_task_bar">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<i class="icon-envelope-alt"></i>
+						<i class="icon-tasks"></i>
 						<span class="badge">5</span>
 						</a>
-						<ul class="dropdown-menu extended inbox">
+						<ul class="dropdown-menu extended tasks">
 							<li>
-								<p>You have 12 new messages</p>
+								<p>You have 12 pending tasks</p>
 							</li>
-							<div class="scroller" data-height="200px" data-always-visible="1" data-rail-visible="1">
+							<div class="scroller" data-height="300px" data-always-visible="1" data-rail-visible="1">
 							<li>
 								<a href="#">
-								<span class="photo"><img src="./assets/img/avatar2.jpg" alt=""></span>
-								<span class="subject">
-								<span class="from">Lisa Wong</span>
-								<span class="time">Just Now</span>
+								<span class="task">
+								<span class="desc">New Discussion Topic Posted by yashraj A-101.</span>
+								<span class="percent">30%</span>
 								</span>
-								<span class="message">
-								Vivamus sed auctor nibh congue nibh. auctor nibh
-								auctor nibh...
-								</span>  
 								</a>
 							</li>
 							<li>
 								<a href="#">
-								<span class="photo"><img src="./assets/img/avatar3.jpg" alt=""></span>
-								<span class="subject">
-								<span class="from">Richard Doe</span>
-								<span class="time">16 mins</span>
+								<span class="task">
+								<span class="desc">Application deployment</span>
+								<span class="percent">65%</span>
 								</span>
-								<span class="message">
-								Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh
-								auctor nibh...
-								</span>  
+								<span class="progress progress-danger progress-striped active">
+								<span style="width: 65%;" class="bar"></span>
+								</span>
 								</a>
 							</li>
 							<li>
 								<a href="#">
-								<span class="photo"><img src="./assets/img/avatar1.jpg" alt=""></span>
-								<span class="subject">
-								<span class="from">Bob Nilson</span>
-								<span class="time">2 hrs</span>
+								<span class="task">
+								<span class="desc">Mobile app release</span>
+								<span class="percent">98%</span>
 								</span>
-								<span class="message">
-								Vivamus sed nibh auctor nibh congue nibh. auctor nibh
-								auctor nibh...
-								</span>  
+								<span class="progress progress-success">
+								<span style="width: 98%;" class="bar"></span>
+								</span>
 								</a>
 							</li>
 							<li>
 								<a href="#">
-								<span class="photo"><img src="./assets/img/avatar1.jpg" alt=""></span>
-								<span class="subject">
-								<span class="from">Bob Nilson</span>
-								<span class="time">2 hrs</span>
+								<span class="task">
+								<span class="desc">Database migration</span>
+								<span class="percent">10%</span>
 								</span>
-								<span class="message">
-								Vivamus sed nibh auctor nibh congue nibh. auctor nibh
-								auctor nibh...
-								</span>  
+								<span class="progress progress-warning progress-striped">
+								<span style="width: 10%;" class="bar"></span>
+								</span>
 								</a>
 							</li>
 							<li>
 								<a href="#">
-								<span class="photo"><img src="./assets/img/avatar1.jpg" alt=""></span>
-								<span class="subject">
-								<span class="from">Bob Nilson</span>
-								<span class="time">2 hrs</span>
+								<span class="task">
+								<span class="desc">Web server upgrade</span>
+								<span class="percent">58%</span>
 								</span>
-								<span class="message">
-								Vivamus sed nibh auctor nibh congue nibh. auctor nibh
-								auctor nibh...
-								</span>  
+								<span class="progress progress-info">
+								<span style="width: 58%;" class="bar"></span>
+								</span>
 								</a>
 							</li>
 							<li>
 								<a href="#">
-								<span class="photo"><img src="./assets/img/avatar1.jpg" alt=""></span>
-								<span class="subject">
-								<span class="from">Bob Nilson</span>
-								<span class="time">2 hrs</span>
+								<span class="task">
+								<span class="desc">Mobile development</span>
+								<span class="percent">85%</span>
 								</span>
-								<span class="message">
-								Vivamus sed nibh auctor nibh congue nibh. auctor nibh
-								auctor nibh...
-								</span>  
+								<span class="progress progress-success">
+								<span style="width: 85%;" class="bar"></span>
+								</span>
 								</a>
 							</li>
 							<li>
 								<a href="#">
-								<span class="photo"><img src="./assets/img/avatar1.jpg" alt=""></span>
-								<span class="subject">
-								<span class="from">Bob Nilson</span>
-								<span class="time">2 hrs</span>
+								<span class="task">
+								<span class="desc">Web server upgrade</span>
+								<span class="percent">58%</span>
 								</span>
-								<span class="message">
-								Vivamus sed nibh auctor nibh congue nibh. auctor nibh
-								auctor nibh...
-								</span>  
+								<span class="progress progress-info">
+								<span style="width: 58%;" class="bar"></span>
+								</span>
 								</a>
 							</li>
 							<li>
 								<a href="#">
-								<span class="photo"><img src="./assets/img/avatar1.jpg" alt=""></span>
-								<span class="subject">
-								<span class="from">Bob Nilson</span>
-								<span class="time">2 hrs</span>
+								<span class="task">
+								<span class="desc">Mobile development</span>
+								<span class="percent">85%</span>
 								</span>
-								<span class="message">
-								Vivamus sed nibh auctor nibh congue nibh. auctor nibh
-								auctor nibh...
-								</span>  
+								<span class="progress progress-success">
+								<span style="width: 85%;" class="bar"></span>
+								</span>
 								</a>
 							</li>
 							<li>
 								<a href="#">
-								<span class="photo"><img src="./assets/img/avatar1.jpg" alt=""></span>
-								<span class="subject">
-								<span class="from">Bob Nilson</span>
-								<span class="time">2 hrs</span>
+								<span class="task">
+								<span class="desc">Web server upgrade</span>
+								<span class="percent">58%</span>
 								</span>
-								<span class="message">
-								Vivamus sed nibh auctor nibh congue nibh. auctor nibh
-								auctor nibh...
-								</span>  
+								<span class="progress progress-info">
+								<span style="width: 58%;" class="bar"></span>
+								</span>
 								</a>
 							</li>
 							<li>
 								<a href="#">
-								<span class="photo"><img src="./assets/img/avatar1.jpg" alt=""></span>
-								<span class="subject">
-								<span class="from">Bob Nilson</span>
-								<span class="time">2 hrs</span>
+								<span class="task">
+								<span class="desc">Mobile development</span>
+								<span class="percent">85%</span>
 								</span>
-								<span class="message">
-								Vivamus sed nibh auctor nibh congue nibh. auctor nibh
-								auctor nibh...
-								</span>  
+								<span class="progress progress-success">
+								<span style="width: 85%;" class="bar"></span>
+								</span>
 								</a>
-							</li><li>
+							</li>
+							<li>
 								<a href="#">
-								<span class="photo"><img src="./assets/img/avatar1.jpg" alt=""></span>
-								<span class="subject">
-								<span class="from">Bob Nilson</span>
-								<span class="time">2 hrs</span>
+								<span class="task">
+								<span class="desc">Web server upgrade</span>
+								<span class="percent">58%</span>
 								</span>
-								<span class="message">
-								Vivamus sed nibh auctor nibh congue nibh. auctor nibh
-								auctor nibh...
-								</span>  
+								<span class="progress progress-info">
+								<span style="width: 58%;" class="bar"></span>
+								</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								<span class="task">
+								<span class="desc">Mobile development</span>
+								<span class="percent">85%</span>
+								</span>
+								<span class="progress progress-success">
+								<span style="width: 85%;" class="bar"></span>
+								</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								<span class="task">
+								<span class="desc">Web server upgrade</span>
+								<span class="percent">58%</span>
+								</span>
+								<span class="progress progress-info">
+								<span style="width: 58%;" class="bar"></span>
+								</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								<span class="task">
+								<span class="desc">Mobile development</span>
+								<span class="percent">85%</span>
+								</span>
+								<span class="progress progress-success">
+								<span style="width: 85%;" class="bar"></span>
+								</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								<span class="task">
+								<span class="desc">Web server upgrade</span>
+								<span class="percent">58%</span>
+								</span>
+								<span class="progress progress-info">
+								<span style="width: 58%;" class="bar"></span>
+								</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								<span class="task">
+								<span class="desc">Mobile development</span>
+								<span class="percent">85%</span>
+								</span>
+								<span class="progress progress-success">
+								<span style="width: 85%;" class="bar"></span>
+								</span>
 								</a>
 							</li>
 							</div>
 							<li class="external">
-								<a href="#">See all messages <i class="m-icon-swapright"></i></a>
+								<a href="#">See all tasks <i class="m-icon-swapright"></i></a>
 							</li>
 						</ul>
 					</li>

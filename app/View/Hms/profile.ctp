@@ -107,30 +107,34 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 <div class="row-fluid">
                <div class="span12">
                   <!-- BEGIN SAMPLE FORM PORTLET-->   
-                  <div class="portlet box blue tabbable">
-                     <div class="portlet-title">
+                  <div class="portlet box blue">
+                     <div class="portlet-title" style="background-color: rgb(134, 171, 196);">
                         <h4>
                            <span class="hidden-phone">User Profile</span>
                            <span class="visible-phone">Profile</span>
                         </h4>
                      </div>
-                     <div class="portlet-body form">
-                        <div class="tabbable portlet-tabs">
+                     <div class="portlet-body">
+						<div class="row-fluid">
+									<div class="span12">
+                        <div class="tabbable tabbable-custom">
                           <ul class="nav nav-tabs">
+									
+									
+								
+									
+										
+									<li class="active"><a href="profile" rel='tab' >Basic</a></li>	
 									<?php 
 									if(($owner=="yes" and $family_member==1 and $member_type=="member") or ($owner=="no" and $family_member_tenant==1 and $member_type=="member")){ ?>
 									<li class=""><a href="family_member_view" rel='tab' >Family Member</a></li>
 
-									<?php } ?>
-									
-									<li class="active"><a href="profile" rel='tab' >Basic</a></li>
-											
-										
+									<?php } ?>	
 						 </ul>
-						  <form method="post" enctype="multipart/form-data" id="contact-form1"> 
+						 
                            <div class="tab-content">
-                              
-                              <div class="tab-pane  active" id="portlet_tab2">
+                               <form method="post" enctype="multipart/form-data" id="contact-form1"> 
+                              <div class="tab-pane active" id="portlet_tab2">
                                  <div class="controls controls-row">
 								  
 								   <div class="span12"> 
@@ -489,11 +493,13 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 								</div>
 								
                               </div>
-                              
+                             </form> 
                            </div>
-						</form>
+						
                         </div>
                      </div>
+                  </div>
+				  </div>
                   </div>
                   <!-- END SAMPLE FORM PORTLET-->
                </div>

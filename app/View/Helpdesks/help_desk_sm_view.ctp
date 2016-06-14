@@ -1,10 +1,10 @@
 
-<div style="float:left;">
-<a href="<?php echo $this->webroot;?>Helpdesks/help_desk_sm_all_ticket" rel="tab" class="btn  green hide_at_print"><i class="icon-caret-left"></i> Back</a>
+<div style="">
+<a href="<?php echo $this->webroot;?>Helpdesks/help_desk_sm_all_ticket" style="margin-bottom: 2px;" rel="tab" class="btn  green hide_at_print"><i class="icon-caret-left"></i> Back</a>
 </div>
 
 <link href="<?php echo $webroot_path; ?>/as/reply.css" rel="stylesheet" />
-<div style="border:solid 2px #269abc; width:80%; margin-left:10%;overflow: auto;">
+<div style="border:solid 2px #269abc; width:80%; margin-left:10%;overflow: auto;" class="help_desk_responsive">
 <div style="border-bottom:solid 2px #269abc; color:white; background-color: #39b3d7; padding:4px; font-size:20px; " align="center">Ticket# <?php echo $ticket_id; ?>-<?php echo $help_desk_category_name; ?></div>
 
 <div style="padding:10px;overflow:auto;">
@@ -81,7 +81,7 @@ Ticket has been closed on <?php echo @$help_desk_close_date ;?>
 
 <?php if($hd_sp_id==0 && $status==0) { ?>						  
 <!----------Assign------->					  
-<div class="accordion-group pull-left" style="width:49%;;">
+<div class="accordion-group pull-left help-desk-remove" style="width:49%;" >
 <div class="accordion-heading">
 	<a class="btn tooltips accordion-toggle collapsed" style=" border: solid 2px #269abc; color:#269abc; background-color: #fff;font-size:16px;" data-toggle="collapse" data-parent="#accordion1" href="#collapse_3">
 		Assign Ticket to Service Provider 
@@ -195,7 +195,7 @@ Ticket has been closed on <?php echo @$help_desk_close_date ;?>
 
 
 <?php if($help_desk_status===0) { ?>
-<div class="accordion-group pull-right" style="width:49%;">
+<div class="accordion-group pull-right help-desk-remove" style="width:49%;" >
 	<div class="accordion-heading">
 		<a class="btn tooltips accordion-toggle collapsed" style=" border: solid 2px green; color:green; background-color: #fff;font-size:16px;" data-toggle="collapse" data-parent="#accordion1" href="#collapse_2" >
 		Close Ticket
@@ -241,7 +241,7 @@ Ticket has been closed on <?php echo @$help_desk_close_date ;?>
 
 
 <br/>
-<div style="border:solid 2px #d58512; width:80%; margin-left:10%;">
+<div style="border:solid 2px #d58512; width:80%; margin-left:10%;" class="help_desk_responsive">
 <div style="border-bottom:solid 2px #d58512; color:white; background-color: #ed9c28; padding:4px; font-size:20px;" align="center">Conversation History</div>
 
 <div style="padding:10px;overflow:auto;" >

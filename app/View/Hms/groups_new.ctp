@@ -9,17 +9,16 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 </div>
 <?php } ?>
 
+<div style="border:solid 2px #4cae4c; width:80%; margin:auto;" class="portal group_responsive">
+<div style="border-bottom:solid 2px #4cae4c; color:white; background-color: #5cb85c; padding:4px; font-size:20px;"> All Groups</div>
+<div style="padding:10px;background-color:#FFF;">
+
+<div class="row-fluid">
+<div class="span12 responsive">
 
 
-<div style="width:80%;margin:auto;">
-<div class="span" >
-	<!-- BEGIN BORDERED TABLE PORTLET-->
-	<div class="portlet box green">
-		<div class="portlet-title">
-			<h4>All Groups</h4>
-		</div>
-		<div class="portlet-body">
-			<table class="table table-bordered ">
+<div class="control-group">
+  <table class="table table-bordered ">
 				<thead>
 					<tr>
 						<th width="10%">Sr. No.</th>
@@ -43,29 +42,35 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 							<td><?php echo $group_name; ?></td>
 							<td><span class="label label-info"><?php echo sizeof($users_d); ?></span></td>
 							<td>
-							<a href="groupview/<?php echo $group_id; ?>" rel="tab" class="btn mini yellow" >View</a>
-							
+							<a href="groupview/<?php echo $group_id; ?>" rel="tab" class="btn mini yellow" ><i class="icon-search" ></i></a>
+							&nbsp;
 							<a  role="button" class="btn red mini delete_group" group="<?php echo $group_id; ?>" ><i class=" icon-trash"></i></a>
 							</td>
 						</tr>
 					<?php } ?>
 				</tbody>
 			</table>
-			
-			
-			
-			<div>Add new group</div>
-			<div class="input-append">
+</div>
+
+
+</div>
+
+</div>
+
+<div class="row-fluid">
+<div class="span12 responsive">
+
+<label>Add new group</label>
+			<div class="">
 				<form id="contact-form" method="POST">
 			   <input class="m-wrap" type="text" name="group_name" id="group_name_error" style="background-color: #fff !important;"><button class="btn green" type="submit" name="add"><i class="icon-plus"></i> Add new group</button>
 			   </form>
 			   <label id="group_name_error"></label>
 			</div>
 
+</div>
 
-		</div>
-	</div>
-	<!-- END BORDERED TABLE PORTLET-->
+</div>
 </div>
 </div>
 <div id="show_div"> </div>

@@ -1,18 +1,3 @@
-<div style="background-color: #FFF; padding: 0px 10px; border: 1px solid rgb(233, 231, 231);">
-<table cellpadding="0" cellspacing="0" width="100%">
-	<tr>
-		<td style="white-space: nowrap;"><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-th-list"></i> Contact Handbook </span><span class=" tooltips" data-placement="bottom" data-original-title="This list is maintained by your society members"><i class=" icon-info-sign"></i></span></td>
-		<td align="right">
-			<span style="margin-top: 5px; margin-bottom: 5px;"><a href='contact_handbook_export'class='btn' download='download'><i class="fa fa-file-excel-o"></i></a></span>
-			<input class="m-wrap medium" placeholder="Search" id="search" style="margin-top: 5px; margin-bottom: 5px;" type="text">
-			<a  onclick="blank_value();" href="javascript:ShowContactForm()" class=" btn blue" style="margin-top: 5px; margin-bottom: 5px;"><i class='icon-plus-sign'></i> Add New </a>
-		</td>
-	</tr>
-</table>
-</div>
-
-
-<div style="float:left; width:68%;">
 
 <style>
 .r_d{
@@ -27,7 +12,10 @@ width:46%;float:left; padding:5px;
 
 @media (max-width: 650px) {
 .r_d{
-width:100%; float:left; padding:5px;
+width:auto !important; float:left; padding:5px;
+}
+.contact_responsive{
+width:auto !important; 
 }
 }
 
@@ -35,6 +23,39 @@ width:100%; float:left; padding:5px;
 background-color:rgb(218, 236, 240);
 }
 </style>
+<div class="container-fluid">
+
+<div style="background-color: rgb(255, 255, 255); padding: 0px 20px; border: 1px solid rgb(233, 231, 231);">
+<table cellpadding="0" cellspacing="0" width="100%">
+	<tbody><tr>
+		<td><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-th-list"></i> Contact Handbook </span> <span class=" tooltips" data-placement="bottom" data-original-title="This list is maintained by your society members"><i class=" icon-info-sign"></i></span></td>
+		<td align="right">
+			<span style="margin-top: 5px; margin-bottom: 5px;"><a href='contact_handbook_export'class='btn' download='download'><i class="fa fa-file-excel-o"></i></a></span>
+				<input class="m-wrap medium" placeholder="Search" id="search" style="margin-top: 5px; margin-bottom: 5px;" type="text">
+				<a  onclick="blank_value();" href="javascript:ShowContactForm()" class=" btn blue" style="margin-top: 5px; margin-bottom: 5px;"><i class='icon-plus-sign'></i> Add New </a>
+		</td>
+	</tr>
+</tbody></table>
+</div>
+
+<!--
+<div style="background-color: #FFF; padding: 0px 10px; border: 1px solid rgb(233, 231, 231);">
+<table cellpadding="0" cellspacing="0" width="100%">
+	<tr>
+		<td style="white-space: nowrap;"><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-th-list"></i> Contact Handbook </span><span class=" tooltips" data-placement="bottom" data-original-title="This list is maintained by your society members"><i class=" icon-info-sign"></i></span></td>
+		<td align="right">
+			<span style="margin-top: 5px; margin-bottom: 5px;"><a href='contact_handbook_export'class='btn' download='download'><i class="fa fa-file-excel-o"></i></a></span>
+			<input class="m-wrap medium" placeholder="Search" id="search" style="margin-top: 5px; margin-bottom: 5px;" type="text">
+			<a  onclick="blank_value();" href="javascript:ShowContactForm()" class=" btn blue" style="margin-top: 5px; margin-bottom: 5px;"><i class='icon-plus-sign'></i> Add New </a>
+		</td>
+	</tr>
+</table>
+</div> -->
+
+
+<div style="float:left; width:68%;" class="contact_responsive">
+
+
 <script type="text/javascript">
  var xobj;
    //modern browers
@@ -233,18 +254,14 @@ $(".con_delete").click(function(){
 </div>
 <div style="float:right; display:none;" id="contact_hand">
 
-<div class="container-fluid">
+
 				<!-- BEGIN PAGE HEADER-->
-				<div class="row-fluid">
-					
-				</div>
-                
+			
        
 				<!-- END PAGE HEADER-->
 				<!-- BEGIN PAGE CONTENT-->
-				<div class="row-fluid" >
-					<div>
-                        <div class="row-fluid"  >
+				
+                <div class="row-fluid"  >
               			 <div class="span12">
                   <!-- BEGIN VALIDATION STATES-->
 				  
@@ -332,17 +349,16 @@ $(".con_delete").click(function(){
             
             
             
-					</div>
-				</div>
+					
 				<!-- END PAGE CONTENT-->
 			</div>
 			
 
-</div>
+
 <div id="edit_contact">
 </div>		
 	<input type="hidden" id="new_text"value="1"	>	
-	
+</div>	
 <script>
 $(document).ready(function(){
 <?php 

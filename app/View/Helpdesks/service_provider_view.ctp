@@ -2,7 +2,7 @@
 <?php
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
-<div align="center">
+<div align="center" class="mobile-align">
 <a href="service_provider_view" class="btn red" rel='tab' > View</a>
 <a href="service_provider_add" class="btn blue" rel='tab' > Add</a>
 </div>
@@ -57,9 +57,11 @@ table th { font-size:12px !important ; }
 <div id="st" class="h_d"> 
  </div>
  
+ <div class="row-fluid" >
+  <div class="span12" >
 <div class="portlet box " >
 							
-							<div class="portlet-body">
+							<div class="portlet-body mobile_responce">
 									<div align="right" class="hide_at_print">
 									<a href="service_provider_excel" class="btn blue mini"><i class="fa fa-file-excel-o"></i> </a>
 									<a class="btn green mini" onclick="window.print()"><i class="icon-print"></i>  </a>
@@ -254,9 +256,9 @@ table th { font-size:12px !important ; }
 				<!-- END PAGE CONTENT-->
 			</div>
 			<!-- END PAGE CONTAINER-->	
-		</div>
-		<!-- END PAGE -->	 	
 	</div>
+		<!-- END PAGE -->	 	
+	
 	
 	<script>
 	 $(document).ready(function () {

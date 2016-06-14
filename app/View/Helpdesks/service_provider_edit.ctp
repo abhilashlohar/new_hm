@@ -1,5 +1,5 @@
 <div>
-<a href='<?php echo $this->webroot;?>/Helpdesks/service_provider_view' role='button' rel='tab' class='btn blue'>Back</a>
+<a href='<?php echo $this->webroot;?>/Helpdesks/service_provider_view' style="margin-bottom:2px;" role='button' rel='tab' class='btn blue'>Back</a>
 </div>
 <?php 
 foreach ($result_sp as $collection) 
@@ -26,7 +26,7 @@ foreach ($result_sp as $collection)
 				<!-- END PAGE HEADER-->
 				<!-- BEGIN PAGE CONTENT-->
 				<div class="row-fluid">
-					<div style="width:70%; margin-left:15%;">
+					<div style="width:70%; margin-left:15%;" class="help_desk_responsive">
                         <div class="row-fluid"  >
 
               			 <div class="span12">
@@ -143,7 +143,7 @@ foreach ($result_sp as $collection)
                            <div class="control-group ">
                               <div class="controls">
                                <label class="" style="font-size:14px;" >Category </label>
-                               <table>
+                               <table class="service-category-responsive">
                                  <?php  
                 
 				$i=2;

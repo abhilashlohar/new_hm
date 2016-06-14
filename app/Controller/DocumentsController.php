@@ -653,6 +653,7 @@ if($this->RequestHandler->isAjax()){
 	}else{
 		$this->layout='session';
 	}
+	$this->ath();
 $s_society_id=$this->Session->read('society_id');
 $res_id=(int)$res_id;
 $this->loadmodel('resource');

@@ -1,7 +1,7 @@
 <?php
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>	
-<div align="center">
+<div align="center" class="mobile-align">
 <a href="service_provider_view" class="btn blue" rel='tab'> View</a>
 <a href="service_provider_add" class="btn red" rel='tab'> Add</a>
 </div>
@@ -56,7 +56,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 
 
 <div class="row-fluid">
-					<div style="width:70%; margin-left:15%;">
+					<div style="width:70%; margin-left:15%;" class="help_desk_responsive">
                         <div class="row-fluid"  >
               			 <div class="span12">
                   <!-- BEGIN VALIDATION STATES-->
@@ -175,7 +175,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 						<div class="control-group ">
                               <div class="controls">
                                <label class="" style="font-size:14px;" >Category </label>
-                               <table>
+                               <table class="service-category-responsive">
                                  <?php  
                 
 				$i=2;

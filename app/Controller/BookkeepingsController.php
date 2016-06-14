@@ -720,10 +720,11 @@ foreach($myArray as $child){
 				$order=array('regular_bill.start_date'=>'DESC');
 				$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1)); 
 				
-				if(sizeof($result_regular_bill)==1){
+				//IMPORTANT- VALIDATION OF BACK-DATE COMMENTED// 
+				/*if(sizeof($result_regular_bill)==1){
 					$output = json_encode(array('type'=>'error', 'text' => 'Jv is not generated before bill generation date'));
 					die($output);
-				}
+				}*/
 				
 			}
   

@@ -6556,7 +6556,7 @@ function regular_bill_edit2($auto_id=null){
 		$society_email=$data["society"]["society_email"];
 		$society_phone=$data["society"]["society_phone"];
 		$terms_conditions=$data["society"]["terms_conditions"];
-		$signature=$data["society"]["signature"];
+		
 		$sig_title=$data["society"]["sig_title"];
 	    $neft_type = @$data["society"]["neft_type"];
 	    $neft_detail = @$data["society"]["neft_detail"];
@@ -6587,7 +6587,7 @@ function regular_bill_edit2($auto_id=null){
 		$arrear_intrest=$this->request->data['arrear_intrest'];
 		$credit_stock=$this->request->data['credit_stock'];
 		$due_for_payment=$this->request->data['due_for_payment'];
-		$description=$this->request->data['description'];
+		$description=htmlspecialchars($this->request->data['description']);
 		
 		if(sizeof(@$other_charges_array)==0){$other_charges_array=array();}
 		

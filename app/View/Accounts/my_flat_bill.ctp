@@ -28,7 +28,7 @@ $multiple_flat = sizeof($result_user_info);
 ?>
 
 
-<div align="center" class="hide_at_print">
+<div align="center" class="hide_at_print hidden-phone">
 	<table>
 		<tr>
 		<?php  if($multiple_flat>1){  ?>
@@ -49,7 +49,30 @@ $multiple_flat = sizeof($result_user_info);
 	</table>
 </div>
 
-
+<div class="controls controls-row visible-phone">
+	<div class="span3"> 
+		<?php  if($multiple_flat>1){  ?>
+		
+		<select name="ledger_sub_account[]" class="m-wrap" style="width:200px;" id="ledger_sub_account1">
+		<option value="" style="display:none;">--member--</option>
+		<?php foreach($members_for_billing as $ledger_sub_account_id){
+		$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+		echo '<option value='.$ledger_sub_account_id.'>'.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
+		} ?>
+		</select>  
+		
+		<?php } ?>
+	</div>
+	<div class="span3">
+		<input class="date-picker m-wrap medium" id="from1" data-date-format="dd-mm-yyyy" name="from" placeholder="From" style="background-color:white !important;" value="<?php echo date("d-m-Y",strtotime($from)); ?>" type="text">
+	</div>
+	<div class="span3">
+		<input class="date-picker  m-wrap medium" id="to1" data-date-format="dd-mm-yyyy" name="to" placeholder="To" style="background-color:white !important;" value="<?php echo date("d-m-Y",strtotime($to)); ?>" type="text">
+	</div>
+	<div class="span3">
+		<button type="button" name="sub" class="btn yellow" id="go1">Go</button>
+	</div>
+</div>
 
 <br/>
 <div style="width:98%;margin:auto;overflow:auto;background-color:#FFF;padding:5px;display:none;border:solid 1px #ccc;" id="result_statement" >
@@ -60,8 +83,22 @@ $multiple_flat = sizeof($result_user_info);
 $(document).ready(function() {
 	$("#go").die().live('click',function(){
 		var ledger_sub_account_id=$("#ledger_sub_account option:selected").val();
+
 		var from=$("#from").val();
 		var to=$("#to").val();
+		$("#result_statement").show();
+		$.ajax({
+		   url: '<?php echo $webroot_path; ?>Accounts/my_flat_bill_ajax1/'+from+'/'+to+'/'+ledger_sub_account_id,
+		   success: function(data){
+			   $("#result_statement").html(data);
+		   }
+		 });
+	});
+	$("#go1").die().live('click',function(){
+		var ledger_sub_account_id=$("#ledger_sub_account1 option:selected").val();
+
+		var from=$("#from1").val();
+		var to=$("#to1").val();
 		$("#result_statement").show();
 		$.ajax({
 		   url: '<?php echo $webroot_path; ?>Accounts/my_flat_bill_ajax1/'+from+'/'+to+'/'+ledger_sub_account_id,

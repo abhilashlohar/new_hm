@@ -57,6 +57,7 @@ resident approve screen
 	 i.mobile_responce {
 			    display: none !important;
 		}
+		
 	}
 
 /***
@@ -64,4 +65,123 @@ end resident approve screen
 ***/
 
 
+/***
+ member profile view
+***/
 
+@media (max-width: 650px) {
+   div.profile_responsive {
+			width:auto !important;
+				
+		}
+}
+
+/***
+end member profile view
+***/
+
+
+/***
+ Group 
+***/
+
+
+@media (max-width: 650px) {
+   div.group_responsive {
+			width:auto !important;
+				
+		}
+}
+
+
+/***
+end Group
+***/
+
+
+
+/***
+ Notice 
+***/
+
+
+@media (max-width: 648px)  {
+	 span.notice_text_mobile {
+			    display: none !important;
+				
+		}
+	}
+
+
+/***
+end Notice
+***/
+
+
+/***
+ Document  
+***/
+
+@media (max-width: 650px) {
+   div.document_responsive {
+			width:auto !important;
+			 margin:0px !important;
+		}
+		div.document_add_with {
+			width:190px !important;
+			
+		}
+		
+		
+		
+}
+/***
+end document
+***/
+
+
+/***
+ Help desk  and service provider
+***/
+
+@media (max-width: 650px) {
+   div.help_desk_responsive {
+			width:auto !important;
+			 margin:0px !important;
+		}
+		a.space-responsive{
+			margin-bottom:2px !important;
+		}
+		
+		table.service-category-responsive {
+			font-size:12px;
+		}
+		div.help-desk-remove {
+			width:auto !important;
+			float:left;
+		}
+		div.mobile-align {
+			text-align:left !important;
+			
+		}
+		
+}
+
+/***
+end Help desk 
+***/
+
+
+/***
+ Family member 
+***/
+
+@media (max-width: 650px) {
+	table.mobile_table_responsive td{
+		width:auto !important;
+		float:left !important;
+	}
+}
+/***
+end Family member
+***/

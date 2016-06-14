@@ -1,7 +1,201 @@
 name,wing,flat,email,mobile,Owner,committee
-Abhi lohar,Flat,101,,,yes,no
-Rohit Joshi,Flat,102,,,yes,no
-Yash Rao,shop,201,yashrajrao52@gmail.com,9784311638,yes,yes
-Nikhil Vyas,shop,202,,,no,
-Ashish Jain,Office,301,,,yes,no
-Dsu Menaria,Office,302,,,no,yes
+Member 1,A,1,,,yes,yes
+Member 2,A,2,,,yes,yes
+Member 3,A,3,,,yes,yes
+Member 4,A,4,,,yes,yes
+Member 5,A,5,,,yes,yes
+Member 6,A,6,,,yes,yes
+Member 7,A,7,,,no,yes
+Member 8,A,8,,,yes,yes
+Member 9,A,9,,,yes,yes
+Member 10,A,10,,,yes,yes
+Member 11,A,11,,,yes,yes
+Member 12,A,12,,,yes,yes
+Member 13,A,13,,,yes,yes
+Member 14,A,14,,,yes,yes
+Member 15,A,15,,,yes,yes
+Member 16,A,16,,,no,yes
+Member 17,A,17,,,yes,yes
+Member 18,A,18,,,yes,yes
+Member 19,A,19,,,yes,yes
+Member 20,A,20,,,yes,yes
+Member 21,A,21,,,yes,yes
+Member 22,A,22,,,yes,yes
+Member 23,A,23,,,yes,yes
+Member 24,A,24,,,yes,yes
+Member 25,A,25,,,yes,yes
+Member 26,A,26,,,yes,yes
+Member 27,A,27,,,yes,yes
+Member 28,A,28,,,yes,yes
+Member 29,A,29,,,yes,yes
+Member 30,A,30,,,yes,yes
+Member 31,A,31,,,yes,yes
+Member 32,A,32,,,yes,yes
+Member 33,A,33,,,yes,yes
+Member 34,A,34,,,yes,yes
+Member 35,A,35,,,yes,yes
+Member 36,A,36,,,yes,yes
+Member 37,A,37,,,yes,yes
+Member 38,A,38,,,yes,yes
+Member 39,A,39,,,yes,yes
+Member 40,A,40,,,yes,yes
+Member 41,A,41,,,yes,yes
+Member 42,A,42,,,yes,yes
+Member 43,A,43,,,yes,yes
+Member 44,A,44,,,yes,yes
+Member 45,A,45,,,yes,yes
+Member 46,A,46,,,yes,yes
+Member 47,A,47,,,yes,yes
+Member 48,A,48,,,yes,yes
+Member 49,A,49,,,yes,yes
+Member 50,A,50,,,yes,yes
+Member 51,B,51,,,yes,yes
+Member 52,B,52,,,yes,yes
+Member 53,B,53,,,yes,yes
+Member 54,B,54,,,yes,yes
+Member 55,B,55,,,yes,yes
+Member 56,B,56,,,yes,yes
+Member 57,B,57,,,yes,yes
+Member 58,B,58,,,yes,yes
+Member 59,B,59,,,yes,yes
+Member 60,B,60,,,yes,yes
+Member 61,B,61,,,yes,yes
+Member 62,B,62,,,yes,yes
+Member 63,B,63,,,yes,yes
+Member 64,B,64,,,yes,yes
+Member 65,B,65,,,yes,yes
+Member 66,B,66,,,yes,yes
+Member 67,B,67,,,yes,yes
+Member 68,B,68,,,yes,yes
+Member 69,B,69,,,yes,yes
+Member 70,B,70,,,yes,yes
+Member 71,B,71,,,yes,yes
+Member 72,B,72,,,yes,yes
+Member 73,B,73,,,yes,yes
+Member 74,B,74,,,yes,yes
+Member 75,B,75,,,yes,yes
+Member 76,B,76,,,yes,yes
+Member 77,B,77,,,yes,yes
+Member 78,B,78,,,yes,yes
+Member 79,B,79,,,yes,yes
+Member 80,B,80,,,yes,yes
+Member 81,B,81,,,yes,yes
+Member 82,B,82,,,yes,yes
+Member 83,B,83,,,yes,yes
+Member 84,B,84,,,yes,yes
+Member 85,B,85,,,yes,yes
+Member 86,B,86,,,yes,yes
+Member 87,B,87,,,yes,yes
+Member 88,B,88,,,yes,yes
+Member 89,B,89,,,yes,yes
+Member 90,B,90,,,yes,yes
+Member 91,B,91,,,yes,yes
+Member 92,B,92,,,yes,yes
+Member 93,B,93,,,yes,yes
+Member 94,B,94,,,yes,yes
+Member 95,B,95,,,yes,yes
+Member 96,B,96,,,yes,yes
+Member 97,B,97,,,yes,yes
+Member 98,B,98,,,yes,yes
+Member 99,B,99,,,yes,yes
+Member 100,B,100,,,yes,yes
+Member 101,C,101,,,Yes ,no
+Member 102,C,102,,,Yes ,no
+Member 103,C,103,,,Yes ,no
+Member 104,C,104,,,Yes ,no
+Member 105,C,105,,,Yes ,no
+Member 106,C,106,,,Yes ,no
+Member 107,C,107,,,Yes ,no
+Member 108,C,108,,,Yes ,no
+Member 109,C,109,,,Yes ,no
+Member 110,C,110,,,Yes ,no
+Member 111,C,111,,,Yes ,no
+Member 112,C,112,,,Yes ,no
+Member 113,C,113,,,Yes ,no
+Member 114,C,114,,,Yes ,no
+Member 115,C,115,,,Yes ,no
+Member 116,C,116,,,Yes ,no
+Member 117,C,117,,,Yes ,no
+Member 118,C,118,,,Yes ,no
+Member 119,C,119,,,Yes ,no
+Member 120,C,120,,,Yes ,no
+Member 121,C,121,,,Yes ,no
+Member 122,C,122,,,Yes ,no
+Member 123,C,123,,,Yes ,no
+Member 124,C,124,,,Yes ,no
+Member 125,C,125,,,Yes ,no
+Member 126,C,126,,,Yes ,no
+Member 127,C,127,,,Yes ,no
+Member 128,C,128,,,Yes ,no
+Member 129,C,129,,,Yes ,no
+Member 130,C,130,,,Yes ,no
+Member 131,C,131,,,Yes ,no
+Member 132,C,132,,,Yes ,no
+Member 133,C,133,,,Yes ,no
+Member 134,C,134,,,Yes ,no
+Member 135,C,135,,,Yes ,no
+Member 136,C,136,,,Yes ,no
+Member 137,C,137,,,Yes ,no
+Member 138,C,138,,,Yes ,no
+Member 139,C,139,,,Yes ,no
+Member 140,C,140,,,Yes ,no
+Member 141,C,141,,,Yes ,no
+Member 142,C,142,,,Yes ,no
+Member 143,C,143,,,Yes ,no
+Member 144,C,144,,,Yes ,no
+Member 145,C,145,,,Yes ,no
+Member 146,C,146,,,Yes ,no
+Member 147,C,147,,,Yes ,no
+Member 148,C,148,,,Yes ,no
+Member 149,C,149,,,Yes ,no
+Member 150,C,150,,,Yes ,no
+Member 151,D,101,,,Yes ,no
+Member 152,D,102,,,Yes ,no
+Member 153,D,103,,,Yes ,no
+Member 154,D,104,,,Yes ,no
+Member 155,D,105,,,Yes ,no
+Member 156,D,106,,,Yes ,no
+Member 157,D,107,,,Yes ,no
+Member 158,D,108,,,Yes ,no
+Member 159,D,109,,,Yes ,no
+Member 160,D,110,,,Yes ,no
+Member 161,D,111,,,Yes ,no
+Member 162,D,112,,,Yes ,no
+Member 163,D,113,,,Yes ,no
+Member 164,D,114,,,Yes ,no
+Member 165,D,115,,,Yes ,no
+Member 166,D,116,,,Yes ,no
+Member 167,D,117,,,Yes ,no
+Member 168,D,118,,,Yes ,no
+Member 169,D,119,,,Yes ,no
+Member 170,D,120,,,Yes ,no
+Member 171,D,121,,,Yes ,no
+Member 172,D,122,,,Yes ,no
+Member 173,D,123,,,Yes ,no
+Member 174,D,124,,,Yes ,no
+Member 175,D,125,,,Yes ,no
+Member 176,D,126,,,Yes ,no
+Member 177,D,127,,,Yes ,no
+Member 178,D,128,,,Yes ,no
+Member 179,D,129,,,Yes ,no
+Member 180,D,130,,,Yes ,no
+Member 181,D,131,,,Yes ,no
+Member 182,D,132,,,Yes ,no
+Member 183,D,133,,,Yes ,no
+Member 184,D,134,,,Yes ,no
+Member 185,D,135,,,Yes ,no
+Member 186,D,136,,,Yes ,no
+Member 187,D,137,,,Yes ,no
+Member 188,D,138,,,Yes ,no
+Member 189,D,139,,,Yes ,no
+Member 190,D,140,,,Yes ,no
+Member 191,D,141,,,Yes ,no
+Member 192,D,142,,,Yes ,no
+Member 193,D,143,,,Yes ,no
+Member 194,D,144,,,Yes ,no
+Member 195,D,145,,,Yes ,no
+Member 196,D,146,,,Yes ,no
+Member 197,D,147,,,Yes ,no
+Member 198,D,148,,,Yes ,no
+Member 199,D,149,,,Yes ,no
+Member 200,D,150,,,Yes ,no

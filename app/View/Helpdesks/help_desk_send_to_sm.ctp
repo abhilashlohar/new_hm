@@ -9,7 +9,7 @@ $ticket_priority=$data['help_desk']['ticket_priority'];
 }
 ?>
 <div class="row-fluid">
-					<div style="width:70%; margin-left:15%;">
+					<div style="width:70%; margin-left:15%;" class="help_desk_responsive" >
                         <div class="row-fluid"  >
               			 <div class="span12">
                   <!-- BEGIN VALIDATION STATES-->

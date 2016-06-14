@@ -1,0 +1,7 @@
+Transaction Date,Ledger A/c,Amount,TDS Amount,Mode of Payment,Instrument/UTR,Bank Account,Invoice Reference,Narration 
+2-2-2016,sanjay,100,10,Cheque,55,SBBJ,65,paid Payment
+5-2-2016,vicky,150,15,Cheque,556,SBBJ,64,paid Payment
+16-2-2016,Ram Shinde,600,200,Cheque,554,SBBJ,6,paid Payment
+14-2-2016,Kone Elevators,400,123,Cheque,554,SBBJ,254,paid Payment
+17-2-2016,kappy,300,125,Cheque,556,SBBJ,44,paid Payment
+18-2-2016,vicky,200,33,Cheque,213,SBBJ,48,paid Payment

@@ -19,34 +19,32 @@ $category = $this->requestAction(array('controller' => 'hms', 'action' => 'resou
 
 ?>
 
+<div style="padding-left: 2px;margin-bottom:2px;">
+<a href="<?php echo $webroot_path ; ?>Documents/resource_view" role="button" rel='tab' class="btn blue" > Back </a> </div>  
 
-
-<div class="row-fluid">
-					<div style="width:70%; margin-left:15%;">
-                        <div class="row-fluid"  >
-              			 <div class="span12">
-                  <!-- BEGIN VALIDATION STATES-->
-                 		 <div class="portlet box green">
+<div class="row-fluid document_responsive" style="width:70%; margin-left:15%;">
+               <div class="span12">
+                  <!-- BEGIN PORTLET-->   
+                  <div class="portlet box green">
                      <div class="portlet-title">
-                        <h4><i class="icon-reorder"></i> Resources Add</h4>
-                        
+                       <h4><i class="icon-reorder"></i> Document Add</h4>
+                       
                      </div>
                      <div class="portlet-body form">
-                        <h3 class="block"></h3>
                         <!-- BEGIN FORM-->
-                        <form  id="contact-form" class="form-horizontal" method="post" enctype="multipart/form-data">
-                         <fieldset>
-                           <div class="control-group ">
+                       <form  id="contact-form" class="form-horizontal" method="post" enctype="multipart/form-data">
+                        
+					<div class="control-group ">
                               <div class="controls">
                                <label class="" style="font-size:14px;" >Title <span style="color:red;">*</span> <span style="font-size:12px; color:#999;">(Maximum 100 characters.)</span></label>
-                                 <input type="text" maxlength="100" class="span8 m-wrap" id="inputWarning" name="title" value="<?php echo $title ?> ">
+                                 <input type="text" maxlength="100" class="span8 m-wrap document_rm" id="inputWarning" name="title" value="<?php echo $title ?> ">
                               </div>
                            </div>
-                          
+                          <div>
                            <div class="control-group ">
                               <div class="controls">
                                <label class="" style="font-size:14px;">Category <span style="color:red;">*</span>  </label>
-                                 <select name="sel" class="span8 m-wrap chosen"  >
+                         <select name="sel" class=" chosen document_rm">
                             <option value="">--Please select any category--*</option>
                                                  
                             <?php
@@ -63,53 +61,44 @@ $category = $this->requestAction(array('controller' => 'hms', 'action' => 'resou
                                                          
                               </div>
                            </div>
-                           <div class="control-group ">
+
+						  
+						     <div class="control-group ">
                               <div class="controls">
                               <label class="" style="font-size:14px;">Attachment  <span style="font-size:12px; color:#999; margin:2%">(Limit 2MB)</span></label>
                                  <div class="fileupload fileupload-new" data-provides="fileupload"><input type="hidden">
                                     <div class="input-append">
-                                       <div class="uneditable-input">
+                                       <div class="uneditable-input document_add_with">
                                           <i class="icon-file fileupload-exists"></i> 
                                           <span class="fileupload-preview"><?php if(empty($name)) { ?>Select <?php }  echo $name; ?></span>
                                        </div>
                                        <span class="btn btn-file">
                                        <span class="fileupload-new">Select file</span>
                                        <span class="fileupload-exists">Change</span>
-                                       <input type="file"  class="span8 m-wrap" name="file" multiple >
+                                       <input type="file"  class="default" name="file" multiple >
                                        </span>
                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
                                     </div>
                                  </div>
                               </div>
                            </div>
-                           
-                   
-                                  
-                                  
-                           
-                           
-                           <div class="form-actions">
-                              <input type="submit" class="btn green" value="Publish" name="sub">
+						   
+                           <div class="control-group ">
+                              <div class="controls">
+								<input type="submit" class="btn green" value="Publish" name="sub">
+							  </div>
                            </div>
-                           </fieldset>
+                           
                         </form>
-                        <!-- END FORM-->
+                        <!-- END FORM-->  
                      </div>
                   </div>
-                  <!-- END VALIDATION STATES-->
+                  <!-- END PORTLET-->
                </div>
             </div>
-            
-           
-            
-            
-					</div>
-				</div>
-				<!-- END PAGE CONTENT-->
-			</div>
 			
 			
-			
+						
 			    <script>
 $(document).ready(function(){
 		$('#contact-form').validate({

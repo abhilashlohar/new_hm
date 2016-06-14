@@ -1,4 +1,11 @@
 Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Amount,Narration 
+<<<<<<< HEAD
+25-01-2016,SBBJ,cheque,55,25-01-2016,SBI,SEC 4,abhi,Wing A,102,500,Receipt for jan
+25-01-2016,SBBJ,cheque,57,25-01-2016,ICICI,SEC 5,dsu,Wing A,104,540,Receipt for jan
+25-01-2016,SBBJ,cheque,56,25-01-2016,ICICI,SEC 6,kavish,Wing A,109,550,Receipt for jan
+25-01-2016,SBBJ,cheque,54,25-01-2016,BOI,SEC 7,rohit,Wing A,101,650,Receipt for jan
+25-01-2016,SBBJ,cheque,58,25-01-2016,ICICI,SEC 8,yashraj,Wing A,107,780,Receipt for jan
+=======
 15-04-2016,UCO Bank,NEFT,999,15-04-2016,,,,FLAT,701,10519,April-June Qtr 2016 Payment
 23-04-2016,UCO Bank,Cheque ,70,23-04-2016,HDFC BANK,N/A,,FLAT,1003,10230,April-June Qtr 2016 Payment
 23-04-2016,UCO Bank,Cheque ,20513,23-04-2016,AXIS BANK ,N/A,,SHOP ,9,4568,April-June Qtr 2016 Payment
@@ -29,3 +36,4 @@ Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn 
 30-05-2016,UCO Bank,Cheque ,343143,30-05-2016,State Bank Of India ,N/A,,FLAT,1501,10770,April-June Qtr 2016 Payment
 18-05-2016,UCO Bank,Cheque ,85,18-05-2016, Andhra Bank,N/A,,FLAT,1602,9075,April-June Qtr 2016 Payment
 05-05-2016,UCO Bank,NEFT,999,05-05-2016,,,,FLAT,202,9645,April-June Qtr 2016 Payment
+>>>>>>> 494192a48739a2238242be0159b3c9ff2a817799

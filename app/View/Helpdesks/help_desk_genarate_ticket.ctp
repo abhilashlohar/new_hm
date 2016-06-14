@@ -4,8 +4,20 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 	
 <br/>
 
+<style>
+.chzn-container123{
+width: 500px !important;	
+	
+}
+
+</style>
+<script>
+
+
+
+</script>
 <div class="row-fluid">
-					<div style="width:70%; margin-left:15%;">
+					<div style="width:70%; margin-left:15%;" class="help_desk_responsive">
                         <div class="row-fluid"  >
               			 <div class="span12">
                   <!-- BEGIN VALIDATION STATES-->

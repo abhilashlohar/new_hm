@@ -379,6 +379,11 @@ function change_role_member(){
 			$this->loadmodel('user_role');
 			$this->user_role->updateAll(array("default"=>""),array("user_id"=>$s_user_id));
 			$this->user_role->updateAll(array("default"=>"yes"),array("auto_id"=>$auto_id));
+			
+			$this->loadmodel('user_role');
+			$result_user_roles=$this->user_role->find('all',array('conditions'=>array('auto_id'=>$auto_id)));
+			$role_id=$result_user_roles[0]['user_role']['role_id'];
+			$this->Session->write('role_id', $role_id);
 			$this->redirect(array('action' => 'dashboard'));
 		}
 	
@@ -2724,7 +2729,7 @@ $this->redirect(array('action' => 'index'));
 
 function beforeFilter()
 {
-Configure::write('debug', 0);
+//Configure::write('debug', 0);
 }
 
 
@@ -4384,7 +4389,7 @@ if($user_type == "hm_child"){
 		$cursor=$this->role_privilege->find('all',array('conditions'=>$conditions));
 		sort($cursor);
 		if(sizeof($cursor)>1){
-			echo '<div align="center">';
+			echo '<div align="center" class="mobile-align">';
 			foreach ($cursor as $collection){
 				$sub_module_id=$collection["role_privilege"]["sub_module_id"];
 
@@ -11672,7 +11677,7 @@ $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'soc
 if($owner=="yes"){
 $this->loadmodel('ledger_sub_account');
 $j=$this->autoincrement('ledger_sub_account','auto_id');
-$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$user_name,'society_id' => $society_id,'user_flat_id'=>$user_flat_id,'exited'=>'no'));
+$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$user_name,'society_id' => $society_id,'user_flat_id'=>$user_flat_id,'exited'=>'no','user_id' => $i));
 }
 /////////////  End code ledger sub accounts //////////////////////////
 
@@ -17912,8 +17917,7 @@ $this->redirect(array('action' => 'profile'));
 
 	
 
-$result_user_profile = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_profile_info_via_user_id'),array('pass'=>array($s_user_id)));
-$profile=@$result_user_profile[0]['user_profile']['profile_pic'];
+
 
 			$this->loadmodel('user_flat');
 			$conditions=array('user_id'=>$s_user_id);
@@ -18004,12 +18008,11 @@ $age_group="65+";
 }
 
 
-
-
  $result_user=$this->profile_picture($s_user_id);
  foreach($result_user as $data){
 	  $email1=$data['user']['email'];
 	  $mobile1=$data['user']['mobile'];
+	  $profile=@$data['user']['profile_pic'];
  }
  
  if($email==$email && $mobile==$mobile1){
@@ -18023,7 +18026,6 @@ $age_group="65+";
 		$this->loadmodel('profile_log');
 		$this->profile_log->saveAll(array('profile_log_id'=>$op,'user_id'=>$s_user_id,'society_id'=>$s_society_id,'email'=>$email1,'mobile'=>$mobile1,'new_email'=>$email,'new_mobile'=>$mobile,'date'=>$date,'time'=>$time));
  }
- 
  
 if(empty($photo_name)){
 $photo_name=$profile;
@@ -19697,7 +19699,7 @@ $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'soc
 if($owner=="yes"){
 $this->loadmodel('ledger_sub_account');
 $j=$this->autoincrement('ledger_sub_account','auto_id');
-$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$name,'society_id' => $society_id,'user_flat_id'=>$user_flat_id,'exited'=>'no'));
+$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$name,'society_id' => $society_id,'user_flat_id'=>$user_flat_id,'exited'=>'no','user_id' => $i));
 }
 		 
 ///////////////  Insert code ledger Sub Accounts //////////////////////
@@ -22466,11 +22468,11 @@ foreach($myArray as $child)
  $purchase_date = $child[1];
  $assert_supplier_id = (int)$child[2];
  $cost_of_purchase = $child[3];
- $asset_name = $child[4];
+ $asset_name = htmlspecialchars($child[4]);
  $warranty_from = $child[5];
  $warranty_to = $child[6];
- $description = $child[7];
- $maintanance_schedule = $child[8]; 
+ $description = htmlspecialchars($child[7]);
+ $maintanance_schedule = htmlspecialchars($child[8]); 
  $current_date = date('d-m-Y');
  
  $file_name=@$_FILES["file".$z]["name"];

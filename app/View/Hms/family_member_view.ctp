@@ -34,135 +34,121 @@ $('#hid').val(c);
 if(($owner=="yes" and $family_member==1 and $member_type=="member") or ($owner=="no" and $family_member_tenant==1 and $member_type=="member")){	?>
 
 				<!-- BEGIN PAGE HEADER-->
-				<div class="row-fluid">
-					<div class="span12">
-						<!-- BEGIN PAGE TITLE & BREADCRUMB-->		
-						
-						<!-- END PAGE TITLE & BREADCRUMB-->
-							<div class="portlet box blue">
-							<div class="portlet-title" style="background-color: rgb(134, 171, 196);">
-								<h4><i class="icon-reorder"></i>Family Members</h4>
+<div class="row-fluid">
+   <div class="span12">
+	 <div class="portlet box blue">
+		<div class="portlet-title" style="background-color: rgb(134, 171, 196);">
+			<h4><i class="icon-reorder"></i>Family Members</h4>
 								
-							</div>
-				<div class="portlet-body">
-								<div class="row-fluid">
-									<div class="span12">
-
-<div class="tabbable tabbable-custom">
-										<ul class="nav nav-tabs">
-										
-<li class=""><a href="profile" rel='tab' >Basic</a></li>
-<li class="active"><a href="family_member_view" rel='tab' >Family Members</a></li> 
-										</ul>
-										<div class="tab-content" style="overflow-x:auto;">
-										<br>
-
-										
-			
-<form method="post" id="contact-form" >
-	<div id="error_msg"></div>
-	<br>	
-	<input type="hidden" value="1" id="hid" name="hid_id">
-	<table class="table_1 mobile_table_responsive" width="100%" cellpadding="0"  class="table table-bordered" style="background-color:white;" bordered >
-	
-	<tr >
-	<td  width="20%">
-	<label> &nbsp;Name <span style="color:red;"> * </span></label>
-	<input type="text"   class="span12 m-wrap" name="name1" id="name1" style="font-size:16px;" placeholder="Name*" value="<?php echo @$nam; ?>" >
-	
-	
-	</td>
-	
-	<td width="20%" > 
-
-<label> &nbsp;Email </label>
-<input type="text" class=" span12 m-wrap" placeholder="Email Address"  id="email1" style="font-size:16px;" name="email1" >
-<div id="echo_exit"></div>
-
-
-</td>
-
-<td width="10%" > 
-<label> &nbsp;Mobile  <span style="color:red;"> +91</span></label>
-<input type="text"   class="span12 m-wrap" placeholder="Mobile No"style="font-size:16px;" id="mobile1" maxlength="10" name="mobile1" >
-
-
-</td>
-	
-	
-	<td width="10%" >
-
-                             
-    <label> &nbsp;Age <span style="color:red;"> * <i class=" icon-info-sign tooltips" data-placement="top" data-original-title="No login access/emails are currently provided to users <18 years"> </i> </span> </label>                        
-							 
- 
-	<select class='span12 m-wrap ' data-placeholder='Choose Age Group' name='dob1' id='dob1'>
-	<option value='' style='display:none;'>Age group</option>
-	<option value='1'> 18-24 </option>
-	<option value='2'> 25-34 </option>
-	<option value='3'> 35-44 </option>
-	<option value='4'> 45-54 </option>
-	<option value='5'> 55-64 </option>
-	<option value='6'> 65+</option>
-	</select>                            
-
- </td>
-	
-	
-	
-	<td width="11%" > 
-<label> &nbsp;Blood Group </label>
-<select class=" span12 m-wrap "placeholder=" Blood Group" name="blood_group1" id="blood_group1">
-<option value="" style="display:none;">Blood Group</option>
-<option value="1">  A+ </option>
-<option value="2">  B+ </option>
-<option value="3">  AB+  </option>
-<option value="4">  O+  </option>
-<option value="5">  A- </option>
-<option value="6">  B- </option>
-<option value="7">  AB-  </option>
-<option value="8">  O-  </option>
-</select>
-
-
-
- </td>
- 
- <td width="19%" >
-<label> &nbsp;Relation <span style="color:red;"> * </span></label>
-                                 <input class="span8 m-wrap " type="text" value="" name="relation1" placeholder="Relationship*" id='relation1'>
-                       
- </td>
-<td  width='10%'>
-<label> &nbsp;Gender </label>
-<label class='radio'><input type='radio' class='gen1' name='gen1'  value='1' >Male</label>
-<label class="radio"><input type='radio' class='gen1' name='gen1'  value='2' >Female</label>
-</td>
-	
-	</tr>
-			
-	
-			
-
-										
-										
-										
-		
-	</table>
-<div class="form-actions">
-<button type="submit" class="btn blue" name="flat_add">Submit</button>
-<button type="button"  class="btn blue add"> <i class="icon-plus"></i> Add Row</button>
-<button type="button" id="button_remove " class="btn red rem"> <i class=" icon-remove "></i>Delete Row</button>
-</div>	
-		</form>
 		</div>
+		<div class="portlet-body">
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="tabbable tabbable-custom">
+						<ul class="nav nav-tabs">
+										
+							<li class=""><a href="profile" rel='tab' >Basic</a></li>
+							<li class="active"><a href="family_member_view" rel='tab' >Family Members</a></li> 
+						</ul>
+						<div class="tab-content" style="overflow-x:auto;">
+										<br>
+							<form method="post" id="contact-form" >
+								<div id="error_msg"></div>
+										<br>	
+									<input type="hidden" value="1" id="hid" name="hid_id">
+								<table class="table_1 mobile_table_responsive" width="100%" cellpadding="0"  class="table table-bordered" style="background-color:white;" bordered >
+	
+									<tr >
+										<td  width="20%">
+										<label> &nbsp;Name <span style="color:red;"> * </span></label>
+										<input type="text"   class="span12 m-wrap" name="name1" id="name1" style="font-size:16px;" placeholder="Name*" value="<?php echo @$nam; ?>" >
+
+
+										</td>
+
+										<td width="20%" > 
+
+										<label> &nbsp;Email </label>
+										<input type="text" class=" span12 m-wrap" placeholder="Email Address"  id="email1" style="font-size:16px;" name="email1" >
+										<div id="echo_exit"></div>
+
+
+										</td>
+
+										<td width="10%" > 
+										<label> &nbsp;Mobile  <span style="color:red;"> +91</span></label>
+										<input type="text"   class="span12 m-wrap" placeholder="Mobile No"style="font-size:16px;" id="mobile1" maxlength="10" name="mobile1" >
+
+
+										</td>
+	
+	
+											<td width="10%" >
+
+
+											<label> &nbsp;Age <span style="color:red;"> * <i class=" icon-info-sign tooltips" data-placement="top" data-original-title="No login access/emails are currently provided to users <18 years"> </i> </span> </label>                        
+
+
+											<select class='span12 m-wrap ' data-placeholder='Choose Age Group' name='dob1' id='dob1'>
+											<option value='' style='display:none;'>Age group</option>
+											<option value='1'> 18-24 </option>
+											<option value='2'> 25-34 </option>
+											<option value='3'> 35-44 </option>
+											<option value='4'> 45-54 </option>
+											<option value='5'> 55-64 </option>
+											<option value='6'> 65+</option>
+											</select>                            
+
+											</td>
+
+
+
+											<td width="11%" > 
+											<label> &nbsp;Blood Group </label>
+											<select class=" span12 m-wrap "placeholder=" Blood Group" name="blood_group1" id="blood_group1">
+											<option value="" style="display:none;">Blood Group</option>
+											<option value="1">  A+ </option>
+											<option value="2">  B+ </option>
+											<option value="3">  AB+  </option>
+											<option value="4">  O+  </option>
+											<option value="5">  A- </option>
+											<option value="6">  B- </option>
+											<option value="7">  AB-  </option>
+											<option value="8">  O-  </option>
+											</select>
+
+
+
+											</td>
+
+											<td width="19%" >
+											<label> &nbsp;Relation <span style="color:red;"> * </span></label>
+											<input class="span8 m-wrap " type="text" value="" name="relation1" placeholder="Relationship*" id='relation1'>
+
+											</td>
+											<td  width='10%'>
+											<label> &nbsp;Gender </label>
+											<label class='radio'><input type='radio' class='gen1' name='gen1'  value='1' >Male</label>
+											<label class="radio"><input type='radio' class='gen1' name='gen1'  value='2' >Female</label>
+											</td>
+
+									</tr>
+
+								</table>
+									<div class="form-actions">
+									<button type="submit" class="btn blue" name="flat_add">Submit</button>
+									<button type="button"  class="btn blue add"> <i class="icon-plus"></i> Add Row</button>
+									<button type="button" id="button_remove " class="btn red rem"> <i class=" icon-remove "></i>Delete Row</button>
+									</div>	
+							</form>
+						</div>
 										
 										
-						<div id="show"></div>				
+								<div id="show"></div>				
 										
-									<div style="width:100%;">	
+									<div style="width:100%;overflow-x:auto;">	
 										<table width="100%" class="table  table-bordered" id="sample_2">
-<thead>                                               
+											<thead>                                               
 											   <tr>
 												<td>Sr.no</td>
 												<td>Name</td>
@@ -174,87 +160,87 @@ if(($owner=="yes" and $family_member==1 and $member_type=="member") or ($owner==
 												<td>Blood Group</td>
 												<td>Action</td>
 												</tr>
-												</thead>
-<tbody>
+											</thead>
+											<tbody>
 
-	<?php
-	$i=0;
+											<?php
+											$i=0;
 
-	foreach($result_user as $data){
+											foreach($result_user as $data){
 
-			$i++;
-			$user_name=$data['user']['user_name'];
-			$user_id=$data['user']['user_id'];
-			$mobile=$data['user']['mobile'];
-			$email=$data['user']['email'];
-			$relation=$data['user']['relationship'];
-			$result_user_profile = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_profile_info_via_user_id'),array('pass'=>array($user_id)));
-			 $dob=$result_user_profile[0]['user_profile']['age'];
+											$i++;
+											$user_name=$data['user']['user_name'];
+											$user_id=$data['user']['user_id'];
+											$mobile=$data['user']['mobile'];
+											$email=$data['user']['email'];
+											$relation=$data['user']['relationship'];
+											$result_user_profile = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_profile_info_via_user_id'),array('pass'=>array($user_id)));
+											$dob=$result_user_profile[0]['user_profile']['age'];
 
-			 @$blood_group=$result_user_profile[0]['user_profile']['blood_group']; 
-			 
-				$result_member_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($user_id)));
-				
-				$wing_flat_result= $result_member_info['wing_flat'];
-					foreach($wing_flat_result as $data){
-						$wing_flat=$data;
-					}					
-				if($blood_group==1){ $b_group="A+"; }
-				if($blood_group==2){ $b_group="B+"; }
-				if($blood_group==3){ $b_group="AB+"; }
-				if($blood_group==4){ $b_group="O+"; }
-				if($blood_group==5){ $b_group="A-"; }
-				if($blood_group==6){ $b_group="B-"; }
-				if($blood_group==7){ $b_group="AB-"; }
-				if($blood_group==8){ $b_group="O-"; }
-				if($dob==1){ $dob_group="18-24"; }
-				if($dob==2){ $dob_group="25-34";}
-				if($dob==3){ $dob_group="35-44"; }
-				if($dob==4){ $dob_group="45-54"; }
-				if($dob==5){ $dob_group="55-64";}
-				if($dob==6){ $dob_group="65+";}
-												?>
-						<tr>
+											@$blood_group=$result_user_profile[0]['user_profile']['blood_group']; 
 
-							<td><?php echo $i ; ?></td>
-							<td><?php echo $user_name ; ?></td>
-							<td><?php echo @$wing_flat ; ?></td>
-							<td><?php echo $mobile ; ?></td>
-							<td><?php echo $email ; ?></td>
-							<td><?php echo $relation; ?></td>
-							<td><?php echo $dob_group; ?></td>
-							<td><?php echo @$b_group; ?></td>
-							<td>
+											$result_member_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($user_id)));
 
+											$wing_flat_result= $result_member_info['wing_flat'];
+											foreach($wing_flat_result as $data){
+											$wing_flat=$data;
+											}					
+											if($blood_group==1){ $b_group="A+"; }
+											if($blood_group==2){ $b_group="B+"; }
+											if($blood_group==3){ $b_group="AB+"; }
+											if($blood_group==4){ $b_group="O+"; }
+											if($blood_group==5){ $b_group="A-"; }
+											if($blood_group==6){ $b_group="B-"; }
+											if($blood_group==7){ $b_group="AB-"; }
+											if($blood_group==8){ $b_group="O-"; }
+											if($dob==1){ $dob_group="18-24"; }
+											if($dob==2){ $dob_group="25-34";}
+											if($dob==3){ $dob_group="35-44"; }
+											if($dob==4){ $dob_group="45-54"; }
+											if($dob==5){ $dob_group="55-64";}
+											if($dob==6){ $dob_group="65+";}
+											?>
+										<tr>
 
-							<div class="btn-group">
-							<a class="btn mini blue" href="#" data-toggle="dropdown">
-							Action
-
-							</a>
-							<ul class="dropdown-menu">
-							<li><a href="family_member_add_ajax?con=<?php echo $user_id ; ?>" ><i class="icon-pencil"></i> Edit</a></li>
-
-							<!--<li><a href="#1" role="button" class="dec" atid="<?php echo $user_id ; ?>" ><i class="icon-trash"></i> Deactive</a></li>-->
-							</ul>
-							</div>
+											<td><?php echo $i ; ?></td>
+											<td><?php echo $user_name ; ?></td>
+											<td><?php echo @$wing_flat ; ?></td>
+											<td><?php echo $mobile ; ?></td>
+											<td><?php echo $email ; ?></td>
+											<td><?php echo $relation; ?></td>
+											<td><?php echo $dob_group; ?></td>
+											<td><?php echo @$b_group; ?></td>
+											<td>
 
 
-							</td>
-						</tr>
-  <?php } ?>
-		</tbody>
-	</table>
-	</div>
+											<div class="btn-group">
+											<a class="btn mini blue" href="#" data-toggle="dropdown">
+											Action
+
+											</a>
+											<ul class="dropdown-menu">
+											<li><a href="family_member_add_ajax?con=<?php echo $user_id ; ?>" ><i class="icon-pencil"></i> Edit</a></li>
+
+											<!--<li><a href="#1" role="button" class="dec" atid="<?php echo $user_id ; ?>" ><i class="icon-trash"></i> Deactive</a></li>-->
+											</ul>
+											</div>
+
+
+											</td>
+										</tr>
+								<?php } ?>
+										</tbody>
+									</table>
+								</div>
 	<br><br>
-  </div>
-</div>
- </div>
-</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-</div>
- </div>
-</div>										
+			</div>
+		</div>
+	</div>										
 										
 
 

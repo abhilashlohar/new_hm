@@ -5956,6 +5956,14 @@ function notifications()
 {
 $this->layout="full_blank";
 
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
+
+$this->loadmodel('notification');
+$conditions=array('users' =>array('$in' => array($s_user_id)),'seen_users' =>array('$nin' => array($s_user_id)));
+$order=array('notification.notification_id'=>'DESC');
+$this->set('result_notifications',$this->notification->find('all',array('conditions'=>$conditions,'order'=>$order)));
+
 }
 
 
@@ -5978,17 +5986,15 @@ $this->loadmodel('notification');
 $this->notification->updateAll(array('seen_users'=>1),array('user_id'=>$s_user_id));
 }
 
-function send_notification($icon,$text,$module_id,$element_id,$url,$by_user,$users) 
+function send_notification($icon,$text,$url,$by_user,$users) 
 {
-
-
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 
 $now=date('Y-m-d');
 $seen=array();
 $notification_id=$this->autoincrement('notification','notification_id');
 $this->loadmodel('notification');
-$this->notification->saveAll(array('notification_id' => $notification_id,'icon' => $icon,'module_id' => $module_id,'element_id' => $element_id,'text' => $text, 'url' =>$url, 'by_user' =>$by_user, 'users' =>$users, 'society_id' =>$s_society_id, 'date' =>$now,'seen_users'=>$seen));
+$this->notification->saveAll(array('notification_id' => $notification_id,'icon' => $icon,'text' => $text, 'url' =>$url, 'by_user' =>$by_user, 'users' =>$users, 'society_id' =>$s_society_id, 'date' =>strtotime($now),'seen_users'=>$seen));
 }
 
 

@@ -156,7 +156,6 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 <script>
 $(document).ready(function() {
 	$("#header_task_bar").on("click",function(){
-		alert("<?php echo $webroot_path ; ?>Hms/notifications");
 		$.ajax({
 		   url: "<?php echo $webroot_path ; ?>Hms/notifications",
 		   success: function(data){
@@ -277,19 +276,8 @@ $("#menus_area>li").live('click',function(e){
 								<p>You have 12 pending tasks</p>
 							</li>
 							<div class="scroller" data-height="300px" data-always-visible="1" data-rail-visible="1" id="notification_div">
-							
-							
-							
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">New Discussion Topic Posted by yashraj A-101.</span>
-								<span class="percent">5 mins</span>
-								</span>
-								</a>
-							</li>
-							
-							
+											
+							<div align="center"><br/>Loading...</div>
 							
 							
 							</div>

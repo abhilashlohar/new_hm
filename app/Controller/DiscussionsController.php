@@ -161,7 +161,7 @@ function new_topic(){
 	
 	$s_user_id=$this->Session->read('hm_user_id'); 
 	$s_society_id=$this->Session->read('hm_society_id');
-	
+	$webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'webroot_path')); 
 	
 	if(isset($this->request->data['sub'])){
 		$topic=htmlentities($this->request->data['topic']);
@@ -208,6 +208,8 @@ function new_topic(){
 		$this->loadmodel('discussion_post');
 		$discussion_post_id=$this->autoincrement('discussion_post','discussion_post_id');
 		$this->discussion_post->saveAll(Array( Array("discussion_post_id" => $discussion_post_id, "user_id" => $s_user_id , "society_id" => $s_society_id, "topic" => $topic,"description" => $description, "file" =>$file,"delete" =>"no", "date" =>strtotime($date), "time" => $time, "visible" => $send_to, "sub_visible" => $sub_visible,"users_have_access"=>$users_have_access,"status"=>0))); 
+		
+		$this->send_notification('icon-comments','New Discussion Topic <b>'.$topic.'</b> Posted.',$webroot_path.'Discussions/index',$s_user_id,$users_have_access);
 		
 		$this->loadmodel('society');
 		$conditions=array("society_id"=>$s_society_id);

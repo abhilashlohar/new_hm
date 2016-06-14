@@ -293,7 +293,7 @@ Dropdowns
 .dropdown-menu .active > a:hover {
   text-decoration: none;
   background-image: none;
-  background-color: #eee;
+  background-color: #eee !important;
   color: #333;
   filter:none;
 }

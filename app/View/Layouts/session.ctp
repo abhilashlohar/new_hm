@@ -59,6 +59,15 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 		  text-indent: -9999px;
 		  position:fixed;
 		}
+		.dropdown-menu li > a:hover, 
+		.dropdown-menu .active > a, 
+		.dropdown-menu .active > a:hover {
+		  text-decoration: none;
+		  background-image: none;
+		  background-color: #eee !important;
+		  color: #333;
+		  filter:none;
+		}
 		</style>
 		<style media="print">
 		.hide_at_print {

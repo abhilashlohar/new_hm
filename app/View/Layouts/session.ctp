@@ -257,8 +257,8 @@ $("#menus_area>li").live('click',function(e){
             <!-- END RESPONSIVE MENU TOGGLER -->            
             <!-- BEGIN TOP NAVIGATION MENU -->              
             <ul class="nav pull-right">
-			
-				<li class="dropdown" id="header_task_bar">
+				
+					<li class="dropdown" id="header_task_bar">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<i class="icon-tasks"></i>
 						<span class="badge">5</span>
@@ -267,6 +267,7 @@ $("#menus_area>li").live('click',function(e){
 							<li>
 								<p>You have 12 pending tasks</p>
 							</li>
+							<div class="scroller" data-height="300px" data-always-visible="1" data-rail-visible="1">
 							<li>
 								<a href="#">
 								<span class="task">
@@ -333,6 +334,117 @@ $("#menus_area>li").live('click',function(e){
 								</span>
 								</a>
 							</li>
+							<li>
+								<a href="#">
+								<span class="task">
+								<span class="desc">Web server upgrade</span>
+								<span class="percent">58%</span>
+								</span>
+								<span class="progress progress-info">
+								<span style="width: 58%;" class="bar"></span>
+								</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								<span class="task">
+								<span class="desc">Mobile development</span>
+								<span class="percent">85%</span>
+								</span>
+								<span class="progress progress-success">
+								<span style="width: 85%;" class="bar"></span>
+								</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								<span class="task">
+								<span class="desc">Web server upgrade</span>
+								<span class="percent">58%</span>
+								</span>
+								<span class="progress progress-info">
+								<span style="width: 58%;" class="bar"></span>
+								</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								<span class="task">
+								<span class="desc">Mobile development</span>
+								<span class="percent">85%</span>
+								</span>
+								<span class="progress progress-success">
+								<span style="width: 85%;" class="bar"></span>
+								</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								<span class="task">
+								<span class="desc">Web server upgrade</span>
+								<span class="percent">58%</span>
+								</span>
+								<span class="progress progress-info">
+								<span style="width: 58%;" class="bar"></span>
+								</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								<span class="task">
+								<span class="desc">Mobile development</span>
+								<span class="percent">85%</span>
+								</span>
+								<span class="progress progress-success">
+								<span style="width: 85%;" class="bar"></span>
+								</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								<span class="task">
+								<span class="desc">Web server upgrade</span>
+								<span class="percent">58%</span>
+								</span>
+								<span class="progress progress-info">
+								<span style="width: 58%;" class="bar"></span>
+								</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								<span class="task">
+								<span class="desc">Mobile development</span>
+								<span class="percent">85%</span>
+								</span>
+								<span class="progress progress-success">
+								<span style="width: 85%;" class="bar"></span>
+								</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								<span class="task">
+								<span class="desc">Web server upgrade</span>
+								<span class="percent">58%</span>
+								</span>
+								<span class="progress progress-info">
+								<span style="width: 58%;" class="bar"></span>
+								</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								<span class="task">
+								<span class="desc">Mobile development</span>
+								<span class="percent">85%</span>
+								</span>
+								<span class="progress progress-success">
+								<span style="width: 85%;" class="bar"></span>
+								</span>
+								</a>
+							</li>
+							</div>
 							<li class="external">
 								<a href="#">See all tasks <i class="m-icon-swapright"></i></a>
 							</li>

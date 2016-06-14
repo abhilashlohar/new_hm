@@ -5954,17 +5954,8 @@ $this->set('result_notifications_count',$this->notification->find('count',array(
 
 function notifications() 
 {
-$this->layout='blank';
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$this->layout="full_blank";
 
-$this->loadmodel('notification');
-$conditions=array('users' =>array('$in' => array($s_user_id)),'seen_users' =>array('$nin' => array($s_user_id)));
-$order=array('notification.notification_id'=>'DESC');
-$this->set('result_notification',$this->notification->find('all',array('conditions'=>$conditions,'order'=>$order)));
-
-$this->loadmodel('notification');
-$this->notification->updateAll(array('seen_users'=>1),array('user_id'=>$s_user_id));
 }
 
 

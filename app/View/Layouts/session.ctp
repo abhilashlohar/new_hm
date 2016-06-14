@@ -155,6 +155,14 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
    
 <script>
 $(document).ready(function() {
+	$("#header_task_bar").on("click",function(){
+		$.ajax({
+		   url: "<?php echo $webroot_path ; ?>Hms/notifications",
+		   success: function(data){
+				$("#notification_div").html(data);
+		   }
+		 });
+	})
 
 	$("a[rel='tab']").live('click',function(e){
 		e.preventDefault();
@@ -267,180 +275,22 @@ $("#menus_area>li").live('click',function(e){
 							<li>
 								<p>You have 12 pending tasks</p>
 							</li>
-							<div class="scroller" data-height="300px" data-always-visible="1" data-rail-visible="1">
+							<div class="scroller" data-height="300px" data-always-visible="1" data-rail-visible="1" id="notification_div">
+							
+							
+							
 							<li>
 								<a href="#">
 								<span class="task">
 								<span class="desc">New Discussion Topic Posted by yashraj A-101.</span>
-								<span class="percent">30%</span>
+								<span class="percent">5 mins</span>
 								</span>
 								</a>
 							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Application deployment</span>
-								<span class="percent">65%</span>
-								</span>
-								<span class="progress progress-danger progress-striped active">
-								<span style="width: 65%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Mobile app release</span>
-								<span class="percent">98%</span>
-								</span>
-								<span class="progress progress-success">
-								<span style="width: 98%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Database migration</span>
-								<span class="percent">10%</span>
-								</span>
-								<span class="progress progress-warning progress-striped">
-								<span style="width: 10%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Web server upgrade</span>
-								<span class="percent">58%</span>
-								</span>
-								<span class="progress progress-info">
-								<span style="width: 58%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Mobile development</span>
-								<span class="percent">85%</span>
-								</span>
-								<span class="progress progress-success">
-								<span style="width: 85%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Web server upgrade</span>
-								<span class="percent">58%</span>
-								</span>
-								<span class="progress progress-info">
-								<span style="width: 58%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Mobile development</span>
-								<span class="percent">85%</span>
-								</span>
-								<span class="progress progress-success">
-								<span style="width: 85%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Web server upgrade</span>
-								<span class="percent">58%</span>
-								</span>
-								<span class="progress progress-info">
-								<span style="width: 58%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Mobile development</span>
-								<span class="percent">85%</span>
-								</span>
-								<span class="progress progress-success">
-								<span style="width: 85%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Web server upgrade</span>
-								<span class="percent">58%</span>
-								</span>
-								<span class="progress progress-info">
-								<span style="width: 58%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Mobile development</span>
-								<span class="percent">85%</span>
-								</span>
-								<span class="progress progress-success">
-								<span style="width: 85%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Web server upgrade</span>
-								<span class="percent">58%</span>
-								</span>
-								<span class="progress progress-info">
-								<span style="width: 58%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Mobile development</span>
-								<span class="percent">85%</span>
-								</span>
-								<span class="progress progress-success">
-								<span style="width: 85%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Web server upgrade</span>
-								<span class="percent">58%</span>
-								</span>
-								<span class="progress progress-info">
-								<span style="width: 58%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-								<span class="task">
-								<span class="desc">Mobile development</span>
-								<span class="percent">85%</span>
-								</span>
-								<span class="progress progress-success">
-								<span style="width: 85%;" class="bar"></span>
-								</span>
-								</a>
-							</li>
+							
+							
+							
+							
 							</div>
 							<li class="external">
 								<a href="#">See all tasks <i class="m-icon-swapright"></i></a>

@@ -16,17 +16,18 @@
 	}
 ?>
 
-
+<div class="row-fluid">
+   <div class="span12">
 
 <div style="background-color:#fff;">
 <div style="background-color:#EFEFEF; border-top:1px solid #e6e6e6; border-bottom:1px solid #e6e6e6; padding:10px; box-shadow:5px; font-size:16px; color:#006;">
 Family Member
 </div style="width:100%;">
 <br>
-<div>
+<div style="width:30%; margin-left:30%;" class="family-responsive">
 <form id="contact-form" method="POST" class="" />
 <center>
-<table width="30%">
+<table width="100%">
 <tr>
 <td>
 <div class="control-group">
@@ -106,7 +107,8 @@ Family Member
 
 </div>
 </div>
-
+</div>
+</div>
 
 <script>
 $(document).ready(function(){

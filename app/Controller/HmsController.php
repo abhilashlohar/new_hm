@@ -18872,7 +18872,11 @@ function dob_check()
 function family_member_add_ajax()
 {
 	
-	$this->layout="session";
+	if($this->RequestHandler->isAjax()){
+			$this->layout='blank';
+		}else{
+			$this->layout='session';
+		}
 	$id=(int)$this->request->query('con');
 	$result_user=$this->profile_picture($id);
 	$this->set('result_user',$result_user);

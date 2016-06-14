@@ -181,6 +181,10 @@ end Help desk
 		width:auto !important;
 		float:left !important;
 	}
+	div.family-responsive {
+			width:auto !important;
+			 margin:0px !important;
+		}
 }
 /***
 end Family member

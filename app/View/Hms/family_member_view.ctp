@@ -136,9 +136,9 @@ if(($owner=="yes" and $family_member==1 and $member_type=="member") or ($owner==
 
 								</table>
 									<div class="form-actions">
-									<button type="submit" class="btn blue" name="flat_add">Submit</button>
-									<button type="button"  class="btn blue add"> <i class="icon-plus"></i> Add Row</button>
-									<button type="button" id="button_remove " class="btn red rem"> <i class=" icon-remove "></i>Delete Row</button>
+									<button type="submit" class="btn blue family-space" name="flat_add">Submit</button>
+									<button type="button"  class="btn blue add family-space"> <i class="icon-plus"></i> Add Row</button>
+									<button type="button" id="button_remove " class="btn red rem family-space"> <i class=" icon-remove "></i>Delete Row</button>
 									</div>	
 							</form>
 						</div>

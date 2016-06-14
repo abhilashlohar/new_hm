@@ -185,6 +185,9 @@ end Help desk
 			width:auto !important;
 			 margin:0px !important;
 		}
+		button.family-space{
+			margin-bottom:2px !important;
+		}
 }
 /***
 end Family member

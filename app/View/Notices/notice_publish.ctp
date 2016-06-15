@@ -5,7 +5,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 
 
 
-<div align="center">
+<div align="center" class="mobile-align">
 <a href='<?php echo $webroot_path; ?>Notices/notice_publish' rel='tab' <?php if(empty($blue_cat)){ ?> class="btn yellow " <?php } else { ?> class="btn"  <?php } ?> style="margin-bottom: 2px;">All</a>
 <?php
 foreach($result1 as $data)

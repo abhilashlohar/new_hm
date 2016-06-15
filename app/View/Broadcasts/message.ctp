@@ -2,7 +2,7 @@
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>
 
-<div style="padding:5px;" align="center">
+<div style="padding:5px;" align="center" class="mobile-align">
 <a href="message_view" class="btn blue" rel='tab'>SMS History</a>
 <a href="message" class="btn red" rel='tab'>Send SMS</a>
 </div>

@@ -5,7 +5,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </div>
 
 
-<div style="padding:5px;" align="center" class="hide_at_print">
+<div style="padding:5px;" align="center" class="hide_at_print mobile-align">
 <a href="email_view" rel='tab' class="btn red">Email History</a>
 <a href="email" rel='tab' class="btn blue">Send Email</a>
 </div>

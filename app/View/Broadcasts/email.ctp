@@ -2,7 +2,7 @@
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>
 
-<div style="padding:5px;" align="center">
+<div style="padding:5px;" align="center" class="mobile-align">
 <a href="email_view" rel='tab' class="btn blue">Email History</a>
 <a href="email" rel='tab' class="btn red">Send Email</a>
 </div>

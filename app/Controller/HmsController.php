@@ -8063,7 +8063,7 @@ function dashboard(){
 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	
-	
+	  
 	   
 		//////////////Help-desk  last 3 tickets///////////////// 
 		$this->loadmodel('help_desk');
@@ -8197,6 +8197,17 @@ function dashboard(){
 			$ledger_name=trim($data['ledger_account']['ledger_name']);
 			$this->ledger_account->updateAll(array('auto_id'=>$auto_id,'group_id'=>$group_id,'ledger_name'=>$ledger_name),array('auto_id'=>$auto_id));
 	}
+	
+	
+	$this->loadmodel("ledger_account");
+		$result_ledger_account=$this->ledger_account->find('all');
+		foreach($result_ledger_account as $data){
+				$auto_id=(int)$data['ledger_account']['auto_id'];
+				$group_id=$data['ledger_account']['group_id']; 
+				
+				$this->loadmodel("ledger_account");
+				$this->ledger_account->updateAll(array('group_id'=>(int)$group_id),array('auto_id'=>$auto_id));
+    		}
 		*/
 		
 	$this->loadmodel('test');

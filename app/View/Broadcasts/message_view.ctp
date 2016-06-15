@@ -5,7 +5,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </div>
 
 
-<div style="padding:5px;" align="center" class="hide_at_print">
+<div style="padding:5px;" align="center" class="hide_at_print mobile-align">
 <a href="message_view" class="btn red" rel='tab'>SMS History</a>
 <a href="message" class="btn blue" rel='tab'>Send SMS</a>
 </div>

@@ -18,10 +18,10 @@ function auto_backup_data(){
 		$to="rohitkumarjoshi43@gmail.com";
 		$from="alerts@housingmatters.in";
 		$from_name="Housingmatters";						
-		$subject="Auto Backup";
+		$subject="Backup";
 		$message_web="message here";
 
-		$file='C:\xampp\htdocs\backup 12-5-2016 4_58.zip';
+		$file='/var/www/html/Housingmatters/app/webroot/dump.zip';
 		
 		$mail = new PHPMailer();
 		$mail->IsSMTP();

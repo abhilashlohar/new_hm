@@ -36,6 +36,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 			<th><?php echo $flat_type_name; ?></th>
 			<?php if(!empty($income_heads)){ foreach($income_heads as $income_head){
 				$rate_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'get_rates_via_flat_type_id_and_income_head_id'), array('pass' => array($flat_type_id,$income_head)));
+				
 				$rate_type=@$rate_info[0]["rate_card"]["rate_type"];
 				$rate=@$rate_info[0]["rate_card"]["rate"];?>
 			<td>

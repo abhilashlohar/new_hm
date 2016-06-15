@@ -171,14 +171,16 @@ function income_head_name_via_income_head_id($income_head_id){
 }
 
 function get_rates_via_flat_type_id_and_income_head_id($flat_type_id,$income_head_id){
+	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('rate_card');
-	$conditions=array("flat_type_id" => $flat_type_id,"income_head_id" => $income_head_id);
+	$conditions=array("flat_type_id" => $flat_type_id,"income_head_id" => $income_head_id,'society_id'=>$s_society_id);
 	return $this->rate_card->find('all',array('conditions'=>$conditions));
 }
 
 function get_rates_via_flat_type_id_in_noc_rate($flat_type_id){
+	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('noc_rate');
-	$conditions=array("flat_type_id"=>$flat_type_id);
+	$conditions=array("flat_type_id"=>$flat_type_id,'society_id'=>$s_society_id);
 	return $this->noc_rate->find('all',array('conditions'=>$conditions));
 }
 

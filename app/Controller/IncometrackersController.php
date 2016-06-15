@@ -5503,7 +5503,7 @@ function master_rate_card(){
 function auto_save_rate_card($flat_type_id=null,$income_head_id=null,$rate_type=null,$rate=null){
 	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('rate_card');
-	$conditions=array("flat_type_id" => (int)$flat_type_id,"income_head_id" => (int)$income_head_id);
+	$conditions=array("flat_type_id" => (int)$flat_type_id,"income_head_id" => (int)$income_head_id,'society_id'=>$s_society_id);
 	$this->rate_card->deleteAll($conditions);
 
 	$this->rate_card->saveAll(array("flat_type_id" => (int)$flat_type_id,"income_head_id" => (int)$income_head_id,"rate_type" => (int)$rate_type,"rate"=>$rate,"society_id"=>$s_society_id));

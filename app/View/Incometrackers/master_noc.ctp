@@ -77,6 +77,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		    
 			
 $rate_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'get_rates_via_flat_type_id_in_noc_rate'), array('pass' => array($flat_type_id)));
+
 $rate_type=@$rate_info[0]["noc_rate"]["rate_type"];
 $rate=@$rate_info[0]["noc_rate"]["rate"];
 $heads=@$rate_info[0]["noc_rate"]["income_heads"]; 

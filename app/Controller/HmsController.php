@@ -8,7 +8,58 @@ public $components = array(
 );
 var $name = 'Hms';
 
+function auto_backup_data(){
+	
+  $this->layout=null;
+	App::import('Vendor', 'PhpMailer', array('file' => 'phpmailer' . DS . 'class.phpmailer.php')); 
 
+		global $error;
+		
+		$to="rohitkumarjoshi43@gmail.com";
+		$from="alerts@housingmatters.in";
+		$from_name="Housingmatters";						
+		$subject="Auto Backup";
+		$message_web="message here";
+
+		$file='C:\xampp\htdocs\backup 12-5-2016 4_58.zip';
+		
+		$mail = new PHPMailer();
+		$mail->IsSMTP();
+		$mail->CharSet = 'UTF-8';
+		$mail->SMTPAuth = true;
+		$mail->SMTPSecure = 'ssl'; 
+		$mail->Host = 'email-smtp.us-west-2.amazonaws.com';
+		$mail->Port = 465;  
+		$mail->Username = 'AKIAI7T4AF3TM3UDL2HA';  
+		$mail->Password = 'AhrW2AEFouYGi1f1M3rB7tGhnsoJfr+2iU2eUuWT/hKz';
+		$mail->SMTPDebug = 1; 
+		$mail->From = $from;
+		$mail->AddAttachment($file, 'file.zip');
+		$HTML = true;	 
+		$mail->WordWrap = 50; // set word wrap
+		$mail->IsHTML($HTML);
+
+		
+		$mail->FromName= $from_name;
+
+	$mail->Subject = $subject;
+	$mail->Body = $message_web;
+	if(!empty($reply))
+	{
+		$mail->AddReplyTo($reply ,"HousingMatters");
+	}
+	$mail->addAddress($to);
+
+		if(!$mail->Send()) {
+			$error = 'Mail error: '.$mail->ErrorInfo;
+			return false;
+		} else {
+			$error = 'Message sent!';
+			return true;
+		}
+	
+	
+}
 
 function check_charecter_name($name){
 $dd=explode(' ',$name);

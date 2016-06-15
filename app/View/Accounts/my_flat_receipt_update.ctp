@@ -203,7 +203,7 @@ ar.push([transaction_date,mode,cheque_no,cheque_date,drawn_bank,branch,date,utr,
 			url: "<?php echo $webroot_path; ?>Accounts/my_flat_receipt_update_json?q="+myJsonString,
 			dataType:'json',
 			}).done(function(response){
-				 //alert(response);
+				
 				if(response.type == 'error'){
 			
 			 $("#validdn").html('<div class="alert alert-error" style="color:red;">'+response.text+'</div>');

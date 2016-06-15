@@ -5762,19 +5762,20 @@ foreach($myArray as $child)
 	$cursor = $this->financial_year->find('all',array('conditions'=>$conditions));
 	$abc = 555;
 	foreach($cursor as $collection){
-	$from = $collection['financial_year']['from'];
-	$to = $collection['financial_year']['to'];
-	$from1 = date('Y-m-d',($from));
-	$to1 = date('Y-m-d',($to));
-	$from2 = strtotime($from1);
-	$to2 = strtotime($to1);
+	 $from = $collection['financial_year']['from'];
+	 $to = $collection['financial_year']['to'];
+	 //$from1 = date('Y-m-d',($from));
+	 //$to1 = date('Y-m-d',($to));
+	// $from2 = strtotime($from1);
+	// $to2 = strtotime($to1);
 	$transaction1 = date('Y-m-d',strtotime($TransactionDate));
 	$transaction2 = strtotime($transaction1);
-		if($transaction2 <= $to2 && $transaction2 >= $from2){
+		if($transaction2 <= $to && $transaction2 >= $from){
 		$abc = 5;
 		break;
 		}	
 	}
+	
 	if($abc == 555){
 	$output=json_encode(array('type'=>'error','text'=>'Transaction date is not in open Financial Year '));
 	die($output);

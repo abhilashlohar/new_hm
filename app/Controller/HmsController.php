@@ -15,11 +15,11 @@ function auto_backup_data(){
 
 		global $error;
 		
-		$to="rohitkumarjoshi43@gmail.com";
+		$to="abhilashlohar01@gmail";
 		$from="alerts@housingmatters.in";
 		$from_name="Housingmatters";						
-		$subject="Backup";
-		$message_web="message here";
+		$subject="Backup of database";
+		$message_web="Backup of HousingMatters database";
 
 		$file='/var/www/html/Housingmatters/app/webroot/dump.zip';
 		

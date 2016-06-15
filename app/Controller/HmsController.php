@@ -28183,7 +28183,11 @@ function menus_as_per_user_rights(){
 			<i class="icon-home"></i>Logins
 			</a>					
 		</li>
-		
+		<li>
+			<a href="<?php echo $webroot_path; ?>app/webroot/backup_db.php">
+			<i class="icon-home"></i>Backup
+			</a>					
+		</li>
 		<?php
 	}
 	if($user_type=="hm_child")

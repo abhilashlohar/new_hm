@@ -1,6 +1,6 @@
 <?php
 
 
-$output1 = shell_exec('C:/xampp/mysql/bin/mysqldump -u root -h localhost cp > C:\xampp\htdocs\cp\app\webroot\backup\cp.sql 2>&1');
+$output1 = shell_exec('/usr/bin/mongodump -h 52.74.61.249 new_version > /var/www/html/Housingmatters/app/webroot 2>&1');
 echo "Back up comppleted";
 ?>

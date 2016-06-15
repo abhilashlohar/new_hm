@@ -5967,8 +5967,46 @@ $conditions=array('users' =>array('$in' => array($s_user_id)),'seen_users' =>arr
 $order=array('notification.notification_id'=>'DESC');
 $this->set('result_notifications',$this->notification->find('all',array('conditions'=>$conditions,'order'=>$order)));
 
+
 }
 
+function mark_all_as_read_notifications(){
+	$this->layout="full_blank";
+
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+
+	$this->loadmodel('notification');
+	$conditions=array('users' =>array('$in' => array($s_user_id)),'seen_users' =>array('$nin' => array($s_user_id)));
+	$result_notifications=$this->notification->find('all',array('conditions'=>$conditions));
+	
+	foreach($result_notifications as $notification){
+		$notification_id=$notification["notification"]["notification_id"];
+		
+		$seen_users=@$notification['notification']['seen_users'];
+	
+		if(is_array($seen_users)){
+			
+			if(sizeof($seen_users)==0)	{ $seen_users=array(); }
+
+			if (!in_array($s_user_id, $seen_users)){
+				
+				if(sizeof($seen_users)==0)
+				{
+				$seen_users[]=$s_user_id;
+				
+				}
+				else
+				{
+				$t=$s_user_id;
+				array_push($seen_users,$t);
+				}
+				
+				$this->notification->updateAll(array('seen_users'=>$seen_users),array('notification.notification_id'=>$notification_id));
+			}
+		}
+	}
+}
 
 function see_all_notifications(){
 		if($this->RequestHandler->isAjax()){

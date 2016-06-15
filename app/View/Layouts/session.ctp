@@ -68,6 +68,9 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 		  color: #333;
 		  filter:none;
 		}
+		#mark_all:hover{
+			font-weight: 400;
+		}
 		</style>
 		<style media="print">
 		.hide_at_print {
@@ -173,6 +176,17 @@ $(document).ready(function() {
 		   }
 		 });
 	})
+	
+	$("#mark_all").live("click",function(){
+	
+		$.ajax({
+		   url: "<?php echo $webroot_path ; ?>Hms/mark_all_as_read_notifications",
+		   success: function(data){
+				//alert(data);
+		   }
+		 });
+	})
+	
 	
 	setInterval(function(){ 
 	   $.ajax({
@@ -287,14 +301,15 @@ $("#menus_area>li").live('click',function(e){
             <!-- BEGIN TOP NAVIGATION MENU -->              
             <ul class="nav pull-right">
 				
-					<!--<li class="dropdown" id="header_task_bar">
+					<li class="dropdown" id="header_task_bar">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<i class="icon-tasks"></i>
+						<i class="icon-bell"></i>
 						<span class="badge" id="notification_signer"></span>
 						</a>
 						<ul class="dropdown-menu extended tasks">
 							<li>
-								<p><i class="icon-bell"></i> Notifications</p>
+								<p><i class="icon-bell"></i> Notifications <span class="pull-right" id="mark_all" style="cursor: pointer;font-size: 12px;"> Mark All</span></p>
+								
 							</li>
 							<div class="scroller" data-height="300px" data-always-visible="1" data-rail-visible="1" id="notification_div">
 											
@@ -306,7 +321,7 @@ $("#menus_area>li").live('click',function(e){
 								<a href="<?php echo $webroot_path; ?>Hms/see_all_notifications">See all tasks <i class="m-icon-swapright"></i></a>
 							</li>
 						</ul>
-					</li>-->
+					</li>
 			
 			
                <!-- BEGIN USER LOGIN DROPDOWN -->

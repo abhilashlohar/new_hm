@@ -15,7 +15,7 @@ function auto_backup_data(){
 
 		global $error;
 		
-		$to="abhilashlohar01@gmail";
+		$to="abhilashlohar01@gmail.com";
 		$from="alerts@housingmatters.in";
 		$from_name="Housingmatters";						
 		$subject="Backup of database";

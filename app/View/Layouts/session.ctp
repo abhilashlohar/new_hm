@@ -173,6 +173,17 @@ $(document).ready(function() {
 		   }
 		 });
 	})
+	
+	setInterval(function(){ 
+	   $.ajax({
+		   url: "<?php echo $webroot_path ; ?>Hms/notifications_count/",
+		   success: function(data){
+				$("#notification_signer").html(data);
+		   }
+		 });
+	}, 1000);
+	
+	
 
 	$("a[rel='tab']").live('click',function(e){
 		e.preventDefault();
@@ -279,7 +290,7 @@ $("#menus_area>li").live('click',function(e){
 					<li class="dropdown" id="header_task_bar">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<i class="icon-tasks"></i>
-						<span class="badge">5</span>
+						<span class="badge" id="notification_signer"></span>
 						</a>
 						<ul class="dropdown-menu extended tasks">
 							<li>

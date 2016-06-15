@@ -2729,7 +2729,7 @@ $this->redirect(array('action' => 'index'));
 
 function beforeFilter()
 {
-Configure::write('debug', 0);
+//Configure::write('debug', 0);
 }
 
 
@@ -5967,23 +5967,21 @@ $this->set('result_notifications',$this->notification->find('all',array('conditi
 }
 
 
-function see_all_notifications() 
-{
-if($this->RequestHandler->isAjax()){
-	$this->layout='blank';
-	}else{
-	$this->layout='session';
-	}
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+function see_all_notifications(){
+		if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+		}else{
+		$this->layout='session';
+		}
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 
-$this->loadmodel('notification');
-$conditions=array('users' =>array('$in' => array($s_user_id)),'seen_users' =>array('$nin' => array($s_user_id)));
-$order=array('notification.notification_id'=>'DESC');
-$this->set('result_notification',$this->notification->find('all',array('conditions'=>$conditions,'order'=>$order)));
-
-$this->loadmodel('notification');
-$this->notification->updateAll(array('seen_users'=>1),array('user_id'=>$s_user_id));
+	$this->loadmodel('notification');
+	$conditions=array('users' =>array('$in' => array($s_user_id)),'seen_users' =>array('$nin' => array($s_user_id)));
+	$order=array('notification.notification_id'=>'DESC');
+	$result_notifications=$this->notification->find('all',array('conditions'=>$conditions,'order'=>$order));
+	$this->set('result_notifications',$result_notifications);
+	
 }
 
 function send_notification($icon,$text,$url,$by_user,$users) 
@@ -5998,15 +5996,14 @@ $this->notification->saveAll(array('notification_id' => $notification_id,'icon' 
 }
 
 
-function seen_notification($module_id,$element_id) 
+function seen_notification($notification_id) 
 {
-	$module_id=(int)$module_id;
-	$element_id=(int)$element_id;
-	$s_society_id=$this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$notification_id=(int)$notification_id;
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 
 	$this->loadmodel('notification');
-	$conditions=array("module_id" => $module_id,"element_id" => $element_id);
+	$conditions=array("notification_id" => $notification_id);
 	$notification_result=$this->notification->find('all', array('conditions' => $conditions));
 	
 	
@@ -6032,7 +6029,7 @@ function seen_notification($module_id,$element_id)
 		}
 		
 		
-		$this->notification->updateAll(array('seen_users'=>$seen_users),array('notification.module_id'=>$module_id,'notification.element_id'=>$element_id));
+		$this->notification->updateAll(array('seen_users'=>$seen_users),array('notification.notification_id'=>$notification_id));
 	}
 	
 	}

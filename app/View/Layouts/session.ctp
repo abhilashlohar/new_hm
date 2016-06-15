@@ -163,6 +163,16 @@ $(document).ready(function() {
 		   }
 		 });
 	})
+	
+	$(".notification_tab").live("click",function(){
+		var notification_id=$(this).attr("notification_id");
+		$.ajax({
+		   url: "<?php echo $webroot_path ; ?>Hms/seen_notification/"+notification_id,
+		   success: function(data){
+				
+		   }
+		 });
+	})
 
 	$("a[rel='tab']").live('click',function(e){
 		e.preventDefault();
@@ -273,7 +283,7 @@ $("#menus_area>li").live('click',function(e){
 						</a>
 						<ul class="dropdown-menu extended tasks">
 							<li>
-								<p>You have 12 pending tasks</p>
+								<p><i class="icon-bell"></i> Notifications</p>
 							</li>
 							<div class="scroller" data-height="300px" data-always-visible="1" data-rail-visible="1" id="notification_div">
 											
@@ -282,7 +292,7 @@ $("#menus_area>li").live('click',function(e){
 							
 							</div>
 							<li class="external">
-								<a href="#">See all tasks <i class="m-icon-swapright"></i></a>
+								<a href="<?php echo $webroot_path; ?>Hms/see_all_notifications">See all tasks <i class="m-icon-swapright"></i></a>
 							</li>
 						</ul>
 					</li>

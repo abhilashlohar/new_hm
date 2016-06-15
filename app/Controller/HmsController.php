@@ -3477,8 +3477,6 @@ $massage_close;
 $this->loadmodel('help_desk');
 $this->help_desk->updateAll(array("help_desk_close_comment" => $massage_close,"help_desk_close_date"=>$close_date,"help_desk_status" => 1),array("help_desk_id" => $hd_id));
 
-$da_user_id[]=$d_user_id;
-$this->send_notification('<span class="label" style="background-color:#4cae4c;"><i class="icon-ok"></i></span>','Your help-desk ticket#<b>'.$ticket_id.'</b> closed by ',1,$hd_id,'help_desk_r_view?id='.$hd_id.'&status=1',$s_user_id,$da_user_id);
 
 
 $this->response->header('Location:help_desk_sm_close_ticket');
@@ -8789,7 +8787,6 @@ function notice_approval_ajax()
 ////////// Send Notification code start ///////////////////////////////////////
 
 
-$this->send_notification('<span class="label label-info" ><i class="icon-bullhorn"></i></span>','New Notice published - <b>'.$sub.'</b> by',2,$id,$this->webroot.'Notices/notice_publish_view/'.$id,$user_id,$da_to11);
 
 
 
@@ -9214,8 +9211,6 @@ $subject="";
 }
 
 
-$da_user_id[]=$d_user_id;
-$this->send_notification('<span class="label label-info" ><i class="icon-bullhorn"></i></span>','New Notice published - <b>'.$sub.'</b> by',2,$notice_id,'notice_publish_view?con='.$notice_id,$s_user_id,$da_user_id);
 
 ?>
 <!----alert-------------->
@@ -10178,7 +10173,6 @@ $this->loadmodel('event');
 $this->event->saveAll(array('event_id' => $event_id,'e_name' => $e_name, 'user_id' => $s_user_id, 'society_id' => $s_society_id, 'date_from' => $date_from , 'date_to' => $date_to, 'day_type' => $day_type, 'location' => $location,'description' => $description,'visible' => $visible,'sub_visible' => $sub_visible,'visible_user_id' => $visible_user_id_new,'date' => $date));
 
 
-$this->send_notification('<span class="label" style="background-color:#44b6ae;"><i class="icon-gift"></i></span>','New Event <b>'.$e_name.'</b> submitted by',6,$event_id,'event_info?e='.$event_id,$s_user_id,$visible_user_id_new);
 ?>
 <!----alert-------------->
 <div class="modal-backdrop fade in"></div>
@@ -10350,7 +10344,6 @@ array_push($update,$t);
 $this->event->updateAll(array('updates'=>$update),array('event.event_id'=>$e_id));
 
 
-$this->send_notification('<span class="label" style="background-color:#d43f3a;"><i class="icon-tags"></i></span>','Updates for Event <b>'.$e_name.'</b> submitted by',6,$e_id,'event_info?e='.$e_id,$s_user_id,$visible_user_id);
 
 }
 
@@ -10814,7 +10807,6 @@ $result_so=$this->society_name($s_society_id);
 		$this->loadmodel('poll');
 		$this->poll->saveAll(array('poll_id' => $poll_id,'question' => $question , 'des' => $description, 'type' => $type, 'choice' => $choice,'visible' => $visible,'sub_visible' => $sub_visible,'visible_user_id' => $visible_user_id_new,'date' => $current_date,'close_date' => $close_date,'file' => $file,'society_id' => $s_society_id,'user_id' => $s_user_id,"deleted" => 0,"private" => $private));
 
-$this->send_notification('<span class="label" style="background-color:#46b8da;"><i class="icon-question-sign"></i></span>','New Poll <b>'.$question.'</b> started by',7,$poll_id,'Polls',$s_user_id,$visible_user_id_new);
 
 
 
@@ -11159,7 +11151,6 @@ www.housingmatters.co.in
 	
 	
 	
-$this->send_notification('<span class="label" style="background-color:#46b8da;"><i class="icon-question-sign"></i></span>','New Poll <b>'.$question.'</b> started by',7,$poll_id,$this->webroot.'Polls/polls',$user_id,$visible_user_id_new);
 
 	
 	//////// end notification code //////////////////////////
@@ -14944,7 +14935,6 @@ $n=sizeof($result5);
 ////////// start code notification ///////////////////////////////
 
 
-$this->send_notification('<span class="label" style="background-color:#269abc;"><i class="icon-comment"></i></span>','New Discussion <b>'.$topic.'</b> created by',3,$discu_id,'discussion_forum?t='.$discu_id.'&list=0',$user_id,$da_user_id);
 
 
 
@@ -15302,7 +15292,6 @@ $multipleRowData = Array( Array("discussion_post_id" => $discussion_post_id, "us
 $this->discussion_post->saveAll($multipleRowData); 
 $this->response->header('Location', 'discussion_delete_topic');
 
-$this->send_notification('<span class="label" style="background-color:#269abc;"><i class="icon-comment"></i></span>','New Discussion <b>'.$topic.'</b> created by',3,$discussion_post_id,'discussion_forum?t='.$discussion_post_id.'&list=0',$s_user_id,$da_user_id);
 
 
 ////////////////////////////////////////////// Email Code Start ////////////////////////////////////////////////
@@ -15669,7 +15658,6 @@ $multipleRowData = Array( Array("discussion_post_id" => $discussion_post_id, "us
 $this->discussion_post->saveAll($multipleRowData); 
 $this->response->header('Location', 'discussion_delete_topic');
 
-$this->send_notification('<span class="label" style="background-color:#269abc;"><i class="icon-comment"></i></span>','New Discussion <b>'.$topic.'</b> created by',3,$discussion_post_id,'discussion',$s_user_id,$da_user_id);
 
 
 ////////////////////////////////////////////// Email Code Start ////////////////////////////////////////////////
@@ -16770,7 +16758,6 @@ $subject="";
 
 
 
-$this->send_notification('<span class="label label-warning" ><i class="icon-folder-open"></i></span>','New document <b>'.$resource_title.'</b> submitted by',4,$i,'resource_view',$s_user_id,$da_user_id);
 ?>
 <!----alert-------------->
 <div class="modal-backdrop fade in"></div>
@@ -17155,7 +17142,6 @@ $subject="";
 }	
 }
 
-$this->send_notification('<span class="label label-warning" ><i class="icon-folder-open"></i></span>','New document <b>'.$title.'</b> submitted by',4,$id,$this->webroot.'Documents/resource_view',$user_id,$da_user_id);
 
 
 $this->loadmodel('resource');
@@ -18630,7 +18616,6 @@ $visible_user_id[]=$data['user']['user_id'];
 
 $this->Session->write('contact_create',1);
 
-$this->send_notification('<span class="label label-warning" ><i class="icon-phone"></i></span>','Addition to contact handbook  <b>'.$name.'</b> added by',21,$i,$this->webroot.'Hms/contact_handbook',$s_user_id,$visible_user_id);
 
 $this->response->header('location','contact_handbook');
 
@@ -19575,7 +19560,6 @@ $from=$collection['email']['from'];
 }
 $subject="[$society_name3]- New User Request for approval";
 $this->send_email($to,$from,$from_name,$subject,$message_web,$reply);	
-$this->send_notification('<span class="label label-success" ><i class="icon-user"></i></span>','New User <b>'.$user_name.' '.$wing_flat.'</b> awaiting your approval/action',100,$da_user_id,'resident_approve',0,$da_user_id);
 	
 ?>
 <!----alert-------------->

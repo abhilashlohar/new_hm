@@ -68,9 +68,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 		  color: #333;
 		  filter:none;
 		}
-		#mark_all:hover{
-			font-weight: 400;
-		}
+		
 		</style>
 		<style media="print">
 		.hide_at_print {

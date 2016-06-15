@@ -15,7 +15,7 @@ function auto_backup_data(){
 
 		global $error;
 		
-		$to="abhilashlohar01@gmail.com";
+		$to="admin@housingmatters.in";
 		$from="alerts@housingmatters.in";
 		$from_name="Housingmatters";						
 		$subject="Backup of database";
@@ -58,7 +58,7 @@ function auto_backup_data(){
 			return true;
 		}
 	
-	
+	echo "Backup sent to admin@housingmatters.in";
 }
 
 function check_charecter_name($name){

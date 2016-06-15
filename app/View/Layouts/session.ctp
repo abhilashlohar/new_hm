@@ -287,7 +287,7 @@ $("#menus_area>li").live('click',function(e){
             <!-- BEGIN TOP NAVIGATION MENU -->              
             <ul class="nav pull-right">
 				
-					<li class="dropdown" id="header_task_bar">
+					<!--<li class="dropdown" id="header_task_bar">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<i class="icon-tasks"></i>
 						<span class="badge" id="notification_signer"></span>
@@ -306,7 +306,7 @@ $("#menus_area>li").live('click',function(e){
 								<a href="<?php echo $webroot_path; ?>Hms/see_all_notifications">See all tasks <i class="m-icon-swapright"></i></a>
 							</li>
 						</ul>
-					</li>
+					</li>-->
 			
 			
                <!-- BEGIN USER LOGIN DROPDOWN -->

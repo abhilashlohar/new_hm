@@ -22,17 +22,16 @@ foreach($result_society as $data){
 
 
 $nnn=55; 
-
 	if(!empty($flat_type_idss)){
 	foreach($flat_type_idss as $flat_type_id){
-	$noc_card_count = $this->requestAction(array('controller' => 'Fns', 'action' => 'noc_rate_info_via_flat_type_id'),array('pass'=>array((int)$flat_type_id)));  
-		
+	 $noc_card_count = $this->requestAction(array('controller' => 'Fns', 'action' => 'noc_rate_info_via_flat_type_id'),array('pass'=>array((int)$flat_type_id))); 
+
 		 if($noc_card_count == 0)
 		 {
 			$nnn=555;
 			break;		
 		 }		 
-	}}
+	} }
 
 
 	 

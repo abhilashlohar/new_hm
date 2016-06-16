@@ -105,6 +105,8 @@ function submit_comment(){
 		$discussion_comment_id=$this->autoincrement('discussion_comment','discussion_comment_id');
 		$this->loadmodel('discussion_comment');
 		$this->discussion_comment->saveAll(Array( Array("discussion_comment_id" => $discussion_comment_id, "user_id" => $s_user_id , "society_id" => $s_society_id, "comment" => $comment_box,"discussion_post_id" => $post_id, "delete_id" =>0, "date" =>$date, "time" => $time, "color" => $color_in))); 
+		
+		$this->send_notification('icon-comment-alt','New Discussion Topic <b>'.$topic.'</b> Posted.',$webroot_path.'Discussions/index',$s_user_id,$users_have_access);
 	}
 }
 
@@ -209,7 +211,7 @@ function new_topic(){
 		$discussion_post_id=$this->autoincrement('discussion_post','discussion_post_id');
 		$this->discussion_post->saveAll(Array( Array("discussion_post_id" => $discussion_post_id, "user_id" => $s_user_id , "society_id" => $s_society_id, "topic" => $topic,"description" => $description, "file" =>$file,"delete" =>"no", "date" =>strtotime($date), "time" => $time, "visible" => $send_to, "sub_visible" => $sub_visible,"users_have_access"=>$users_have_access,"status"=>0))); 
 		
-		$this->send_notification('icon-comments','New Discussion Topic <b>'.$topic.'</b> Posted.',$webroot_path.'Discussions/index',$s_user_id,$users_have_access);
+		
 		
 		$this->loadmodel('society');
 		$conditions=array("society_id"=>$s_society_id);
@@ -338,6 +340,9 @@ function new_topic(){
 				$this->send_email($email,$from,$from_name,$subject,$message_web,$reply);
 			}
 		}
+		
+		$this->send_notification('icon-comments','New Discussion: <b>'.$topic.'</b> by '.$user_name_post,$webroot_path.'Discussions/index',$s_user_id,$users_have_access);
+		
 		$this->redirect(array('controller' => 'Discussions','action' => 'index'));
 	}
 }

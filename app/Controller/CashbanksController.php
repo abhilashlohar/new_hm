@@ -4884,21 +4884,21 @@ function bank_payment_update($auto_id=null)
 
 if($ledger_account_type == 1){
 	$this->loadmodel('ledger');
-	$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"debit"=>$amount,"ledger_account_id"=>15,"ledger_sub_account_id"=>$ledger_account_id),array("society_id"=>$s_society_id,"element_id"=>$element_id,"credit" =>null));
+	$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"debit"=>$amount,"ledger_account_id"=>15,"ledger_sub_account_id"=>$ledger_account_id),array("table_name"=>"cash_bank","society_id"=>$s_society_id,"element_id"=>$element_id,"credit" =>null));
 }
 else
 {
 $this->loadmodel('ledger');
-$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"debit"=>$amount,"ledger_account_id"=>$ledger_account_id,"ledger_sub_account_id"=>null),array("society_id"=>$s_society_id,"element_id"=>$element_id,"credit" =>null));
+$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"debit"=>$amount,"ledger_account_id"=>$ledger_account_id,"ledger_sub_account_id"=>null),array("table_name"=>"cash_bank","society_id"=>$s_society_id,"element_id"=>$element_id,"credit" =>null));
 }
 
 $this->loadmodel('ledger');
-$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"credit"=>$total_tds_amount,"ledger_sub_account_id"=>$bank_account),array("society_id"=>$s_society_id,"element_id"=>$element_id,"debit"=>null,"ledger_account_id"=>33));
+$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"credit"=>$total_tds_amount,"ledger_sub_account_id"=>$bank_account),array("table_name"=>"cash_bank","society_id"=>$s_society_id,"element_id"=>$element_id,"debit"=>null,"ledger_account_id"=>33));
 
 if($tds_amount > 0){
 $sub_account_id_t = 16;
 $this->loadmodel('ledger');
-$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"credit"=>$tds_amount,"ledger_sub_account_id"=>null),array("society_id"=>$s_society_id,"element_id"=>$element_id,"debit"=>null,"ledger_account_id"=>16));
+$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"credit"=>$tds_amount,"ledger_sub_account_id"=>null),array("table_name"=>"cash_bank","society_id"=>$s_society_id,"element_id"=>$element_id,"debit"=>null,"ledger_account_id"=>16));
 }
 $this->Session->write('bank_payment_update', 1);
 $this->redirect(array('controller' => 'Cashbanks','action' => 'bank_payment_view'));

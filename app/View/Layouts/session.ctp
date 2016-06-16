@@ -301,9 +301,9 @@ $("#menus_area>li").live('click',function(e){
             <!-- END RESPONSIVE MENU TOGGLER -->            
             <!-- BEGIN TOP NAVIGATION MENU -->              
             <ul class="nav pull-right">
-				
+				<a href="#" id="header_task_bar" >notification</a>
 					<li class="dropdown" >
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="header_task_bar">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" >
 						<i class="icon-bell"></i>
 						<span class="badge" id="notification_signer"></span>
 						</a>

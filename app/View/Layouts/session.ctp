@@ -190,14 +190,8 @@ $(document).ready(function() {
 	   $.ajax({
 		   url: "<?php echo $webroot_path ; ?>Hms/notifications_count/",
 		   success: function(data){
-			   if(data!=""){
-					var q=$("#notification_signer").html();
-					if(q<data){
-						$("#notification_signer").html(data);
-						$('<audio id="chatAudio"><source src="<?php echo $webroot_path ; ?>app/webroot/notification-sound.mp3" type="audio/wav"></audio>').appendTo('body');
-						$('#chatAudio')[0].play();
-					}
-			   }
+		   $("#notification_signer").html(data);
+			   
 		   }
 		 });
 	}, 1000);

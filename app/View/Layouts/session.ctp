@@ -156,7 +156,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
    
 <script>
 $(document).ready(function() {
-	$("#header_task_bar").on("click",function(){
+	$(".header_task_bar").on("click",function(){
 	alert();
 		$.ajax({
 		   url: "<?php echo $webroot_path ; ?>Hms/notifications",
@@ -301,11 +301,11 @@ $("#menus_area>li").live('click',function(e){
             <!-- END RESPONSIVE MENU TOGGLER -->            
             <!-- BEGIN TOP NAVIGATION MENU -->              
             <ul class="nav pull-right">
-				<a href="#" id="header_task_bar" >notification</a>
-					<li class="dropdown" >
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" >
-						<i class="icon-bell"></i>
-						<span class="badge" id="notification_signer"></span>
+				<a href="#" class="header_task_bar" >notification</a>
+					<li class="dropdown header_task_bar" >
+						<a href="#" class="dropdown-toggle header_task_bar" data-toggle="dropdown" >
+						<i class="icon-bell header_task_bar"></i>
+						<span class="badge header_task_bar" id="notification_signer"></span>
 						</a>
 						<ul class="dropdown-menu extended tasks">
 							<li>

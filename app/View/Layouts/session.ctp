@@ -156,7 +156,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
    
 <script>
 $(document).ready(function() {
-	$(".dropdown-toggle").on("click",function(){
+	$(".dropdown").on("click",function(){
 	alert();
 		$.ajax({
 		   url: "<?php echo $webroot_path ; ?>Hms/notifications",

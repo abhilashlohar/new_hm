@@ -4874,32 +4874,47 @@ function bank_payment_update($auto_id=null)
           $ledger_account_id=(int)$ledger_account_array[0];
 		    $ledger_account_type=(int)$ledger_account_array[1];
 				$edited_on=date('Y-m-d');
-		   
+		 $this->loadmodel('ledger');
+		 $this->ledger->deleteAll(array());
 		   
 	$this->loadmodel('cash_bank');
 	$this->cash_bank->updateAll(array("transaction_date"=>strtotime($transaction_date),"sundry_creditor_id"=>$ledger_account_id,"invoice_reference"=>@$invoice_reference,"narration"=>$narration,"receipt_mode"=>$mode_of_payment,"receipt_instruction"=>$instrument_utr,"account_head"=>$bank_account,"amount"=>$amount,"account_type"=>$ledger_account_type,"tds_tax_amount"=>$tds_id,"edited_by"=>$s_user_id,"edited_on"=>$edited_on),array("society_id"=>$s_society_id,"transaction_id"=>$element_id));
     $tds_amount=round($tds_id);
 	$total_tds_amount=$amount-$tds_amount;
 
+	
+$this->loadmodel('ledger');
+$this->ledger->deleteAll(array("table_name"=>"cash_bank","society_id"=>$s_society_id,"element_id"=>$element_id));
 
-if($ledger_account_type == 1){
+if($ledger_account_type==1){
+			$l=$this->autoincrement('ledger','auto_id');
+			$this->loadmodel('ledger');
+			$multipleRowData = Array( Array("auto_id"=> $l,"transaction_date"=>strtotime($transaction_date),"debit"=>$amount,"credit"=>null,"ledger_account_id"=>15, "ledger_sub_account_id"=>$ledger_account_id,"table_name"=>"cash_bank","element_id"=>$element_id, "society_id"=>$s_society_id));
+			$this->ledger->saveAll($multipleRowData); 
+	}else{
+			$l=$this->autoincrement('ledger','auto_id');
+			$this->loadmodel('ledger');
+			$multipleRowData=Array(Array("auto_id"=>$l,"transaction_date"=>strtotime($transaction_date),"debit"=>$amount,"credit"=>null,"ledger_account_id"=>$ledger_account_id,"ledger_sub_account_id" =>null,"table_name"=>"cash_bank","element_id" =>$element_id,"society_id"=>$s_society_id));
+			$this->ledger->saveAll($multipleRowData); 
+    }
+
+	$l=$this->autoincrement('ledger','auto_id');
 	$this->loadmodel('ledger');
-	$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"debit"=>$amount,"ledger_account_id"=>15,"ledger_sub_account_id"=>$ledger_account_id),array("table_name"=>"cash_bank","society_id"=>$s_society_id,"element_id"=>$element_id,"credit" =>null));
-}
-else
-{
-$this->loadmodel('ledger');
-$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"debit"=>$amount,"ledger_account_id"=>$ledger_account_id,"ledger_sub_account_id"=>null),array("table_name"=>"cash_bank","society_id"=>$s_society_id,"element_id"=>$element_id,"credit" =>null));
-}
+	$multipleRowData=Array(Array("auto_id"=>$l,"transaction_date"=>strtotime($transaction_date),"debit"=>null,"credit"=>$total_tds_amount,"ledger_account_id" =>33, 
+	"ledger_sub_account_id"=>$bank_account,"table_name" =>"cash_bank","element_id" =>$element_id, 
+	"society_id"=>$s_society_id));
+	$this->ledger->saveAll($multipleRowData); 
 
-$this->loadmodel('ledger');
-$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"credit"=>$total_tds_amount,"ledger_sub_account_id"=>$bank_account),array("table_name"=>"cash_bank","society_id"=>$s_society_id,"element_id"=>$element_id,"debit"=>null,"ledger_account_id"=>33));
+if($tds_amount >0){
+		
+		$l=$this->autoincrement('ledger','auto_id');
+		$this->loadmodel('ledger');
+		$multipleRowData = Array( Array("auto_id"=>$l,"transaction_date"=>strtotime($transaction_date),"debit"=>null,"credit"=>$tds_amount,"ledger_account_id" =>16, 
+		"ledger_sub_account_id"=>null,"table_name"=>"cash_bank","element_id"=>$element_id, 
+		"society_id"=>$s_society_id));
+		$this->ledger->saveAll($multipleRowData); 			
+	}	
 
-if($tds_amount > 0){
-$sub_account_id_t = 16;
-$this->loadmodel('ledger');
-$this->ledger->updateAll(array("transaction_date"=>strtotime($transaction_date),"credit"=>$tds_amount,"ledger_sub_account_id"=>null),array("table_name"=>"cash_bank","society_id"=>$s_society_id,"element_id"=>$element_id,"debit"=>null,"ledger_account_id"=>16));
-}
 $this->Session->write('bank_payment_update', 1);
 $this->redirect(array('controller' => 'Cashbanks','action' => 'bank_payment_view'));
 }		

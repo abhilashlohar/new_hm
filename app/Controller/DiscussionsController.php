@@ -341,7 +341,7 @@ function new_topic(){
 			}
 		}
 		
-		$this->send_notification('icon-comments','New Discussion: <b>'.$topic.'</b> by '.$user_name_post,$webroot_path.'Discussions/index',$s_user_id,$users_have_access);
+		$this->send_notification('<span class="label label-info"><i class=" icon-comments"></i></span>','New Discussion: <b>'.$topic.'</b> by '.$user_name_post,$webroot_path.'Discussions/index',$s_user_id,$users_have_access);
 		
 		$this->redirect(array('controller' => 'Discussions','action' => 'index'));
 	}

@@ -17,11 +17,18 @@ foreach($result_notifications as $notification){
 		$time_text="sdfsdf";
 	}?>
 <li>
-	<a href="<?php echo $url; ?>" role="button" rel='tab' class="notification_tab" notification_id="<?php echo $notification_id; ?>">
+	<a href="<?php echo $url; ?>" role="button" rel='tab' class="notification_tab" notification_id="<?php echo $notification_id; ?>" style="text-align: justify;">
 	<span class="task">
-	<span class="desc"> <i class=" <?php echo $icon; ?>"></i> <?php echo $text; ?></span>
-	<span class="percent"><?php echo $time_text; ?></span>
+	<span ><?php echo $icon; ?> <?php echo $text; ?></span>
+	<span class="percent time_text"><?php echo $time_text; ?></span>
 	</span>
 	</a>
 </li>
 <?php } ?>
+<style>
+.time_text{
+	font-weight: 400 !important;
+    font-size: 12px !important;
+    color: #aeaeae !important;
+}
+</style>

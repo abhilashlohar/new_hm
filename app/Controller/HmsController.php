@@ -6009,6 +6009,7 @@ function notifications()
 {
 $this->layout="full_blank";
 
+date_default_timezone_set('Asia/Kolkata');
 $s_society_id=$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');
 
@@ -6079,6 +6080,7 @@ function send_notification($icon,$text,$url,$by_user,$users)
 {
 $s_society_id=$this->Session->read('hm_society_id');
 
+date_default_timezone_set('Asia/Kolkata');
 $now=date('Y-m-d');
 $seen=array();
 $notification_id=$this->autoincrement('notification','notification_id');

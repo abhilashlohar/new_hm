@@ -13,7 +13,7 @@
 		<li>
 			<a href="<?php echo $url; ?>" role="button" rel='tab' class="notification_tab" notification_id="<?php echo $notification_id; ?>">
 			<span class="task">
-			<span class="desc"> <i class=" <?php echo $icon; ?>"></i> <?php echo $text; ?></span>
+			<span ><?php echo $icon; ?> <?php echo $text; ?></span>
 			<span class="percent">5 mins</span>
 			</span>
 			</a>

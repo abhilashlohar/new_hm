@@ -152,14 +152,10 @@ $s_user_id=$this->Session->read('hm_user_id');
 		$to1 = date('Y-m-d',strtotime($to));
 		$to1 = strtotime($to1);
 		$this->loadmodel('journal');
-		if(!empty($search_vocher)){
-			
-			$conditions=array("society_id" => $s_society_id,'voucher_id'=>(int)$search_vocher);
-				
-		}else{
+		
 		  $conditions=array("society_id" => $s_society_id,'journal.transaction_date'=>array('$gte'=>$from1,'$lte'=>$to1));
 		
-		}
+	
 		$order=array('journal.transaction_date'=> 'ASC');
 		$result_journal=$this->journal->find('all',array('conditions'=>$conditions,'order'=>$order));
 		$this->set('result_journal',$result_journal);

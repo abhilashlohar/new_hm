@@ -192,13 +192,13 @@ $(document).ready(function() {
 		   success: function(data){
 			   if(data!=""){
 					var q=$("#notification_signer").html();
+					
 					if(q<data){
-						$("#notification_signer").html(data);
 						$('<audio id="chatAudio"><source src="<?php echo $webroot_path ; ?>app/webroot/notification_sound.mp3" type="audio/wav"></audio>').appendTo('body');
 						$('#chatAudio')[0].play();
 					}
 			   }
-			   
+			   $("#notification_signer").html(data);
 		   }
 		 });
 	}, 1000);

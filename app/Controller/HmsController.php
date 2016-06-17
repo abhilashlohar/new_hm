@@ -13,9 +13,11 @@ function auto_backup_data(){
   $this->layout=null;
 	App::import('Vendor', 'PhpMailer', array('file' => 'phpmailer' . DS . 'class.phpmailer.php')); 
 
+	$payload = file_get_contents('http://app.housingmatters.co.in/app/webroot/backup_db.php');
+	
 		global $error;
 		
-		$to="admin@housingmatters.in";
+		$to="abhilashlohar01@gmail.com"; //admin@housingmatters.in
 		$from="alerts@housingmatters.in";
 		$from_name="Housingmatters";						
 		$subject="Backup of database";
@@ -25,7 +27,8 @@ function auto_backup_data(){
 		
 		$mail = new PHPMailer();
 		$mail->IsSMTP();
-		$mail->CharSet = 'UTF-8';
+		$mail->CharSet = 
+		'UTF-8';
 		$mail->SMTPAuth = true;
 		$mail->SMTPSecure = 'ssl'; 
 		$mail->Host = 'email-smtp.us-west-2.amazonaws.com';

@@ -7,7 +7,7 @@
 				$society_email=$data["society"]["society_email"];
 				$society_phone=$data["society"]["society_phone"];
 				$terms_conditions=$data["society"]["terms_conditions"];
-				$signature=$data["society"]["signature"];
+				//$signature=$data["society"]["signature"];
 				$sig_title=$data["society"]["sig_title"];
 				$neft_type = @$data["society"]["neft_type"];
 				$neft_detail = @$data["society"]["neft_detail"];

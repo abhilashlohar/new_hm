@@ -5742,8 +5742,14 @@ function new_bank_receipt(){
 						 $email=$result_member_info["email"];
 						 $mobile=$result_member_info["mobile"];
 						 $wing_id=$result_member_info["wing_id"];
-				
-				
+						$representative=$result_member_info["representative"];
+						$representator=$result_member_info["representator"];
+						if($representative=="yes"){
+							$representator_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($representator)));
+							$representator_email=$representator_info["email"];
+							$representator_mobile=$representator_info["mobile"];
+						}
+
 				
 					$html_receipt='<table style="padding:24px;background-color:#34495e" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
 				<tbody><tr>
@@ -5883,16 +5889,24 @@ function new_bank_receipt(){
 			if($email_is_on_off==1){
 			////email code//
 					if(!empty($email)){
-					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$date." against Unit ".$wing_flat."";
+						if($representative=="yes"){
+						
+								$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$date." against Unit ".$wing_flat."";
+								$this->send_email($representator_email,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'donotreply@housingmatters.in');
+						}else{
+							
+								$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$date." against Unit ".$wing_flat."";
+								$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'donotreply@housingmatters.in');
+							
+						}
 					
-
-					$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'donotreply@housingmatters.in');
 				}
 			}	
 
 			
 				if($sms_is_on_off==1){
 						if(!empty($mobile)){
+							
 								$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
 
 								$working_key=$r_sms->working_key;
@@ -5901,18 +5915,30 @@ function new_bank_receipt(){
 								
 							if($sms_allow==1){
 									
-									$user_name_short=$this->check_charecter_name($user_name);
-									
-									$sms="Dear ".$user_name_short." ,we have received Rs ".$amount." on ".$date." towards Society Maint. dues. Cheques are subject to realization,".$society_name;
-									$sms1=str_replace(' ', '+', $sms);
+									if($representative=="yes"){
+										
+											$user_name_short=$this->check_charecter_name($user_name);
 
-									$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.''); 
+											$sms="Dear ".$user_name_short." ,we have received Rs ".$amount." on ".$date." towards Society Maint. dues. Cheques are subject to realization,".$society_name;
+											$sms1=str_replace(' ', '+', $sms);
+
+											$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$representator_mobile.'&message='.$sms1.''); 
+										
+									}else{
+										
+											$user_name_short=$this->check_charecter_name($user_name);
+
+											$sms="Dear ".$user_name_short." ,we have received Rs ".$amount." on ".$date." towards Society Maint. dues. Cheques are subject to realization,".$society_name;
+											$sms1=str_replace(' ', '+', $sms);
+
+											$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.''); 
+									}	
 							}
 						}	
 				}
 				
 				
-			$i++; }
+			$i++; } 
 		//vochar code
 		
 			$first=reset($receipt_array_num);

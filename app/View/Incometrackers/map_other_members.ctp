@@ -30,6 +30,12 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <div align="center">
 	<form method="post" id="contact-form">
 		<table>
+			<thead>
+				<tr>
+					<th>Select Member</th>
+					<th>Bill(s) will send to</th>
+				</tr>
+			</thead>
 			<tr>
 				<td id="first">
 				<select class="m-wrap" name="first">

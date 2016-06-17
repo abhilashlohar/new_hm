@@ -8150,6 +8150,8 @@ function dashboard(){
 	$role_id = $this->Session->read('role_id');
 	$this->set('role_id',$role_id);
 	$this->set('s_society_id',$s_society_id);
+	
+	echo strtotime(date("2016-6-16")); exit;
 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	

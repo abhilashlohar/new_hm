@@ -233,7 +233,6 @@ function notice_approval_ajax($id=null)
 ////////// Send Notification code start ///////////////////////////////////////
 
 
-$this->send_notification('<span class="label label-info" ><i class="icon-bullhorn"></i></span>','New Notice published - <b>'.$sub.'</b> by',2,$id,'notice_publish_view?con='.$id,$user_id,$da_to11);
 
 
 
@@ -661,7 +660,6 @@ $subject="";
 
 
 $da_user_id[]=$d_user_id;
-$this->send_notification('<span class="label label-info" ><i class="icon-bullhorn"></i></span>','New Notice published - <b>'.$sub.'</b> by',2,$notice_id,$this->webroot.'notice_publish_view?con='.$notice_id,$s_user_id,$da_user_id);
 
 ?>
 <!----alert-------------->
@@ -1885,7 +1883,6 @@ foreach($receivers as $user_id=>$data){
 		$this->notice->updateAll(array('user_id' => $s_user_id, 'society_id' => $s_society_id, 'n_category_id' => $category_id ,'n_subject' => $notice_subject , 'n_expire_date' => $notice_expire_date, 'n_attachment' => "" , 'n_message' => $code,'n_date' => $date, 'n_time' => $time, 'n_delete_id' => 0,'n_draft_id' => 0,'visible' => $visible,'sub_visible' => $sub_visible,'visible_user_id' => $recieve_info),array('notice_id'=>$notice_id_q));
 		
 		//$da_user_id[]=$d_user_id;
-		//$this->send_notification('<span class="label label-info" ><i class="icon-bullhorn"></i></span>','New Notice published - <b>'.$notice_subject.'</b> by',2,$notice_id,'notice_publish_view?con='.$notice_id,$s_user_id,$da_user_id);
 
 		$output = json_encode(array('type'=>'created', 'text' =>'Your notice has been created and sent via email to all users selected by you.'));
 		die($output);

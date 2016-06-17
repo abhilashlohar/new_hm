@@ -106,7 +106,6 @@ function submit_comment(){
 		$this->loadmodel('discussion_comment');
 		$this->discussion_comment->saveAll(Array( Array("discussion_comment_id" => $discussion_comment_id, "user_id" => $s_user_id , "society_id" => $s_society_id, "comment" => $comment_box,"discussion_post_id" => $post_id, "delete_id" =>0, "date" =>$date, "time" => $time, "color" => $color_in))); 
 		
-		$this->send_notification('icon-comment-alt','New Discussion Topic <b>'.$topic.'</b> Posted.',$webroot_path.'Discussions/index',$s_user_id,$users_have_access);
 	}
 }
 

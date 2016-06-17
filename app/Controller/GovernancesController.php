@@ -827,7 +827,6 @@ $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" 
 			$output=json_encode(array('report_type'=>'error','report'=>$report));
 			die($output);
 			}
-			//$this->send_notification('<span class="label label-info" ><i class="icon-bullhorn"></i></span>','New Meeting Invitation published - <b>'.$subject.'</b> by',40,$email_id,$this->webroot.'Governances/governance_invite_view/',$s_user_id,$da_user_id);
 
 			$output = json_encode(array('type'=>'created', 'text' =>'Invitation successfully submitted'));
 			die($output);
@@ -1313,7 +1312,6 @@ function governance_invite_submit_draft(){
 		
 		
 		
-		//$this->send_notification('<span class="label label-info" ><i class="icon-bullhorn"></i></span>','New Meeting Invitation published - <b>'.$subject.'</b> by',40,$id,$this->webroot.'Governances/governance_invite_view/',$s_user_id,$invite_user);
 		$output = json_encode(array('type'=>'created', 'text' =>'Invitation successfully submitted'));
 		die($output);		
 }

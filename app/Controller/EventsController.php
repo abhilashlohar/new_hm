@@ -434,7 +434,6 @@ array_push($update,$t);
 $this->event->updateAll(array('updates'=>$update),array('event.event_id'=>$e_id));
 
 
-$this->send_notification('<span class="label" style="background-color:#d43f3a;"><i class="icon-tags"></i></span>','Updates for Event <b>'.$e_name.'</b> submitted by',6,$e_id,$this->webroot.'Events/event_info?e='.$e_id,$s_user_id,$visible_user_id);
 
 }
 

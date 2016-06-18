@@ -629,6 +629,15 @@ function final_import_bank_receipt_ajax(){
 			 $email=$result_member_info["email"];
 			 $mobile=$result_member_info["mobile"];
 			 $wing_id=$result_member_info["wing_id"];
+			 
+			$representative=@$result_member_info["representative"];
+			$representator=@$result_member_info["representator"];
+			if($representative=="yes"){
+				$representator_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($representator)));
+				$email=$representator_info["email"];
+				$mobile=$representator_info["mobile"];
+			}
+
 						 
 			$amount = str_replace( ',', '', $amount );
 			$am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));
@@ -706,10 +715,10 @@ function final_import_bank_receipt_ajax(){
 									</tr>';
 									
 								if($receipt_mode=="cheque"){
-								$receipt_type='Via '.$receipt_mode.'-'.$cheque_number.' drawn on '.$drown_in_which_bank.' dated '.$cheque_date;
+								$receipt_type='Via '.$receipt_mode.'-'.$cheque_or_reference_no.' drawn on '.$drown_in_which_bank.' dated '.$date;
 								}
 								else{
-								$receipt_type='Via '.$receipt_mode.'-'.$cheque_number.' dated '.$cheque_date;
+								$receipt_type='Via '.$receipt_mode.'-'.$cheque_or_reference_no.' dated '.$date;
 								}
 
 									
@@ -5746,8 +5755,8 @@ function new_bank_receipt(){
 						$representator=$result_member_info["representator"];
 						if($representative=="yes"){
 							$representator_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($representator)));
-							$representator_email=$representator_info["email"];
-							$representator_mobile=$representator_info["mobile"];
+							$email=$representator_info["email"];
+							$mobile=$representator_info["mobile"];
 						}
 
 				
@@ -5889,18 +5898,11 @@ function new_bank_receipt(){
 			if($email_is_on_off==1){
 			////email code//
 					if(!empty($email)){
-						if($representative=="yes"){
 						
 								$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$date." against Unit ".$wing_flat."";
-								$this->send_email($representator_email,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'donotreply@housingmatters.in');
-						}else{
-							
-								$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$date." against Unit ".$wing_flat."";
 								$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'donotreply@housingmatters.in');
-							
-						}
-					
-				}
+						
+					}
 			}	
 
 			
@@ -5915,24 +5917,13 @@ function new_bank_receipt(){
 								
 							if($sms_allow==1){
 									
-									if($representative=="yes"){
-										
-											$user_name_short=$this->check_charecter_name($user_name);
-
-											$sms="Dear ".$user_name_short." ,we have received Rs ".$amount." on ".$date." towards Society Maint. dues. Cheques are subject to realization,".$society_name;
-											$sms1=str_replace(' ', '+', $sms);
-
-											$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$representator_mobile.'&message='.$sms1.''); 
-										
-									}else{
-										
 											$user_name_short=$this->check_charecter_name($user_name);
 
 											$sms="Dear ".$user_name_short." ,we have received Rs ".$amount." on ".$date." towards Society Maint. dues. Cheques are subject to realization,".$society_name;
 											$sms1=str_replace(' ', '+', $sms);
 
 											$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.''); 
-									}	
+									
 							}
 						}	
 				}

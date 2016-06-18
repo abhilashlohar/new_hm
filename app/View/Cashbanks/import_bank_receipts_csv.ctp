@@ -137,6 +137,7 @@ function final_import_bank_receipt_ajax(){
 			url: "<?php echo $webroot_path; ?>Cashbanks/final_import_bank_receipt_ajax",
 			dataType: 'json'
 		}).done(function(response){
+			
 			if(response.again_call_ajax=="YES"){
 				$("#progress_im").css("width",response.converted_per_im+"%");
 				$("#text_per_im").html(response.converted_per_im.toFixed(2)+"%");

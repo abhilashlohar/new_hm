@@ -309,7 +309,11 @@ if(isset($this->request->data['send']))
 	{
 	$name=$collection2["user"]["user_name"];
 	$sender_email=$collection2["user"]["email"];
-
+		if(!empty($sender_email)){
+			$reply=$sender_email;
+		}else{
+			$reply="donotreply@housingmatters.in";
+		}
 	$result_user_flat=$this->requestAction(array('controller'=>'Fns','action'=>'user_flat_info_via_user_id'),array('pass'=>array((int)$s_user_id)));
 	foreach($result_user_flat as $data){
 		@$wing=(int)@$data["user_flat"]["wing"];
@@ -406,10 +410,10 @@ if($radio==1){
 	$multi[]="$s_user_id,$sender_email";
 	$multi=array_unique($multi);
 		foreach($multi as $data){
-		$ex = explode(",", $data);
-		$user[]=$ex[0];
-		$to=$ex[1];
-		$this->send_email($to,'support@housingmatters.in','HousingMatters',$subject,$message_web,'donotreply@housingmatters.in');
+			$ex = explode(",", $data);
+			$user[]=$ex[0];
+			$to=$ex[1];
+			$this->send_email($to,'support@housingmatters.in','HousingMatters',$subject,$message_web,$reply);
 		}
 $email_id=$this->autoincrement('email_communication','email_id');
 $this->loadmodel('email_communication');
@@ -448,7 +452,7 @@ $user_id_array[]=$user_id;
 $user_id_array=array_unique($user_id_array);	
 $email_array=array_unique($email_array);
 foreach($email_array as $email){
-$this->send_email($email,'support@housingmatters.in','HousingMatters',$subject,$message_web,'donotreply@housingmatters.in');
+$this->send_email($email,'support@housingmatters.in','HousingMatters',$subject,$message_web,$reply);
 }
 
 $email_id=$this->autoincrement('email_communication','email_id');

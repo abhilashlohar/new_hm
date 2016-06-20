@@ -6670,12 +6670,21 @@ function regular_bill_edit2($auto_id=null){
 				$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($ledger_sub_account_id))); 
 				
 						  $user_name=$result_member_info["user_name"];
-						 $wing_name=$result_member_info["wing_name"];
-						 $flat_name=$result_member_info["flat_name"];
-						 $wing_flat=$wing_name.'-'.$flat_name;
+						  $wing_name=$result_member_info["wing_name"];
+						  $flat_name=$result_member_info["flat_name"];
+						  $wing_flat=$wing_name.'-'.$flat_name;
 						  $email=$result_member_info["email"];
 						  $mobile=$result_member_info["mobile"];
-						 $wing_id=$result_member_info["wing_id"];
+						  $wing_id=$result_member_info["wing_id"];
+							$representative=$result_member_info["representative"];
+							$representator=$result_member_info["representator"];
+							if($representative=="yes"){
+								$representator_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($representator)));
+								$email=$representator_info["email"];
+								$mobile=$representator_info["mobile"];
+							}
+
+						
 						
 					$result_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'flat_info_via_ledger_sub_account_id'), array('pass' => array($ledger_sub_account_id))); 
 					$flat_area=$result_flat_info[0]['flat']['flat_area'];

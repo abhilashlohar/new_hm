@@ -524,7 +524,8 @@ function generate_bills(){
 						 $representator=$result_member_info["representator"];
 						 if($representative=="yes"){
 							$representator_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($representator)));
-							$representator_email=$representator_info["email"];
+							$email=$representator_info["email"];
+							$mobile=$representator_info["mobile"];
 						}
 						
 					$result_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'flat_info_via_ledger_sub_account_id'), array('pass' => array($ledger_sub_account_id))); 
@@ -803,13 +804,10 @@ function generate_bills(){
 		if($email_is_on_off==1){
 					
 					if(!empty($email)){
-						if($representative=="yes"){
-							$subject="[".$society_name."]- Maintenance e-bill, ".date('d-M',$start_date)." to ".date('d-M-Y',$end_date)."";
-							$this->send_email($representator_email,'accounts@housingmatters.in','HousingMatters',$subject,$bill_html,'donotreply@housingmatters.in');
-						}else{
+						
 							$subject="[".$society_name."]- Maintenance e-bill, ".date('d-M',$start_date)." to ".date('d-M-Y',$end_date)."";
 							$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$bill_html,'donotreply@housingmatters.in');
-						}
+						
 					}
 				}
 ////SMS CODE//

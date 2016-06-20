@@ -15,11 +15,7 @@ function auto_backup_data(){
 
 		global $error;
 		
-		$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
-		$working_key=$r_sms->working_key;
-		$sms_sender=$r_sms->sms_sender;
-			
-		$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to=9636653883&message=backup done');
+		$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to=9636653883'&message='backup done');
 		
 		$to="admin@housingmatters.in";
 		$from="alerts@housingmatters.in";

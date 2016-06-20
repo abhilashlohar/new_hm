@@ -2324,6 +2324,14 @@ $flat=$user_data['flat_name'];
 $user_email_id=$user_data['email'];
 $user_mobile=$user_data['mobile'];
 
+	$representative=$user_data["representative"];
+	$representator=$user_data["representator"];
+	if($representative=="yes"){
+			$representator_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($representator)));
+			$user_email_id=$representator_info["email"];
+			$user_mobile=$representator_info["mobile"];
+		}
+
 $wing_flat=$wing.'-'.$flat;
 $am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));
 

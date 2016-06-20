@@ -8153,6 +8153,9 @@ function dashboard(){
 	$this->set('s_society_id',$s_society_id);
 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
+	
+	$output1 = shell_exec('/usr/bin/mongodump --db new_version 2>&1');
+$output1 = shell_exec('/usr/bin/zip -r dump.zip dump 2>&1');
 		   
 		//////////////Help-desk  last 3 tickets///////////////// 
 		$this->loadmodel('help_desk');

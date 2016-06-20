@@ -2240,8 +2240,17 @@ function b_receipt_edit($transaction_id=null){
 	$old_user_name=$old_user_data['user_name'];		
 	$old_wing=$old_user_data['wing_name'];
 	$old_flat=$old_user_data['flat_name'];
-	$old_user_email_id=$old_user_data['email'];
-	$old_user_mobile=$old_user_data['mobile'];
+	 $old_user_email_id=$old_user_data['email'];
+	 $old_user_mobile=$old_user_data['mobile'];
+	
+	$representative=$old_user_data["representative"];
+	$representator=$old_user_data["representator"];
+	if($representative=="yes"){
+		$representator_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($representator)));
+		$old_user_email_id=$representator_info["email"];
+		$old_user_mobile=$representator_info["mobile"];
+	}
+
 	$old_wing_flat=$old_wing.'-'.$old_flat;
 	
 	$edit_text=$ignore_receipt_number."-R";	
@@ -2270,8 +2279,6 @@ function b_receipt_edit($transaction_id=null){
 		$email_message.='<br/><br/> Thank You <br/>
 	HousingMatters (Support Team)<br/>
 			www.housingmatters.in';
-		
-		
 		
 		
 		
@@ -2573,6 +2580,17 @@ $wing=$user_data['wing_name'];
 $flat=$user_data['flat_name'];
 $user_email_id=$user_data['email'];
 $user_mobile=$user_data['mobile'];
+
+
+$representative=$user_data["representative"];
+$representator=$user_data["representator"];
+if($representative=="yes"){
+		$representator_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($representator)));
+		 $user_email_id=$representator_info["email"];
+		$user_mobile=$representator_info["mobile"];
+	}
+	
+
 
 $wing_flat=$wing.'-'.$flat;
 $am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));

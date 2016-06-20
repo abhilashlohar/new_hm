@@ -436,7 +436,7 @@ $this->set('ledger_account_id',$ledger_account_id);
 $this->set('ledger_sub_account_id',$ledger_sub_account_id);
 
 		
-	if($ledger_account_id == 15 || $ledger_account_id == 33 || $ledger_account_id == 34 || $ledger_account_id == 35 || $ledger_account_id == 112)
+	if($ledger_account_id == 15 || $ledger_account_id == 33 || $ledger_account_id == 34 || $ledger_account_id == 112)
 	{
 		
 		$this->loadmodel('ledger');
@@ -532,7 +532,7 @@ $ledger_account_id = (int)$id_arr[0];
 	$this->set('count_bank_receipt_converted',$count_bank_receipt_converted);
 	
 	
-	if($ledger_account_id == 15 || $ledger_account_id == 33 || $ledger_account_id == 34 || $ledger_account_id == 35 || $ledger_account_id == 112){
+	if($ledger_account_id == 15 || $ledger_account_id == 33 || $ledger_account_id == 34 ||  $ledger_account_id == 112){
 
 		$element_id="";
         $this->loadmodel('ledger');

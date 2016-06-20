@@ -25,7 +25,7 @@ $default_date_to = date('d-m-Y')
 						{
 						$auto_id = (int)$collection['ledger_account']['auto_id'];
 						$name = $collection['ledger_account']['ledger_name'];
-						if($auto_id != 34 && $auto_id != 33 && $auto_id != 35 && $auto_id != 15 && $auto_id != 112)
+						if($auto_id != 34 && $auto_id != 33 && $auto_id != 15 && $auto_id != 112)
 						{
 						?>
 						<option value="<?php echo $auto_id; ?>,2"><?php echo $name; ?></option>

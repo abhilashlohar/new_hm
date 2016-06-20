@@ -121,14 +121,14 @@ $prepaired_by = $dataaaa['user']['user_name'];
 		$ledger_ac_name=$led_sub_name;	
 		
 	}
-	if($ledger_account_id == 35)
+	/*if($ledger_account_id == 35)
 	{
 	$result_ledger_sub_account=$this->requestAction(array('controller' => 'Hms', 'action' => 'subledger_fetch_by_auto_id'),array('pass'=>array($ledger_sub_account_id)));
 		$led_sub_name=$result_ledger_sub_account[0]['ledger_sub_account']['name'];
 		//$bank_account=$result_ledger_sub_account[0]['ledger_sub_account']['bank_account'];
 		$ledger_ac_name=$led_sub_name;	
 		
-	}
+	} */
 	
 ?>
 <tr>

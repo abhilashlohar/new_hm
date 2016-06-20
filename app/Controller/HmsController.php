@@ -16,7 +16,6 @@ function auto_backup_data(){
 		global $error;
 		
 			
-		$payload = file_get_contents('http://app.housingmatters.co.in/app/webroot/backup_db.php');
 		
 		$to="admin@housingmatters.in";
 		$from="alerts@housingmatters.in";

@@ -19,7 +19,7 @@ function auto_backup_data(){
 		global $error;
 		
 		
-		$to="abhilashlohar01@gmail.com"; //admin@housingmatters.in
+		$to="abhilashlohar01@gmail.com";  //admin@housingmatters.in
 		$from="alerts@housingmatters.in";
 		$from_name="Housingmatters";						
 		$subject="Backup of database";

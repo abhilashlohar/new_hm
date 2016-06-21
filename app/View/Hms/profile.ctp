@@ -215,7 +215,7 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 												 Mobile Number <span style="color:red">+91</span> 
 										</div>
 										<div class="span3"> 
-												<input type="text" class="m-wrap" value="<?php echo $c_mobile; ?>" name="mobile1" readonly maxlength="10">
+												<input type="text" class="m-wrap change_mobile" value="<?php echo $c_mobile; ?>" name="mobile1" readonly maxlength="10">
 										</div>
 										<div class="span3"> 
 											<select class="span12 m-wrap check_privacy" data-placeholder="Choose a Category" tabindex="1" name="sel_private" change_field="mobile" >
@@ -236,7 +236,7 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 												Email-Id
 										</div>
 										<div class="span3"> 
-												<input type="text" value="<?php echo $c_email;  ?>"  readonly class=" m-wrap" name="email">
+												<input type="text" value="<?php echo $c_email;  ?>"   class=" m-wrap" name="email">
 										</div>
 										
 										<div class="span3"> 
@@ -504,13 +504,21 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
                   <!-- END SAMPLE FORM PORTLET-->
                </div>
             </div>
-			
-			
+<div class="edit_div" style="display: none;">
+<div class="modal-backdrop fade in"></div>
+<div class="modal"  id="poll_edit_content">
+
+</div>
+</div>		
 			
 <script>
 
 $(document).ready(function(){
-
+	$( ".change_mobile" ).click(function() {
+		var x = $(this).val();
+		//$(".edit_div").show();
+		//$("#poll_edit_content").html('<div align="center" style="padding:20px;"><img src="<?php echo $this->webroot ; ?>/as/indicator_blue_small.gif" /><br/><h5>Please Wait</h5></div>').load('');
+	});
 		$( "select.check_privacy" ).change(function() {
 			var update=$(this).val();
 			var field=$(this).attr('change_field');

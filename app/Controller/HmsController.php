@@ -12192,6 +12192,31 @@ $this->set('result_not_login',$this->user->find('all',array('conditions'=>$condi
 
 }
 
+function verification_member_profile(){
+
+$this->layout='without_session';
+$webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'webroot_path')); 
+$this->set('webroot_path',$webroot_path);
+
+$q=$this->request->query['q'];
+$user_id=(int)$this->decode($q,'housingmatters');
+$this->loadmodel('user');
+$conditions=array('signup_random'=>$user_id);
+$result_check=$this->user->find('all',array('conditions'=>$conditions));
+$n= sizeof($result_check);
+if($n>0){ 
+	$new_email= $result_check[0]['user']['new_email'];
+	$this->loadmodel('user');
+	$this->user->updateAll(array('signup_random'=>'','new_email'=>'','email'=>$new_email),array('user.user_id'=>$user_id));
+
+}
+else
+{
+echo "Sorry, you have used this link.This link is one time login link.";	
+exit;
+}
+}	
+
 function set_new_password()
 {
 
@@ -17981,7 +18006,8 @@ $this->loadmodel('user');
 	$conditions=array("user_id" => $s_user_id);
 	$this->set('result_user',$this->user->find('all',array('conditions'=>$conditions)));  	
 }
-	
+
+
 
 function profile() 
 {
@@ -18105,7 +18131,124 @@ $age_group="65+";
 	  $profile=@$data['user']['profile_pic'];
  }
  
+ 
+$from_name="HousingMatters";
+$subject='['.$society_name2.']-Profile Update';
+$this->loadmodel('email');
+$conditions=array('auto_id'=>4);
+$result_email=$this->email->find('all',array('conditions'=>$conditions));
+foreach ($result_email as $collection) 
+{
+$from=$collection['email']['from'];
+}
+$reply=$from;
+
+ 
+ 
+ if(!empty($email) && $email!=$email1){
+		
+		
+		
+		$de_user_id=$this->encode($s_user_id,'housingmatters');
+		$random=$de_user_id;
+		 $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tbody>
+			<tr>
+                <td>
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                        <tbody>
+						
+								<tr>
+									<td colspan="2">
+										<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+										<tbody>
+										<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+										<tr>
+										<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
+										<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+										<td width="100%"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px"><span style="color:#00a0e3">Housing</span><span style="color:#777776">Matters</span></a></td>
+										<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
+											
+										</td>
+										</tr>
+										<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+										</tbody>
+										</table>
+									</td>
+								</tr>
+								
+									
+								
+						</tbody>
+					</table>
+					
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                        <tbody>
+						
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										<span style="color:rgb(100,100,99)" align="justify"> Dear '.$name.', </span> 
+										</td>
+																
+								</tr>
+								
+							
+								
+								
+								<tr>
+										<td style="padding:5px;" width="100%" align="left"><br/>
+											<span  align="justify"> <b>
+											<a href="'.$ip.$this->webroot.'hms/verification_member_profile?q='.$random.'"> Click here </a> for one time verification of your email have updated  </b>
+											</span> 
+										</td>
+																
+								</tr>
+								
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										<span align="justify"> Pls add www.housingmatters.in in your favorite bookmarks for future use. </span> 
+										</td>
+																
+								</tr>
+								
+								<tr>
+									<td style="padding:5px;" width="100%" align="left">
+											<span > 
+												Regards,<br/>
+												Administrator of '.$society_name2.'<br/>
+												www.housingmatters.in
+											</span>
+									</td>
+																
+								</tr>
+					
+					</table>
+					
+				</td>
+			</tr>
+
+        </tbody>
+</table>';
+
+
+$this->loadmodel('user');	
+$this->user->updateAll(array('signup_random'=>$s_user_id,'new_email'=>$email),array('user_id'=>$s_user_id));
+$this->send_email($email,$from,$from_name,$subject,$message_web,$reply);
+
+		date_default_timezone_set('Asia/Kolkata');
+		$date=date("d-m-Y");
+		$time = date(' h:i a', time());
+		$op=$this->autoincrement('profile_log','profile_log_id');
+		$this->loadmodel('profile_log');
+		$this->profile_log->saveAll(array('profile_log_id'=>$op,'user_id'=>$s_user_id,'society_id'=>$s_society_id,'email'=>$email1,'mobile'=>$mobile1,'new_email'=>$email,'new_mobile'=>$mobile,'date'=>$date,'time'=>$time));
+
+
+}
+ 
+
+ 
  if($email==$email && $mobile==$mobile1){
+	
  }
  else{
 	 
@@ -18116,7 +18259,7 @@ $age_group="65+";
 		$this->loadmodel('profile_log');
 		$this->profile_log->saveAll(array('profile_log_id'=>$op,'user_id'=>$s_user_id,'society_id'=>$s_society_id,'email'=>$email1,'mobile'=>$mobile1,'new_email'=>$email,'new_mobile'=>$mobile,'date'=>$date,'time'=>$time));
  }
- 
+
 if(empty($photo_name)){
 $photo_name=$profile;
 }
@@ -18144,16 +18287,6 @@ $photo_name=$profile;
 	}
 	
 $to=$email;
-$from_name="HousingMatters";
- $subject='['.$society_name2.']-Profile Update';
-$this->loadmodel('email');
-$conditions=array('auto_id'=>4);
-$result_email=$this->email->find('all',array('conditions'=>$conditions));
-foreach ($result_email as $collection) 
-{
-$from=$collection['email']['from'];
-}
-$reply=$from;
 
   
 
@@ -19346,6 +19479,7 @@ function society_member_view(){
 				$user_flat_id=$user_flat["user_flat"]["user_flat_id"];
 				$wing=$user_flat["user_flat"]["wing"];
 				$flat=$user_flat["user_flat"]["flat"];
+				$owner=$user_flat["user_flat"]["owner"];
 				$exited=$user_flat["user_flat"]["exited"];
 				if($exited=="no"){
 					$this->loadmodel('wing');
@@ -19357,11 +19491,26 @@ function society_member_view(){
 					$conditions=array("flat_id"=>$flat);
 					$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
 					$flat_name=ltrim(@$flat_info[0]["flat"]["flat_name"],'0');
-					$noc_ch_tp=$flat_info[0]['flat']['noc_ch_tp'];
-					if($noc_ch_tp==1){
-						$resident[$user_flat_id]=1;
-					}
+					
 					$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
+					
+					if($owner=="yes" && (!empty($wing) && !empty($flat))){
+								$this->loadmodel('flat');
+								$conditions=array("wing_id"=>$wing,"flat_id"=>$flat);
+								$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+								
+								$noc_status=@$flat_info[0]["flat"]["noc_ch_tp"];
+								if($noc_status==1){
+									$resident[$user_flat_id]=1;
+								}
+							}elseif($owner=="no" && (!empty($wing) && !empty($flat))){
+								$resident[$user_flat_id]=1;
+							}
+					
+					
+					
+					
+					
 				}
 				
 			} 
@@ -19408,6 +19557,7 @@ function society_member_view(){
 		
 		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id,"count_member_owner"=>$count_member_owner,"count_member_tenant"=>$count_member_tenant,"count_member_family"=>$count_member_family,'resident_member'=>$resident);
 	}
+	
 	$this->set(compact("arranged_users"));
 }
 

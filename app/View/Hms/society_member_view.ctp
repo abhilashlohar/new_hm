@@ -6,7 +6,9 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<span> Owner </span> -<span id="owner">  0 </span> |
 	<span> Tenant </span>-<span id="tenant"> 0 </span> |
 	<span> Family Member </span>-<span id="family"> 0 </span> |
-	<span style="color:red; font-size:10px;" > <i class=" icon-star"></i></span><span> Awaiting User Validation  </span> 
+	<span style="color:red; font-size:10px;" > <i class=" icon-star"></i></span><span> Awaiting User Validation  </span> |
+	<span style="color:red; font-size:10px;"><i class=" icon-star-empty" ></i> </span> <span> Resident  </span> 
+	
 	</div>
 	<a href="society_member_excel" class="blue mini btn" download="download"><i class="fa fa-file-excel-o"></i></a> 
 
@@ -19,7 +21,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<table class="table table-condensed table-bordered" >
 			<thead>
 				<tr>
-					<th>Sr.</th>
+					<th width="5%">Sr.</th>
 					<th>User Name</th>
 					<th>unit</th>
 					<th>Roles</th>
@@ -55,7 +57,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					$q=0;
 					foreach($wing_flats as $user_flat_id=>$wing_flat){ $q++; ?>
 						<tr>
-							<td><?php echo $sr_no; if(!empty($resident_member)){ if($resident_member[$user_flat_id]==1){ ?> <span style="color:red; font-size:10px;" class="pull-right"> R </span> <?php } } ?>  </td>
+							<td><?php echo $sr_no; if(!empty($resident_member)){ if(@$resident_member[$user_flat_id]==1){ ?> <span style="color:red; font-size:10px;" class="pull-right"> <i class=" icon-star-empty" ></i> </span> <?php } } ?>  </td>
 							<td><?php echo $user_name; ?>  
 							     <?php if(empty($validation_status)){ ?>  
 									<span style="color:red; font-size:10px;" class="pull-right"> <i class=" icon-star"></i> </span> 
@@ -82,7 +84,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					<?php } 
 				}else{ ?>
 					<tr>
-						<td ><?php echo $sr_no; ?> </td>
+						<td ><?php echo $sr_no; if(!empty($resident_member)){ if($resident_member[$user_flat_id]==1){ ?> <span style="color:red; font-size:10px;" class="pull-right"> R </span> <?php } } ?>  </td>
 						<td><?php echo $user_name; ?>
 							<?php if(empty($validation_status)){ ?>  
 									<span style="color:red; font-size:10px;" class="pull-right"> <i class=" icon-star"></i> </span> 

@@ -32,12 +32,15 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			</thead>
 			<tbody>
 			<?php $sr_no=0;
+			//pr($arranged_users);
 			$count_owner=0; $count_tenant=0; $count_family=0;
 			foreach($arranged_users as $user_id=>$user_info){ $sr_no++;
 				$user_name=$user_info["user_name"];
 				$user_flat_id=$user_info["user_flat_id"];
 				$wing_flats=$user_info["wing_flat"];
 				$roles=$user_info["roles"];
+				$resident_member=$user_info["resident_member"];
+				
 				$count_member_owner_info=$user_info["count_member_owner"];
 				$count_member_tenant_info=$user_info["count_member_tenant"];
 				$count_member_family_info=$user_info["count_member_family"];
@@ -52,7 +55,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					$q=0;
 					foreach($wing_flats as $user_flat_id=>$wing_flat){ $q++; ?>
 						<tr>
-							<td><?php echo $sr_no; ?> </td>
+							<td><?php echo $sr_no; if(!empty($resident_member)){ if($resident_member[$user_flat_id]==1){ ?> <span style="color:red; font-size:10px;" class="pull-right"> R </span> <?php } } ?>  </td>
 							<td><?php echo $user_name; ?>  
 							     <?php if(empty($validation_status)){ ?>  
 									<span style="color:red; font-size:10px;" class="pull-right"> <i class=" icon-star"></i> </span> 

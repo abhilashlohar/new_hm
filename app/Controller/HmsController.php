@@ -19341,7 +19341,7 @@ function society_member_view(){
 		
 		if($user_type=="member" or $user_type=="family_member"){
 			$user_flat_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($user_id)));
-			$flats=array();
+			$flats=array(); $resident=array();
 			foreach($user_flat_info as $user_flat){
 				$user_flat_id=$user_flat["user_flat"]["user_flat_id"];
 				$wing=$user_flat["user_flat"]["wing"];
@@ -19357,7 +19357,10 @@ function society_member_view(){
 					$conditions=array("flat_id"=>$flat);
 					$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
 					$flat_name=ltrim(@$flat_info[0]["flat"]["flat_name"],'0');
-					
+					$noc_ch_tp=$flat_info[0]['flat']['noc_ch_tp'];
+					if($noc_ch_tp==1){
+						$resident[$user_flat_id]=1;
+					}
 					$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
 				}
 				
@@ -19366,6 +19369,7 @@ function society_member_view(){
 			$user_flat_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($user_id)));
 			$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"];
 			$flats=array();
+			$resident=array();
 		}
 		
 		$this->loadmodel('user_role');
@@ -19402,7 +19406,7 @@ function society_member_view(){
 		}
 		$roles=implode(',',$roles);
 		
-		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id,"count_member_owner"=>$count_member_owner,"count_member_tenant"=>$count_member_tenant,"count_member_family"=>$count_member_family);
+		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id,"count_member_owner"=>$count_member_owner,"count_member_tenant"=>$count_member_tenant,"count_member_family"=>$count_member_family,'resident_member'=>$resident);
 	}
 	$this->set(compact("arranged_users"));
 }

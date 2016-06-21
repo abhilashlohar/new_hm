@@ -429,7 +429,7 @@ $("#menus_area>li").live('click',function(e){
    </div>
    <!-- END CONTAINER -->
    <!-- BEGIN FOOTER -->
-   <div class="footer hide_at_print" style="color:black;">
+   <div class="footer hide_at_print" >
       HousingMatters
       <div class="span pull-right">
          <span class="go-top"><i class="icon-angle-up"></i></span>

@@ -94,8 +94,6 @@ function substrwords($text, $maxchar, $end='...') {
 					$description=$discussion_data['discussion_post']['description'];
 					
 					$topic_cut=substrwords($topic,25,'...');
-					
-					
 					?>
 					<tr>
 						<td><a href="<?php echo $this->webroot; ?>Discussions/index/<?php echo $discussion_id; ?>/0" rel='tab' class="" data-trigger="hover" data-placement="bottom" data-content="<?php echo $description; ?>" data-original-title="<?php echo $topic; ?>"> <?php echo $topic_cut; ?> </a></td>

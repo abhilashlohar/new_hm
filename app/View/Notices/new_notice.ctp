@@ -108,28 +108,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 			  
 
 
-<script>
-$(document).ready(function(){
-	 $("#v3").live('click',function(){
-	 
-		$("#show_3").slideDown('fast');
-		$("#show_2").slideUp('fast');
-		$("#show_1").slideUp('fast');
-	 });
-	 
-	 $("#v2").live('click',function(){
-		$("#show_2").slideDown('fast');
-		$("#show_3").slideUp('fast');
-		$("#show_1").slideUp('fast');
-	 });
-	 
-	 $("#v1").live('click',function(){
-		$("#show_1").slideDown('fast');
-		$("#show_2").slideUp('fast');
-		$("#show_3").slideUp('fast');
-	 });
-});
-</script>
+
 
 				  
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />

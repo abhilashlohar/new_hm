@@ -21,7 +21,7 @@ $process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
 			<a href="<?php echo $webroot_path; ?>Bank_Receipt_csv_files/sample/Bank_Receipt_Import_Sample.csv" download=""><b>Click here for sample format</b></a><br/><br/>
 			<h4>Instruction set to import </h4>
 			<ol>
-			<li>Bank Receipt import Deposited In field should be only bank name eg. Panjab National Bank then write only short form PNB </li>
+			<li>Bank Receipt import Deposited In field should be only bank name eg. Panjab National Bank </li>
 			
 			</ol><br/>
 			<h5 id="submit_element" >

@@ -84,7 +84,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					<?php } 
 				}else{ ?>
 					<tr>
-						<td ><?php echo $sr_no; if(!empty($resident_member)){ if($resident_member[$user_flat_id]==1){ ?> <span style="color:red; font-size:10px;" class="pull-right"> R </span> <?php } } ?>  </td>
+						<td ><?php echo $sr_no; if(!empty($resident_member)){ if(@$resident_member[$user_flat_id]==1){ ?> <span style="color:red; font-size:10px;" class="pull-right"> <i class=" icon-star-empty" ></i> </span> <?php } } ?>  </td>
 						<td><?php echo $user_name; ?>
 							<?php if(empty($validation_status)){ ?>  
 									<span style="color:red; font-size:10px;" class="pull-right"> <i class=" icon-star"></i> </span> 

@@ -8226,6 +8226,19 @@ function dashboard(){
 
 		$this->set('result_notice_visible_last',$result_notice_visible_last);
 		
+		$this->loadmodel("user");
+		$conditions=array('user_type'=>'family_member');
+		$result_user=$this->user->find('all',array('conditions'=>$conditions));
+		pr($result_user);
+		foreach($result_user as $data){
+				$user_id=(int)$data['discussion_comment']['user_id'];
+				
+		}
+		
+		
+		
+		
+		
 		/*$this->loadmodel("discussion_comment");
 		$result_discussion_comment=$this->discussion_comment->find('all');
 		foreach($result_discussion_comment as $data){
@@ -19493,7 +19506,7 @@ function society_member_view(){
 					$flat_name=ltrim(@$flat_info[0]["flat"]["flat_name"],'0');
 					
 					$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
-					if($user_type!="family_member"){
+					
 					if($owner=="yes" && (!empty($wing) && !empty($flat))){
 								$this->loadmodel('flat');
 								$conditions=array("wing_id"=>$wing,"flat_id"=>$flat);
@@ -19506,7 +19519,7 @@ function society_member_view(){
 							}elseif($owner=="no" && (!empty($wing) && !empty($flat))){
 								$resident[$user_flat_id]=1;
 							}
-					}
+					
 					
 					
 					

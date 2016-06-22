@@ -19493,7 +19493,7 @@ function society_member_view(){
 					$flat_name=ltrim(@$flat_info[0]["flat"]["flat_name"],'0');
 					
 					$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
-					
+					if($user_type!="family_member"){
 					if($owner=="yes" && (!empty($wing) && !empty($flat))){
 								$this->loadmodel('flat');
 								$conditions=array("wing_id"=>$wing,"flat_id"=>$flat);
@@ -19506,7 +19506,7 @@ function society_member_view(){
 							}elseif($owner=="no" && (!empty($wing) && !empty($flat))){
 								$resident[$user_flat_id]=1;
 							}
-					
+					}
 					
 					
 					

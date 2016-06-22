@@ -19479,7 +19479,7 @@ function society_member_view(){
 				$user_flat_id=$user_flat["user_flat"]["user_flat_id"];
 				$wing=$user_flat["user_flat"]["wing"];
 				$flat=$user_flat["user_flat"]["flat"];
-				$owner=@$user_flat["user_flat"]["owner"];
+				$owner=$user_flat["user_flat"]["owner"];
 				$exited=$user_flat["user_flat"]["exited"];
 				if($exited=="no"){
 					$this->loadmodel('wing');

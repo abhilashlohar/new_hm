@@ -8229,9 +8229,9 @@ function dashboard(){
 		$this->loadmodel("user");
 		$conditions=array('user_type'=>'family_member');
 		$result_user=$this->user->find('all',array('conditions'=>$conditions));
-		pr($result_user);
+		//pr($result_user);
 		foreach($result_user as $data){
-				$user_id=(int)$data['discussion_comment']['user_id'];
+				//$user_id=(int)$data['discussion_comment']['user_id'];
 				
 		}
 		

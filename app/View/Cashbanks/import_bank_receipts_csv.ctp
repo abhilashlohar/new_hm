@@ -18,10 +18,10 @@ $process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
 		<form method="post" id="form1" style="margin: 0px;">
 			<h5>Upload CSV file in given format to import Receipts.</h5>
 			<input name="file" class="default" id="image-file" type="file">
-			<a href="<?php echo $webroot_path; ?>Bank_Receipt_csv_files/sample/Bank_Receipt_Import_Sample.csv" download=""><b>Click here for sample format</b></a><br/><br/>
+			<a href="<?php echo $webroot_path; ?>Cashbanks/bank_receipt_sample"><b>Click here for sample format</b></a><br/><br/>
 			<h4>Instruction set to import </h4>
 			<ol>
-			<li>Bank Receipt import Deposited In field should be only bank name eg. Panjab National Bank </li>
+			<li>Bank Receipt import Receipt mode type field can be take cheque/neft/pg </li>
 			
 			</ol><br/>
 			<h5 id="submit_element" >

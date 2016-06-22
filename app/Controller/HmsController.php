@@ -8232,9 +8232,20 @@ function dashboard(){
 		$this->loadmodel("user");
 		$conditions=array('user_type'=>'family_member');
 		$result_user=$this->user->find('all',array('conditions'=>$conditions));
-		//pr($result_user);
+		
+		
 		foreach($result_user as $data){
-				//$user_id=(int)$data['discussion_comment']['user_id'];
+				$user_id=(int)$data['user']['user_id'];
+				$this->loadmodel("user_flat");
+				$conditions=array('user_id'=>$user_id);
+				$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions));
+				
+				foreach($result_user_flat as $data){
+					$user_flat_id=$data['user_flat']['user_flat_id'];
+					$owner=$data['user_flat']['owner'];
+					$this->user_flat->updateAll(array('owner'=>null),array('user_flat_id'=>$user_flat_id));
+				}
+				
 				
 		}
 		

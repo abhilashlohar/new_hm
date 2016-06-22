@@ -8242,7 +8242,7 @@ function dashboard(){
 				
 				foreach($result_user_flat as $data){
 					$user_flat_id=$data['user_flat']['user_flat_id'];
-					$owner=$data['user_flat']['owner'];
+					$owner=@$data['user_flat']['owner'];
 					$this->user_flat->updateAll(array('owner'=>null),array('user_flat_id'=>$user_flat_id));
 				}
 				

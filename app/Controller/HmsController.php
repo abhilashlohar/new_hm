@@ -12219,6 +12219,105 @@ $this->set('result_not_login',$this->user->find('all',array('conditions'=>$condi
 
 }
 
+function profile_mobile_verification_send($user_id=null,$mobile=null){
+	$this->layout=null;		
+	
+		$user_id=(int)$user_id;
+		
+		$this->loadmodel('user');
+		$conditions=array('user_id'=>$user_id);
+		$result_user=$this->user->find('all',array('conditions'=>$conditions));
+		foreach($result_user as $data)
+		{
+		  $user_name=$data['user']['user_name'];
+			
+		}
+		$user_name=$this->check_charecter_name($user_name);
+		$r_sms=$this->requestAction(array('controller'=>'Fns','action'=>'hms_sms_ip'));
+		$working_key=$r_sms->working_key;
+		$sms_sender=$r_sms->sms_sender; 
+		$sms_allow=(int)$r_sms->sms_allow; 
+		if($sms_allow==1){
+		$random=(string)mt_rand(1000,9999);
+		$sms="Your 4 digit random code is ".$random."";
+		$sms1=str_replace(" ", '+', $sms);
+		//$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');
+
+			$this->loadmodel('user');
+			$this->user->updateAll(array('signup_random'=>$random,'new_mobile'=>$mobile),array('user_id'=>$user_id)); 
+		 
+		}
+
+	
+}
+
+function profile_mobile_update($user_id=null,$otp_number=null){
+$this->layout=null;		
+$this->loadmodel('user');
+$conditions=array("signup_random" => $otp_number,'user_id'=>(int)$user_id);
+$result_user = $this->user->find('all',array('conditions'=>$conditions));
+ $n4 = sizeof($result_user);
+	if($n4>0){
+		$mobile=$result_user[0]['user']['new_mobile'];
+		
+		$this->loadmodel('user');
+		$this->user->updateAll(array("mobile"=>$mobile,"new_mobile"=>"","signup_random"=>""),array('user_id'=>(int)$user_id));
+		
+		echo"update";
+	}else{
+
+		echo"wrong";
+	}	
+
+	
+}
+
+function profile_mobile_verification_already($user_id=null,$mobile=null){
+	
+$this->layout=null;	
+
+$this->loadmodel('user');
+$conditions=array("mobile" => $mobile,'user_id'=>(int)$user_id);
+$result4 = $this->user->find('all',array('conditions'=>$conditions));
+$n4 = sizeof($result4);
+$e=$n4;
+if ($e > 0) {
+echo "true";
+} else {
+		$this->loadmodel('user_temp');
+		$conditions=array("mobile" => $mobile,'reject'=>0);
+		$result3 = $this->user_temp->find('all',array('conditions'=>$conditions));
+		$n3 = sizeof($result3);
+		$this->loadmodel('user');
+		$conditions=array("mobile" => $mobile);
+		$result4 = $this->user->find('all',array('conditions'=>$conditions));
+		$n4 = sizeof($result4);
+		$e=$n3+$n4;
+
+		if ($e > 0) {
+		echo"false";
+		} else {
+		echo"true";
+		}
+	
+}
+
+
+	
+}
+
+function profile_mobile_verification($user_id=null){
+	$this->layout=null;	
+	
+	$this->loadmodel('user');
+	$conditions=array('user_id'=>(int)$user_id);
+	$result_user=$this->user->find('all',array('conditions'=>$conditions));
+	$mobile=$result_user[0]['user']['mobile'];
+	$this->set('mobile',$mobile);
+	$this->set('user_id',$user_id);
+	
+}
+
 function verification_member_profile(){
 
 $this->layout='without_session';

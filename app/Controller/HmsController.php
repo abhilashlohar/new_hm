@@ -19681,10 +19681,71 @@ function society_member_view(){
 		}
 		$roles=implode(',',$roles);
 		
-		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id,"count_member_owner"=>$count_member_owner,"count_member_tenant"=>$count_member_tenant,"count_member_family"=>$count_member_family,'resident_member'=>$resident);
+		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id,"count_member_owner"=>$count_member_owner,"count_member_tenant"=>$count_member_tenant,"count_member_family"=>$count_member_family,'resident_member'=>$resident,'user_id'=>$user_id);
 	}
 	
 	$this->set(compact("arranged_users"));
+}
+
+function update_member_info($user_id=null){
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	$this->set(compact("user_id"));
+	$this->ath();
+	$this->check_user_privilages();	
+	$s_society_id=$this->Session->read('hm_society_id');
+	
+	$user_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array((int)$user_id)));
+	$this->set(compact("user_info"));
+	
+	if (isset($this->request->data['sub'])) {
+		$name=$this->request->data['name'];
+		$email=$this->request->data['email'];
+		$mobile=$this->request->data['mobile'];
+		
+		$this->loadmodel('user');
+		$this->user->updateAll(array('user_name'=>$name,'email'=>$email,'mobile'=>$mobile),array('user.user_id'=>(int)$user_id));
+		$this->redirect(array('action' => 'society_member_view'));
+	}
+}
+
+function validate_for_member_info_update(){
+	$this->layout="";
+	$s_society_id=$this->Session->read('hm_society_id');
+	
+	$email=$this->request->query('email');
+	$user_id=(int)$this->request->query('user_id');
+	
+	$this->loadmodel('user'); 
+	$conditions=array("society_id"=>(int)$s_society_id,"email"=>$email,"user_id"=>array('$ne'=>$user_id));
+	$count=$this->user->find('count',array('conditions'=>$conditions));
+	if($count>0){
+		echo "no";
+	}else{
+		echo "";
+	}
+	
+}
+
+function validate_for_member_info_update_mobile(){
+	$this->layout="";
+	$s_society_id=$this->Session->read('hm_society_id');
+	
+	$mobile=$this->request->query('mobile');
+	$user_id=(int)$this->request->query('user_id');
+	
+	$this->loadmodel('user'); 
+	$conditions=array("society_id"=>(int)$s_society_id,"mobile"=>$mobile,"user_id"=>array('$ne'=>$user_id));
+	$count=$this->user->find('count',array('conditions'=>$conditions));
+	if($count>0){
+		echo "no";
+	}else{
+		echo "";
+	}
+	
 }
 
 function society_member_excel()

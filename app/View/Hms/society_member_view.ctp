@@ -39,6 +39,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			foreach($arranged_users as $user_id=>$user_info){ $sr_no++;
 				$user_name=$user_info["user_name"];
 				$user_flat_id=$user_info["user_flat_id"];
+				$user_id=$user_info["user_id"];
 				$wing_flats=$user_info["wing_flat"];
 				$roles=$user_info["roles"];
 				$resident_member=$user_info["resident_member"];
@@ -79,7 +80,17 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 								echo '<td>'.$validation_status.'</td>';
 							} ?>
 							<td><?php echo $date; ?></td>
-							<td><a href="#" role="button" class="btn red mini exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign mobile_responce"></i> Exit</a></td>
+							<td>
+								<div class="btn-group" style="margin: 0px !important;">
+								<a class="btn blue mini" href="#" data-toggle="dropdown">
+								<i class="icon-chevron-down"></i>	
+								</a>
+								<ul class="dropdown-menu" style="min-width: 80px ! important; margin-left: -52px;">
+									<li><a href="update_member_info/<?php echo $user_id; ?>" ><i class="icon-pencil"></i> Edit</a></li>
+									<li><a href="#" role="button" class=" exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign mobile_responce"></i> Exit</a></li>
+								</ul>
+								</div>
+							</td>
 						</tr>
 					<?php } 
 				}else{ ?>
@@ -107,7 +118,17 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 							echo '<td>'.$validation_status.'</td>';
 						} ?>
 						<td><?php echo $date; ?></td>
-						<td><a href="#" role="button" class="btn red mini exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign mobile_responce"></i> Exit</a></td>
+						<td>
+							<div class="btn-group" style="margin: 0px !important;">
+							<a class="btn blue mini" href="#" data-toggle="dropdown">
+							<i class="icon-chevron-down"></i>	
+							</a>
+							<ul class="dropdown-menu" style="min-width: 80px ! important; margin-left: -52px;">
+								<li><a href="update_member_info/<?php echo $user_id; ?>" ><i class="icon-pencil"></i> Edit</a></li>
+								<li><a href="#" role="button" class=" exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign mobile_responce"></i> Exit</a></li>
+							</ul>
+							</div>
+						</td>
 					</tr>
 				<?php } ?>
 			<?php } ?>

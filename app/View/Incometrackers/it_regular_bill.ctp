@@ -35,7 +35,7 @@ $nnn=55;
 
 
 	 
-if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type) || $nn==555 || $nnn==555)
+if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type) || $nn==555 || $nnn==555 || $financial_year_count==0)
 {
 ?>
 <br>
@@ -60,6 +60,9 @@ if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type) 
 		<?php if($ledger_sub_account_data == 0){ ?>
 		<li style="text-align:left;"><p style="font-size:18px;">There is no any member for billing</p></li>	
 		<?php } ?>
+		<?php if($financial_year_count == 0){ ?>
+		<li style="text-align:left;"><p style="font-size:18px;">Kindly Open Financial Year.</p></li>	
+		<?php } ?>
 	</ul>
 <br>
 </div>
@@ -76,7 +79,7 @@ if(sizeof($result_regular_bill_temp)>0){
 
 ?>
 
-<?php if(!empty($select_income_head_array) && !empty($penalty_tax) && !empty($neft_type) && $nn==55 && $nnn==55){ ?>
+<?php if(!empty($select_income_head_array) && !empty($penalty_tax) && !empty($neft_type) && $nn==55 && $nnn==55 && $financial_year_count>0){ ?>
 <input type="hidden" id="validat_value">
 <div class="portlet box blue">
 	<div class="portlet-title">

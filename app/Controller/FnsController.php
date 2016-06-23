@@ -1001,6 +1001,10 @@ function tenancy_agreement_via_user_fetch($society_id,$user_id){
 
 function sending_options(){
 	$s_society_id=$this->Session->read('hm_society_id');
+	$this->loadmodel('group');
+	$conditions=array('society_id'=>$s_society_id,'delete_id'=>0);
+	$count=$this->group->find('count',array('conditions'=>$conditions));
+	
 	?>
 	<div class="controls">
 		<label class="radio line">
@@ -1098,6 +1102,7 @@ function sending_options(){
 				<label id="requirecheck2"></label>
 				</div>
 			</div>
+	<?php if($count>0){ ?>
 		<label class="radio line">
 		<div class="radio"><span><input name="send_to" value="group_wise" type="radio"></span></div>
 		Group wise
@@ -1117,7 +1122,8 @@ function sending_options(){
 				<?php } ?>
 				<label id="requirecheck3"></label>
 				</div>
-			</div>
+			</div> 
+		<?php } ?>
 	</div>
 <script>
 $(document).ready(function() {

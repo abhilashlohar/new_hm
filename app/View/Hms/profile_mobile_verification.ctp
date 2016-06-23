@@ -1,11 +1,11 @@
 <div class="modal-header" >
-	<h4 id="myModalLabel1">Update Mobile Number</h4>
+	<h4 id="myModalLabel1">Update Mobile Number</h4> 	
 </div>
 <div class="modal-body">
 	
 	
 	<div class="control-group">
-	  <label class="control-label">Old number</label>
+	  <label class="control-label">Current number</label>
 	  <div class="controls">
 		<input class="m-wrap " maxlength="10" readonly id=""  type="text" value="<?php echo $mobile; ?> ">
 	  </div>
@@ -24,6 +24,7 @@
 					   
 </div>
 <div class="modal-footer">
+
 	<button class="btn" id="close_edit">Close</button>
 	<button class="btn blue save_edited" member_id="<?php echo $user_id; ?>">Save</button>
 </div>

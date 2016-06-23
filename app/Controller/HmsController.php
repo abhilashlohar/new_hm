@@ -12241,7 +12241,7 @@ function profile_mobile_verification_send($user_id=null,$mobile=null){
 		$random=(string)mt_rand(1000,9999);
 		$sms="Your 4 digit random code is ".$random."";
 		$sms1=str_replace(" ", '+', $sms);
-		$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');
+		//$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');
 
 			$this->loadmodel('user');
 			$this->user->updateAll(array('signup_random'=>$random,'new_mobile'=>$mobile),array('user_id'=>$user_id)); 

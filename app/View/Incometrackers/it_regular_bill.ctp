@@ -32,10 +32,24 @@ $nnn=55;
 			break;		
 		 }		 
 	} }
-
-
+foreach($result_society as $data){
+		$society_name=$data["society"]["society_name"];
+		$society_reg_num=$data["society"]["society_reg_num"];
+		$society_address=$data["society"]["society_address"];
+		$society_email=$data["society"]["society_email"];
+		$society_phone=$data["society"]["society_phone"];
+		$terms_conditions=$data["society"]["terms_conditions"];
+		$signature=$data["society"]["signature"];
+		$sig_title=$data["society"]["sig_title"];
+	    $neft_type = @$data["society"]["neft_type"];
+	    $neft_detail = @$data["society"]["neft_detail"];
+	    $society_logo = @$data["society"]["logo"];
+		$area_scale = (int)@$data["society"]["area_scale"];
+		$email_is_on_off=(int)@$data["society"]["account_email"];
+		$sms_is_on_off=(int)@$data["society"]["account_sms"];
+		}
 	 
-if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type) || $nn==555 || $nnn==555 || $financial_year_count==0)
+if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type) || $nn==555 || $nnn==555 || $financial_year_count==0 || empty($society_reg_num) || empty($society_address) || empty($society_email) || empty($society_phone) || empty($sig_title) || empty($society_logo))
 {
 ?>
 <br>
@@ -63,6 +77,9 @@ if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type) 
 		<?php if($financial_year_count == 0){ ?>
 		<li style="text-align:left;"><p style="font-size:18px;">Kindly Open Financial Year.</p></li>	
 		<?php } ?>
+		<?php if(empty($society_reg_num) || empty($society_address) || empty($society_email) || empty($society_phone) || empty($sig_title) || empty($society_logo)){ ?>
+		<li style="text-align:left;"><p style="font-size:18px;">Kindly Fill the Society Details.</p></li>	
+		<?php } ?>
 	</ul>
 <br>
 </div>
@@ -79,7 +96,7 @@ if(sizeof($result_regular_bill_temp)>0){
 
 ?>
 
-<?php if(!empty($select_income_head_array) && !empty($penalty_tax) && !empty($neft_type) && $nn==55 && $nnn==55 && $financial_year_count>0){ ?>
+<?php if(!empty($select_income_head_array) && !empty($penalty_tax) && !empty($neft_type) && $nn==55 && $nnn==55 && $financial_year_count>0 && !empty($society_reg_num) && !empty($society_address) && !empty($society_email) && !empty($society_phone) && !empty($sig_title) && !empty($society_logo)){ ?>
 <input type="hidden" id="validat_value">
 <div class="portlet box blue">
 	<div class="portlet-title">

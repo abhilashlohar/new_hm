@@ -480,6 +480,12 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 								
 								</div>
 								
+								<div class="span12"> 
+									  <div align="center">
+										<span style="color:red; font-size:10px;"> <i class=" icon-star"></i></span><span> Private:- Visible to Society Admin/Managing Committee only </span> | <span > Public:- Visible to all your society members</span>
+		
+										</div>
+								  </div>
 								
 								<div class="controls controls-row">
 										<div class="span3"> 

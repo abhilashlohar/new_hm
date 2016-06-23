@@ -93,8 +93,10 @@ function it_regular_bill(){
 	$s_user_id=$this->Session->read('hm_user_id');
 	$s_user_flat_id=$this->Session->read('hm_user_flat_id');
 	
-	
-	
+	$this->loadmodel('financial_year');
+		$conditions =array('society_id' =>$s_society_id,'status' =>1);
+		$financial_year_count=$this->financial_year->find('count',array('conditions'=>$conditions));
+		$this->set(compact("financial_year_count"));
 	
 	$this->loadmodel('wing');
 	$condition=array('society_id'=>$s_society_id);

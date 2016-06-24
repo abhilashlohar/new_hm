@@ -127,6 +127,61 @@ $cursor2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions))
 $this->set('cursor2',$cursor2);
 }
 //End Journal Add (Accounts)//
+
+
+function journal_voucher_edit($voucher_id=null){
+if($this->RequestHandler->isAjax()){
+$this->layout='blank';
+}else{
+$this->layout='session';
+}
+$this->set('voucher_id',$voucher_id);
+
+$webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'webroot_path'));
+$this->set('webroot_path',$webroot_path);
+
+$this->ath();
+$this->check_user_privilages();
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
+$this->set('s_role_id',$s_role_id);
+
+$this->loadmodel('journal');
+$conditions=array("society_id" => $s_society_id);
+$order=array('journal.receipt_id'=> 'DESC');
+$cursor=$this->journal->find('all',array('conditions'=>$conditions,'order' =>$order,'limit'=>1));
+foreach ($cursor as $collection) 
+{
+$last=@$collection['journal']['receipt_id'];
+}
+if(empty($last))
+{
+$zz= 0;
+}	
+else
+{	
+$zz=$last;
+}
+$this->set('zz',$zz);   
+
+$this->loadmodel('ledger_account');
+$conditions = array( '$or' => array(array('society_id' =>$s_society_id),array('society_id' =>0)));
+$cursor1=$this->ledger_account->find('all',array('conditions'=>$conditions));
+$this->set('cursor1',$cursor1);
+
+$this->loadmodel('ledger_sub_account');
+$conditions=array("society_id" => $s_society_id);
+$cursor2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+$this->set('cursor2',$cursor2);
+
+$this->loadmodel('journal');
+$conditions=array('society_id'=>$s_society_id,'voucher_id'=>(int)$voucher_id);
+$result_journal=$this->journal->find('all',array('conditions'=>$conditions));
+$this->set('result_journal',$result_journal);	
+}
+
+
 //Start Journal Excel//
 function journal_excel(){
 
@@ -806,6 +861,210 @@ $output = json_encode(array('type'=>'succ', 'text' => 'Journal voucher '.$vouche
 
 ///////////////////////////////// Start journal validation///////////////////////////////////////////////////////////
 
+
+
+
+
+
+function journal_update(){
+	$this->layout='blank';
+	$this->ath();
+	$q=$this->request->query('q');
+	
+	$q = html_entity_decode($q);
+	
+	$voucher_id = (int)$this->request->query('v_id');
+	
+	
+	
+	$tra_date = $this->request->query('b');
+	$tra_date = json_decode($tra_date, true);
+	$tra_date = date('Y-m-d',strtotime($tra_date));
+	$transaction_date = strtotime($tra_date); 
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id  = (int)$this->Session->read('hm_user_id');
+	$date=date("d-m-Y");
+	$time=date('h:i:a',time());
+				if(empty($tra_date)){
+				$output = json_encode(array('type'=>'error', 'text' => 'Transaction Date is Required'));
+				die($output);
+			}
+			
+			
+			
+	    $TransactionDate = $tra_date; 
+		$this->loadmodel('financial_year');
+		$conditions=array("society_id" => $s_society_id,"status"=>1);
+		$cursor = $this->financial_year->find('all',array('conditions'=>$conditions));
+		$abc = 555;
+		foreach($cursor as $collection){
+				$from = $collection['financial_year']['from'];
+				$to = $collection['financial_year']['to'];
+				//$from1 = date('Y-m-d',$from->sec);
+				//$to1 = date('Y-m-d',$to->sec);
+				$from2 = $from;
+				$to2 = $to;
+				$transaction1 = date('Y-m-d',strtotime($TransactionDate));
+				$transaction2 = strtotime($transaction1);
+					if($transaction2 <= $to2 && $transaction2 >= $from2){
+						$abc = 5;
+						break;
+					}	
+		}
+	if($abc == 555){
+		$output=json_encode(array('type'=>'error','text'=>'Transaction Date Should be in Open Financial Year'));
+		die($output);
+	}		
+		
+			
+		$myArray = json_decode($q, true);
+		$c=0;
+		$total_debit = 0;
+		$total_credit = 0;
+		
+foreach($myArray as $child){
+	$c++;
+			
+	if(empty($child[0])){
+	$output = json_encode(array('type'=>'error', 'text' => 'Ledger Account is Required in row '.$c));
+	die($output);
+	}
+	
+	if(empty($child[1]) and empty($child[2])){
+	$output = json_encode(array('type'=>'error', 'text' => 'Debit or Credit is Required in row '.$c));
+	die($output);
+	}
+	
+	if(is_numeric($child[1]) || is_numeric($child[2])){
+	}	
+	else
+	{
+	$output = json_encode(array('type'=>'error', 'text' => 'Debit or Credit Should be Numeric Value in row '.$c));
+	die($output);
+	}
+	$total_debit = $total_debit + $child[1];
+	 $total_credit = $total_credit + $child[2];
+
+		
+	        $ledger_validation_for_bill = $child[0];
+			$ledger_sub_acc_for_bill = explode(',',$ledger_validation_for_bill);
+			$type_member = (int)$ledger_sub_acc_for_bill[1];
+			if($type_member==1){
+				$ledger_sub_acc_for_bill=(int)$ledger_sub_acc_for_bill[0];
+				$this->loadmodel('regular_bill');
+				$conditions=array('society_id'=>$s_society_id,'ledger_sub_account_id'=>$ledger_sub_acc_for_bill,'start_date'=>array('$gte'=>$transaction_date));
+				$order=array('regular_bill.start_date'=>'DESC');
+				$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1)); 
+				
+				//IMPORTANT- VALIDATION OF BACK-DATE COMMENTED// 
+				/*if(sizeof($result_regular_bill)==1){
+					$output = json_encode(array('type'=>'error', 'text' => 'Jv is not generated before bill generation date'));
+					die($output);
+				}*/
+				
+			}
+  
+
+}	
+
+	 if($total_debit != $total_credit){
+			$output = json_encode(array('type'=>'error', 'text' => 'Total Debit Should be Match with Total Credit'));
+			die($output);
+		}
+		
+	//$voucher_id=$this->autoincrement_with_society_ticket('journal','voucher_id');
+	$qw=0;
+	foreach($myArray as $child){ $qw++;
+	
+			$ledger = $child[0];
+			$ledgerr_arrr = explode(',',$ledger);
+			$type = (int)$ledgerr_arrr[1];
+			$flat_id = null;
+if($type == 1)
+{
+$ledger_sub_account = (int)$ledgerr_arrr[0];
+$ledger_sub_account2 = (int)$ledger_sub_account;
+
+$ledger_sub_data = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_sub_account_fetch'),array('pass'=>array($ledger_sub_account)));
+foreach($ledger_sub_data as $sub_ledgerr)
+{
+$ledger = (int)$sub_ledgerr['ledger_sub_account']['ledger_id'];	
+if($ledger == 34)
+{
+//$flat_id = (int)$sub_ledgerr['ledger_sub_account']['flat_id'];
+$ledger_sub_account = (int)$ledger_sub_account;
+
+}
+}
+}	
+else
+{
+$ledger = (int)$ledgerr_arrr[0];
+$ledger_sub_account2=null;	
+}	
+		
+			
+			$debit = $child[1];
+			$credit = $child[2];
+			$desc = $child[3];
+			
+			if(empty($debit)){
+				$debit=null;
+				
+			}
+			if(empty($credit)){
+				$credit=null;
+				
+			}
+			
+		
+		if($qw==1){
+			$this->loadmodel('journal');
+			$conditions=array('society_id'=>$s_society_id,'voucher_id'=>(int)$voucher_id);
+			$result_journal=$this->journal->find('all',array('conditions'=>$conditions));
+			foreach($result_journal as $dataer){
+				$j_id=(int)$dataer["journal"]["journal_id"];
+				
+				$this->loadmodel('ledger');
+				$conditions4=array('society_id'=>$s_society_id,"table_name"=>"journal",'element_id'=>$j_id);
+				$this->ledger->deleteAll($conditions4);
+			}
+			
+			$this->loadmodel('journal');
+			$conditions4=array('society_id'=>$s_society_id,'voucher_id'=>$voucher_id);
+			$this->journal->deleteAll($conditions4);
+		}
+	
+				
+				
+				
+		$journal_id=$this->autoincrement('journal','journal_id');
+		$this->loadmodel('journal');
+		$multipleRowData = Array( Array("journal_id" => $journal_id,"ledger_account_id" => $ledger,"ledger_sub_account_id"=>(int)@$ledger_sub_account,"user_id" => $s_user_id, "transaction_date" => $transaction_date,"current_date" => $date, "credit" => $credit,'debit'=>$debit, "remark" => $desc ,"society_id" => $s_society_id,'voucher_id'=>$voucher_id));
+		$this->journal->saveAll($multipleRowData);
+		
+		
+		$this->loadmodel('ledger');
+		$auto_id=$this->autoincrement('ledger','auto_id');
+		$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => $ledger,"ledger_sub_account_id" =>$ledger_sub_account2,"debit"=>$debit,"credit"=>$credit,"table_name"=>"journal","element_id"=>$journal_id,"society_id"=>$s_society_id,"transaction_date"=>$transaction_date));
+
+	
+	}
+		
+
+////////////////////////////////////////////////////////////////
+$show_vouchar=array(1,$voucher_id);
+$this->Session->write('journll',$show_vouchar);
+
+$output = json_encode(array('type'=>'succ', 'text' => 'Journal voucher '.$voucher_id.' is generated successfully.'));
+    die($output);
+	
+}
+
+
+
+
+
 function journal_voucher_view($id=null){
 	
 if($this->RequestHandler->isAjax()){
@@ -825,7 +1084,7 @@ $result_society=$this->society_name($s_society_id);
 $this->set('society_name',$result_society[0]['society']['society_name']);
 
 $this->loadmodel('journal');
-$conditions=array('society_id'=>$s_society_id,'voucher_id'=>$voucher_id);	
+$conditions=array('society_id'=>$s_society_id,'voucher_id'=>$voucher_id);
 $result_journal=$this->journal->find('all',array('conditions'=>$conditions));
 $this->set('result_journal',$result_journal);	
 }

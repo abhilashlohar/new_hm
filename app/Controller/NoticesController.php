@@ -1380,6 +1380,9 @@ function submit_notice(){
 	$post_data=$this->request->data;
 
 	$this->ath();
+	$webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'webroot_path')); 
+	
+	
 	$s_society_id=$this->Session->read('hm_society_id');
 	$s_role_id=$this->Session->read('role_id'); 
 	$s_user_id=$this->Session->read('hm_user_id');
@@ -1633,6 +1636,9 @@ if($post_data['post_type']==1){
 		
 		$this->loadmodel('notice');
 		$this->notice->save(array('notice_id' => $notice_id, 'user_id' => $s_user_id, 'society_id' => $s_society_id, 'n_category_id' => $category_id ,'n_subject' => $notice_subject , 'n_expire_date' => $notice_expire_date, 'n_attachment' => @$file_name, 'n_message' => $code,'n_date' => $date, 'n_time' => $time, 'n_delete_id' => 0,'n_draft_id' => 0,'visible' => $visible,'sub_visible' => $sub_visible,'visible_user_id' => $recieve_info,'allowed' => $allowed));
+		
+		$this->send_notification('<span class="label label-warning"><i class="icon-bell"></i></span>','New Notice: <b>'.$notice_subject.'</b>',$webroot_path.'Notices/notice_publish',$s_user_id,$recieve_info);
+		
 		$this->Session->write('create_notice',1);
 		$output = json_encode(array('type'=>'created', 'text' =>'Your notice has been created and sent via email to all users selected by you.'));
 		die($output);
@@ -1668,6 +1674,8 @@ function submit_notice_edit($id=null){
 	$this->layout=null;
 	$post_data=$this->request->data;
 	$this->ath();
+	$webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'webroot_path')); 
+	
 	$s_society_id=$this->Session->read('hm_society_id');
 	$s_role_id=$this->Session->read('role_id'); 
 	$s_user_id=$this->Session->read('hm_user_id');
@@ -1882,7 +1890,7 @@ foreach($receivers as $user_id=>$data){
 		$this->loadmodel('notice');
 		$this->notice->updateAll(array('user_id' => $s_user_id, 'society_id' => $s_society_id, 'n_category_id' => $category_id ,'n_subject' => $notice_subject , 'n_expire_date' => $notice_expire_date, 'n_attachment' => "" , 'n_message' => $code,'n_date' => $date, 'n_time' => $time, 'n_delete_id' => 0,'n_draft_id' => 0,'visible' => $visible,'sub_visible' => $sub_visible,'visible_user_id' => $recieve_info),array('notice_id'=>$notice_id_q));
 		
-		//$da_user_id[]=$d_user_id;
+		$this->send_notification('<span class="label label-warning"><i class="icon-bell"></i></span>','New Notice: <b>'.$notice_subject.'</b>',$webroot_path.'Notices/notice_publish',$s_user_id,$recieve_info);
 
 		$output = json_encode(array('type'=>'created', 'text' =>'Your notice has been created and sent via email to all users selected by you.'));
 		die($output);

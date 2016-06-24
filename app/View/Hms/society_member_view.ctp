@@ -6,7 +6,9 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<span> Owner </span> -<span id="owner">  0 </span> |
 	<span> Tenant </span>-<span id="tenant"> 0 </span> |
 	<span> Family Member </span>-<span id="family"> 0 </span> |
-	<span style="color:red; font-size:10px;" > <i class=" icon-star"></i></span><span> Awaiting User Validation  </span> 
+	<span style="color:red; font-size:10px;" > <i class=" icon-star"></i></span><span> Awaiting User Validation  </span> |
+	<span style="color:red; font-size:10px;"><i class=" icon-star-empty" ></i> </span> <span> Resident  </span> 
+	
 	</div>
 	<a href="society_member_excel" class="blue mini btn" download="download"><i class="fa fa-file-excel-o"></i></a> 
 
@@ -19,7 +21,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<table class="table table-condensed table-bordered" >
 			<thead>
 				<tr>
-					<th>Sr.</th>
+					<th width="5%">Sr.</th>
 					<th>User Name</th>
 					<th>unit</th>
 					<th>Roles</th>
@@ -32,12 +34,16 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			</thead>
 			<tbody>
 			<?php $sr_no=0;
+			//pr($arranged_users);
 			$count_owner=0; $count_tenant=0; $count_family=0;
 			foreach($arranged_users as $user_id=>$user_info){ $sr_no++;
 				$user_name=$user_info["user_name"];
 				$user_flat_id=$user_info["user_flat_id"];
+				$user_id=$user_info["user_id"];
 				$wing_flats=$user_info["wing_flat"];
 				$roles=$user_info["roles"];
+				$resident_member=$user_info["resident_member"];
+				
 				$count_member_owner_info=$user_info["count_member_owner"];
 				$count_member_tenant_info=$user_info["count_member_tenant"];
 				$count_member_family_info=$user_info["count_member_family"];
@@ -52,7 +58,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					$q=0;
 					foreach($wing_flats as $user_flat_id=>$wing_flat){ $q++; ?>
 						<tr>
-							<td><?php echo $sr_no; ?> </td>
+							<td><?php echo $sr_no; if(!empty($resident_member)){ if(@$resident_member[$user_flat_id]==1){ ?> <span style="color:red; font-size:10px;" class="pull-right"> <i class=" icon-star-empty" ></i> </span> <?php } } ?>  </td>
 							<td><?php echo $user_name; ?>  
 							     <?php if(empty($validation_status)){ ?>  
 									<span style="color:red; font-size:10px;" class="pull-right"> <i class=" icon-star"></i> </span> 
@@ -74,12 +80,22 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 								echo '<td>'.$validation_status.'</td>';
 							} ?>
 							<td><?php echo $date; ?></td>
-							<td><a href="#" role="button" class="btn red mini exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign mobile_responce"></i> Exit</a></td>
+							<td>
+								<div class="btn-group" style="margin: 0px !important;">
+								<a class="btn blue mini" href="#" data-toggle="dropdown">
+								<i class="icon-chevron-down"></i>	
+								</a>
+								<ul class="dropdown-menu" style="min-width: 80px ! important; margin-left: -52px;">
+									<li><a href="update_member_info/<?php echo $user_id; ?>" ><i class="icon-pencil"></i> Edit</a></li>
+									<li><a href="#" role="button" class=" exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign mobile_responce"></i> Exit</a></li>
+								</ul>
+								</div>
+							</td>
 						</tr>
 					<?php } 
 				}else{ ?>
 					<tr>
-						<td ><?php echo $sr_no; ?> </td>
+						<td ><?php echo $sr_no; if(!empty($resident_member)){ if(@$resident_member[$user_flat_id]==1){ ?> <span style="color:red; font-size:10px;" class="pull-right"> <i class=" icon-star-empty" ></i> </span> <?php } } ?>  </td>
 						<td><?php echo $user_name; ?>
 							<?php if(empty($validation_status)){ ?>  
 									<span style="color:red; font-size:10px;" class="pull-right"> <i class=" icon-star"></i> </span> 
@@ -102,7 +118,17 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 							echo '<td>'.$validation_status.'</td>';
 						} ?>
 						<td><?php echo $date; ?></td>
-						<td><a href="#" role="button" class="btn red mini exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign mobile_responce"></i> Exit</a></td>
+						<td>
+							<div class="btn-group" style="margin: 0px !important;">
+							<a class="btn blue mini" href="#" data-toggle="dropdown">
+							<i class="icon-chevron-down"></i>	
+							</a>
+							<ul class="dropdown-menu" style="min-width: 80px ! important; margin-left: -52px;">
+								<li><a href="update_member_info/<?php echo $user_id; ?>" ><i class="icon-pencil"></i> Edit</a></li>
+								<li><a href="#" role="button" class=" exit" user_flat_id="<?php echo $user_flat_id; ?>"><i class=" icon-exclamation-sign mobile_responce"></i> Exit</a></li>
+							</ul>
+							</div>
+						</td>
 					</tr>
 				<?php } ?>
 			<?php } ?>

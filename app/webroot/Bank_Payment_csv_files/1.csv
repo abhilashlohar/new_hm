@@ -1,7 +1,50 @@
 Transaction Date,Ledger A/c,Amount,TDS Amount,Mode of Payment,Instrument/UTR,Bank Account,Invoice Reference,Narration 
-20-4-2016,Sanjay,1000,130,NEFT,HHHG4455,SBBJ,for marketing,erfvg
-20-4-2016,Jay,1500,,NEFT,HHHG4456,SBBJ,for marketing,rghjk
-20-4-2016,Ajit Patil ,1400,159,NEFT,HHHG4457,SBBJ,for marketing,dfgn
-20-4-2016,Kone Elevator,1300,187,NEFT,HHHG4458,SBBJ,for marketing,jhgfd
-20-4-2016,Abhilash,1200,,NEFT,HHHG4459,SBBJ,for marketing,sdf
-20-4-2016,Vicky,13645,669,NEFT,HHHG4460,SBBJ,for marketing,kjhgf
+23-06-2016,Rohit,100,10,NEFT,5148,SBI,N/A,narration 
+23-06-2016,Abhi ,150,,Cheque,299,SBI,N/A,narration 
+23-06-2016,Ashish,125,,Cheque,945,SBI,N/A,narration 
+23-06-2016,Dsu,654,,Cheque,654,SBI,N/A,narration 
+23-06-2016,Nilesh,5465,,Cheque,4581,SBI,N/A,narration 
+23-06-2016,Gopesh,458,,Cheque,56651,SBI,N/A,narration 
+23-06-2016,Yash,2215,,Cheque,156498,SBI,N/A,narration 
+23-06-2016,Rohit,22,,Cheque,15619,SBI,N/A,narration 
+23-06-2016,Abhi ,224,,Cheque,1516,SBI,N/A,narration 
+23-06-2016,Ashish,552,52,Cheque,1545,SBI,N/A,narration 
+23-06-2016,Dsu,151,,Cheque,1159,SBI,N/A,narration 
+23-06-2016,Nilesh,25,,Cheque,616,SBI,N/A,narration 
+23-06-2016,Gopesh,22,,Cheque,3154,SBI,N/A,narration 
+23-06-2016,Yash,25,,Cheque,1351,SBI,N/A,narration 
+23-06-2016,Rohit,55,,Cheque,321,SBI,N/A,narration 
+23-06-2016,Abhi ,21,,Cheque,1248,SBI,N/A,narration 
+23-06-2016,Ashish,55,,Cheque,1564,SBI,N/A,narration 
+23-06-2016,Dsu,545,,NEFT,999,SBI,N/A,narration 
+23-06-2016,Nilesh,545,,NEFT,999,SBI,N/A,narration 
+23-06-2016,Gopesh,45,,NEFT,999,SBI,N/A,narration 
+23-06-2016,Yash,52,,NEFT,999,SBI,N/A,narration 
+23-06-2016,Rohit,5465,65,NEFT,999,SBI,N/A,narration 
+23-06-2016,Abhi ,458,,NEFT,999,SBI,N/A,narration 
+23-06-2016,Ashish,2215,15,NEFT,999,SBI,N/A,narration 
+23-06-2016,Dsu,22,,NEFT,999,SBI,N/A,narration 
+23-06-2016,Nilesh,224,,NEFT,999,SBI,N/A,narration 
+23-06-2016,Gopesh,552,,Cheque,,SBI,N/A,narration 
+23-06-2016,Yash,151,,Cheque,85962,SBI,N/A,narration 
+23-06-2016,Abhi ,25,,Cheque,96,SBI,N/A,narration 
+23-06-2016,Ashish,22,,Cheque,949,SBI,N/A,narration 
+23-06-2016,Dsu,25,,Cheque,894,SBI,N/A,narration 
+23-06-2016,Nilesh,55,,Cheque,895,SBI,N/A,narration 
+23-06-2016,Gopesh,21,,Cheque,85,SBI,N/A,narration 
+23-06-2016,Yash,55,,Cheque,854,SBI,N/A,narration 
+23-06-2016,Rohit,545,,Cheque,258,SBI,N/A,narration 
+23-06-2016,Abhi ,545,,Cheque,6546,SBI,N/A,narration 
+23-06-2016,Ashish,45,,Cheque,48,SBI,N/A,narration 
+23-06-2016,Abhi ,52,,Cheque,4668,SBI,N/A,narration 
+23-06-2016,Ashish,5465,65,Cheque,987,SBI,N/A,narration 
+23-06-2016,Dsu,458,,Cheque,8784,SBI,N/A,narration 
+23-06-2016,Nilesh,2215,15,Cheque,454,SBI,N/A,narration 
+23-06-2016,Gopesh,22,,Cheque,54,SBI,N/A,narration 
+23-06-2016,Yash,224,,Cheque,649,SBI,N/A,narration 
+23-06-2016,Rohit,552,,Cheque,6984,SBI,N/A,narration 
+23-06-2016,Abhi ,151,,Cheque,149,SBI,N/A,narration 
+23-06-2016,Ashish,25,,Cheque,451165,SBI,N/A,narration 
+23-06-2016,Yash,22,,Cheque,29541,SBI,N/A,narration 
+23-06-2016,Rohit,25,,Cheque,25598,SBI,N/A,narration 
+23-06-2016,Rohit,55,,Cheque,1544,SBI,N/A,narration 

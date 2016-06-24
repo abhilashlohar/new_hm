@@ -50,7 +50,7 @@ $z=0;$j=0;
 <thead>
 <tr>
 <th>Sr.n.</th>
-
+<th>Name</th>
 <th >Unit</th>
 <th>NOC Type
  &nbsp; 
@@ -75,10 +75,12 @@ foreach($result_wing as $data){
 		$flat_id = (int)$data2['flat']['flat_id'];
 		$noc_ch_tp = (int)$data2['flat']['noc_ch_tp'];
 		$wing_flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'),array('pass'=>array($wing_id,$flat_id)));
+
+$ledger_name = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_member_name_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
 	?>
 	<tr>
 	<td><?php echo $i ; ?></td>
-	
+	<td><?php echo $ledger_name ; ?></td>
 	<td><?php echo $wing_flat ; ?></td>
 	
 	<td>

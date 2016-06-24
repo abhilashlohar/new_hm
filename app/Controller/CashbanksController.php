@@ -5200,6 +5200,43 @@ die($output);
 
 }
 //End Petty Cash receipt update Json//
+
+function bank_receipt_sample(){
+	
+$this->layout="";
+$filename="Bank_receipt_Import_sample";
+header ("Expires: 0");
+header ("Last-Modified: " . gmdate("D,d M YH:i:s") . "GMT");
+header ("Cache-Control: no-cache, must-revalidate");
+header ("Pragma: no-cache");
+header ("Content-type: application/vnd.ms-excel");
+header ("Content-Disposition: attachment; filename=".$filename.".csv");
+header ("Content-Description: Generated Report" );
+
+$this->ath();
+	$date=date('d-m-y');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+
+$this->loadmodel('ledger_sub_account');
+$conditions=array('ledger_id'=>33,'society_id'=>$s_society_id);
+$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+			
+$excel = "Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Amount,Narration \n";
+
+foreach($result_ledger_sub_account as $data){
+	
+$ledger_name=$data['ledger_sub_account']['name'];
+$excel.="$date,$ledger_name,cheque,12345,$date,Allahabad Bank,sec-4,Anupam Tagore,A,101,5000,Receipt for jan \n";	
+}
+	
+
+
+echo $excel;	
+	
+}
+
+
+
 //Start bank_payment_import_excel//
 function bank_payment_import_excel()
 {

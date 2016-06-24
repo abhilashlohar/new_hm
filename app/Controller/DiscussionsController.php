@@ -28,6 +28,10 @@ function index($list=null,$id=null){
 		$this->layout='session';
 	}
 	$this->ath();
+
+$dash_id = $this->request->query('dash_id');
+$this->set("dash_id",$dash_id);
+
 	$this->set("list",$list);
 	$this->set("id",$id);
 	$s_user_id=$this->Session->read('hm_user_id'); 

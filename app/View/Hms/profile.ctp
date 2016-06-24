@@ -215,7 +215,7 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 												 Mobile Number <span style="color:red">+91</span> 
 										</div>
 										<div class="span3"> 
-												<input type="text" class="m-wrap" value="<?php echo $c_mobile; ?>" name="mobile1" readonly maxlength="10">
+												<input type="text" class="m-wrap change_mobile" value="<?php echo $c_mobile; ?>" name="mobile1" readonly maxlength="10" member_update="<?php echo $da_user_id; ?>">
 										</div>
 										<div class="span3"> 
 											<select class="span12 m-wrap check_privacy" data-placeholder="Choose a Category" tabindex="1" name="sel_private" change_field="mobile" >
@@ -236,7 +236,7 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 												Email-Id
 										</div>
 										<div class="span3"> 
-												<input type="text" value="<?php echo $c_email;  ?>"  readonly class=" m-wrap" name="email">
+												<input type="text" value="<?php echo $c_email;  ?>"   class=" m-wrap" name="email">
 										</div>
 										
 										<div class="span3"> 
@@ -480,6 +480,12 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 								
 								</div>
 								
+								<div class="span12"> 
+									  <div align="center">
+										<span style="color:red; font-size:10px;"> <i class=" icon-star"></i></span><span> Private:- Visible to Society Admin/Managing Committee only </span> | <span > Public:- Visible to all your society members</span>
+		
+										</div>
+								  </div>
 								
 								<div class="controls controls-row">
 										<div class="span3"> 
@@ -504,13 +510,95 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
                   <!-- END SAMPLE FORM PORTLET-->
                </div>
             </div>
-			
-			
+<div class="edit_div" style="display: none;">
+<div class="modal-backdrop fade in"></div>
+<div class="modal"  id="profile_edit_content">
+
+</div>
+</div>		
 			
 <script>
 
 $(document).ready(function(){
-
+	$( ".change_mobile" ).click(function() {
+		var user_id = $(this).attr("member_update");
+		
+		$(".edit_div").show();
+		$.ajax({
+			url: "<?php echo $webroot_path; ?>/Hms/profile_mobile_verification/"+user_id,
+			}).done(function(response) {
+			$("#profile_edit_content").html(response);	
+		});		
+	});
+	
+	$(".save_edited").live("click",function() {
+		var mob=$("#new_mobile").val();
+		var user_id=$(this).attr("member_id");
+		//$("#load_data").html('<div ><img src="<?php echo $this->webroot ; ?>/as/indicator_blue_small.gif" /><br/><h5>Please Wait</h5></div>');
+		if($.isNumeric(mob)){
+			$("#validation").html('');
+			$("#load_data").html('');
+				$.ajax({
+				url: "<?php echo $webroot_path; ?>/Hms/profile_mobile_verification_already/"+user_id+"/"+mob,
+				}).done(function(response) {
+				if(response=="true"){
+					$("#validation").html('');
+					$.ajax({
+					url: "<?php echo $webroot_path; ?>/Hms/profile_mobile_verification_send/"+user_id+"/"+mob,
+					}).done(function(response) {
+						$('#new_mobile').prop('readonly', true);
+						$("#otp_code").html(response);
+						$( ".save_edited" ).addClass("mobile_update");	
+						$( ".mobile_update" ).removeClass("save_edited");					
+					});	
+					
+					
+					
+				}else{
+					$("#validation").html('Mobile-No is Already Exist.');
+				}
+			});	
+		}else{
+			$("#validation").html('please fill only numeric value');
+			$("#new_mobile").val('');
+			
+		}
+		
+		
+		
+	});
+	
+	
+	$(".mobile_update").die().live("click",function() {
+		
+		var otp_number=$("#otp_number").val();
+		var user_id=$(this).attr("member_id");
+			if(otp_number==""){
+				
+				$("#validation_otp").html('Please fill 4 digit number');
+			}else{
+				$("#validation_otp").html('');
+				
+					$.ajax({
+					url: "<?php echo $webroot_path; ?>/Hms/profile_mobile_update/"+user_id+"/"+otp_number,
+					}).done(function(response) {
+							
+							if(response=="update"){
+								
+								window.location.href="profile";
+							}else{
+								
+								$("#validation_otp").html('You have enter wrong digit');
+							}
+					});	
+					
+			}
+	});	
+	
+	 $("#close_edit").live('click',function(){
+		$(".edit_div").hide();
+	 });
+	 
 		$( "select.check_privacy" ).change(function() {
 			var update=$(this).val();
 			var field=$(this).attr('change_field');

@@ -10,10 +10,10 @@
 			$icon=$notification["notification"]["icon"];
 			$text=$notification["notification"]["text"];
 			$url=$notification["notification"]["url"];?>
-		<li>
+		<li style=" border-bottom: solid 1px #CCC; padding: 5px; text-decoration: none; list-style: none; ">
 			<a href="<?php echo $url; ?>" role="button" rel='tab' class="notification_tab" notification_id="<?php echo $notification_id; ?>">
 			<span class="task">
-			<span ><?php echo $icon; ?> <?php echo $text; ?></span>
+			<span ><?php echo $icon; ?> <?php echo $text; ?></span><br/>
 			<span class="percent">5 mins</span>
 			</span>
 			</a>

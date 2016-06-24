@@ -197,6 +197,18 @@ function ledger_sub_account_id_via_wing_id_and_flat_id($wing_id,$flat_id){
 	return (int)@$result2[0]["ledger_sub_account"]["auto_id"];
 }
 
+function ledger_member_name_via_wing_id_and_flat_id($wing_id,$flat_id){
+	$this->loadmodel('user_flat');
+	$conditions=array("wing" => $wing_id,"flat" => $flat_id,"owner" =>"yes");
+	$result=$this->user_flat->find('all',array('conditions'=>$conditions));
+	$user_flat_id=(int)@$result[0]["user_flat"]["user_flat_id"];
+	
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("user_flat_id" => $user_flat_id);
+	$result2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	return @$result2[0]["ledger_sub_account"]["name"];
+}
+
 
 function calculate_income_head_amount($ledger_sub_account_id,$income_head_id,$billing_cycle){
 	$s_society_id=$this->Session->read('hm_society_id');

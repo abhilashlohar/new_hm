@@ -1,7 +1,7 @@
 
 <style>
 .r_d{
-width:44%; float:left; padding:5px;
+width:46%; float:left; padding:5px;
 }
 
 @media (min-width: 650px) and (max-width: 1200px){
@@ -46,22 +46,22 @@ color:#FFF;
 			
 			<div class="modal-body  " id="show_serch" >
 			
-		<?php foreach($all_users as $user) { 
-							$user_id=$user['user']['user_id'];
-							$name=$user['user']['user_name'];
-							$profile_pic=@$user['user']['profile_pic'];
-							if(empty($profile_pic)){ $profile_pic="blank.jpg"; }
-							$result_member = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($user_id)));
-							$wing_flat=$result_member['wing_flat'];
-							foreach($wing_flat as $flat){ }
+		<?php   foreach($all_users as $user) { 
+				
+							$user_id=$user["user_id"];
+							$name=$user['user_name'];
+							$profile_pic_member=@$user['profile_pic'];
+							$flat=$profile_pic=@$user['wing_flat'];
+							if(empty($profile_pic_member)){ $profile_pic_member="blank.jpg"; }
+							
 				?>
 				
 	<div class="r_d">
 		
 			<div class="qwe">
 				<div class="hv_b" style="overflow: auto;padding: 5px;cursor: pointer;" title="">
-					<?php if(!empty($profile_pic)){ ?>
-							<img alt="" src="<?php echo $webroot_path; ?>profile/<?php echo @$profile_pic; ?>" 
+					<?php if(!empty($profile_pic_member)){ ?>
+							<img alt="" src="<?php echo $webroot_path; ?>profile/<?php echo @$profile_pic_member; ?>" 
 							style="float:left;width: 40px;height: 50px;" class="profile_pic"/>
 							<?php } ?>
 							
@@ -71,9 +71,9 @@ color:#FFF;
 							<input type="checkbox" value="1" name="user<?php echo $user_id; ?>" <?php if (in_array($user_id, $result_group_info)) { echo 'checked="checked"'; } ?> style="opacity: 0;">
 						</span>
 					</div> 
-						<span style="font-size:12px;"><?php echo $name; ?></span> 
+						<span style="font-size:11px;"><?php echo $name; ?></span> 
 						 <br>
-						<span style="font-size:12px;margin-left: 26px;"><?php echo $flat; ?></span>
+						<span style="font-size:11px;margin-left: 26px;"><?php echo $flat; ?></span>
 						
 					</div>
 				</div>

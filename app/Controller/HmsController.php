@@ -2787,7 +2787,7 @@ $this->redirect(array('action' => 'index'));
 
 function beforeFilter()
 {
-//Configure::write('debug', 0);
+ Configure::write('debug', 0);
 
 }
 
@@ -27118,7 +27118,7 @@ function expense_tracker_fetch2($auto_id)
 {
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 $this->loadmodel('ledger_account');
-$conditions =array('$or'=>array(array("group_id"=>$auto_id,'society_id' =>$s_society_id),array("society_id" => 0,"group_id"=>$auto_id)));
+$conditions =array('$or'=>array(array("group_id"=>(int)$auto_id,'society_id' =>$s_society_id),array("society_id" => 0,"group_id"=>$auto_id)));
 return $this->ledger_account->find('all',array('conditions'=>$conditions));
 }
 //End Function Fetch expense Tracker Add Fetch2 (Accounts)//
@@ -29154,12 +29154,44 @@ function groupview($gid=null)
 	$result_group_info=$this->group->find('all',array('conditions'=>$conditions));
 	
 	$result_group_info=$result_group_info[0]['group']['users'];
-	$this->loadmodel('user');
+	/*$this->loadmodel('user');
 	$conditions=array("society_id"=>$s_society_id,"active"=>"yes");
 	$order=array('user.user_name'=> 'ASC');
-	$users=$this->user->find('all',array('conditions'=>$conditions,'order'=>$order));
+	$users=$this->user->find('all',array('conditions'=>$conditions,'order'=>$order));*/
+	 
 	$this->set('result_group_info',$result_group_info);
-	$this->set('all_users',$users);
+	
+	
+	// asending order wing  wise 
+	
+		$this->loadmodel('wing');
+		$condition=array('society_id'=>$s_society_id);
+		$order=array('wing.wing_name'=>'ASC');
+		$result_wing=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+		foreach($result_wing as $data){
+			$wing_id = (int)$data['wing']['wing_id'];	
+			$wing_name = $data['wing']['wing_name'];
+			$this->loadmodel('flat');
+			$conditions=array("wing_id" => $wing_id,'society_id'=>$s_society_id);
+			$order=array('flat.flat_name'=> 'ASC');
+			$result5= $this->flat->find('all',array('conditions'=>$conditions,'order' =>$order));
+			foreach($result5 as $data){
+					@$flat_name=ltrim(@$data["flat"]["flat_name"],'0');
+					$flat_id=(int)@$data["flat"]["flat_id"];
+					$flats=$wing_name.' - '.$flat_name;
+					$this->loadmodel('user_flat');
+					$conditions=array('society_id'=>$s_society_id,'flat'=>$flat_id,'exited'=>'no');
+					$result_user_flat= $this->user_flat->find('all',array('conditions'=>$conditions));
+					$user_id=$result_user_flat[0]['user_flat']['user_id'];
+					$result_user = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_info_via_user_id'),array('pass'=>array($user_id)));
+					$user_name=$result_user[0]['user']['user_name'];
+					$profile_pic=$result_user[0]['user']['profile_pic'];
+					
+					$resulr_member[]=array("user_name"=>$user_name,"wing_flat"=>$flats,"user_id"=>$user_id,"profile_pic"=>$profile_pic);
+		  }
+		}
+	$this->set('all_users',$resulr_member);
+	
 }
 
 function group_delete(){

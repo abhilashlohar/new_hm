@@ -2787,11 +2787,7 @@ $this->redirect(array('action' => 'index'));
 
 function beforeFilter()
 {
-<<<<<<< HEAD
 Configure::write('debug', 0);
-=======
- Configure::write('debug', 0);
->>>>>>> b64004a93a902b2ba37b9efef155e6108626f076
 
 }
 

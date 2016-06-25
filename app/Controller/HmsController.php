@@ -7886,7 +7886,7 @@ if($forget_type=='email'){
 		$username=$collection['user']['user_name'];
 		$user_id=$collection['user']['user_id'];
 		$user_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($user_id)));
-		$wing_flat=$user_info["wing_flat"][$user_id];
+		$wing_flat=@$user_info["wing_flat"][$user_id];
 
 		$society_id=$collection['user']['society_id'];
 		}

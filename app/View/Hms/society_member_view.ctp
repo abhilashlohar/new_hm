@@ -28,7 +28,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					<th>Roles</th>
 					<th>Email</th>
 					<th>Mobile</th>
-					<th style="width: 96px;">Validation Status</th>
+					<th>Validation Status</th>
 					<th>Portal Enrollment date</th>
 					<th>Action</th>
 				</tr>
@@ -74,9 +74,9 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 							<td><?php echo $mobile; ?></td>
 							<?php if(empty($validation_status)){
 								if(!empty($email)){
-									echo '<td><a href="#" role="button" class="resend btn red mini" id="'.$user_id.'">  Send Reminder </a></td>'; 
+									echo '<td><a href="#" role="button" class="resend btn red mini" id="'.$user_id.'" style="white-space: nowrap;">  Send Reminder </a></td>'; 
 								}elseif(!empty($mobile)){
-									echo '<td><a href="#" role="button" class="resend_sms btn red mini" id="'.$user_id.'">  Send Reminder </a></td>';
+									echo '<td><a href="#" role="button" class="resend_sms btn red mini" id="'.$user_id.'" style="white-space: nowrap;">  Send Reminder </a></td>';
 								}else{
 									echo '<td></td>';
 								}
@@ -91,7 +91,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 								</a>
 								<ul class="dropdown-menu" style="min-width: 80px ! important; margin-left: -52px;">
 									<li><a href="update_member_info/<?php echo $user_id; ?>" ><i class="icon-pencil"></i> Edit</a></li>
-									<li><a href="#" role="button" class="exit" user_flat_id="<?php echo $user_flat_id; ?>" style="color:red;"><i class=" icon-exclamation-sign mobile_responce"></i> Exit</a></li>
+									<li><a href="#" role="button" class="exit" user_flat_id="<?php echo $user_flat_id; ?>" style="color:red;"><i class=" icon-exclamation-sign "></i> Exit</a></li>
 								</ul>
 								</div>
 							</td>
@@ -112,9 +112,9 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 						<td><?php echo $mobile; ?></td>
 						<?php if(empty($validation_status)){
 							if(!empty($email)){
-								echo '<td><a href="#" role="button" class="resend btn red mini" id="'.$user_id.'"> Send Reminder </a></td>'; 
+								echo '<td><a href="#" role="button" class="resend btn red mini" id="'.$user_id.'" style="white-space: nowrap;"> Send Reminder </a></td>'; 
 							}elseif(!empty($mobile)){
-								echo '<td><a href="#" role="button" class="resend_sms btn red mini" id="'.$user_id.'">  Send Reminder </a></td>';
+								echo '<td><a href="#" role="button" class="resend_sms btn red mini" id="'.$user_id.'" style="white-space: nowrap;">  Send Reminder </a></td>';
 							}else{
 								echo '<td></td>';
 							}
@@ -129,7 +129,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 							</a>
 							<ul class="dropdown-menu" style="min-width: 80px ! important; margin-left: -52px;">
 								<li><a href="update_member_info/<?php echo $user_id; ?>" ><i class="icon-pencil"></i> Edit</a></li>
-								<li><a href="#" role="button" class="exit" user_flat_id="<?php echo $user_flat_id; ?>"  style="color:red;"><i class=" icon-exclamation-sign mobile_responce" ></i> Exit</a></li>
+								<li><a href="#" role="button" class="exit" user_flat_id="<?php echo $user_flat_id; ?>"  style="color:red;"><i class=" icon-exclamation-sign" ></i> Exit</a></li>
 							</ul>
 							</div>
 						</td>

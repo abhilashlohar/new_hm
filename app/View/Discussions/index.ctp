@@ -47,6 +47,8 @@
 <div id="delete_topic_result"></div>
 <script>
 $(document).ready(function(){
+
+
 	var nn=0;
 	function load_comments(){
 		
@@ -65,6 +67,26 @@ $(document).ready(function(){
 		nn=0;
 	};
 
+
+var dash_id="<?php echo $dash_id; ?>";
+
+	
+    
+
+
+if(dash_id!=""){
+	$.ajax({
+		   url: "<?php echo $webroot_path; ?>Discussions/topic_detail/"+dash_id,
+		   success: function(data) {
+			  $("#topic_detail").html(data);
+				   load_comments();
+			    $("html, body").animate({
+					scrollTop:0
+				},"slow");
+			
+		   }
+		});
+}else{
 	$.ajax({
 	   url: "<?php echo $webroot_path; ?>Discussions/topic_detail/"+"<?php echo $id; ?>",
 	   success: function(data) {
@@ -76,7 +98,8 @@ $(document).ready(function(){
 			},"slow");
 	   }
 	});
-    
+}
+
 	$(".topic").die().live("click",function(){ 
 		nn++;
 		//clearInterval(interval);

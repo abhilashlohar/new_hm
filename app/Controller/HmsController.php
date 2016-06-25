@@ -2787,8 +2787,12 @@ $this->redirect(array('action' => 'index'));
 
 function beforeFilter()
 {
+<<<<<<< HEAD
 
  //Configure::write('debug', 0);
+=======
+Configure::write('debug', 0);
+>>>>>>> origin/master
 
 }
 

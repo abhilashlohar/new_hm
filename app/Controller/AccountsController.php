@@ -3590,7 +3590,7 @@ function calculate_balance_sheet_credit_new($from,$ledger_account_id){
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$from=date('Y-m-d',strtotime($from));
 	$this->loadmodel('ledger');
-	$conditions=array('society_id'=>$s_society_id,'ledger_account_id'=>$ledger_account_id,'transaction_date'=>array('$lt'=>strtotime($from)));
+	$conditions=array('society_id'=>$s_society_id,'ledger_account_id'=>$ledger_account_id,'transaction_date'=>array('$lte'=>strtotime($from)));
 	
 	
 	$ledger_result_b=$this->ledger->find('all',array('conditions'=>$conditions));
@@ -3632,7 +3632,7 @@ function calculate_balance_sheet_debit_new($from,$ledger_account_id){
 	
 	$this->loadmodel('ledger');
 	
-	$conditions=array('society_id'=>$s_society_id,'ledger_account_id'=>$ledger_account_id,'transaction_date'=>array('$lt'=>strtotime($from)));
+	$conditions=array('society_id'=>$s_society_id,'ledger_account_id'=>$ledger_account_id,'transaction_date'=>array('$lte'=>strtotime($from)));
 	
 	$ledger_result_b=$this->ledger->find('all',array('conditions'=>$conditions));
 	$credit_b=0; $debit_b=0;

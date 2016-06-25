@@ -128,7 +128,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
  	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 	<script src="<?php echo $webroot_path; ?>assets/js/gmaps.js"></script>
 	<script src="<?php echo $webroot_path; ?>assets/js/demo.gmaps.js"></script>
-		<script type="text/javascript" src="<?php echo $webroot_path; ?>assets/data-tables/jquery.dataTables.js"></script>
+		<script type="text/javascript" src="<?php echo $webroot_path; ?>assets/data-tables/jquery.dataTables1.js"></script>
 	<script type="text/javascript" src="<?php echo $webroot_path; ?>assets/data-tables/DT_bootstrap.js"></script>
 		<script src="<?php echo $webroot_path; ?>assets/js/app.js"></script>		
 	<script>

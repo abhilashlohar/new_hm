@@ -80,15 +80,25 @@ $(document).ready(function(){
 	      email: {
 	       
 	        required: true,
-			email:true
+			email:true,
+			remote: "forget_check_email_exits"
 	      },
 		   mobile: {
 	       
 	        required: true,
-			number:true
+			number:true,
+			remote: "forget_check_mobile_exits"
 	      }
 	     
 	    },
+		messages: {
+	                email: {
+	                    remote: "This Email is not exist"
+	                },
+					 mobile: {
+	                    remote: "This Mobile number is not exist"
+	                }
+	            },
 			highlight: function(element) {
 				$(element).closest('.control-group').removeClass('success').addClass('error');
 			},

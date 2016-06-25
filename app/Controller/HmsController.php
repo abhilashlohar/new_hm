@@ -7639,6 +7639,7 @@ $result = $this->flat->find('all',array('conditions'=>$conditions));
 $this->set('result3',$result);
 }
 
+
 function flat_already_exits()
 {
 $this->layout='blank_signup';
@@ -7826,8 +7827,39 @@ echo "true";
 		}
 }
 
+function forget_check_email_exits(){
+	
+	$this->layout=null;
+	$email=$this->request->query['email'];
+		$this->loadmodel('user');
+		$conditions=array("email" => $email);
+		$result3 = $this->user->find('all',array('conditions'=>$conditions));
+		
+		$n = sizeof($result3);
+		if($n>0){ 
+			echo "true";
+		}else{
+			echo "false";
+		}			
+	
+}
 
-
+function forget_check_mobile_exits(){
+	
+	$this->layout=null;
+	$mobile=$this->request->query['mobile'];
+		$this->loadmodel('user');
+		$conditions=array("mobile" => $mobile);
+		$result3 = $this->user->find('all',array('conditions'=>$conditions));
+		
+		$n = sizeof($result3);
+		if($n>0){ 
+			echo "true";
+		}else{
+			echo "false";
+		}			
+	
+}
 
 function forget() 
 {
@@ -8012,6 +8044,23 @@ if($forget_type=='email'){
 
 }
 
+function verification_check_code(){
+	$this->layout=null;
+	$user_id=(int)$this->request->data['user_id'];
+	$code=(int)$this->request->data['email'];
+	
+	$this->loadmodel('user');
+	$conditions =array('user_id'=> $user_id,'password'=>$code);
+
+	$result_user=$this->user->find('all',array('conditions'=>$conditions));
+	$n= sizeof($result_user); 
+	if($n>0){
+		echo"true";
+	}else{
+		echo"false";
+	}
+	
+}
 
 
 function verification() 
@@ -8022,6 +8071,19 @@ $this->set(compact('webroot_path'));
 $emil=$this->request->query['con'];
 $type=$this->request->query['em'];
 $this->set('type',$type);
+
+
+$this->loadmodel('user');
+$conditions =array( '$or' => array(array('email'=> $emil),array('mobile'=> $emil)));
+
+$result_user=$this->user->find('all',array('conditions'=>$conditions));
+$n= sizeof($result_user); 
+if($n>0)
+{
+	$user_id=$result_user[0]['user']['user_id'];
+	$this->set('user_id',$user_id);
+}
+
 if ($this->request->is('POST')) 
 {
 $verification=(int)$this->request->data['email'];

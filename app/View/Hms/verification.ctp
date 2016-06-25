@@ -15,13 +15,13 @@
 	
 	<?php if($type=='m'){ ?>
 	  <div class="alert alert-info"><strong style="color:#33C; font-family:Georgia, 'Times New Roman', Times, serif;">Info!</strong>
-    <span style="font-family:Georgia, 'Times New Roman', Times, serif; color:#60C;"> Verification Code has been sent to your mobile.<br/>
+    <span style="font-family:Georgia, 'Times New Roman', Times, serif; color:#60C;"> Verification Code has been sent to your mobile.
      Kindly check your message.</span>
      </div> 
      <?php } ?>
     <form id="contact-form" method="post" class="form-vertical login-form"  />
     <fieldset>
-       
+       <input type="hidden" value="<?php echo $user_id; ?>" id="user_id" >
       <p style="font-size:16px;"><?php //echo $emil ; ?></p>
       <div style="color:red;"><?php echo @$wrong; echo @$right;?></div>
       <div class="control-group">
@@ -52,11 +52,23 @@ $(document).ready(function(){
 	      email: {
 	       
 	        required: true,
-			number:true
+			number:true,
+			remote: {
+				url: "verification_check_code",
+				type: "post",
+				data: {
+					user_id: function() { return $("#user_id").val();}
+					
+				}
+			}
 			
 	      }
 	     
-	    },
+	    },messages: {
+	           email: {
+	                    remote: "This verification code is not exist"
+	                }
+	            },
 			highlight: function(element) {
 				$(element).closest('.control-group').removeClass('success').addClass('error');
 			},

@@ -9,19 +9,43 @@
     <form id="contact-form" method="post" class="form-vertical login-form"  />
     <fieldset>
        <h3 class="">Forgot Password ?</h3>
-      <p>Enter your e-mail address below to reset your password.</p>
-      <div style="color:red;"><?php echo @$wrong; echo @$right;?></div>
-      <div class="control-group">
-	  	<div class="controls">
-        	<div class="input-icon left"><i class="icon-envelope"></i>
-			<input type="text"   class="m-wrap" name="email" style="font-size:16px;"  placeholder="Login-Id*" >
-             </div>
-		</div>
-	  </div>
-                
-    
-     
-      
+			<div class="controls">
+				<label class="radio">
+				<div class="radio" id="uniform-undefined"><span><input type="radio" name="forget_type" value="email" style="opacity: 0;" checked=""></span></div>
+				Email
+				</label>
+				<label class="radio">
+				<div class="radio" id="uniform-undefined"><span class="checked"><input type="radio" name="forget_type" value="mobile" style="opacity: 0;"></span></div>
+				Mobile
+				</label>  
+			 
+			</div>
+			<br/>
+		<div id="email_show">
+			  <p>Enter your e-mail address below to reset your password.</p>
+			 
+			  <div style="color:red;"><?php echo @$wrong; echo @$right;?></div>
+			  <div class="control-group">
+				<div class="controls">
+					<div class="input-icon left"><i class="icon-envelope"></i>
+					<input type="text"   class="m-wrap" name="email" style="font-size:16px;"  placeholder="Login-Id*" >
+					 </div>
+				</div>
+			  </div>
+		  </div>
+		  
+		  <div id="mobile_show" style="display:none;">
+			<p >Enter your mobile numenr below to reset your password.</p>
+			 <div style="color:red;"><?php echo @$wrong; echo @$right;?></div>
+			  <div class="control-group">
+				<div class="controls">
+					<div class="input-icon left"><i class="icon-envelope"></i>
+					<input type="text"   class="m-wrap" name="mobile" style="font-size:16px;" maxlength="10" placeholder="Login-Id*" >
+					 </div>
+				</div>
+			  </div>
+		  </div>
+		      
       <input type="submit" class="btn blue btn-block" value="Submit" style="font-size:16px;" name="forget" >
 	 <!-- <hr>
 	  Demo Link for Mobile
@@ -38,12 +62,30 @@
   
 <script>
 $(document).ready(function(){
+	
+	 $("input[type=radio]").bind('click',function(){
+		var type=$(this).val();
+		if(type=="email"){
+			$("#email_show").show();
+			$("#mobile_show").hide();
+		}else{
+			$("#email_show").hide();
+			$("#mobile_show").show();
+		}
+	 });
+	
+	
 		$('#contact-form').validate({
 	    rules: {
 	      email: {
 	       
 	        required: true,
 			email:true
+	      },
+		   mobile: {
+	       
+	        required: true,
+			number:true
 	      }
 	     
 	    },

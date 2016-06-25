@@ -6,11 +6,19 @@
   <!-- BEGIN LOGIN -->
   <div class="content">
     <!-- BEGIN LOGIN FORM -->
+	<?php if($type=='em'){ ?>
    <div class="alert alert-info"><strong style="color:#33C; font-family:Georgia, 'Times New Roman', Times, serif;">Info!</strong>
     <span style="font-family:Georgia, 'Times New Roman', Times, serif; color:#60C;"> Verification Code has been sent to your login-email address.<br/>
      Kindly check your Inbox.</span>
      </div> 
-     
+	<?php } ?>
+	
+	<?php if($type=='m'){ ?>
+	  <div class="alert alert-info"><strong style="color:#33C; font-family:Georgia, 'Times New Roman', Times, serif;">Info!</strong>
+    <span style="font-family:Georgia, 'Times New Roman', Times, serif; color:#60C;"> Verification Code has been sent to your mobile.<br/>
+     Kindly check your message.</span>
+     </div> 
+     <?php } ?>
     <form id="contact-form" method="post" class="form-vertical login-form"  />
     <fieldset>
        

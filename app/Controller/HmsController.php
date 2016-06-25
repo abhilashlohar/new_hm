@@ -2787,7 +2787,7 @@ $this->redirect(array('action' => 'index'));
 
 function beforeFilter()
 {
- Configure::write('debug', 0);
+ //Configure::write('debug', 0);
 
 }
 
@@ -7835,136 +7835,175 @@ $this->set('webroot_path',$webroot_path);
 if ($this->request->is('POST')) 
 {
 $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
-$to=$this->request->data['email'];
 
-$this->loadmodel('user');
-$conditions=array("email" => $to);
-$result3 = $this->user->find('all',array('conditions'=>$conditions));
-foreach($result3 as $collection)
-{
-$username=$collection['user']['user_name'];
-$user_id=$collection['user']['user_id'];
-$user_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($user_id)));
-$wing_flat=$user_info["wing_flat"][$user_id];
+ $forget_type=$this->request->data['forget_type'];
+if($forget_type=='email'){
+		$to=$this->request->data['email'];
+		$this->loadmodel('user');
+		$conditions=array("email" => $to);
+		$result3 = $this->user->find('all',array('conditions'=>$conditions));
+		
+		$n = sizeof($result3);
+		if($n>0)
+		{ 
+	
+		foreach($result3 as $collection)
+		{
+		$username=$collection['user']['user_name'];
+		$user_id=$collection['user']['user_id'];
+		$user_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($user_id)));
+		$wing_flat=$user_info["wing_flat"][$user_id];
 
-$society_id=$collection['user']['society_id'];
-}
-$result_society=$this->society_name($society_id);
-$society_name=$result_society[0]['society']['society_name'];
+		$society_id=$collection['user']['society_id'];
+		}
+		$result_society=$this->society_name($society_id);
+		$society_name=$result_society[0]['society']['society_name'];
 
-$n = sizeof($result3);
-if($n>0)
-{ 
-$random=mt_rand(10000,99999);
-$this->loadmodel('user');
-$this->user->updateAll(array('password'=>$random),array('user.email'=>$to));
-$from_name="HousingMatters Support Team";
- $subject="[".$society_name."] OTP for password reset";
+		$random=mt_rand(10000,99999);
+		$this->loadmodel('user');
+		$this->user->updateAll(array('password'=>$random),array('user.email'=>$to));
+		$from_name="HousingMatters Support Team";
+		 $subject="[".$society_name."] OTP for password reset";
 
 
 
-  $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
-          <tbody>
-			<tr>
-                <td>
-                    <table width="100%" cellpadding="0" cellspacing="0">
-                        <tbody>
-						
-								<tr>
-									<td colspan="2">
-										<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
-										<tbody>
-										<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+		  $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+				  <tbody>
+					<tr>
+						<td>
+							<table width="100%" cellpadding="0" cellspacing="0">
+								<tbody>
+								
 										<tr>
-										<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
-										<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-										<td width="100%"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px"><span style="color:#00a0e3">Housing</span><span style="color:#777776">Matters</span></a></td>
-										<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
-											
-										</td>
+											<td colspan="2">
+												<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+												<tbody>
+												<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+												<tr>
+												<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
+												<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+												<td width="100%"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px"><span style="color:#00a0e3">Housing</span><span style="color:#777776">Matters</span></a></td>
+												<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
+													
+												</td>
+												</tr>
+												<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+												</tbody>
+												</table>
+											</td>
 										</tr>
-										<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
-										</tbody>
-										</table>
-									</td>
-								</tr>
-														
-								
-						</tbody>
-					</table>
-					
-                    <table width="100%" cellpadding="0" cellspacing="0">
-                        <tbody>
-						
-								
-								
-								<tr>
-								<td style="padding:5px;" width="100%" align="left">
-								<span style="color:rgb(100,100,99)" align="justify"> Hello '.$username.' '.$wing_flat.', </span> 
-								</td>
 																
-								</tr>
+										
+								</tbody>
+							</table>
+							
+							<table width="100%" cellpadding="0" cellspacing="0">
+								<tbody>
 								
-								
-								<tr>
+										
+										
+										<tr>
 										<td style="padding:5px;" width="100%" align="left">
-										<span style="color:rgb(100,100,99)" align="justify">It seems that you or someone requested to reset your login password. </span> 
+										<span style="color:rgb(100,100,99)" align="justify"> Hello '.$username.' '.$wing_flat.', </span> 
 										</td>
-																
-								</tr>
-								
-								<tr>
-										<td style="padding:5px;" width="100%" align="left">
-										<span style="color:rgb(100,100,99)" align="justify">We have generated a One Time Password (OTP). </span> 
-										</td>
-																
-								</tr>
-								
-								
-								<tr>
-										<td style="padding:5px;" width="100%" align="left">
-										<span style="color:rgb(100,100,99)" align="justify">
-										<b> Username: </b> = '.$to.'<br/>
-										<b>Your OTP to reset your password </b> = '.$random.'  </span> 
-										</td>
-																
-								</tr>
+																		
+										</tr>
+										
+										
+										<tr>
+												<td style="padding:5px;" width="100%" align="left">
+												<span style="color:rgb(100,100,99)" align="justify">It seems that you or someone requested to reset your login password. </span> 
+												</td>
+																		
+										</tr>
+										
+										<tr>
+												<td style="padding:5px;" width="100%" align="left">
+												<span style="color:rgb(100,100,99)" align="justify">We have generated a One Time Password (OTP). </span> 
+												</td>
+																		
+										</tr>
+										
+										
+										<tr>
+												<td style="padding:5px;" width="100%" align="left">
+												<span style="color:rgb(100,100,99)" align="justify">
+												<b> Username: </b> = '.$to.'<br/>
+												<b>Your OTP to reset your password </b> = '.$random.'  </span> 
+												</td>
+																		
+										</tr>
 
-								
-								<tr>
-									<td style="padding:5px;" width="100%" align="left">
-											<span style="color:rgb(100,100,99)"> 
-												Thank you.<br/>
-												HousingMatters (Support Team)<br/>
-												www.housingmatters.in
-											</span>
-									</td>
-																
-								</tr>
-					
-					</table>
-					
-				</td>
-			</tr>
+										
+										<tr>
+											<td style="padding:5px;" width="100%" align="left">
+													<span style="color:rgb(100,100,99)"> 
+														Thank you.<br/>
+														HousingMatters (Support Team)<br/>
+														www.housingmatters.in
+													</span>
+											</td>
+																		
+										</tr>
+							
+							</table>
+							
+						</td>
+					</tr>
 
-        </tbody>
-</table>';
+				</tbody>
+		</table>';
 
-$this->loadmodel('email');
-$conditions=array('auto_id'=>4);
-$result_email=$this->email->find('all',array('conditions'=>$conditions));
-foreach ($result_email as $collection) 
-{
-$from=$collection['email']['from'];
-}
-$reply=$from;
-$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
-$this->response->header('Location', 'verification?con='.$to.' ');
-}
-else
-{ 
-$this->set('wrong','This Email is not exist');
+		$this->loadmodel('email');
+		$conditions=array('auto_id'=>4);
+		$result_email=$this->email->find('all',array('conditions'=>$conditions));
+		foreach ($result_email as $collection) 
+		{
+		$from=$collection['email']['from'];
+		}
+		$reply=$from;
+		$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+		$this->response->header('Location', 'verification?con='.$to.'&em=em ');
+		}
+		else
+		{ 
+			$this->set('wrong','This Email is not exist');
 
+		}
+}else{
+	
+	    $mobile=$this->request->data['mobile'];
+		$this->loadmodel('user');
+		$conditions=array("mobile" => $mobile);
+		$result_user = $this->user->find('all',array('conditions'=>$conditions));
+		$n = sizeof($result_user);
+		if($n>0){ 
+			$user_id=(int)$result_user [0]['user']['user_id'];
+		
+			$random=mt_rand(10000,99999);
+			
+			$r_sms=$this->requestAction(array('controller'=>'Fns','action'=>'hms_sms_ip'));
+			$working_key=$r_sms->working_key;
+			$sms_sender=$r_sms->sms_sender; 
+			$sms_allow=(int)$r_sms->sms_allow; 
+			if($sms_allow==1){
+			
+					$sms="Your 5 digit random code is ".$random." for verification";
+					$sms1=str_replace(" ", '+', $sms);
+					$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');
+
+					$this->loadmodel('user');
+					$this->user->updateAll(array('password'=>$random),array('user.user_id'=>$user_id));
+					$this->response->header('Location', 'verification?con='.$mobile.'&em=m ');
+			}
+			
+			
+			
+			
+		}else{
+			$this->set('wrong','This Mobile number is not exist');
+		}
+	
 }
 
 }
@@ -7979,14 +8018,19 @@ $this->layout='without_session';
 $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'webroot_path'));
 $this->set(compact('webroot_path'));
 $emil=$this->request->query['con'];
-
+$type=$this->request->query['em'];
+$this->set('type',$type);
 if ($this->request->is('POST')) 
 {
 $verification=(int)$this->request->data['email'];
 $this->loadmodel('user');
-$conditions=array('email'=> $emil,"password"=>$verification);
+$conditions =array( '$or' => array( 
+array('email'=> $emil,'password'=>$verification),
+array('mobile'=> $emil,'password'=>$verification)
+));
+
 $result_user=$this->user->find('all',array('conditions'=>$conditions));
-$n= sizeof($result_user);
+$n= sizeof($result_user); 
 if($n>0)
 {
 $this->response->header('Location', $this->webroot.'hms/change_password?con='.$emil.' ');
@@ -8015,8 +8059,11 @@ if ($this->request->is('POST'))
 $pass=$this->request->data['pass'];
 $this->loadmodel('user');
 $conditions=array('email'=> $emil);
+
+$conditions =array( '$or' => array(array('email'=> $emil),array('mobile'=> $emil)));
+
 $result_user=$this->user->find('all',array('conditions'=>$conditions));
-$n= sizeof($result_user);
+$n= sizeof($result_user); 
 if($n>0)
 { 
 foreach ($result_user as $collection) 
@@ -8027,14 +8074,14 @@ $user_name=$collection['user']["user_name"];
  $role_id=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id'), array('pass' => array($user_id)));
 }
 $user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));
-		$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
+$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
 		
 $this->Session->write('hm_user_id', $user_id);
 $this->Session->write('role_id', $role_id);
 $this->Session->write('hm_society_id', $society_id);
 $this->Session->write('hm_user_flat_id', $user_flat_id);
 $this->loadmodel('user');
-$this->user->updateAll(array('password'=>$pass),array('user.email'=>$emil));
+$this->user->updateAll(array('password'=>$pass),array('user.user_id'=>$user_id));
 $this->redirect(array('action' => 'dashboard'));
 }
 
@@ -29175,6 +29222,7 @@ function groupview($gid=null)
 			$conditions=array("wing_id" => $wing_id,'society_id'=>$s_society_id);
 			$order=array('flat.flat_name'=> 'ASC');
 			$result5= $this->flat->find('all',array('conditions'=>$conditions,'order' =>$order));
+			
 			foreach($result5 as $data){
 					@$flat_name=ltrim(@$data["flat"]["flat_name"],'0');
 					$flat_id=(int)@$data["flat"]["flat_id"];
@@ -29182,10 +29230,10 @@ function groupview($gid=null)
 					$this->loadmodel('user_flat');
 					$conditions=array('society_id'=>$s_society_id,'flat'=>$flat_id,'exited'=>'no');
 					$result_user_flat= $this->user_flat->find('all',array('conditions'=>$conditions));
-					$user_id=$result_user_flat[0]['user_flat']['user_id'];
+					$user_id=(int)@$result_user_flat[0]['user_flat']['user_id'];
 					$result_user = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_info_via_user_id'),array('pass'=>array($user_id)));
-					$user_name=$result_user[0]['user']['user_name'];
-					$profile_pic=$result_user[0]['user']['profile_pic'];
+					$user_name=@$result_user[0]['user']['user_name'];
+					$profile_pic=@$result_user[0]['user']['profile_pic'];
 					
 					$resulr_member[]=array("user_name"=>$user_name,"wing_flat"=>$flats,"user_id"=>$user_id,"profile_pic"=>$profile_pic);
 		  }

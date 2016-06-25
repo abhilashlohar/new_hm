@@ -8,7 +8,8 @@
 					@$profile_pic = @$collection['user']['profile_pic'];
 					$email_privacy = @$collection['user']['email_privacy'];
 					$mobile_privacy = @$collection['user']['mobile_privacy'];
-					
+					@$f_profile_pic = @$collection['user']['f_profile_pic'];
+					@$g_profile_pic = @$collection['user']['g_profile_pic'];
 					
 					$result_user_flat = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($da_user_id)));
 					 $c_wing_id = (int)@$result_user_flat[0]['user_flat']['wing'];
@@ -18,8 +19,8 @@
 					$medical_pro = @$result_user_profile[0]['user_profile']['medical_pro'];
 					
 					//@$profile_pic = @$result_user_profile[0]['user_profile']['profile_pic'];
-					@$f_profile_pic = @$result_user_profile[0]['user_profile']['f_profile_pic'];
-					@$g_profile_pic = @$result_user_profile[0]['user_profile']['g_profile_pic'];
+					//@$f_profile_pic = @$result_user_profile[0]['user_profile']['f_profile_pic'];
+					//@$g_profile_pic = @$result_user_profile[0]['user_profile']['g_profile_pic'];
 					$c_sex = (int)@$result_user_profile[0]['user_profile']['gender'];
 					$gender_privacy = @$result_user_profile[0]['user_profile']['gender_privacy'];
 					

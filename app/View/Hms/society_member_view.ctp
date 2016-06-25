@@ -18,7 +18,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<div align="center" style="font-size:15px;padding-bottom: 5px;"> 
 		<?php echo $result_society_name; ?> 
 	</div>
-		<table class="table table-condensed table-bordered" >
+		<table class="table table-condensed table-bordered" id="sample_1" >
 			<thead>
 				<tr>
 					<th width="5%">Sr.</th>

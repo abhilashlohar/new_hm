@@ -2789,7 +2789,7 @@ function beforeFilter()
 {
 
 
- Configure::write('debug', 0);
+ //Configure::write('debug', 0);
 
 }
 
@@ -8340,7 +8340,21 @@ function dashboard(){
 
 		$this->set('result_notice_visible_last',$result_notice_visible_last);
 		
-		$this->loadmodel("user");
+
+		
+		
+		/*$this->loadmodel("discussion_comment");
+		$result_discussion_comment=$this->discussion_comment->find('all');
+		foreach($result_discussion_comment as $data){
+				$auto_id=(int)$data['discussion_comment']['discussion_comment_id'];
+				$current_date=$data['discussion_comment']['date']; 
+				$date2= date("d-m-y",strtotime($current_date)); 
+				$date23= date("Y-m-d",strtotime($date2));
+				$this->loadmodel("discussion_comment");
+				$this->discussion_comment->updateAll(array('date'=>$date23),array('discussion_comment_id'=>$auto_id));
+    		}
+		exit;
+				$this->loadmodel("user");
 		$conditions=array('user_type'=>'family_member');
 		$result_user=$this->user->find('all',array('conditions'=>$conditions));
 		
@@ -8359,22 +8373,6 @@ function dashboard(){
 				
 				
 		}
-		
-		
-		
-		
-		
-		/*$this->loadmodel("discussion_comment");
-		$result_discussion_comment=$this->discussion_comment->find('all');
-		foreach($result_discussion_comment as $data){
-				$auto_id=(int)$data['discussion_comment']['discussion_comment_id'];
-				$current_date=$data['discussion_comment']['date']; 
-				$date2= date("d-m-y",strtotime($current_date)); 
-				$date23= date("Y-m-d",strtotime($date2));
-				$this->loadmodel("discussion_comment");
-				$this->discussion_comment->updateAll(array('date'=>$date23),array('discussion_comment_id'=>$auto_id));
-    		}
-		exit;
 		
 		
 	    //////////////notice  last 3///////////////// 
@@ -19761,8 +19759,10 @@ function society_member_view(){
 		$this->loadmodel('user_role');
 		$conditions=array("user_id"=>$user_id);
 		$user_role_info=$this->user_role->find('all',array('conditions'=>$conditions));
-		$roles=array(); $count_member_owner=0; $count_member_tenant=0; $count_member_family=0;
-		$x=0;$z=0;$y=0;
+		$roles=array(); $count_member_owner=0;
+		$count_member_tenant=0; $count_member_family=0;$count_member_family_owner=0;$count_member_family_tenant=0;
+		
+		$x=0;$z=0;$y=0;$f=0;
 		foreach($user_role_info as $user_role){
 			$role_id=$user_role["user_role"]["role_id"];
 			
@@ -19782,17 +19782,17 @@ function society_member_view(){
 			}
 			
 			if($role_id==5){
-				$y++;
-				$count_member_family+=$y;
+				$f++;
+				$count_member_family_owner+=$f;
 			}
 			if($role_id==6){
 				$y++;
-				$count_member_family+=$y;
+				$count_member_family_tenant+=$y;
 			}
 		}
 		$roles=implode(',',$roles);
 		
-		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id,"count_member_owner"=>$count_member_owner,"count_member_tenant"=>$count_member_tenant,"count_member_family"=>$count_member_family,'resident_member'=>$resident,'user_id'=>$user_id);
+		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id,"count_member_owner"=>$count_member_owner,"count_member_tenant"=>$count_member_tenant,"count_member_family_owner"=>$count_member_family_owner,"count_member_family_tenant"=>$count_member_family_tenant,'resident_member'=>$resident,'user_id'=>$user_id);
 	}
 	
 	$this->set(compact("arranged_users"));

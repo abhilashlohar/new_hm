@@ -930,10 +930,10 @@ foreach($myArray as $child){
 	die($output);
 	}
 	
-	if(empty($child[1]) and empty($child[2])){
+	/*if(empty($child[1]) and empty($child[2])){
 	$output = json_encode(array('type'=>'error', 'text' => 'Debit or Credit is Required in row '.$c));
 	die($output);
-	}
+	}*/
 	
 	if(is_numeric($child[1]) || is_numeric($child[2])){
 	}	
@@ -1044,9 +1044,13 @@ $ledger_sub_account2=null;
 		$this->journal->saveAll($multipleRowData);
 		
 		
-		$this->loadmodel('ledger');
-		$auto_id=$this->autoincrement('ledger','auto_id');
-		$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => $ledger,"ledger_sub_account_id" =>$ledger_sub_account2,"debit"=>$debit,"credit"=>$credit,"table_name"=>"journal","element_id"=>$journal_id,"society_id"=>$s_society_id,"transaction_date"=>$transaction_date));
+		if(empty($debit) && empty($credit)){
+			
+		}else{
+			$this->loadmodel('ledger');
+			$auto_id=$this->autoincrement('ledger','auto_id');
+			$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => $ledger,"ledger_sub_account_id" =>$ledger_sub_account2,"debit"=>$debit,"credit"=>$credit,"table_name"=>"journal","element_id"=>$journal_id,"society_id"=>$s_society_id,"transaction_date"=>$transaction_date));
+		}
 
 	
 	}

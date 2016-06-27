@@ -29127,13 +29127,14 @@ function exit_user($user_flat_id=null){
 	$conditions=array('user_flat_id'=>(int)$user_flat_id);
 	$user_flat_info=$this->user_flat->find('all',array('conditions'=>$conditions));
 	$user_id=$user_flat_info[0]["user_flat"]["user_id"];
+	$owner=$user_flat_info[0]["user_flat"]["owner"];
 	
 	$this->loadmodel('user');
 	$conditions=array('user_id'=>(int)$user_id);
 	$user_info=$this->user->find('all',array('conditions'=>$conditions));
 	$user_type=$user_info[0]["user"]["user_type"];
 	$net_bal=0;
-	if($user_type=="member"){
+	if($user_type=="member" and $owner=="yes"){
 		$this->loadmodel('ledger_sub_account');
 		$conditions=array('user_flat_id'=>(int)$user_flat_id);
 		$ledger_sub_account_info=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
@@ -29151,7 +29152,7 @@ function exit_user($user_flat_id=null){
 		$net_bal=$total_dr-$total_cr;
 	}
 	
-	
+
 	if($net_bal==0){
 		
 				date_default_timezone_set('Asia/Kolkata');	

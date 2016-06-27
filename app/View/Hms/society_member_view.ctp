@@ -212,6 +212,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: "exit_user/"+user_flat_id,
 		}).done(function(response){
+			
 			$("#confirm").hide();
 			$("#success").html(response);
 			$("#success").show();

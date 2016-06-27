@@ -29122,7 +29122,7 @@ echo "F";
 ////////////////////// End auto_save_unit_config ///////////////////////////////
 function exit_user($user_flat_id=null){
 	
-	$s_user_id=(int)$this->Session->read('user_id');
+	$s_user_id=(int)$this->Session->read('hm_user_id');
 	$this->loadmodel('user_flat');
 	$conditions=array('user_flat_id'=>(int)$user_flat_id);
 	$user_flat_info=$this->user_flat->find('all',array('conditions'=>$conditions));

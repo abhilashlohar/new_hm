@@ -8110,7 +8110,42 @@ $this->set('wrong','This verification is not exist');
 }
 
 
+function change_new_password(){
+	
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	
+	if($this->request->is('POST')) {
+		$pass=$this->request->data['pass'];
+		$this->loadmodel('user');
+		$this->user->updateAll(array('password'=>$pass),array('user.user_id'=>$s_user_id));
+		$this->redirect(array('action' => 'dashboard'));
+	}
+	
+}
 
+function check_current_password(){
+	$this->layout=null;	
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$current_password=$this->request->query['current_password'];
+	$this->loadmodel('user');
+	$conditions=array('user_id'=>$s_user_id,'password'=>$current_password);
+	$count=$this->user->find('count',array('conditions'=>$conditions));
+	if($count>0){
+		echo"true";
+	}else{
+		echo"false";
+	}
+	
+	
+}
 
 function change_password() 
 {

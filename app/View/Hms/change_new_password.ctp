@@ -3,7 +3,7 @@
                   <!-- BEGIN PORTLET-->   
                   <div class="portlet box green">
                      <div class="portlet-title">
-                        <h4><i class="icon-reorder"></i>Change Password</h4>
+                        <h4><i class="icon-reorder"></i>Change login Password</h4>
                         <div class="tools">
                           
                         </div>

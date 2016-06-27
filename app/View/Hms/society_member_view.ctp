@@ -1,15 +1,20 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
+<style>
+.tex-col{
+	color: #b94a48;
+}
+</style>
 <div align="right" style="margin-right: 25px;">
 	<div class="pull-left" style="margin-left: 30px;">
-	<span> Owner </span> - <span id="owner">  0 </span> |
-	<span> Owner family member</span> - <span id="owner_family">  0 </span> |
-	<span> Tenant </span> - <span id="tenant"> 0 </span> |
-	<span> Tenant family member </span> - <span id="tenant_family"> 0 </span> |
-	<span style="color:red; font-size:10px;" > <i class=" icon-star"></i></span><span> Awaiting User Validation </span> - <span id="awa_count"> 0 </span>  |
-	<span style="color:blue; font-size:10px;"><i class=" icon-star-empty" ></i> </span> <span> Resident </span> -  <span id="resident">  0 </span> 
+	<span class="tex-col"> Owner </span> - <span id="owner">  0 </span> |
+	<span class="tex-col"> Owner family member</span> - <span id="owner_family">  0 </span> |
+	<span class="tex-col"> Tenant </span> - <span id="tenant"> 0 </span> |
+	<span class="tex-col"> Tenant family member </span> - <span id="tenant_family"> 0 </span> |
 	
+	<span style="color:red; font-size:10px;"><i class=" icon-star"></i></span> <span class="tex-col"> Resident </span> -  <span id="resident">  0 </span> |
+	<span style="color:red; font-size:10px;" > </span><span class="tex-col"> Awaiting User Validation </span> - <span id="awa_count"> 0 </span>  
 	</div>
 	<a href="society_member_excel" class="blue mini btn" download="download"><i class="fa fa-file-excel-o"></i></a> 
 
@@ -62,11 +67,9 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					$q=0;
 					foreach($wing_flats as $user_flat_id=>$wing_flat){ $sr_no++; ?>
 						<tr>
-							<td><?php echo $sr_no; if(!empty($resident_member)){ if(@$resident_member[$user_flat_id]==1){ $resident_count++; ?> <span style="color:blue; font-size:10px;" class="pull-right"> <i class=" icon-star-empty" ></i> </span> <?php } } ?>  </td>
-							<td><?php echo $user_name; ?>  
-							     <?php if(empty($validation_status)){ $awating_count++; ?>  
-									<span style="color:red; font-size:10px;" class="pull-right"> <i class=" icon-star"></i> </span> 
-								 <?php } ?>
+							<td><?php echo $sr_no; ?>  <?php if(empty($validation_status)){ $awating_count++; ?> <?php } ?> </td>
+							<td><?php echo $user_name; if(!empty($resident_member)){ if(@$resident_member[$user_flat_id]==1){ $resident_count++; ?> <span style="color:red; font-size:10px;" class="pull-right"> <i class=" icon-star" ></i> </span> <?php } }  ?>  
+							     
 							</td>
 							<td><?php echo $wing_flat; ?></td>
 							<td><?php echo $roles; ?></td>
@@ -99,11 +102,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 					<?php } 
 				}else{ $sr_no++;  ?>
 					<tr>
-						<td ><?php echo $sr_no; if(!empty($resident_member)){ if(@$resident_member[$user_flat_id]==1){ $resident_count++; ?> <span style="color:blue; font-size:10px;" class="pull-right"> <i class=" icon-star-empty" ></i> </span> <?php } } ?>  </td>
-						<td><?php echo $user_name; ?>
-							<?php if(empty($validation_status)){ $awating_count++; ?>  
-									<span style="color:red; font-size:10px;" class="pull-right"> <i class=" icon-star"></i> </span> 
-								 <?php } ?>
+						<td ><?php echo $sr_no;  ?> <?php if(empty($validation_status)){ $awating_count++; ?> <?php } ?>  </td>
+						<td><?php echo $user_name; if(!empty($resident_member)){ if(@$resident_member[$user_flat_id]==1){ $resident_count++; ?> <span style="color:blue; font-size:10px;" class="pull-right"> <i class=" icon-star-empty" ></i> </span> <?php } } ?>
 						
 						</td>
 						<td></td>

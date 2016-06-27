@@ -49,7 +49,7 @@
 		 <table width="100%">
 			<tr>
 				<td width="20%" style="background-color:#35508D;padding: 7px;" align="center"><i class="icon-facebook" style="font-size: 28px;"></i></td>
-				<td style="background-color: rgb(60, 90, 152); padding-left: 15px; font-size: 14px; font-weight: bold;">Sign up with Facebook</td>
+				<td style="background-color: rgb(60, 90, 152); padding-left: 15px; font-size: 14px; font-weight: bold;">Login with Facebook</td>
 			</tr>
 		 </table>
 		 </div>
@@ -60,7 +60,7 @@
 		 <table width="100%">
 			<tr>
 				<td width="20%" style="background-color:#C5462E;padding: 7px;" align="center"><i class="icon-google-plus" style="font-size: 28px;"></i></td>
-				<td style="background-color: #DD4D3B; padding-left: 15px; font-size: 14px; font-weight: bold;">Sign up Google</td>
+				<td style="background-color: #DD4D3B; padding-left: 15px; font-size: 14px; font-weight: bold;">Login with Google</td>
 			</tr>
 		 </table>
 		 </div>
@@ -81,7 +81,7 @@
 	  
       <div class="forget-password">Forgot your password ?
         <p>
-          no worries, click <a href="<?php echo $webroot_path ; ?>hms/forget" class="" id="forget-password">here</a>
+          no worries, click <a href="<?php echo $webroot_path ; ?>hms/forget" class="" id="forget-password" style="color:red;">here</a>
           to reset your password.
         </p>
       </div>

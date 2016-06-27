@@ -145,7 +145,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<div class="modal-backdrop fade in"></div>
 	<div style="display: block;" class="modal hide fade in" >
 		<div class="modal-body">
-			<p>Confirm Message</p>
+			<p>Are you sure you want to exit this user ?</p>
 		</div>
 		<div class="modal-footer">
 			<button class="btn" id="close">Close</button>

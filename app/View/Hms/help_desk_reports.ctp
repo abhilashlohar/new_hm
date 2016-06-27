@@ -29,6 +29,8 @@
 <div>  <a href="login_report_user" target="_blank">Login reports for users </a> </div>
 <b> <i class="icon-user-md"></i> Profile Reports </b>
 <div>  <a href="profile_report" target="_blank">Profile reports for users </a> </div>
+<b> <i class="icon-user-md"></i> Exited User Reports </b>
+<div>  <a href="exited_member_report" target="_blank">Exited reports for users </a> </div>
 </div>
 
 <!--<strong>Help-Desk Graphical Reports</strong>-->

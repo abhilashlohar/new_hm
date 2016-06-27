@@ -16510,6 +16510,15 @@ $result=$this->user->find('all',array('conditions'=>$conditions));
 $this->set('result_user',$result);
 }
 
+function exited_member_report(){
+$this->layout='session';
+$s_society_id=$this->Session->read('hm_society_id');
+$this->loadmodel('user_flat');
+$conditions=array('society_id'=>$s_society_id,'exited'=>"yes");
+$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions));
+$this->set('result_user_flat',$result_user_flat);
+
+}
 
 function profile_report()
 {
@@ -29112,6 +29121,8 @@ echo "F";
 }
 ////////////////////// End auto_save_unit_config ///////////////////////////////
 function exit_user($user_flat_id=null){
+	
+	$s_user_id=(int)$this->Session->read('user_id');
 	$this->loadmodel('user_flat');
 	$conditions=array('user_flat_id'=>(int)$user_flat_id);
 	$user_flat_info=$this->user_flat->find('all',array('conditions'=>$conditions));
@@ -29142,8 +29153,13 @@ function exit_user($user_flat_id=null){
 	
 	
 	if($net_bal==0){
+		
+				date_default_timezone_set('Asia/Kolkata');	
+				$date=date("d-m-Y");
+				$time=date('h:i:a',time());
+		
 		$this->loadmodel('user_flat');
-		$this->user_flat->updateAll(array('exited'=>"yes"),array('user_flat.user_flat_id'=>(int)$user_flat_id));
+		$this->user_flat->updateAll(array('exited'=>"yes",'exited_date'=>$date,'exited_time'=>$time,'exited_by_user'=>$s_user_id),array('user_flat.user_flat_id'=>(int)$user_flat_id));
 		
 		$this->loadmodel('ledger_sub_account');
 		$this->ledger_sub_account->updateAll(array('exited'=>"yes"),array('ledger_sub_account.user_flat_id'=>(int)$user_flat_id));

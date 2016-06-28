@@ -5677,9 +5677,9 @@ function new_bank_receipt(){
 	}
 
 	$this->ath();
-		$this->check_user_privilages();
-			$s_society_id = (int)$this->Session->read('hm_society_id');
-				$s_user_id = (int)$this->Session->read('hm_user_id');
+	$this->check_user_privilages();
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id = (int)$this->Session->read('hm_user_id');
 	
 	$this->loadmodel('ledger_sub_account');
 	$conditions=array("society_id"=>$s_society_id,"ledger_id"=>112);

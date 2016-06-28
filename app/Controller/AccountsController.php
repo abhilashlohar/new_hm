@@ -4281,7 +4281,7 @@ $this->set('result_accounts_category',$result_accounts_category);
 
 	
 	$this->loadmodel('ledger_account');
-	$conditions = array( '$or' => array(array('society_id' =>$s_society_id),array('society_id' =>0)));
+	$conditions = array( '$or' => array(array('society_id' =>$s_society_id,"delete_id" => 0),array('society_id' =>0,"delete_id" => 0)));
 	$cursor2=$this->ledger_account->find('all',array('conditions'=>$conditions));
 	$this->set('cursor2',$cursor2);	
 

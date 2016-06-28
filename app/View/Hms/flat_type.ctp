@@ -69,17 +69,14 @@ $wing_name = $collection['wing']['wing_name'];
 </tr>
 <?php
 $c=0;
-foreach($cursor1 as $collection)
+foreach($units as $collection)
 {
 $c++;
-$wing_id = (int)$collection['flat']['wing_id'];	
-$flat_number = $collection['flat']['flat_name'];	
+$wing_id = (int)$collection['wing_id'];	
+$flat_number = $collection['flat_name'];	
 $flat_num = ltrim($flat_number,0);
-$result_prb = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_fetch'),array('pass'=>array($wing_id)));
-foreach ($result_prb as $collection) 
-{
-$wing_name = $collection['wing']['wing_name'];	
-}
+$wing_name = $collection['wing_name'];
+
 
 ?>
 <tr>
@@ -194,6 +191,7 @@ $(document).ready(function() {
 			<li>All the field are compulsory.</li>
 			<li>Wing and Flat number be valid as per society setting.</li>
 			<li>Flat number should be not same.</li>
+			<li style="color:red;">You can Import Maximum 100 Unit once.</li>
 			</ol>
 		</div>
 		<div class="modal-footer">

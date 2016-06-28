@@ -25039,10 +25039,29 @@ $conditions=array("society_id" => $s_society_id);
 $cursor1 = $this->flat->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set('cursor1',$cursor1);
 
+
+
+
 $this->loadmodel('wing');
-$conditions=array("society_id" => $s_society_id);
-$cursor2 = $this->wing->find('all',array('conditions'=>$conditions));
-$this->set('cursor2',$cursor2);
+$condition=array('society_id'=>$s_society_id);
+$order=array('wing.wing_name'=>'ASC');
+$wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+foreach($wings as $data){
+	$wing_id=$data["wing"]["wing_id"];
+	$wing_name=$data["wing"]["wing_name"];
+		$this->loadmodel('flat');
+		$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+		$order=array('flat.flat_name'=>'ASC');
+		$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+		foreach($flats as $data2){
+			$flat_id=$data2["flat"]["flat_id"];
+			$flat_name=$data2["flat"]["flat_name"];
+				
+			$units[]=array("wing_id"=>$wing_id,"wing_name"=>$wing_name,"flat_id"=>$flat_id,"flat_name"=>$flat_name);	
+		}
+}
+$this->set('units',$units);		
+		
 }
 //End Flat Type//
 //Start Flat Import//

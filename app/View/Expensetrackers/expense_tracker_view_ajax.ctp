@@ -182,7 +182,7 @@ $(document).ready(function() {
 	 
 	 $(".cancel_voucher_btn").die().live('click',function(){
 		var voucher_id=$(this).attr("voucher_id");
-		var resion=$("#resion").val();
+		var resion=encodeURIComponent($("#resion").val());
 		
 		$("#confirm_msg").load('<?php echo $this->webroot; ?>Expensetrackers/cancel_voucher?v_id='+voucher_id+'&delete=1&resion='+resion, function() {
 			

@@ -7479,7 +7479,7 @@ function account_statement(){
 			$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
 			foreach($flats as $data2){
 				$flat_id=$data2["flat"]["flat_id"];
-				$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+				$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id_report'),array('pass'=>array($wing_id,$flat_id)));
 				if(!empty($ledger_sub_account_id)){
 					if (in_array($ledger_sub_account_id, $ledger_sub_account_ids)){
 						$members_for_billing[]=$ledger_sub_account_id;

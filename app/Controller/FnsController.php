@@ -187,6 +187,18 @@ function get_rates_via_flat_type_id_in_noc_rate($flat_type_id){
 
 function ledger_sub_account_id_via_wing_id_and_flat_id($wing_id,$flat_id){
 	$this->loadmodel('user_flat');
+	$conditions=array("wing" => $wing_id,"flat" => $flat_id,"owner" =>"yes","exited" =>"no");
+	$result=$this->user_flat->find('all',array('conditions'=>$conditions));
+	$user_flat_id=(int)@$result[0]["user_flat"]["user_flat_id"];
+	
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("user_flat_id" => $user_flat_id);
+	$result2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	return (int)@$result2[0]["ledger_sub_account"]["auto_id"];
+}
+
+function ledger_sub_account_id_via_wing_id_and_flat_id_report($wing_id,$flat_id){
+	$this->loadmodel('user_flat');
 	$conditions=array("wing" => $wing_id,"flat" => $flat_id,"owner" =>"yes");
 	$result=$this->user_flat->find('all',array('conditions'=>$conditions));
 	$user_flat_id=(int)@$result[0]["user_flat"]["user_flat_id"];

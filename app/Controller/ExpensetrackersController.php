@@ -1324,7 +1324,7 @@ function cancel_voucher(){
 		$this->ledger->deleteAll($conditions4);
 		
 		$ctext="Canceled of amount- ".$amount;
-		if(!empty($resion)){ $ctext.=" Due to ".$resion; }
+		if(!empty($resion)){ $ctext.=" | ".$resion; }
 		$this->loadmodel('expense_tracker');
 		$this->expense_tracker->updateAll(array("description"=>$ctext,"cancled"=>"yes","cancel_user"=>$s_user_id,"cancled_on"=>$today,"ammount_of_invoice"=>0),array('society_id'=>$s_society_id,'expense_tracker_id'=>$v_id));
 	}

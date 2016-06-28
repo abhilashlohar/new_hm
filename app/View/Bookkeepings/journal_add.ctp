@@ -377,6 +377,10 @@ document.getElementById('total').value = t_d;
 
 <script>
 $(document).ready(function() {
+	
+	
+
+
 	$('form').submit( function(ev){
 		
 	ev.preventDefault();
@@ -392,8 +396,7 @@ $(document).ready(function() {
 		var ledger = $("#main_table tbody tr:nth-child("+i+") td:nth-child(1) select").val();
 		var debit = $("#main_table tbody tr:nth-child("+i+") td:nth-child(2) input").val();
 		var credit = $("#main_table tbody tr:nth-child("+i+") td:nth-child(3) input").val();
-		var desc = $("#desc1").val();
-		
+		var desc = encodeURIComponent($("#desc1").val());
 		ar.push([ledger,debit,credit,desc]);
 		
 		var myJsonString = JSON.stringify(ar);
@@ -404,6 +407,7 @@ $(document).ready(function() {
 			url: "journal_validation?q="+myJsonString+"&b="+date2,
 			dataType:'json',
 			}).done(function(response) {
+				//alert(response);
 			 $("#output").html(response);
 				
 				if(response.type == 'error'){  

@@ -172,20 +172,20 @@ $(document).ready(function() {
 	$(".cancel_voucher").die().live('click',function(){
 	$(".edit_div").show();
 	var voucher_id=$(this).attr("voucher_id");
-	alert(voucher_id);
+	
 	$("#confirm_msg").html('<div align="center" style="padding:20px;"><img src="<?php echo $this->webroot ; ?>/as/indicator_blue_small.gif" /><br/><h5>Please Wait</h5></div>').load('<?php echo $this->webroot; ?>Expensetrackers/cancel_voucher?v_id='+voucher_id+'&delete=0');
 	});
 	
-	 $("#close_edit").live('click',function(){
+	 $("#close_edit").die().live('click',function(){
 		$(".edit_div").hide();
 	 });
 	 
-	 $(".cancel_voucher_btn").live('click',function(){
+	 $(".cancel_voucher_btn").die().live('click',function(){
 		var voucher_id=$(this).attr("voucher_id");
 		var resion=$("#resion").val();
-		alert(resion);
+		
 		$("#confirm_msg").load('<?php echo $this->webroot; ?>Expensetrackers/cancel_voucher?v_id='+voucher_id+'&delete=1&resion='+resion, function() {
-			alert("ok");
+			
 		});
 		
 	 });

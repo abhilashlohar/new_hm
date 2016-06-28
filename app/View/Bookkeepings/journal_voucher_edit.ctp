@@ -321,7 +321,7 @@ $(document).ready(function() {
 		var ledger = $("#main_table tbody tr:nth-child("+i+") td:nth-child(1) select").val();
 		var debit = $("#main_table tbody tr:nth-child("+i+") td:nth-child(2) input").val();
 		var credit = $("#main_table tbody tr:nth-child("+i+") td:nth-child(3) input").val();
-		var desc = $("#desc1").val();
+		var desc = encodeURIComponent($("#desc1").val());
 		
 		ar.push([ledger,debit,credit,desc]);
 		

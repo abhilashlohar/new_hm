@@ -376,7 +376,7 @@ $("#menus_area>li").live('click',function(e){
 					<?php  if($user_type!='hm'){ if(sizeof($role_result)>1){ ?>
                      <li><a href="<?php echo $webroot_path; ?>Hms/change_role_member" rel='tab'><i class="fa fa-exchange"></i> Change Role</a></li>
 					 <?php } } ?>
-					  <li><a href="<?php echo $webroot_path; ?>Hms/change_new_password" rel='tab'><i class="icon-user"></i> Change Password</a></li>
+					  <li><a href="<?php echo $webroot_path; ?>Hms/change_new_password" rel='tab'><i class="fa fa-unlock-alt"></i> Change Password</a></li>
                      <li class="divider"></li>
                      <li><a href="<?php echo $webroot_path; ?>Hms/logout"><i class="icon-key"></i> Log Out</a></li>
                   </ul>

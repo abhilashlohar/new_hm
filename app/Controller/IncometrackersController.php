@@ -5266,6 +5266,17 @@ function other_charges(){
 
 }
 
+
+function map_other_members_delete($led_sub_id=null){
+
+    $this->layout=null;	
+	$led_sub_id=(int)$led_sub_id;
+	$this->loadmodel('ledger_sub_account');
+	$this->ledger_sub_account->updateAll(array("representative"=>null,"representator"=>null),array("auto_id"=>$led_sub_id));
+	$this->redirect(array('action' => 'map_other_members'));
+}
+
+
 function map_other_members(){
 	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';

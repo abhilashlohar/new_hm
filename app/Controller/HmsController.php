@@ -2333,7 +2333,9 @@ function griter_notification($id)
 	if($id=="society_detail"){
 		$this->Session->delete('society_detail');
 	}	
-
+	if($id=="remove_change_pass"){
+			$this->Session->delete('change_pass');
+		}	
 	if($id=="bank_receipt_cancel"){
 		$this->Session->delete('bank_receipt_cancel');
 	}
@@ -8125,6 +8127,8 @@ function change_new_password(){
 		$pass=$this->request->data['pass'];
 		$this->loadmodel('user');
 		$this->user->updateAll(array('password'=>$pass),array('user.user_id'=>$s_user_id));
+		
+		$this->Session->write('change_pass', 1);
 		$this->redirect(array('action' => 'dashboard'));
 	}
 	

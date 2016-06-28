@@ -3,7 +3,7 @@
                   <!-- BEGIN PORTLET-->   
                   <div class="portlet box green">
                      <div class="portlet-title">
-                        <h4><i class="icon-reorder"></i>Change Password</h4>
+                        <h4><i class="fa fa-unlock-alt" aria-hidden="true"></i>Change Password</h4>
                         <div class="tools">
                           
                         </div>
@@ -12,27 +12,31 @@
                         <!-- BEGIN FORM-->
                        <form method="post" class="form-horizontal" id="contact-form">
                           
+						
 						  <div class="control-group">
+						 
 								<div class="controls">
-									<div class="">
+									 <label >Current Password</label>
 									<input type="password" class="m-wrap" name="current_password"  style="font-size:16px;" placeholder="Current Password*">
-									</div>
+									
 								</div>
 							</div>
 						  
 						  
 							<div class="control-group">
+							
 								<div class="controls">
-									<div class="">
+									 <label class="" >New Password</label>
 									<input type="password" class="m-wrap" name="pass" id="register_password" style="font-size:16px;" placeholder="New Password*">
-									</div>
+									
 								</div>
 							</div>
 							<div class="control-group">
+							
 								<div class="controls">
-									<div class="">
+									 <label class="" >Confirmation password</label>
 									<input type="password" class="m-wrap" name="cpass" style="font-size:16px;" placeholder="Retype Password*">
-									</div>
+								
 								</div>
 							</div>
 						   
@@ -75,6 +79,9 @@ $(document).ready(function(){
 	    },messages: {
 	                current_password: {
 	                    remote: "you have enter wrong password"
+	                },
+					cpass: {
+	                    equalTo: "The new password does not match the confirmation password"
 	                }
 	            },
 			highlight: function(element) {

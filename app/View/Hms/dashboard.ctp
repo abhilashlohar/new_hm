@@ -544,3 +544,73 @@ function substrwords($text, $maxchar, $end='...') {
 	</div>
 <!---------right section end------------------>
 </div>
+
+
+
+<script>
+
+$(document).ready(function() {
+<?php 	$change_pass=(int)$this->Session->read('change_pass');	
+if($change_pass==1){
+
+?>
+ $.gritter.add({
+               
+			title: '<i class="fa fa-unlock-alt"></i>  Change Password',
+			text: 'Password is successfully changed.',
+			sticky: false,
+			time: '10000',
+				
+            });
+			
+<?php 
+$this->requestAction(array('controller' => 'hms', 'action' => 'griter_notification'), array('pass' => array('remove_change_pass')));
+
+} ?>			
+
+<?php
+
+$status1=(int)$this->Session->read('profile_status');
+if($status1==1)
+{
+
+?>	
+
+ $.gritter.add({
+               
+               title: '<i class="icon-user"></i> Profile',
+               text: 'Your profile is successfully update.',
+               sticky: false,
+                time: '10000',
+				
+            });
+
+<?php
+$this->requestAction(array('controller' => 'hms', 'action' => 'griter_notification'), array('pass' => array(101)));
+} 
+
+
+$status5=(int)$this->Session->read('feedback_status');
+if($status5==1)
+{
+?>
+
+ $.gritter.add({
+               
+               title: '<i class="icon-phone-sign"></i> Feedback',
+               text: '<p>Thank you for getting in touch with us.</p><p>We shall Respond to you within 24 hours.</p>',
+               sticky: false,
+                time: '10000',
+				
+            });
+
+<?php
+$this->requestAction(array('controller' => 'hms', 'action' => 'griter_notification'), array('pass' => array(102)));
+}
+?>
+	
+   
+});
+
+
+</script>

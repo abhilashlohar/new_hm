@@ -1300,5 +1300,44 @@ if($converted_per==100){ $again_call_ajax="NO";
 }
 /////////////////// End final_import_expense_tracker ////////////////////////////////
 
+
+
+function cancel_voucher(){
+	$this->layout='blank';
+	
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id  = (int)$this->Session->read('hm_user_id');
+	
+	$v_id=(int)$this->request->query('v_id');
+	$delete=(int)$this->request->query('delete');
+	$this->set('delete',$delete);
+	if($delete==1){
+		$resion=$this->request->query('resion');
+		$today = date("d-M-Y");
+		
+		$this->loadmodel('expense_tracker');
+		$result_expense_tracker=$this->expense_tracker->find('all',array('conditions'=>array('expense_tracker_id'=>$v_id)));
+		$amount=$result_expense_tracker[0]["expense_tracker"]["ammount_of_invoice"];
+			
+		$this->loadmodel('ledger');
+		$conditions4=array('society_id'=>$s_society_id,"table_name"=>"expense_tracker",'element_id'=>$v_id);
+		$this->ledger->deleteAll($conditions4);
+		
+		$ctext="Canceled of amount- ".$amount;
+		if(!empty($resion)){ $ctext.=" Due to ".$resion; }
+		$this->loadmodel('expense_tracker');
+		$this->expense_tracker->updateAll(array("description"=>$ctext,"cancled"=>"yes","cancel_user"=>$s_user_id,"cancled_on"=>$today,"ammount_of_invoice"=>0),array('society_id'=>$s_society_id,'expense_tracker_id'=>$v_id));
+	}
+
+	if($delete==0)
+	{
+	$this->set('v_id',$v_id);
+	}
+
+}
+
+
+
+
 }
 ?>

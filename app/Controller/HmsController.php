@@ -6958,7 +6958,7 @@ if($this->request->is('post')){
 		
 
 $this->loadmodel('user_flat');
-$conditions2=array('flat'=>$flat,'society_id'=>$society_id);
+$conditions2=array('flat'=>$flat,'society_id'=>$society_id,'exited'=>'no');
  $result_user=$this->user_flat->find('all',array('conditions'=>$conditions2));
   $n5=sizeof($result_user); 
 if($n5==1){
@@ -7648,7 +7648,7 @@ $society=(int)$this->request->data['society'];
 $flat=(int)$this->request->data['flat'];
 $tenant_fetch=$this->request->data['tenant'];
 $this->loadmodel('user_flat');
-$conditions=array("flat" => $flat,'society_id'=>$society);
+$conditions=array("flat" => $flat,'society_id'=>$society,"exited"=>"no","owner"=>array('$ne'=>null));
 $result4 = $this->user_flat->find('all',array('conditions'=>$conditions));
 $n4 = sizeof($result4);
 
@@ -11872,7 +11872,7 @@ $this->loadmodel('flat');
 		
 		
 $this->loadmodel('user_flat');
-$conditions=array('flat'=>$flat,'society_id'=>$society_id);
+$conditions=array('flat'=>$flat,'society_id'=>$society_id,'exited'=>'no');
 $result_user=$this->user_flat->find('all',array('conditions'=>$conditions));
 $n5=sizeof($result_user);
 if($n5==1){
@@ -20197,7 +20197,7 @@ $owner=$this->request->data['owner'];
 		
 
 $this->loadmodel('user_flat');
-$conditions2=array('flat'=>$flat,'society_id'=>$society_id);
+$conditions2=array('flat'=>$flat,'society_id'=>$society_id,'exited'=>'no');
  $result_user=$this->user_flat->find('all',array('conditions'=>$conditions2));
   $n5=sizeof($result_user); 
 if($n5==1){
@@ -26796,9 +26796,9 @@ foreach($myArray as $child){
 		}
 		
 		$this->loadmodel('user_flat');
-		$conditions=array("flat" => (int)$child[2],"owner"=>array('$ne'=>null));
+		$conditions=array("flat" => (int)$child[2],"owner"=>array('$ne'=>null),"exited"=>"no");
 		$result4 = $this->user_flat->find('all',array('conditions'=>$conditions));
-				
+			
 		$n4 = sizeof($result4); 
 		if($n4==1){
 			
@@ -29569,9 +29569,10 @@ function wing_flat_validation($wing_flat=null,$owner_type=null)
 				}
 		}
 		$this->loadmodel('user_flat');
-		$conditions=array("flat"=>$flat,"owner"=>array('$ne'=>null));
+		$conditions=array("flat"=>$flat,"owner"=>array('$ne'=>null),"exited"=>"no");
 		$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions));
-		$n4 = sizeof($result_user_flat); 
+		
+		 $n4 = sizeof($result_user_flat); 
 		if($n4==1){
 			$tenant=$result_user_flat[0]['user_flat']['owner'];
 			if($tenant=='yes'){

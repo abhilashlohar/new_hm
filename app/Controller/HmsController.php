@@ -23739,8 +23739,13 @@ return $this->service_provider->find('all',array('conditions'=>$conditions));
 /////////////////////// Start Ledger Account Fetch (Accounts)////////////////////////////////////////////////////////////////////////
 function ledger_account_fetch($auto_id) 
 {
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	
 $this->loadmodel('ledger_account');
-$conditions=array("group_id" => $auto_id);
+$conditions =array( '$or' => array( 
+	array('group_id' =>7,'society_id'=>$s_society_id),
+	array('group_id' =>7,'society_id'=>0)
+	));
 $order=array("ledger_account.ledger_name"=>"ASC");
 return $this->ledger_account->find('all',array('conditions'=>$conditions,'order'=>$order));
 }

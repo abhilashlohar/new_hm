@@ -537,28 +537,35 @@ $(document).ready(function(){
 		var user_id=$(this).attr("member_id");
 		//$("#load_data").html('<div ><img src="<?php echo $this->webroot ; ?>/as/indicator_blue_small.gif" /><br/><h5>Please Wait</h5></div>');
 		if($.isNumeric(mob)){
-			$("#validation").html('');
-			$("#load_data").html('');
-				$.ajax({
-				url: "<?php echo $webroot_path; ?>/Hms/profile_mobile_verification_already/"+user_id+"/"+mob,
-				}).done(function(response) {
-				if(response=="true"){
+			
+			if(mob.length!=10){
+				$("#validation").html('Please enter at least 10 characters.');
+			}else{
 					$("#validation").html('');
+					$("#load_data").html('');
 					$.ajax({
-					url: "<?php echo $webroot_path; ?>/Hms/profile_mobile_verification_send/"+user_id+"/"+mob,
+					url: "<?php echo $webroot_path; ?>/Hms/profile_mobile_verification_already/"+user_id+"/"+mob,
 					}).done(function(response) {
-						$('#new_mobile').prop('readonly', true);
-						$("#otp_code").html(response);
-						$( ".save_edited" ).addClass("mobile_update");	
-						$( ".mobile_update" ).removeClass("save_edited");					
-					});	
-					
-					
-					
-				}else{
-					$("#validation").html('Mobile-No is Already Exist.');
-				}
-			});	
+					if(response=="true"){
+						$("#validation").html('');
+						$.ajax({
+						url: "<?php echo $webroot_path; ?>/Hms/profile_mobile_verification_send/"+user_id+"/"+mob,
+						}).done(function(response) {
+							$('#new_mobile').prop('readonly', true);
+							$("#otp_code").html(response);
+							$( ".save_edited" ).addClass("mobile_update");	
+							$( ".mobile_update" ).removeClass("save_edited");					
+						});	
+						
+						
+						
+					}else{
+						$("#validation").html('Mobile-No is Already Exist.');
+					}
+				});	
+			}
+			
+			
 		}else{
 			$("#validation").html('please fill only numeric value');
 			$("#new_mobile").val('');

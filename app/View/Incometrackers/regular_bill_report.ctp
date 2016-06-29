@@ -164,10 +164,13 @@ $(document).ready(function(){
 	$('#main thead tr th').each(function(i, obj) {
 		var total=0;
 		$('#main tbody tr td:nth-child('+tr+')').each(function(i, obj) {
-			var value=parseInt($(this).text());
+			var opt3=$(this).text();
+			opt3=opt3.replace(/,/g, "");
+			var value=parseInt(opt3);
 			total=total+value;
 		});
-		$('#main tfoot tr').append('<td>'+total+'</td>');
+		<?php $phpvar='"+total+"';  ?>
+		$('#main tfoot tr').append("<td><?php echo $phpvar; ?></td>");
 		tr++;
 	});
 	$('#main tfoot tr td:first').remove();

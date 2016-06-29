@@ -80,6 +80,14 @@ end resident approve screen
 end member profile view
 ***/
 
+@media (max-width: 480px) {
+   td.responsive_visable {
+			float:left !important;
+				
+		}
+}
+
+
 
 /***
  Group 

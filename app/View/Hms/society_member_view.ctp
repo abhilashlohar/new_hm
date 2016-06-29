@@ -5,6 +5,9 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 .tex-col{
 	color: #b94a48;
 }
+.remove_th{
+	display:none;
+}
 </style>
 <div align="right" style="margin-right: 25px;">
 	<div class="pull-left" style="margin-left: 30px;">
@@ -29,7 +32,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				<tr>
 					<th width="5%">Sr.</th>
 					<th>User Name</th>
-					<th>unit</th>
+					<th id="unit_number1">unit</th>
+					<th id="unit_number" class="remove_th">unit</th>
 					<th>Roles</th>
 					<th>Email</th>
 					<th>Mobile</th>
@@ -47,9 +51,10 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				$user_flat_id=$user_info["user_flat_id"];
 				$user_id=$user_info["user_id"];
 				$wing_flats=$user_info["wing_flat"];
+				//$wing_name=$user_info["wing_name"];
 				$roles=$user_info["roles"];
 				$resident_member=$user_info["resident_member"];
-							
+						$flat_ascs=$user_info["flat_asc"];	
 				$count_member_owner_info=$user_info["count_member_owner"];
 				$count_member_tenant_info=$user_info["count_member_tenant"];
 				$count_member_family_owner=$user_info["count_member_family_owner"];
@@ -72,6 +77,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 							     
 							</td>
 							<td><?php echo $wing_flat; ?></td>
+							<td class="remove_th"> <?php echo $flat_ascs[$user_flat_id]; ?></td>
 							<td><?php echo $roles; ?></td>
 							<td><?php echo $email; ?></td>
 							<td><?php echo $mobile; ?></td>
@@ -106,7 +112,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 						<td><?php echo $user_name; if(!empty($resident_member)){ if(@$resident_member[$user_flat_id]==1){ $resident_count++; ?> <span style="color:blue; font-size:10px;" class="pull-right"> <i class=" icon-star-empty" ></i> </span> <?php } } ?>
 						
 						</td>
-						<td></td>
+						<td></td><td class="remove_th"></td>
 						<td><?php echo $roles; ?></td>
 						<td><?php echo $email; ?></td>
 						<td><?php echo $mobile; ?></td>
@@ -160,8 +166,13 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <div id="total_member_info" owner_count="<?php echo $count_owner; ?>" tenant_count="<?php echo $count_tenant; ?>" count_family_tenant="<?php echo $count_family_tenant; ?>" resident_count="<?php echo $resident_count; ?>" count_family_owner="<?php echo $count_family_owner; ?>" awating_count="<?php echo $awating_count; ?>"> </div>
 
 <script>
+
 $(document).ready(function(){
-	
+
+	setTimeout(
+	function(){
+		$("#unit_number").click();
+	}, 500);
 		var ow= $("#total_member_info").attr("owner_count");
 		var te= $("#total_member_info").attr("tenant_count");
 		var t_fa= $("#total_member_info").attr("count_family_tenant");

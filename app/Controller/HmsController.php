@@ -19757,7 +19757,7 @@ function society_member_view(){
 		
 		if($user_type=="member" or $user_type=="family_member"){
 			$user_flat_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($user_id)));
-			$flats=array(); $resident=array();
+			$flats=array(); $resident=array();	$flats1=array();
 			foreach($user_flat_info as $user_flat){
 				$user_flat_id=$user_flat["user_flat"]["user_flat_id"];
 				$wing=$user_flat["user_flat"]["wing"];
@@ -19774,9 +19774,9 @@ function society_member_view(){
 					$conditions=array("flat_id"=>$flat);
 					$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
 					$flat_name=ltrim(@$flat_info[0]["flat"]["flat_name"],'0');
-					
+					$flat_name_new=@$flat_info[0]["flat"]["flat_name"];
 					$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
-					
+					$flats1[$user_flat_id]=$wing_name.' - '.$flat_name_new;
 					if($owner=="yes" && (!empty($wing) && !empty($flat))){
 								$this->loadmodel('flat');
 								$conditions=array("wing_id"=>$wing,"flat_id"=>$flat);
@@ -19801,6 +19801,7 @@ function society_member_view(){
 			$user_flat_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($user_id)));
 			$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"];
 			$flats=array();
+			$flats1=array();
 			$resident=array();
 		}
 		
@@ -19840,7 +19841,7 @@ function society_member_view(){
 		}
 		$roles=implode(',',$roles);
 		
-		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id,"count_member_owner"=>$count_member_owner,"count_member_tenant"=>$count_member_tenant,"count_member_family_owner"=>$count_member_family_owner,"count_member_family_tenant"=>$count_member_family_tenant,'resident_member'=>$resident,'user_id'=>$user_id);
+		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id,"count_member_owner"=>$count_member_owner,"count_member_tenant"=>$count_member_tenant,"count_member_family_owner"=>$count_member_family_owner,"count_member_family_tenant"=>$count_member_family_tenant,'resident_member'=>$resident,'user_id'=>$user_id,'flat_asc'=>$flats1,);
 	}
 	
 	$this->set(compact("arranged_users"));

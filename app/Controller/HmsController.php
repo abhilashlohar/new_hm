@@ -12406,8 +12406,18 @@ $conditions=array("signup_random" => $otp_number,'user_id'=>(int)$user_id);
 $result_user = $this->user->find('all',array('conditions'=>$conditions));
  $n4 = sizeof($result_user);
 	if($n4>0){
-		$mobile=$result_user[0]['user']['new_mobile'];
 		
+		$mobile=$result_user[0]['user']['new_mobile'];
+		$email=$result_user[0]['user']['email'];
+		$society_id=$result_user[0]['user']['society_id'];
+		$mobile_old=$result_user[0]['user']['mobile'];
+		date_default_timezone_set('Asia/Kolkata');
+		$date=date("d-m-Y");
+		$time = date(' h:i a', time());
+		$op=$this->autoincrement('profile_log','profile_log_id');
+		$this->loadmodel('profile_log');
+		$this->profile_log->saveAll(array('profile_log_id'=>$op,'user_id'=>(int)$user_id,'society_id'=>$society_id,'email'=>$email,'mobile'=>$mobile_old,'new_email'=>'','new_mobile'=>$mobile,'date'=>$date,'time'=>$time));
+				
 		$this->loadmodel('user');
 		$this->user->updateAll(array("mobile"=>$mobile,"new_mobile"=>"","signup_random"=>""),array('user_id'=>(int)$user_id));
 		
@@ -12479,7 +12489,19 @@ $conditions=array('signup_random'=>$user_id);
 $result_check=$this->user->find('all',array('conditions'=>$conditions));
 $n= sizeof($result_check);
 if($n>0){ 
-	$new_email= $result_check[0]['user']['new_email'];
+
+		$new_email= $result_check[0]['user']['new_email'];
+		$email= $result_check[0]['user']['email'];
+		$mobile= $result_check[0]['user']['mobile'];
+		$society_id= @$result_check[0]['user']['society_id'];
+
+		date_default_timezone_set('Asia/Kolkata');
+		$date=date("d-m-Y");
+		$time = date(' h:i a', time());
+		$op=$this->autoincrement('profile_log','profile_log_id');
+		$this->loadmodel('profile_log');
+		$this->profile_log->saveAll(array('profile_log_id'=>$op,'user_id'=>$user_id,'society_id'=>$society_id,'email'=>$email,'mobile'=>$mobile,'new_email'=>$new_email,'new_mobile'=>'','date'=>$date,'time'=>$time));
+
 	$this->loadmodel('user');
 	$this->user->updateAll(array('signup_random'=>'','new_email'=>'','email'=>$new_email),array('user.user_id'=>$user_id));
 
@@ -18518,31 +18540,9 @@ $this->loadmodel('user');
 $this->user->updateAll(array('signup_random'=>$s_user_id,'new_email'=>$email),array('user_id'=>$s_user_id));
 $this->send_email($email,$from,$from_name,$subject,$message_web,$reply);
 
-		date_default_timezone_set('Asia/Kolkata');
-		$date=date("d-m-Y");
-		$time = date(' h:i a', time());
-		$op=$this->autoincrement('profile_log','profile_log_id');
-		$this->loadmodel('profile_log');
-		$this->profile_log->saveAll(array('profile_log_id'=>$op,'user_id'=>$s_user_id,'society_id'=>$s_society_id,'email'=>$email1,'mobile'=>$mobile1,'new_email'=>$email,'new_mobile'=>$mobile,'date'=>$date,'time'=>$time));
-
 
 }
  
-
- 
- if($email==$email && $mobile==$mobile1){
-	
- }
- else{
-	 
-		date_default_timezone_set('Asia/Kolkata');
-		$date=date("d-m-Y");
-		$time = date(' h:i a', time());
-		$op=$this->autoincrement('profile_log','profile_log_id');
-		$this->loadmodel('profile_log');
-		$this->profile_log->saveAll(array('profile_log_id'=>$op,'user_id'=>$s_user_id,'society_id'=>$s_society_id,'email'=>$email1,'mobile'=>$mobile1,'new_email'=>$email,'new_mobile'=>$mobile,'date'=>$date,'time'=>$time));
- }
-
 if(empty($photo_name)){
 $photo_name=$profile;
 }

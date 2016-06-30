@@ -1,0 +1,202 @@
+/***
+login poup sucess message
+***/
+
+
+@media (min-width: 480px) and (max-width: 580px) { 
+div.mobile_responsive {
+		      width: 90% !important;
+				left: 58% !important;	
+		}
+
+
+}
+
+@media (min-width: 360px) and (max-width: 480px) {
+   div.mobile_responsive {
+			width: 85% !important;
+			left: 75% !important;	
+		}
+}
+
+@media (min-width: 320px) and (max-width: 360px) {
+div.mobile_responsive {
+			width: 100% !important;
+			left:70% !  important;	
+		}
+}
+
+@media (max-width: 320px)  {
+	 div.mobile_responsive {
+			width: 100% !important;
+			    left: 90% !important;	
+		}
+	
+}
+/***
+end login poup sucess message
+***/
+
+/***
+resident approve screen
+***/
+
+
+
+@media (max-width: 648px)  {
+	 div.mobile_responce {
+			overflow-x:auto !important;
+		}
+		div.resident_reply_responce {
+			overflow-x:auto !important;
+			overflow-y:auto !important;
+		}
+		
+}
+	@media (max-width: 720px)  {
+	 i.mobile_responce {
+			    display: none !important;
+		}
+		
+	}
+
+/***
+end resident approve screen
+***/
+
+
+/***
+ member profile view
+***/
+
+@media (max-width: 650px) {
+   div.profile_responsive {
+			width:auto !important;
+				
+		}
+}
+
+/***
+end member profile view
+***/
+
+@media (max-width: 480px) {
+   td.responsive_visable {
+			float:left !important;
+				
+		}
+}
+
+
+
+/***
+ Group 
+***/
+
+
+@media (max-width: 650px) {
+   div.group_responsive {
+			width:auto !important;
+				
+		}
+}
+
+
+/***
+end Group
+***/
+
+
+
+/***
+ Notice 
+***/
+
+
+@media (max-width: 648px)  {
+	 span.notice_text_mobile {
+			    display: none !important;
+				
+		}
+	}
+
+
+/***
+end Notice
+***/
+
+
+/***
+ Document  
+***/
+
+@media (max-width: 650px) {
+   div.document_responsive {
+			width:auto !important;
+			 margin:0px !important;
+		}
+		div.document_add_with {
+			width:190px !important;
+			
+		}
+		
+		
+		
+}
+/***
+end document
+***/
+
+
+/***
+ Help desk  and service provider
+***/
+
+@media (max-width: 650px) {
+   div.help_desk_responsive {
+			width:auto !important;
+			 margin:0px !important;
+		}
+		a.space-responsive{
+			margin-bottom:2px !important;
+		}
+		
+		table.service-category-responsive {
+			font-size:12px;
+		}
+		div.help-desk-remove {
+			width:auto !important;
+			float:left;
+		}
+		div.mobile-align {
+			text-align:left !important;
+			
+		}
+		
+}
+
+/***
+end Help desk 
+***/
+
+
+/***
+ Family member 
+***/
+
+@media (max-width: 650px) {
+	table.mobile_table_responsive td{
+		width:auto !important;
+		float:left !important;
+	}
+	div.family-responsive {
+			width:auto !important;
+			 margin:0px !important;
+		}
+		button.family-space{
+			margin-bottom:2px !important;
+		}
+}
+/***
+end Family member
+***/

@@ -19,7 +19,6 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </div>
 </center>
 <br>
-<style>
 <?php	
 $nnn=55;
 foreach ($result_temp_cash_bank as $collection) 
@@ -27,38 +26,16 @@ foreach ($result_temp_cash_bank as $collection)
 $nnn = 555;
 }
 ?>
-#bg_color th{
-	font-size: 10px !important;background-color:#C8EFCE;padding:2px;border:solid 1px #55965F;
-}
-#report_tb td{
-	padding:2px;
-	font-size: 12px;border:solid 1px #55965F;
-}
-.text_bx{
-	width: 50px;
-	height: 15px !important;
-	margin-bottom: 0px !important;
-	font-size: 12px;
-}
-.text_rdoff{
-	width: 50px;
-	height: 15px !important;
-	border: none !important;
-	margin-bottom: 0px !important;
-	font-size: 12px;
-}
-</style>
 
 
 <?php if($nnn == 555)
 {
 	?>
-<table  width="100%" style=" background-color:white;" id="report_tb">
+<table  width="100%" class="table table-bordered table-hover" id="report_tb">
 <thead>
 <tr id="bg_color">
 <th>Sr#</th>
 <th>Receipt Date </th>
-<th>Receipt Type</th>
 <th>Party Name</th>
 <th>Payment Mode</th>
 <th>Instrument/UTR</th>
@@ -149,7 +126,7 @@ $nnn = 555;
 			}			
 			
 		
-		$TransactionDate = date('d-m-Y',strtotime($TransactionDate));
+		$TransactionDate = date('d-m-Y',$TransactionDate);
 		$total_debit =  $total_debit + $amount; 
 		if(empty($reference_utr)){
 		$reference_utr = $reference_utr;
@@ -158,7 +135,6 @@ $nnn = 555;
 <tr <?php if($deposit_status == 1) { ?> style="background-color:#E8EAE8;"  <?php } ?> >
 <td><?php echo $n; ?> </td>
 <td><?php echo $TransactionDate; ?></td>
-<td><?php echo $receipt_tppp; ?></td>
 <td><?php echo $party_name; ?>&nbsp;(<?php echo $wing_flat; ?>)</td>
 <td><?php echo $receipt_mode; ?> - <?php echo @$drawn_on_which_bank; ?></td>
 <td><?php echo @$reference_utr; ?> </td>

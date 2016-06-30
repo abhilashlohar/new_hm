@@ -5780,10 +5780,6 @@ foreach($myArray as $child)
 	foreach($cursor as $collection){
 	 $from = $collection['financial_year']['from'];
 	 $to = $collection['financial_year']['to'];
-	 //$from1 = date('Y-m-d',($from));
-	 //$to1 = date('Y-m-d',($to));
-	// $from2 = strtotime($from1);
-	// $to2 = strtotime($to1);
 	$transaction1 = date('Y-m-d',strtotime($TransactionDate));
 	$transaction2 = strtotime($transaction1);
 		if($transaction2 <= $to && $transaction2 >= $from){
@@ -5966,7 +5962,7 @@ $current_date = date('d-m-Y');
 $l=$this->autoincrement('temp_cash_bank','auto_id');
 $this->loadmodel('temp_cash_bank');
 $multipleRowData = Array( Array("auto_id"=> $l,"receipt_date" => strtotime($transaction_date),"receipt_mode" => $mode,"cheque_number" =>@$cheque_number,"cheque_date" =>@$cheque_date,"drawn_on_which_bank" =>@$drawn_bank_name,"reference_utr" => @$utr_ref,"deposited_bank_id"=>$bank_id,"member_type"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,
-"current_date"=>$current_date,"society_id"=>$s_society_id,"narration"=>$narration,"prepaired_by"=>$s_user_id,"bank_branch"=>@$branch));
+"current_date"=>$current_date,"society_id"=>$s_society_id,"narration"=>$narration,"prepaired_by"=>$s_user_id,"bank_branch"=>@$branch,"status"=>"Pending"));
 $this->temp_cash_bank->saveAll($multipleRowData);
 }
 $output = json_encode(array('type'=>'success', 'text' => 'Please Fill Numeric Amount '));

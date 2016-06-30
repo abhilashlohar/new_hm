@@ -154,31 +154,70 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 </div>
 
 
-<!--<div class="portlet-body">
+<div class="portlet-body">
 	<table class="table table-bordered table-hover">
 		<thead>
 			<tr>
 				<th>Transaction Date</th>
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th class="hidden-phone">Username</th>
+				<th>Deposited In</th>
+				<th>Receipt Mode</th>
+				<th>Cheque/UTR Ref</th>
+				<th>Date</th>
+				<th>Drawn on which bank</th>
+				<th>Branch</th>
+				<th>Received From</th>
+				<th>Amount</th>
+				<th>Remarks</th>
 				<th>Status</th>
 			</tr>
 		</thead>
 		<tbody>
 		<?php foreach($temp_cash_banks as $temp_cash_bank){ 
-		$receipt_date=$temp_cash_bank["temp_cash_bank"]["receipt_date"];?>
+		$receipt_date=$temp_cash_bank["temp_cash_bank"]["receipt_date"];
+		$deposited_in=$temp_cash_bank["temp_cash_bank"]["deposited_bank_id"];
+		$deposited_in_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($deposited_in)));
+		$bank_name=$deposited_in_info[0]["ledger_sub_account"]["name"];
+		$bank_account=$deposited_in_info[0]["ledger_sub_account"]["bank_account"];
+		$receipt_mode=$temp_cash_bank["temp_cash_bank"]["receipt_mode"];
+		$cheque_number=$temp_cash_bank["temp_cash_bank"]["cheque_number"];
+		$cheque_date=$temp_cash_bank["temp_cash_bank"]["cheque_date"];
+		$drawn_on_which_bank=@$temp_cash_bank["temp_cash_bank"]["drawn_on_which_bank"];
+		$bank_branch=@$temp_cash_bank["temp_cash_bank"]["bank_branch"];
+		$ledger_sub_account_id=@$temp_cash_bank["temp_cash_bank"]["ledger_sub_account_id"];
+		$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+				$user_name=$member_info["user_name"];
+				$wing_name=$member_info["wing_name"];
+				$flat_name=$member_info["flat_name"];
+		$amount=@$temp_cash_bank["temp_cash_bank"]["amount"];
+		$narration=@$temp_cash_bank["temp_cash_bank"]["narration"];
+		$status=@$temp_cash_bank["temp_cash_bank"]["status"];
+		if(empty($status)){
+			$status="Pending";
+			$status_class="label-danger";
+		}
+		?>
 			<tr>
 				<td><?php echo date("d-m-Y",$receipt_date); ?></td>
-				<td>Mark</td>
-				<td>Otto</td>
-				<td class="hidden-phone">makr124</td>
-				<td><span class="label label-success">Approved</span></td>
+				<td><?php echo $bank_name.' - '.$bank_account; ?></td>
+				<td><?php echo $receipt_mode; ?></td>
+				<td><?php echo $cheque_number; ?></td>
+				<td><?php echo $cheque_date; ?></td>
+				<td><?php echo $drawn_on_which_bank; ?></td>
+				<td><?php echo $bank_branch; ?></td>
+				<td><?php echo $user_name.' ('.$wing_name.'-'.$flat_name.')'; ?></td>
+				<td><?php echo $amount; ?></td>
+				<td><?php echo $narration; ?></td>
+				<td><span class="label <?php echo $status_class; ?>"><?php echo $status; ?></span></td>
+			</tr>
+		<?php } 
+		if(sizeof($temp_cash_banks)==0){?>
+			<tr>
+				<td colspan="5" >No Record</td>
 			</tr>
 		<?php } ?>
 		</tbody>
 	</table>
-</div>-->
+</div>
 
 
 
@@ -207,9 +246,9 @@ $(document).ready(function() {
 			var utr = $("#main_table tr:nth-child(1) td:nth-child(1) #sub_table tr:nth-child(2) td:nth-child(4) input").val();	
 			var date = $("#main_table tr:nth-child(1) td:nth-child(1) #sub_table tr:nth-child(2) td:nth-child(5) input").val();
 			}
-	var flat_id = $("#main_table tr:nth-child(1) td:nth-child(1) #sub_table tr:nth-child(4) td:nth-child(3) select").val();
-	var amount = $("#main_table tr:nth-child(1) td:nth-child(1) #sub_table tr:nth-child(4) td:nth-child(5) input").val();
-	var narration = $("#main_table tr:nth-child(1) td:nth-child(1) #sub_table tr:nth-child(4) td:nth-child(6) input").val();
+	var flat_id = $("#main_table tr:nth-child(1) td:nth-child(1) #sub_table tr:nth-child(4) td:nth-child(2) select").val();
+	var amount = $("#main_table tr:nth-child(1) td:nth-child(1) #sub_table tr:nth-child(4) td:nth-child(3) input").val();
+	var narration = $("#main_table tr:nth-child(1) td:nth-child(1) #sub_table tr:nth-child(4) td:nth-child(4) input").val();
 		
 ar.push([transaction_date,mode,cheque_no,cheque_date,drawn_bank,branch,date,utr,amount,narration,bank_id,flat_id]);
 		

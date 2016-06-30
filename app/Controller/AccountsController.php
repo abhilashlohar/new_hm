@@ -5637,13 +5637,29 @@ $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=(int)$this->Session->read('hm_user_id');	
 $this->set('s_user_id',$s_user_id);
 
+
 	$this->loadmodel('ledger_sub_account');
 	$condition=array('society_id'=>$s_society_id,'ledger_id'=>34,'user_id'=>$s_user_id);
 	$members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
+	$ledger_sub_account_ids=array();
 	foreach($members as $data3){
 	$ledger_sub_account_ids[]=$data3["ledger_sub_account"]["auto_id"];
 	}
 	
+	$qwe=array();
+	foreach($ledger_sub_account_ids as $ledger_sub_account_id){
+		$qwe[]=array("society_id" => $s_society_id, "ledger_sub_account_id" => $ledger_sub_account_id);
+	}
+	
+	$this->loadmodel('temp_cash_bank');
+	if(sizeof($qwe)>0){
+		$conditions =array( '$or' => $qwe);
+	}else{
+		$conditions =array();
+	}
+	
+	$temp_cash_banks=$this->temp_cash_bank->find('all',array('conditions'=>$conditions));
+	$this->set('temp_cash_banks',$temp_cash_banks);
 	
 		$this->loadmodel('wing');
         $condition=array('society_id'=>$s_society_id);
@@ -5905,7 +5921,6 @@ $result_user=$this->requestAction(array('controller'=>'Fns','action'=>'user_info
 foreach($result_user as $user_data){
 $user_email=@$user_data['user']['email'];
 }	
-//$user_email="nikhileshvyas4455@gmail.com";
 
 $this->loadmodel('society');
 $condition=array('society_id'=>$s_society_id);
@@ -5925,7 +5940,6 @@ $sms_sender=$r_sms->sms_sender;
 $sms_allow=(int)$r_sms->sms_allow;
 
 $subject="[".$society_name."]- ".$wing_flat." payment update";
-//$subject = "[".$society_name."]- Receipt,"date('d-M-Y',$d_date).""; 
 $email_content = "Dear ".$user_name.", Thanks for updating your payment details. (Receipt of ".$amount." via-".$mode." on ".$transaction_date.") This info has been sent to society for further verification & confirmation before issuing a formal receipt to you.";
 $this->send_email($user_email,'accounts@housingmatters.in','HousingMatters',$subject,$email_content,'donotreply@housingmatters.in');
 }
@@ -5946,12 +5960,12 @@ $email_content2 = "".$user_name."-".$wing_flat." has updated his/her payment det
 
 $this->send_email($admin_email,'accounts@housingmatters.in','HousingMatters',$subject,$email_content2,'donotreply@housingmatters.in');
 }
-
+$transaction_date = date('Y-m-d',strtotime($transaction_date));
 
 $current_date = date('d-m-Y');
 $l=$this->autoincrement('temp_cash_bank','auto_id');
 $this->loadmodel('temp_cash_bank');
-$multipleRowData = Array( Array("auto_id"=> $l,"receipt_date" => $transaction_date,"receipt_mode" => $mode,"cheque_number" =>@$cheque_number,"cheque_date" =>@$cheque_date,"drawn_on_which_bank" =>@$drawn_bank_name,"reference_utr" => @$utr_ref,"deposited_bank_id"=>$bank_id,"member_type"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>"maintenance","amount"=>$amount,
+$multipleRowData = Array( Array("auto_id"=> $l,"receipt_date" => strtotime($transaction_date),"receipt_mode" => $mode,"cheque_number" =>@$cheque_number,"cheque_date" =>@$cheque_date,"drawn_on_which_bank" =>@$drawn_bank_name,"reference_utr" => @$utr_ref,"deposited_bank_id"=>$bank_id,"member_type"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,
 "current_date"=>$current_date,"society_id"=>$s_society_id,"narration"=>$narration,"prepaired_by"=>$s_user_id,"bank_branch"=>@$branch));
 $this->temp_cash_bank->saveAll($multipleRowData);
 }

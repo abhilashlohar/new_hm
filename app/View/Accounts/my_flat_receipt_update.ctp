@@ -90,10 +90,10 @@ $default_date = date('d-m-Y');
 				 <tr style="background-color:#E8EAE8;">
 				    <th>Branch</th>
                     <th>Received From</th>
-		            <th>Select Resident</th>
-		            <th>Receipt Type</th>
 		            <th>Amount (Rupees)</th>
                     <th>Remarks</th>
+					<th></th>
+					<th></th>
 				 </tr>
 				
 				 <tr style="background-color:#E8F3FF;">
@@ -104,13 +104,7 @@ style="background-color:#FFF !important; margin-top:3px;" data-provide="typeahea
 data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" id="branchh">
 </td>
 					
-					<td>
-					<select class="span12 m-wrap" disabled="disabled">
-					<option value="" style="display:none;">received from</option>    
-					<option value="1" selected="selected">Residential</option>
-					<option value="2">Non-Residential</option>
-					</select>
-				    </td>
+					
 										 
 					<td>
 			<?php if(sizeof(@$members_for_billing)>1){ ?>
@@ -133,14 +127,6 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 			<?php } ?>	
 			</td>
 								 
-				<td>
-				<select class="m-wrap span12" disabled="disabled">
-				<option value="" style="display:none;">Select Receipt Type</option>
-				<option value="1" selected="selected">Maintenance Receipt</option>
-				<option value="2">Other Receipt</option>
-				</select>
-				</td>
-								 
 				 <td>
 				 <input type="text" class="m-wrap span12"  
 				 style="text-align:right; background-color:#FFF !important; margin-top:3px;"
@@ -150,7 +136,8 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 				 <td>
 				 <input type="text" class="m-wrap span12" style="background-color:#FFF !important; margin-top:3px;"/>
 				 </td>
-				 
+				  <td></td>
+				  <td></td>
 				 </tr>
 			</table>
 						
@@ -165,6 +152,36 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 </div>
 </form>
 </div>
+
+
+<!--<div class="portlet-body">
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>Transaction Date</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th class="hidden-phone">Username</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php foreach($temp_cash_banks as $temp_cash_bank){ 
+		$receipt_date=$temp_cash_bank["temp_cash_bank"]["receipt_date"];?>
+			<tr>
+				<td><?php echo date("d-m-Y",$receipt_date); ?></td>
+				<td>Mark</td>
+				<td>Otto</td>
+				<td class="hidden-phone">makr124</td>
+				<td><span class="label label-success">Approved</span></td>
+			</tr>
+		<?php } ?>
+		</tbody>
+	</table>
+</div>-->
+
+
+
 
 <script>
 $(document).ready(function() { 

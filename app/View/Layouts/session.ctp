@@ -46,7 +46,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 <link href="<?php echo $webroot_path; ?>as/bootstrap.min.css" rel="stylesheet">
 <link href="<?php echo $webroot_path; ?>as/animate.css" rel="stylesheet" />
 <link href="<?php echo $webroot_path; ?>as/demo-styles.css" rel="stylesheet" />
-<link href="<?php echo $webroot_path; ?>assets/css/mobile_responsive.css" rel="stylesheet" />
+<link href="<?php echo $webroot_path; ?>assets/css/mobile_responsive1.css" rel="stylesheet" />
 		<style>
 		label.error {
 			color: red;
@@ -128,7 +128,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
  	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 	<script src="<?php echo $webroot_path; ?>assets/js/gmaps.js"></script>
 	<script src="<?php echo $webroot_path; ?>assets/js/demo.gmaps.js"></script>
-		<script type="text/javascript" src="<?php echo $webroot_path; ?>assets/data-tables/jquery.dataTables.js"></script>
+		<script type="text/javascript" src="<?php echo $webroot_path; ?>assets/data-tables/jquery.dataTables1.js"></script>
 	<script type="text/javascript" src="<?php echo $webroot_path; ?>assets/data-tables/DT_bootstrap.js"></script>
 		<script src="<?php echo $webroot_path; ?>assets/js/app.js"></script>		
 	<script>
@@ -376,7 +376,7 @@ $("#menus_area>li").live('click',function(e){
 					<?php  if($user_type!='hm'){ if(sizeof($role_result)>1){ ?>
                      <li><a href="<?php echo $webroot_path; ?>Hms/change_role_member" rel='tab'><i class="fa fa-exchange"></i> Change Role</a></li>
 					 <?php } } ?>
-					 <li><a href="#"><i class="icon-tasks"></i> My Tasks</a></li>
+					  <li><a href="<?php echo $webroot_path; ?>Hms/change_new_password" rel='tab'><i class="fa fa-unlock-alt"></i> Change Password</a></li>
                      <li class="divider"></li>
                      <li><a href="<?php echo $webroot_path; ?>Hms/logout"><i class="icon-key"></i> Log Out</a></li>
                   </ul>

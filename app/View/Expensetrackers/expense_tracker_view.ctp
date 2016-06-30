@@ -83,7 +83,12 @@ $this->requestAction(array('controller' => 'hms', 'action' => 'griter_notificati
 });
 </script>     
 
-
+<div class="edit_div" style="display: none;">
+<div class="modal-backdrop fade in"></div>
+<div class="modal"  id="confirm_msg">
+	
+</div>
+</div>
 
 
 

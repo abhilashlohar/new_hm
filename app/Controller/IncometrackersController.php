@@ -746,7 +746,7 @@ function generate_bills(){
 							</tbody></table>';
 							$bill_html.='<table style="font-size:12px;border-bottom: dotted 1px;" width="100%" cellspacing="0">
 								<tbody><tr>
-									<td width="50%" style="padding:5px;" valign="top">
+									<td width="100%" style="padding:5px;" valign="top">
 									<span>Remarks:</span><br>';
 									$inc_t_c=0;
 									foreach($terms_conditions as $t_c){ $inc_t_c++;
@@ -754,9 +754,16 @@ function generate_bills(){
 									}
 									
 									$bill_html.='</td>
-									<td align="center" width="50%" style="padding:5px;" valign="top">
-									For  <b>'.$society_name.'</b><br><br><br>
-									<div><span style="border-top:solid 1px #424141">'.$sig_title.'</span></div>
+								</tr>
+							</tbody></table>
+							<table style="font-size:12px;border-bottom: dotted 1px;" width="100%" cellspacing="0">
+								<tbody><tr>
+								<td align="right" width="60%" style="padding:5px;" valign="top">
+									<br/>For  <b>'.$society_name.'</b>: <span >'.$sig_title.'</span>
+									
+									</td>
+									<td align="right" width="40%" style="padding:0px 20px 5px 20px;" valign="bottom">
+									<br/><div style="border-bottom:solid 1px #424141"></div>
 									</td>
 								</tr>
 							</tbody></table>
@@ -5266,6 +5273,17 @@ function other_charges(){
 
 }
 
+
+function map_other_members_delete($led_sub_id=null){
+
+    $this->layout=null;	
+	$led_sub_id=(int)$led_sub_id;
+	$this->loadmodel('ledger_sub_account');
+	$this->ledger_sub_account->updateAll(array("representative"=>null,"representator"=>null),array("auto_id"=>$led_sub_id));
+	$this->redirect(array('action' => 'map_other_members'));
+}
+
+
 function map_other_members(){
 	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
@@ -7468,7 +7486,7 @@ function account_statement(){
 			$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
 			foreach($flats as $data2){
 				$flat_id=$data2["flat"]["flat_id"];
-				$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+				$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id_report'),array('pass'=>array($wing_id,$flat_id)));
 				if(!empty($ledger_sub_account_id)){
 					if (in_array($ledger_sub_account_id, $ledger_sub_account_ids)){
 						$members_for_billing[]=$ledger_sub_account_id;

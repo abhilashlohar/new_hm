@@ -33,7 +33,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			<thead>
 				<tr>
 					<th>Select Member</th>
-					<th>Bill(s) will send to</th>
+					<th>Bill(s) will be sent to</th>
 				</tr>
 			</thead>
 			<tr>
@@ -58,7 +58,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			<thead>
 				<tr>
 					<th>Member</th>
-					<th>Representator</th>
+					<th>Representative</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -69,7 +69,10 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				$representator_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($representator)));?>
 				<tr>
 					<td><?php echo $member_info["user_name"].' '.$member_info["wing_name"].' - '.$member_info["flat_name"]; ?></td>
-					<td><?php echo $representator_info["user_name"].' '.$representator_info["wing_name"].' - '.$representator_info["flat_name"]; ?></td>
+					<td><?php echo $representator_info["user_name"].' '.$representator_info["wing_name"].' - '.$representator_info["flat_name"]; ?>
+					
+					<a role="button" led_sub_id="<?php echo $ledger_sub_account_id; ?>" class="btn mini pull-right rep_delete red"> <i class="icon-trash"></i>  </a>
+					</td>
 				</tr>
 			<?php } ?>
 			</tbody>
@@ -77,8 +80,24 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	</div>
 </div>
 
+<div id="delete_topic_result">
+
+</div>
+
 <script>
 $(document).ready(function(){
+	
+	$(".rep_delete").on("click",function(){
+		
+		var user_flat_id=$(this).attr("led_sub_id");
+		$('#delete_topic_result').html('<div id="pp"><div class="modal-backdrop fade in"></div><div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"><div class="modal-body" style="font-size:14px;"><i class="icon-warning-sign" style="color:#d84a38;"></i> Are you sure you want to delete ? </div><div class="modal-footer"><a href="<?php echo $webroot_path; ?>Incometrackers/map_other_members_delete/'+user_flat_id+'" class="btn blue" id="yes">Yes</a><a href="#"  role="button" id="can" class="btn">No</a></div></div></div>');
+		
+	});
+	
+	$("#can").live('click',function(){
+			$('#pp').hide();
+		});
+	
 	var sel=$("#first").html();
 	$("#second").html(sel);
 	$("#first select").chosen();

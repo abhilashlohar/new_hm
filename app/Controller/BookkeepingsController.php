@@ -690,7 +690,8 @@ function journal_validation(){
 	$this->ath();
 	$q=$this->request->query('q');
 	
-	$q = html_entity_decode($q);
+	 $q = html_entity_decode($q);
+	
 	
 	$tra_date = $this->request->query('b');
 	$tra_date = json_decode($tra_date, true);
@@ -821,7 +822,7 @@ $ledger_sub_account2=null;
 			
 			$debit = $child[1];
 			$credit = $child[2];
-			$desc = $child[3];
+			$desc = htmlspecialchars($child[3]);
 			
 			if(empty($debit)){
 				$debit=null;

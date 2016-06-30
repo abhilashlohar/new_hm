@@ -187,6 +187,18 @@ function get_rates_via_flat_type_id_in_noc_rate($flat_type_id){
 
 function ledger_sub_account_id_via_wing_id_and_flat_id($wing_id,$flat_id){
 	$this->loadmodel('user_flat');
+	$conditions=array("wing" => $wing_id,"flat" => $flat_id,"owner" =>"yes","exited" =>"no");
+	$result=$this->user_flat->find('all',array('conditions'=>$conditions));
+	$user_flat_id=(int)@$result[0]["user_flat"]["user_flat_id"];
+	
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("user_flat_id" => $user_flat_id);
+	$result2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	return (int)@$result2[0]["ledger_sub_account"]["auto_id"];
+}
+
+function ledger_sub_account_id_via_wing_id_and_flat_id_report($wing_id,$flat_id){
+	$this->loadmodel('user_flat');
 	$conditions=array("wing" => $wing_id,"flat" => $flat_id,"owner" =>"yes");
 	$result=$this->user_flat->find('all',array('conditions'=>$conditions));
 	$user_flat_id=(int)@$result[0]["user_flat"]["user_flat_id"];
@@ -1031,36 +1043,38 @@ function sending_options(){
 				<div class="" style="background-color: rgb(252, 250, 250); padding: 2px; border: 1px solid rgba(204, 204, 204, 0.3);">
 					<table width="100%">
 					<tr>
-						<td>
+						<td class="responsive_visable">
 							<label class="checkbox">
 							<div class="checker"><span><input class="owner requirecheck1" e_id="requirecheck1" value="3" type="checkbox" name="roles[]"></span></div> Owners
 							</label>
 						</td>
-						<td class="owner_family" style="display:none;">
+						<td class="owner_family responsive_visable" style="display:none;">
 							<label class="checkbox" >
 							<div class="checker"><span><input value="5" class="requirecheck1" type="checkbox" name="roles[]"></span></div> Add Family Members also?
 							</label>
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td class="responsive_visable">
 							<label class="checkbox">
 							<div class="checker"><span><input class="tenant requirecheck1" e_id="requirecheck1" value="4" type="checkbox" name="roles[]"></span></div> Tenants
 							</label>
 						</td>
-						<td class="tenant_family" style="display:none;">
+						<td class="tenant_family responsive_visable" style="display:none;">
 							<label class="checkbox">
 							<div class="checker"><span><input value="6" class="requirecheck1" type="checkbox" name="roles[]"></span></div> Add Family Members also?
 							</label>
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td class="responsive_visable">
 							<label class="checkbox">
 							<div class="checker"><span><input class="resident requirecheck1" e_id="requirecheck1" value="resident" type="checkbox" name="roles[]"></span></div> Residents
+							<i class=" icon-info-sign tooltips" data-placement="bottom" data-original-title="Users who are occupants/residing currently"> </i>
 							</label>
+							
 						</td>
-						<td class="resident_family" style="display:none;">
+						<td class="resident_family responsive_visable" style="display:none;">
 							<label class="checkbox">
 							<div class="checker"><span><input class="requirecheck1" value="resident_family" type="checkbox" name="roles[]"></span></div> Add Family Members also?
 							</label>

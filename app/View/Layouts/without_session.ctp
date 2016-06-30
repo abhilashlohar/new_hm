@@ -21,7 +21,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
   <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/uniform/css/uniform.default.css" />
   <link rel="shortcut icon" href="<?php echo $webroot_path; ?>favicon.ico" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="<?php echo $webroot_path; ?>assets/css/mobile_responsive.css" rel="stylesheet" />
+<link href="<?php echo $webroot_path; ?>assets/css/mobile_responsive1.css" rel="stylesheet" />
 <style>
 label.valid {
   width: 24px;

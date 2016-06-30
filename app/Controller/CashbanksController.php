@@ -573,7 +573,7 @@ function final_import_bank_receipt_ajax(){
 	$this->layout=null;
 	$s_society_id = $this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');
-	
+	$this->ath();
 	$this->loadmodel('import_record');
 	$conditions=array("society_id" => $s_society_id,"module_name" => "BR");
 	$result_import_record = $this->import_record->find('all',array('conditions'=>$conditions));

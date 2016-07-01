@@ -2787,9 +2787,8 @@ $this->Session->destroy();
 $this->redirect(array('action' => 'index'));
 }
 
-function beforeFilter()
-{
- Configure::write('debug', 0);
+function beforeFilter(){
+	Configure::write('debug', 0);
 }
 
 
@@ -21418,39 +21417,7 @@ $to = "Support@housingmatters.in";
 $from="Support@housingmatters.in";
 $reply="Support@housingmatters.in";
 $from_name="HousingMatters"; 
- /* $message_web="<div>
-<img src='$ip".$this->webroot."/as/hm/hm-logo.png'/><span  style='float:right; margin:2.2%;'>
-<span class='test' style='margin-left:5px;'><a href='https://www.facebook.com/HousingMatters.co.in' target='_blank' ><img src='$ip".$this->webroot."/as/hm/fb.png'/></a></span>
-<a href='#' target='_blank'><img src='$ip".$this->webroot."/as/hm/tw.png'/></a><a href'#'><img src='$ip".$this->webroot."/as/hm/ln.png'/ class='test' style='margin-left:5px;'></a></span>
-
-</br><p>Dear Administrator,</p>
-<br/>
-<table  cellpadding='10' width='100%;' border='1' bordercolor='#e1e1e1'  >
-<tr class='tr_heading' style='background-color:#00A0E3;color:white;'>
-<td>Name</td>
-<td>Category</td>
-<td>Society Name</td>
-<td>Details</td>
-</tr>
-<tr class='tr_content' style=background-color:#E9E9E9;'>
-<td>$user</td>
-<td>$feedback_cat_name</td>
-<td>$society_name</td>
-<td><p>User Email-Id: &nbsp; $email </p>
-<p>Mobile No: &nbsp; $mobile </p></td>
-</tr>
-</table>
-<div>
-<p style='font-size:16px;'> <strong>Message Description:</strong></p>
-<p style='font-size:15px;'>$message</p>
-<center><p>To view the feedback response <a href='$ip".$this->webroot."hms' ><button style='width:100px; height:30px;  background-color:#00A0E3;color:white'> Click Here </button></a></p></center><br/>
-Thank you.<br/>
-HousingMatters (Support Team)<br/><br/>
-www.housingmatters.co.in
-</div>
-</div>"; */
-
-
+ 
  $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
           <tbody>
 			<tr>
@@ -28660,7 +28627,13 @@ function menus_as_per_user_rights(){
 					</li>
 					<?php
 				}
-			}
+			}?>
+			<!--<li>
+				<a href="<?php echo $webroot_path; ?>Hms/feedback" rel='tab'>
+				<i class="icon-phone"></i> Feedback
+				</a>					
+			</li>-->
+			<?php
 		
 		}else{
 			echo '<li style="color:#FFF; padding: 5px;">There is no any module assigned to you.</li>';

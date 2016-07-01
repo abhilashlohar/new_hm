@@ -67,7 +67,7 @@ $society_sig = @$data['society']['signature'];
 <div class="controls">
 <div class="fileupload fileupload-new" data-provides="fileupload">
 <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-<?php if(empty($society_logo)){ ?>
+<?php if(empty($society_sig)){ ?>
 <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 <?php }else{ ?>
 <img src="<?php echo $webroot_path; ?>sig/<?php echo $society_sig; ?>" alt="">
@@ -77,8 +77,8 @@ $society_sig = @$data['society']['signature'];
 <div>
 <span class="btn btn-file"><span class="fileupload-new">Select image</span>
 <span class="fileupload-exists">Change</span>
-<input type="file" class="default" name="sig"></span>
-<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+<input type="file" class="default change_file" field="society_signature" name="sig"></span>
+<a href="#" class="btn fileupload-exists rem" data-dismiss="fileupload">Remove</a>
 </div>
 </div>
 <label id="sig_vali"></label>
@@ -100,7 +100,7 @@ $society_sig = @$data['society']['signature'];
 <div>
 <span class="btn btn-file"><span class="fileupload-new">Select image</span>
 <span class="fileupload-exists">Change</span>
-<input type="file" class="default" name="logo" value=""></span>
+<input type="file" class="default change_file" field="society_logo" name="logo" value=""></span>
 <a href="#" class="btn fileupload-exists rem" data-dismiss="fileupload">Remove</a>
 </div>
 </div>
@@ -174,6 +174,22 @@ $(document).ready(function(){
 		});	
 	});
 	
+	$('.change_file').change(function(){
+		var m_data = new FormData(); 
+		var field=$(this).attr('field');
+		m_data.append( 'file', $(this)[0].files[0]);
+		m_data.append( 'field',field );
+		$.ajax({
+			url: "<?php echo $this->webroot;?>hms/society_detail_auto_save_file_upload",
+			data: m_data,
+			processData: false,
+			contentType: false,
+			type: 'POST',
+		}).done(function(response) {
+			
+		});
+		
+	});
 	
  $.validator.addMethod("loginRegex", function(value, element) {
         return this.optional(element) || /^[a-z0-9\-\s]+$/i.test(value);

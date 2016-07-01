@@ -2789,7 +2789,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -25051,6 +25051,7 @@ $this->loadmodel('wing');
 $condition=array('society_id'=>$s_society_id);
 $order=array('wing.wing_name'=>'ASC');
 $wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+$this->set('wings',$wings);
 foreach($wings as $data){
 	$wing_id=$data["wing"]["wing_id"];
 	$wing_name=$data["wing"]["wing_name"];
@@ -25058,6 +25059,7 @@ foreach($wings as $data){
 		$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
 		$order=array('flat.flat_name'=>'ASC');
 		$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+		$units=array();
 		foreach($flats as $data2){
 			$flat_id=$data2["flat"]["flat_id"];
 			$flat_name=$data2["flat"]["flat_name"];

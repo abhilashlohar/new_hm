@@ -36,7 +36,7 @@ Society Setup
 <select name="wing" id="tp" class="m-wrap span7 chosen">
 <option value="">Select</option>
 <?php
-foreach($cursor2 as $collection)
+foreach($wings as $collection)
 {
 $wing_id = (int)$collection['wing']['wing_id'];	 
 $wing_name = $collection['wing']['wing_name'];		 

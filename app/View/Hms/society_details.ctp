@@ -45,19 +45,19 @@ $society_sig = @$data['society']['signature'];
 
 <label style="font-size:14px;">Society PAN #<span style="color:red;">*</span></label>
 <div class="controls">
-<input type="text" maxlength="10"  class="m-wrap span9" style="font-size:16px;"  name="pan" value='<?php echo $society_pan ; ?>'>
+<input type="text" maxlength="10"  class="m-wrap span9" style="font-size:16px;" field="society_pan"  name="pan" value='<?php echo $society_pan ; ?>'>
 </div>
 <br />
 
 <label style="font-size:14px;">Society Registrations Number<span style="color:red;">*</span></label>
 <div class="controls">
-<input type="text"   class="m-wrap span9" style="font-size:16px;"  name="s_number" value='<?php echo $society_reg_num ; ?>'>
+<input type="text"   class="m-wrap span9" style="font-size:16px;" field="society_reg_no"  name="s_number" value='<?php echo $society_reg_num ; ?>'>
 </div>
 <br />
 
 <label style="font-size:14px;">Registered Address of Society<span style="color:red;">*</span></label>
 <div class="controls">
-<textarea rows='5' cols='5' style='resize:none;' name='address' class="m-wrap span9"><?php echo $society_address ; ?></textarea>
+<textarea rows='5' cols='5' style='resize:none;' name='address' field="society_add"  class="m-wrap span9"><?php echo $society_address ; ?></textarea>
 </div>
 <br />
 
@@ -120,25 +120,25 @@ $society_sig = @$data['society']['signature'];
 
 <label style="font-size:14px;">Society Service Tax Number</label>
 <div class="controls">
-<input type="text" class="m-wrap span9" style="font-size:16px;"  name="s_tax" value='<?php echo $tex_number ; ?>'>
+<input type="text" class="m-wrap span9" style="font-size:16px;" field="society_ser_tax"  name="s_tax" value='<?php echo $tex_number ; ?>'>
 </div>
 <br />
 
 <label style="font-size:14px;">Society Phone Number</label>
 <div class="controls">
-<input type="text" class="m-wrap span9" name="society_phone" value="<?php echo $society_phone; ?>" />
+<input type="text" class="m-wrap span9" name="society_phone" field="society_ph_num" value="<?php echo $society_phone; ?>" />
 </div>
 <br />
 
 <label style="font-size:14px;">Society E-mail</label>
 <div class="controls">
-<input type="text" class="m-wrap span9" name="society_email" value="<?php echo $society_email; ?>" />
+<input type="text" class="m-wrap span9" name="society_email" field="society_email" value="<?php echo $society_email; ?>" />
 </div>
 <br />
 
 <label style="font-size:14px;">Signature Title<span style="color:red;">*</span></label>
 <div class="controls">
-<input type="text" class="m-wrap span9" name="title" value="<?php echo @$sig_title; ?>" />
+<input type="text" class="m-wrap span9" name="title" field="society_signature" value="<?php echo @$sig_title; ?>" />
 </div>
 <br />
 
@@ -163,6 +163,17 @@ $(document).ready(function(){
 		$('.hide_remo').remove();
 		
 	});
+	
+	$('input,textarea').blur(function(){
+		var field=$(this).attr('field');
+		var update=$(this).val();
+		$.ajax({
+			url: "<?php echo $webroot_path; ?>/Hms/society_detail_auto_save/"+field+"/"+update,
+			}).done(function(response) {
+				
+		});	
+	});
+	
 	
  $.validator.addMethod("loginRegex", function(value, element) {
         return this.optional(element) || /^[a-z0-9\-\s]+$/i.test(value);

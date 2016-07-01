@@ -18768,6 +18768,45 @@ $s_user_id=$this->Session->read('hm_user_id');
 //End Profile//
 //start Content modaration//
 
+
+function society_detail_auto_save($field,$update){
+	
+$this->layout=null;	
+$s_society_id=$this->Session->read('hm_society_id');
+	
+		if($field=="society_pan"){
+			$this->loadmodel('society');
+			$this->society->updateAll(array('pan'=>$update),array('society_id'=>$s_society_id));
+		}	
+		if($field=="society_reg_no"){
+			$this->loadmodel('society');
+			$this->society->updateAll(array('society_reg_num'=>$update),array('society_id'=>$s_society_id));
+		}		
+	
+
+		if($field=="society_add"){
+			$this->loadmodel('society');
+			$this->society->updateAll(array('society_address'=>$update),array('society_id'=>$s_society_id));
+		}
+		if($field=="society_ser_tax"){
+			$this->loadmodel('society');
+			$this->society->updateAll(array('tex_number'=>$update),array('society_id'=>$s_society_id));
+		}
+		if($field=="society_ph_num"){
+			$this->loadmodel('society');
+			$this->society->updateAll(array('society_phone'=>$update),array('society_id'=>$s_society_id));
+		}
+		if($field=="society_email"){
+			$this->loadmodel('society');
+			$this->society->updateAll(array('society_email'=>$update),array('society_id'=>$s_society_id));
+		}
+		if($field=="society_signature"){
+			$this->loadmodel('society');
+			$this->society->updateAll(array('sig_title'=>$update),array('society_id'=>$s_society_id));
+		}
+}
+
+
 function society_details()
 {
 if($this->RequestHandler->isAjax()){

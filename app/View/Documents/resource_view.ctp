@@ -8,8 +8,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<td ><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="fa fa-file-text"></i> Documents</span> <span><i class=" icon-info-sign tooltips " data-placement="bottom" data-original-title="You could post frequently needed content like Society Rules &amp; Regulations, Associations Policies, Standard Operating Procedures, Guidelines, News Letters etc."></i>
         </span></td>
 		<td align="right">
-			<div class="input-append ">  
-			   <input class="m-wrap medium" size="10" placeholder="Search" id="search" type="text"><button class="btn red ser" >Search</button>
+			<div class=" ">  
+			   <input class="m-wrap medium" size="10" placeholder="Search" id="search" type="text">
 			</div>
 		</td>
 	</tr>
@@ -123,7 +123,7 @@ $this->requestAction(array('controller' => 'hms', 'action' => 'griter_notificati
 <script type="text/javascript">
 
 		 var $rows = $('.search_record');
-		 $('.ser').click(function() {
+		 $('#search').keyup(function() {
 			var z=$('#search').val();
 			var val = $.trim(z).replace(/ +/g, ' ').toLowerCase();
 			$rows.show().filter(function() {

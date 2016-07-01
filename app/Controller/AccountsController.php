@@ -1550,6 +1550,11 @@ function my_flat_bill(){
 			}
 		}
 		$this->set(compact("members_for_billing"));	
+		$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+		$from=$result_financial_year[0]['financial_year']['from'];
+		$to=$result_financial_year[0]['financial_year']['to'];
+		$this->set('from',$from); 
+		$this->set('to',$to); 
 
 	}
 //End My Flat Bill//
@@ -3420,6 +3425,12 @@ function balance_sheet(){
 				}	
 				$this->ath();
 				$this->check_user_privilages();
+				$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+				$from=$result_financial_year[0]['financial_year']['from'];
+				$to=$result_financial_year[0]['financial_year']['to'];
+				$this->set('from',$from); 
+				$this->set('to',$to); 	
+				
 		}
 //End income_expenditure//
 //Start balance_sheet_ajax// 

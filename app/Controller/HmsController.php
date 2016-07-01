@@ -2787,8 +2787,17 @@ $this->Session->destroy();
 $this->redirect(array('action' => 'index'));
 }
 
+<<<<<<< HEAD
 function beforeFilter(){
 	Configure::write('debug', 0);
+=======
+function beforeFilter()
+{
+
+
+ //Configure::write('debug', 0);
+
+>>>>>>> 292e430c2b8cc5281f11d9569233f56548b30cb7
 }
 
 

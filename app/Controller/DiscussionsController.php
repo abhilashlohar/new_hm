@@ -106,9 +106,17 @@ function submit_comment(){
 			$color_in=$this->rendom_color($last_color);
 		//////////////////end color///////////////////
 
+		$this->loadmodel('discussion_post');
+		$conditions=array('discussion_post_id'=>$post_id,'society_id'=>$s_society_id);
+		$result_discussion_post=$this->discussion_post->find('all',array('conditions'=>$conditions));
+		$create_post_id=$result_discussion_post[0]['discussion_post']['user_id'];
+		
+		
 		$discussion_comment_id=$this->autoincrement('discussion_comment','discussion_comment_id');
 		$this->loadmodel('discussion_comment');
 		$this->discussion_comment->saveAll(Array( Array("discussion_comment_id" => $discussion_comment_id, "user_id" => $s_user_id , "society_id" => $s_society_id, "comment" => $comment_box,"discussion_post_id" => $post_id, "delete_id" =>0, "date" =>$date, "time" => $time, "color" => $color_in))); 
+		
+		
 		
 	}
 }

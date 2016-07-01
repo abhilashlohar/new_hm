@@ -8,8 +8,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		
 <!-------------------------------Start Ledger Form --------------------------->
 <?php  
-$default_date_from = date('1-m-Y'); 
-$default_date_to = date('d-m-Y')
+$default_date_from = date('d-m-Y',$from); 
+$default_date_to = date('d-m-Y',$to);
 ?> 
 <center>
 <form method="post" onSubmit="return valid()">

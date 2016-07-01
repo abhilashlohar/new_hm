@@ -169,10 +169,12 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 				<th>Amount</th>
 				<th>Remarks</th>
 				<th>Status</th>
+				<th>Action</th>
 			</tr>
 		</thead>
 		<tbody>
 		<?php foreach($temp_cash_banks as $temp_cash_bank){ 
+		$auto_id=$temp_cash_bank["temp_cash_bank"]["auto_id"];
 		$receipt_date=$temp_cash_bank["temp_cash_bank"]["receipt_date"];
 		$deposited_in=$temp_cash_bank["temp_cash_bank"]["deposited_bank_id"];
 		$deposited_in_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($deposited_in)));
@@ -208,11 +210,12 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 				<td><?php echo $amount; ?></td>
 				<td><?php echo $narration; ?></td>
 				<td><span class="label <?php echo $status_class; ?>"><?php echo $status; ?></span></td>
+				<td><a href="<?php echo $webroot_path; ?>Accounts/delete_receipt_by_member/<?php echo $auto_id; ?>" class="btn mini red"><i class="icon-trash"></i></a></td>
 			</tr>
 		<?php } 
 		if(sizeof($temp_cash_banks)==0){?>
 			<tr>
-				<td colspan="5" >No Record</td>
+				<td colspan="12" >No Record</td>
 			</tr>
 		<?php } ?>
 		</tbody>

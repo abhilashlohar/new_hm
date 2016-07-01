@@ -150,6 +150,7 @@ echo $amount; ?></td>
 <td class="hide_at_print">
 <a href="approve_bank_receipt_ajax/<?php echo $transaction_id; ?>" class="btn mini red">Approve</a>
 <a href="aprrove_bank_receipt_update?bb=<?php echo $transaction_id; ?>" class="btn mini blue">Edit</a>
+<a href="<?php echo $webroot_path; ?>Cashbanks/delete_receipt_by_admin/<?php echo $transaction_id; ?>" class="btn mini red"><i class="icon-trash"></i></a>
 </td>
 </tr>
 <?php	
@@ -158,7 +159,7 @@ echo $amount; ?></td>
 
 ?>
 <tr>
-<td colspan="8" style="text-align:right;"><b>Total</b></td>
+<td colspan="7" style="text-align:right;"><b>Total</b></td>
 <td align="right"><b><?php 
 $total_debit = number_format($total_debit);
 echo $total_debit; ?> <?php //echo "  dr"; ?></b></td>

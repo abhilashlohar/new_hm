@@ -21385,8 +21385,8 @@ if($this->RequestHandler->isAjax()){
 	}else{
 		$this->layout='session';
 	}
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $this->loadmodel('user');
 $conditions=array('user_id'=>$s_user_id);
 $result=$this->user->find('all',array('conditions'=>$conditions));
@@ -21403,8 +21403,8 @@ $this->set('result_fed_cat',$this->feedback_category->find('all'));
 
 if($this->request->is('post')) 
 {
-
-$ip=$this->hms_email_ip();
+	
+$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
 $feedback_cat_id=(int)$this->request->data['sel'];
 $subject= htmlentities($this->request->data['subject']);
 $message= htmlentities($this->request->data['mess']);
@@ -21585,8 +21585,8 @@ function feedback_view()
 {
 
 $this->layout='session';	
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 $this->loadmodel('feedback');
 $order=array('feedback.feedback_id'=>'DESC');
 $conditions=array('delete_id'=>0);
@@ -21605,7 +21605,7 @@ $result=$this->feedback->find('all',array('conditions'=>$conditions));
 $this->set('result_feedback',$result);
 if($this->request->is('post'))
 {
-	$ip=$this->hms_email_ip();
+	$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
 	 $feedback_reply=$this->request->data['feedback_reply'];
 	
 	foreach($result as $collection)
@@ -28629,11 +28629,11 @@ function menus_as_per_user_rights(){
 					<?php
 				}
 			}?>
-			<!--<li>
+			<li>
 				<a href="<?php echo $webroot_path; ?>Hms/feedback" rel='tab'>
 				<i class="icon-phone"></i> Feedback
 				</a>					
-			</li>-->
+			</li>
 			<?php
 		
 		}else{

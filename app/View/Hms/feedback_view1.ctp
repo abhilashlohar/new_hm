@@ -14,21 +14,21 @@ $feedback_id=(int)$collection['feedback']['feedback_id'];
 $da_society_id=(int)$collection['feedback']['society_id'];
 $feedback_des=@$collection['feedback']['feedback_des'];
 $feedback_cat_name= $this->requestAction(array('controller' => 'hms', 'action' => 'feedback_category_name'),array('pass'=>array($feedback_category)));
-$result_user= $this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'),array('pass'=>array($da_user_id)));
+
 $result_society= $this->requestAction(array('controller' => 'hms', 'action' => 'society_name'),array('pass'=>array($da_society_id)));
 foreach ($result_society as $collection) 
 { 
 $society_name=$collection['society']["society_name"];
 }
-foreach($result_user as $collection) 
-{ 
-$user_name=$collection['user']["user_name"];
-$wing=$collection['user']["wing"];
-$flat=$collection['user']["flat"];
-$email=$collection['user']["email"];
-$mobile=$collection['user']["mobile"];
+
+$result_user= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($da_user_id)));
+$user_name=$result_user['user_name'];
+$wing_flats=$result_user["wing_flat"];
+$email=$result_user["email"];
+$mobile=$result_user["mobile"];
+foreach($wing_flats as $wing_flat){
+	
 }
-$wing_flat= $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'),array('pass'=>array($wing,$flat)));
 
 }
 ?>

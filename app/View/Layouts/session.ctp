@@ -397,12 +397,13 @@ $("#menus_area>li").live('click',function(e){
          <div class="clearfix"></div>
          <!-- END RESPONSIVE QUICK SEARCH FORM -->
          <!-- BEGIN SIDEBAR MENU -->
-         <ul id="menus_area" >
+         <ul id="menus_area">
             <li class="active">
                <a href="<?php echo $webroot_path; ?>Hms/Dashboard">
                <i class="icon-home"></i> Dashboard               
                </a>              
             </li>
+			
          </ul>
          <!-- END SIDEBAR MENU -->
       </div>

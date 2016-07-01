@@ -20,7 +20,17 @@ function user_profile_info_via_user_id($user_id){
 	$conditions=array("user_id" =>$user_id);
 	return $this->user_profile->find('all',array('conditions'=>$conditions));	
 }
+function financial_year_current_open(){
+	
+	$s_society_id=$this->Session->read('hm_society_id');
+	$this->requestAction(array('controller' => 'Hms', 'action' => 'ath'));
+	$current_date= date('d-m-Y');	
+	$current_date=strtotime($current_date);	
+	$this->loadmodel('financial_year');
+	$conditions =array('society_id' =>$s_society_id,'status' =>1,'financial_year.from'=>array('$lte'=>$current_date),'financial_year.to'=>array('$gte'=>$current_date));
+	return $this->financial_year->find('all',array('conditions'=>$conditions));
 
+}
 function user_info_via_user_id($user_id){
 	$this->loadmodel('user');
 	$conditions=array("user_id" =>$user_id);

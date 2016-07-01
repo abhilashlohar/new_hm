@@ -26,7 +26,10 @@ foreach($result_society as $data){
 $result_user_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'), array('pass' => array($s_user_id)));
 $multiple_flat = sizeof($result_user_info);	
 ?>
-
+<?php  
+$default_date_from = date('d-m-Y',$from); 
+$default_date_to = date('d-m-Y',$to);
+?> 
 
 <div align="center" class="hide_at_print hidden-phone">
 	<table>
@@ -42,8 +45,8 @@ $multiple_flat = sizeof($result_user_info);
 		</select>  
 		</td>
 		<?php } ?>
-		<td><input class="date-picker m-wrap medium" id="from" data-date-format="dd-mm-yyyy" name="from" placeholder="From" style="background-color:white !important;" value="<?php echo date("d-m-Y",strtotime($from)); ?>" type="text"></td>
-		<td><input class="date-picker  m-wrap medium" id="to" data-date-format="dd-mm-yyyy" name="to" placeholder="To" style="background-color:white !important;" value="<?php echo date("d-m-Y",strtotime($to)); ?>" type="text"></td>
+		<td><input class="date-picker m-wrap medium" id="from" data-date-format="dd-mm-yyyy" name="from" placeholder="From" style="background-color:white !important;" value="<?php echo $default_date_from; ?>" type="text"></td>
+		<td><input class="date-picker  m-wrap medium" id="to" data-date-format="dd-mm-yyyy" name="to" placeholder="To" style="background-color:white !important;" value="<?php echo $default_date_to; ?>" type="text"></td>
 		<td valign="top"><button type="button" name="sub" class="btn yellow" id="go">Go</button></td>
 		</tr>
 	</table>
@@ -64,10 +67,10 @@ $multiple_flat = sizeof($result_user_info);
 		<?php } ?>
 	</div>
 	<div class="span3">
-		<input class="date-picker m-wrap medium" id="from1" data-date-format="dd-mm-yyyy" name="from" placeholder="From" style="background-color:white !important;" value="<?php echo date("d-m-Y",strtotime($from)); ?>" type="text">
+		<input class="date-picker m-wrap medium" id="from1" data-date-format="dd-mm-yyyy" name="from" placeholder="From" style="background-color:white !important;" value="<?php echo $default_date_from; ?>" type="text">
 	</div>
 	<div class="span3">
-		<input class="date-picker  m-wrap medium" id="to1" data-date-format="dd-mm-yyyy" name="to" placeholder="To" style="background-color:white !important;" value="<?php echo date("d-m-Y",strtotime($to)); ?>" type="text">
+		<input class="date-picker  m-wrap medium" id="to1" data-date-format="dd-mm-yyyy" name="to" placeholder="To" style="background-color:white !important;" value="<?php echo $default_date_to; ?>" type="text">
 	</div>
 	<div class="span3">
 		<button type="button" name="sub" class="btn yellow" id="go1">Go</button>

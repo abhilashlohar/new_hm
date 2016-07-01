@@ -1550,6 +1550,11 @@ function my_flat_bill(){
 			}
 		}
 		$this->set(compact("members_for_billing"));	
+		$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+		$from=$result_financial_year[0]['financial_year']['from'];
+		$to=$result_financial_year[0]['financial_year']['to'];
+		$this->set('from',$from); 
+		$this->set('to',$to); 
 
 	}
 //End My Flat Bill//
@@ -3420,6 +3425,12 @@ function balance_sheet(){
 				}	
 				$this->ath();
 				$this->check_user_privilages();
+				$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+				$from=$result_financial_year[0]['financial_year']['from'];
+				$to=$result_financial_year[0]['financial_year']['to'];
+				$this->set('from',$from); 
+				$this->set('to',$to); 	
+				
 		}
 //End income_expenditure//
 //Start balance_sheet_ajax// 
@@ -5780,10 +5791,6 @@ foreach($myArray as $child)
 	foreach($cursor as $collection){
 	 $from = $collection['financial_year']['from'];
 	 $to = $collection['financial_year']['to'];
-	 //$from1 = date('Y-m-d',($from));
-	 //$to1 = date('Y-m-d',($to));
-	// $from2 = strtotime($from1);
-	// $to2 = strtotime($to1);
 	$transaction1 = date('Y-m-d',strtotime($TransactionDate));
 	$transaction2 = strtotime($transaction1);
 		if($transaction2 <= $to && $transaction2 >= $from){
@@ -5966,7 +5973,7 @@ $current_date = date('d-m-Y');
 $l=$this->autoincrement('temp_cash_bank','auto_id');
 $this->loadmodel('temp_cash_bank');
 $multipleRowData = Array( Array("auto_id"=> $l,"receipt_date" => strtotime($transaction_date),"receipt_mode" => $mode,"cheque_number" =>@$cheque_number,"cheque_date" =>@$cheque_date,"drawn_on_which_bank" =>@$drawn_bank_name,"reference_utr" => @$utr_ref,"deposited_bank_id"=>$bank_id,"member_type"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,
-"current_date"=>$current_date,"society_id"=>$s_society_id,"narration"=>$narration,"prepaired_by"=>$s_user_id,"bank_branch"=>@$branch));
+"current_date"=>$current_date,"society_id"=>$s_society_id,"narration"=>$narration,"prepaired_by"=>$s_user_id,"bank_branch"=>@$branch,"status"=>"Pending"));
 $this->temp_cash_bank->saveAll($multipleRowData);
 }
 $output = json_encode(array('type'=>'success', 'text' => 'Please Fill Numeric Amount '));
@@ -6098,126 +6105,20 @@ if($process_status==3){
 	$this->set('count_bank_receipt_converted',$count_bank_receipt_converted);
 }
 
-/*
-if($this->request->is('post'))	
-{
-	$transaction_date = $this->request->data['date'];	
-	$transaction_date = date('Y-m-d',strtotime($transaction_date));
-	$ledger_ids = $this->request->data['ledger_id'];
-	$debits = $this->request->data['debit'];
-	$credits = $this->request->data['credit'];	
-	$i=0;
-	foreach($ledger_ids as $ledger_id)
-	{
-	$debit = $debits[$i];
-	$credit = $credits[$i];
-	
-		if(!empty($debit) || !empty($credit)){
-		$this->loadmodel('ledger');
-		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>(int)$ledger_id ,"ledger_sub_account_id"=>null,"debit"=>$debit,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));	
-		}
-	$i++;
-	}
-	
-	$ledger_sub_account_ids=$this->request->data['ledger_sub_account_id'];
-	$penaltys=$this->request->data['penalty'];
-	$debit_members=$this->request->data['debit_members'];
-	$credit_members=$this->request->data['credit_members'];
-	$ii=0;
-		foreach($ledger_sub_account_ids as $ledger_sub_account_id)
-		{
-		$ledger_sub_account_id; echo "<br>";
-		$debit_member=$debit_members[$ii];
-		$credit_member=$credit_members[$ii];
-		$penalty=$penaltys[$ii];
 
-		if(!empty($debit_member) || !empty($credit_member)){
-		$this->loadmodel('ledger');
-		$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-		$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>34,"ledger_sub_account_id"=>(int)$ledger_sub_account_id,"debit"=>$debit_member,"credit"=>$credit_member,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));	
-		}
-		
-		if(!empty($penalty))
-		{
-			$this->loadmodel('ledger');
-			$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-			$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>34,"ledger_sub_account_id"=>(int)$ledger_sub_account_id,"debit"=>$penalty,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date),"intrest_on_arrears"=>"YES"));		
-		}
-		$ii++;
-		}
-	
-	
-	
-		exit;
-		
-		foreach($ledger_ids as $ledger_id){
-			$debit = $debits[$i];	
-			$credit = $credits[$i]; 
-			@$penalty = @$penaltys[$i];
-			$ledger_id = explode(',',$ledger_id);
-		$i++; 
-		if(sizeof($ledger_id)== 1){
-			$ledger_id=(int)$ledger_id[0];	
-			if(!empty($debit) || !empty($credit)){
-				$this->loadmodel('ledger');
-				$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-				$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_id ,"ledger_sub_account_id"=>null,"debit"=>$debit,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));	
-			}
-		}
-		else
-		{
-		$ledger_account_id = (int)$ledger_id[0];
-		$ledger_sub_account_id = (int)$ledger_id[1];
-		
-$result_ledger_sub_accounts = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
-foreach($result_ledger_sub_accounts as $ledger_sub_accounts_data)
-{
-$ledger_account_id2=(int)$ledger_sub_accounts_data['ledger_sub_account']['ledger_id'];
-}
-			
-			if(!empty($debit) || !empty($credit))
-			{
-			$this->loadmodel('ledger');
-			$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-			$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_account_id2,"ledger_sub_account_id"=>$ledger_sub_account_id,"debit"=>$debit,"credit"=>$credit,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date)));
-			}		
-			if($ledger_account_id2 == 34)
-			{
-			if(!empty($penalty))
-			{
-			$this->loadmodel('ledger');
-			$ledger_auto_id=$this->autoincrement('ledger','auto_id');
-			$this->ledger->saveAll(array("auto_id" => $ledger_auto_id,"ledger_account_id" =>$ledger_account_id2,"ledger_sub_account_id"=>$ledger_sub_account_id,"debit"=>$penalty,"credit"=>null,"table_name"=>"opening_balance","element_id"=>null,"society_id"=>$s_society_id,"transaction_date"=>strtotime($transaction_date),"intrest_on_arrears"=>"YES"));	
-			}
-			}
-		}
-	}
-	$this->loadmodel('opening_balance_csv_converted');
-	$conditions4=array('society_id'=>$s_society_id);
-	$this->opening_balance_csv_converted->deleteAll($conditions4);
-
-	$this->loadmodel('opening_balance_csv');
-	$conditions4=array('society_id'=>$s_society_id);
-	$this->opening_balance_csv->deleteAll($conditions4);
-
-	$this->loadmodel('import_ob_record');
-	$conditions4=array("society_id" => $s_society_id, "module_name" => "OB");
-	$this->import_ob_record->deleteAll($conditions4);	
-?>	
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body">
-<p style="font-size:15px; font-weight:600;">Opening Balance Imported Successfully
-</div>
-<div class="modal-footer">
-<a href="opening_balance_import" class="btn green">OK</a>
-</div>
-</div>	
-<?php	
-} */
 	
 }
+
+
+function delete_receipt_by_member($auto_id=null){
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$this->loadmodel('temp_cash_bank');
+		$conditions4=array('society_id'=>$s_society_id,'auto_id'=>(int)$auto_id);
+		$this->temp_cash_bank->deleteAll($conditions4);
+		$this->redirect(array('action' => 'my_flat_receipt_update'));
+}
+
+
 //End opening_balance_new//
 }
 ?>

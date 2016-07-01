@@ -1,4 +1,2 @@
 Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Amount,Narration 
-25-06-2016,SBI,cheque,12345,25-06-2016,Allahabad Bank,Sec-4,Anupam Tagore,A,103,5000,Receipt for jan
-26-06-2016,sbi ,neft,3534,26-06-2016,udaipur,Sec-4,B L Naik,A,103,4000,Receipt for jan
-27-06-2016,sbi,pg,3534,27-06-2016,udaipur,Sec-4,B L Naik,A,103,3000,Receipt for jan
+30-06-2016,SBI,cheque,12345,30-06-2016,Allahabad Bank,sec-4,Abhilash Lohar,A,101,500,Receipt for jan 

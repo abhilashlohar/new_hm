@@ -13,7 +13,11 @@ table#report_tb tr:hover td {
 background-color: #E6ECE7;
 }
 </style>
-<?php $default_from = date('1-m-Y'); $default_to = date('d-m-Y'); ?>
+
+<?php  
+$default_from = date('d-m-Y',$from); 
+$default_to = date('d-m-Y',$to);
+?> 
 
 <div style="text-align:center;" class="hide_at_print">
 <a href="<?php echo $webroot_path; ?>Incometrackers/in_head_report" class="btn" rel='tab'>Regular Bill Report</a>

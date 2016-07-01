@@ -131,6 +131,7 @@ $(document).ready(function(){
 	};
 	
 	$("#idForm").on("submit",function(e){
+		alert();
 		nn++;
 		$('#sub').attr('disabled','disabled');
 		if(nn==1){

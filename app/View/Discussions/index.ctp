@@ -52,7 +52,7 @@ $(document).ready(function(){
 	var nn=0;
 	function load_comments(){
 		
-		 
+		
 		var post_id=$("div[post_id]").attr("post_id");
 		var comment_id=$("#comments div[comment_id]:last").attr("comment_id");
 		if(!comment_id){ comment_id=0; }

@@ -33,9 +33,6 @@ foreach ($result_resource as $collection){
 	$wing_notice_id=@$collection['resource']['sub_visible'];
 	$data='';
 	
-	if($i%2==1){
-		echo '<div class="row-fluid search_record" id="">';
-	}
 	
 	
 	$result_user_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'), array('pass' => array((int)$upload_id)));
@@ -45,7 +42,7 @@ foreach ($result_resource as $collection){
 		}
 	
 	?>
-	
+	<div class=" search_record" id="">
 	<div class="span6 " style="padding: 5px;" >
 	<div  style="background-color: rgb(255, 255, 255); padding: 10px; color: rgb(96, 96, 96); width: 98%; margin: auto;">
 		<div style="font-size: 14px;"> <span style="font-weight: 600;"><?php echo $title; ?></span> </div>
@@ -67,13 +64,10 @@ foreach ($result_resource as $collection){
 		</table>
 	</div>
 	</div>
-	
+	</div>
 	<?php
-	if ($i % 2 == 0) {
-		echo '</div> ';
-	}
 } ?>
-</div>
+
 <script>
 $(document).ready(function(){
 <?php

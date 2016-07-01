@@ -3712,7 +3712,8 @@ function trial_balance_ajax_show($from=null,$to=null,$wise=null)
 		}
 		
 		foreach($accounts_group_ids as $accounts_group_id){
-			$condition_array[]=array("group_id" => $accounts_group_id);
+			$condition_array[]=array("group_id" => $accounts_group_id,"society_id" => $s_society_id);
+			$condition_array[]=array("group_id" => $accounts_group_id,"society_id" => 0);
 		}
 		
 		

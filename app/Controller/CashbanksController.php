@@ -7905,6 +7905,7 @@ $this->layout='blank';
 }else{
 $this->layout='session';
 }
+$this->ath();
 $s_role_id=$this->Session->read('hm_role_id');
 $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');		
@@ -7990,10 +7991,6 @@ foreach($myArray as $child)
 		foreach($cursor as $collection){
 				$from = $collection['financial_year']['from'];
 				$to = $collection['financial_year']['to'];
-				//$from1 = date('Y-m-d',$from->sec);
-				//$to1 = date('Y-m-d',$to->sec);
-				//$from2 = strtotime($from1);
-				//$to2 = strtotime($to1);
 				$transaction1 = date('Y-m-d',strtotime($TransactionDate));
 				$transaction2 = strtotime($transaction1);
 					if($transaction2 <= $to && $transaction2 >= $from){
@@ -8103,6 +8100,7 @@ else
 foreach($myArray as $child)
 {	
 $transaction_date = $child[0];
+$transaction_date=date("Y-m-d",strtotime($transaction_date));
 $mode = $child[1];
 
 if($mode == "Cheque" || $mode == "cheque")
@@ -8126,10 +8124,8 @@ $current_date = date('d-m-Y');
 
 $l=$this->autoincrement('temp_cash_bank','auto_id');
 $this->loadmodel('temp_cash_bank');
-$this->temp_cash_bank->updateAll(array("receipt_date" => $transaction_date,"receipt_mode" => $mode,"cheque_number" =>@$cheque_number,"cheque_date" =>@$cheque_date,"drawn_on_which_bank" =>@$drawn_bank_name,"reference_utr" => @$utr_ref,"deposited_bank_id"=>$bank_id,"member_type"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>"maintenance","amount"=>$amount,"current_date"=>$current_date,"society_id"=>$s_society_id,"narration"=>$narration,"prepaired_by"=>$s_user_id,"bank_branch"=>@$branch),array("auto_id"=> $transaction_id));
+$this->temp_cash_bank->updateAll(array("receipt_date" => strtotime($transaction_date),"receipt_mode" => $mode,"cheque_number" =>@$cheque_number,"cheque_date" =>@$cheque_date,"drawn_on_which_bank" =>@$drawn_bank_name,"reference_utr" => @$utr_ref,"deposited_bank_id"=>$bank_id,"member_type"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>"maintenance","amount"=>$amount,"current_date"=>$current_date,"society_id"=>$s_society_id,"narration"=>$narration,"prepaired_by"=>$s_user_id,"bank_branch"=>@$branch),array("auto_id"=> $transaction_id));
 
-//$multipleRowData = Array( Array("auto_id"=> $l,"receipt_date" => $transaction_date,"receipt_mode" => $mode,"cheque_number" =>@$cheque_number,"cheque_date" =>@$cheque_date,"drawn_on_which_bank" =>@$drawn_bank_name,"reference_utr" => @$utr_ref,"deposited_bank_id"=>$bank_id,"member_type"=>"residential","ledger_sub_account_id"=>$ledger_sub_account_id,"receipt_type"=>"maintenance","amount"=>$amount,"current_date"=>$current_date,"society_id"=>$s_society_id,"narration"=>$narration,"prepaired_by"=>$s_user_id,"bank_branch"=>@$branch));
-//$this->temp_cash_bank->saveAll($multipleRowData);
 }  
 
 

@@ -8168,6 +8168,9 @@ foreach($temp_cash_bank_datas as $data){
 	$deposited_in=(int)$data['temp_cash_bank']['deposited_bank_id'];
 	$receipt_mode=$data['temp_cash_bank']['receipt_mode'];
 	$cheque_number=@$data['temp_cash_bank']['cheque_number'];
+	if($receipt_mode!="cheque"){
+		$cheque_number=@$data['temp_cash_bank']['reference_utr'];
+	}
 	$date=@$data['temp_cash_bank']['cheque_date'];
 	$drown_in_which_bank=@$data['temp_cash_bank']['drawn_on_which_bank'];
 	$branch_of_bank=@$data['temp_cash_bank']['bank_branch'];

@@ -138,6 +138,7 @@ var ledger_name2 = $.trim(ledger_name2);
 string2 = ledger_name2.toLowerCase();
 
  var ledger = $("#ledger").val();
+
  var y = $("#yy").val();
  
  var led = ledger.split(",");

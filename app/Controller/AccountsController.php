@@ -805,6 +805,8 @@ function master_ledger_account_coa()
 	}else{
 	$this->layout='session';
 	}
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	
 
 	$this->ath();
 	$this->check_user_privilages();
@@ -812,8 +814,9 @@ function master_ledger_account_coa()
 		$ledger = array();
 		$y=0;
 		$this->loadmodel('ledger_account');
+		$conditions=array("society_id" => $s_society_id);
 		$order=array('ledger_account.auto_id'=> 'ASC');
-		$cursor=$this->ledger_account->find('all',array('order' =>$order));
+		$cursor=$this->ledger_account->find('all',array('conditions'=>$conditions,'order' =>$order));
 		foreach ($cursor as $collection) 
 		{
 		$y++;

@@ -23803,8 +23803,8 @@ function ledger_account_fetch($auto_id)
 	
 $this->loadmodel('ledger_account');
 $conditions =array( '$or' => array( 
-	array('group_id' =>7,'society_id'=>$s_society_id),
-	array('group_id' =>7,'society_id'=>0)
+	array('group_id' =>$auto_id,'society_id'=>0),
+	array('group_id' =>$auto_id,'society_id'=>$s_society_id)
 	));
 $order=array("ledger_account.ledger_name"=>"ASC");
 return $this->ledger_account->find('all',array('conditions'=>$conditions,'order'=>$order));

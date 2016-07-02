@@ -40,11 +40,12 @@ $society_name=$society_result[0]["society"]["society_name"];
 			<?php  
 			$total_balace_expenditure=0; 
 			foreach($result_accounts_group as $data){
-				$auto_id=$data['accounts_group']['auto_id'];
+				$auto_id=(int)$data['accounts_group']['auto_id'];
 				$group_name=$data['accounts_group']['group_name'];
 				
 				$result_ledger_account=$this->requestAction(array('controller' => 'Accounts', 'action' => 'ledger_account_fetch'),array('pass'=>array($auto_id)));
 					$total_ledger_account_expen=0;
+					
 					foreach($result_ledger_account as $data1){
 					$ledger_account_id=$data1['ledger_account']['auto_id'];
 					$ledger_name=$data1['ledger_account']['ledger_name'];
@@ -103,6 +104,7 @@ $society_name=$society_result[0]["society"]["society_name"];
 				
 				$result_ledger_account=$this->requestAction(array('controller' => 'Accounts', 'action' => 'ledger_account_fetch'),array('pass'=>array($auto_id)));
 				$total_ledger_account=0;
+				
 				foreach($result_ledger_account as $data1){
 			
 					$ledger_account_id=$data1['ledger_account']['auto_id'];
@@ -151,7 +153,7 @@ if($balance_sheet_income_expenditure>0){
 				
 					<table width="100%" style="border:none;">
 					<tr>
-					<td colspan="2" width="75%" style="border:none;border-right: 1px solid;"> <span ><b>Surplus in income over expenditure</b></span>  </td>
+					<td colspan="2" width="75%" style="border:none;border-right: 1px solid;"> <span><b>Surplus in income over expenditure</b></span></td>
 					<td align="right"> <span style="float:right;"> <?php echo number_format($total_surplus); $total_balace_expenditure+=$total_surplus; ?></span> </td>
 					
 					</tr>

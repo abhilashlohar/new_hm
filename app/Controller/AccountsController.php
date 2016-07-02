@@ -3541,7 +3541,7 @@ function balance_sheet_income_expenditure($from){
 		$total_balace=0; 
 		$this->loadmodel('accounts_group');
 		$conditions4=array("accounts_id" => 3);
-		$result_accounts_group2=$this->accounts_group->find('all',array('conditions'=>$conditions4));
+		$result_accounts_group2=$this->accounts_group->find('all',array('conditions'=>$conditions4,'society_id'=>$s_society_id));
 			foreach($result_accounts_group2 as $data){
 				$auto_id=$data['accounts_group']['auto_id'];
 				$result_ledger_account=$this->requestAction(array('controller' => 'Accounts', 'action' => 'ledger_account_fetch'),array('pass'=>array($auto_id)));
@@ -3558,7 +3558,7 @@ function balance_sheet_income_expenditure($from){
 	
 		$this->loadmodel('accounts_group');
 		$conditions5=array("accounts_id" => 4);
-		$result_accounts_group3=$this->accounts_group->find('all',array('conditions'=>$conditions5));
+		$result_accounts_group3=$this->accounts_group->find('all',array('conditions'=>$conditions5,'society_id'=>$s_society_id));
 		$total_balace_expenditure=0; 
 			foreach($result_accounts_group3 as $data){
 				$auto_id=$data['accounts_group']['auto_id'];
@@ -6122,6 +6122,18 @@ function delete_receipt_by_member($auto_id=null){
 		$this->redirect(array('action' => 'my_flat_receipt_update'));
 }
 
+function ledger_account_fetch($auto_id) 
+{
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	
+$this->loadmodel('ledger_account');
+$conditions =array( '$or' => array( 
+	array('group_id' =>$auto_id,'society_id'=>0),
+	array('group_id' =>$auto_id,'society_id'=>$s_society_id)
+	));
+$order=array("ledger_account.ledger_name"=>"ASC");
+return $this->ledger_account->find('all',array('conditions'=>$conditions,'order'=>$order));
+}
 
 //End opening_balance_new//
 }

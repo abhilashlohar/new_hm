@@ -476,7 +476,6 @@ $(document).ready(function() {
 	});
 </script>
 
-</script>
 <style>
 input,select{
 	margin:0 !important;

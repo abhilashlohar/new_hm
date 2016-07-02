@@ -2789,7 +2789,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	//Configure::write('debug', 0);
+	Configure::write('debug', 0);
 }
 
 
@@ -18768,58 +18768,7 @@ $s_user_id=$this->Session->read('hm_user_id');
 //End Profile//
 //start Content modaration//
 
-function society_detail_auto_save_file_upload(){
-	$this->layout=null;
-	$this->ath();
-	$s_society_id = (int)$this->Session->read('hm_society_id');
-	$s_user_id=$this->Session->read('hm_user_id');
-	$post_data=$this->request->data;
-	
-	if($post_data['field']=="society_logo"){
-		
-		if(!empty($_FILES["file"]["name"])){
-				$file_name=@$_FILES["file"]["name"];
-				$target = "logo/";
-				$target = $target . basename( $_FILES['file']['name']) ;
-				move_uploaded_file($_FILES['file']['tmp_name'], $target);
-				$this->loadmodel('society');
-				$this->society->updateAll(array('logo'=>$file_name),array('society_id'=>$s_society_id));
-		}else{
-			$this->loadmodel('society');
-			$this->society->updateAll(array('logo'=>''),array('society_id'=>$s_society_id));
-			
-		}
-	}
-	
-	if($post_data['field']=="society_signature"){
-		
-		if(!empty($_FILES["file"]["name"])){
-			$file_name=@$_FILES["file"]["name"];
-			$target = "sig/";
-			$target = $target.basename($_FILES['file']['name']) ;
-			move_uploaded_file($_FILES['file']['tmp_name'], $target);
-			$this->loadmodel('society');
-			$this->society->updateAll(array('signature'=>$file_name),array('society_id'=>$s_society_id));
-		}else{
-			$this->loadmodel('society');
-			$this->society->updateAll(array('signature'=>''),array('society_id'=>$s_society_id));
-		}
-		
-	}
-	
-	/*
-	$file_name=@$_FILES["file"]["name"];
-				if(!empty($file_name)){
-					$file_name=$_FILES["file"]["name"];
-					$file_tmp_name =$_FILES['file']['tmp_name'];
-					$target = "tenant_upload/";
-					$target=@$target.basename($file_name);
-					move_uploaded_file($file_tmp_name,@$target);
-				}
-			$this->loadmodel('tenant');
-			$this->tenant->updateAll(array("t_file"=>$file_name),array("user_id" => $tenant_id));
-	*/
-}
+
 function society_detail_auto_save($field,$update){
 	
 $this->layout=null;	

@@ -89,17 +89,7 @@ $account_number = $collection['ledger_sub_account']['bank_account'];
 <!-----------------------------------End Ledger Form ------------------------------------------>
  		
 <!------------------------------------ Start Java Script --------------------------------->
-<script>/*
-$(document).ready(function(){
-	
-	    $("#ledger_account").bind('change',function(){
-		  var ledger_account_id = $('#ledger_account').val();
-		  $("#sub_ledger_ajax_view").html('loading...');
-		  $("#sub_ledger_ajax_view").load("ledger_ajax?ledger_account_id=" +ledger_account_id+ "");
-	    });
-	
-}); */
-</script>			
+		
 		
 <script>
 $(document).ready(function() {

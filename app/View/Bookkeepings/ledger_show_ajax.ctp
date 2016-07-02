@@ -112,17 +112,17 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 	$approver_name = "";
 		 
 	$debit=$data["ledger"]["debit"];
-	  $credit=$data["ledger"]["credit"];
-	    $transaction_date=$data["ledger"]["transaction_date"];
-		  $arrear_int_type=@$data["ledger"]["intrest_on_arrears"];
-			$table_name=$data["ledger"]["table_name"];
-			  $element_id=(int)$data["ledger"]["element_id"];
-				$subledger_id = (int)@$data["ledger"]["ledger_sub_account_id"];
-				  $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
-					$tds_ledger_id = "";
-					  $refrence_no="";
-						$total_debit=$total_debit+$debit;
-						  $total_credit=$total_credit+$credit;
+	$credit=$data["ledger"]["credit"];
+	$transaction_date=$data["ledger"]["transaction_date"];
+	$arrear_int_type=@$data["ledger"]["intrest_on_arrears"];
+	$table_name=$data["ledger"]["table_name"];
+	$element_id=(int)$data["ledger"]["element_id"];
+	$subledger_id = (int)@$data["ledger"]["ledger_sub_account_id"];
+	$ledger_id = (int)@$data["ledger"]["ledger_account_id"];
+	$tds_ledger_id = "";
+	$refrence_no="";
+	$total_debit=$total_debit+$debit;
+	$total_credit=$total_credit+$credit;
 		
 	if($table_name=="regular_bill"){
 		$source="Regular Bill";
@@ -130,12 +130,12 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 			$bill_approved="";
 			if(sizeof($result_regular_bill)>0){
 				$bill_approved="yes";
-				  $refrence_no=$result_regular_bill[0]["regular_bill"]["bill_number"];
-					$description=$result_regular_bill[0]["regular_bill"]["description"];
-					  $description=substrwords($description,200,'...');
-						$ledger_sub_account_id = (int)$result_regular_bill[0]["regular_bill"]["ledger_sub_account_id"]; 
-							$prepaired_by = (int)$result_regular_bill[0]["regular_bill"]["created_by"]; 
-								@$current_date = @$result_regular_bill[0]["regular_bill"]["current_date"];
+				$refrence_no=$result_regular_bill[0]["regular_bill"]["bill_number"];
+				$description=$result_regular_bill[0]["regular_bill"]["description"];
+				$description=substrwords($description,200,'...');
+				$ledger_sub_account_id = (int)$result_regular_bill[0]["regular_bill"]["ledger_sub_account_id"]; 
+				$prepaired_by = (int)$result_regular_bill[0]["regular_bill"]["created_by"]; 
+				@$current_date = @$result_regular_bill[0]["regular_bill"]["current_date"];
 				@$current_datttt = date('d-m-Y',strtotime(@$current_date));
 	
 		$user_dataaaa = $this->requestAction(array('controller'=>'hms','action'=>'user_fetch'),array('pass'=>array($prepaired_by)));
@@ -770,10 +770,14 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 		</tr>
 	<?php }}} ?>
 		<tr>
-			<td colspan="5" align="right"><b>Total</b></td>
+			<td colspan="5" style="text-align:right;"><b>Total</b></td>
 			<td style="text-align:right;"><b><?php echo $total_debit; ?></b></td>
 			<td style="text-align:right;"><b><?php echo $total_credit; ?></b></td>
 			<td class="hide_at_print"></td>
+		</tr>
+		<tr>
+			<td colspan="7" style="text-align:right;font-size:15px;">Closing Balance</td>
+			<td style="text-align:right;font-size:15px;"><?php $closing_balance=$total_debit-$total_credit; echo abs($closing_balance); if($closing_balance>0){ echo " Dr."; }elseif($closing_balance<0){ echo " Cr."; } ?></td>
 		</tr>
 	</tbody>
 </table>

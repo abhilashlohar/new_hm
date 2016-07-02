@@ -188,10 +188,14 @@ foreach($result_society as $data){
 				
 			<?php } ?>
 					<tr>
-						<td colspan="4" align="right"><b>Total</b></td>
+						<td colspan="4" style="text-align:right;"><b>Total</b></td>
 						<td style="text-align:right;"><b><?php echo $total_debit; ?></b></td>
 						<td style="text-align:right;"><b><?php echo $total_credit; ?></b></td>
 						
+					</tr>
+					<tr>
+						<td colspan="5" style="text-align:right;font-size:15px;">Closing Balance</td>
+						<td style="text-align:right;font-size:15px;"><?php $closing_balance=$total_debit-$total_credit; echo abs($closing_balance); if($closing_balance>0){ echo " Dr."; }elseif($closing_balance<0){ echo " Cr."; } ?></td>
 					</tr>
 				
                     </tbody>

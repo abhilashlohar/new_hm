@@ -158,7 +158,7 @@
 					</tr>
 				
 			<?php } ?>
-			<?php $closing_balance=$total_credit-$total_debit; ?>
+			
 					<tr>
 						<td colspan="4" style="text-align:right;"><b>Total</b></td>
 						<td style="text-align:right;"><b><?php echo $total_debit; ?></b></td>
@@ -166,8 +166,8 @@
 						<td class="hide_at_print"></td>
 					</tr>
 					<tr>
-	                <td colspan="4" style="text-align:right;"><b>Closing Balance</b></td>
-					<td colspan="2" style="text-align:right;"><b><?php echo $closing_balance; ?></b></td>
+	                <td colspan="4" style="text-align:right;font-size:15px;">Closing Balance</td>
+					<td colspan="2" style="text-align:right;font-size:15px;"><?php $closing_balance=$total_debit-$total_credit; echo abs($closing_balance); if($closing_balance>0){ echo " Dr."; }elseif($closing_balance<0){ echo " Cr."; } ?></td>
 					<td class="hide_at_print"></td>					
      				</tr>
 				    </tbody>

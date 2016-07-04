@@ -150,7 +150,7 @@ echo $amount; ?></td>
 <td class="hide_at_print">
 <a href="approve_bank_receipt_ajax/<?php echo $transaction_id; ?>" class="btn mini red">Approve</a>
 <a href="aprrove_bank_receipt_update?bb=<?php echo $transaction_id; ?>" class="btn mini blue">Edit</a>
-<a href="<?php echo $webroot_path; ?>Cashbanks/delete_receipt_by_admin/<?php echo $transaction_id; ?>" class="btn mini red"><i class="icon-trash"></i></a>
+<a href="<?php echo $webroot_path; ?>Cashbanks/delete_receipt_by_admin/<?php echo $transaction_id; ?>" class="btn mini red delete_r" role="button"><i class="icon-trash"></i></a>
 </td>
 </tr>
 <?php	
@@ -176,9 +176,32 @@ echo $total_debit; ?> <?php //echo "  dr"; ?></b></td>
 </center>
 	<?php
 	
-}
+} ?>
 
-
+<div class="edit_div"  style="display:none;">
+<div class="modal-backdrop fade in"></div>
+<div class="modal"  id="tems_edit_content">
+	<div class="modal-body">
+		<p>Are you sure to delete?</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" id="closed">Close</button>
+		<a href="#" class="btn red" role="button" id="confirm"><i class="icon-trash"></i> Delete</a>
+	</div>
+</div>
+</div>
+<script>
+$(document).ready(function(){
+	$(".delete_r").die().live("click",function(){
+		var h=$(this).attr("href");
+		$("#confirm").attr("href",h);
+		$(".edit_div").show();
+	})
+	$("#closed").die().live("click",function(){
+		$(".edit_div").hide();
+	})
+})
+</script>
 
 
 

@@ -231,12 +231,25 @@ $(document).ready(function(){
 		
 		
 		
-if(allow=="no"){
+		if(allow=="no"){
 			e.preventDefault();
+		}
+		
+		if(allow=="yes"){
+			$(".sucess_msg").show();
 		}
 	});
 });  
 </script>
+<div class="sucess_msg" style="display:none ;">
+<div class="modal-backdrop fade in"></div>
+<div class="modal"  id="confirm_msg">
+	<div class="modal-body" align="center">
+		<img src="<?php echo $webroot_path; ?>as/fb_loading.gif" ><BR/>
+		<h5>Please Wait, Preparing Bills Preview.</h5>
+	</div>
+</div>
+</div>
 <script>
 function validation(t){
 $('#validat_value').val(t);	

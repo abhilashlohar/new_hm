@@ -29199,6 +29199,7 @@ echo "F";
 function exit_user($user_flat_id=null){
 	
 	$s_user_id=(int)$this->Session->read('hm_user_id');
+	$s_society_id=(int)$this->Session->read('hm_society_id');
 	$this->loadmodel('user_flat');
 	$conditions=array('user_flat_id'=>(int)$user_flat_id);
 	$user_flat_info=$this->user_flat->find('all',array('conditions'=>$conditions));
@@ -29215,6 +29216,17 @@ function exit_user($user_flat_id=null){
 		$conditions=array('user_flat_id'=>(int)$user_flat_id);
 		$ledger_sub_account_info=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 		$ledger_sub_account_id=$ledger_sub_account_info[0]["ledger_sub_account"]["auto_id"];
+		
+		$this->loadmodel('user_flat');
+		$conditions=array('user_flat_id'=>(int)$user_flat_id);
+		$user_flat_info=$this->user_flat->find('all',array('conditions'=>$conditions));
+		$wing=$user_flat_info[0]["user_flat"]["wing"];
+		$flat=(int)$user_flat_info[0]["user_flat"]["flat"];
+		$user_id=(int)$user_flat_info[0]["user_flat"]["user_id"];
+		$this->loadmodel('flat');
+		$this->flat->updateAll(array('noc_ch_tp'=>null),array("society_id" => (int)$s_society_id,"flat_id"=>$flat));
+		
+		
 		
 		
 		$this->loadmodel('ledger');
@@ -29247,6 +29259,19 @@ function exit_user($user_flat_id=null){
 		if($count==0){
 			$this->loadmodel('user');
 			$this->user->updateAll(array('active'=>"no"),array('user.user_id'=>$user_id));
+			
+			$this->loadmodel('user');
+			$conditions=array('family_main_member'=>(int)$user_id,"is_family_member"=>"yes");
+			$user_family=$this->user->find('all',array('conditions'=>$conditions));
+			foreach($user_family as $family_mem){
+				$user_id=$family_mem["user"]["user_id"];
+				
+				$this->loadmodel('user');
+				$this->user->updateAll(array('active'=>"no"),array('user.user_id'=>$user_id));
+				
+				$this->loadmodel('user_flat');
+				$this->user_flat->updateAll(array('exited'=>"yes"),array('user_flat.user_id'=>$user_id));
+			}
 		}
 		echo '<div class="modal-backdrop fade in"></div>
 		<div style="display: block;" class="modal hide fade in">

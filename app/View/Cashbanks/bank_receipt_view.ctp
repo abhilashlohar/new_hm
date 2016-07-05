@@ -8,10 +8,12 @@
 	<a href="<?php echo $webroot_path; ?>Cashbanks/bank_receipt_approve" class="btn" rel='tab'>Approve Receipts</a>
 </div>
 
-<?php
-$c_date = date('d-m-Y');
-$b_date = date('1-m-Y');
-?>
+
+<?php  
+$b_date = date('d-m-Y',$from); 
+$c_date = date('d-m-Y',$to);
+?> 
+
 
 <div class="hide_at_print" align="center">
 	<table>

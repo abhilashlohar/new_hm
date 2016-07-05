@@ -887,6 +887,13 @@ function bank_receipt_view()
 		$s_society_id = $this->Session->read('hm_society_id');
 		$s_user_id=$this->Session->read('hm_user_id');
 
+		$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+		$from=$result_financial_year[0]['financial_year']['from'];
+		$to=$result_financial_year[0]['financial_year']['to'];
+		$this->set('from',$from); 
+		$this->set('to',$to); 
+		
+		
 		
 	if($this->request->is('post'))	
 	{
@@ -1402,6 +1409,12 @@ $s_role_id=$this->Session->read('role_id');
 $s_society_id = $this->Session->read('society_id');
 $s_user_id=$this->Session->read('user_id');
 
+$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+$from=$result_financial_year[0]['financial_year']['from'];
+$to=$result_financial_year[0]['financial_year']['to'];
+$this->set('from',$from); 
+$this->set('to',$to); 
+
 $this->set('s_role_id',$s_role_id);
 }
 //End Bank Payment View (Accounts)//
@@ -1663,6 +1676,15 @@ $s_role_id=$this->Session->read('role_id');
 $s_society_id = $this->Session->read('society_id');
 $s_user_id=$this->Session->read('user_id');
 $this->set('s_role_id',$s_role_id);
+
+$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+$from=$result_financial_year[0]['financial_year']['from'];
+$to=$result_financial_year[0]['financial_year']['to'];
+$this->set('from',$from); 
+$this->set('to',$to); 
+
+
+
 }
 //End Petty Cash Receipt View (Accounts)//
 //Start Petty cash receipt excel//
@@ -1916,6 +1938,14 @@ $s_role_id=$this->Session->read('hm_role_id');
 $s_society_id = $this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');
 $this->set('s_role_id',$s_role_id);
+
+$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+$from=$result_financial_year[0]['financial_year']['from'];
+$to=$result_financial_year[0]['financial_year']['to'];
+$this->set('from',$from); 
+$this->set('to',$to); 
+
+
 }
 //End Petty cash Payment View (Accounts)// 
 //Start Petty Cash Payment Show Ajax (Accounts)//

@@ -167,6 +167,11 @@ function it_regular_bill(){
 		$society_result=$this->society->find('all',array('conditions'=>$condition));
 		$income_heads=$society_result[0]["society"]["income_head"];
 		$tax=(float)$society_result[0]["society"]["tax"];
+		$terms_conditions=$society_result[0]["society"]["terms_conditions"];
+		
+		$this->loadmodel('terms_condition');
+		$terms_condition_id=$this->autoincrement('terms_condition','auto_id');
+		$this->terms_condition->saveAll(array("auto_id" => $terms_condition_id,"terms_conditions"=>$terms_conditions,"society_id"=>$s_society_id));
 		
 		//Start billing calculation//
 		foreach($members_for_billing as $ledger_sub_account_id){
@@ -217,9 +222,11 @@ function it_regular_bill(){
 			$intrest_on_arrears=round($intrest_on_arrears);
 			$due_for_payment=round($due_for_payment);
 			
+			
+			
 			$this->loadmodel('regular_bill_temp');
 			$auto_id=$this->autoincrement('regular_bill_temp','auto_id');
-			$this->regular_bill_temp->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => (int)$ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_principle"=> $arrear_principle,"maint_arrear"=> $maint_arrear,"non_maint_arrear"=> $non_maint_arrear, "arrear_intrest" => $arrear_interest, "intrest_on_arrears" => $intrest_on_arrears,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>strtotime($start_date),"due_date"=>strtotime($due_date),"credit_stock"=>0,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$s_user_flat_id,"current_date"=>strtotime($current_date),"sent_for_approval"=>"no","approved"=>"no","end_date"=>strtotime($end_date)));
+			$this->regular_bill_temp->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => (int)$ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_principle"=> $arrear_principle,"maint_arrear"=> $maint_arrear,"non_maint_arrear"=> $non_maint_arrear, "arrear_intrest" => $arrear_interest, "intrest_on_arrears" => $intrest_on_arrears,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>strtotime($start_date),"due_date"=>strtotime($due_date),"credit_stock"=>0,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$s_user_flat_id,"current_date"=>strtotime($current_date),"sent_for_approval"=>"no","approved"=>"no","end_date"=>strtotime($end_date),"terms_condition_id"=>$terms_condition_id));
 			
 			
 		} 
@@ -403,7 +410,7 @@ function generate_bills(){
 		$society_address=$data["society"]["society_address"];
 		$society_email=$data["society"]["society_email"];
 		$society_phone=$data["society"]["society_phone"];
-		$terms_conditions=$data["society"]["terms_conditions"];
+		//$terms_conditions=$data["society"]["terms_conditions"];
 		$signature=$data["society"]["signature"];
 		$sig_title=$data["society"]["sig_title"];
 	    $neft_type = @$data["society"]["neft_type"];
@@ -419,6 +426,8 @@ function generate_bills(){
 		if($area_scale==1){
 			$area_scale_text="sq.mtr.";
 		}
+		
+		
 		
 		
 	$this->loadmodel('regular_bill_temp');
@@ -447,12 +456,18 @@ function generate_bills(){
 		$description=$regular_bill["regular_bill_temp"]["description"];
 		$created_by=$regular_bill["regular_bill_temp"]["created_by"];
 		$billing_cycle=$regular_bill["regular_bill_temp"]["billing_cycle"];
+		$terms_condition_id=$regular_bill["regular_bill_temp"]["terms_condition_id"];
+		
+		$this->loadmodel('terms_condition');
+		$conditions=array("auto_id"=>$terms_condition_id,"society_id" => $s_society_id);
+		$terms_conditions=$this->terms_condition->find('all',array('conditions'=>$conditions));
+		$terms_conditions=$terms_conditions[0]["terms_condition"]["terms_conditions"];
 		
 		$current_date=date("Y-m-d");
 		$this->loadmodel('regular_bill');
 		$regular_bill_id=$this->autoincrement('regular_bill','auto_id');
 		$bill_number=$this->autoincrement_with_society_ticket('regular_bill','bill_number');
-		$this->regular_bill->saveAll(array("auto_id" => $regular_bill_id,"bill_number"=>$bill_number, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_principle"=> $arrear_principle,"maint_arrear"=> $maint_arrear,"non_maint_arrear"=> $non_maint_arrear, "arrear_intrest" => $arrear_intrest, "intrest_on_arrears" => $intrest_on_arrears,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"credit_stock"=>$credit_stock,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by,"current_date"=>$current_date,"edited"=>"no","end_date"=>$end_date));
+		$this->regular_bill->saveAll(array("auto_id" => $regular_bill_id,"bill_number"=>$bill_number, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_principle"=> $arrear_principle,"maint_arrear"=> $maint_arrear,"non_maint_arrear"=> $non_maint_arrear, "arrear_intrest" => $arrear_intrest, "intrest_on_arrears" => $intrest_on_arrears,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"credit_stock"=>$credit_stock,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by,"current_date"=>$current_date,"edited"=>"no","end_date"=>$end_date,"terms_condition_id"=>$terms_condition_id));
 		
 	//LEDGER CODE START//
 		foreach($income_head_array as $income_head_id=>$income_head_amount){
@@ -6490,6 +6505,13 @@ $this->loadmodel('regular_bill');
 $conditions=array("auto_id"=>$auto_id);
 $result_new_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions));
 $this->set('result_new_regular_bill',$result_new_regular_bill);
+$terms_condition_id=$result_new_regular_bill[0]["regular_bill"]["terms_condition_id"];
+$this->loadmodel('regular_bill');
+
+$this->loadmodel('terms_condition');
+$conditions=array("auto_id"=>$terms_condition_id,"society_id" => $s_society_id);
+$terms_conditions=$this->terms_condition->find('all',array('conditions'=>$conditions));
+$this->set('terms_conditions',$terms_conditions[0]["terms_condition"]["terms_conditions"]);
 
 $this->loadmodel('society');
 $conditions=array("society_id" => $s_society_id);

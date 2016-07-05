@@ -4,6 +4,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 ?>				   
 </div>
 <?php $c_date = date('d-m-Y'); $b_date = date('1-m-Y'); ?>
+<?php  $from = date('d-m-Y',$from); $to = date('d-m-Y',$to); ?> 
 <center>
 <div class="hide_at_print">
 	<form method="post" id="contact-form">
@@ -27,9 +28,9 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				</select>
 				</td>
 				<td><input type="text" class="date-picker m-wrap medium" id="date1" data-date-format="dd-mm-yyyy" 
-				name="from" placeholder="From" style="background-color:white !important; margin-top:8px;" value="<?php echo $b_date; ?>"></td>
+				name="from" placeholder="From" style="background-color:white !important; margin-top:8px;" value="<?php echo $from; ?>"></td>
 				<td><input type="text" class="date-picker  m-wrap medium" id="date2" data-date-format="dd-mm-yyyy" 
-				name="to" placeholder="To" style="background-color:white !important; margin-top:8px;" value="<?php echo $c_date; ?>">
+				name="to" placeholder="To" style="background-color:white !important; margin-top:8px;" value="<?php echo $to; ?>">
 				</td>
 				<td valign="top"><button type="button" name="sub" class="btn yellow" id="go" style="margin-top:8px;">Go</button>
 				</td>

@@ -5453,7 +5453,15 @@ function bank_book_report()
 	$this->loadmodel('ledger_sub_account');
 	$conditions=array("society_id" => $s_society_id,"ledger_id"=>33);
 	$cursor1=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-	$this->set('cursor1',$cursor1);		
+	$this->set('cursor1',$cursor1);	
+
+	$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+	$from=$result_financial_year[0]['financial_year']['from'];
+	$to=$result_financial_year[0]['financial_year']['to'];
+	$this->set('from',$from); 
+	$this->set('to',$to); 
+
+	
 	
 }
 //End bank_book_report//

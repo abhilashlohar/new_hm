@@ -1439,7 +1439,7 @@ function bank_receipt_cancel_button_show_or_hide($transaction_date=null,$ledger_
 
 
 function calculate_opening_balance($ledger_account_id=null,$ledger_sub_account_id=null,$date=null){
-	$s_society_id = $this->Session->read('hm_society_id');	
+	$s_society_id = (int)$this->Session->read('hm_society_id');	
 	
 	$this->loadmodel('ledger_account');
 	$conditions=array("auto_id" => (int)$ledger_account_id);
@@ -1453,8 +1453,9 @@ function calculate_opening_balance($ledger_account_id=null,$ledger_sub_account_i
 	
 	if($accounts_id==1 or $accounts_id==2){
 		$this->loadmodel('ledger');
-		$conditions=array("society_id"=>$s_society_id,"ledger_account_id"=>$ledger_account_id,"ledger_sub_account_id"=>$ledger_sub_account_id,"transaction_date"=>array('$lt'=>$date));
+		$conditions=array("society_id"=>$s_society_id,"ledger_account_id"=>(int)$ledger_account_id,"ledger_sub_account_id"=>(int)$ledger_sub_account_id,"transaction_date"=>array('$lt'=>$date));
 		$result_ledger = $this->ledger->find('all',array('conditions'=>$conditions));
+		
 		$total_debit=0; $total_credit=0;
 		foreach($result_ledger as $data){
 			$total_debit+=$data["ledger"]["debit"];

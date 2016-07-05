@@ -7542,7 +7542,8 @@ function account_statement_for_flat_ajax1($ledger_sub_account_id,$from,$to){
 	
 	$this->ath();
 	$this->set("ledger_sub_account_id",$ledger_sub_account_id);
-	$from=date("Y-m-d",strtotime($from));
+
+	$from = date("Y-m-d",strtotime($from));
 	$this->set("from",$from);
 	$to=date("Y-m-d",strtotime($to));
 	$this->set("to",$to);

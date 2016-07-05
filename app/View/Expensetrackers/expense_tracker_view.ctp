@@ -28,14 +28,18 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 }
 </style>
 
+<?php  
+$default_date_from = date('d-m-Y',$from); 
+$default_date_to = date('d-m-Y',$to);
+?> 
 <center>
 <table class="hide_at_print">
 <tr>
 <td>
-<input type="text" id="date1" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="from" placeholder="From" style="background-color:white !important;" value="<?php echo $date=date('01-m-Y'); ?>">
+<input type="text" id="date1" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="from" placeholder="From" style="background-color:white !important;" value="<?php echo $default_date_from; ?>">
 </td>
 <td>
-<input type="text" id="date2" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="to" placeholder="To" style="background-color:white !important;" value="<?php echo $date=date('d-m-Y'); ?>">
+<input type="text" id="date2" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="to" placeholder="To" style="background-color:white !important;" value="<?php echo $default_date_to; ?>">
 </td>
 <td valign="top"><button type="button" name="sub" class="btn blue" id="go"><i class="m-icon-swapright m-icon-white"></i></button></td>
 </tr>

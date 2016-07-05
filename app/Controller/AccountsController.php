@@ -1218,7 +1218,12 @@ function over_due_report()
 			}
 		}
 		$this->set(compact("members_for_billing"));
-					
+		$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+		$from=$result_financial_year[0]['financial_year']['from'];
+		$to=$result_financial_year[0]['financial_year']['to'];
+		$this->set('from',$from); 
+		$this->set('to',$to); 
+			
 }
 //End Over Due Report (Accounts)//
 //Start over due report show ajax(Accounts)//
@@ -3417,6 +3422,11 @@ function balance_sheet(){
 				}	
 				$this->ath();
 				$this->check_user_privilages();
+				$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+				$from=$result_financial_year[0]['financial_year']['from'];
+				$to=$result_financial_year[0]['financial_year']['to'];
+				$this->set('from',$from); 
+				$this->set('to',$to); 	
 		}
 //End Balance Sheet//
 //Start income_expenditure//
@@ -3673,6 +3683,12 @@ function trial_balance()
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');	
 	
+	$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+	$from=$result_financial_year[0]['financial_year']['from'];
+	$to=$result_financial_year[0]['financial_year']['to'];
+	$this->set('from',$from); 
+	$this->set('to',$to); 
+
 	
 	
 }
@@ -5265,6 +5281,13 @@ function tds_payment_report()
 		
 		$this->ath();
 		$this->check_user_privilages();	
+		$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+		$from=$result_financial_year[0]['financial_year']['from'];
+		$to=$result_financial_year[0]['financial_year']['to'];
+		$this->set('from',$from); 
+		$this->set('to',$to); 
+
+		
 }
 //End tds_payment_report//
 //Start tds_payment_report_view_ajax//
@@ -5363,6 +5386,14 @@ function cash_book_report()
 $s_role_id=$this->Session->read('role_id');
 $s_society_id = $this->Session->read('society_id');
 $s_user_id=$this->Session->read('user_id');
+
+$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+$from=$result_financial_year[0]['financial_year']['from'];
+$to=$result_financial_year[0]['financial_year']['to'];
+$this->set('from',$from); 
+$this->set('to',$to); 
+
+
 }
 //End Cash Book Report//
 //Start cash_book_report_show_ajax// 

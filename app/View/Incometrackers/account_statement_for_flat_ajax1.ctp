@@ -31,6 +31,10 @@
 	</div>
 	
 	<div>
+	<?php
+	$opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_opening_balance'), array('pass' => array(34,$ledger_sub_account_id,strtotime($from))));
+	?>
+	<div class="pull-right" style="text-align:right;font-size:15px;padding:5px;">Opening Balance: <?php echo $opening_balance; ?></div>
 		<table width="100%" class="table table-bordered table-condensed">
 			<thead>
             <tr>
@@ -46,7 +50,7 @@
 			if(sizeof($result_ledger)==0){
 				?>
 				<tr>
-					<td colspan="6" align="center">No Record Found for above selected period.</td>
+					<td colspan="7" align="center">No Record Found for above selected period.</td>
 				</tr>
                
 				<?php

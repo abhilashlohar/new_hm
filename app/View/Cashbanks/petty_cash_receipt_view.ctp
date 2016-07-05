@@ -8,10 +8,11 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_receipt" class="btn" rel='tab'>Create</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_receipt_view" class="btn yellow" rel='tab'>View</a>
 </div>
-<?php
-$c_date = date('d-m-Y');
-$b_date = date('1-m-Y');
-?>       
+<?php  
+$b_date = date('d-m-Y',$from); 
+$c_date = date('d-m-Y',$to);
+?> 
+     
 <div class="hide_at_print">
 	<form method="post" id="contact-form">
 	<table>

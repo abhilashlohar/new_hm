@@ -4873,7 +4873,12 @@ $order=array('user.user_id'=> 'ASC');
 $conditions=array("society_id" => $s_society_id,"tenant" => 1,"deactive"=>0);
 $cursor3 = $this->user->find('all',array('conditions'=>$conditions,'order'=>$order));
 $this->set("cursor3",$cursor3);
-	
+
+$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+$from=$result_financial_year[0]['financial_year']['from'];	
+$to=$result_financial_year[0]['financial_year']['to'];
+$this->set('from',$from);
+$this->set('to',$to);
 }
 /////////////////////////////////////////////////////// End It Reports Supplimentry Bill (Accounts)//////////////////////////////////////////////////////
 

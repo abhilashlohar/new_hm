@@ -1452,12 +1452,33 @@ function calculate_opening_balance($ledger_account_id=null,$ledger_sub_account_i
 		if($opening_balance>0){
 			return $opening_balance." Dr";
 		}elseif($opening_balance<0){
-			return $opening_balance." Cr";
+			return abs($opening_balance)." Cr";
 		}else{
 			return 0;
 		}
 	}else{
-		return "I/E Acc";
+		$this->loadmodel('financial_year');
+		$conditions =array('society_id' =>$s_society_id,'status' =>1,'financial_year.from'=>array('$lte'=>$date),'financial_year.to'=>array('$gte'=>$date));
+		$financial_years=$this->financial_year->find('all',array('conditions'=>$conditions));
+		$last_bill_start_date=@$financial_years[0]["financial_year"]["from"];
+		$first_date=$last_bill_start_date;
+		
+		$this->loadmodel('ledger');
+		$conditions=array("society_id"=>$s_society_id,"ledger_account_id"=>$ledger_account_id,"ledger_sub_account_id"=>$ledger_sub_account_id,"transaction_date"=>array('$gte'=>$first_date),"transaction_date"=>array('$lt'=>$date));
+		$result_ledger = $this->ledger->find('all',array('conditions'=>$conditions));
+		$total_debit=0; $total_credit=0;
+		foreach($result_ledger as $data){
+			$total_debit+=$data["ledger"]["debit"];
+			$total_credit+=$data["ledger"]["credit"];
+		}
+		$opening_balance=$total_debit-$total_credit;
+		if($opening_balance>0){
+			return $opening_balance." Dr";
+		}elseif($opening_balance<0){
+			return abs($opening_balance)." Cr";
+		}else{
+			return 0;
+		}
 	}
 }
 

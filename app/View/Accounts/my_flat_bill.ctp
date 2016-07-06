@@ -37,7 +37,6 @@ $default_date_to = date('d-m-Y',$to);
 		<?php  if($multiple_flat>1){  ?>
 		<td>
 		<select name="ledger_sub_account[]" class="m-wrap" style="width:200px;" id="ledger_sub_account">
-		<option value="" style="display:none;">--member--</option>
 		<?php foreach($members_for_billing as $ledger_sub_account_id){
 		$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 		echo '<option value='.$ledger_sub_account_id.'>'.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
@@ -57,7 +56,6 @@ $default_date_to = date('d-m-Y',$to);
 		<?php  if($multiple_flat>1){  ?>
 		
 		<select name="ledger_sub_account[]" class="m-wrap" style="width:200px;" id="ledger_sub_account1">
-		<option value="" style="display:none;">--member--</option>
 		<?php foreach($members_for_billing as $ledger_sub_account_id){
 		$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 		echo '<option value='.$ledger_sub_account_id.'>'.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';

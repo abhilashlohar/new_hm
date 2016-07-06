@@ -202,8 +202,21 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 						
 					</tr>
 					<tr>
+					<?php
+					if($opening_balance!=0){
+						$opening_be=explode(" ",$opening_balance);
+						$opening_balance=$opening_be[0];
+						if($opening_be[1]=="Dr"){
+							$closing_balance=$opening_balance+$total_debit-$total_credit;
+						}elseif($opening_be[1]=="Cr"){
+							$closing_balance=$total_debit-$total_credit-$opening_balance;
+						}
+					}else{
+						$closing_balance=$total_debit-$total_credit;
+					}
+					?>
 						<td colspan="5" style="text-align:right;font-size:15px;">Closing Balance</td>
-						<td style="text-align:right;font-size:15px;"><?php $closing_balance=$total_debit-$total_credit; echo abs($closing_balance); if($closing_balance>0){ echo " Dr."; }elseif($closing_balance<0){ echo " Cr."; } ?></td>
+						<td style="text-align:right;font-size:15px;"><?php echo abs($closing_balance); if($closing_balance>0){ echo " Dr."; }elseif($closing_balance<0){ echo " Cr."; } ?></td>
 					</tr>
 				
                     </tbody>

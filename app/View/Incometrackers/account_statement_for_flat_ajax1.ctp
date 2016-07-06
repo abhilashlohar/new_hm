@@ -1,4 +1,3 @@
-
 <div style="overflow: auto;">
 <a href="<?php echo $webroot_path; ?>Incometrackers/account_statement_for_flat_excel1/<?php echo $ledger_sub_account_id; ?>/<?php echo $from; ?>/<?php echo $to; ?>" class="btn mini blue pull-right hide_at_print" style="margin-left: 2px;"><i class="icon-download"></i></a>
 <a href="#" role="button" class="btn mini purple pull-right hide_at_print" style="margin-left: 2px;" onclick="window.print();"><i class="fa fa-print"></i></a>
@@ -170,8 +169,21 @@
 						<td class="hide_at_print"></td>
 					</tr>
 					<tr>
+					<?php
+					if($opening_balance!=0){
+						$opening_be=explode(" ",$opening_balance);
+						$opening_balance=$opening_be[0];
+						if($opening_be[1]=="Dr"){
+							$closing_balance=$opening_balance+$total_debit-$total_credit;
+						}elseif($opening_be[1]=="Cr"){
+							$closing_balance=$total_debit-$total_credit-$opening_balance;
+						}
+					}else{
+						$closing_balance=$total_debit-$total_credit;
+					}
+					?>
 	                <td colspan="4" style="text-align:right;font-size:15px;">Closing Balance</td>
-					<td colspan="2" style="text-align:right;font-size:15px;"><?php $closing_balance=$total_debit-$total_credit; echo abs($closing_balance); if($closing_balance>0){ echo " Dr."; }elseif($closing_balance<0){ echo " Cr."; } ?></td>
+					<td colspan="2" style="text-align:right;font-size:15px;"><?php echo abs($closing_balance); if($closing_balance>0){ echo " Dr."; }elseif($closing_balance<0){ echo " Cr."; } ?></td>
 					<td class="hide_at_print"></td>					
      				</tr>
 				    </tbody>

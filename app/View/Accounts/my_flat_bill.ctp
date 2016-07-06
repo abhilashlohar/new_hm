@@ -102,6 +102,7 @@ $(document).ready(function() {
 		var from=$("#from1").val();
 		var to=$("#to1").val();
 		$("#result_statement").show();
+		$("#result_statement").html("<div align='center'><h4>Loading...</h4></div>");
 		$.ajax({
 		   url: '<?php echo $webroot_path; ?>Accounts/my_flat_bill_ajax1/'+from+'/'+to+'/'+ledger_sub_account_id,
 		   success: function(data){

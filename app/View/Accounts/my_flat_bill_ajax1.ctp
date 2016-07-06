@@ -36,7 +36,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 	</div>
 
 	<div>
-		<table width="100%" class="table table-bordered table-condensed">
+		<table width="100%" class="table table-bordered table-condensed table-striped ">
 			<thead>
             <tr>
 				<th>Transaction Date</th>
@@ -80,6 +80,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 					$source="Regular Bill";
 					$result_regular_bill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'regular_bill_info_via_auto_id'), array('pass' => array($element_id)));
 					if(sizeof($result_regular_bill)>0){
+						$auto_id=$result_regular_bill[0]["regular_bill"]["auto_id"];
 						 $refrence_no=$result_regular_bill[0]["regular_bill"]["bill_number"];
 						$description = $result_regular_bill[0]["regular_bill"]["description"];
 						$prepaired_by = (int)$result_regular_bill[0]["regular_bill"]["created_by"]; 
@@ -94,7 +95,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 							}	
 					
 					}
-				
+					$href=$webroot_path."Incometrackers/regular_bill_view/".$auto_id;
 				}
 				if($table_name=="cash_bank"){
 					
@@ -105,6 +106,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 					 $ledger_sub_account_id = (int)@$result_cash_bank[0]["cash_bank"]["ledger_sub_account_id"];
 					$description = @$result_cash_bank[0]["cash_bank"]["narration"];
 					$receipt_source = @$result_cash_bank[0]["cash_bank"]["source"];  
+					$transaction_id = @$result_cash_bank[0]["cash_bank"]["transaction_id"];  
 					$date = @$result_cash_bank[0]["cash_bank"]["created_on"];	
 					$prepaired_by = (int)@$result_cash_bank[0]["cash_bank"]["created_by"];	
 						if($receipt_source=='bank_receipt'){
@@ -123,7 +125,8 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 							{
 								$source="Petty Cash Payment";
 								$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_number"];
-							}		
+							}
+				$href=$webroot_path."Cashbanks/bank_receipt_html_view/".$transaction_id;							
 				} 
 				
 			if($table_name=="journal"){
@@ -136,11 +139,10 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 						$journal_id=$data['journal']['journal_id'];
 						$refrence_no=$data['journal']['voucher_id'];
 					}
-
+				$href=$webroot_path."Bookkeepings/journal_voucher_view/".$refrence_no;
 				}
 				
 				if($table_name=="expense_tracker"){
-
 						$source="Expenses";
 						$result_expense_tracker=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_expense_tracker'), array('pass' => array($element_id)));
 							foreach($result_expense_tracker as $data){
@@ -155,12 +157,13 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 		$element_id=(int)$element_id;	
 		$result_adhoc=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'adhoc_info_via_auto_id'), array('pass' =>array($element_id)));
 
+		$supplimentry_bill_id=@$result_adhoc[0]["supplimentry_bill"]["supplimentry_bill_id"];
 		$refrence_no=@$result_adhoc[0]["supplimentry_bill"]["receipt_id"]; 
 		$ledger_sub_account_id = @$result_adhoc[0]["supplimentry_bill"]["ledger_sub_account_id"];
 		$description = @$result_adhoc[0]["supplimentry_bill"]["description"];
 		$date = $result_adhoc[0]["supplimentry_bill"]["date"];	
 		$prepaired_by = (int)$result_adhoc[0]["supplimentry_bill"]["created_by"];		
-
+		$href=$webroot_path."Incometrackers/supplimentry_view/".$supplimentry_bill_id;
 	}				
 				
 	$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array(@$prepaired_by)));
@@ -174,7 +177,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 				?>
 					<tr>
 						<td><?php echo date("d-m-Y",$transaction_date); ?></td>
-						<td><?php echo $refrence_no; ?></td>
+						<td><a href="<?php echo $href; ?>" target="blank"><?php echo $refrence_no; ?></a></td>
 						<td><?php echo $description; ?></td>
 						<td><?php echo $source; ?></td>
 						

@@ -4422,9 +4422,9 @@ if($user_type == "hm_child"){
 
 			$sub_module_id_fix="fix".$sub_module_id;
 			if($sub_module_id_page==$sub_module_id){
-				echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn red allsubmenu" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
+				echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn red allsubmenu hide_at_print" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
 			}else{
-				echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn blue allsubmenu" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
+				echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn blue allsubmenu hide_at_print" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
 			}
 		}
 	}	
@@ -4468,9 +4468,9 @@ if($user_type == "hm_child"){
 			
 				$sub_module_id_fix="fix".$sub_module_id;
 				if($sub_module_id_page==$sub_module_id){
-					echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn red allsubmenu" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
+					echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn red allsubmenu hide_at_print" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
 				}else{
-					echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn blue allsubmenu" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
+					echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn blue allsubmenu hide_at_print" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
 				}
 			
 			}

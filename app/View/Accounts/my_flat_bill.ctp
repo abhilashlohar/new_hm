@@ -51,7 +51,7 @@ $default_date_to = date('d-m-Y',$to);
 	</table>
 </div>
 
-<div class="controls controls-row visible-phone">
+<div class="controls controls-row visible-phone hide_at_print">
 	<div class="span3"> 
 		<?php  if($multiple_flat>1){  ?>
 		

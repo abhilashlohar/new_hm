@@ -1,3 +1,7 @@
+<?php
+echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'));
+?>
+
 <?php 
 function substrwords($text, $maxchar, $end='...') {
     if (strlen($text) > $maxchar || $text == '') {

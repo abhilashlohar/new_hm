@@ -8290,7 +8290,61 @@ function supplimentry_bill_table(){
 	</table>
 	<?php
 }
+function committee_member_list(){
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id = $this->Session->read('hm_user_id'); 
+	$role_id = $this->Session->read('role_id');	
+	
+	$this->loadmodel('user');
+	$conditions=array('society_id'=>$s_society_id,'active'=>'yes');
+	$result_user=$this->user->find('all',array('conditions'=>$conditions));
+	foreach($result_user as $data){
+				$user_id=$data['user']['user_id'];
+				$user_name=$data['user']['user_name'];
+				$email=$data['user']['email'];
+				$mobile=$data['user']['mobile'];
+				$designation_id=@$data['user']['designation_id'];
+				
+				$this->loadmodel('governance_designation');
+				$conditions=array("society_id" => $s_society_id,"governance_designation_id"=>$designation_id);
+				$result_designation=$this->governance_designation->find('all',array('conditions'=>$conditions));
+				$designation_name=@$result_designation[0]['governance_designation']['designation_name'];
+				$this->loadmodel('user_flat');
+				$conditions1=array("user_id"=>$user_id);
+				$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions1));
+				foreach($result_user_flat as $data){
+							$user_flat_id=$data["user_flat"]["user_flat_id"];
+							$wing=@$data["user_flat"]["wing"];
+							$flat=@$data["user_flat"]["flat"];
 
+							$this->loadmodel('wing');
+							$conditions=array("wing_id"=>$wing);
+							$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
+							@$wing_name=$wing_info[0]["wing"]["wing_name"];
+
+							$this->loadmodel('flat');
+							$conditions=array("flat_id"=>$flat);
+							$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+							@$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
+							$flats=$wing_name.' - '.$flat_name;
+					}
+				
+				$this->loadmodel('user_role');
+				$conditions3=array("user_id"=>$user_id,'role_id'=>2);
+				$result_user_role=$this->user_role->find('all',array('conditions'=>$conditions3));
+				if(!empty($result_user_role)){
+					$result_users_com[]=array('user_name'=>$user_name,'wing_flat'=>$flats,'email'=>$email,'mobile'=>$mobile,'user_id'=>$user_id,'user_flat_id'=>$user_flat_id,'designation_name'=>$designation_name);
+				}
+				
+	}
+	$this->set('result_committee_member',$result_users_com);
+}
 
 function dashboard(){
 	if($this->RequestHandler->isAjax()){

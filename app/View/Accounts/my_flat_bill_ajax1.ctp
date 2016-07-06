@@ -15,24 +15,26 @@ foreach($result_society as $data){
 
 
 	<div align="center" style="color:#606060;">
-		<h4 style="color:#5D9B5D;"><b><?php echo strtoupper($society_name); ?></b></h4>
+		<span style="color:#5D9B5D;"><b><?php echo strtoupper($society_name); ?></b></span><br/>
 		Regn # <?php echo $society_reg_num; ?><br/>
 		
 		Email: <?php echo $society_email; ?> | Phone : <?php echo $society_phone; ?>
+		<br/>
+		<span style="font-size:16px;">Statement of Account</span><br/>
+			<span style="font-size:12px;">From <?php echo date("d-m-Y",strtotime($from)); ?> to <?php echo date("d-m-Y",strtotime($to)); ?></span>
 	</div>
+	<?php
+$opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_opening_balance'), array('pass' => array(34,$ledger_sub_account_id,strtotime($from))));
+?>
 	<div class="row-fluid" style="font-size:14px;">
 		<div class="span6">
 			For : <?php echo $user_name; ?> (<?php echo $wing_flat; ?>)
 		</div>
-		<div class="span6" align="right">
-			<span style="font-size:16px;">Statement of Account</span><br/>
-			<span style="font-size:12px;">From <?php echo date("d-m-Y",strtotime($from)); ?> to <?php echo date("d-m-Y",strtotime($to)); ?></span>
+		<div class="span6" align="right" style="text-align:right;font-size:15px;padding:5px;">
+			Opening Balance: <?php echo $opening_balance; ?>
 		</div>
 	</div>
-<?php
-$opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_opening_balance'), array('pass' => array(34,$ledger_sub_account_id,strtotime($from))));
-?>
-<div class="pull-right" style="text-align:right;font-size:15px;padding:5px;">Opening Balance: <?php echo $opening_balance; ?></div>
+
 	<div>
 		<table width="100%" class="table table-bordered table-condensed">
 			<thead>

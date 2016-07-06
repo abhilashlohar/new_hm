@@ -33,10 +33,14 @@ $society_sig = @$data['society']['signature'];
 </ul>
 <div class="tab-content" style="min-height:300px;">
 <div class="tab-pane active" id="tab_1_1">
+<div style="">
+<span class="label label-important">NOTE</span><span> No need to save this form. The system will automatically save updated data. </span>
+</div>
 <div class="portlet-body">
 <?php ///////////////////////////////////////////////////////////////////////////////////////// ?>
 <br />
 <div style="background-color:#fff;padding:5px;width:96%;margin:auto; overflow:auto;" class="form_div">
+
 <form method="POST" id="contact-form" enctype="multipart/form-data">
 <div class="row-fluid">
 <div class="span6">
@@ -70,7 +74,7 @@ $society_sig = @$data['society']['signature'];
 <?php if(empty($society_sig)){ ?>
 <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 <?php }else{ ?>
-<img src="<?php echo $webroot_path; ?>sig/<?php echo $society_sig; ?>" alt="">
+<span id="sig_hide"><img src="<?php echo $webroot_path; ?>sig/<?php echo $society_sig; ?>" alt=""> </span>
 <?php } ?>
 </div>
 <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
@@ -78,6 +82,29 @@ $society_sig = @$data['society']['signature'];
 <span class="btn btn-file"><span class="fileupload-new">Select image</span>
 <span class="fileupload-exists">Change</span>
 <input type="file" class="default change_file" field="society_signature" name="sig"></span>
+<a href="#" class="btn fileupload-exists rem_sig" data-dismiss="fileupload">Remove</a>
+</div>
+</div>
+<label id="sig_vali"></label>
+</div>
+<br />
+
+
+<label style="font-size:14px;">Society Logo<span style="color:red;">*</span></label>
+<div class="controls">
+<div class="fileupload fileupload-new" data-provides="fileupload">
+<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+<?php if(empty($society_logo)){ ?>
+<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+<?php }else{ ?>
+<span id="img_hide"><img src="<?php echo $webroot_path; ?>sig/<?php echo $society_logo; ?>" alt=""></span>
+<?php } ?>
+</div>
+<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+<div>
+<span class="btn btn-file"><span class="fileupload-new">Select image</span>
+<span class="fileupload-exists">Change</span>
+<input type="file" class="default change_file" field="society_logo" name="logo" value=""></span>
 <a href="#" class="btn fileupload-exists rem" data-dismiss="fileupload">Remove</a>
 </div>
 </div>
@@ -86,6 +113,7 @@ $society_sig = @$data['society']['signature'];
 <br />
 
 
+<!--
 <label style="font-size:14px;">Society Logo<span style="color:red;">*</span></label>
 <div class="controls">
 <div class="fileupload <?php if(empty($society_logo)){ ?> fileupload-new <?php }else{ ?> fileupload-exists <?php } ?>" data-provides="fileupload">
@@ -105,7 +133,7 @@ $society_sig = @$data['society']['signature'];
 </div>
 </div>
 </div>
-<br />
+<br />-->
 
 
 
@@ -144,9 +172,9 @@ $society_sig = @$data['society']['signature'];
 
 </div>
 </div>
-<hr/>
+<!--<hr/>
 <button type="submit" class="btn blue" id="go">Update </button>
-<br /><br />
+<br /><br />-->
 </form>
 </div>
 
@@ -160,7 +188,14 @@ $society_sig = @$data['society']['signature'];
 $(document).ready(function(){
 	
 	$('.rem').click(function(){
-		$(this).closest('.hide_remo').remove();
+		
+		$('#img_hide').css("display", "none");
+		
+	});
+	
+	$('.rem_sig').click(function(){
+		
+		$('#sig_hide').css("display", "none");
 		
 	});
 	
@@ -186,7 +221,7 @@ $(document).ready(function(){
 			contentType: false,
 			type: 'POST',
 		}).done(function(response) {
-			alert(response);
+			
 		});
 		
 	});

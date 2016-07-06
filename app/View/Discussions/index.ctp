@@ -29,7 +29,7 @@
 			$time=$post["discussion_post"]["time"];?>
 			<div class="topic show_list" post_id="<?php echo $discussion_post_id; ?>" style="width:100%;">
 				<div align="left" style="font-size: 12px;"><?php echo $topic; ?></div>
-				<div align="left" style="font-size: 10px;"><span >(<?php echo sizeof($result_count_comment); ?> Comments ) </span><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp; <?php echo $time; ?></div>
+				<div align="left" style="font-size: 10px;"><span>(<?php echo sizeof($result_count_comment); ?> Comments ) </span><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp; <?php echo $time; ?></div>
 			</div>
 		<?php } ?>
 		</div>

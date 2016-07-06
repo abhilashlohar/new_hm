@@ -15,7 +15,7 @@ function count_comment_via_discussion_post_id($discussion_post_id){
 	$s_user_id=$this->Session->read('hm_user_id'); 
 	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('discussion_comment');	
-	$conditions=array("discussion_post_id"=>$discussion_post_id);	
+	$conditions=array("discussion_post_id"=>$discussion_post_id,"delete_id"=>0);	
 	return $this->discussion_comment->find('all',array('conditions'=>$conditions));
 }
 

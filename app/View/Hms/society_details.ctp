@@ -160,7 +160,7 @@ $society_sig = @$data['society']['signature'];
 $(document).ready(function(){
 	
 	$('.rem').click(function(){
-		$('.hide_remo').remove();
+		$(this).closest('.hide_remo').remove();
 		
 	});
 	
@@ -174,7 +174,7 @@ $(document).ready(function(){
 		});	
 	});
 	
-	$('.change_file').change(function(){
+	$('.change_file').change(function(){ 
 		var m_data = new FormData(); 
 		var field=$(this).attr('field');
 		m_data.append( 'file', $(this)[0].files[0]);
@@ -186,7 +186,7 @@ $(document).ready(function(){
 			contentType: false,
 			type: 'POST',
 		}).done(function(response) {
-			
+			alert(response);
 		});
 		
 	});

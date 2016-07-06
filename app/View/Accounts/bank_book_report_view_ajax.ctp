@@ -68,6 +68,8 @@ else if($receipt_source == "bank_payment"){
 $transaction_date=$dataaa['cash_bank']['transaction_date'];	
 $transaction_date2=date('d-m-Y',($transaction_date));		
 $payment_amount=$dataaa['cash_bank']['amount'];	
+$tds_tax_amount=$dataaa['cash_bank']['tds_tax_amount'];
+$payment_amount=$payment_amount-$tds_tax_amount;
 $receipt_amount="";
 $receipt_amount2="";
 $type=(int)$dataaa['cash_bank']['account_type'];

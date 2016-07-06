@@ -28,7 +28,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 ?>
 	<div class="row-fluid" style="font-size:14px;">
 		<div class="span6">
-			For : <?php echo $user_name; ?> (<?php echo $wing_flat; ?>)
+			<?php echo $user_name; ?> (<?php echo $wing_flat; ?>)
 		</div>
 		<div class="span6" align="right" style="text-align:right;font-size:15px;padding:5px;">
 			Opening Balance: <?php echo $opening_balance; ?>

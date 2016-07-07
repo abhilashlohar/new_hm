@@ -221,7 +221,7 @@ $(document).ready(function(){
 			contentType: false,
 			type: 'POST',
 		}).done(function(response) {
-			alert(response);
+			
 		});
 		
 	});

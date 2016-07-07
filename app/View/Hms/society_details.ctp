@@ -97,7 +97,7 @@ $society_sig = @$data['society']['signature'];
 <?php if(empty($society_logo)){ ?>
 <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 <?php }else{ ?>
-<span id="img_hide"><img src="<?php echo $webroot_path; ?>sig/<?php echo $society_logo; ?>" alt=""></span>
+<span id="img_hide"><img src="<?php echo $webroot_path; ?>logo/<?php echo $society_logo; ?>" alt=""></span>
 <?php } ?>
 </div>
 <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
@@ -221,7 +221,7 @@ $(document).ready(function(){
 			contentType: false,
 			type: 'POST',
 		}).done(function(response) {
-			
+			alert(response);
 		});
 		
 	});

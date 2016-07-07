@@ -1,7 +1,7 @@
 <div style="background-color: #FFF; padding: 0px 10px; border: 1px solid rgb(233, 231, 231);" class="hide_at_print">
 <table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-		<td style="white-space: nowrap;"><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-comments"></i> Discussion Forum</span></td>
+		<td style="white-space: nowrap;" class="hidden-phone"><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-comments"></i> </span><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);">Discussion Forum</span></td>
 		<td align="right">
 			<a  topic_type="all" role="button"  class="btn btn_menu btn_active select_type" style="margin-top: 5px; margin-bottom: 5px;"><i class="icon-cloud"></i> All Topics</a>
 			<a  topic_type="my" role="button"  class="btn btn_menu select_type" style="margin-top: 5px; margin-bottom: 5px;"><i class="icon-heart"></i> My Topics</a>
@@ -102,7 +102,7 @@ if(dash_id!=""){
 
 	$(".topic").die().live("click",function(){ 
 		nn++;
-		//clearInterval(interval);
+		$("#topic_detail").html('<div align="center" style="font-size:16px;"><img src="<?php echo $webroot_path; ?>as/fb_loading.gif" >	<span>Loading</span></div>');
 		$('.topic').each(function(i, obj) {
 			$(this).removeClass("run");
 		});

@@ -259,6 +259,8 @@ function submit_comment(){
 				$this->send_notification('<span class="label label-warning"><i class="fa fa-commenting-o" aria-hidden="true" style=" padding: 1px 0px 1px 2px; font-size: 15px; "></i></span>','New Comment: <b>'.$comment_box.'</b> by '.$current_member_name,$webroot_path.'Discussions/index?dash_id='.$discussion_post_id,$s_user_id,$commenter_ids);
 			}
 			
+		}else{
+			
 		}
 	}
 }

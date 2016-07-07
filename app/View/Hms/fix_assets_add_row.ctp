@@ -7,11 +7,21 @@ $default_date = date('d-m-Y');
          <table class="table table-bordered" id="subb_table">  
          
 		       <tr style="background-color:#E8EAE8;">
-		       <th style="width:20%;">Asset Category</th>
-		       <th style="width:20%;">Date of Purchase</th>
-               <th style="width:20%;">Name of Supplier</th>
-               <th style="width:20%;">Rupees</th>
-			   <th style="width:20%;">Asset Name</th>
+		       <th style="width:20%;">
+			   Asset Category <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span>
+			   </th>
+		       <th style="width:20%;">
+			   Date of Purchase <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span>
+			   </th>
+               <th style="width:20%;">
+			   Name of Supplier <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span>
+			   </th>
+               <th style="width:20%;">
+			   Rupees <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span>
+			   </th>
+			   <th style="width:20%;">
+			   Asset Name <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span>
+			   </th>
                </tr>
 		
 

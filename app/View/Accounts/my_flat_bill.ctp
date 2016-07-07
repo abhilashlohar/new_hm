@@ -76,7 +76,7 @@ $default_date_to = date('d-m-Y',$to);
 </div>
 
 <br/>
-<div style="width:98%;margin:auto;overflow:auto;background-color:#FFF;padding:5px;display:none;border:solid 1px #ccc;" id="result_statement" >
+<div style="width:98%;overflow:auto;background-color:#FFF;display:none;" id="result_statement" >
 	
 </div>
 

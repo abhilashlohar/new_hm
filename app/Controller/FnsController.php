@@ -124,10 +124,10 @@ function fetch_module_info_via_module_id($module_id){
 	return $this->main_module->find('all',array('conditions'=>$conditions));
 }
 
-function fetch_page_info_via_module_id($module_id){
+function fetch_page_info_via_module_id($module_id,$default_role){
 	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('role_privilege');
-	$conditions=array('module_id'=>$module_id,'society_id'=>$s_society_id);
+	$conditions=array('module_id'=>$module_id,'society_id'=>$s_society_id,'role_id'=>(int)$default_role);
 	$privilege=$this->role_privilege->find('all',array('conditions'=>$conditions,'limit'=>1));
 	$sub_module_id=$privilege[0]["role_privilege"]["sub_module_id"];
 	

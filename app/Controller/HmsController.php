@@ -28715,7 +28715,6 @@ function menus_as_per_user_rights(){
 			
 			$assigned_modules = array_unique($assigned_modules);
 			$assigned_sub_modules = array_unique($assigned_sub_modules);
-			
 			$this->loadmodel('module_type');
 			$order=array("module_type.order" => "ASC");
 			$module_types=$this->module_type->find('all',array('order'=>$order));
@@ -28752,7 +28751,7 @@ function menus_as_per_user_rights(){
 						$module_name=$module_info[0]["main_module"]["module_name"];
 						$icon=$module_info[0]["main_module"]["icon"];
 						
-						$page_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_page_info_via_module_id'),array('pass'=>array($module_id)));
+						$page_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_page_info_via_module_id'),array('pass'=>array($module_id,$default_role)));
 						$controller=$page_info[0]["page"]["controller"];
 						$page_name=$page_info[0]["page"]["page_name"];
 						?>

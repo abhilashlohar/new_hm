@@ -120,7 +120,7 @@ $( ".edit_role" ).click(function() {
 	$( ".role_delete" ).click(function() {
 		var role_id = $(this).attr("update_id");
 		
-		$('#delete_topic_result').html('<div id="pp"><div class="modal-backdrop fade in"></div><div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"><div class="modal-body" style="font-size:14px;"><i class="icon-warning-sign" style="color:#d84a38;"></i> Sure, you want to delete the role ?</div><div class="modal-footer"><a href="<?php echo $webroot_path; ?>Hms/role_new_delete?con='+role_id+'" class="btn blue" id="yes">Yes</a><a href="#" role="button" id="can" class="btn">No</a></div></div></div>');
+		$('#delete_topic_result').html('<div id="pp"><div class="modal-backdrop fade in"></div><div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"><div class="modal-body" style="font-size:14px;"><i class="icon-warning-sign" style="color:#d84a38;"></i> Sure, you want to delete this role ?</div><div class="modal-footer"><a href="<?php echo $webroot_path; ?>Hms/role_new_delete?con='+role_id+'" class="btn blue" id="yes">Yes</a><a href="#" role="button" id="can" class="btn">No</a></div></div></div>');
 	});	
 	
 	$('#edit_submit').validate({

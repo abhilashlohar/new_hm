@@ -110,6 +110,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 										
 										}
 										$href=$webroot_path."Incometrackers/regular_bill_view/".$auto_id;
+										$tooltip="View bill";
 									}
 									if($table_name=="cash_bank"){
 										
@@ -140,7 +141,8 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 													$source="Petty Cash Payment";
 													$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_number"];
 												}
-									$href=$webroot_path."Cashbanks/bank_receipt_html_view/".$transaction_id;							
+									$href=$webroot_path."Cashbanks/bank_receipt_html_view/".$transaction_id;
+									$tooltip="View Receipt";							
 									} 
 									
 								if($table_name=="journal"){
@@ -154,6 +156,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 											$refrence_no=$data['journal']['voucher_id'];
 										}
 									$href=$webroot_path."Bookkeepings/journal_voucher_view/".$refrence_no;
+									$tooltip="View Journal Voucher";
 									}
 									
 									if($table_name=="expense_tracker"){
@@ -178,6 +181,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 							$date = $result_adhoc[0]["supplimentry_bill"]["date"];	
 							$prepaired_by = (int)$result_adhoc[0]["supplimentry_bill"]["created_by"];		
 							$href=$webroot_path."Incometrackers/supplimentry_view/".$supplimentry_bill_id;
+							$tooltip="View Supplimentry Bill";
 						}				
 									
 						$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array(@$prepaired_by)));
@@ -188,7 +192,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 						@$dattt = date('d-m-Y',strtotime(@$date));?>
 							<tr>
 								<td><?php echo date("d-m-Y",$transaction_date); ?></td>
-								<td><a href="<?php echo $href; ?>" target="blank"><?php echo $refrence_no; ?></a></td>
+								<td><a href="<?php echo $href; ?>" target="blank" class="tooltips" data-placement="bottom" data-original-title="<?php echo $tooltip; ?>"><?php echo $refrence_no; ?></a></td>
 								<td><?php echo $description; ?></td>
 								<td><?php echo $source; ?></td>
 								

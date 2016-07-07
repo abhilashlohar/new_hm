@@ -153,11 +153,11 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 </form>
 </div>
 
-<div class="portlet box green">
+<div class="portlet box green" >
 							<div class="portlet-title">
 								<h4>Receipts for Approval</h4>
 							</div>
-							<div class="portlet-body">
+							<div class="portlet-body" style="overflow:auto;">
 								<table class="table table-bordered table-hover">
 									<thead>
 										<tr>

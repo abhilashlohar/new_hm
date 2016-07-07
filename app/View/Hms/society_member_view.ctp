@@ -45,6 +45,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			<tbody>
 			<?php $sr_no=0;
 			//pr($arranged_users); 
+			echo $main_admin_user_id;
 			$count_owner=0; $count_tenant=0; $count_family_owner=0;$resident_count=0;$count_family_tenant=0;$awating_count=0;
 			foreach($arranged_users as $user_id=>$user_info){ 
 				$user_name=$user_info["user_name"];
@@ -100,7 +101,9 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 								</a>
 								<ul class="dropdown-menu" style="min-width: 80px ! important; margin-left: -52px;">
 									<li><a href="update_member_info/<?php echo $user_id; ?>" ><i class="icon-pencil"></i> Edit</a></li>
-									<li><a href="#" role="button" class="exit" user_flat_id="<?php echo $user_flat_id; ?>" style="color:red;"><i class=" icon-exclamation-sign "></i> Exit</a></li>
+						<?php if($main_admin_user_id!=$user_id){ ?>
+										<li><a href="#" role="button" class="exit" user_flat_id="<?php echo $user_flat_id; ?>" style="color:red;"><i class=" icon-exclamation-sign "></i> Exit</a></li> 
+								<?php } ?>
 								</ul>
 								</div>
 							</td>
@@ -135,7 +138,9 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 							</a>
 							<ul class="dropdown-menu" style="min-width: 80px ! important; margin-left: -52px;">
 								<li><a href="update_member_info/<?php echo $user_id; ?>" ><i class="icon-pencil"></i> Edit</a></li>
-								<li><a href="#" role="button" class="exit" user_flat_id="<?php echo $user_flat_id; ?>"  style="color:red;"><i class=" icon-exclamation-sign" ></i> Exit</a></li>
+				<?php if($main_admin_user_id!=$user_id){ ?>							
+							<li><a href="#" role="button" class="exit" user_flat_id="<?php echo $user_flat_id; ?>"  style="color:red;"><i class=" icon-exclamation-sign" ></i> Exit</a></li>
+				<?php } ?>
 							</ul>
 							</div>
 						</td>

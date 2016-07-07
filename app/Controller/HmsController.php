@@ -13271,6 +13271,14 @@ $this->response->header('Location','society_approve');
 
 }
 
+function role_new_delete(){
+	
+$this->layout=null;	
+$auto_id=(int)$this->request->query('con');	
+$this->loadmodel('role');
+$this->role->updateAll(array("delete_id"=>0),array("auto_id"=>$auto_id));
+$this->redirect(array('action' => 'role_add'));
+}
 
 function role_add()
 {
@@ -13291,12 +13299,25 @@ $role_id=$this->autoincrement_with_society('role','role_id');
 
 
 $this->loadmodel('role');
-$multipleRowData = Array( Array('auto_id'=>$auto_id,'role_id' => $role_id, 'role_name' => $role_name,'society_id' => $s_society_id));
+$multipleRowData = Array( Array('auto_id'=>$auto_id,'role_id' => $role_id, 'role_name' => $role_name,'society_id' => $s_society_id,'delete_id'=>1));
 $this->role->saveAll($multipleRowData); 
 }
 
+if (isset($this->request->data['update_data'])) 
+{
+	  $role_name=$this->request->data['edit_text'];
+	  $update_id=(int)$this->request->data['update'];
+	  $this->loadmodel('role');
+	  $this->role->updateAll(array("role_name"=>$role_name),array("auto_id"=>$update_id));
+}
+
 $this->loadmodel('role');
-$conditions=array("society_id" => $s_society_id);
+
+$conditions =array('$or' => array( 
+array("society_id" => $s_society_id,'role_id'=>array('$lte'=>6)),
+array('society_id' =>$s_society_id,'delete_id' =>1)
+));
+
 $this->set('result_role',$this->role->find('all',array('conditions'=>$conditions)));
 
 
@@ -19855,6 +19876,7 @@ $result_user_flat= $this->user_flat->find('all',array('conditions'=>$conditions)
 		}
 }
 
+
 function society_member_view(){
 	if($this->RequestHandler->isAjax()){
 			$this->layout='blank';
@@ -19865,9 +19887,16 @@ function society_member_view(){
 	$this->check_user_privilages();	
 	$s_society_id=$this->Session->read('hm_society_id');
 	
-	$result_society_name= $this->requestAction(array('controller' => 'Fns', 'action' => 'society_name_via_society_id'),array('pass'=>array($s_society_id)));
+	$this->loadmodel('society');
+	$conditions=array("society_id"=>$s_society_id);
+	$result_society=$this->society->find('all',array('conditions'=>$conditions));
+	$result_society_name=$result_society[0]['society']['society_name'];
+	
+	$main_admin_user_id=$result_society[0]['society']['user_id'];
+	
 	
 	$this->set(compact("result_society_name"));
+	$this->set(compact("main_admin_user_id"));
 	$arranged_users=array();
 	
 	

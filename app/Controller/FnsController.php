@@ -10,6 +10,37 @@ function webroot_path(){
 	return @$resultwebroot_path[0]['assistant']['path'];
 }
 
+function find_out_role_assign_member($role_id){
+	$res="true";
+	
+	
+	$s_society_id=$this->Session->read('hm_society_id');
+	$this->loadmodel('user');
+	$conditions=array('society_id'=>$s_society_id,'active'=>'yes');
+		$result_user=$this->user->find('all',array('conditions'=>$conditions));
+		foreach($result_user as $data){
+			 $user_ids[]=(int)$data['user']['user_id'];
+			
+		}
+		
+		$this->loadmodel('user_role');
+		$conditions=array('role_id'=>(int)$role_id);
+		$role_info=$this->user_role->find('all',array('conditions'=>$conditions));
+	
+		foreach($role_info as $data){
+			$role_user_ids[]=(int)$data['user_role']['user_id'];
+			
+		}
+	
+		foreach($user_ids as $user_id){
+				if(@in_array((int)$user_id,$role_user_ids))
+					{
+						$res="false";
+					}
+		}
+	return $res;
+}
+
 function user_flat_info_via_user_id($user_id){
 	$this->loadmodel('user_flat');
 	$conditions=array("user_id" =>$user_id);

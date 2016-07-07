@@ -1,8 +1,7 @@
 
 <div style="overflow: auto;">
-<a href="<?php echo $webroot_path; ?>Accounts/my_flat_bill_excel_export1/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $ledger_sub_account_id; ?>" class="btn mini blue pull-right hide_at_print" style="margin-left: 2px;" ><i class="icon-download"></i></a>
-
-<a href="#" role="button" class="btn mini purple pull-right hide_at_print" style="margin-left: 2px;" onclick="window.print();"><i class="fa fa-print"></i></a>
+	<a href="<?php echo $webroot_path; ?>Accounts/my_flat_bill_excel_export1/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $ledger_sub_account_id; ?>" class="btn mini blue pull-right hide_at_print" style="margin-left: 2px;" ><i class="fa fa-file-excel-o" aria-hidden="true"></i> Excel</a>
+	<a href="#" role="button" class="btn mini purple pull-right hide_at_print" style="margin-left: 2px;" onclick="window.print();"><i class="fa fa-print"></i> Print</a>
 </div>
 <?php
 foreach($result_society as $data){

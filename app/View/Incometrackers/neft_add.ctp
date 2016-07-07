@@ -58,7 +58,7 @@ else
 <div class="portlet-body form">
 <div class="row-fluid">                     
 <div class="span6">                      
-
+<!--
 <label  style="font-size:14px;">NEFT Detail For<span style="color:red;">*</span> </label>
 <div class="controls">
 <label class="radio">
@@ -70,7 +70,7 @@ All
 Wing Wise
 </label>
 </div>
-<br />
+<br />-->
 <input type="hidden" value="ALL" name="neft_for">
 <div id="show1">
 <label style="font-size:14px;">Account Name<span style="color:red;">*</span></label>

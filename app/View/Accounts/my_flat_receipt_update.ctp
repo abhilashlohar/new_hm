@@ -146,7 +146,7 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 </tr>						
 </table>
 <div class="form-actions">
-<button type="submit" class="btn green" name="my_flat_receipt_update">Update My Receipt</button>
+<button type="submit" class="btn green" name="my_flat_receipt_update">Update Payment Detail </button>
 </div>
 </div>
 </div>

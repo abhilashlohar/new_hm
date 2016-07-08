@@ -96,10 +96,9 @@ $(".resend_meeting").click(function(){
 		$.ajax({
 			url: "governace_meeting_resend/"+meeting_id,
 		}).done(function(response){
-			alert(response);
-			/*if(response=="done"){
-				//$("#rep"+notice_id).html('<a class="btn mini red">Email Sent</a>');
-			 } */
+			if(response=="done"){
+				$("#rep"+meeting_id).html('<a class="btn mini red">Email Sent</a>');
+			 } 
 			
 		});
 	});	

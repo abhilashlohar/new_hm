@@ -125,7 +125,7 @@ else if($ac_type == 2){
 if($date >= $m_from && $date <= $m_to){
 $date = date('d-m-Y',($date));
 $total_debit =  $total_debit + $total_tds_amount; 
-$total_tds_amount = number_format($total_tds_amount); ?>
+$total_tds_amount = $this->Currency->formatCurrency($total_tds_amount, "INR"); ?>
 <tr>
 	<td><?php echo $date; ?> </td>
 	<td><?php echo $receipt_no; ?> </td>
@@ -157,7 +157,7 @@ $total_tds_amount = number_format($total_tds_amount); ?>
 <tr>
 	<td colspan="7" style="text-align:right;"><b>Total</b></td>
 	<td style="text-align:right;"><b><?php 
-	$total_debit = number_format($total_debit);
+	$total_debit = $this->Currency->formatCurrency( $total_debit, "INR");
 	echo $total_debit; ?> <?php //echo "  DR"; ?></b></td>
 	<td class="hide_at_print"></td>
 </tr>

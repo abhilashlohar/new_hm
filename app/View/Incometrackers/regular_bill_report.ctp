@@ -65,6 +65,7 @@
 					$noc_charge=$data["regular_bill"]["noc_charge"];
 					$other_charge=$data["regular_bill"]["other_charge"];
 					$total=$data["regular_bill"]["total"];
+					//$total=$this->Currency->formatCurrency( $total, "INR");
 					$arrear_principle=$data["regular_bill"]["arrear_principle"];
 					$arrear_intrest=$data["regular_bill"]["arrear_intrest"];
 					$intrest_on_arrears=$data["regular_bill"]["intrest_on_arrears"];

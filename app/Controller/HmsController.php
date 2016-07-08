@@ -8362,6 +8362,7 @@ function dashboard(){
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	
 
+
 		   
 		//////////////Help-desk  last 3 tickets///////////////// 
 		$this->loadmodel('help_desk');

@@ -60,9 +60,9 @@ for period <?php echo $from; ?> to <?php echo $to; ?>
 						
 						<td align="right" style="border:none;border-right: 1px solid;"><span style="float:right;">
 						<?php 
-						if($balance_sheet_expenditure>0){ echo number_format($balance_sheet_expenditure) ;  }else{
+						if($balance_sheet_expenditure>0){ echo $this->Currency->formatCurrency( $balance_sheet_expenditure, "INR") ;  }else{
 							$plus_sign=$balance_sheet_expenditure;
-							echo "(".number_format(abs($plus_sign)).")" ; }
+							echo "(".$this->Currency->formatCurrency(abs($plus_sign), "INR").")" ; }
 						$total_balace_expenditure+=$balance_sheet_expenditure; $total_ledger_account_expen+=$balance_sheet_expenditure  ?></span></td>
 						<td style="border:none;"></td>
 					</tr>
@@ -74,8 +74,8 @@ for period <?php echo $from; ?> to <?php echo $to; ?>
 							<span style="float:right;"> 
 							<?php 
 							if($total_ledger_account_expen>0){
-							echo number_format($total_ledger_account_expen);
-							}else{ echo "(".number_format(abs($total_ledger_account_expen)).")"; }
+							echo $this->Currency->formatCurrency( $total_ledger_account_expen, "INR");
+							}else{ echo "(".$this->Currency->formatCurrency(abs($total_ledger_account_expen), "INR").")"; }
 							?>
 							</span></td></tr>
 					<?php } } ?>
@@ -117,9 +117,9 @@ for period <?php echo $from; ?> to <?php echo $to; ?>
 						<td style="border:none;"><?php echo $ledger_name;  ?></td>
 						<td align="right" style="border:none;border-right: 1px solid;"><span style="float:right;"> 
 						<?php 
-						if($balance_sheet_income>0){ echo number_format($balance_sheet_income) ; }else{
+						if($balance_sheet_income>0){ echo $this->Currency->formatCurrency( $balance_sheet_income, "INR") ; }else{
 							$plus_sign=$balance_sheet_income;
-							echo "(".number_format(abs($plus_sign)).")" ; 
+							echo "(".$this->Currency->formatCurrency(abs($plus_sign), "INR").")" ; 
 						}
 						$total_balace+=$balance_sheet_income;  $total_ledger_account+=$balance_sheet_income; ?></span></td>
 						<td style="border:none;"></td>
@@ -134,7 +134,7 @@ for period <?php echo $from; ?> to <?php echo $to; ?>
 					<td style="border:none;"><span style="float:right;">
 					<?php 
 					if($total_ledger_account>0){
-					echo number_format($total_ledger_account); }else{ echo "(".number_format(abs($total_ledger_account)).")"; }
+					echo $this->Currency->formatCurrency( $total_ledger_account, "INR"); }else{ echo "(".$this->Currency->formatCurrency(abs($total_ledger_account), "INR").")"; }
 	
 					?> </span></td>
 					
@@ -156,7 +156,7 @@ if($total_balace>$total_balace_expenditure){
 				<table width="100%" style="border:none;">
 				<tr>
 				<td colspan="2" width="75%" style="border:none;border-right: 1px solid;"><span ><b>Surplus in income over expenditure</b></span> </td>
-				<td align="right"><span style="float:right;"> <?php echo number_format($total_surplus); $total_balace_expenditure+=$total_surplus; ?></span></td>
+				<td align="right"><span style="float:right;"> <?php echo $this->Currency->formatCurrency( $total_surplus, "INR"); $total_balace_expenditure+=$total_surplus; ?></span></td>
 				
 				</tr>
 				
@@ -174,7 +174,7 @@ if($total_balace>$total_balace_expenditure){
 				<table width="100%" style="border:none;">
 					<tr>
 					<td colspan="2" width="75%" style="border:none;border-right: 1px solid;"><span ><b>Deficit in income over expenditure</b></span> </td>
-					<td align="right"><span style="float:right;"> <?php echo number_format($total_surplus); $total_balace+=$total_surplus; ?></span>
+					<td align="right"><span style="float:right;"> <?php echo $this->Currency->formatCurrency( $total_surplus, "INR"); $total_balace+=$total_surplus; ?></span>
 					</td>
 					
 					</tr>
@@ -189,7 +189,7 @@ if($total_balace>$total_balace_expenditure){
 			<table width="100%" style="border:none;">
 					<tr>
 					<td colspan="2" width="75%" style="border:none;border-right: 1px solid;"><b style="float:left;">Total</b>  </td>
-					<td align="right"> <span style="float:right;"><?php echo number_format($total_balace); ?> </span>
+					<td align="right"> <span style="float:right;"><?php echo $this->Currency->formatCurrency( $total_balace, "INR"); ?> </span>
 					</td>
 					
 					</tr>
@@ -209,7 +209,7 @@ if($total_balace>$total_balace_expenditure){
 			<table width="100%" style="border:none;">
 					<tr>
 					<td colspan="2" width="75%" style="border:none;border-right: 1px solid;"><b style="float:left;">Total</b>  </td>
-					<td align="right">  <span style="float:right;"><?php echo number_format($total_balace_expenditure); ?></span>
+					<td align="right">  <span style="float:right;"><?php echo $this->Currency->formatCurrency( $total_balace_expenditure, "INR"); ?></span>
 					</td>
 					
 					</tr>

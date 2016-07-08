@@ -85,7 +85,7 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 				<?php if($trail_balance["opening_balance"][1]=="Dr"){
 					?>
 					<td style="text-align: right;">
-						<?php echo $trail_balance["opening_balance"][0]; 
+						<?php echo $this->Currency->formatCurrency( $trail_balance["opening_balance"][0], "INR"); 
 						$total_ob_debit+=$trail_balance["opening_balance"][0]; ?>
 					</td>
 					<td style="text-align: right;">0</td>
@@ -94,7 +94,7 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 					?>
 					<td style="text-align: right;">0</td>
 					<td style="text-align: right;">
-						<?php echo $trail_balance["opening_balance"][0]; 
+						<?php echo $this->Currency->formatCurrency( $trail_balance["opening_balance"][0], "INR"); 
 						$total_ob_credit+=$trail_balance["opening_balance"][0]; ?>
 					</td>
 					<?php
@@ -107,17 +107,17 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 				}
 				?>
 				
-				<td style="text-align: right;"><?php echo $trail_balance["debit"]; 
+				<td style="text-align: right;"><?php echo $this->Currency->formatCurrency( $trail_balance["debit"], "INR"); 
 				$total_debit+=$trail_balance["debit"];
 				?></td>
-				<td style="text-align: right;"><?php echo $trail_balance["credit"]; 
+				<td style="text-align: right;"><?php echo $this->Currency->formatCurrency( $trail_balance["credit"], "INR"); 
 				$total_credit+=$trail_balance["credit"];
 				?></td>
 				
 				<?php if($trail_balance["closing_balance"][1]=="Dr"){
 					?>
 					<td style="text-align: right;">
-						<?php echo $trail_balance["closing_balance"][0]; 
+						<?php echo $this->Currency->formatCurrency( $trail_balance["closing_balance"][0], "INR"); 
 						$total_cb_debit+=$trail_balance["closing_balance"][0]; ?>
 					</td>
 					<td style="text-align: right;">0</td>
@@ -126,7 +126,7 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 					?>
 					<td style="text-align: right;">0</td>
 					<td style="text-align: right;">
-						<?php echo $trail_balance["closing_balance"][0]; 
+						<?php echo $this->Currency->formatCurrency( $trail_balance["closing_balance"][0], "INR"); 
 						$total_cb_credit+=$trail_balance["closing_balance"][0]; ?>
 					</td>
 					<?php
@@ -156,7 +156,7 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 				<?php if($trail_balance["opening_balance"][1]=="Dr"){
 					?>
 					<td style="text-align: right;">
-						<?php echo $trail_balance["opening_balance"][0]; 
+						<?php echo $this->Currency->formatCurrency( $trail_balance["opening_balance"][0], "INR"); 
 						$total_ob_debit+=$trail_balance["opening_balance"][0]; ?>
 					</td>
 					<td style="text-align: right;">0</td>
@@ -165,7 +165,7 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 					?>
 					<td style="text-align: right;">0</td>
 					<td style="text-align: right;">
-						<?php echo $trail_balance["opening_balance"][0]; 
+						<?php echo $this->Currency->formatCurrency( $trail_balance["opening_balance"][0], "INR"); 
 						$total_ob_credit+=$trail_balance["opening_balance"][0]; ?>
 					</td>
 					<?php
@@ -178,17 +178,17 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 				}
 				?>
 				
-				<td style="text-align: right;"><?php echo $trail_balance["debit"]; 
+				<td style="text-align: right;"><?php echo $this->Currency->formatCurrency( $trail_balance["debit"], "INR"); 
 				$total_debit+=$trail_balance["debit"];
 				?></td>
-				<td style="text-align: right;"><?php echo $trail_balance["credit"]; 
+				<td style="text-align: right;"><?php echo$this->Currency->formatCurrency( $trail_balance["credit"], "INR"); 
 				$total_credit+=$trail_balance["credit"];
 				?></td>
 				
 				<?php if($trail_balance["closing_balance"][1]=="Dr"){
 					?>
 					<td style="text-align: right;">
-						<?php echo $trail_balance["closing_balance"][0]; 
+						<?php echo $this->Currency->formatCurrency($trail_balance["closing_balance"][0], "INR"); 
 						$total_cb_debit+=$trail_balance["closing_balance"][0]; ?>
 					</td>
 					<td style="text-align: right;">0</td>
@@ -197,7 +197,7 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 					?>
 					<td style="text-align: right;">0</td>
 					<td style="text-align: right;">
-						<?php echo $trail_balance["closing_balance"][0]; 
+						<?php echo $this->Currency->formatCurrency( $trail_balance["closing_balance"][0], "INR"); 
 						$total_cb_credit+=$trail_balance["closing_balance"][0]; ?>
 					</td>
 					<?php
@@ -217,12 +217,12 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 		
 		<tr>
 			<th><b>TOTAL</b></th>
-			<th style="text-align: right;"><?php echo $total_ob_debit; ?></th>
-			<th style="text-align: right;"><?php echo $total_ob_credit; ?></th>
-            <th style="text-align: right;"><?php echo $total_debit; ?></th>
-            <th style="text-align: right;"><?php echo $total_credit; ?></th>
-			<th style="text-align: right;"><?php echo $total_cb_debit; ?></th>
-			<th style="text-align: right;"><?php echo $total_cb_credit; ?></th>
+			<th style="text-align: right;"><?php echo $this->Currency->formatCurrency( $total_ob_debit, "INR"); ?></th>
+			<th style="text-align: right;"><?php echo $this->Currency->formatCurrency( $total_ob_credit, "INR"); ?></th>
+            <th style="text-align: right;"><?php echo $this->Currency->formatCurrency( $total_debit, "INR"); ?></th>
+            <th style="text-align: right;"><?php echo $this->Currency->formatCurrency( $total_credit, "INR"); ?></th>
+			<th style="text-align: right;"><?php echo $this->Currency->formatCurrency( $total_cb_debit, "INR"); ?></th>
+			<th style="text-align: right;"><?php echo $this->Currency->formatCurrency( $total_cb_credit, "INR"); ?></th>
 		</tr>
 	</tbody>
 </table>

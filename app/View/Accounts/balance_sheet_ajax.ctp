@@ -11,6 +11,8 @@
 <?php
 $society_result=$this->requestAction(array('controller' => 'Hms', 'action' => 'society_name'),array('pass'=>array($s_society_id)));
 $society_name=$society_result[0]["society"]["society_name"];
+
+
 ?>
 <div align="center">
 <span style="font-size: 14px;"><?php echo $society_name; ?></span><br/>
@@ -58,9 +60,9 @@ $society_name=$society_result[0]["society"]["society_name"];
 						
 						<td align="right" style="border:none;border-right: 1px solid;"><span style="float:right;">
 						<?php 
-						if($balance_sheet_expenditure>0){ echo number_format($balance_sheet_expenditure) ;  }else{
+						if($balance_sheet_expenditure>0){ echo $this->Currency->formatCurrency( $balance_sheet_expenditure, "INR") ;  }else{
 							$plus_sign=$balance_sheet_expenditure;
-							echo "(".number_format(abs($plus_sign)).")" ; }
+							echo "(".$this->Currency->formatCurrency( abs($plus_sign), "INR").")" ; }
 						$total_balace_expenditure+=$balance_sheet_expenditure; $total_ledger_account_expen+=$balance_sheet_expenditure  ?></span></td>
 						<td style="border:none;"></td>
 					</tr>
@@ -72,8 +74,9 @@ $society_name=$society_result[0]["society"]["society_name"];
 							<span style="float:right;"> 
 							<?php 
 							if($total_ledger_account_expen>0){
-							echo number_format($total_ledger_account_expen);
-							}else{ echo "(".number_format(abs($total_ledger_account_expen)).")"; }
+								
+							echo $this->Currency->formatCurrency( $total_ledger_account_expen, "INR") ;
+							}else{ echo "(".$this->Currency->formatCurrency( abs($total_ledger_account_expen), "INR").")"; }
 							?>
 							</span></td></tr>
 					<?php } } ?>
@@ -114,10 +117,10 @@ $society_name=$society_result[0]["society"]["society_name"];
 					<tr>
 						<td style="border:none;"><?php echo $ledger_name;  ?></td>
 						<td align="right" style="border:none;border-right: 1px solid;"><span style="float:right;"> 
-						<?php 
-						if($balance_sheet_income>0){ echo number_format($balance_sheet_income) ; }else{
+						<?php  ;
+						if($balance_sheet_income>0){ echo $this->Currency->formatCurrency($balance_sheet_income, "INR") ; }else{
 							$plus_sign=$balance_sheet_income;
-							echo "(".number_format(abs($plus_sign)).")" ; 
+							echo "(".$this->Currency->formatCurrency(abs($plus_sign), "INR").")" ; 
 						}
 						$total_balace+=$balance_sheet_income;  $total_ledger_account+=$balance_sheet_income; ?></span></td>
 						<td style="border:none;"></td>
@@ -131,8 +134,8 @@ $society_name=$society_result[0]["society"]["society_name"];
 					<td style="border:none;border-right: 1px solid; border-top: 1px solid;"> </td>
 					<td style="border:none;"><span style="float:right;">
 					<?php 
-					if($total_ledger_account>0){
-					echo number_format($total_ledger_account); }else{ echo "(".number_format(abs($total_ledger_account)).")"; }
+					if($total_ledger_account>0){ 
+					echo $this->Currency->formatCurrency($total_ledger_account, "INR"); }else{ echo "(".$this->Currency->formatCurrency(abs($total_ledger_account), "INR").")"; }
 	
 					?> </span></td>
 					
@@ -153,8 +156,8 @@ if($balance_sheet_income_expenditure>0){
 				
 					<table width="100%" style="border:none;">
 					<tr>
-					<td colspan="2" width="75%" style="border:none;border-right: 1px solid;"> <span><b>Surplus in income over expenditure</b></span></td>
-					<td align="right"> <span style="float:right;"> <?php echo number_format($total_surplus); $total_balace_expenditure+=$total_surplus; ?></span> </td>
+					<td colspan="2" width="75%" style="border:none;border-right: 1px solid;"> <span><b>Surplus in income over expenditure</b></span></td> 
+					<td align="right"> <span style="float:right;"> <?php echo $this->Currency->formatCurrency($total_surplus, "INR"); $total_balace_expenditure+=$total_surplus; ?></span> </td>
 					
 					</tr>
 					
@@ -172,8 +175,8 @@ if($balance_sheet_income_expenditure>0){
 				
 				<table width="100%" style="border:none;">
 					<tr>
-					<td colspan="2" width="75%" style="border:none;border-right: 1px solid;"> <span ><b>Surplus in expenditure over income </b></span>   </td>
-					<td align="right"> <span style="float:right;"> <?php echo number_format($total_surplus); $total_balace+=$total_surplus; ?></span>
+					<td colspan="2" width="75%" style="border:none;border-right: 1px solid;"> <span ><b>Surplus in expenditure over income </b></span>   </td> 
+					<td align="right"> <span style="float:right;"> <?php echo $this->Currency->formatCurrency($total_surplus, "INR"); $total_balace+=$total_surplus; ?></span>
 					</td>
 					
 					</tr>
@@ -191,7 +194,7 @@ if($balance_sheet_income_expenditure>0){
 			<table width="100%" style="border:none;">
 					<tr>
 					<td colspan="2" width="75%" style="border:none;border-right: 1px solid;"><b style="float:left;">Total</b>  </td>
-					<td align="right"> <span style="float:right;"><?php echo number_format($total_balace_expenditure); ?></span>
+					<td align="right"> <span style="float:right;"><?php echo $this->Currency->formatCurrency($total_balace_expenditure, "INR"); ?></span>
 					</td>
 					
 					</tr>
@@ -205,7 +208,7 @@ if($balance_sheet_income_expenditure>0){
 			<table width="100%" style="border:none;">
 					<tr>
 					<td colspan="2" width="75%" style="border:none;border-right: 1px solid;"><b style="float:left;">Total</b>  </td>
-					<td align="right">  <span style="float:right;"><?php echo number_format($total_balace); ?> </span>
+					<td align="right">  <span style="float:right;"><?php echo $this->Currency->formatCurrency($total_balace, "INR"); ?> </span>
 
 					</td>
 					

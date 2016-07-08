@@ -76,6 +76,7 @@ $i++;
 	 <a href="<?php echo $webroot_path; ?>Governances/governance_invite_draft/<?php echo $gov_id; ?>" rel='tab' class="btn mini blue tooltips" data-placement="bottom" data-original-title="Draft" ><i class="icon-inbox"></i></a>
 	<?php } ?>
 	<?php if(!empty($minute_id)){ ?><a href="<?php echo $webroot_path; ?>Governances/governance_minute_view1/<?php echo $minute_id; ?>" rel='tab' class="btn mini yellow tooltips" data-placement="bottom" data-original-title="Minutes View" ><i class="icon-search"></i></a> <?php } ?>
+	<span id="rep<?php echo $gov_id; ?>"><a  class='btn mini red resend_meeting tooltips' element_id="<?php echo $gov_id; ?>" data-placement="bottom" data-original-title="Resend Email" > <i class=' icon-envelope'></i></a></span>
 	</td>
 <?php } ?>	
 	
@@ -86,6 +87,24 @@ $i++;
 </div>
 
 <script type="text/javascript">
+
+$(document).ready(function() {
+	
+$(".resend_meeting").click(function(){
+
+	var meeting_id=$(this).attr("element_id");
+		$.ajax({
+			url: "governace_meeting_resend/"+meeting_id,
+		}).done(function(response){
+			alert(response);
+			/*if(response=="done"){
+				//$("#rep"+notice_id).html('<a class="btn mini red">Email Sent</a>');
+			 } */
+			
+		});
+	});	
+});		
+
 		 var $rows = $('#table tr');
 		 $('#search').keyup(function() {
 			var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();

@@ -112,6 +112,7 @@ foreach($result_notice_publish as $data){
 				{ ?>
 				<a href='notice_move_archive/<?php echo $notice_id; ?>' class='btn mini tooltips' data-placement="bottom" data-original-title="Send to Archives " style='background-color:#FFA500;' > <i class=' icon-move'></i></a>
 			<?php } ?>
+			<span id="rep<?php echo $notice_id; ?>"><a  class='btn mini red resend_notice tooltips' element_id="<?php echo $notice_id; ?>" data-placement="bottom" data-original-title="Resend Email" > <i class=' icon-envelope'></i></a></span>
 				</td>
 				
 				
@@ -121,10 +122,24 @@ foreach($result_notice_publish as $data){
 </table> 
 
 </div>
-
+<div id="sh"></div>
 
 <script>
 $(document).ready(function() {
+	
+$(".resend_notice").click(function(){
+
+var notice_id=$(this).attr("element_id");
+	$.ajax({
+		url: "notice_resend_email/"+notice_id,
+	}).done(function(response){
+		if(response=="done"){
+			$("#rep"+notice_id).html('<a class="btn mini red">Email Sent</a>');
+		 }
+		
+	});
+});	
+	
 	
 <?php 
 $notice_create=$this->Session->read('create_notice');

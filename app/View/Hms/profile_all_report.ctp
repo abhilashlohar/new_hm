@@ -23,7 +23,7 @@
 <th>email</th>
 <th>mobile</th>
 <th>Update email</th>
-<th>update mobile</th>
+<th>Update mobile</th>
 <th>All profile update Logged In Time </th>
 </tr>
 </thead>

@@ -141,7 +141,7 @@ $(document).ready(function(){
 		   url: "<?php echo $webroot_path; ?>Discussions/submit_comment",
 		   data: $("#idForm").serialize(), // serializes the form's elements.
 		   success: function(data){
-			   alert(data);
+			  
 			   $('#sub').removeAttr('disabled');
 			   $("textarea[name=comment_box]").val("");
 			   $("#save_comment").html(data); // show response from the php script.

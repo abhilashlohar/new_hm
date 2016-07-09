@@ -19,10 +19,11 @@
 <thead>
 <tr>
 <th>Sr No.</th>
+
 <th>email</th>
 <th>mobile</th>
-<th>change email</th>
-<th>change mobile</th>
+<th>Update email</th>
+<th>update mobile</th>
 <th>All profile update Logged In Time </th>
 </tr>
 </thead>
@@ -43,6 +44,7 @@ $new_mobile=$data['profile_log']['new_mobile'];
 
 ?>
 <tr class="odd gradeX" >
+
 <td><?php echo $i ; ?></td>
 <td><?php echo $old_email ; ?></td>
 <td><?php echo $old_mobile ; ?></td>

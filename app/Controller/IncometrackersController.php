@@ -5577,7 +5577,7 @@ $this->layout=null;
 	$s_society_id=$this->Session->read('hm_society_id');	
 	
 	$this->loadmodel('noc_rate');
-	$conditions=array("flat_type_id"=>(int)$flat_type_id);
+	$conditions=array("flat_type_id"=>(int)$flat_type_id,'society_id'=>$s_society_id);
 	$this->noc_rate->deleteAll($conditions);
 
 	$this->noc_rate->saveAll(array("flat_type_id"=>(int)$flat_type_id,"income_heads" =>$head,"rate_type"=>(int)$type,"rate"=>$amt,"society_id"=>$s_society_id));

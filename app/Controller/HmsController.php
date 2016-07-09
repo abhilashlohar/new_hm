@@ -22588,7 +22588,8 @@ $this->wing->saveAll(array("wing_id" => $i,"society_id"=> $s_society_id,"wing_na
 }
 $this->loadmodel('wing');
 $condition=array('society_id'=>$s_society_id);
-$result=$this->wing->find('all',array('conditions'=>$condition)); 
+$order=array('wing.wing_name'=> 'ASC');
+$result=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order)); 
 $this->set('user_wing',$result);
 
 
@@ -23023,7 +23024,7 @@ $this->set('result_ledger_account',$result_ledger_account);
 
 
 $this->loadmodel('ledger_sub_account');
-$conditions=array("ledger_id" => 15);
+$conditions=array("ledger_id" => 15,"society_id"=>$s_society_id);
 $result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 $this->set('result_ledger_sub_account',$result_ledger_sub_account);
 
@@ -25161,20 +25162,13 @@ function flat_type()
 $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');	
 
-$this->loadmodel('flat');
-$order=array('flat.flat_name'=>'ASC');
-$conditions=array("society_id" => $s_society_id);
-$cursor1 = $this->flat->find('all',array('conditions'=>$conditions,'order'=>$order));
-$this->set('cursor1',$cursor1);
-
-
-
 
 $this->loadmodel('wing');
 $condition=array('society_id'=>$s_society_id);
 $order=array('wing.wing_name'=>'ASC');
 $wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
 $this->set('wings',$wings);
+$units=array();
 foreach($wings as $data){
 	$wing_id=$data["wing"]["wing_id"];
 	$wing_name=$data["wing"]["wing_name"];
@@ -25182,7 +25176,8 @@ foreach($wings as $data){
 		$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
 		$order=array('flat.flat_name'=>'ASC');
 		$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
-		$units=array();
+		
+		
 		foreach($flats as $data2){
 			$flat_id=$data2["flat"]["flat_id"];
 			$flat_name=$data2["flat"]["flat_name"];
@@ -25190,6 +25185,7 @@ foreach($wings as $data){
 			$units[]=array("wing_id"=>$wing_id,"wing_name"=>$wing_name,"flat_id"=>$flat_id,"flat_name"=>$flat_name);	
 		}
 }
+
 $this->set('units',$units);		
 		
 }
@@ -27978,7 +27974,7 @@ $date=date('d-m-Y');
 $time = date(' h:i a', time());
 
 $wing = htmlentities($post_data['wing']);
-
+$wing=trim($wing);
 $report = array();
 if(empty($wing)){
 $report[]=array('label'=>'win', 'text' => 'Please Fill Wing Name');

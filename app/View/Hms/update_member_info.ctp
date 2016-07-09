@@ -51,8 +51,7 @@ $(document).ready(function(){
 		var mobile=$('input[name="mobile"]').val();
 		
 		if(email==""){
-			allow="no";
-			$('#email').html("Email is required.");
+			
 		}else{
 			var filter=/^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 			if (filter.test(email)) {
@@ -74,8 +73,7 @@ $(document).ready(function(){
 		}
 		
 		if(mobile==""){
-			allow="no";
-			$('#mobile').html("Mobile is required.");
+			
 		}else{
 			var filter2=/^[0-9-+]+$/;
 			if (filter2.test(mobile)) {

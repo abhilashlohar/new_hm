@@ -45,7 +45,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			<tbody>
 			<?php $sr_no=0;
 			//pr($arranged_users); 
-			echo $main_admin_user_id;
+			
 			$count_owner=0; $count_tenant=0; $count_family_owner=0;$resident_count=0;$count_family_tenant=0;$awating_count=0;
 			foreach($arranged_users as $user_id=>$user_info){ 
 				$user_name=$user_info["user_name"];

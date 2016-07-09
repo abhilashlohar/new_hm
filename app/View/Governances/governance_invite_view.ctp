@@ -97,7 +97,7 @@ $(".resend_meeting").click(function(){
 			url: "governace_meeting_resend/"+meeting_id,
 		}).done(function(response){
 			if(response=="done"){
-				$("#rep"+meeting_id).html('<a class="btn mini red">Email Sent</a>');
+				$("#rep"+meeting_id).html('<a class="btn mini green"><i class="icon-ok"></i> Email Sent</a>');
 			 } 
 			
 		});

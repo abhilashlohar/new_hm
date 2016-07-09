@@ -240,7 +240,7 @@ function governace_meeting_resend($meeting_id=null){
 			</table>';
 			
 			
-		@$title.= '['. $society_name . ']  - '.'Notice of '.$moc.' Meeting scheduled'.'  on   '.''.$date.'';	
+		@$title.= '['. $society_name . ']  - '.' Meeting Reminder '.$moc.' Meeting scheduled'.'  on   '.''.$date.'';	
 
 		$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,$reply);
 		$title="";	

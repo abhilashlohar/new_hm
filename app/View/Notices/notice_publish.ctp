@@ -134,7 +134,7 @@ var notice_id=$(this).attr("element_id");
 		url: "notice_resend_email/"+notice_id,
 	}).done(function(response){
 		if(response=="done"){
-			$("#rep"+notice_id).html('<a class="btn mini red">Email Sent</a>');
+			$("#rep"+notice_id).html('<a class="btn mini green"><i class="icon-ok"></i> Email Sent</a>');
 		 }
 		
 	});

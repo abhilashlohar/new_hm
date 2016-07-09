@@ -189,7 +189,7 @@ function notice_resend_email($notice_id=null){
 				</div></div>';
 			
 			if(!empty($to)){
-				@$subject.= '['. $society_name . ']  - '.' New Notice : '.'     '.''.$notice_subject.'';
+				@$subject.= '['. $society_name . ']  - '.' Notice Reminder : '.'     '.''.$notice_subject.'';
 				$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
 				$subject="";
 			}

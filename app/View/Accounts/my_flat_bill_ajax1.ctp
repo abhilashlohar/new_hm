@@ -246,7 +246,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 								</tr>
 								
 								<tr>
-									<td align="center">Regn # <?php echo $society_reg_num; ?> | Email: <?php echo $society_email; ?> | Phone : <?php echo $society_phone; ?> | support@housingmatters.in | <a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end"><img src="http://localhost/new_hm//as/hm/whatsup.png" width="18px"></a> +919869157561 | <a href="http://www.housingmatters.in" target="_blank" style="color:#FFF !important;">www.housingmatters.in</a></td>
+									<td align="center"> support@housingmatters.in | <a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end"><img src="http://localhost/new_hm//as/hm/whatsup.png" width="18px"></a> +919869157561 | <a href="http://www.housingmatters.in" target="_blank" style="color:#FFF !important;">www.housingmatters.in</a></td>
 								</tr>
 																   
 							</tbody>

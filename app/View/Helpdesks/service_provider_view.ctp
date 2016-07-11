@@ -80,7 +80,10 @@ table th { font-size:12px !important ; }
                                     <th></th>
 									<th class="hide_at_print"><span style="font-size:14px;"><i class="icon-paper-clip"></i></span></th>
                                    
-									<th class="hide_at_print"></th>
+									<?php if($role_id==1)
+									{ 
+									?>
+									<th class="hide_at_print"></th><?php }?>
 									</tr>
 									</thead>
 									<tbody>
@@ -185,7 +188,7 @@ table th { font-size:12px !important ; }
                             } ?>
 						
                              </td>
-                                             
+                             <?php if($role_id==1){ ?>                      
                             <td class="hide_at_print">
                 
                 <!---- action popup ----->
@@ -224,8 +227,9 @@ table th { font-size:12px !important ; }
                          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
                         </div>
                         </div> 
-                        <!--popup end -->  			   
-                            </td>
+                        <!--popup end -->  	
+						
+                             </td> <?php }?>
                         </tr>
                    <!--popup start -->
 				   

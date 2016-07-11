@@ -32,7 +32,7 @@ function substrwords($text, $maxchar, $end='...') {
 	<tbody><tr>
 		<td><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-book"></i> Resident Directory </span> (<span id="show_resident">0</span>) </td>
 		<td align="right">
-			   <input class="m-wrap medium"  placeholder="Search" id="search" type="text" style="margin-top: 5px; margin-bottom: 5px;">
+			   <input class="m-wrap medium"  placeholder="Search:- Name,Flat,Hobbies" id="search" type="text" style="margin-top: 5px; margin-bottom: 5px;">
 		</td>
 	</tr>
 </tbody></table>

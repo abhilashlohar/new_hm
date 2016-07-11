@@ -251,7 +251,7 @@ function submit_comment(){
 					
 	
 					$from_name="HousingMatters";
-					$subject= 'Discussion: ['. $society_name . ']' .'  -   '.'New Comment: '.$comment_box.'';
+					$subject= 'Discussion: ['. $society_name . ']' .'  -   '.'New Comment on '.$topic.'';
 					$this->send_email($email,$from,$from_name,$subject,$message_web,$reply);
 					
 					
@@ -328,7 +328,7 @@ function submit_comment(){
 														<tr>
 															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
 															<td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="line-height:28px" height="28">&nbsp;</td></tr><tr><td><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:21px;color:#141823">Hello  '.$create_post_name.'<br/>'.$current_member_name.' Commented on Your
-															Topic.</span></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr><tr><td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="font-size:11px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;border:solid 1px #e5e5e5;border-radius:2px;display:block"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="padding:5px 10px;background:#269ABC;border-top:#cccccc 1px solid;border-bottom:#cccccc 1px solid"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:19px;color:#FFF">'.$topic.'</span></td></tr><tr>
+															post you were interested.</span></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr><tr><td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="font-size:11px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;border:solid 1px #e5e5e5;border-radius:2px;display:block"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="padding:5px 10px;background:#269ABC;border-top:#cccccc 1px solid;border-bottom:#cccccc 1px solid"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:19px;color:#FFF">'.$topic.'</span></td></tr><tr>
 															<td style="padding:5px;">
 															<table style="border-collapse:collapse" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding-right:10px;font-size:0px" valign="middle"><a href="#" style="color:#3b5998;text-decoration:none" target="_blank"><img  src="'.$ip.$this->webroot.'profile/'.$current_profile_pic.'" style="border:0" height="50" width="50"></a></td>
 															<td style="width:100%" valign="middle">
@@ -389,7 +389,7 @@ function submit_comment(){
 					
 	
 					$from_name="HousingMatters";
-					$subject= 'Discussion: ['. $society_name . ']' .'  -   '.'New Comment: '.$comment_box.'';
+					$subject= 'Discussion: ['. $society_name . ']' .'  -   '.'New Comment on '.$topic.'';
 					$this->send_email($current_email,$from,$from_name,$subject,$message_web,$reply);
 					
 					
@@ -445,8 +445,7 @@ function submit_comment(){
 														</tr>
 														<tr>
 															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
-															<td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="line-height:28px" height="28">&nbsp;</td></tr><tr><td><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:21px;color:#141823">Hello  '.$commenter_name.'<br/>'.$current_member_name.' Commented on '.$create_post_name.' 
-															topic.</span></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr><tr><td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="font-size:11px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;border:solid 1px #e5e5e5;border-radius:2px;display:block"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="padding:5px 10px;background:#269ABC;border-top:#cccccc 1px solid;border-bottom:#cccccc 1px solid"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:19px;color:#FFF">'.$topic.'</span></td></tr><tr>
+															<td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="line-height:28px" height="28">&nbsp;</td></tr><tr><td><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:21px;color:#141823">Hello  '.$commenter_name.'<br/>'.$current_member_name.' commented on a post you were interested.</span></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr><tr><td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="font-size:11px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;border:solid 1px #e5e5e5;border-radius:2px;display:block"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="padding:5px 10px;background:#269ABC;border-top:#cccccc 1px solid;border-bottom:#cccccc 1px solid"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:19px;color:#FFF">'.$topic.'</span></td></tr><tr>
 															<td style="padding:5px;">
 															<table style="border-collapse:collapse" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding-right:10px;font-size:0px" valign="middle"><a href="#" style="color:#3b5998;text-decoration:none" target="_blank"><img  src="'.$ip.$this->webroot.'profile/'.$current_profile_pic.'" style="border:0" height="50" width="50"></a></td>
 															<td style="width:100%" valign="middle">
@@ -507,7 +506,7 @@ function submit_comment(){
 					
 	
 					$from_name="HousingMatters";
-					$subject= 'Discussion: ['. $society_name . ']' .'  -   '.'New Comment: '.$comment_box.'';
+					$subject= 'Discussion: ['. $society_name . ']' .'  -   '.'New Comment on '.$topic.'';
 					$this->send_email($email,$from,$from_name,$subject,$message_web,$reply);
 					
 					

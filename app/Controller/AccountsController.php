@@ -1728,6 +1728,16 @@ function my_flat_bill_excel_export1($from=null,$to=null,$ledger_sub_account_id=n
 	$to=date("Y-m-d",strtotime($to));
 	$this->set("to",$to);
 	$this->set("ledger_sub_account_id",$ledger_sub_account_id);
+	$member_detail=$this->requestAction(array('controller'=>'Fns','action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id)));	
+	$wing_id = $member_detail['wing_id'];
+	$flat_id = $member_detail['flat_id'];
+    $user_id = $member_detail['user_id']; 	
+    $user_name = $member_detail['user_name'];
+	$this->set('user_name',$user_name);
+	
+	$wing_flat=$this->requestAction(array('controller' => 'Fns', 'action' => 'wing_flat_via_wing_id_and_flat_id'), array('pass' => array($wing_id,$flat_id)));
+	$this->set('wing_flat',$wing_flat);
+	
 	
 $this->loadmodel('society');
 $conditions=array("society_id"=>$s_society_id);

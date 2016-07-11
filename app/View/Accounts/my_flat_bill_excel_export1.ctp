@@ -19,7 +19,9 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
             <tr>
 			<th colspan="6" style="text-align:center;">Account Statement <?php echo $society_name; ?> Register from : <?php echo date('d-m-Y',strtotime($from)); ?>-to:<?php echo date('d-m-Y',strtotime($to)); ?></th>
 			</tr>
-			<th colspan="6" style="text-align:right;">Opening Balance: <?php echo $opening_balance; ?></th>
+			<tr>
+			<th colspan="3" style="text-align:left;"><?php echo $user_name; ?> (<?php echo $wing_flat; ?>)</th>
+			<th colspan="3" style="text-align:right;">Opening Balance: <?php echo $opening_balance; ?></th>
 			</tr>
 			<tr>
 				<th>Transaction Date</th>

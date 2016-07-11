@@ -124,7 +124,7 @@ foreach($arranged_users as $user_id=> $user_info){
 					</div>
 					<?php 
 					if($medical_pro==1){ ?>
-					<span class="pull-right"><i class=" icon-plus-sign"></i></span>
+					<span class="pull-right" style="color:red;"><i class=" icon-plus-sign"></i></span>
 					<?php } ?>
 				</div>
 			</div>

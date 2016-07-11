@@ -1,7 +1,7 @@
 <?php
 App::import('Controller', 'Hms');
 class DiscussionsController extends HmsController {
-var $helpers = array('Html', 'Form','Js');
+var $helpers = array('Html', 'Form','Js','Text');
 public $components = array(
 'Paginator',
 'Session','Cookie','RequestHandler'
@@ -32,6 +32,7 @@ function index($list=null,$id=null){
 $dash_id = $this->request->query('dash_id');
 $this->set("dash_id",$dash_id);
 
+
 	$this->set("list",$list);
 	$this->set("id",$id);
 	$s_user_id=$this->Session->read('hm_user_id'); 
@@ -40,6 +41,7 @@ $this->set("dash_id",$dash_id);
 	$conditions=array("society_id"=>$s_society_id,"status"=>0,'users_have_access' =>array('$in' => array($s_user_id)));
 	$order=array('discussion_post.discussion_post_id'=> 'DESC');
 	$posts=$this->discussion_post->find('all',array('conditions'=>$conditions,'order'=>$order));
+	
 	
 	$this->set(compact("posts"));
 }

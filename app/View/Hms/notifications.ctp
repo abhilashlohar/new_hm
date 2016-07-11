@@ -8,6 +8,10 @@ foreach($result_notifications as $notification){
 	$notification_id=$notification["notification"]["notification_id"];
 	$icon=$notification["notification"]["icon"];
 	$text=$notification["notification"]["text"];
+	
+	$text_cut=$this->Text->truncate($text, 45, array('ellipsis' => '...','exact' => false));
+
+
 	$url=$notification["notification"]["url"];
 	$noti_date=$notification["notification"]["date"];
 	$current_date=strtotime(date('Y-m-d'));
@@ -45,7 +49,7 @@ foreach($result_notifications as $notification){
 <li>
 	<a href="<?php echo $url; ?>" role="button" rel='tab' class="notification_tab" notification_id="<?php echo $notification_id; ?>" style="text-align: justify;">
 	<span class="task">
-	<span ><?php echo $icon; ?> <?php echo $text; ?></span>
+	<span ><?php echo $icon; ?> <?php echo $text_cut; ?></span>
 	<span class="percent time_text"><?php echo $time_text; ?></span>
 	</span>
 	</a>

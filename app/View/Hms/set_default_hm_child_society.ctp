@@ -16,7 +16,7 @@
 								<div class="controls">
 								
 								<select class=" chosen chzn-done" name="society">
-									<option>Select society</option>
+									<option style="display:none;">Select society</option>
 										<?php
 
 										foreach($result_hms_right as $data){

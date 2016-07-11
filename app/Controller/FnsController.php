@@ -449,17 +449,35 @@ function fetch_ledger_account_info_via_ledger_id($ledger_id){
 }
 
 function default_role_name_via_user_id($user_id){
-	$s_society_id=$this->Session->read('hm_society_id');
+	$s_society_id=(int)$this->Session->read('hm_society_id');
 	
-	$this->loadmodel('user_role');
-	$conditions=array("user_id" => $user_id,"default"=>"yes");
-	$result=$this->user_role->find('all',array('conditions'=>$conditions));
-	@$role_id=@$result[0]["user_role"]["role_id"];
+	$this->loadmodel('user');
+	$conditions=array("user_id" =>(int)$user_id);
+	$user_info=$this->user->find('all',array('conditions'=>$conditions));
+	$user_type=$user_info[0]["user"]["user_type"]; 
+	if($user_type=="third_party" or $user_type=="member" or $user_type=="family_member"){
+		$this->loadmodel('user_role');
+		$conditions=array("user_id" => $user_id,"default"=>"yes");
+		$result=$this->user_role->find('all',array('conditions'=>$conditions));
+		@$role_id=@$result[0]["user_role"]["role_id"];
+		
+		$this->loadmodel('role');
+		$conditions=array("society_id" => $s_society_id,"role_id"=>$role_id);
+		$result=$this->role->find('all',array('conditions'=>$conditions));
+		return @$result[0]["role"]["role_name"];
+	}elseif($user_type=="hm_child"){
+		
+		$this->loadmodel('hms_right');
+		$conditions=array("user_id" => (int)$user_id,"society_id"=>$s_society_id);
+		$hms_rights=$this->hms_right->find('all',array('conditions'=>$conditions));
+		@$role_id=@(int)$hms_rights[0]["hms_right"]["role_id"];
+		
+		$this->loadmodel('hms_role');
+		$conditions=array("auto_id"=>$role_id);
+		$result=$this->hms_role->find('all',array('conditions'=>$conditions));
+		return @$result[0]["hms_role"]["role_name"];
+	}
 	
-	$this->loadmodel('role');
-	$conditions=array("society_id" => $s_society_id,"role_id"=>$role_id);
-	$result=$this->role->find('all',array('conditions'=>$conditions));
-	return @$result[0]["role"]["role_name"];
 }
 
 function calculate_arrears($ledger_sub_account_id){
@@ -1524,6 +1542,12 @@ function calculate_opening_balance($ledger_account_id=null,$ledger_sub_account_i
 			return 0;
 		}
 	}
+}
+
+function hm_users_right($user_id){
+	$this->loadmodel('hms_right');
+	$conditions =array('user_id' =>(int)$user_id);
+	return $hms_right=$this->hms_right->find('all',array('conditions'=>$conditions));
 }
 
 }

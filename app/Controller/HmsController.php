@@ -6619,7 +6619,7 @@ function submit_login(){
 	));
 	$result_user=$this->user->find('all',array('conditions'=>$conditions));
 	if(sizeof($result_user)==1){
-		 $user_id=(int)$result_user[0]["user"]["user_id"];
+		$user_id=(int)$result_user[0]["user"]["user_id"];
 		$society_id=(int)@$result_user[0]["user"]["society_id"];
 		$user_type=@$result_user[0]["user"]["user_type"];
 		$signup_random=@$result_user[0]["user"]["signup_random"]; 
@@ -6706,6 +6706,11 @@ function submit_login(){
 				
 				if($user_type=="hm_child"){
 					
+					$this->loadmodel('hms_right');
+					$conditions =array('user_id' =>(int)$user_id);
+					$hms_rights=$this->hms_right->find('all',array('conditions'=>$conditions));
+					$society_id=$hms_rights[0]["hms_right"]["society_id"];
+					$this->Session->write('hm_society_id', $society_id);
 					echo $output=json_encode(array('url' => $webroot_path.'hms/set_default_hm_child_society','action' => 'redirect','result' => 'success'));
 					die();
 						//$this->redirect(array('action' => 'set_default_hm_child_society'));
@@ -29839,5 +29844,32 @@ function wing_flat_overlap_validation($wing_flat=null,$owner_type=null)
 echo $result;	
 }
 //End wing_flat_overlap_validation//
+
+function switch_society(){
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	$this->ath();
+	$s_user_id=$this->Session->read('hm_user_id'); 
+	$s_society_id = $this->Session->read('hm_society_id');
+	$this->set("s_user_id",$s_user_id);
+	$this->set("s_society_id",$s_society_id);
+	
+	if(isset($this->request->data['submit'])){ 
+		$society_id=(int)$this->request->data["society_id"];
+		$this->Session->write('hm_society_id', $society_id);
+		$this->redirect(array('action' => 'Dashboard'));
+	}
+	
+	$this->loadmodel('hms_right');
+	$conditions =array('user_id' =>(int)$s_user_id);
+	$hms_rights=$this->hms_right->find('all',array('conditions'=>$conditions));
+	$this->set("hms_rights",$hms_rights);
+}
+
+
+
 }
 ?>

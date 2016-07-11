@@ -149,8 +149,6 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 			$("#menus_area").append(response);
 		});
 	});
-	
-	
 	</script>
    <!-- END JAVASCRIPTS -->    
    
@@ -296,7 +294,13 @@ $("#menus_area>li").live('click',function(e){
 			
 			$s_society_id=$this->Session->read('hm_society_id');
 			$society_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'society_name_via_society_id'), array('pass' => array($s_society_id)));
-			} 
+			}
+			if($user_type=="hm_child"){
+			$role_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'default_role_name_via_user_id'), array('pass' => array($s_user_id))); 
+			
+			$s_society_id=$this->Session->read('hm_society_id');
+			$society_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'society_name_via_society_id'), array('pass' => array($s_society_id)));
+			}
 		
 			if(!empty($society_name)){
 			?>
@@ -376,9 +380,14 @@ $("#menus_area>li").live('click',function(e){
                   </a>
                   <ul class="dropdown-menu">
                      <li><a href="<?php echo $webroot_path; ?>Hms/profile" rel='tab'><i class="icon-user"></i> My Profile</a></li>
-					<?php  if($user_type!='hm'){ if(sizeof($role_result)>1){ ?>
+					<?php  if($user_type!='hm'){ if(sizeof(@$role_result)>1){ ?>
                      <li><a href="<?php echo $webroot_path; ?>Hms/change_role_member" rel='tab'><i class="fa fa-exchange"></i> Change Role</a></li>
 					 <?php } } ?>
+					 <?php 
+					 $hms_user_right=@$this->requestAction(array('controller' => 'Fns', 'action' => 'hm_users_right'), array('pass' => array($s_user_id)));
+					 if($user_type=="hm_child" && sizeof(@$hms_user_right)>1){ ?>
+					 <li><a href="<?php echo $webroot_path; ?>Hms/switch_society" rel='tab'><i class="fa fa-home" aria-hidden="true"></i> Switch Society</a></li>
+					 <?php } ?>
 					  <li><a href="<?php echo $webroot_path; ?>Hms/change_new_password" rel='tab'><i class="fa fa-unlock-alt"></i> Change Password</a></li>
                      <li class="divider"></li>
                      <li><a href="<?php echo $webroot_path; ?>Hms/logout"><i class="icon-key"></i> Log Out</a></li>

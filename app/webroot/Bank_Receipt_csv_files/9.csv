@@ -1,17 +1,19 @@
 Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Amount,Narration 
-04-06-2016,Federal Bank,Cheque,3,01-06-2016,IDFC,N/A,,A,801,13050,April-June Qtr 2016 Payment 
-02-06-2016,Federal Bank,Cheque,755199,02-04-2016,ICICI,N/A,,B,404,16471,April-June Qtr 2016 Payment 
-02-06-2016,Federal Bank,Cheque,755199,02-04-2016,ICICI,N/A,,B,404A,4337,April-June Qtr 2016 Payment 
-02-06-2016,Federal Bank,Cheque,566661,02-06-2016,ICICI,N/A,,B,603,15041,April-June Qtr 2016 Payment 
-02-06-2016,Federal Bank,Cheque,566661,02-06-2016,ICICI,N/A,,B,603A,3960,April-June Qtr 2016 Payment 
-06-06-2016,Bank Of India ,NEFT,999,06-06-2016,BOI,N/A,,B,702,28000,1st And 2nd  Qtr 2016 Payment
-04-06-2016,Federal Bank,Cheque,171428,04-06-2016,HDFC,N/A,,B,1101,12810,April-June Qtr 2016 Payment 
-06-06-2016,Federal Bank,Cheque,3,16-05-2016,HDFC,N/A,,B,1903,15254,April-June Qtr 2016 Payment 
-06-06-2016,Federal Bank,Cheque,3,16-05-2016,HDFC,N/A,,B,1903A,4180,April-June Qtr 2016 Payment 
-03-06-2016,Federal Bank,NEFT,999,03-06-2016,FBL,N/A,,C,101,13975,April-June Qtr 2016 Payment 
-04-06-2016,Federal Bank,Cheque,138146,04-06-2016,SBI,N/A,,C,1304,13057,April-June Qtr 2016 Payment 
-05-06-2016,Federal Bank,Cheque,12189,05-06-2016,BOI,N/A,,C,1503,12912,April-June Qtr 2016 Payment 
-05-06-2016,Federal Bank,Cheque,12189,05-06-2016,BOI,N/A,,C,1504,12912,April-June Qtr 2016 Payment 
-06-06-2016,Federal Bank,Cheque,865007,06-06-2016,IOB,N/A,,C,301,14092,April-June Qtr 2016 Payment 
-06-06-2016,Federal Bank,Cheque,242412,06-06-2016,UCO,N/A,,B,1201,13188,April-June Qtr 2016 Payment 
-06-06-2016,Federal Bank,Cheque,165258,05-06-2016,IDBI,N/A,,B,1904,10000,April-June Qtr 2016 Payment 
+24-06-2016,Federal Bank,Cheque,385508,24-06-2016,ICICI,N/A,,A,302,28153,1st And 2nd Qtr 2016 Payment
+20-06-2016,Federal Bank,Cheque,81,20-06-2016,HDFC,N/A,,A,1103,12965,Apr-June 2016 Qtr Payment
+20-06-2016,Federal Bank,NEFT,999,20-06-2016,,,,B,101,12810,Apr-June 2016 Qtr Payment
+24-06-2016,Federal Bank,Cheque,1046,24-06-2016,ICICI,N/A,,B,202,25096,1st And 2nd Qtr 2016 Payment
+13-06-2016,Bank Of India,NEFT,999,13-06-2016,,,,B,304,21125,Apr-June 2016 Qtr Payment
+09-06-2016,Federal Bank,Cheque,209663,09-06-2016,ICICI,N/A,,B,1204,15041,Apr-June 2016 Qtr Payment
+09-06-2016,Federal Bank,Cheque,209663,09-06-2016,ICICI,N/A,,B,1204A,3960,Apr-June 2016 Qtr Payment
+17-06-2016,Federal Bank,Cheque,24489,17-06-2016,ABL,N/A,,B,1303,14990,Apr-June 2016 Qtr Payment
+17-06-2016,Federal Bank,Cheque,24489,17-06-2016,ABL,N/A,,B,1303A,4180,Apr-June 2016 Qtr Payment
+17-06-2016,Federal Bank,Cheque,137,17-06-2016,HDFC,N/A,,B,1703,14990,Apr-June 2016 Qtr Payment
+17-06-2016,Federal Bank,Cheque,138,17-06-2016,HDFC,N/A,,B,1703A,4180,Apr-June 2016 Qtr Payment
+17-06-2016,Federal Bank,Cheque,812712,17-06-2016,SBI,N/A,,C,1003,14100,Apr-June 2016 Qtr Payment
+10-06-2016,Federal Bank,NEFT,999,10-06-2016,,,,C,1303,12810,Apr-June 2016 Qtr Payment
+17-06-2016,Federal Bank,Cheque,304769,17-06-2016,BCCBL,N/A,,C,1501,12912,Apr-June 2016 Qtr Payment
+17-06-2016,Federal Bank,Cheque,304769,17-06-2016,BCCBL,N/A,,C,1502,12912,Apr-June 2016 Qtr Payment
+24-06-2016,Federal Bank,Cheque,31,24-06-2016,HDFC,N/A,,C,504,13000,Apr-June 2016 Qtr Payment
+28-06-2016,Bank Of India,NEFT,999,28-06-2016,,,,B,703,11086,Apr-June 2016 Qtr Payment
+28-06-2016,Bank Of India,NEFT,999,28-06-2016,,,,B,703A,8437,Apr-June 2016 Qtr Payment

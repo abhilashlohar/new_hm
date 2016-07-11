@@ -1,16 +1,15 @@
-Transaction Date,Ledger A/c,Amount,TDS Amount,Mode of Payment,Instrument/UTR,Bank Account,Invoice Reference,Narration 
-04-04-2015,Munoth Transport,15000,,Cheque,28412,SVC Bank  ,,Paid for water Tanker
-18-04-2015,Dharamveer Dulhch,4000,,Cheque,28416,SVC Bank  ,,Paid for 8 dustbins
-18-04-2015,Tejas Water suppliers,40000,,Cheque,28417,SVC Bank  ,,Paid for water Tanker
-16-04-2015,OM Painting,33000,660,Cheque,28413,SVC Bank  ,,Paid for invoice no.1&2
-18-04-2015,Raj Electric & Hardware Stores,1664,,Cheque,28415,SVC Bank  ,,Paid for  electric motor repairing
-18-04-2015,MSEDCL ,86570,,Cheque,28418,SVC Bank  ,,Paid for MSEDC bill
-18-04-2015,MSEDCL ,5470,,Cheque,28419,SVC Bank  ,,Paid for MSEDC bill
-20-04-3015,Jitendra,6667,,Cheque,28422,SVC Bank  ,,Paid for salary of 20 days for month of april
-25-04-2015,Amit enterprises,40000,800,Cheque,28423,SVC Bank  ,,Paid for month of april
-25-04-2015,Maharashtra Service Bureau,88764,1775,Cheque,28424,SVC Bank  ,,Paid for month of april 2015
-25-04-2015,National Fitness Gym Management,10000,200,Cheque,28425,SVC Bank  ,,Paid for month of april
-25-04-2015,Pushpendra Kumar Singh,7500,,Cheque,28426,SVC Bank  ,,Paid for month of april
-25-04-2015,S K Filters,13000,260,Cheque,28427,SVC Bank  ,,Paid for month of april
-25-04-2015,Kashi shah,7000,,Cheque,28428,SVC Bank  ,,Paid for month of april
-25-04-2015,Ramesh C.T,12000,,Cheque,28429,SVC Bank  ,,Paid for month of april
+Transaction Date,Ledger A/c,Amount,TDS Amount,Mode of Payment,Instrument/UTR,Bank Account,Invoice Reference,Narration ,
+01-03-2016,Tax deducted at source (payable),4066,,Cheque,47417,SVC Bank  ,,Paid  for  TDS for month of feb 16,
+01-03-2016,Jai Bhavani Housekeeping Service,41000,820,Cheque,47418,SVC Bank  ,,Paid  for  the month of feb 16,
+01-03-2016,Maharashtra Service Bureau,93890,1640,Cheque,47419,SVC Bank  ,,Paid  for   the month of feb 16 ,
+27-02-2016,Royal Fitness Management,3600,,Cheque,47416,SVC Bank  ,,"Paid  for  servicing of gym equipments for the month of march16,may16 & july16",
+01-03-2016,Mihir Adhikari,7500,,Cheque,47422,SVC Bank  ,,Paid  for  the month of feb 16,
+01-03-2016,Abhishek Kumar ,11000,,Cheque,47424,SVC Bank  ,,Paid  for  the month of feb 16,
+01-03-2016,Kashi shah,7000,,Cheque,47420,SVC Bank  ,,Paid  for  the month of feb 16,
+01-03-2016,National Fitness Gym Management,10000,200,Cheque,47421,SVC Bank  ,,Paid  for  month of feb16,
+01-03-2016,Mithu Turi,9500,,Cheque,47423,SVC Bank  ,,Paid  for  month of feb16,
+02-03-2016,CIDCO,76986,,Cheque,47425,SVC Bank  ,,Paid  for  the month of DEC 15-JAN16,
+23-03-2016,Tejas Water suppliers,109000,,Cheque,47427,SVC Bank  ,,Paid for water Tanker,
+23-03-2016,MSEDCL ,66850,,Cheque,47428,SVC Bank  ,,Electrical Charges for Feb-2016,
+23-03-2016,MTNL,1221,,Cheque,47429,SVC Bank  ,,Paid for telephone bill for the month of Feb-2016,
+30-03-2016,Tirupati Water Suppliers,153900,,Cheque,47433,SVC Bank  ,,Paid  for  83 tankers of water,

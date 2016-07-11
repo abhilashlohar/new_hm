@@ -1,2 +1,18 @@
 Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Amount,Narration 
-30-06-2016,SBI,cheque,12345,30-06-2016,Allahabad Bank,sec-4,Abhilash Lohar,A,101,500,Receipt for jan 
+12-05-2016,Uco Bank,Cheque,170451,12-05-2016,NKGS Bank,N/A,,Shop,3,5258,Apr- June Qtr 2016 Payment - Bank Book/May/16
+10-05-2016,Uco Bank,Neft,999,10-05-2016,,,,Shop,8,37500,Apr- June Qtr 2016 Payment - Bank Book/May/17
+11-05-2016,Uco Bank,Neft,999,11-05-2016,,,,Flat,902,10264,Apr- June Qtr 2016 Payment - Bank Book/May/18
+11-05-2016,Uco Bank,Neft,999,11-05-2015,,,,Flat,1403,11700,Apr- June Qtr 2016 Payment - Bank Book/May/19
+13-05-2016,Uco Bank,Neft,999,13-05-2016,,,,Flat,801,10354,Apr- June Qtr 2016 Payment - Bank Book/May/20
+11-05-2016,Uco Bank,Neft,999,11-05-2016,,,,Flat,302,9364,Apr- June Qtr 2016 Payment - Bank Book/May/21
+14-05-2016,Uco Bank,Cheque,324103,14-05-2016,SBI,N/A,,Flat,1101,10519,Apr- June Qtr 2016 Payment - Bank Book/May/22
+15-05-2016,Uco Bank,Neft,999,15-05-2016,,,,Flat,903,10024,Apr- June Qtr 2016 Payment - Bank Book/May/23
+15-05-2016,Uco Bank,Neft,999,15-05-2016,,,,Shop,17,2573,Apr- June Qtr 2016 Payment - Bank Book/May/24
+15-05-2016,Uco Bank,Cheque,17,15-05-2016,HDFC,N/A,,Flat,1701,10519,Apr- June Qtr 2016 Payment - Bank Book/May/25
+18-05-2016,Uco Bank,Cheque,353753,18-05-2016,N/A,,,Flat,402,9100,Apr- June Qtr 2016 Payment - Bank Book/May/26
+15-05-2016,Uco Bank,Cheque,21,15-05-2016,PMC Bank,,,Flat,1001,11254,Apr- June Qtr 2016 Payment - Bank Book/May/27
+14-05-2016,Uco Bank,Cheque,6,14-05-2016,PMC Bank,N/A,,Flat,203,10553,Apr- June Qtr 2016 Payment - Bank Book/May/28
+18-05-2016,Uco Bank,Cheque,345128,18-05-2016,N/A,,,Shop,6,5310,Apr- June Qtr 2016 Payment - Bank Book/May/29
+16-05-2016,Uco Bank,Neft,613600898,16-05-2016,,,,Shop,5,5258,Apr- June Qtr 2016 Payment - Bank Book/May/30
+,,,,,,,,,,,
+,,,,,,,,,,,

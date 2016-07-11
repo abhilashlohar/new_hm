@@ -1,5 +1,21 @@
-Transaction Date,Ledger A/c,Amount,TDS in Percentage,Mode of Payment,Instrument/UTR,Bank Account,Invoice Reference,Narration 
-03-05-2016,Ram Shinde,100,1,Cheque,521,SBI 123,2,
-03-05-2016,Secure One Facility,100,2,Cheque,214,SBI 123,2,
-03-05-2016,Kone Elevators,100,1,Cheque,524,SBI 123,5,
-03-05-2016,Ram Shinde,100,1,Cheque,351,SBI 123,215,
+Transaction Date,Ledger A/c,Amount,TDS Amount,Mode of Payment,Instrument/UTR,Bank Account,Invoice Reference,Narration 
+05-01-2016,Reliance Energy - Coral,1060,,Cheque,99999,JKSBL - Coral,,electricty bill
+05-01-2016,Reliance Energy - Coral,7440,,Cheque,99999,JKSBL - Coral,,electricty bill
+07-01-2016,Mahesh Pandey - Coral,3000,,Cheque,900157,JKSBL - Coral,,cleaning charges
+08-01-2016,Raghuveer Swami Samarth Security - Coral,21000,,Cheque,900158,JKSBL - Coral,,security guard charges
+12-01-2016,Raju Shekhar Chelaiya - Coral,2400,,Cheque,900156,JKSBL - Coral,,fumigation & pest control
+05-02-2016,Reliance Energy - Coral,820,,Cheque,99999,JKSBL - Coral,,electricty bill
+05-02-2016,Reliance Energy - Coral,6470,,Cheque,99999,JKSBL - Coral,,electricty bill
+06-02-2016,Famous Engineering Co - Coral,9000,,Cheque,900159,JKSBL - Coral,,amc
+09-02-2016,Mahesh Pandey - Coral,3000,,Cheque,900160,JKSBL - Coral,,cleaning charges
+10-02-2016,Raghuveer Swami Samarth Security - Coral,21000,,Cheque,900161,JKSBL - Coral,,security guard charges
+11-02-2016,Raju Shekhar Chelaiya - Coral,2400,,Cheque,900162,JKSBL - Coral,,fumigation & pest control
+08-03-2016,Mahesh Pandey - Coral,3000,,Cheque,900167,JKSBL - Coral,,cleaning charges
+08-03-2016,Reliance Energy - Coral,6550,,Cheque,99999,JKSBL - Coral,,electricty bill
+08-03-2016,Reliance Energy - Coral,840,,Cheque,99999,JKSBL - Coral,,electricty bill
+08-03-2016,Raghuveer Swami Samarth Security - Coral,21000,,Cheque,900168,JKSBL - Coral,,security guard charges
+09-03-2016,Raju Shekhar Chelaiya - Coral,2400,,Cheque,900166,JKSBL - Coral,,fumigation & pest control
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,

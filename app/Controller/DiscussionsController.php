@@ -87,6 +87,9 @@ function submit_comment(){
 	if(empty($comment)){
 		exit;
 	}
+	if(empty($s_user_id)){
+		exit;
+	}
 	$comment_box = nl2br(wordwrap($comment, 25, " ", true));
 	$date=date("Y-m-d");
 	$time=date('h:i:a',time());

@@ -68,7 +68,9 @@ color:#FFF;
 <?php 
 
 $cou=0;
-foreach($arranged_users as $user_info){ 
+
+foreach($arranged_users as $user_id=> $user_info){ 
+
 	$user_flat_id=(int)$user_info["user_flat_id"];
 	$user_name=$user_info["user_name"];
 	$user_name=substrwords($user_name,20,'...');
@@ -76,6 +78,22 @@ foreach($arranged_users as $user_info){
 	$profile_pic=$user_info["profile_pic"];
 	$g_profile_pic=$user_info["g_profile_pic"];
 	$f_profile_pic=$user_info["f_profile_pic"];
+	$result_user_profile = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_profile_info_via_user_id'),array('pass'=>array((int)$user_id)));
+	//pr($result_user_profile);
+		
+	$medical_pro=@$result_user_profile[0]['user_profile']['medical_pro'];
+	$hobbies=@$result_user_profile[0]['user_profile']['hobbies'];
+	
+		if(!empty($hobbies)){
+					$hobbies_name=null;
+					foreach($hobbies as $data){
+						$hobbies_name[] = $this->requestAction(array('controller' => 'hms', 'action' => 'hobbies_category_fetch'),array('pass'=>array((int)$data)));		
+					
+					}
+						$hobbies=implode(', ',$hobbies_name);
+						
+			 }	
+	
 	foreach($wing_flats as $user_flat_id=>$wing_flat){ $cou++ ; ?>
 	
 	<div class="r_d">
@@ -95,10 +113,19 @@ foreach($arranged_users as $user_info){
 								<img alt="" src="<?php echo $webroot_path; ?>profile/blank.jpg" class="profile_pic" />
 							<?php } ?>
 					<div style="float:left;margin-left:3%;margin-top: 8px;">
-						<span style="font-size:18px;"><?php echo ucfirst($user_name); ?></span> 
+						<span style="font-size:18px;"><?php echo ucfirst($user_name); ?> 
+						
+						
+						</span> 
+						
 						 <br>
-						<span style="font-size:14px;"><?php echo $wing_flat; ?></span>
+						<span style="font-size:14px;"><?php echo $wing_flat; ?></span><br>
+						<span style="font-size:14px;display:none;"><?php echo $hobbies; ?></span>
 					</div>
+					<?php 
+					if($medical_pro==1){ ?>
+					<span class="pull-right"><i class=" icon-plus-sign"></i></span>
+					<?php } ?>
 				</div>
 			</div>
 		</a>

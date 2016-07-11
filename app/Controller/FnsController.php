@@ -949,7 +949,7 @@ function member_info_via_user_id($user_id){
 	@$email=@$userresult[0]["user"]["email"];
 	@$mobile=@$userresult[0]["user"]["mobile"];
 	$profile_pic=@$userresult[0]["user"]["profile_pic"];
-	
+	$validation_status=@$userresult[0]["user"]["validation_status"];
 	$this->loadmodel('user_flat');
 	$conditions=array("user_id"=>$user_id, "exited"=>"no");
 	$result=$this->user_flat->find('all',array('conditions'=>$conditions));
@@ -971,7 +971,7 @@ function member_info_via_user_id($user_id){
 		
 		$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
 	}
-	return array("user_name"=>$user_name,"wing_flat"=>$flats,"email"=>$email,"mobile"=>$mobile,"profile_pic"=>$profile_pic);
+	return array("user_name"=>$user_name,"wing_flat"=>$flats,"email"=>$email,"mobile"=>$mobile,"profile_pic"=>$profile_pic,"validation_status"=>$validation_status);
 }
 function society_info_via_society_id($society_id){
 	$this->loadmodel('society');

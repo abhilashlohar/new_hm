@@ -6001,7 +6001,7 @@ $sms_allow=(int)$r_sms->sms_allow;
 
 $subject="[".$society_name."]- ".$wing_flat." payment update";
 $email_content = "Dear ".$user_name.", Thanks for updating your payment details. (Receipt of ".$amount." via-".$mode." on ".$transaction_date.") This info has been sent to society for further verification & confirmation before issuing a formal receipt to you.";
-$this->send_email($user_email,'accounts@housingmatters.in','HousingMatters',$subject,$email_content,'donotreply@housingmatters.in');
+$this->smtpmailer($user_email,'accounts@housingmatters.in','HousingMatters',$subject,$email_content,'donotreply@housingmatters.in');
 }
 
 $result_admin_user=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'),array('pass'=>array($admin_user_id)));
@@ -6018,7 +6018,7 @@ $sms_allow=(int)$r_sms->sms_allow;
 $subject="[".$society_name."]- ".$wing_flat." payment update";
 $email_content2 = "".$user_name."-".$wing_flat." has updated his/her payment details (Receipt of ".$amount." via-".$mode." on ".$transaction_date."). Please verify with bank statement & confirm for issuing formal receipt to resident.";
 
-$this->send_email($admin_email,'accounts@housingmatters.in','HousingMatters',$subject,$email_content2,'donotreply@housingmatters.in');
+$this->smtpmailer($admin_email,'accounts@housingmatters.in','HousingMatters',$subject,$email_content2,'donotreply@housingmatters.in');
 }
 $transaction_date = date('Y-m-d',strtotime($transaction_date));
 

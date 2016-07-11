@@ -607,7 +607,8 @@ if(1==1)
 {
 		 @$subject.= '['. $society_name . ']' . '- New Helpdesk Ticket : ' . '  #   ' .$ticket_no .'';
 
-$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+$this->smtpmailer($to,$from,$from_name,$subject,$message_web,$reply);
+//$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
 $subject="";
 }
 }	
@@ -751,7 +752,8 @@ $s=sizeof($result6);
 if($s>0)
 {
 	@$subject.= '['. $society_name . ']' . '- New Helpdesk Ticket : ' . '  #   ' .$ticket_no .'';
-$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+//$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+$this->smtpmailer($to,$from,$from_name,$subject,$message_web,$reply);
 $subject="";
 }	
 
@@ -1822,8 +1824,8 @@ if($n>0)
         </tbody>
 </table>';
 
-$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
-$this->send_email($email,$from,$from_name,$subject,$message_web,$reply);
+$this->smtpmailer($to,$from,$from_name,$subject,$message_web,$reply);
+$this->smtpmailer($email,$from,$from_name,$subject,$message_web,$reply);
 
 $subject="";
 $this->loadmodel('help_desk');

@@ -2789,7 +2789,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -8000,7 +8000,8 @@ if($forget_type=='email'){
 		$from=$collection['email']['from'];
 		}
 		$reply=$from;
-		$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+		//$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+		$this->smtpmailer($to,$from,$from_name,$subject,$message_web,$reply);
 		$this->response->header('Location', 'verification?con='.$to.'&em=em ');
 		}
 		else
@@ -18616,7 +18617,7 @@ $reply=$from;
 
 $this->loadmodel('user');	
 $this->user->updateAll(array('signup_random'=>$s_user_id,'new_email'=>$email),array('user_id'=>$s_user_id));
-$this->send_email($email,$from,$from_name,$subject,$message_web,$reply);
+$this->smtpmailer($email,$from,$from_name,$subject,$message_web,$reply);
 
 
 }
@@ -18781,7 +18782,7 @@ $to=$email;
         </tbody>
 </table>';
 
-	$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+	$this->smtpmailer($to,$from,$from_name,$subject,$message_web,$reply);
 	$this->Session->write('profile_status', 1);
 	$this->response->header('Location', $this->webroot.'Hms/dashboard');
 }

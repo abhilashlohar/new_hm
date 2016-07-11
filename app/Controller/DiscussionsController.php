@@ -15,7 +15,7 @@ function count_comment_via_discussion_post_id($discussion_post_id){
 	$s_user_id=$this->Session->read('hm_user_id'); 
 	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('discussion_comment');	
-	$conditions=array("discussion_post_id"=>$discussion_post_id);	
+	$conditions=array("discussion_post_id"=>$discussion_post_id,"delete_id"=>0);	
 	return $this->discussion_comment->find('all',array('conditions'=>$conditions));
 }
 
@@ -76,18 +76,22 @@ function topic_show_type($type_list=null){
 }
 
 function submit_comment(){
-	
 	$this->ath();
 	$s_user_id=$this->Session->read('hm_user_id');
 	$s_society_id=$this->Session->read('hm_society_id');
 	$post_id=(int)$this->request->data['post_id'];
 	$comment=htmlentities($this->request->data['comment_box']);
+	$webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'webroot_path'));
 	if(empty($comment)){
 		exit;
 	}
 	$comment_box = nl2br(wordwrap($comment, 25, " ", true));
 	$date=date("Y-m-d");
 	$time=date('h:i:a',time());
+	
+	$ip= $this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
+	$society_name= $this->requestAction(array('controller' => 'Fns', 'action' => 'society_name_via_society_id'),array('pass'=>array((int)$s_society_id)));
+	
 	$r=$this->content_moderation_society($comment);
 	if($r==0){
 		echo $word='You have entered banned words. <br/> ';
@@ -110,6 +114,8 @@ function submit_comment(){
 		$conditions=array('discussion_post_id'=>$post_id,'society_id'=>$s_society_id);
 		$result_discussion_post=$this->discussion_post->find('all',array('conditions'=>$conditions));
 		$create_post_id=$result_discussion_post[0]['discussion_post']['user_id'];
+		$discussion_post_id=(int)$result_discussion_post[0]['discussion_post']['discussion_post_id'];
+		$topic=$result_discussion_post[0]['discussion_post']['topic'];
 		
 		
 		$discussion_comment_id=$this->autoincrement('discussion_comment','discussion_comment_id');
@@ -117,7 +123,401 @@ function submit_comment(){
 		$this->discussion_comment->saveAll(Array( Array("discussion_comment_id" => $discussion_comment_id, "user_id" => $s_user_id , "society_id" => $s_society_id, "comment" => $comment_box,"discussion_post_id" => $post_id, "delete_id" =>0, "date" =>$date, "time" => $time, "color" => $color_in))); 
 		
 		
-		
+		if($create_post_id==$s_user_id){
+			
+			$this->loadmodel('discussion_comment');
+			$conditions=array("discussion_post_id"=>$discussion_post_id);
+			$result_discussion_comment=$this->discussion_comment->find('all',array('conditions'=>$conditions));
+			foreach($result_discussion_comment as $discussion_comment_data){
+				$commenter_ids[]=$discussion_comment_data["discussion_comment"]["user_id"];
+			}
+			$commenter_ids=array_unique($commenter_ids);
+			
+			if (($key = array_search($s_user_id, $commenter_ids)) !== false) {
+				unset($commenter_ids[$key]);
+			}
+			$commenter_ids=array_values($commenter_ids);
+			
+			
+			$current_member_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array((int)$s_user_id)));
+				$current_member_name=$current_member_info["user_name"];
+				$current_wing_flats=$current_member_info["wing_flat"];
+				$current_profile_pic=$current_member_info["profile_pic"];
+				foreach($current_wing_flats as $current_wing_flat){
+					$current_wing_flats=$current_wing_flats;
+				}
+			
+			foreach($commenter_ids as $commenter_id){
+				if($commenter_id!=$create_post_id){
+					$commenter_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array((int)$commenter_id)));
+					$commenter_name=$commenter_info["user_name"];
+					$email=@$commenter_info["email"];
+					if(!empty($email)){
+					
+					$reply="donotreply@housingmatters.in";
+					
+					
+					
+					$message_web='<div style="margin:0;padding:0" dir="ltr" bgcolor="#ffffff">
+								<table style="border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%;">
+									<tbody>
+										<tr>
+											<td style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;background:#ffffff">
+												<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+													<tbody>
+														<tr>
+															<td style="line-height:20px" colspan="3" height="20">&nbsp;</td>
+														</tr>
+														<tr>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+															<td>
+															<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+															<tbody>
+															<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+															<tr>
+															<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#" style="color:#3b5998;text-decoration:none" target="_blank"><img src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+															<td width="100%"><a href="#" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px" target="_blank"><span style="color:#00A0E3">Housing</span><span style="color:#777776">Matters</span></a></td>
+															<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img  src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
+																
+															</td>
+															</tr>
+															<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+															</tbody>
+															</table>
+															</td>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+														</tr>
+														<tr>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+															<td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="line-height:28px" height="28">&nbsp;</td></tr><tr><td><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:21px;color:#141823">Hello  '.$commenter_name.'<br/>'.$current_member_name.' Commented on his own topic.</span></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr><tr><td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="font-size:11px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;border:solid 1px #e5e5e5;border-radius:2px;display:block"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="padding:5px 10px;background:#269ABC;border-top:#cccccc 1px solid;border-bottom:#cccccc 1px solid"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:19px;color:#FFF">'.$topic.'</span></td></tr><tr>
+															<td style="padding:5px;">
+															<table style="border-collapse:collapse" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding-right:10px;font-size:0px" valign="middle"><a href="#" style="color:#3b5998;text-decoration:none" target="_blank"><img  src="'.$ip.$this->webroot.'profile/'.$current_profile_pic.'" style="border:0" height="50" width="50"></a></td>
+															<td style="width:100%" valign="middle">
+															<table style="border-collapse:collapse" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="2">
+															<span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:21px;color:#141823">'.$current_member_name.' '.$current_wing_flat.'</span><br/><span style="color:#ADABAB;font-size: 12px;">'.date("d-m-Y",strtotime($date)).'&nbsp;&nbsp;'.$time.'</span></td></tr><tr><td style="line-height:10px" colspan="2" height="10">&nbsp;</td></tr><tr><td width="100%"></td></tr></tbody></table>
+															</td>
+															</tr></tbody></table>
+															</td>
+														</tr>
+														<tr>
+															<td style="padding:5px;font-size:12px;" height="10">'.$comment_box.'</td>
+														</tr>
+													</tbody>
+												</table></td></tr></tbody></table></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr></tbody></table></td>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+							</tr>						<tr>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+															<td>
+																<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="line-height:2px" colspan="3" height="2">&nbsp;</td></tr><tr><td><a href="#" style="color:#3b5998;text-decoration:none" target="_blank"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-collapse:collapse;border-radius:2px;text-align:center;display:block;border:1px solid #026A9E;background:#008ED5;padding:7px 16px 11px 16px"><a href="'.$ip.$this->webroot.'Discussions/index?dash_id='.$discussion_post_id.'" style="color:#3b5998;text-decoration:none;display:block" target="_blank"><center><font size="3"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;white-space:nowrap;font-weight:bold;vertical-align:middle;color:#ffffff;font-size:14px;line-height:14px">View on HousingMatters</span></font></center></a></td></tr></tbody></table></a></td><td style="display:block;width:10px" width="10">&nbsp;&nbsp;&nbsp;</td><td><a href="#" style="color:#3b5998;text-decoration:none" target="_blank"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-collapse:collapse;border-radius:2px;text-align:center;display:block;border:solid 1px #c9ccd1;background:#f6f7f8;padding:7px 16px 11px 16px"><a href="'.$ip.$this->webroot.'Discussions/index?dash_id='.$discussion_post_id.'" style="color:#3b5998;text-decoration:none;display:block" target="_blank"><center><font size="3"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;white-space:nowrap;font-weight:bold;vertical-align:middle;color:#525252;font-size:14px;line-height:14px">Comment</span></font></center></a></td></tr></tbody></table></a></td><td width="100%"></td></tr><tr><td style="line-height:32px" colspan="3" height="32">&nbsp;</td></tr></tbody></table>
+															</td>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+														</tr>
+														
+														
+												<tr>
+															<td  width="15">&nbsp;&nbsp;&nbsp;</td>
+													<td>
+													<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+														<tbody>
+															
+															<tr>
+															<td  align="left" valign="middle" width="">
+															Thank you <br/>HousingMatters (Support Team)<br/>www.housingmatters.in
+															
+															</td>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+															
+															
+															</tr>
+															
+															</tbody>
+													</table>
+													</td>
+												</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>';
+					$this->loadmodel('email');
+					$conditions=array('auto_id'=>10);
+					$result_email=$this->email->find('all',array('conditions'=>$conditions));
+					foreach ($result_email as $collection){
+						$from=$collection['email']['from'];
+					}
+					
+	
+					$from_name="HousingMatters";
+					$subject= 'Discussion: ['. $society_name . ']' .'  -   '.'New Comment: '.$comment_box.'';
+					$this->send_email($email,$from,$from_name,$subject,$message_web,$reply);
+					
+					
+				}
+				}
+			}
+			if(sizeof($commenter_ids)>0){
+				$this->send_notification('<span class="label label-warning"><i class="fa fa-commenting-o" aria-hidden="true" style=" padding: 1px 0px 1px 2px; font-size: 15px; "></i></span>','New Comment: <b>'.$comment_box.'</b> by '.$current_member_name,$webroot_path.'Discussions/index?dash_id='.$discussion_post_id,$s_user_id,$commenter_ids);
+			}
+			
+		}else{
+			
+			$create_post_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array((int)$create_post_id)));
+					$create_post_name=$create_post_info["user_name"];
+					$create_post_email=@$create_post_info["email"];
+					
+					
+			$this->loadmodel('discussion_comment');
+			$conditions=array("discussion_post_id"=>$discussion_post_id);
+			$result_discussion_comment=$this->discussion_comment->find('all',array('conditions'=>$conditions));
+			foreach($result_discussion_comment as $discussion_comment_data){
+				$commenter_ids[]=$discussion_comment_data["discussion_comment"]["user_id"];
+			}
+			$commenter_ids=array_unique($commenter_ids);
+			
+			if (($key = array_search($s_user_id, $commenter_ids)) !== false) {
+				unset($commenter_ids[$key]);
+			}
+			$commenter_ids=array_values($commenter_ids);
+			
+			$current_member_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array((int)$s_user_id)));
+				$current_member_name=$current_member_info["user_name"];
+				$current_wing_flats=$current_member_info["wing_flat"];
+				$current_profile_pic=$current_member_info["profile_pic"];
+				$current_email=$current_member_info["email"];
+				foreach($current_wing_flats as $current_wing_flat){
+					$current_wing_flats=$current_wing_flats;
+				}
+				
+				///////////creator email///
+				if(!empty($create_post_email)){
+					
+					$reply="donotreply@housingmatters.in";
+					$message_web='<div style="margin:0;padding:0" dir="ltr" bgcolor="#ffffff">
+								<table style="border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%;">
+									<tbody>
+										<tr>
+											<td style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;background:#ffffff">
+												<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+													<tbody>
+														<tr>
+															<td style="line-height:20px" colspan="3" height="20">&nbsp;</td>
+														</tr>
+														<tr>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+															<td>
+															<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+															<tbody>
+															<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+															<tr>
+															<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#" style="color:#3b5998;text-decoration:none" target="_blank"><img src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+															<td width="100%"><a href="#" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px" target="_blank"><span style="color:#00A0E3">Housing</span><span style="color:#777776">Matters</span></a></td>
+															<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img  src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
+																
+															</td>
+															</tr>
+															<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+															</tbody>
+															</table>
+															</td>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+														</tr>
+														<tr>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+															<td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="line-height:28px" height="28">&nbsp;</td></tr><tr><td><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:21px;color:#141823">Hello  '.$create_post_name.'<br/>'.$current_member_name.' Commented on Your
+															Topic.</span></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr><tr><td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="font-size:11px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;border:solid 1px #e5e5e5;border-radius:2px;display:block"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="padding:5px 10px;background:#269ABC;border-top:#cccccc 1px solid;border-bottom:#cccccc 1px solid"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:19px;color:#FFF">'.$topic.'</span></td></tr><tr>
+															<td style="padding:5px;">
+															<table style="border-collapse:collapse" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding-right:10px;font-size:0px" valign="middle"><a href="#" style="color:#3b5998;text-decoration:none" target="_blank"><img  src="'.$ip.$this->webroot.'profile/'.$current_profile_pic.'" style="border:0" height="50" width="50"></a></td>
+															<td style="width:100%" valign="middle">
+															<table style="border-collapse:collapse" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="2">
+															<span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:21px;color:#141823">'.$current_member_name.' '.$current_wing_flat.'</span><br/><span style="color:#ADABAB;font-size: 12px;">'.date("d-m-Y",strtotime($date)).'&nbsp;&nbsp;'.$time.'</span></td></tr><tr><td style="line-height:10px" colspan="2" height="10">&nbsp;</td></tr><tr><td width="100%"></td></tr></tbody></table>
+															</td>
+															</tr></tbody></table>
+															</td>
+														</tr>
+														<tr>
+															<td style="padding:5px;font-size:12px;" height="10">'.$comment_box.'</td>
+														</tr>
+													</tbody>
+												</table></td></tr></tbody></table></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr></tbody></table></td>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+							</tr>						<tr>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+															<td>
+																<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="line-height:2px" colspan="3" height="2">&nbsp;</td></tr><tr><td><a href="#" style="color:#3b5998;text-decoration:none" target="_blank"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-collapse:collapse;border-radius:2px;text-align:center;display:block;border:1px solid #026A9E;background:#008ED5;padding:7px 16px 11px 16px"><a href="'.$ip.$this->webroot.'Discussions/index?dash_id='.$discussion_post_id.'" style="color:#3b5998;text-decoration:none;display:block" target="_blank"><center><font size="3"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;white-space:nowrap;font-weight:bold;vertical-align:middle;color:#ffffff;font-size:14px;line-height:14px">View on HousingMatters</span></font></center></a></td></tr></tbody></table></a></td><td style="display:block;width:10px" width="10">&nbsp;&nbsp;&nbsp;</td><td><a href="#" style="color:#3b5998;text-decoration:none" target="_blank"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-collapse:collapse;border-radius:2px;text-align:center;display:block;border:solid 1px #c9ccd1;background:#f6f7f8;padding:7px 16px 11px 16px"><a href="'.$ip.$this->webroot.'Discussions/index?dash_id='.$discussion_post_id.'" style="color:#3b5998;text-decoration:none;display:block" target="_blank"><center><font size="3"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;white-space:nowrap;font-weight:bold;vertical-align:middle;color:#525252;font-size:14px;line-height:14px">Comment</span></font></center></a></td></tr></tbody></table></a></td><td width="100%"></td></tr><tr><td style="line-height:32px" colspan="3" height="32">&nbsp;</td></tr></tbody></table>
+															</td>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+														</tr>
+														
+														
+												<tr>
+															<td  width="15">&nbsp;&nbsp;&nbsp;</td>
+													<td>
+													<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+														<tbody>
+															
+															<tr>
+															<td  align="left" valign="middle" width="">
+															Thank you <br/>HousingMatters (Support Team)<br/>www.housingmatters.in
+															
+															</td>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+															
+															
+															</tr>
+															
+															</tbody>
+													</table>
+													</td>
+												</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>';
+					$this->loadmodel('email');
+					$conditions=array('auto_id'=>10);
+					$result_email=$this->email->find('all',array('conditions'=>$conditions));
+					foreach ($result_email as $collection){
+						$from=$collection['email']['from'];
+					}
+					
+	
+					$from_name="HousingMatters";
+					$subject= 'Discussion: ['. $society_name . ']' .'  -   '.'New Comment: '.$comment_box.'';
+					$this->send_email($current_email,$from,$from_name,$subject,$message_web,$reply);
+					
+					
+				}
+				$create_post_id_ar[]=$create_post_id;
+				$this->send_notification('<span class="label label-warning"><i class="fa fa-commenting-o" aria-hidden="true" style=" padding: 1px 0px 1px 2px; font-size: 15px; "></i></span>','New Comment: <b>'.$comment_box.'</b> by '.$current_member_name,$webroot_path.'Discussions/index?dash_id='.$discussion_post_id,$s_user_id,$create_post_id_ar);
+				
+				
+				
+				
+				
+			
+			foreach($commenter_ids as $commenter_id){
+				if($commenter_id!=$create_post_id){
+					$commenter_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array((int)$commenter_id)));
+					$commenter_name=$commenter_info["user_name"];
+					$email=@$commenter_info["email"];
+					if(!empty($email)){
+					
+					$reply="donotreply@housingmatters.in";
+					
+					
+					
+					$message_web='<div style="margin:0;padding:0" dir="ltr" bgcolor="#ffffff">
+								<table style="border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%;">
+									<tbody>
+										<tr>
+											<td style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;background:#ffffff">
+												<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+													<tbody>
+														<tr>
+															<td style="line-height:20px" colspan="3" height="20">&nbsp;</td>
+														</tr>
+														<tr>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+															<td>
+															<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+															<tbody>
+															<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+															<tr>
+															<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#" style="color:#3b5998;text-decoration:none" target="_blank"><img src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+															<td width="100%"><a href="#" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px" target="_blank"><span style="color:#00A0E3">Housing</span><span style="color:#777776">Matters</span></a></td>
+															<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img  src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
+																
+															</td>
+															</tr>
+															<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+															</tbody>
+															</table>
+															</td>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+														</tr>
+														<tr>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+															<td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="line-height:28px" height="28">&nbsp;</td></tr><tr><td><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:21px;color:#141823">Hello  '.$commenter_name.'<br/>'.$current_member_name.' Commented on '.$create_post_name.' 
+															topic.</span></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr><tr><td><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="font-size:11px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;border:solid 1px #e5e5e5;border-radius:2px;display:block"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="padding:5px 10px;background:#269ABC;border-top:#cccccc 1px solid;border-bottom:#cccccc 1px solid"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:19px;color:#FFF">'.$topic.'</span></td></tr><tr>
+															<td style="padding:5px;">
+															<table style="border-collapse:collapse" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding-right:10px;font-size:0px" valign="middle"><a href="#" style="color:#3b5998;text-decoration:none" target="_blank"><img  src="'.$ip.$this->webroot.'profile/'.$current_profile_pic.'" style="border:0" height="50" width="50"></a></td>
+															<td style="width:100%" valign="middle">
+															<table style="border-collapse:collapse" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="2">
+															<span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16px;line-height:21px;color:#141823">'.$current_member_name.' '.$current_wing_flat.'</span><br/><span style="color:#ADABAB;font-size: 12px;">'.date("d-m-Y",strtotime($date)).'&nbsp;&nbsp;'.$time.'</span></td></tr><tr><td style="line-height:10px" colspan="2" height="10">&nbsp;</td></tr><tr><td width="100%"></td></tr></tbody></table>
+															</td>
+															</tr></tbody></table>
+															</td>
+														</tr>
+														<tr>
+															<td style="padding:5px;font-size:12px;" height="10">'.$comment_box.'</td>
+														</tr>
+													</tbody>
+												</table></td></tr></tbody></table></td></tr><tr><td style="line-height:14px" height="14">&nbsp;</td></tr></tbody></table></td>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+							</tr>						<tr>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+															<td>
+																<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="line-height:2px" colspan="3" height="2">&nbsp;</td></tr><tr><td><a href="#" style="color:#3b5998;text-decoration:none" target="_blank"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-collapse:collapse;border-radius:2px;text-align:center;display:block;border:1px solid #026A9E;background:#008ED5;padding:7px 16px 11px 16px"><a href="'.$ip.$this->webroot.'Discussions/index?dash_id='.$discussion_post_id.'" style="color:#3b5998;text-decoration:none;display:block" target="_blank"><center><font size="3"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;white-space:nowrap;font-weight:bold;vertical-align:middle;color:#ffffff;font-size:14px;line-height:14px">View on HousingMatters</span></font></center></a></td></tr></tbody></table></a></td><td style="display:block;width:10px" width="10">&nbsp;&nbsp;&nbsp;</td><td><a href="#" style="color:#3b5998;text-decoration:none" target="_blank"><table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-collapse:collapse;border-radius:2px;text-align:center;display:block;border:solid 1px #c9ccd1;background:#f6f7f8;padding:7px 16px 11px 16px"><a href="'.$ip.$this->webroot.'Discussions/index?dash_id='.$discussion_post_id.'" style="color:#3b5998;text-decoration:none;display:block" target="_blank"><center><font size="3"><span style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;white-space:nowrap;font-weight:bold;vertical-align:middle;color:#525252;font-size:14px;line-height:14px">Comment</span></font></center></a></td></tr></tbody></table></a></td><td width="100%"></td></tr><tr><td style="line-height:32px" colspan="3" height="32">&nbsp;</td></tr></tbody></table>
+															</td>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+														</tr>
+														
+														
+												<tr>
+															<td  width="15">&nbsp;&nbsp;&nbsp;</td>
+													<td>
+													<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+														<tbody>
+															
+															<tr>
+															<td  align="left" valign="middle" width="">
+															Thank you <br/>HousingMatters (Support Team)<br/>www.housingmatters.in
+															
+															</td>
+															<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+															
+															
+															</tr>
+															
+															</tbody>
+													</table>
+													</td>
+												</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>';
+					$this->loadmodel('email');
+					$conditions=array('auto_id'=>10);
+					$result_email=$this->email->find('all',array('conditions'=>$conditions));
+					foreach ($result_email as $collection){
+						$from=$collection['email']['from'];
+					}
+					
+	
+					$from_name="HousingMatters";
+					$subject= 'Discussion: ['. $society_name . ']' .'  -   '.'New Comment: '.$comment_box.'';
+					$this->send_email($email,$from,$from_name,$subject,$message_web,$reply);
+					
+					
+				}
+				}
+			}
+			if(sizeof($commenter_ids)>0){
+				$this->send_notification('<span class="label label-warning"><i class="fa fa-commenting-o" aria-hidden="true" style=" padding: 1px 0px 1px 2px; font-size: 15px; "></i></span>','New Comment: <b>'.$comment_box.'</b> by '.$current_member_name,$webroot_path.'Discussions/index?dash_id='.$discussion_post_id,$s_user_id,$commenter_ids);
+			}
+		}
 	}
 }
 

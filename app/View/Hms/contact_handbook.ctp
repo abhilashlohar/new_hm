@@ -1,4 +1,6 @@
-
+<?php
+echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'));
+?>
 <style>
 .r_d{
 width:32%; float:left; padding:5px;

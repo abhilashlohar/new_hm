@@ -207,7 +207,10 @@ $(document).ready(function() {
 
 	$("a[rel='tab']").live('click',function(e){
 		e.preventDefault();
+		
+		$(".nav-collapse").css("height","0");
 		$("#loading").show();
+		
 		pageurl = $(this).attr('href');
 		$.ajax({
 			url: pageurl,

@@ -139,7 +139,7 @@ $grand_total=$grand_total+$total_amount;
 <td><?php echo $supplimentry_bill_type_for_view;?></td>
 <td><?php echo @$user_name;?>&nbsp;&nbsp;<?php echo @$wing_flat;?> </td>
 <td><?php echo $transaction_date_for_view;?></td>
-<td style="text-align:right;"><?php $g_total=number_format($total_amount); echo $g_total;?></td>
+<td style="text-align:right;"><?php $g_total=$this->Currency->formatCurrency( $total_amount, "INR"); echo $g_total;?></td>
 <td><?php echo $description;?></td>
 <td class="hide_at_print" style="text-align:left;">
 <div class="btn-group">
@@ -162,7 +162,7 @@ $grand_total=$grand_total+$total_amount;
 <?php }} ?>
 <tr>
 	<td colspan="6" style="text-align:right;"><b>Total</b></td>
-	<td style="text-align:right;"><b><?php $grand_total = number_format($grand_total); echo $grand_total;?></b></td>
+	<td style="text-align:right;"><b><?php $grand_total = $this->Currency->formatCurrency( $grand_total, "INR"); echo $grand_total;?></b></td>
 	<td></td>
 	<td class="hide_at_print"></td>
 </tr>

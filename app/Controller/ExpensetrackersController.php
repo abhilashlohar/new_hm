@@ -25,6 +25,13 @@ $s_role_id=$this->Session->read('hm_role_id');
 $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');	
 
+$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+$from=$result_financial_year[0]['financial_year']['from'];
+$to=$result_financial_year[0]['financial_year']['to'];
+$this->set('from',$from); 
+$this->set('to',$to); 
+
+
 }
 //End Expense Tracker Pie Chart (Accounts)//
 //Start Expense Tracker Pie Chart Ajax(Accounts)//
@@ -400,6 +407,13 @@ function expense_tracker_view(){
 		$conditions=array('society_id'=>$s_society_id);
 		$result_expense_tracker=$this->expense_tracker->find('all',array('conditions'=>$conditions));
 		$this->set('result_expense_tracker',$result_expense_tracker);
+		$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+		$from=$result_financial_year[0]['financial_year']['from'];
+		$to=$result_financial_year[0]['financial_year']['to'];
+		$this->set('from',$from); 
+		$this->set('to',$to); 
+
+		
 }
 //End expense_tracker_view// 
 //Start expense_tracker_view_ajax// 

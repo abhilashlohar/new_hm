@@ -3,7 +3,8 @@
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
 ?>				   
 </div>
-<?php $c_date = date('d-m-Y'); $b_date = date('1-m-Y'); ?>
+
+<?php  $from = date('d-m-Y',$from); $to = date('d-m-Y',$to); ?> 
 <center>
 	<div class="hide_at_print">
 	<form method="post" id="contact-form">
@@ -11,11 +12,11 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<tbody>
 			<tr>
 				<td><input type="text" class="date-picker m-wrap small" id="date1" data-date-format="dd-mm-yyyy" name="from" placeholder="From" 
-				style="background-color:white !important;" value="<?php echo $b_date; ?>">
+				style="background-color:white !important;" value="<?php echo $from; ?>">
 				</td>
 				<td>
 				<input type="text" class="date-picker  m-wrap small" id="date2" data-date-format="dd-mm-yyyy" 
-				name="to" placeholder="To" style="background-color:white !important;" value="<?php echo $c_date; ?>">
+				name="to" placeholder="To" style="background-color:white !important;" value="<?php echo $to; ?>">
 				</td>
 				<td valign="top"><button type="button" name="sub" class="btn yellow" id="go">Go</button>
 				</td>

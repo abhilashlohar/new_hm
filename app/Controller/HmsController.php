@@ -2789,7 +2789,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -4422,9 +4422,9 @@ if($user_type == "hm_child"){
 
 			$sub_module_id_fix="fix".$sub_module_id;
 			if($sub_module_id_page==$sub_module_id){
-				echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn red allsubmenu" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
+				echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn red allsubmenu hide_at_print" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
 			}else{
-				echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn blue allsubmenu" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
+				echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn blue allsubmenu hide_at_print" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
 			}
 		}
 	}	
@@ -4468,9 +4468,9 @@ if($user_type == "hm_child"){
 			
 				$sub_module_id_fix="fix".$sub_module_id;
 				if($sub_module_id_page==$sub_module_id){
-					echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn red allsubmenu" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
+					echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn red allsubmenu hide_at_print" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
 				}else{
-					echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn blue allsubmenu" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
+					echo '<a href='.$this->webroot.@$controller.'/'.$page_name.' class="btn blue allsubmenu hide_at_print" style="margin-left: 2px;margin-bottom: 4px;" rel="tab">'.$sub_module_name.' </a>';
 				}
 			
 			}
@@ -8290,7 +8290,61 @@ function supplimentry_bill_table(){
 	</table>
 	<?php
 }
+function committee_member_list(){
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id = $this->Session->read('hm_user_id'); 
+	$role_id = $this->Session->read('role_id');	
+	
+	$this->loadmodel('user');
+	$conditions=array('society_id'=>$s_society_id,'active'=>'yes');
+	$result_user=$this->user->find('all',array('conditions'=>$conditions));
+	foreach($result_user as $data){
+				$user_id=$data['user']['user_id'];
+				$user_name=$data['user']['user_name'];
+				$email=$data['user']['email'];
+				$mobile=$data['user']['mobile'];
+				$designation_id=@$data['user']['designation_id'];
+				
+				$this->loadmodel('governance_designation');
+				$conditions=array("society_id" => $s_society_id,"governance_designation_id"=>$designation_id);
+				$result_designation=$this->governance_designation->find('all',array('conditions'=>$conditions));
+				$designation_name=@$result_designation[0]['governance_designation']['designation_name'];
+				$this->loadmodel('user_flat');
+				$conditions1=array("user_id"=>$user_id);
+				$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions1));
+				foreach($result_user_flat as $data){
+							$user_flat_id=$data["user_flat"]["user_flat_id"];
+							$wing=@$data["user_flat"]["wing"];
+							$flat=@$data["user_flat"]["flat"];
 
+							$this->loadmodel('wing');
+							$conditions=array("wing_id"=>$wing);
+							$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
+							@$wing_name=$wing_info[0]["wing"]["wing_name"];
+
+							$this->loadmodel('flat');
+							$conditions=array("flat_id"=>$flat);
+							$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+							@$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
+							$flats=$wing_name.' - '.$flat_name;
+					}
+				
+				$this->loadmodel('user_role');
+				$conditions3=array("user_id"=>$user_id,'role_id'=>2);
+				$result_user_role=$this->user_role->find('all',array('conditions'=>$conditions3));
+				if(!empty($result_user_role)){
+					$result_users_com[]=array('user_name'=>$user_name,'wing_flat'=>$flats,'email'=>$email,'mobile'=>$mobile,'user_id'=>$user_id,'user_flat_id'=>$user_flat_id,'designation_name'=>$designation_name);
+				}
+				
+	}
+	$this->set('result_committee_member',$result_users_com);
+}
 
 function dashboard(){
 	if($this->RequestHandler->isAjax()){
@@ -8307,6 +8361,7 @@ function dashboard(){
 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	
+
 
 		   
 		//////////////Help-desk  last 3 tickets///////////////// 
@@ -13217,6 +13272,14 @@ $this->response->header('Location','society_approve');
 
 }
 
+function role_new_delete(){
+	
+$this->layout=null;	
+$auto_id=(int)$this->request->query('con');	
+$this->loadmodel('role');
+$this->role->updateAll(array("delete_id"=>0),array("auto_id"=>$auto_id));
+$this->redirect(array('action' => 'role_add'));
+}
 
 function role_add()
 {
@@ -13237,12 +13300,25 @@ $role_id=$this->autoincrement_with_society('role','role_id');
 
 
 $this->loadmodel('role');
-$multipleRowData = Array( Array('auto_id'=>$auto_id,'role_id' => $role_id, 'role_name' => $role_name,'society_id' => $s_society_id));
+$multipleRowData = Array( Array('auto_id'=>$auto_id,'role_id' => $role_id, 'role_name' => $role_name,'society_id' => $s_society_id,'delete_id'=>1));
 $this->role->saveAll($multipleRowData); 
 }
 
+if (isset($this->request->data['update_data'])) 
+{
+	  $role_name=$this->request->data['edit_text'];
+	  $update_id=(int)$this->request->data['update'];
+	  $this->loadmodel('role');
+	  $this->role->updateAll(array("role_name"=>$role_name),array("auto_id"=>$update_id));
+}
+
 $this->loadmodel('role');
-$conditions=array("society_id" => $s_society_id);
+
+$conditions =array('$or' => array( 
+array("society_id" => $s_society_id,'role_id'=>array('$lte'=>6)),
+array('society_id' =>$s_society_id,'delete_id' =>1)
+));
+
 $this->set('result_role',$this->role->find('all',array('conditions'=>$conditions)));
 
 
@@ -18767,7 +18843,46 @@ $s_user_id=$this->Session->read('hm_user_id');
 }
 //End Profile//
 //start Content modaration//
-
+function society_detail_auto_save_file_upload(){
+	$this->layout=null;
+	$this->ath();
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$post_data=$this->request->data;
+	
+	if($post_data['field']=="society_logo"){
+		
+		if(!empty($_FILES["file"]["name"])){
+				$file_name=@$_FILES["file"]["name"];
+				$target = "logo/";
+				$target = $target . basename( $_FILES['file']['name']) ;
+				move_uploaded_file($_FILES['file']['tmp_name'], $target);
+				$this->loadmodel('society');
+				$this->society->updateAll(array('logo'=>$file_name),array('society_id'=>$s_society_id));
+		}else{
+			$this->loadmodel('society');
+			$this->society->updateAll(array('logo'=>''),array('society_id'=>$s_society_id));
+			
+		}
+	}
+	
+	if($post_data['field']=="society_signature"){
+		
+		if(!empty($_FILES["file"]["name"])){
+			$file_name=@$_FILES["file"]["name"];
+			$target = "sig/";
+			$target = $target.basename($_FILES['file']['name']) ;
+			move_uploaded_file($_FILES['file']['tmp_name'], $target);
+			$this->loadmodel('society');
+			$this->society->updateAll(array('signature'=>$file_name),array('society_id'=>$s_society_id));
+		}else{
+			$this->loadmodel('society');
+			$this->society->updateAll(array('signature'=>''),array('society_id'=>$s_society_id));
+		}
+		
+	}
+	
+}
 
 function society_detail_auto_save($field,$update){
 	
@@ -19762,6 +19877,7 @@ $result_user_flat= $this->user_flat->find('all',array('conditions'=>$conditions)
 		}
 }
 
+
 function society_member_view(){
 	if($this->RequestHandler->isAjax()){
 			$this->layout='blank';
@@ -19772,9 +19888,16 @@ function society_member_view(){
 	$this->check_user_privilages();	
 	$s_society_id=$this->Session->read('hm_society_id');
 	
-	$result_society_name= $this->requestAction(array('controller' => 'Fns', 'action' => 'society_name_via_society_id'),array('pass'=>array($s_society_id)));
+	$this->loadmodel('society');
+	$conditions=array("society_id"=>$s_society_id);
+	$result_society=$this->society->find('all',array('conditions'=>$conditions));
+	$result_society_name=$result_society[0]['society']['society_name'];
+	
+	$main_admin_user_id=$result_society[0]['society']['user_id'];
+	
 	
 	$this->set(compact("result_society_name"));
+	$this->set(compact("main_admin_user_id"));
 	$arranged_users=array();
 	
 	
@@ -22465,7 +22588,8 @@ $this->wing->saveAll(array("wing_id" => $i,"society_id"=> $s_society_id,"wing_na
 }
 $this->loadmodel('wing');
 $condition=array('society_id'=>$s_society_id);
-$result=$this->wing->find('all',array('conditions'=>$condition)); 
+$order=array('wing.wing_name'=> 'ASC');
+$result=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order)); 
 $this->set('user_wing',$result);
 
 
@@ -22900,7 +23024,7 @@ $this->set('result_ledger_account',$result_ledger_account);
 
 
 $this->loadmodel('ledger_sub_account');
-$conditions=array("ledger_id" => 15);
+$conditions=array("ledger_id" => 15,"society_id"=>$s_society_id);
 $result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 $this->set('result_ledger_sub_account',$result_ledger_sub_account);
 
@@ -25038,20 +25162,13 @@ function flat_type()
 $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');	
 
-$this->loadmodel('flat');
-$order=array('flat.flat_name'=>'ASC');
-$conditions=array("society_id" => $s_society_id);
-$cursor1 = $this->flat->find('all',array('conditions'=>$conditions,'order'=>$order));
-$this->set('cursor1',$cursor1);
-
-
-
 
 $this->loadmodel('wing');
 $condition=array('society_id'=>$s_society_id);
 $order=array('wing.wing_name'=>'ASC');
 $wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
 $this->set('wings',$wings);
+$units=array();
 foreach($wings as $data){
 	$wing_id=$data["wing"]["wing_id"];
 	$wing_name=$data["wing"]["wing_name"];
@@ -25059,7 +25176,8 @@ foreach($wings as $data){
 		$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
 		$order=array('flat.flat_name'=>'ASC');
 		$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
-		$units=array();
+		
+		
 		foreach($flats as $data2){
 			$flat_id=$data2["flat"]["flat_id"];
 			$flat_name=$data2["flat"]["flat_name"];
@@ -25067,6 +25185,7 @@ foreach($wings as $data){
 			$units[]=array("wing_id"=>$wing_id,"wing_name"=>$wing_name,"flat_id"=>$flat_id,"flat_name"=>$flat_name);	
 		}
 }
+
 $this->set('units',$units);		
 		
 }
@@ -27855,7 +27974,7 @@ $date=date('d-m-Y');
 $time = date(' h:i a', time());
 
 $wing = htmlentities($post_data['wing']);
-
+$wing=trim($wing);
 $report = array();
 if(empty($wing)){
 $report[]=array('label'=>'win', 'text' => 'Please Fill Wing Name');
@@ -28622,7 +28741,6 @@ function menus_as_per_user_rights(){
 			
 			$assigned_modules = array_unique($assigned_modules);
 			$assigned_sub_modules = array_unique($assigned_sub_modules);
-			
 			$this->loadmodel('module_type');
 			$order=array("module_type.order" => "ASC");
 			$module_types=$this->module_type->find('all',array('order'=>$order));
@@ -29199,6 +29317,7 @@ echo "F";
 function exit_user($user_flat_id=null){
 	
 	$s_user_id=(int)$this->Session->read('hm_user_id');
+	$s_society_id=(int)$this->Session->read('hm_society_id');
 	$this->loadmodel('user_flat');
 	$conditions=array('user_flat_id'=>(int)$user_flat_id);
 	$user_flat_info=$this->user_flat->find('all',array('conditions'=>$conditions));
@@ -29215,6 +29334,17 @@ function exit_user($user_flat_id=null){
 		$conditions=array('user_flat_id'=>(int)$user_flat_id);
 		$ledger_sub_account_info=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 		$ledger_sub_account_id=$ledger_sub_account_info[0]["ledger_sub_account"]["auto_id"];
+		
+		$this->loadmodel('user_flat');
+		$conditions=array('user_flat_id'=>(int)$user_flat_id);
+		$user_flat_info=$this->user_flat->find('all',array('conditions'=>$conditions));
+		$wing=$user_flat_info[0]["user_flat"]["wing"];
+		$flat=(int)$user_flat_info[0]["user_flat"]["flat"];
+		$user_id=(int)$user_flat_info[0]["user_flat"]["user_id"];
+		$this->loadmodel('flat');
+		$this->flat->updateAll(array('noc_ch_tp'=>null),array("society_id" => (int)$s_society_id,"flat_id"=>$flat));
+		
+		
 		
 		
 		$this->loadmodel('ledger');
@@ -29247,6 +29377,19 @@ function exit_user($user_flat_id=null){
 		if($count==0){
 			$this->loadmodel('user');
 			$this->user->updateAll(array('active'=>"no"),array('user.user_id'=>$user_id));
+			
+			$this->loadmodel('user');
+			$conditions=array('family_main_member'=>(int)$user_id,"is_family_member"=>"yes");
+			$user_family=$this->user->find('all',array('conditions'=>$conditions));
+			foreach($user_family as $family_mem){
+				$user_id=$family_mem["user"]["user_id"];
+				
+				$this->loadmodel('user');
+				$this->user->updateAll(array('active'=>"no"),array('user.user_id'=>$user_id));
+				
+				$this->loadmodel('user_flat');
+				$this->user_flat->updateAll(array('exited'=>"yes"),array('user_flat.user_id'=>$user_id));
+			}
 		}
 		echo '<div class="modal-backdrop fade in"></div>
 		<div style="display: block;" class="modal hide fade in">

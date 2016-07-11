@@ -85,21 +85,21 @@ $net_amt=$net_amt+$total_tds_amount;  ?>
 	<?php echo $instrument_utr; ?>
 	</td>
 	<td style="text-align:right;">
-	<?php $total_tds_amount2 = number_format($total_tds_amount); echo $total_tds_amount2; ?>
+	<?php $total_tds_amount2 = $this->Currency->formatCurrency( $total_tds_amount, "INR"); echo $total_tds_amount2; ?>
 	</td>
 	<td style="text-align:right;">
-	<?php $tds_amount2 = number_format($tds_amount);  echo $tds_amount2; ?>
+	<?php $tds_amount2 = $this->Currency->formatCurrency( $tds_amount, "INR");  echo $tds_amount2; ?>
 	</td>
 	<td style="text-align:right;">
-	<?php $amount2 = number_format($amount); echo $amount2; ?>
+	<?php $amount2 = $this->Currency->formatCurrency( $amount, "INR"); echo $amount2; ?>
 	</td>
 </tr>
 <?php }} ?>
 <tr>
 <td colspan="4" style="text-align:right;"><b>Total</b></td>
-<td style="text-align:right;"><b><?php $net_amt2 = number_format($net_amt); echo $net_amt2; ?></b></td>
-<td style="text-align:right;"><b><?php $total_tds2 = number_format($total_tds); echo $total_tds2; ?></b></td>
-<td style="text-align:right;"><b><?php $total2=number_format($total); echo $total2; ?></b></td>
+<td style="text-align:right;"><b><?php $net_amt2 = $this->Currency->formatCurrency( $net_amt, "INR"); echo $net_amt2; ?></b></td>
+<td style="text-align:right;"><b><?php $total_tds2 = $this->Currency->formatCurrency( $total_tds, "INR"); echo $total_tds2; ?></b></td>
+<td style="text-align:right;"><b><?php $total2=$this->Currency->formatCurrency( $total, "INR"); echo $total2; ?></b></td>
 </tr>
 </tbody>
 

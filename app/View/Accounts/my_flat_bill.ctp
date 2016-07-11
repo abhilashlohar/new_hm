@@ -37,7 +37,6 @@ $default_date_to = date('d-m-Y',$to);
 		<?php  if($multiple_flat>1){  ?>
 		<td>
 		<select name="ledger_sub_account[]" class="m-wrap" style="width:200px;" id="ledger_sub_account">
-		<option value="" style="display:none;">--member--</option>
 		<?php foreach($members_for_billing as $ledger_sub_account_id){
 		$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 		echo '<option value='.$ledger_sub_account_id.'>'.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
@@ -52,12 +51,11 @@ $default_date_to = date('d-m-Y',$to);
 	</table>
 </div>
 
-<div class="controls controls-row visible-phone">
+<div class="controls controls-row visible-phone hide_at_print">
 	<div class="span3"> 
 		<?php  if($multiple_flat>1){  ?>
 		
 		<select name="ledger_sub_account[]" class="m-wrap" style="width:200px;" id="ledger_sub_account1">
-		<option value="" style="display:none;">--member--</option>
 		<?php foreach($members_for_billing as $ledger_sub_account_id){
 		$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 		echo '<option value='.$ledger_sub_account_id.'>'.$member_info["user_name"].' '.$member_info["wing_name"].'-'.ltrim($member_info["flat_name"],'0').'</option>';
@@ -78,7 +76,7 @@ $default_date_to = date('d-m-Y',$to);
 </div>
 
 <br/>
-<div style="width:98%;margin:auto;overflow:auto;background-color:#FFF;padding:5px;display:none;border:solid 1px #ccc;" id="result_statement" >
+<div style="width:98%;overflow:auto;background-color:#FFF;display:none;" id="result_statement" >
 	
 </div>
 
@@ -90,6 +88,7 @@ $(document).ready(function() {
 		var from=$("#from").val();
 		var to=$("#to").val();
 		$("#result_statement").show();
+		$("#result_statement").html("<div align='center'><h4>Loading...</h4></div>");
 		$.ajax({
 		   url: '<?php echo $webroot_path; ?>Accounts/my_flat_bill_ajax1/'+from+'/'+to+'/'+ledger_sub_account_id,
 		   success: function(data){
@@ -103,6 +102,7 @@ $(document).ready(function() {
 		var from=$("#from1").val();
 		var to=$("#to1").val();
 		$("#result_statement").show();
+		$("#result_statement").html("<div align='center'><h4>Loading...</h4></div>");
 		$.ajax({
 		   url: '<?php echo $webroot_path; ?>Accounts/my_flat_bill_ajax1/'+from+'/'+to+'/'+ledger_sub_account_id,
 		   success: function(data){

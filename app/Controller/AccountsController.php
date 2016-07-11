@@ -1218,7 +1218,12 @@ function over_due_report()
 			}
 		}
 		$this->set(compact("members_for_billing"));
-					
+		$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+		$from=$result_financial_year[0]['financial_year']['from'];
+		$to=$result_financial_year[0]['financial_year']['to'];
+		$this->set('from',$from); 
+		$this->set('to',$to); 
+			
 }
 //End Over Due Report (Accounts)//
 //Start over due report show ajax(Accounts)//
@@ -1723,6 +1728,16 @@ function my_flat_bill_excel_export1($from=null,$to=null,$ledger_sub_account_id=n
 	$to=date("Y-m-d",strtotime($to));
 	$this->set("to",$to);
 	$this->set("ledger_sub_account_id",$ledger_sub_account_id);
+	$member_detail=$this->requestAction(array('controller'=>'Fns','action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id)));	
+	$wing_id = $member_detail['wing_id'];
+	$flat_id = $member_detail['flat_id'];
+    $user_id = $member_detail['user_id']; 	
+    $user_name = $member_detail['user_name'];
+	$this->set('user_name',$user_name);
+	
+	$wing_flat=$this->requestAction(array('controller' => 'Fns', 'action' => 'wing_flat_via_wing_id_and_flat_id'), array('pass' => array($wing_id,$flat_id)));
+	$this->set('wing_flat',$wing_flat);
+	
 	
 $this->loadmodel('society');
 $conditions=array("society_id"=>$s_society_id);
@@ -3417,6 +3432,11 @@ function balance_sheet(){
 				}	
 				$this->ath();
 				$this->check_user_privilages();
+				$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+				$from=$result_financial_year[0]['financial_year']['from'];
+				$to=$result_financial_year[0]['financial_year']['to'];
+				$this->set('from',$from); 
+				$this->set('to',$to); 	
 		}
 //End Balance Sheet//
 //Start income_expenditure//
@@ -3673,6 +3693,12 @@ function trial_balance()
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');	
 	
+	$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+	$from=$result_financial_year[0]['financial_year']['from'];
+	$to=$result_financial_year[0]['financial_year']['to'];
+	$this->set('from',$from); 
+	$this->set('to',$to); 
+
 	
 	
 }
@@ -3867,7 +3893,7 @@ function trial_balance_ajax_show_sub_ledger($from=null,$to=null,$wise=null)
             $flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
             foreach($flats as $data2){
                 $flat_id=$data2["flat"]["flat_id"];
-                $ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+                $ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id_for_trail_balance'),array('pass'=>array($wing_id,$flat_id)));
                 if(!empty($ledger_sub_account_id)){
                         $members_for_billing[]=$ledger_sub_account_id;
                 }
@@ -5265,6 +5291,13 @@ function tds_payment_report()
 		
 		$this->ath();
 		$this->check_user_privilages();	
+		$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+		$from=$result_financial_year[0]['financial_year']['from'];
+		$to=$result_financial_year[0]['financial_year']['to'];
+		$this->set('from',$from); 
+		$this->set('to',$to); 
+
+		
 }
 //End tds_payment_report//
 //Start tds_payment_report_view_ajax//
@@ -5363,6 +5396,14 @@ function cash_book_report()
 $s_role_id=$this->Session->read('role_id');
 $s_society_id = $this->Session->read('society_id');
 $s_user_id=$this->Session->read('user_id');
+
+$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+$from=$result_financial_year[0]['financial_year']['from'];
+$to=$result_financial_year[0]['financial_year']['to'];
+$this->set('from',$from); 
+$this->set('to',$to); 
+
+
 }
 //End Cash Book Report//
 //Start cash_book_report_show_ajax// 
@@ -5422,7 +5463,15 @@ function bank_book_report()
 	$this->loadmodel('ledger_sub_account');
 	$conditions=array("society_id" => $s_society_id,"ledger_id"=>33);
 	$cursor1=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-	$this->set('cursor1',$cursor1);		
+	$this->set('cursor1',$cursor1);	
+
+	$result_financial_year=$this->requestAction(array('controller' => 'Fns', 'action' => 'financial_year_current_open'));
+	$from=$result_financial_year[0]['financial_year']['from'];
+	$to=$result_financial_year[0]['financial_year']['to'];
+	$this->set('from',$from); 
+	$this->set('to',$to); 
+
+	
 	
 }
 //End bank_book_report//

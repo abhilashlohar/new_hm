@@ -6,8 +6,8 @@
 <a href="<?php echo $webroot_path; ?>Incometrackers/account_statement" class="btn" rel='tab'>Account Statement</a>
 </div>
 <?php
-$c_date = date('d-m-Y');
-$b_date = date('1-m-Y');
+$from = date('d-m-Y',$from);
+$to = date('d-m-Y',$to);
 ?>
 <center>
 <div class="hide_at_print">
@@ -22,9 +22,9 @@ $b_date = date('1-m-Y');
 <option value="3">Non-residential</option>
 </select>
 </td>
-<td><input type="text" id="date1" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="from" placeholder="From" style="background-color:white !important; margin-top:8px;" value="<?php echo $b_date; ?>">
+<td><input type="text" id="date1" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="from" placeholder="From" style="background-color:white !important; margin-top:8px;" value="<?php echo $from; ?>">
 </td>
-<td><input type="text" id="date2" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="to" placeholder="To" style="background-color:white !important; margin-top:8px;" value="<?php echo $c_date; ?>"></td>
+<td><input type="text" id="date2" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="to" placeholder="To" style="background-color:white !important; margin-top:8px;" value="<?php echo $to; ?>"></td>
 <td valign="top"><button type="button" name="sub" class="btn yellow" id="go" style="margin-top:8px;">Go</button></td>
 </tr>
 </tbody></table>

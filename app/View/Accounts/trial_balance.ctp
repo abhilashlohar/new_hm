@@ -1,8 +1,8 @@
-<?php
-$default_from = date('1-m-Y');
-$default_to = date('d-m-Y');
-?>
 
+<?php  
+$default_from = date('d-m-Y',$from); 
+$default_to = date('d-m-Y',$to);
+?> 
 
 <div class="hide_at_print">	
 <?php

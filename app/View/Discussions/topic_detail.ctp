@@ -106,7 +106,7 @@ if($visible=="group_wise"){
 		<textarea class="span12 m-wrap" type="text" name="comment_box" placeholder="Type your comments..." style="background-color:#FFF !important; resize:none;"></textarea>
 		<div align="right">
 		<div class="pull-left" id="save_comment"></div>
-		<button type="submit" id="sub" style="margin-top:-10px;" class="btn blue icn-only tooltips" data-placement="bottom" data-original-title="Tab + Enter for post comment">POST</button>
+		<button type="submit" id="sub" style="margin-top:-10px;" class="btn blue icn-only tooltips" data-placement="bottom" data-original-title="Tab + Enter for post comment" >POST</button>
 		</div>
 	</form>
 </div>
@@ -128,6 +128,7 @@ $(document).ready(function(){
             }
         });
 		nn=0;
+		
 	};
 	
 	$("#idForm").on("submit",function(e){
@@ -140,6 +141,7 @@ $(document).ready(function(){
 		   url: "<?php echo $webroot_path; ?>Discussions/submit_comment",
 		   data: $("#idForm").serialize(), // serializes the form's elements.
 		   success: function(data){
+			  
 			   $('#sub').removeAttr('disabled');
 			   $("textarea[name=comment_box]").val("");
 			   $("#save_comment").html(data); // show response from the php script.

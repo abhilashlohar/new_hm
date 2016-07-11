@@ -1,3 +1,7 @@
+<?php
+echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'));
+?>
+
 <?php 
 function substrwords($text, $maxchar, $end='...') {
     if (strlen($text) > $maxchar || $text == '') {
@@ -59,6 +63,7 @@ background: transparent linear-gradient(141deg, #0FB8AD 0%, #1FC8DB 61%, #2CB5E8
 color:#FFF;
 }
 </style>
+
 <div id="main" style="overflow: auto;">
 <?php 
 
@@ -115,10 +120,13 @@ foreach($arranged_users as $user_info){
 	
 	 var $rows = $('#main div');
 	 $('#search').keyup(function() {
+		
 		var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
 		$rows.show().filter(function() {
 			var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
 			return !~text.indexOf(val);
+					
 		}).hide();
+		
 	});
  </script>

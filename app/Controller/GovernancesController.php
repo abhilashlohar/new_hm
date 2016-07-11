@@ -33,6 +33,223 @@ $this->set('result_governance_designation',$result);
 
 }
 
+
+function governace_meeting_resend($meeting_id=null){
+	
+	$this->layout=null;
+	$s_society_id=$this->Session->read('hm_society_id');
+	$this->loadmodel('governance_invite');
+	$conditions=array('governance_invite_id'=>(int)$meeting_id);
+	$result_governace_invite=$this->governance_invite->find('all',array('conditions'=>$conditions));
+	foreach($result_governace_invite as $data){
+		
+		$message=$data['governance_invite']['message'];
+		$date=$data['governance_invite']['date'];
+		$creater_user_id=$data['governance_invite']['user_id'];
+		$time=$data['governance_invite']['time'];
+		$subject=$data['governance_invite']['subject'];
+		$type_mettings=$data['governance_invite']['meeting_type'];
+		$user_resend=$data['governance_invite']['user'];
+		$location=$data['governance_invite']['location'];
+		$covering_note=$data['governance_invite']['covering_note'];
+		$notice_of_date=$data['governance_invite']['notice_of_date'];
+		$any_other=$data['governance_invite']['any_other_note'];
+	}
+		if($type_mettings==1)
+			{
+				$moc="Managing Committee";
+
+			}
+			if($type_mettings==2)
+			{
+				$moc="General Body";
+
+			}
+			if($type_mettings==3)
+			{
+				$moc="Special General Body";
+
+			}
+	
+	$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
+	
+	$result_society=$this->society_name($s_society_id);
+	foreach($result_society as $child)	{
+		$society_name=$child['society']['society_name'];
+	}
+	
+	$result_user_creater=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_info_via_user_id'),array('pass'=>array($creater_user_id))); 
+	$email=$result_user_creater[0]['user']['email'];
+	$user_name=$result_user_creater[0]['user']['user_name'];
+	if(!empty($email)){
+		$reply=$email;
+	  }else{
+		$reply="donotreply@housingmatters.in"; 
+	  }
+	
+	foreach($user_resend as $user_send_id){
+		
+		$result_user=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_info_via_user_id'),array('pass'=>array($user_send_id))); 
+			
+			$to=$result_user[0]['user']['email'];
+	
+				$message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+					  <tbody>
+						<tr>
+							<td>
+								<table width="100%" cellpadding="0" cellspacing="0">
+									<tbody>
+									
+											<tr>
+												<td colspan="2">
+													<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+													<tbody>
+													<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+													<tr>
+													<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
+													<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+													<td width="100%"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px"><span style="color:#00a0e3">Housing</span><span style="color:#777776">Matters</span></a></td>
+													<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
+														
+													</td>
+													</tr>
+													<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+													</tbody>
+													</table>
+												</td>
+											</tr>
+											
+												
+											
+									</tbody>
+								</table>
+								
+								<table width="100%" cellpadding="0" cellspacing="0">
+									<tbody>
+									
+											<tr>
+													<td style="padding:5px;" width="100%" align="left">
+													<span style="color:rgb(100,100,99)" align="justify"><p><center><b>'.$society_name.'</b></center></p> </span> 
+													</td>
+																			
+											</tr>
+											
+											<tr>
+													<td style="padding:5px;" width="100%" align="left">
+													<span style="color:rgb(100,100,99)" align="justify"><b>Meeting Type:</b> [ '.$moc .' Meeting ]  </span> 
+													</td>
+																			
+											</tr>
+											
+											<tr>
+													<td style="padding:5px;" width="100%" align="left">
+													<span style="color:rgb(100,100,99)" align="justify"><b>Meeting Title:</b> '.$subject .' </span> 
+													</td>
+																			
+											</tr>
+											
+											<tr>
+													<td style="padding:5px;" width="100%" align="left">
+													<span style="color:rgb(100,100,99)" align="justify"><b>Date of Notice:</b> '.$notice_of_date.'  </span> 
+													</td>
+																			
+											</tr>
+											<tr>
+													<td style="padding:5px;" width="100%" align="left">
+													 
+															<table  cellpadding="10" width="100%;" border="1" bordercolor="#e1e1e1"  >
+															<tr class="tr_heading" style="background-color:#00A0E3;color:white;">
+															<td width="10%">Meeting ID</td>
+															<td width="20%">Date of Meeting</td>
+															<td width="10%">Time</td>
+															<td width="60%">Location</td>
+															</tr>
+															<tr class="tr_content" style="background-color:#E9E9E9;">
+															<td>'.$meeting_id.'</td>
+															<td>'.$date.'</td>
+															<td>'.$time.'</td>
+															<td>'.$location.'</td>
+
+															</tr>
+															</table>
+													
+													</td>
+																			
+											</tr>
+											
+											
+											
+											
+											<tr>
+													<td style="padding:5px;" width="100%" align="left">
+															<p><b>Covering Note:</b><br/>
+															<p>'.$covering_note.'</p>
+													</td>
+																			
+											</tr>
+											
+											<tr>
+													<td style="padding:5px;" width="100%" align="left">
+															<p> <b>	Agenda to be discussed: </b></p><br/>
+																	<table  cellpadding="10" width="100%;" border="1" bordercolor="#e1e1e1"  >
+																	<tr style="background-color:#00A0E3;color:white;">
+																	<td>Time</td>
+																	<td>Meeting Agenda</td>
+
+																	</tr>';
+																	 $jj=0;
+																	foreach($message as $ddd)
+																	{	$jj++;
+
+																	$message_web.='<tr>
+																	<td width="10%">'.urldecode($ddd[2]).'</td>
+																	<td>'.$jj.'. '.urldecode($ddd[0]). ' <br/> '.urldecode($ddd[1]).'</td>
+																	</tr>';	
+																	 } 
+																	 $message_web.='</table><br/>
+													</td>
+																			
+											</tr>
+											
+											<tr>
+													<td style="padding:5px;" width="100%" align="left">
+															<p><b>Any other Note:</b><br/>
+															<p>'.$any_other.'</p>	
+													</td>
+																			
+											</tr>
+											
+											
+											<tr>
+												<td style="padding:5px;" width="100%" align="left">
+														<span > 
+																For  '.$society_name.' .<br/>
+																'.$user_name.'<br/>
+																
+														</span>
+												</td>
+																			
+											</tr>
+								
+								</table>
+								
+							</td>
+						</tr>
+
+					</tbody>
+			</table>';
+			
+			
+		@$title.= '['. $society_name . ']  - '.' Meeting Reminder '.$moc.' Meeting scheduled'.'  on   '.''.$date.'';	
+
+		$this->send_email($to,'support@housingmatters.in','HousingMatters',$title,$message_web,$reply);
+		$title="";	
+	}			
+			
+echo 'done'	;
+}
+
+
 function governance_invite_submit()
 {
 	

@@ -5,19 +5,20 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 </center>
 
 <?php ///////////////////////////////////////////////////////////////////////////////////////////////////// ?>
-<?php
-$date_from = date('1-m-Y');
-$date_to = date('d-m-Y');
-?>
+
+<?php  
+$default_date_from = date('d-m-Y',$from); 
+$default_date_to = date('d-m-Y',$to);
+?> 
  <center>
             <div style="width:50%;" class="hide_at_print">
             <form method="post" id="contact-form">
              <table>
             <tbody><tr>
            
-            <td><input type="text" id="date1" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="from" placeholder="From" style="background-color:white !important;" value="<?php echo $date_from; ?>"></td>
+            <td><input type="text" id="date1" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="from" placeholder="From" style="background-color:white !important;" value="<?php echo $default_date_from; ?>"></td>
            
-            <td><input type="text" id="date2" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="to" placeholder="To" style="background-color:white !important;" value="<?php echo $date_to; ?>"></td>
+            <td><input type="text" id="date2" class="date-picker m-wrap medium" data-date-format="dd-mm-yyyy" name="to" placeholder="To" style="background-color:white !important;" value="<?php echo $default_date_to; ?>"></td>
             <td valign="top"><button type="button" name="sub" class="btn yellow" id="go">Go</button></td>
             </tr>
             </tbody></table>

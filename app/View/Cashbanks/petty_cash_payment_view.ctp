@@ -15,11 +15,11 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <?php //} ?>
 </div>
 <?php /////////////////////////////////////////////////////////////////////////////////////////////////////////////// ?>
-<?php
-$c_date = date('d-m-Y');
-$b_date = date('1-m-Y');
+<?php  
+$b_date = date('d-m-Y',$from); 
+$c_date = date('d-m-Y',$to);
 ?> 
-
+     
 
 
 

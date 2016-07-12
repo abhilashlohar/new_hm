@@ -204,15 +204,16 @@ function substrwords($text, $maxchar, $end='...') {
 		
 		<?php 
 		 $result_role_security_dashboard=$this->requestAction(array('controller' => 'hms', 'action' => 'role_security_dashboard'), array('pass' => array($s_society_id,$role_id,1)));
-		if(sizeof($result_role_security_dashboard)>0){
+		if(sizeof($result_role_security_dashboard)>0){ 
 		?>
 			<div class="span4 div_adjesment"  >
 			<!-------content----------->
-			<?php if($role_id==3) { 
+			
+			<?php if($role_id==1) { 
 			$url_see_all='help_desk_sm_all_ticket';
 			}
 
-			if($role_id!=3) { 
+			if($role_id!=1) { 
 			$url_see_all='help_desk_r_all_ticket';
 			} ?>
 			<table class="table shadow table-bordered table-advance table-hover">
@@ -252,11 +253,11 @@ function substrwords($text, $maxchar, $end='...') {
 				
 				$complain_name=$this->requestAction(array('controller' => 'hms', 'action' => 'help_desk_category_name'), array('pass' => array($complain_type_id)));
 				
-				if($role_id==3) { 
+				if($role_id==1) { 
 				$url='help_desk_sm_view/'.$help_desk_id.'/'.$help_desk_status;
 				}
 
-				if($role_id!=3) { 
+				if($role_id!=1) { 
 				$url='help_desk_r_view/'.$help_desk_id.'/'.$help_desk_status;
 				}
 				?>
@@ -305,11 +306,11 @@ function substrwords($text, $maxchar, $end='...') {
 		
 			<div class="span4 div_adjesment"  >
 			<!-------content----------->
-			<?php if($role_id==3) { 
+			<?php if($role_id==1) { 
 			$url_see_all='notice_publish';
 			}
 
-			if($role_id!=3) { 
+			if($role_id!=1) { 
 			$url_see_all='notice_publish';
 			} ?>
 			<table class="table shadow table-bordered table-advance table-hover">

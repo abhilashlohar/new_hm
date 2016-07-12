@@ -16,6 +16,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </table>
 </div>
 <br/>
+<div style="overflow:auto;">
 <?php $i=0;
 
 foreach ($result_resource as $collection){
@@ -29,10 +30,18 @@ foreach ($result_resource as $collection){
 	$upload_id=$collection['resource']['user_id'];
 
 	$id=$collection['resource']['resource_id'];
-	 $to=@(int)$collection['resource']['visible'];
+	 $to=@$collection['resource']['visible'];
 	$wing_notice_id=@$collection['resource']['sub_visible'];
 	$data='';
-	
+	if($to=="all_users"){
+		$to="All User";
+	}elseif($to=="role_wise"){
+		$to="Role Wise";
+	}elseif($to=="wing_wise"){
+		$to="Wing Wise";
+	}elseif($to=="group_wise"){
+		$to="Group Wise";
+	}
 	
 	
 	$result_user_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'), array('pass' => array((int)$upload_id)));
@@ -67,7 +76,7 @@ foreach ($result_resource as $collection){
 	</div>
 	<?php
 } ?>
-
+</div>
 <script>
 $(document).ready(function(){
 <?php

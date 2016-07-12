@@ -6510,14 +6510,14 @@ $this->loadmodel('regular_bill');
 $conditions=array("auto_id"=>$auto_id);
 $result_new_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions));
 $this->set('result_new_regular_bill',$result_new_regular_bill);
-$terms_condition_id=$result_new_regular_bill[0]["regular_bill"]["terms_condition_id"];
+$terms_condition_id=@$result_new_regular_bill[0]["regular_bill"]["terms_condition_id"];
 $this->loadmodel('regular_bill');
-
-$this->loadmodel('terms_condition');
-$conditions=array("auto_id"=>$terms_condition_id,"society_id" => $s_society_id);
-$terms_conditions=$this->terms_condition->find('all',array('conditions'=>$conditions));
-$this->set('terms_conditions',$terms_conditions[0]["terms_condition"]["terms_conditions"]);
-
+if(!empty($terms_condition_id)){
+	$this->loadmodel('terms_condition');
+	$conditions=array("auto_id"=>$terms_condition_id,"society_id" => $s_society_id);
+	$terms_conditions=$this->terms_condition->find('all',array('conditions'=>$conditions));
+	$this->set('terms_conditions',$terms_conditions[0]["terms_condition"]["terms_conditions"]);
+}
 $this->loadmodel('society');
 $conditions=array("society_id" => $s_society_id);
 $result_society=$this->society->find('all',array('conditions'=>$conditions));

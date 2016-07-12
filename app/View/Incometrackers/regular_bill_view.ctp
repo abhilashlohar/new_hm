@@ -270,10 +270,11 @@
 									<td width="100%" style="padding:5px;" valign="top">
 									<span>Remarks:</span><br>';
 									$inc_t_c=0;
-									foreach($terms_conditions as $t_c){ $inc_t_c++;
-										$bill_html.='<span>'.$inc_t_c.'. '.$t_c.'</span><br>';
+									if(!empty($terms_conditions)){
+										foreach($terms_conditions as $t_c){ $inc_t_c++;
+											$bill_html.='<span>'.$inc_t_c.'. '.$t_c.'</span><br>';
+										}
 									}
-									
 									$bill_html.='</td>
 								</tr>
 							</tbody></table>

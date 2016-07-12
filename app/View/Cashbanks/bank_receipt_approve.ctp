@@ -80,13 +80,7 @@ $nnn = 555;
 		$narration = @$collection['temp_cash_bank']['narration'];
 	if($member_type == "residential"){
 			 $ledger_sub_account_id = (int)$collection['temp_cash_bank']['ledger_sub_account_id'];
-			 $receipt_type = $collection['temp_cash_bank']['receipt_type'];
-		if($receipt_type == "maintenance"){
-			$receipt_tppp = "Maintenance";	
-		}
-		else{
-			$receipt_tppp = "Other";	
-		}
+			
 				
 		$member_info=$this->requestAction(array('controller'=>'Fns','action'=>'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 		$wing_id = $member_info['wing_id'];

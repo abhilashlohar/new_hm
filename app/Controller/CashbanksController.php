@@ -8206,7 +8206,7 @@ foreach($temp_cash_bank_datas as $data){
 	$branch_of_bank=@$data['temp_cash_bank']['bank_branch'];
 	$received_from=$data['temp_cash_bank']['member_type'];
 	$ledger_sub_account_id=(int)$data['temp_cash_bank']['ledger_sub_account_id'];
-	$receipt_type=$data['temp_cash_bank']['receipt_type'];
+	//$receipt_type=$data['temp_cash_bank']['receipt_type'];
 	$amount=$data['temp_cash_bank']['amount'];
 	$narration=$data['temp_cash_bank']['narration'];
 	@$cheque_date=@$date;
@@ -8411,8 +8411,7 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 						}	
 				}
 				
-	
-	
+
 	$this->loadmodel('temp_cash_bank');
 	$conditions=array("auto_id"=>(int)$temp_cash_bank_id,"society_id"=>$s_society_id);
 	$this->temp_cash_bank->deleteAll($conditions);

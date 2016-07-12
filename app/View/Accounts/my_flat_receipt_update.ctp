@@ -196,7 +196,7 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 									$amount=@$temp_cash_bank["temp_cash_bank"]["amount"];
 									$narration=@$temp_cash_bank["temp_cash_bank"]["narration"];
 									$status=@$temp_cash_bank["temp_cash_bank"]["status"];
-									if(empty($status)){
+									if(!empty($status)){
 										$status="Pending";
 										$status_class="label-danger";
 									}

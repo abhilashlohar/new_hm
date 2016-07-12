@@ -18,105 +18,58 @@ $tcpdf->AddPage();
 $tcpdf->SetTextColor(0, 0, 0); 
 $tcpdf->SetFont($textfont,12); 
 $tcpdf->SetLineWidth(0.1);
+date_default_timezone_set('Asia/Kolkata');	
+foreach ($cursor1 as $collection){
+	$receipt_no = (int)$collection['cash_bank']['receipt_number'];
+	$d_date = $collection['cash_bank']['transaction_date'];
+	$today = date("d-M-Y");
+	$receipt_mode = $collection['cash_bank']['receipt_mode'];
+	$user_id = $collection['cash_bank']['sundry_creditor_id']; 
+	$amount = (int)$collection['cash_bank']['amount'];
+	$society_id = (int)$collection['cash_bank']['society_id'];
+	$account_type = (int)$collection['cash_bank']['account_type'];
+	$narration = @$collection['cash_bank']['narration'];
+	$sub_account = (int)$collection['cash_bank']['account_head'];
+	$invoice_ref = $collection['cash_bank']['invoice_reference'];
+	$instrument_utr = $collection['cash_bank']['receipt_instruction']; 
+	$prepaired_by_id = (int)$collection['cash_bank']['created_by']; 
+	$tds_amount = $collection['cash_bank']['tds_tax_amount']; 
+	$total_tds_amount=$amount-$tds_amount;
+}
 
-
-foreach ($cursor1 as $collection) 
-{
-	$tds_amount="";
-$receipt_no = (int)$collection['cash_bank']['receipt_id'];
-$d_date = $collection['cash_bank']['transaction_date'];
-$today = date("d-M-Y");
-$receipt_mode = $collection['cash_bank']['receipt_mode'];
-$user_id = $collection['cash_bank']['user_id']; 
-$amount = $collection['cash_bank']['amount'];
-$society_id = (int)$collection['cash_bank']['society_id'];
-$account_type = (int)$collection['cash_bank']['account_type'];
-$narration = @$collection['cash_bank']['narration'];
-$sub_account = (int)$collection['cash_bank']['account_head'];
-$invoice_ref = $collection['cash_bank']['invoice_reference'];
-$instrument_utr = $collection['cash_bank']['receipt_instruction']; 
-$prepaired_by_id = (int)$collection['cash_bank']['prepaired_by']; 
-$tds_id = (int)$collection['cash_bank']['tds_id']; 
-$total_tds_amount=$amount;
-
-	foreach($tds_arr as $tds_ddd)
-	{
-	$tdsss_taxxx = (int)$tds_ddd[0];  
-	$tds_iddd = (int)$tds_ddd[1];  
-	if($tds_iddd == $tds_id) 
-	{
-	$tds_tax = $tdsss_taxxx;   
-	$tds_amount = (round(($tds_tax/100)*$amount));
-	$total_tds_amount = ($amount - $tds_amount);
 	$tds_amount = str_replace( ',', '', $tds_amount);
+	$total_tds_amount = str_replace( ',', '', $total_tds_amount );
+	$am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' =>array($total_tds_amount))));
+	foreach ($cursor2 as $collection){
+		$society_name = $collection['society']['society_name'];
+		@$society_reg_no = @$collection['society']['society_reg_num'];
+		@$society_address = @$collection['society']['society_address'];
+		@$sig_title = @$collection['society']['sig_title'];
 	}
+
+	if($account_type == 1){
+			$subleddger_result = $this->requestAction(array('controller' => 'hms', 'action' => 'subledger_fetch_by_auto_id'),array('pass'=>array($user_id)));
+			foreach ($subleddger_result as $collection){
+					$user_name = $collection['ledger_sub_account']['name'];	  
+			}
+	}else{
+			$ledger_resullt = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch2'),array('pass'=>array($user_id)));
+			foreach ($ledger_resullt as $collection){
+				$user_name = $collection['ledger_account']['ledger_name'];	  
+			}	
 	}
-	
-	
 
+	$subleddger_result2 = $this->requestAction(array('controller' => 'hms', 'action' => 'subledger_fetch_by_auto_id'),array('pass'=>array($sub_account)));
+	foreach ($subleddger_result2 as $collection){
+		$bank_name = $collection['ledger_sub_account']['name'];	  
+	}
 
-
-
-
-
-
-
-
-}
-
-$total_tds_amount = str_replace( ',', '', @$total_tds_amount );
-$am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' =>array($total_tds_amount))));
-foreach ($cursor2 as $collection) 
-{
-$society_name = $collection['society']['society_name'];
-@$society_reg_no = @$collection['society']['society_reg_num'];
-@$society_address = @$collection['society']['society_address'];
-@$sig_title = @$collection['society']['sig_title'];
-}
-
-if($account_type == 1)
-{
-$subleddger_result = $this->requestAction(array('controller' => 'hms', 'action' => 'subledger_fetch_by_auto_id'),array('pass'=>array($user_id)));
-foreach ($subleddger_result as $collection) 
-{
-$user_name = $collection['ledger_sub_account']['name'];	  
-}
-}
-else
-{
-$ledger_resullt = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch2'),array('pass'=>array($user_id)));
-foreach ($ledger_resullt as $collection) 
-{
-$user_name = $collection['ledger_account']['ledger_name'];	  
-}	
-}
-
-$subleddger_result2 = $this->requestAction(array('controller' => 'hms', 'action' => 'subledger_fetch_by_auto_id'),array('pass'=>array($sub_account)));
-foreach ($subleddger_result2 as $collection) 
-{
-$bank_name = $collection['ledger_sub_account']['name'];	  
-}
-
-
-
-$userr_dattaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by_id)));
-foreach ($userr_dattaa as $user_detail) 
-{
-$user_naammm = $user_detail['user']['user_name'];	  
-}
-
-
-
-
-
-
-
-
-
-
-
-	
-$date=date("d-m-Y",($d_date));
+	$userr_dattaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($prepaired_by_id)));
+	foreach ($userr_dattaa as $user_detail){
+		$user_naammm = $user_detail['user']['user_name'];	  
+	}
+		
+	 $date=date("d-m-Y",($d_date));
 ?>
 <?php 
 $q='<table border="1" style="width:100%;"> <tr><td>';

@@ -2966,6 +2966,7 @@ function bank_payment_pdf($trans_id=null)
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id = (int)$this->Session->read('hm_user_id');	
 	$this->ath();
+	
 	$trans_id = (int)$trans_id;
 
 $this->loadmodel('cash_bank');

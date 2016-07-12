@@ -1,8 +1,8 @@
 <?php
 echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
-
-<table class="table table-condensed table-bordered" id="sample_1" >
+<div style="overflow:auto;">
+	<table class="table table-condensed table-bordered" id="sample_1"  >
 			<thead>
 				<tr>
 					<th>Sr.</th>
@@ -36,4 +36,5 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				
 				<?php } ?>
 			</tbody>
-		</table>
+	</table>
+</div>	

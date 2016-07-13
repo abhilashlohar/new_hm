@@ -207,6 +207,8 @@ $(document).ready(function() {
 		e.preventDefault();
 		
 		$(".nav-collapse").css("height","0");
+		$(".nav-collapse").removeClass("in");
+		$(".btn-navbar").addClass("collapsed"); 
 		$("#loading").show();
 		
 		pageurl = $(this).attr('href');

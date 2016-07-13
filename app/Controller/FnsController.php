@@ -51,6 +51,16 @@ function user_profile_info_via_user_id($user_id){
 	$conditions=array("user_id" =>$user_id);
 	return $this->user_profile->find('all',array('conditions'=>$conditions));	
 }
+
+function journal_info_via_voucher_id($voucher_id){
+	$this->loadmodel('journal');
+	$s_society_id=$this->Session->read('hm_society_id');
+	$conditions=array("voucher_id"=>$voucher_id,"society_id"=>$s_society_id);
+	return $this->journal->find('all',array('conditions'=>$conditions));
+	
+	
+}
+
 function financial_year_current_open(){
 	
 	$s_society_id=$this->Session->read('hm_society_id');

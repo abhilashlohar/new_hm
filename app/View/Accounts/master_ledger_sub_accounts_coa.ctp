@@ -18,7 +18,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </div>
 <div class="portlet-body form">
 
-<label style="font-aize:14px;">Ledger Accounts</label>
+<label style="font-aize:14px;">Ledger Accounts <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></label>
 <div class="controls">
 <select class="span5 m-wrap chosen" name="main_id" id="go">
 <option value="" style="display:none;">Select Ledger Account</option>
@@ -38,7 +38,7 @@ if($auto_id == 33 || $auto_id == 35 || $auto_id == 15 || $auto_id == 112)
 <br>
 
 
-<label style="font-size:14px;">Ledger Sub Account</label>
+<label style="font-size:14px;">Ledger Sub Account <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></label>
 <div class="controls">
 <input type="text" name="cat_name" placeholder="Name" class="m-wrap span5" style="background-color:white !important;" id="cat">
 <label id="cat"></label>

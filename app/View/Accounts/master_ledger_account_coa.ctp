@@ -19,7 +19,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <div class="portlet-body form">
 
 
-<label style="font-aize:14px;">Accounts Group</label>
+<label style="font-aize:14px;">Accounts Group <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></label>
 <div class="controls">
 <select class="m-wrap chosen span5" name="main_id" id="go">
 <option value="" style="display:none;">Select Accounts Group</option>
@@ -38,7 +38,7 @@ $name = $collection['accounts_groups']['group_name'];
 
 
 
-<label style="font-size:14px;">Ledger Account</label>
+<label style="font-size:14px;">Ledger Account <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></label>
 <div class="controls">
 <input type="text" name="cat_name" placeholder="Name" class="m-wrap span5" style="background-color:white !important;" id="cat">
 <label id="cat"></label>

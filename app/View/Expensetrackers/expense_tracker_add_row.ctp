@@ -86,11 +86,11 @@ foreach($result_account_group as $data){
         <table class="table table-bordered" id="sub_table2">
                     
                     <tr style="background-color:#E8EAE8;">
-                            <th style="width:20%;">Posting date</th>
-                            <th style="width:20%;">Date of Invoice</th>
+                            <th style="width:20%;">Posting date <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+                            <th style="width:20%;">Date of Invoice <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
                             <th style="width:20%;">Due Date (Optional)</th>
-                            <th style="width:20%;">Party Account Head</th>
-                            <th style="width:20%;">Invoice Reference</th>
+                            <th style="width:20%;">Party Account Head <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+                            <th style="width:20%;">Invoice Reference <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
 		    </tr>
                     
                     <tr style="background-color:#E8F3FF;">
@@ -134,8 +134,8 @@ foreach($result_account_group as $data){
                     </tr>
                     
                     <tr style="background-color:#E8EAE8;">
-                      <th>Expense Head</th>
-                      <th>Amount of Invoice</th>
+                      <th>Expense Head <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+                      <th>Amount of Invoice <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
                       <th>Attachment</th>
                       <th colspan="2">Description</th>
                     </tr>

@@ -16,11 +16,11 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<table class="table table-condensed table-bordered" id="main">
 			<thead>
 				<tr>
-					<th>Transaction Date</th>
-					<th width="200px">Deposited In</th>
-					<th>Receipt Mode</th>
-					<th width="200px">Received From</th>
-					<th  width="115px">Amount Applied</th>
+					<th width="130px">Transaction Date <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th width="190px">Deposited In <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th>Receipt Mode <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th width="200px">Received From <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th  width="125px">Amount Applied <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
 					<th>Narration</th>
 				</tr>
 			</thead>

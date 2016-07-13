@@ -6,10 +6,10 @@ $default_date = date('d-m-Y');
    <td style="">
        <table class="table table-bordered" id="sub_tablll">		 
 		 <tr style="background-color:#E8EAE8;">
-               <th>Bank Name</th>
-			   <th>Branch</th>
-			   <th>Account Reference</th>
-			   <th>Principal Amount</th>
+               <th>Bank Name <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+			   <th>Branch <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+			   <th>Account Reference <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+			   <th>Principal Amount <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
 			   <th>Start Date</th>
 			</tr> 
               
@@ -42,10 +42,10 @@ $default_date = date('d-m-Y');
 			 
 			 </tr>
 			 <tr style="background-color:#E8EAE8;">
-                 <th>Maturity Date</th>
-				 <th>Interest Rate%</th>
+                 <th>Maturity Date <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+				 <th>Interest Rate% <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
 				 <th>Attachment</th>
-				 <th colspan="2">Purpose</th>
+				 <th colspan="2">Purpose <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
 				 
              </tr>
 					

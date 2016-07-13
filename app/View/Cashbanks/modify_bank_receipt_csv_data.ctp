@@ -8,11 +8,11 @@ input.m-wrap[type="text"]{
 <table id="report_tb" class="table table-bordered table-condensed" width="100%">
 	<thead>
 	<tr>
-		<th>Transaction Date</th>
-		<th>Deposited In</th>
-		<th>Receipt Mode</th>
-		<th>Member</th>
-		<th>Amount Applied</th>
+		<th width="130px">Transaction Date <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+		<th>Deposited In <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+		<th>Receipt Mode <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+		<th>Member <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+		<th>Amount Applied <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
 		<th>Narration</th>
 		<th>Delete</th>
 	</tr>

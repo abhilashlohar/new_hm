@@ -266,7 +266,7 @@ foreach($regular_bills as $data){
 							</tbody></table>';
 							$bill_html.='<table style="font-size:12px;border-bottom: dotted 1px;" width="100%" cellspacing="0">
 								<tbody><tr>
-									<td width="50%" style="padding:5px;" valign="top">
+									<td width="100%" style="padding:5px;" valign="top">
 									<span>Remarks:</span><br>';
 									$inc_t_c=0;
 									foreach($terms_conditions as $t_c){ $inc_t_c++;
@@ -274,9 +274,16 @@ foreach($regular_bills as $data){
 									}
 									
 									$bill_html.='</td>
-									<td align="center" width="50%" style="padding:5px;" valign="top">
-									For  <b>'.$society_name.'</b><br><br><br>
-									<div><span style="border-top:solid 1px #424141">'.$sig_title.'</span></div>
+								</tr>
+							</tbody></table>
+							<table style="font-size:12px;border-bottom: dotted 1px;" width="100%" cellspacing="0">
+								<tbody><tr>
+								<td align="right" width="60%" style="padding:5px;" valign="top">
+									<br/>For  <b>'.$society_name.'</b>: <span >'.$sig_title.'</span>
+									
+									</td>
+									<td align="right" width="40%" style="padding:0px 20px 5px 20px;" valign="bottom">
+									<br/><div style="border-bottom:solid 1px #424141"></div>
 									</td>
 								</tr>
 							</tbody></table>

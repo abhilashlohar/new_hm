@@ -574,7 +574,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 				foreach($result_journal_voucher as $data){
 					$subledger_id=$data['journal']['ledger_sub_account_id'];
 					$ledger_id=$data['journal']['ledger_account_id'];
-					
+					$wing_flat='';
 					if($ledger_id==34 or $ledger_id==33 or $ledger_id==15 or $ledger_id==112){
 							$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
 							foreach($subleddger_detaill as $subledger_datttaa)

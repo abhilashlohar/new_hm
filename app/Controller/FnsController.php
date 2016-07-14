@@ -237,7 +237,7 @@ function get_rates_via_flat_type_id_in_noc_rate($flat_type_id){
 
 function ledger_sub_account_id_via_wing_id_and_flat_id($wing_id,$flat_id){
 	$this->loadmodel('user_flat');
-	$conditions=array("wing" => $wing_id,"flat" => $flat_id,"owner" =>"yes","exited" =>"no");
+	$conditions=array("wing" => (int)$wing_id,"flat" =>(int) $flat_id,"owner" =>"yes","exited" =>"no");
 	$result=$this->user_flat->find('all',array('conditions'=>$conditions));
 	$user_flat_id=(int)@$result[0]["user_flat"]["user_flat_id"];
 	
@@ -1557,6 +1557,13 @@ function hm_users_right($user_id){
 	$this->loadmodel('hms_right');
 	$conditions =array('user_id' =>(int)$user_id);
 	return $hms_right=$this->hms_right->find('all',array('conditions'=>$conditions));
+}
+
+
+function fetch_terms_condition($terms_condition_id){
+	$this->loadmodel('terms_condition');
+	$conditions =array('auto_id' =>(int)$terms_condition_id);
+	return $this->terms_condition->find('all',array('conditions'=>$conditions));
 }
 
 }

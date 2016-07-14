@@ -2789,7 +2789,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	//Configure::write('debug', 0);
+	Configure::write('debug', 0);
 }
 
 
@@ -6611,6 +6611,8 @@ function submit_login(){
 	 $password=htmlentities($this->request->data["password"]);
 	 $rememberme=htmlentities(@$this->request->data["rememberme"]);
 	 
+	 $next=@$this->request->query['next'];
+	 
 	$this->loadmodel('user');
 		$conditions =array( '$or' => array( 
 		array("email" => $username, "password" => $password),
@@ -6667,7 +6669,6 @@ function submit_login(){
 				
 				
 				if($owner=="no"){
-					
 						$result_tenant=$this->requestAction(array('controller' => 'Fns', 'action' => 'tenancy_agreement_via_user_fetch'), array('pass' => array($society_id,$user_id)));
 						
 					if(!empty($result_tenant)){
@@ -6726,8 +6727,12 @@ function submit_login(){
 
 						echo $output=json_encode(array('url' => $webroot_path.'hms/set_new_password?q='.$random.'','action' => 'redirect','result' => 'success'));
 				}else{
-				
-						echo $output=json_encode(array('url' => $webroot_path.'hms/dashboard','action' => 'redirect','result' => 'success'));
+						if(empty($next)){
+							echo $output=json_encode(array('url' => $webroot_path.'hms/dashboard','action' => 'redirect','result' => 'success'));
+						}else{
+							echo $output=json_encode(array('url' => $next,'action' => 'redirect','result' => 'success'));
+						}
+						
 				}
 	
 	

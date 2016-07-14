@@ -7,7 +7,7 @@ foreach($result_society as $data){
 		$society_address=$data["society"]["society_address"];
 		$society_email=$data["society"]["society_email"];
 		$society_phone=$data["society"]["society_phone"];
-		$terms_conditions=$data["society"]["terms_conditions"];
+		//$terms_conditions=$data["society"]["terms_conditions"];
 		
 		$sig_title=$data["society"]["sig_title"];
 		$neft_type = @$data["society"]["neft_type"];
@@ -44,6 +44,12 @@ foreach($regular_bills as $data){
 					$end_date=$data["regular_bill"]["end_date"];
 					$due_date=$data["regular_bill"]["due_date"];
 					$description=$data["regular_bill"]["description"];
+					$terms_condition_id=@$data["regular_bill"]["terms_condition_id"];
+					$terms_condition_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_terms_condition'), array('pass' => array($terms_condition_id)));
+					$terms_conditions=@$terms_condition_info[0]["terms_condition"]["terms_conditions"];
+					if(empty($terms_conditions)){
+						$terms_conditions=array();
+					}
 					$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($ledger_sub_account_id))); 
 				
 						 $user_name=$result_member_info["user_name"];
@@ -312,8 +318,8 @@ foreach($regular_bills as $data){
 										<a href="mailto:support@housingmatters.in" target="_blank" style="color:#FFF !important;"><b>support@housingmatters.in</b></a>
                                         </td>
 										<td align="center"></td>
-                                        <td align="right" width="50"><b><a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end"><img src="'.$ip.$this->webroot.'/as/hm/whatsup.png"  width="18px" /></a></b></td>
-                                        <td width="104" style="color:#FFF !important;text-decoration: none;"><b>+91-9869157561</b></td>
+                                        <td align="right" width="50"><b><a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end"  style="display:none;"><img src="'.$ip.$this->webroot.'/as/hm/whatsup.png"  width="18px" /></a></b></td>
+                                        <td width="104" style="color:#FFF !important;text-decoration: none;"><b  style="display:none;">+91-9869157561</b></td>
 										<td align="center"></td>
                                         <td width="100" style="padding-right: 10px;text-decoration: none;"> <a href="http://www.housingmatters.in" target="_blank" style="color:#FFF !important;"><b>www.housingmatters.in</b></a></td>
                                     </tr>

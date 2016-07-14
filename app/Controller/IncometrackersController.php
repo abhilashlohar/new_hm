@@ -854,10 +854,10 @@ function generate_bills(){
 						
 						$user_name=$this->check_charecter_name($user_name);				
 							if($billing_cycle==1){
-							   $sms="Hi! Your ".$society_name." ".$wing_flat." maintenance bill - Rs ".$due_for_payment." of ".date('M Y',$end_date)." is sent via email, kindly check %26 pay by ".date('d-M',$due_date).". Whatsapp queries 9869157561";
+							   $sms="Hi! Your ".$society_name." ".$wing_flat." maintenance bill - Rs ".$due_for_payment." of ".date('M Y',$end_date)." is sent via email, kindly check %26 pay by ".date('d-M',$due_date).".";
 							}else{
 								
-								   $sms="Hi! Your ".$society_name." ".$wing_flat." maintenance bill - Rs ".$due_for_payment." of ".date('M',$start_date)."-".date('M Y',$end_date)." is sent via email, kindly check %26 pay by ".date('d-M',$due_date).". Whatsapp queries 9869157561";
+								   $sms="Hi! Your ".$society_name." ".$wing_flat." maintenance bill - Rs ".$due_for_payment." of ".date('M',$start_date)."-".date('M Y',$end_date)." is sent via email, kindly check %26 pay by ".date('d-M',$due_date).".";
 							}
 							
 							$sms1=str_replace(' ', '+', $sms);

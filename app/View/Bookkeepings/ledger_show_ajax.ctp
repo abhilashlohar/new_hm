@@ -160,7 +160,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 		
 		}
 		}
-		if($table_name=="cash_bank"){
+		if($table_name=="cash_bank"){  
 				$element_id=$element_id;
 			$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array((int)$element_id)));
 			$receipt_source = $result_cash_bank[0]["cash_bank"]["source"];  
@@ -569,6 +569,32 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 				$journal_voucher_id=$data['journal']['voucher_id'];
 			    //$ledger_sub_acc = (int)$data['journal']['ledger_sub_account_id'];
 			    //$ledger_acc = (int)$data['journal']['ledger_account_id'];
+				$user_name1='';
+				$result_journal_voucher=$this->requestAction(array('controller' => 'Fns', 'action' => 'journal_info_via_voucher_id'), array('pass' => array($journal_voucher_id,$ledger_id)));
+				foreach($result_journal_voucher as $data){
+					$subledger_id=$data['journal']['ledger_sub_account_id'];
+					$ledger_id=$data['journal']['ledger_account_id'];
+					
+					if($ledger_id==34 or $ledger_id==33 or $ledger_id==15 or $ledger_id==112){
+							$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
+							foreach($subleddger_detaill as $subledger_datttaa)
+							{
+							$user_name1[] = $subledger_datttaa['ledger_sub_account']['name'];
+							//$ledger_id_forwingflat = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
+							}
+						
+					}else{
+						$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id)));
+						foreach($leddger_detaill as $ledger_datttaa)
+						{
+						$user_name1[] = $ledger_datttaa['ledger_account']['ledger_name'];
+						
+						}	
+					}
+				}
+				$user_name=implode(', ',$user_name1);
+				
+				
 			$user_id22=$data['journal']['user_id'];
 	
 	    $current_datttt=$data['journal']['current_date'];
@@ -582,7 +608,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 	
 			
 			
-			   if($subledger_id != 0)
+	/*	if($subledger_id != 0)
 		{
 			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
 			foreach($subleddger_detaill as $subledger_datttaa)
@@ -598,7 +624,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			{
 			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
 			}
-		}	
+		}	*/
 	}
 }
 		

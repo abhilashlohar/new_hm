@@ -52,12 +52,11 @@ function user_profile_info_via_user_id($user_id){
 	return $this->user_profile->find('all',array('conditions'=>$conditions));	
 }
 
-function journal_info_via_voucher_id($voucher_id){
+function journal_info_via_voucher_id($voucher_id,$ledger_id){
 	$this->loadmodel('journal');
 	$s_society_id=$this->Session->read('hm_society_id');
-	$conditions=array("voucher_id"=>$voucher_id,"society_id"=>$s_society_id);
+	$conditions=array("voucher_id"=>$voucher_id,"society_id"=>$s_society_id,"ledger_account_id"=>array('$ne'=>$ledger_id));
 	return $this->journal->find('all',array('conditions'=>$conditions));
-	
 	
 }
 

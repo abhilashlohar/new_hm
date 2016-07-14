@@ -807,8 +807,8 @@ function generate_bills(){
 										<a href="mailto:support@housingmatters.in" target="_blank" style="color:#FFF !important;"><b>support@housingmatters.in</b></a>
                                         </td>
 										<td align="center"></td>
-                                        <td align="right" width="50"><b><a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end" style="display:none;"><img src="'.$ip.$this->webroot.'/as/hm/whatsup.png"  width="18px" /></a></b></td>
-                                        <td width="104" style="color:#FFF !important;text-decoration: none;"><b  style="display:none;">+91-9869157561</b></td>
+                                        <td align="right" width="50"><b></b></td>
+                                        <td width="104" style="color:#FFF !important;text-decoration: none;"></td>
 										<td align="center"></td>
                                         <td width="100" style="padding-right: 10px;text-decoration: none;"> <a href="http://www.housingmatters.in" target="_blank" style="color:#FFF !important;"><b>www.housingmatters.in</b></a></td>
                                     </tr>

@@ -6624,7 +6624,8 @@ function submit_login(){
 		$user_id=(int)$result_user[0]["user"]["user_id"];
 		$society_id=(int)@$result_user[0]["user"]["society_id"];
 		$user_type=@$result_user[0]["user"]["user_type"];
-		$signup_random=@$result_user[0]["user"]["signup_random"]; 
+		$signup_random=@$result_user[0]["user"]["signup_random"];
+			
 		$verify_set_new_password=(int)@$result_user[0]["user"]["verify_set_new_password"]; 
 		
 		
@@ -8357,6 +8358,15 @@ function committee_member_list(){
 	$this->set('result_committee_member',$result_users_com);
 }
 
+function member_update_status_profile($user_id=null){
+	
+ $this->layout=null;	
+ $this->loadmodel("user");
+ $this->user->updateAll(array('profile_status_user'=>1),array('user_id'=>(int)$user_id));
+ echo"done";
+}
+
+
 function dashboard(){
 	if($this->RequestHandler->isAjax()){
 		$this->layout='blank';
@@ -8365,10 +8375,12 @@ function dashboard(){
 	}
 	$this->ath();
 	$s_society_id = $this->Session->read('hm_society_id');
+	$profile_status_user = $this->Session->read('profile_status_user');
 	$s_user_id = $this->Session->read('hm_user_id'); 
 	$role_id = $this->Session->read('role_id');
 	$this->set('role_id',$role_id);
 	$this->set('s_society_id',$s_society_id);
+	$this->set('profile_status_user',$profile_status_user);
 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	

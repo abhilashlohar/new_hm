@@ -1140,6 +1140,86 @@ function tenancy_agreement_via_user_fetch($society_id,$user_id){
 	return $this->tenant->find('all',array('conditions'=>$conditions));
 }
 
+function check_profile_update_status(){
+$s_society_id=$this->Session->read('hm_society_id');	
+$s_user_id=$this->Session->read('hm_user_id');	
+/*	$ccc=0;
+if(!empty($c_email)){ $ccc++; }
+if(!empty($c_mobile)){ $ccc++; }
+if(!empty($c_name)){ $ccc++; }
+if(!empty($profile_pic)){ $ccc++; }
+if(!empty($c_sex)){ $ccc++; }
+if(!empty($da_dob)){ $ccc++; }
+if(!empty($per_address)){ $ccc++; }
+if(!empty($com_address)){ $ccc++;
+									}
+									if(!empty($hobbies))
+									{
+										$ccc++;
+									}
+									if(!empty($contact_emergency3))
+									{
+										$ccc++;
+									}
+						
+						$progres=$ccc*100/10;
+
+$profile_status_user=(int)@$result_user[0]["user"]["profile_status_user"];	
+if($profile_status_user==0){
+?>
+
+<div id="div_close">
+    <!----alert-------------->
+	
+            <div class="modal-backdrop fade in" ></div>
+            <div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+            <div class="modal-body" >
+			<div><span style="color:#00A0E3; font-size:20px;">Your profile completeness</span> <span>
+                                        <b style="font-size:16px;"><?php echo (int)$progres ; ?>% </b> </span> 
+										<p>
+                                        <div id="bar" class="progress progress-success progress-striped" style="width:53%;">
+                                        <div class="bar" style="width: <?php echo $progres ; ?>%;"></div>
+                                        </div></p></div>
+			
+			<p style="font-size:16px;"> Do you want to complete your status </p> 
+            </div> 
+            <div class="modal-footer">
+            <a href="profile?try=1" id=""  class="btn blue">Yes</a>
+            <button data-dismiss="modal" class="btn blue close_letter" update_status="<?php echo $s_user_id; ?>" > Later</button>
+            </div>
+            </div>
+      <!----alert-------------->
+   </div>
+<?php } ?>
+<script>
+$(document).ready(function() {
+	$(".close_letter").live("click",function(){
+		var user=$(this).attr("update_status");
+		alert(user);
+		$.ajax({
+			url: "member_update_status_profile/"+user,
+		}).done(function(response){
+			
+			if(response=="done"){
+				
+				$("#div_close").hide();
+			}
+			
+		});
+		
+		
+	});
+
+});
+</script>
+<?php	
+*/	
+}
+
+
+
+
+
 function sending_options(){
 	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('group');

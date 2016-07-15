@@ -44,6 +44,11 @@ function substrwords($text, $maxchar, $end='...') {
     return $output;
 }
 
+
+//$result_profile=$this->requestAction(array('controller' => 'Fns', 'action' => 'check_profile_update_status'));
+
+
+
 ?>
 
 

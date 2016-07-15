@@ -6589,7 +6589,12 @@ function regular_bill_edit2($auto_id=null){
 	$created_by=$regular_bill_info[0]["regular_bill"]["created_by"];
 	$created_on=$regular_bill_info[0]["regular_bill"]["current_date"];
 	$terms_condition_id=(int)$regular_bill_info[0]["regular_bill"]["terms_condition_id"];
-	
+	$terms_condition_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_terms_condition'), array('pass' => array($terms_condition_id)));
+	$terms_conditions=@$terms_condition_info[0]["terms_condition"]["terms_conditions"];
+	if(empty($terms_conditions)){
+		$terms_conditions=array();
+	}
+					
 	$this->loadmodel('regular_bill');
 	$conditions=array("ledger_sub_account_id"=>$ledger_sub_account_id,'start_date'=>array('$gt'=>$start_date));
 	$count=$this->regular_bill->find('count',array('conditions'=>$conditions));
@@ -6604,7 +6609,7 @@ function regular_bill_edit2($auto_id=null){
 		$society_address=$data["society"]["society_address"];
 		$society_email=$data["society"]["society_email"];
 		$society_phone=$data["society"]["society_phone"];
-		$terms_conditions=$data["society"]["terms_conditions"];
+		//$terms_conditions=$data["society"]["terms_conditions"];
 		
 		$sig_title=$data["society"]["sig_title"];
 	    $neft_type = @$data["society"]["neft_type"];
@@ -6870,7 +6875,7 @@ function regular_bill_edit2($auto_id=null){
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >'.$income_head_name.'</td>
 										<td align="right" style="padding: 0 5px 0 0;">'.$vlaue.'</td>
 									</tr>';
-							} 
+							}
 							
 							
 							$bill_html.='</tbody></table>
@@ -6950,7 +6955,7 @@ function regular_bill_edit2($auto_id=null){
 							</tbody></table>';
 							$bill_html.='<table style="font-size:12px;border-bottom: dotted 1px;" width="100%" cellspacing="0">
 								<tbody><tr>
-									<td width="50%" style="padding:5px;" valign="top">
+									<td width="100%" style="padding:5px;" valign="top">
 									<span>Remarks:</span><br>';
 									$inc_t_c=0;
 									foreach($terms_conditions as $t_c){ $inc_t_c++;
@@ -6958,9 +6963,16 @@ function regular_bill_edit2($auto_id=null){
 									}
 									
 									$bill_html.='</td>
-									<td align="center" width="50%" style="padding:5px;" valign="top">
-									For  <b>'.$society_name.'</b><br><br><br>
-									<div><span style="border-top:solid 1px #424141">'.$sig_title.'</span></div>
+								</tr>
+							</tbody></table>
+							<table style="font-size:12px;border-bottom: dotted 1px;" width="100%" cellspacing="0">
+								<tbody><tr>
+								<td align="right" width="60%" style="padding:5px;" valign="top">
+									<br/>For  <b>'.$society_name.'</b>: <span >'.$sig_title.'</span>
+									
+									</td>
+									<td align="right" width="40%" style="padding:0px 20px 5px 20px;" valign="bottom">
+									<br/><div style="border-bottom:solid 1px #424141"></div>
 									</td>
 								</tr>
 							</tbody></table>

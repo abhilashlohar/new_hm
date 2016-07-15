@@ -1,15 +1,104 @@
 Posting Date,Date of invoice,Due Date,Party account head,Invoice Reference,Expense Head,Amount of invoice, Description 
-07-01-2016,07-01-2016,07-01-2016,Mahesh Pandey - Coral,N/A,House keeping charges - Coral,3000,cleaning charges
-08-01-2016,08-01-2016,08-01-2016,Raghuveer Swami Samarth Security - Coral,N/A,Security charges - Coral,21000,security guard charges
-12-01-2016,12-01-2016,12-01-2016,Raju Shekhar Chelaiya - Coral,N/A,Pest control - Coral,2400,fumigation & pest control
-05-02-2016,05-02-2016,05-02-2016,Reliance Energy - Coral,N/A,Electricity Expenses - Coral,820,electricty bill
-05-02-2016,05-02-2016,05-02-2016,Reliance Energy - Coral,N/A,Electricity Expenses - Coral,6470,electricty bill
-06-02-2016,06-02-2016,06-02-2016,Famous Engineering Co - Coral,N/A,Lifts & Elevators - R&M - Coral,9000,amc
-09-02-2016,09-02-2016,09-02-2016,Mahesh Pandey - Coral,N/A,House keeping charges - Coral,3000,cleaning charges
-10-02-2016,10-02-2016,10-02-2016,Raghuveer Swami Samarth Security - Coral,N/A,Security charges - Coral,21000,security guard charges
-11-02-2016,11-02-2016,11-02-2016,Raju Shekhar Chelaiya - Coral,N/A,Pest control - Coral,2400,fumigation & pest control
-08-03-2016,08-03-2016,08-03-2016,Mahesh Pandey - Coral,N/A,House keeping charges - Coral,3000,cleaning charges
-08-03-2016,08-03-2016,08-03-2016,Reliance Energy - Coral,N/A,Electricity Expenses - Coral,6550,electricty bill
-08-03-2016,08-03-2016,08-03-2016,Reliance Energy - Coral,N/A,Electricity Expenses - Coral,840,electricty bill
-08-03-2016,08-03-2016,08-03-2016,Raghuveer Swami Samarth Security - Coral,N/A,Security charges - Coral,21000,security guard charges
-09-03-2016,09-03-2016,09-03-2016,Raju Shekhar Chelaiya - Coral,N/A,Pest control - Coral,2400,fumigation & pest control
+04-04-2015,04-04-2015,04-04-2015,MCGM,N/A,Property Tax,153611,mcgm prop tax
+04-04-2015,04-04-2015,04-04-2015,Reliance Energy,N/A,Electricity Expenses,9730,electricity charges
+04-04-2015,04-04-2015,04-04-2015,Reliance Energy,N/A,Electricity Expenses,3010,electricity charges
+06-04-2015,06-04-2015,06-04-2015,Laxmi,N/A,House keeping charges,2000,cleaning charges
+06-04-2015,06-04-2015,06-04-2015,Santosh,N/A,House keeping charges,4500,cleaning charges
+24-04-2015,24-04-2015,24-04-2015,Santosh,N/A,House keeping charges,10000,cleaning charges
+24-04-2015,24-04-2015,24-04-2015,Santosh,N/A,House keeping charges,4500,cleaning charges
+25-04-2015,25-04-2015,25-04-2015,Raju Shekhar Chelaiya,N/A,Pest control,2400,fumigation & pest control
+04-05-2015,04-05-2015,04-05-2015,MCGM,N/A,Water supply expenses,48240,mcgm water supply bill
+05-05-2015,05-05-2015,05-05-2015,Laxmi,N/A,House keeping charges,2500,cleaning charges
+05-05-2015,05-05-2015,05-05-2015,Reliance Energy,N/A,Electricity Expenses,8280,electricity charges
+05-05-2015,05-05-2015,05-05-2015,Reliance Energy,N/A,Electricity Expenses,2620,electricity charges
+13-05-2015,13-05-2015,13-05-2015,Marshal Utility Services,N/A,Security charges,40450,security guards chgs
+05-06-2015,05-06-2015,05-06-2015,Laxmi,N/A,House keeping charges,3500,cleaning charges
+05-06-2015,05-06-2015,05-06-2015,Reliance Energy,N/A,Electricity Expenses,8170,electricity charges
+05-06-2015,05-06-2015,05-06-2015,Reliance Energy,N/A,Electricity Expenses,2710,electricity charges
+08-06-2015,08-06-2015,08-06-2015,Marshal Utility Services,N/A,Security charges,20225,security guards chgs
+27-06-2015,27-06-2015,27-06-2015,New India Assurance,N/A,Insurance charges,15960,insurance charges
+30-06-2015,30-06-2015,30-06-2015,Raju Shekhar Chelaiya,N/A,Pest control,2400,fumigation & pest control
+04-07-2015,04-07-2015,04-07-2015,Laxmi,N/A,House keeping charges,3500,cleaning charges
+06-07-2015,06-07-2015,06-07-2015,Reliance Energy,N/A,Electricity Expenses,8200,electricity charges
+06-07-2015,06-07-2015,06-07-2015,Reliance Energy,N/A,Electricity Expenses,2690,electricity charges
+14-07-2015,14-07-2015,14-07-2015,Marshal Utility Services,N/A,Security charges,20520,security guards chgs
+25-07-2015,25-07-2015,25-07-2015,K G N Fabricators & Tempo,N/A,General Repairs & Maintenance,18945,shelter on terrace - balance payment
+27-07-2015,27-07-2015,27-07-2015,Raju Shekhar Chelaiya,N/A,Pest control,2400,fumigation & pest control
+04-08-2015,04-08-2015,04-08-2015,Reliance Energy,N/A,Electricity Expenses,7530,electricity charges
+04-08-2015,04-08-2015,04-08-2015,Reliance Energy,N/A,Electricity Expenses,2500,electricity charges
+07-08-2015,07-08-2015,07-08-2015,Laxmi,N/A,House keeping charges,3500,cleaning charges
+13-08-2015,13-08-2015,13-08-2015,Marshal Utility Services,N/A,Security charges,20520,security guards chgs
+18-08-2015,18-08-2015,18-08-2015,Raju Shekhar Chelaiya,N/A,Pest control,2400,fumigation & pest control
+02-09-2015,02-09-2015,02-09-2015,Santosh,N/A,House keeping charges,3500,cleaning charges
+05-09-2015,05-09-2015,05-09-2015,MCGM,N/A,Property Tax,132705,mcgm prop tax
+05-09-2015,05-09-2015,05-09-2015,MCGM,N/A,Water supply expenses,94249,mcgm water supply bill
+07-09-2015,07-09-2015,07-09-2015,Reliance Energy,N/A,Electricity Expenses,3720,electricity charges
+07-09-2015,07-09-2015,07-09-2015,Reliance Energy,N/A,Electricity Expenses,11160,electricity charges
+08-09-2015,08-09-2015,08-09-2015,Laxmi,N/A,House keeping charges,5000,cleaning charges
+09-09-2015,09-09-2015,09-09-2015,Marshal Utility Services,N/A,Security charges,20520,security guards chgs
+14-09-2015,14-09-2015,14-09-2015,Raju Shekhar Chelaiya,N/A,Pest Control,2400,fumigation & pest control
+05-10-2015,05-10-2015,05-10-2015,P Subramani Piramal,N/A,Water supply expenses,3200,water tanker charges
+06-10-2015,06-10-2015,06-10-2015,Reliance Energy,N/A,Electricity Expenses,10330,electricity charges
+06-10-2015,06-10-2015,06-10-2015,Reliance Energy,N/A,Electricity Expenses,3260,electricity charges
+07-10-2015,07-10-2015,07-10-2015,Laxmi,N/A,House keeping charges,3500,cleaning charges
+08-10-2015,08-10-2015,08-10-2015,Marshal Utility Services,N/A,Security charges,20520,security guards chgs
+09-10-2015,09-10-2015,09-10-2015,Raju Shekhar Chelaiya,N/A,Pest Control,2400,fumigation & pest control
+20-10-2015,20-10-2015,20-10-2015,P Subramani Piramal,N/A,Water supply expenses,6100,water tanker charges
+21-10-2015,21-10-2015,21-10-2015,Sai Kripa Furnishers,N/A,Lobby Renovation - Pearl,51000,
+23-10-2015,23-10-2015,23-10-2015,P Subramani Piramal,N/A,Water supply expenses,3500,water tanker charges
+26-10-2015,26-10-2015,26-10-2015,Santosh,N/A,House keeping charges,5500,Santosh - cleaning charges
+27-10-2015,27-10-2015,27-10-2015,Sai Kripa Furnishers,N/A,Lobby Renovation - Pearl,400000,
+28-10-2015,28-10-2015,28-10-2015,Raju Plumbing,N/A,Plumbing - R&M,1000,installation of new pipe line labour costs
+31-10-2015,31-10-2015,31-10-2015,Raju Plumbing,N/A,Plumbing - R&M,5000,installation of new pipe line labour costs
+31-10-2015,31-10-2015,31-10-2015,Raju Plumbing,N/A,Plumbing - R&M,15000,installation of new pipe line labour costs
+06-11-2015,06-11-2015,06-11-2015,Reliance Energy,N/A,Electricity Expenses,3110,electricity charges
+06-11-2015,06-11-2015,06-11-2015,Reliance Energy,N/A,Electricity Expenses,8340,electricity charges
+07-11-2015,07-11-2015,07-11-2015,Raju Shekhar Chelaiya,N/A,Pest Control,2400,fumigation & pest control
+07-11-2015,07-11-2015,07-11-2015,Laxmi,N/A,House keeping charges,1250,diwali bonus
+07-11-2015,07-11-2015,07-11-2015,Laxmi,N/A,House keeping charges,2500,cleaning charges
+07-11-2015,07-11-2015,07-11-2015,Laxmi,N/A,House keeping charges,1000,cleaning charges
+09-11-2015,09-11-2015,09-11-2015,Raghuveer Samarth Security,N/A,Security charges,21000,security guards chgs ref CA3495
+12-11-2015,12-11-2015,12-11-2015,V S Tech Associates,N/A,Legal & Professional Charges,6000,structural audit
+16-11-2015,16-11-2015,16-11-2015,Santosh,N/A,House keeping charges,4500,cleaning charges
+17-11-2015,17-11-2015,17-11-2015,Santosh,N/A,House keeping charges,2250,cleaning charges
+20-11-2015,20-11-2015,20-11-2015,Rukmini Electric,N/A,Lobby Renovation - Pearl,15000,lobby electrical items
+01-12-2015,01-12-2015,01-12-2015,Sai Kripa Furnishers,N/A,Lobby Renovation - Pearl,249000,
+02-12-2015,02-12-2015,02-12-2015,Parasnath exports,N/A,Lobby Renovation - Pearl,88819,
+03-12-2015,03-12-2015,03-12-2015,Sai Kripa Furnishers,N/A,Lobby Renovation - Pearl,151000,
+05-12-2015,05-12-2015,05-12-2015,Rukmini Electric,N/A,Lobby Renovation - Pearl,15000,lobby electrical items
+07-12-2015,07-12-2015,07-12-2015,Laxmi,N/A,House keeping charges,2500,cleaning charges
+07-12-2015,07-12-2015,07-12-2015,Reliance Energy,N/A,Electricity Expenses,4080,electricity charges
+07-12-2015,07-12-2015,07-12-2015,Reliance Energy,N/A,Electricity Expenses,9400,electricity charges
+07-12-2015,07-12-2015,07-12-2015,Raghuveer Samarth Security,N/A,Security charges,21000,security guards chgs ref CA3495
+08-12-2015,08-12-2015,08-12-2015,Raju Shekhar Chelaiya,N/A,Pest Control,2400,fumigation & pest control
+10-12-2015,10-12-2015,10-12-2015,Mahesh Pandey,N/A,House keeping charges,5000,cleaning charges
+11-12-2015,11-12-2015,11-12-2015,MCGM,N/A,Property Tax,132705,mcgm prop tax
+28-12-2015,28-12-2015,28-12-2015,MCGM,N/A,Water supply expenses,62237,mcgm water supply bill
+05-01-2016,05-01-2016,05-01-2016,Famous Engineering Co,N/A,Lifts & Elevators - R&M,1500,lift maint - consumables
+05-01-2016,05-01-2016,05-01-2016,Reliance Energy,N/A,Electricity,4730,electricity charges
+05-01-2016,05-01-2016,05-01-2016,Reliance Energy,N/A,Electricity,9250,electricity charges
+07-01-2016,07-01-2016,07-01-2016,Mahesh Pandey,N/A,House keeping charges,5000,cleaning charges
+07-01-2016,07-01-2016,07-01-2016,Laxmi,N/A,House keeping charges,7500,cleaning charges
+08-01-2016,08-01-2016,08-01-2016,Sai Kripa Furnishers,N/A,Lobby Renovation - Pearl,250000,
+08-01-2016,08-01-2016,08-01-2016,Raghuveer Samarth Security,N/A,Security charges,21000,security guards chgs ref CA3495
+12-01-2016,12-01-2016,12-01-2016,Raju Shekhar Chelaiya,N/A,Pest Control,2400,fumigation & pest control
+27-01-2016,27-01-2016,27-01-2016,Wellcare Bird proofing services,N/A,General Repairs & Maintenance,26000,bird netting installation
+29-01-2016,29-01-2016,29-01-2016,Sai Kripa Furnishers,N/A,Lobby Renovation - Pearl,200000,
+05-02-2016,05-02-2016,05-02-2016,Reliance Energy,N/A,Electricity Expenses,6060,electricity charges
+08-02-2016,08-02-2016,08-02-2016,Reliance Energy,N/A,Electricity Expenses,10150,electricity charges
+08-02-2016,08-02-2016,08-02-2016,Mahesh Pandey,N/A,House keeping charges,5000,cleaning charges
+08-02-2016,08-02-2016,08-02-2016,Bushigampala,N/A,House keeping charges,1500,gardener
+11-02-2016,11-02-2016,11-02-2016,Raju Shekhar Chelaiya,N/A,Pest Control,2400,fumigation & pest control
+11-02-2016,11-02-2016,11-02-2016,Raghuveer Samarth Security,N/A,Security charges,21000,security guards chgs ref CA3495
+02-03-2016,02-03-2016,02-03-2016,MCGM,N/A,Water supply expenses,60219,mcgm water supply bill
+02-03-2016,02-03-2016,02-03-2016,Parasprabhu Granite,N/A,Lobby Renovation - Pearl,8682,
+02-03-2016,02-03-2016,02-03-2016,Parasnath exports,N/A,Lobby Renovation - Pearl,24163,
+08-03-2016,08-03-2016,08-03-2016,Bushigampala,N/A,House keeping charges,1500,gardener
+08-03-2016,08-03-2016,08-03-2016,Reliance Energy,N/A,Electricity Expenses,9410,electricity charges
+08-03-2016,08-03-2016,08-03-2016,Reliance Energy,N/A,Electricity Expenses,4500,electricity charges
+08-03-2016,08-03-2016,08-03-2016,Raghuveer Samarth Security,N/A,Security charges,21000,security guards chgs ref CA3495
+09-03-2016,09-03-2016,09-03-2016,Raju Shekhar Chelaiya,N/A,Pest Control,2400,fumigation & pest control
+09-03-2016,09-03-2016,09-03-2016,Mahesh Pandey,N/A,House keeping charges,5000,cleaning charges
+31-03-2016,31-03-2016,31-03-2016,Exot Elevators P Ltd,N/A,Lifts & Elevators - R&M,16278,lift AMC & repairs
+30-03-2016,30-03-2016,30-03-2016,Famous Engineering Co,N/A,Lifts & Elevators - R&M,2100,lift maint
+11-03-2016,11-03-2016,11-03-2016,Famous Engineering Co,N/A,Lifts & Elevators - R&M,2800,lift maint - brake fixing

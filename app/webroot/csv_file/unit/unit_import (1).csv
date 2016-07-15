@@ -1,201 +1,165 @@
 Wing,Flat Number
-Wing A,105
-Wing A,106
-Wing A,107
-Wing A,108
-Wing A,109
-Wing A,110
-Wing A,111
-Wing A,112
-Wing A,113
-Wing A,114
-Wing A,115
-Wing A,116
-Wing A,117
-Wing A,118
-Wing A,119
-Wing A,120
-Wing A,121
-Wing A,122
-Wing A,123
-Wing A,124
-Wing A,125
-Wing A,126
-Wing A,127
-Wing A,128
-Wing A,129
-Wing A,130
-Wing A,131
-Wing A,132
-Wing A,133
-Wing A,134
-Wing A,135
-Wing A,136
-Wing A,137
-Wing A,138
-Wing A,139
-Wing A,140
-Wing A,141
-Wing A,142
-Wing A,143
-Wing A,144
-Wing A,145
-Wing A,146
-Wing A,147
-Wing A,148
-Wing A,149
-Wing A,150
-Wing A,151
-Wing A,152
-Wing A,153
-Wing A,154
-Wing A,155
-Wing A,156
-Wing A,157
-Wing A,158
-Wing A,159
-Wing A,160
-Wing A,161
-Wing A,162
-Wing A,163
-Wing A,164
-Wing A,165
-Wing A,166
-Wing A,167
-Wing A,168
-Wing A,169
-Wing A,170
-Wing A,171
-Wing A,172
-Wing A,173
-Wing A,174
-Wing A,175
-Wing A,176
-Wing A,177
-Wing A,178
-Wing A,179
-Wing A,180
-Wing A,181
-Wing A,182
-Wing A,183
-Wing A,184
-Wing A,185
-Wing A,186
-Wing A,187
-Wing A,188
-Wing A,189
-Wing A,190
-Wing A,191
-Wing A,192
-Wing A,193
-Wing A,194
-Wing A,195
-Wing A,196
-Wing A,197
-Wing A,198
-Wing A,199
-Wing A,100
-Wing B,205
-Wing B,206
-Wing B,207
-Wing B,208
-Wing B,209
-Wing B,210
-Wing B,211
-Wing B,212
-Wing B,213
-Wing B,214
-Wing B,215
-Wing B,216
-Wing B,217
-Wing B,218
-Wing B,219
-Wing B,220
-Wing B,221
-Wing B,222
-Wing B,223
-Wing B,224
-Wing B,225
-Wing B,226
-Wing B,227
-Wing B,228
-Wing B,229
-Wing B,230
-Wing B,231
-Wing B,232
-Wing B,233
-Wing B,234
-Wing B,235
-Wing B,236
-Wing B,237
-Wing B,238
-Wing B,239
-Wing B,240
-Wing B,241
-Wing B,242
-Wing B,243
-Wing B,244
-Wing B,245
-Wing B,246
-Wing B,247
-Wing B,248
-Wing B,249
-Wing B,250
-Wing B,251
-Wing B,252
-Wing B,253
-Wing B,254
-Wing B,255
-Wing B,256
-Wing B,257
-Wing B,258
-Wing B,259
-Wing B,260
-Wing B,261
-Wing B,262
-Wing B,263
-Wing B,264
-Wing B,265
-Wing B,266
-Wing B,267
-Wing B,268
-Wing B,269
-Wing B,270
-Wing B,271
-Wing B,272
-Wing B,273
-Wing B,274
-Wing B,275
-Wing B,276
-Wing B,277
-Wing B,278
-Wing B,279
-Wing B,280
-Wing B,281
-Wing B,282
-Wing B,283
-Wing B,284
-Wing B,285
-Wing B,286
-Wing B,287
-Wing B,288
-Wing B,289
-Wing B,290
-Wing B,291
-Wing B,292
-Wing B,293
-Wing B,294
-Wing B,295
-Wing B,296
-Wing B,297
-Wing B,298
-Wing B,299
-Wing B,300
-Wing A,101
-Wing A,102
-Wing A,103
-Wing A,104
-Wing B,201
-Wing B,202
-Wing B,203
-Wing B,204
+A,201
+A,202
+A,203
+A,204
+A,205
+A,206
+A,301
+A,302
+A,303
+A,304
+A,305
+A,306
+A,401
+A,402
+A,403
+A,404
+A,405
+A,406
+A,501
+A,502
+A,503
+A,504
+A,505
+A,506
+A,601
+A,602
+A,603
+A,604
+A,605
+A,606
+A,701
+A,702
+A,703
+A,704
+A,705
+A,706
+A,801
+A,802
+A,803
+A,804
+A,805
+A,806
+A,901
+A,902
+A,903
+A,904
+A,905
+A,906
+A,1001
+A,1002
+A,1003
+A,1004
+A,1005
+A,1006
+A,1101
+A,1102
+A,1103
+A,1104
+A,1105
+A,1106
+A,1201
+A,1202
+A,1203
+A,1204
+A,1205
+A,1206
+A,1301
+A,1302
+A,1303
+A,1304
+A,1305
+A,1306
+B,201
+B,202
+B,203
+B,204
+B,205
+B,206
+B,301
+B,302
+B,303
+B,304
+B,305
+B,306
+B,401
+B,402
+B,403
+B,404
+B,405
+B,406
+B,501
+B,502
+B,503
+B,504
+B,505
+B,506
+B,601
+B,602
+B,603
+B,604
+B,605
+B,606
+B,701
+B,702
+B,703
+B,704
+B,705
+B,706
+B,801
+B,802
+B,803
+B,804
+B,805
+B,806
+B,901
+B,902
+B,903
+B,904
+B,905
+B,906
+B,1001
+B,1002
+B,1003
+B,1004
+B,1005
+B,1006
+B,1101
+B,1102
+B,1103
+B,1104
+B,1105
+B,1106
+B,1201
+B,1202
+B,1203
+B,1204
+B,1205
+B,1206
+B,1301
+B,1302
+B,1303
+B,1304
+B,1305
+B,1306
+Office,1
+Office,2
+Office,3
+Office,4
+Shop,1
+Shop,2
+Shop,3
+Shop,4
+Shop,5
+Shop,6
+Shop,7
+Shop,8
+Shop,9
+Shop,10
+Shop,11
+Shop,12
+Shop,13
+Shop,14
+Shop,15
+Shop,16

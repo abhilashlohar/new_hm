@@ -1,51 +1,34 @@
-Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Amount,Narration 
-13-Apr-2016,SVC Bank  106903010000034,NEFT,NEFT,13-Apr-2016,N/A,N/A,,A,404,8000.00,Paid  for  Maint Apr-June'16
-2-May-2016,SVC Bank  106903010000034,NEFT,NEFT,2-May-2016,N/A,N/A,,C,601,20119.00,Paid  for  Maint Apr-June'16
-3-May-2016,SVC Bank  106903010000034,NEFT,NEFT,3-May-2016,N/A,N/A,,E,601,15041.00,Paid  for  Maint Apr-June'16
-5-May-2016,SVC Bank  106903010000034,NEFT,NEFT,5-May-2016,N/A,N/A,,E,104,10000.00,Paid  for  Maint Apr-June'16
-6-May-2016,SVC Bank  106903010000034,NEFT,NEFT,6-May-2016,N/A,N/A,,C,604,17435.00,Paid  for  Maint Apr-June'16
-9-May-2016,SVC Bank  106903010000034,NEFT,NEFT,9-May-2016,N/A,N/A,,D,304,13592.00,Paid  for  Maint Apr-June'16
-9-May-2016,SVC Bank  106903010000034,NEFT,NEFT,9-May-2016,N/A,N/A,,D,501,13519.00,Paid  for  Maint Apr-June'16
-9-May-2016,SVC Bank  106903010000034,NEFT,NEFT,9-May-2016,N/A,N/A,,C,404,14602.00,Paid  for  Maint Apr-June'16
-10-May-2016,SVC Bank  106903010000034,NEFT,NEFT,10-May-2016,N/A,N/A,,A,304,13612.00,Paid  for  Maint Apr-June'16
-10-May-2016,SVC Bank  106903010000034,NEFT,NEFT,10-May-2016,N/A,N/A,,C,1901,15599.00,Paid  for  Maint Apr-June'16
-10-May-2016,SVC Bank  106903010000034,NEFT,NEFT,10-May-2016,N/A,N/A,,D,404,14501.00,Paid  for  Maint Apr-June'16
-11-May-2016,SVC Bank  106903010000034,NEFT,NEFT,11-May-2016,N/A,N/A,,E,401,12779.00,Paid  for  Maint Apr-June'16
-11-May-2016,SVC Bank  106903010000034,NEFT,NEFT,11-May-2016,N/A,N/A,,C,1001,15051.00,Paid  for  Maint Apr-June'16
-12-May-2016,SVC Bank  106903010000034,NEFT,NEFT,12-May-2016,N/A,N/A,,D,102,14369.00,Paid  for  Maint Apr-June'16
-13-May-2016,SVC Bank  106903010000034,NEFT,NEFT,13-May-2016,N/A,N/A,,C,1601,15935.00,Paid  for  Maint Apr-June'16
-13-May-2016,SVC Bank  106903010000034,NEFT,NEFT,13-May-2016,N/A,N/A,,D,203,12746.00,Paid  for  Maint Apr-June'16
-13-May-2016,SVC Bank  106903010000034,NEFT,NEFT,13-May-2016,N/A,N/A,,E,301,12869.00,Paid  for  Maint Apr-June'16
-17-May-2016,SVC Bank  106903010000034,NEFT,NEFT,17-May-2016,N/A,N/A,,E,101,15698.00,Paid  for  Maint Apr-June'16
-18-May-2016,SVC Bank  106903010000034,NEFT,NEFT,18-May-2016,N/A,N/A,,B,603,12746.00,Paid  for  Maint Apr-June'16
-18-May-2016,SVC Bank  106903010000034,NEFT,NEFT,18-May-2016,N/A,N/A,,C,1403,17551.00,Paid  for  Maint Apr-June'16
-20-May-2016,SVC Bank  106903010000034,NEFT,NEFT,20-May-2016,N/A,N/A,,Shop,14,5462.00,Paid  for  Maint Apr-June'16
-23-May-2016,SVC Bank  106903010000034,NEFT,NEFT,23-May-2016,N/A,N/A,,D,202,39245.00,Paid  for  Maint Apr-June'16
-23-May-2016,SVC Bank  106903010000034,NEFT,NEFT,23-May-2016,N/A,N/A,,C,203,43163.00,Paid  for  Maint Apr-June'16
-30-May-2016,SVC Bank  106903010000034,NEFT,NEFT,30-May-2016,N/A,N/A,,Shop,6,5000.00,Paid  for  Maint Apr-June'16
-30-May-2016,SVC Bank  106903010000034,NEFT,NEFT,30-May-2016,N/A,N/A,,E,302,13412.00,Paid  for  Maint Apr-June'16
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
+Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Amount,Narration ,,
+01-06-2016,SVC Bank,cheque,201542,31-05-2016,ACE Coop Bank,Santacruz,E-503,E,503,14408,Paid  for  Apr-June'16,,
+02-06-2016,SVC Bank,cheque,257109,30-05-2016,Axis Bank,Kharghar,E-102,E,102,13824,Paid  for  Apr-June'16,,
+02-06-2016,SVC Bank,cheque,271259,31-05-2016,IDBI,Nerul,C-802,C,802,16551,Paid  for  Apr-June'16,,
+07-06-2016,SVC Bank,cheque,025933,06-06-2016,ICICI,NARIMAN POINT,E-603,E,603,14000,Paid  for  Apr-June'16,,
+07-06-2016,SVC Bank,cheque,344464,07-06-2016,SBI,SEAWOODS,A-301,A,301,31000,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-1,Office,1,4828,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-2,Office,2,4807,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-3,Office,3,4365,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-4,Office,4,4365,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-5,Office,5,4364,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-6,Office,6,4365,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-7,Office,7,4365,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-8,Office,8,4364,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-9,Office,9,4364,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-10,Office,10,4358,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-11,Office,11,4358,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-12,Office,12,4358,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-13,Office,13,4358,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-14,Office,14,4358,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-15,Office,15,4358,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-16,Office,16,4358,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-17,Office,17,4358,Paid  for  Apr-June'16,,
+13-06-2016,SVC Bank,cheque,000023,04-06-2016,HDFC,Santa Cruz,Office-18,Office,18,4821,Paid  for  Apr-June'16,,
+15-06-2016,SVC Bank,cheque,000013,15-06-2016,HDFC,Vashi,B-304,B,304,13128,Paid  for  Apr-June'16,,
+15-06-2016,SVC Bank,cheque,932492,15-06-2016,PNB,Kharghar,C-1703,C,1703,16015,Paid  for  Apr-June'16,,
+18-06-2016,SVC Bank,cheque,005226,18-06-2016,ICICI,Vashi,C-602,C,602,16551,Paid  for  Apr-June'16,,
+18-06-2016,SVC Bank,cheque,455448,14-06-2016,ICICI,Kharghar,D-201,D,201,13500,Paid  for  Apr-June'16,,
+18-06-2016,SVC Bank,cheque,000015,16-06-2016,HDFC,Vashi,B-304,B,304,9078,Paid  for  Apr-June'16,,
+20-06-2016,SVC Bank,cheque,000013,15-05-2016,KOTAK,Belapur,A-603,A,603,14916,Paid  for  Apr-June'16,,
+19-06-2016,SVC Bank,cheque,366728,20-06-2016,Axis Bank,VASHI,B-301,B,301,12869,Paid  for  Apr-June'16,,
+19-06-2016,SVC Bank,cheque,091487,18-06-2016,CENTRAL BANK,VASHI TURBHE ,A-403,A,403,14916,Paid  for  Apr-June'16,,
+25-06-2016,SVC Bank,cheque,100018,15-05-2016,SATARA SAHA. BK.,Ghatkopar,B-101,B,101,15348,Paid  for  Apr-June'16,,
+03-07-2016,SVC Bank,cheque,001203,03-07-2016,CANARA BANK,KHARGHAR,E-103,E,103,14246,Paid  for  Apr-June'16,,

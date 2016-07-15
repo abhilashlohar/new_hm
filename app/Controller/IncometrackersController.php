@@ -7053,7 +7053,7 @@ function regular_bill_edit2($auto_id=null){
 							    $sms="Hi! Your ".$society_name." ".$wing_flat." maintenance bill - Rs ".$due_for_payment." of ".date('M Y',$end_date)." is sent via email, kindly check %26 pay by ".date('d-M',$due_date).".";
 							}else{
 								
-								   $sms="Hi! Your ".$society_name." ".$wing_flat." maintenance bill - Rs ".$due_for_payment." of ".date('M',$start_date)."-".date('M Y',$end_date)." is sent via email, kindly check %26 pay by ".date('d-M',$due_date).". Whatsapp queries 9869157561";
+								   $sms="Hi! Your ".$society_name." ".$wing_flat." maintenance bill - Rs ".$due_for_payment." of ".date('M',$start_date)."-".date('M Y',$end_date)." is sent via email, kindly check %26 pay by ".date('d-M',$due_date).".";
 							}
 							
 							$sms1=str_replace(' ', '+', $sms);

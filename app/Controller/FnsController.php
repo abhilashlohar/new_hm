@@ -730,16 +730,12 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 	
 
 	$current_bill_start_date=strtotime($start_date);
-	$current_bill_start_date_opening_balance=strtotime($start_date);
 	if($bill_count==0){
 		$this->loadmodel('financial_year');
 		$conditions =array('society_id' =>$s_society_id,'status' =>1,'financial_year.from'=>array('$lte'=>$current_bill_start_date),'financial_year.to'=>array('$gte'=>$current_bill_start_date));
 		$financial_years=$this->financial_year->find('all',array('conditions'=>$conditions));
 		$last_bill_start_date=$financial_years[0]["financial_year"]["from"];
 		$last_bill_start_date_for_ledger=$last_bill_start_date;
-		$last_bill_start_date_for_ledger_ob=date('Y-m-d', strtotime('+1 day', $last_bill_start_date_for_ledger));
-		$last_bill_start_date_for_ledger_ob=strtotime($last_bill_start_date_for_ledger_ob);
-		
 		
 		$last_bill_amount=0;
 		$last_bill_maint_arrear=0;
@@ -754,10 +750,8 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 		$last_bill_info=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1));
 		
 		$last_bill_start_date=$last_bill_info[0]["regular_bill"]["start_date"];
-		//$last_bill_start_date_for_ledger=date('Y-m-d', strtotime('+1 day', $last_bill_start_date));
+		$last_bill_start_date_for_ledger=date('Y-m-d', strtotime('+1 day', $last_bill_start_date));
 		$last_bill_start_date_for_ledger=strtotime($last_bill_start_date_for_ledger);
-		$last_bill_start_date_for_ledger_ob=date('Y-m-d', strtotime('+1 day', $last_bill_start_date_for_ledger));
-		$last_bill_start_date_for_ledger_ob=strtotime($last_bill_start_date_for_ledger_ob);
 		$last_bill_due_date=$last_bill_info[0]["regular_bill"]["due_date"];
 		
 		$last_bill_amount=$last_bill_info[0]["regular_bill"]["total"];
@@ -778,11 +772,7 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 	$new_interest=0;
 	
 	$this->loadmodel('ledger');
-	//$conditions =array('society_id' =>$s_society_id,'ledger_account_id' =>34,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'ledger.transaction_date'=>array('$gte'=>$last_bill_start_date_for_ledger,'$lte'=>$current_bill_start_date),"table_name"=>array('$ne'=>"regular_bill"));
-	$conditions =array( '$or' => array( 
-	array('society_id' =>$s_society_id,'ledger_account_id' =>34,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'ledger.transaction_date'=>array('$gte'=>$last_bill_start_date_for_ledger,'$lte'=>$current_bill_start_date),"table_name"=>array('$ne'=>"opening_balance")),
-	array('society_id' =>$s_society_id,'ledger_account_id' =>34,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'ledger.transaction_date'=>array('$gte'=>$last_bill_start_date_for_ledger_ob,'$lte'=>$current_bill_start_date_opening_balance),"table_name"=>"opening_balance")
-	));
+	$conditions =array('society_id' =>$s_society_id,'ledger_account_id' =>34,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'ledger.transaction_date'=>array('$gte'=>$last_bill_start_date_for_ledger,'$lte'=>$current_bill_start_date),"table_name"=>array('$ne'=>"regular_bill"));
 	$order=array('ledger.transaction_date'=>'ASC');
 	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
 	

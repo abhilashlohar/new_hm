@@ -19,6 +19,17 @@ function count_comment_via_discussion_post_id($discussion_post_id){
 	return $this->discussion_comment->find('all',array('conditions'=>$conditions));
 }
 
+function insert_hyperlink_url_comment_box($text){
+	
+	$reg_exUrl = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
+	if(preg_match($reg_exUrl, $text, $url)) {
+		 return preg_replace($reg_exUrl, '<a href="'.$url[0].'" target="_blank" rel="nofollow">'.$url[0].'</a>', $text);
+
+	} else {
+		   return $text;
+	}
+
+}
 
 
 function index($list=null,$id=null){
@@ -93,7 +104,7 @@ function submit_comment(){
 	$comment_box = nl2br(wordwrap($comment, 25, " ", true));
 	$date=date("Y-m-d");
 	$time=date('h:i:a',time());
-	
+	$comment_box=$this->insert_hyperlink_url_comment_box($comment_box);
 	$ip= $this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
 	$society_name= $this->requestAction(array('controller' => 'Fns', 'action' => 'society_name_via_society_id'),array('pass'=>array((int)$s_society_id)));
 	

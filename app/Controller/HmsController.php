@@ -8442,9 +8442,8 @@ function dashboard(){
 
 		$this->set('result_notice_visible_last',$result_notice_visible_last);
 		
+	
 
-		
-		
 		/*$this->loadmodel("discussion_comment");
 		$result_discussion_comment=$this->discussion_comment->find('all');
 		foreach($result_discussion_comment as $data){

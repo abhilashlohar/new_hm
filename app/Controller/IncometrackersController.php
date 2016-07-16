@@ -207,13 +207,15 @@ function it_regular_bill(){
 			$maint_arrear=$maint_arrear+$bill_amount;
 			$arrear_interest=$result["arrear_intrest"];
 				
+			if($intrest_on_arrears<0){$intrest_on_arrears=0;}
+			if($panalty=="no"){$intrest_on_arrears=0;}
+			
 			$intrest_on_arrears=round($result["intrest_on_arrears"]);
 			$due_for_payment+=$arrear_principle;
 			$due_for_payment+=$arrear_interest;
 			$due_for_payment+=$intrest_on_arrears;
 			
-			if($intrest_on_arrears<0){$intrest_on_arrears=0;}
-			if($panalty=="no"){$intrest_on_arrears=0;}
+			
 			
 			$current_date = date('Y-m-d');
 			$total=round($total);

@@ -49,7 +49,7 @@ foreach($result_society as $data){
 		$sms_is_on_off=(int)@$data["society"]["account_sms"];
 		}
 	 
-if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type) || $nn==555 || $nnn==555 || $financial_year_count==0 || empty($society_reg_num) || empty($society_address) || empty($society_email) || empty($society_phone) || empty($sig_title))
+if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type) || $nn==555 || $nnn==555 || $financial_year_count==0 || empty($society_reg_num) || empty($society_address) || empty($sig_title))
 {
 ?>
 <br>
@@ -96,7 +96,7 @@ if(sizeof($result_regular_bill_temp)>0){
 
 ?>
 
-<?php if(!empty($select_income_head_array) && !empty($penalty_tax) && !empty($neft_type) && $nn==55 && $nnn==55 && $financial_year_count>0 && !empty($society_reg_num) && !empty($society_address) && !empty($society_email) && !empty($society_phone) && !empty($sig_title)){ ?>
+<?php if(!empty($select_income_head_array) && !empty($penalty_tax) && !empty($neft_type) && $nn==55 && $nnn==55 && $financial_year_count>0 && !empty($society_reg_num) && !empty($society_address) && !empty($sig_title)){ ?>
 <input type="hidden" id="validat_value">
 <div class="portlet box blue">
 	<div class="portlet-title">

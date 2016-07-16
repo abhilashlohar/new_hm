@@ -259,6 +259,22 @@ function ledger_sub_account_id_via_wing_id_and_flat_id_for_trail_balance($wing_i
 	return (int)@$result2[0]["ledger_sub_account"]["auto_id"];
 }
 
+function ledger_sub_account_id_via_wing_id_and_flat_id_for_trail_balance_trail_balance($wing_id,$flat_id){
+	$this->loadmodel('user_flat');
+	$conditions=array("wing" => $wing_id,"flat" => $flat_id,"owner" =>"yes");
+	$result=$this->user_flat->find('all',array('conditions'=>$conditions));
+	$rtn=array();
+	foreach($result as $data){
+		$user_flat_id=(int)@$data["user_flat"]["user_flat_id"];
+		
+		$this->loadmodel('ledger_sub_account');
+		$conditions=array("user_flat_id" => $user_flat_id);
+		$result2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+		$rtn[]=$result2[0]["ledger_sub_account"]["auto_id"];
+	}
+	return $rtn;
+}
+
 function ledger_sub_account_id_via_wing_id_and_flat_id_report($wing_id,$flat_id){
 	$this->loadmodel('user_flat');
 	$conditions=array("wing" => $wing_id,"flat" => $flat_id,"owner" =>"yes");

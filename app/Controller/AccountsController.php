@@ -3894,8 +3894,9 @@ function trial_balance_ajax_show_sub_ledger($from=null,$to=null,$wise=null)
             foreach($flats as $data2){
                 $flat_id=$data2["flat"]["flat_id"];
                 $ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id_for_trail_balance'),array('pass'=>array($wing_id,$flat_id)));
-                if(!empty($ledger_sub_account_id)){
-                        $members_for_billing[]=$ledger_sub_account_id;
+                if(sizeof($ledger_sub_account_id)>0){
+					foreach($ledger_sub_account_id as $ledger_sub_accountid)
+                        $members_for_billing[]=$ledger_sub_accountid;
                 }
                 
             }

@@ -18906,10 +18906,12 @@ function society_detail_auto_save_file_upload(){
 	
 }
 
-function society_detail_auto_save($field,$update){
+function society_detail_auto_save(){
 	
 $this->layout=null;	
 $s_society_id=$this->Session->read('hm_society_id');
+	$field=$this->request->query('field');
+	$update=$this->request->query('update');
 	
 		if($field=="society_pan"){
 			$this->loadmodel('society');

@@ -202,8 +202,9 @@ $(document).ready(function(){
 	$('input,textarea').blur(function(){
 		var field=$(this).attr('field');
 		var update=$(this).val();
+		var update=encodeURIComponent(update);
 		$.ajax({
-			url: "<?php echo $webroot_path; ?>/Hms/society_detail_auto_save/"+field+"/"+update,
+			url: "<?php echo $webroot_path; ?>/Hms/society_detail_auto_save?field="+field+"&update="+update,
 			}).done(function(response) {
 				
 		});	

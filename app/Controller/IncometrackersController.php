@@ -410,8 +410,8 @@ function generate_bills(){
 		$society_name=$data["society"]["society_name"];
 		$society_reg_num=$data["society"]["society_reg_num"];
 		$society_address=$data["society"]["society_address"];
-		$society_email=$data["society"]["society_email"];
-		$society_phone=$data["society"]["society_phone"];
+		$society_email=@$data["society"]["society_email"];
+		$society_phone=@$data["society"]["society_phone"];
 		//$terms_conditions=$data["society"]["terms_conditions"];
 		$signature=$data["society"]["signature"];
 		$sig_title=$data["society"]["sig_title"];
@@ -617,7 +617,7 @@ function generate_bills(){
 						$bill_html.='</td>
 									<td style="padding:5px;border-bottom: solid 1px #767575;    border-top: solid 1px #767575;"  width="70%" align="right">
 									<span style="color: rgb(100, 100, 99); ">Regn# &nbsp; '.$society_reg_num.'</span><br>
-									<span style="color: rgb(100, 100, 99); ">'.$society_address.'</span><br><span>Email :</span><a href="mailto:'.$society_email.'" target="_blank" style="color:#000 !important;text-decoration: none;"> '.$society_email.'</a> | <span>Phone : '.$society_phone.'</span>
+									<span style="color: rgb(100, 100, 99); ">'.$society_address.'</span><br><span>Email :</span><a href="mailto:'.$society_email.'" target="_blank" style="color:#000 !important;text-decoration: none;"> '.@$society_email.'</a> | <span>Phone : '.@$society_phone.'</span>
 									</td>
 								</tr>
 								</tbody>

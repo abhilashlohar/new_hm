@@ -272,6 +272,9 @@ function ledger_sub_account_id_via_wing_id_and_flat_id_for_trail_balance_trail_b
 		$result2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 		$rtn[]=$result2[0]["ledger_sub_account"]["auto_id"];
 	}
+	
+	
+	
 	return $rtn;
 }
 

@@ -6863,10 +6863,10 @@ function regular_bill_edit2($auto_id=null){
 							}
 							
 							
-							if(!empty($noc_charge)){
+							if(!empty($non_occupancy_charges)){
 							$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >Non Occupancy charges</td>
-										<td align="right" style="padding: 0 5px 0 0;">'.$noc_charge.'</td>
+										<td align="right" style="padding: 0 5px 0 0;">'.$non_occupancy_charges.'</td>
 									</tr>';
 							}
 							

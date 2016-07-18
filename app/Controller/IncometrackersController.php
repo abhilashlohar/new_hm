@@ -7075,6 +7075,18 @@ function regular_bill_edit2($auto_id=null){
 	}
 }
 
+function print_show_last_receipt($led_sub_id){
+	
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$this->loadmodel('cash_bank');
+	$conditions=array("ledger_sub_account_id"=>$led_sub_id,"society_id"=>$s_society_id,"source"=>"bank_receipt");
+	$order=array("transaction_id"=>"DESC");
+	return $this->cash_bank->find('all',array('conditions'=>$conditions,"order"=>$order,"limit"=>1));
+	
+}
+
+
+
 function print_all_bill($period=null){
 	$this->layout='session';
 	

@@ -604,7 +604,7 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 	//$conditions =array('society_id' =>$s_society_id,'ledger_account_id' =>34,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'ledger.transaction_date'=>array('$gte'=>$last_bill_start_date_for_ledger,'$lte'=>$current_bill_start_date),"table_name"=>array('$ne'=>"regular_bill"));
 	$conditions =array( '$or' => array( 
 	array('society_id' =>$s_society_id,'ledger_account_id' =>34,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'ledger.transaction_date'=>array('$gte'=>$last_bill_start_date_for_ledger,'$lte'=>$current_bill_start_date),"table_name"=>array('$ne'=>"opening_balance")),
-	array('society_id' =>$s_society_id,'ledger_account_id' =>34,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'ledger.transaction_date'=>array('$gte'=>$last_bill_start_date_for_ledger_ob,'$lte'=>$current_bill_start_date_opening_balance),"table_name"=>"opening_balance")
+	array('society_id' =>$s_society_id,'ledger_account_id' =>34,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'ledger.transaction_date'=>array('$gte'=>$current_bill_start_date_opening_balance),"table_name"=>"opening_balance")
 	));
 	
 	$order=array('ledger.transaction_date'=>'ASC');

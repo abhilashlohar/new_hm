@@ -344,55 +344,55 @@ foreach($regular_bills as $data){
 	 
 	
 	 $result_last_receipt=$this->requestAction(array('controller' => 'Incometrackers', 'action' => 'print_show_last_receipt'), array('pass' => array($ledger_sub_account_id)));
-	
-	foreach($result_last_receipt as $receipt){
+	if(sizeof($result_last_receipt)>0){
+			foreach($result_last_receipt as $receipt){
 
-		$auto_id=$receipt["cash_bank"]["transaction_id"];
-		$receipt_number=$receipt["cash_bank"]["receipt_number"];
-		$transaction_date=$receipt["cash_bank"]["transaction_date"];
-		$received_from=$receipt["cash_bank"]["received_from"];
-		if($received_from == "residential"){				
-		$receipt_type="Residential";
-		$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];
-		 $date=date("d-m-Y",$transaction_date);
-		$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($ledger_sub_account_id))); 
-		
-				 $user_name=$result_member_info["user_name"];
-				 $wing_name=$result_member_info["wing_name"];
-				 $flat_name=$result_member_info["flat_name"];
-				 $wing_flat=$wing_name.'-'.$flat_name;
-				 $email=$result_member_info["email"];
-				 $mobile=$result_member_info["mobile"];
-				 $wing_id=$result_member_info["wing_id"];
-		
-		}else{
-			$wing_flat="";
-			 $date=date("d-m-Y",$transaction_date);
-		$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];
-		$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];	
-		$result_ledger_sub_account = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id)));
-		foreach($result_ledger_sub_account as $data)
-		{
-		$user_name = $data['ledger_sub_account']['name'];	
-		}	
-			
-			
-		}
-		
+				$auto_id=$receipt["cash_bank"]["transaction_id"];
+				$receipt_number=$receipt["cash_bank"]["receipt_number"];
+				$transaction_date=$receipt["cash_bank"]["transaction_date"];
+				$received_from=$receipt["cash_bank"]["received_from"];
+				if($received_from == "residential"){				
+				$receipt_type="Residential";
+				$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];
+				 $date=date("d-m-Y",$transaction_date);
+				$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($ledger_sub_account_id))); 
 				
-		$deposited_in=$receipt["cash_bank"]["deposited_in"];
-		$deposited_in_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($deposited_in)));
+						 $user_name=$result_member_info["user_name"];
+						 $wing_name=$result_member_info["wing_name"];
+						 $flat_name=$result_member_info["flat_name"];
+						 $wing_flat=$wing_name.'-'.$flat_name;
+						 $email=$result_member_info["email"];
+						 $mobile=$result_member_info["mobile"];
+						 $wing_id=$result_member_info["wing_id"];
+				
+				}else{
+					$wing_flat="";
+					 $date=date("d-m-Y",$transaction_date);
+				$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];
+				$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];	
+				$result_ledger_sub_account = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id)));
+				foreach($result_ledger_sub_account as $data)
+				{
+				$user_name = $data['ledger_sub_account']['name'];	
+				}	
+					
+					
+				}
+				
+						
+				$deposited_in=$receipt["cash_bank"]["deposited_in"];
+				$deposited_in_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($deposited_in)));
 
-		$bank_name=$deposited_in_info[0]["ledger_sub_account"]["name"];
-		$bank_account=$deposited_in_info[0]["ledger_sub_account"]["bank_account"];
-		$receipt_mode=$receipt["cash_bank"]["receipt_mode"];
-		$cheque_number=$receipt["cash_bank"]["cheque_number"];
-		$narration=$receipt["cash_bank"]["narration"];
-		$amount=$receipt["cash_bank"]["amount"];
-		$drown_in_which_bank=$receipt["cash_bank"]["drown_in_which_bank"];
-		$cheque_date=$receipt["cash_bank"]["date"];
-	}	
-	
+				$bank_name=$deposited_in_info[0]["ledger_sub_account"]["name"];
+				$bank_account=$deposited_in_info[0]["ledger_sub_account"]["bank_account"];
+				$receipt_mode=$receipt["cash_bank"]["receipt_mode"];
+				$cheque_number=$receipt["cash_bank"]["cheque_number"];
+				$narration=$receipt["cash_bank"]["narration"];
+				$amount=$receipt["cash_bank"]["amount"];
+				$drown_in_which_bank=$receipt["cash_bank"]["drown_in_which_bank"];
+				$cheque_date=$receipt["cash_bank"]["date"];
+			}	
+			
 				
 				// start Email & Sms code
 					
@@ -536,8 +536,8 @@ foreach($regular_bills as $data){
 			</tbody>
 		</table>';
 
-	echo $html_receipt;
-	
+		echo $html_receipt;
+	}
 
  echo '<DIV style="page-break-after:always"></DIV>';	
 }

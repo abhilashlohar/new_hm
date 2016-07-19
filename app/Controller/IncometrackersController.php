@@ -8515,6 +8515,83 @@ if($start_date_for_compare<=$end_date_from_table){
 }}
 echo $result;
 }
+
+
+function calculate_bill_data(){
+	$this->layout='';
+
+	$s_society_id=(int)$this->Session->read('hm_society_id');	
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("society_id" => $s_society_id,"ledger_id" => 34,"exited" => "no");
+	$ledger_sub_accounts = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	
+	
+	foreach($ledger_sub_accounts as $data){
+		$ledger_sub_account_id=$data["ledger_sub_account"]["auto_id"];
+		//$ledger_sub_account_id=362;
+		
+		$maint_arrear=0;
+		$non_maint_arrear=0;
+		$arrear_interest=0;
+	
+		$this->loadmodel('ledger');
+		$conditions=array("ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id);
+		$ledgers = $this->ledger->find('all',array('conditions'=>$conditions));
+		foreach($ledgers as $data2){
+			$debit=$data2["ledger"]["debit"];
+			$credit=$data2["ledger"]["credit"];
+			$table_name=$data2["ledger"]["table_name"];
+			$arrear_int_type=@$data2["ledger"]["intrest_on_arrears"];
+			if(empty($credit) && $debit>0){
+				if($table_name=="opening_balance" or $table_name=="regular_bill"){
+					if($arrear_int_type=="YES"){
+						$arrear_interest+=$debit;
+					}else{
+						$maint_arrear+=$debit;
+					}
+				}else{
+					$non_maint_arrear+=$debit;
+				}
+			}else{
+				$reminder=$arrear_interest-$credit;
+				if($reminder<0){
+					$credit=abs($reminder);
+					$arrear_interest=0;
+					$reminder=$non_maint_arrear-$credit;
+					if($reminder<0){
+						$credit=abs($reminder);
+						$non_maint_arrear=0;
+						$reminder=$maint_arrear-$credit;
+						if($reminder<0){
+							$maint_arrear=$reminder;
+						}else{
+							$maint_arrear=abs($reminder);
+						}
+					}else{
+						$non_maint_arrear=abs($reminder);
+					}
+				}else{
+					$arrear_interest=abs($reminder);
+				}
+			}
+			echo "<br/>";
+	echo $maint_arrear."-";
+	echo $non_maint_arrear."-";
+	echo $arrear_interest."-";
+	echo "<br/>";
+		}
+		$arrear_principle=$maint_arrear+$non_maint_arrear;
+	$this->loadmodel('regular_bill_temp');
+	$this->regular_bill_temp->updateAll(array("maint_arrear" =>$maint_arrear,"non_maint_arrear" =>$non_maint_arrear,"arrear_principle" =>$arrear_principle,"arrear_intrest" =>$arrear_interest),array("ledger_sub_account_id" => $ledger_sub_account_id));
+	pr(array("maint_arrear" =>$maint_arrear,"non_maint_arrear" =>$non_maint_arrear,"arrear_principle" =>$arrear_principle,"arrear_intrest" =>$arrear_interest,"ledger_sub_account_id" => $ledger_sub_account_id));
+	echo "<br/>";
+	echo $maint_arrear."-";
+	echo $non_maint_arrear."-";
+	echo $arrear_interest."-";
+	echo "<br/>";
+	}
+	
+}
 //End regular_bill_validation_ajax//
 }
 ?>

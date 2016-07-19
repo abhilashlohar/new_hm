@@ -8527,7 +8527,7 @@ function calculate_bill_data(){
 	
 	
 	foreach($ledger_sub_accounts as $data){
-		$ledger_sub_account_id=$data["ledger_sub_account"]["auto_id"];
+		$ledger_sub_account_id=(int)$data["ledger_sub_account"]["auto_id"];
 		//$ledger_sub_account_id=362;
 		
 		$maint_arrear=0;

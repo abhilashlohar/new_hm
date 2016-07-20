@@ -8523,12 +8523,12 @@ function calculate_bill_data(){
 	$s_society_id=(int)$this->Session->read('hm_society_id');	
 	$this->loadmodel('ledger_sub_account');
 	$conditions=array("society_id" => $s_society_id,"ledger_id" => 34,"exited" => "no");
-	$ledger_sub_accounts = $this->ledger_sub_account->find('all',array('conditions'=>$conditions,'limit'=>1));
+	$ledger_sub_accounts = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 	
 	
 	foreach($ledger_sub_accounts as $data){
 		$ledger_sub_account_id=(int)$data["ledger_sub_account"]["auto_id"];
-		$ledger_sub_account_id=388;
+		//$ledger_sub_account_id=362;
 		
 		$maint_arrear=0;
 		$non_maint_arrear=0;

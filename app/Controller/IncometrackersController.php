@@ -8535,7 +8535,7 @@ function calculate_bill_data(){
 		$arrear_interest=0;
 	
 		$this->loadmodel('ledger');
-		$conditions=array("ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id);
+		$conditions=array("ledger_account_id" => 34,"ledger_sub_account_id" => $ledger_sub_account_id,'transaction_date'=>array('$lte'=>1467225000));
 		$ledgers = $this->ledger->find('all',array('conditions'=>$conditions));
 		foreach($ledgers as $data2){
 			$debit=$data2["ledger"]["debit"];

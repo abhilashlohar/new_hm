@@ -210,6 +210,7 @@ $(document).ready(function(){
 	$("form").on("submit",function(e){
 		var allow="yes";
 		var value=$("#validat_value").val();
+		value=10;
 	    if(value==5){
 			allow="no";
 			$('#start_date').html('Bills already generated for this period');

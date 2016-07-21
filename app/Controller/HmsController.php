@@ -2789,7 +2789,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	//Configure::write('debug', 0);
+	Configure::write('debug', 0);
 }
 
 
@@ -8430,7 +8430,7 @@ function dashboard(){
 
 	//////////////polls  last 3///////////////// 
 
-	
+	 
 
 		//////////////documents  last 3///////////////// 
 		$this->loadmodel('resource');
@@ -8455,6 +8455,23 @@ function dashboard(){
 		$this->set('result_notice_visible_last',$result_notice_visible_last);
 		
 	//// bill code
+	
+	$this->loadmodel('regular_bill_temp');
+	$result_regular_temp=$this->regular_bill_temp->find('all');
+	
+		
+		foreach($result_regular_temp as $data){
+			$due_payment=0;
+			$auto_id=(int)$data['regular_bill_temp']['auto_id'];
+			$arrear_intrest=$data['regular_bill_temp']['arrear_intrest'];
+			$arrear_principle=$data['regular_bill_temp']['arrear_principle'];
+			$intrest_on_arrears=$data['regular_bill_temp']['intrest_on_arrears'];
+			$total=$data['regular_bill_temp']['total'];
+			$due_payment=$total+$arrear_principle+$arrear_intrest+$intrest_on_arrears;
+			$this->loadmodel('regular_bill_temp');
+			$this->regular_bill_temp->updateAll(array('due_for_payment'=>$due_payment),array('auto_id'=>$auto_id));
+			
+		}
 	
 	/*
 	$this->loadmodel('regular_bill');

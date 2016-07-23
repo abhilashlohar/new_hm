@@ -783,11 +783,6 @@ function calculate_arrears_and_without_interest_edit($ledger_sub_account_id,$sta
 				}
 			}
 			
-			echo "<br/>";
-	echo $maint_arrear."-";
-	echo $non_maint_arrear."-";
-	echo $arrear_interest."-";
-	echo "<br/>"; 
 		}
 		$arrear_principle=$maint_arrear+$non_maint_arrear;
 		return array("maint_arrear" =>$maint_arrear,"non_maint_arrear" =>$non_maint_arrear,"arrear_principle" =>$arrear_principle,"arrear_intrest" =>$arrear_interest);

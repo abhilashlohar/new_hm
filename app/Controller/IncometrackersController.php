@@ -6654,7 +6654,7 @@ function regular_bill_edit2($auto_id=null){
 		$this->regular_bill->updateAll(array('edited'=>"yes"),array("auto_id"=>$auto_id));
 		
 		$this->loadmodel('ledger');
-		$this->ledger->deleteAll(array('table_name'=>"regular_bill", "element_id"=>$auto_id));
+		$this->ledger->deleteAll(array('table_name'=>"regular_bill", "element_id"=>$auto_id,"society_id"=>$s_society_id));
 		
 		$current_date = date('Y-m-d');
 		

@@ -736,16 +736,23 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 
 function calculate_arrears_and_without_interest_edit($ledger_sub_account_id,$start_date){
 	
-		$maint_arrear=0;
-		$non_maint_arrear=0;
-		$arrear_interest=0;
+		$maint_arrear=0;$non_maint_arrear=0;$arrear_interest=0;
+		$this->requestAction(array('controller' => 'Hms', 'action' => 'ath'));
+		$s_society_id=$this->Session->read('hm_society_id');
+	    $this->loadmodel('ledger');
+		
+		$conditions1 =array('society_id' =>$s_society_id,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'transaction_date'=>array('$lt'=>strtotime($start_date)));
+		$ledger_count = $this->ledger->find('count',array('conditions'=>$conditions1));
+		if($ledger_count==0){
+			$conditions=array("ledger_account_id" =>34,"ledger_sub_account_id" => (int)$ledger_sub_account_id,'transaction_date'=>array('$lte'=>strtotime($start_date)),"table_name"=>array('$ne'=>"regular_bill"));
+			}else{
+				$conditions=array("ledger_account_id" =>34,"ledger_sub_account_id" => (int)$ledger_sub_account_id,'transaction_date'=>array('$lt'=>strtotime($start_date)));	
+			}
 	
 		$this->loadmodel('ledger');
 		$order=array('transaction_date'=>'ASC');
-		$conditions=array("ledger_account_id" =>34,"ledger_sub_account_id" => (int)$ledger_sub_account_id,'transaction_date'=>array('$lt'=>strtotime($start_date)));
 		$ledgers = $this->ledger->find('all',array('conditions'=>$conditions,"order"=>$order));
-		
-		foreach($ledgers as $data2){
+	   foreach($ledgers as $data2){
 			$debit=$data2["ledger"]["debit"];
 			$credit=$data2["ledger"]["credit"];
 			$table_name=$data2["ledger"]["table_name"];

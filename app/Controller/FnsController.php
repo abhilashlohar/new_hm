@@ -532,6 +532,70 @@ function calculate_arrears($ledger_sub_account_id){
 	return array("arrear_principle"=>$total_arrear_principle,"arrear_interest"=>$total_arrear_intrest);
 }
 
+function calculate_arrears_and_interest_new($ledger_sub_account_id,$start_date){
+
+	$s_society_id=$this->Session->read('hm_society_id');
+	$this->requestAction(array('controller' => 'Hms', 'action' => 'ath'));
+	$this->loadmodel('society');
+	$condition=array('society_id'=>$s_society_id);
+	$society_result=$this->society->find('all',array('conditions'=>$condition));
+	$tax=(float)$society_result[0]["society"]["tax"];
+	$tax_factor=$tax/100;
+	$maint_arrear=0;$non_maint_arrear=0;$arrear_interest=0;
+		$this->requestAction(array('controller' => 'Hms', 'action' => 'ath'));
+		$s_society_id=$this->Session->read('hm_society_id');
+	  
+		$conditions=array("ledger_account_id" =>34,"ledger_sub_account_id" => (int)$ledger_sub_account_id,'transaction_date'=>array('$lt'=>strtotime($start_date)));
+		$this->loadmodel('ledger');
+		$order=array('transaction_date'=>'ASC');
+		$ledgers = $this->ledger->find('all',array('conditions'=>$conditions,"order"=>$order));
+	   foreach($ledgers as $data2){
+			$debit=$data2["ledger"]["debit"];
+			$credit=$data2["ledger"]["credit"];
+			$table_name=$data2["ledger"]["table_name"];
+			$arrear_int_type=@$data2["ledger"]["intrest_on_arrears"];
+			if(empty($credit) && $debit>0){
+				if($table_name=="opening_balance" or $table_name=="regular_bill"){
+					if($arrear_int_type=="YES"){
+						$arrear_interest+=$debit;
+					}else{
+						$maint_arrear+=$debit;
+					}
+				}else{
+					$non_maint_arrear+=$debit;
+				}
+			}else{
+				$reminder=$arrear_interest-$credit;
+				if($reminder<0){
+					$credit=abs($reminder);
+					$arrear_interest=0;
+					$reminder=$non_maint_arrear-$credit;
+					if($reminder<0){
+						$credit=abs($reminder);
+						$non_maint_arrear=0;
+						$reminder=$maint_arrear-$credit;
+						if($reminder<0){
+							$maint_arrear=$reminder;
+						}else{
+							$maint_arrear=abs($reminder);
+						}
+					}else{
+						$non_maint_arrear=abs($reminder);
+					}
+				}else{
+					$arrear_interest=abs($reminder);
+				}
+			}
+			
+		}
+		$arrear_principle=$maint_arrear+$non_maint_arrear;
+		return array("maint_arrear" =>$maint_arrear,"non_maint_arrear" =>$non_maint_arrear,"arrear_principle" =>$arrear_principle,"arrear_intrest" =>$arrear_interest);
+		
+	
+	
+}
+
+
 function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 	$s_society_id=$this->Session->read('hm_society_id');
 	
@@ -730,7 +794,10 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 			
 		}
 		
-		return array("maint_arrear"=>$last_bill_maint_arrear,"non_maint_arrear"=>$last_bill_non_maint_arrear,"bill_amount"=>$last_bill_amount,"arrear_intrest"=>$last_bill_arrear_intrest,"intrest_on_arrears"=>$new_interest);
+		return array("intrest_on_arrears"=>$new_interest);
+		
+//return array("maint_arrear"=>$last_bill_maint_arrear,"non_maint_arrear"=>$last_bill_non_maint_arrear,"bill_amount"=>$last_bill_amount,"arrear_intrest"=>$last_bill_arrear_intrest,"intrest_on_arrears"=>$new_interest);
+
 }
 
 
@@ -741,14 +808,14 @@ function calculate_arrears_and_without_interest_edit($ledger_sub_account_id,$sta
 		$s_society_id=$this->Session->read('hm_society_id');
 	    $this->loadmodel('ledger');
 		
-		$conditions1 =array('society_id' =>$s_society_id,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'transaction_date'=>array('$lt'=>strtotime($start_date)));
-		$ledger_count = $this->ledger->find('count',array('conditions'=>$conditions1));
-		if($ledger_count==0){
+			/*$conditions1 =array('society_id' =>$s_society_id,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'transaction_date'=>array('$lt'=>strtotime($start_date)));
+			$ledger_count = $this->ledger->find('count',array('conditions'=>$conditions1));
+			if($ledger_count==0){
 			$conditions=array("ledger_account_id" =>34,"ledger_sub_account_id" => (int)$ledger_sub_account_id,'transaction_date'=>array('$lte'=>strtotime($start_date)),"table_name"=>array('$ne'=>"regular_bill"));
 			}else{
-				$conditions=array("ledger_account_id" =>34,"ledger_sub_account_id" => (int)$ledger_sub_account_id,'transaction_date'=>array('$lt'=>strtotime($start_date)));	
-			}
-	
+			$conditions=array("ledger_account_id" =>34,"ledger_sub_account_id" => (int)$ledger_sub_account_id,'transaction_date'=>array('$lt'=>strtotime($start_date)));	
+			} */
+		$conditions=array("ledger_account_id" =>34,"ledger_sub_account_id" => (int)$ledger_sub_account_id,'transaction_date'=>array('$lt'=>strtotime($start_date)));
 		$this->loadmodel('ledger');
 		$order=array('transaction_date'=>'ASC');
 		$ledgers = $this->ledger->find('all',array('conditions'=>$conditions,"order"=>$order));

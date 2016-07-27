@@ -8374,6 +8374,8 @@ function dashboard(){
 		$this->layout='session';
 	}
 	$this->ath();
+	
+
 	$s_society_id = $this->Session->read('hm_society_id');
 	$profile_status_user = $this->Session->read('profile_status_user');
 	$s_user_id = $this->Session->read('hm_user_id'); 

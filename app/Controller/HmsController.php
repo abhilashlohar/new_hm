@@ -2789,7 +2789,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -8474,6 +8474,7 @@ function dashboard(){
 			$this->regular_bill_temp->updateAll(array('due_for_payment'=>$due_payment),array('auto_id'=>$auto_id));
 			
 		}
+		
 	
 	/*
 	$this->loadmodel('regular_bill');

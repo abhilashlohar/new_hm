@@ -902,8 +902,11 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 		$new_result_ledger=array();
 	}
 	
+	 $last_trasanction_date=$last_bill_start_date;
+	 $last_trasanction_date=date('Y-m-d', strtotime('-1 day', $last_trasanction_date));
+	 $last_trasanction_date=strtotime($last_trasanction_date);
 
-	$last_trasanction_date=$last_bill_start_date;
+	
 	$last_due_date=@$last_bill_due_date;
 	if(sizeof($new_result_ledger)==0){
 		$current_transaction_date=$current_bill_start_date;
@@ -918,6 +921,13 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 		$debit=$transaction["ledger"]["debit"];
 		$credit=$transaction["ledger"]["credit"];
 		
+		if(empty($debit) && !empty($credit)){
+		$current_transaction_date=date('Y-m-d', strtotime('-1 day', $current_transaction_date));
+		$current_transaction_date=strtotime($current_transaction_date);
+		}
+		
+		//echo date("d-m-Y",$last_trasanction_date); echo"<br>";
+		//echo date("d-m-Y",$current_transaction_date); echo"<br>";
 		 $days=abs(floor(($last_trasanction_date-$current_transaction_date)/(60*60*24)));
 		 $new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
 		

@@ -1000,11 +1000,11 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 			}
 		}
 		
-		 echo $new_interest ;
+		 echo $new_interest ; echo"<br>";
 		$last_bill_non_maint_arrear=$non_maint_arrear;
 		$last_bill_arrear_intrest=$arrear_intrest+$intrest_on_arrears;
 		$last_bill_intrest_on_arrears=$intrest_on_arrears;
-		$last_bill_maint_arrear=$maint_arrear;
+		echo $last_bill_maint_arrear=$maint_arrear; echo"<br>";
 		$last_bill_amount=$bill_amount;
 	}
 	
@@ -1018,7 +1018,7 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 			$last_due_date=date('Y-m-d', strtotime('0 day', $last_due_date));
 			$last_due_date=strtotime($last_due_date);
 			
-			$days=abs(floor(($last_due_date-$current_bill_start_date)/(60*60*24)));
+			echo $days=abs(floor(($last_due_date-$current_bill_start_date)/(60*60*24)));
 			$new_interest+=($last_bill_amount*$days*$tax_factor)/365;
 			
 			$last_due_date=$current_transaction_date;

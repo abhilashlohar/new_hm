@@ -1022,7 +1022,7 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 			$last_due_date=$current_transaction_date;
 			
 		}
-		
+		echo $new_interest;
 		return array("intrest_on_arrears"=>$new_interest);
 		
 	

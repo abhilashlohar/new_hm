@@ -790,10 +790,10 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 	}
 	
 		$last_bill_arrear_intrest=$arrear_intrest+$intrest_on_arrears;
-	
-		 $days=abs(floor(($last_trasanction_date-$current_bill_start_date)/(60*60*24)));
-	     $new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
-		
+		if($last_bill_maint_arrear>0){
+			 $days=abs(floor(($last_trasanction_date-$current_bill_start_date)/(60*60*24)));
+			 $new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
+		}
 		if($current_bill_start_date>$last_due_date && $bill_count>0){
 			$last_due_date=date('Y-m-d', strtotime('0 day', $last_due_date));
 			$last_due_date=strtotime($last_due_date);
@@ -1000,26 +1000,26 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 			}
 		}
 		
-		 echo $new_interest ; echo"<br>";
+		
 		$last_bill_non_maint_arrear=$non_maint_arrear;
 		$last_bill_arrear_intrest=$arrear_intrest+$intrest_on_arrears;
 		$last_bill_intrest_on_arrears=$intrest_on_arrears;
-		echo $last_bill_maint_arrear=$maint_arrear; echo"<br>";
-		echo $last_bill_amount=$bill_amount;
+		$last_bill_maint_arrear=$maint_arrear; 
+		$last_bill_amount=$bill_amount;
 	}
 	
 		$last_bill_arrear_intrest=$arrear_intrest+$intrest_on_arrears;
 		 if($last_bill_maint_arrear>0){
-			echo $days=abs(floor(($last_trasanction_date-$current_bill_start_date)/(60*60*24))); echo"<br>";
+			 $days=abs(floor(($last_trasanction_date-$current_bill_start_date)/(60*60*24))); 
 			
-			echo $new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365; echo"<br>";
+			 $new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365; 
 		 }
 		if($current_bill_start_date>$last_due_date && $bill_count>0){
 			$last_due_date=date('Y-m-d', strtotime('0 day', $last_due_date));
 			$last_due_date=strtotime($last_due_date);
 			
-			echo $days=abs(floor(($last_due_date-$current_bill_start_date)/(60*60*24)));
-			echo $new_interest+=($last_bill_amount*$days*$tax_factor)/365; echo"<br>";
+			 $days=abs(floor(($last_due_date-$current_bill_start_date)/(60*60*24)));
+			 $new_interest+=($last_bill_amount*$days*$tax_factor)/365; 
 			
 			$last_due_date=$current_transaction_date;
 			

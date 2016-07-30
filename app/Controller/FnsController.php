@@ -925,10 +925,10 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 		$current_transaction_date=date('Y-m-d', strtotime('-1 day', $current_transaction_date));
 		$current_transaction_date=strtotime($current_transaction_date);
 		}
-		
+		echo $last_bill_maint_arrear;
 		//echo date("d-m-Y",$last_trasanction_date); echo"<br>";
 		//echo date("d-m-Y",$current_transaction_date); echo"<br>";
-		 $days=abs(floor(($last_trasanction_date-$current_transaction_date)/(60*60*24)));
+		echo  $days=abs(floor(($last_trasanction_date-$current_transaction_date)/(60*60*24)));
 		 $new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
 		
 		if($current_transaction_date>$last_due_date && $bill_count>0){

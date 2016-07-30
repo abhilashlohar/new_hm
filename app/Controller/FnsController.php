@@ -925,12 +925,12 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 		$current_transaction_date=date('Y-m-d', strtotime('-1 day', $current_transaction_date));
 		$current_transaction_date=strtotime($current_transaction_date);
 		}
-		echo $last_bill_maint_arrear;echo"<br>";
+		
 		//echo date("d-m-Y",$last_trasanction_date); echo"<br>";
 		//echo date("d-m-Y",$current_transaction_date); echo"<br>";
-		echo  $days=abs(floor(($last_trasanction_date-$current_transaction_date)/(60*60*24)));
-		 echo $new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
-		echo"<br>";
+		  $days=abs(floor(($last_trasanction_date-$current_transaction_date)/(60*60*24)));
+		  $new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
+	
 		if($current_transaction_date>$last_due_date && $bill_count>0){
 			$last_due_date=date('Y-m-d', strtotime('0 day', $last_due_date));
 			$last_due_date=strtotime($last_due_date);
@@ -941,7 +941,7 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 		}
 			
 		$last_trasanction_date=$current_transaction_date;
-		 echo $new_interest ;
+		
 		//Allocation
 		if($table_name=="opening_balance"){
 			if($ledger_intrest=="YES"){
@@ -999,6 +999,8 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 				
 			}
 		}
+		
+		 echo $new_interest ;
 		$last_bill_non_maint_arrear=$non_maint_arrear;
 		$last_bill_arrear_intrest=$arrear_intrest+$intrest_on_arrears;
 		$last_bill_intrest_on_arrears=$intrest_on_arrears;

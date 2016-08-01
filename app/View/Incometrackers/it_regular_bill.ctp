@@ -98,6 +98,7 @@ if(sizeof($result_regular_bill_temp)>0){
 
 <?php if(!empty($select_income_head_array) && !empty($penalty_tax) && !empty($neft_type) && $nn==55 && $nnn==55 && $financial_year_count>0 && !empty($society_reg_num) && !empty($society_address) && !empty($sig_title)){ ?>
 <input type="hidden" id="validat_value">
+<input type="hidden" id="validat_date">
 <div class="portlet box blue">
 	<div class="portlet-title">
 	<h4 class="block"><i class="icon-reorder"></i>Create regular bill</h4>
@@ -211,6 +212,8 @@ $(document).ready(function(){
 		
 		var allow="yes";
 		var value=$("#validat_value").val();
+		var date_valid=$("#validat_date").val();
+		
 		//value=10;
 	    if(value==5){
 			allow="no";
@@ -231,7 +234,7 @@ $(document).ready(function(){
 		  $('#due_date').html('');	
 		}
 		
-		if(value==3){
+		if(date_valid==3){
 			allow="no";
 			$('#due_date').html('Due date is Big according billing cycle');
 		}
@@ -262,6 +265,10 @@ $(document).ready(function(){
 <script>
 function validation(t){
 $('#validat_value').val(t);	
+}
+
+function validation_date(t){
+$('#validat_date').val(t);	
 }
 </script>
 <script>
@@ -303,9 +310,9 @@ $('input[name="start_date"]').die().live("blur",function(){
 		 
 		 	if(response=="error"){
 				$('#due_date').html('Due date is Big according billing cycle');
-				validation(3);
+				validation_date(3);
 				}else{
-				   validation(10);
+				   validation_date(10);
 					$('#due_date').html('');
 				}
 			});
@@ -320,9 +327,9 @@ $('input[name="start_date"]').die().live("blur",function(){
 		}).done(function(response){
 		  if(response=="error"){
 				$('#due_date').html('Due date is Big according billing cycle');
-				validation(3);
+				validation_date(3);
 				}else{
-				   validation(10);
+				   validation_date(10);
 					$('#due_date').html('');
 				}
 			});

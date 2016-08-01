@@ -208,9 +208,10 @@ $(document).ready(function(){
 <script>
 $(document).ready(function(){
 	$("form").on("submit",function(e){
+		
 		var allow="yes";
 		var value=$("#validat_value").val();
-		value=10;
+		//value=10;
 	    if(value==5){
 			allow="no";
 			$('#start_date').html('Bills already generated for this period');
@@ -230,6 +231,13 @@ $(document).ready(function(){
 		  $('#due_date').html('');	
 		}
 		
+		if(value==3){
+			allow="no";
+			$('#due_date').html('Due date is Big according billing cycle');
+		}
+		else{
+			$('#due_date').html('');
+		}
 		
 		
 		if(allow=="no"){
@@ -257,7 +265,10 @@ $('#validat_value').val(t);
 }
 </script>
 <script>
-$('input[name="start_date"]').die().live("blur",function(){
+$('select[name="billing_cycle"]').die().live("change",function(){ 
+   validation_due_date();
+});	
+$('input[name="start_date"]').die().live("blur",function(){ 
 			var start_date=$(this).val();
 				var a1=0;	    
 					$.ajax({url:"regular_bill_validation_ajax/"+start_date, 
@@ -276,15 +287,47 @@ $('input[name="start_date"]').die().live("blur",function(){
 	$('input[name="due_date"]').die().live("blur keyup",function(){	
 	  var due_date=$(this).val();
 	  var start_date=$('input[name="start_date"]').val();
-	  start_date=start_date.split('-').reverse().join('');
+	   var billing_cycle=$('select[name="billing_cycle"]').val();
+	   var start=start_date;
+	    var due=due_date;
+	    start_date=start_date.split('-').reverse().join('');
 		due_date=due_date.split('-').reverse().join('');
 		if(due_date<start_date){
 			$('#due_date').html('Due date is small than start date');
 		}else{
 		  $('#due_date').html('');	
 		}
-
-	});	
+		$.ajax({
+			url:"regular_bill_validation/"+start+"/"+due+"/"+billing_cycle, 
+		}).done(function(response){
+		 
+		 	if(response=="error"){
+				$('#due_date').html('Due date is Big according billing cycle');
+				validation(3);
+				}else{
+				   validation(10);
+					$('#due_date').html('');
+				}
+			});
+		});
+	function validation_due_date(){
+		
+	   var start=$('input[name="start_date"]').val();
+	   var billing_cycle=$('select[name="billing_cycle"]').val();
+	   var due=$('input[name="due_date"]').val();
+		$.ajax({
+			url:"regular_bill_validation/"+start+"/"+due+"/"+billing_cycle, 
+		}).done(function(response){
+		  if(response=="error"){
+				$('#due_date').html('Due date is Big according billing cycle');
+				validation(3);
+				}else{
+				   validation(10);
+					$('#due_date').html('');
+				}
+			});
+	}
+	
 </script>
 
 

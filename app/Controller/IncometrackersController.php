@@ -63,6 +63,76 @@ function it_supplimentry_bill_validation($transaction_date=null,$ledger_sub_acco
 	
 }
 
+function regular_bill_validation($start=null,$due=null,$billing_cycle=null){
+$this->layout=null;
+$s_society_id = (int)$this->Session->read('hm_society_id');	
+	
+if($billing_cycle==1){ 
+	$end_date=date("t-m-Y", strtotime($start));
+	if(strtotime($end_date)<strtotime($due)){
+		echo"error";
+		
+	}else{
+		echo"done";
+	}
+}
+if($billing_cycle==2){ 
+
+$time = strtotime($start);
+$final = date("d-m-Y", strtotime("+1 month", $time));
+$end_date=date("t-m-Y", strtotime($final));
+	if(strtotime($end_date)<strtotime($due)){
+		echo"error";
+	}else{
+		echo"done";
+	}
+	
+}
+
+
+if($billing_cycle==3){ 
+
+$time = strtotime($start);
+$final = date("d-m-Y", strtotime("+2 month", $time));
+$end_date=date("t-m-Y", strtotime($final));
+	if(strtotime($end_date)<strtotime($due)){
+		echo"error";
+	}else{
+		echo"done";
+	}
+	
+}
+
+if($billing_cycle==6){ 
+
+$time = strtotime($start);
+$final = date("d-m-Y", strtotime("+5 month", $time));
+$end_date=date("t-m-Y", strtotime($final));
+
+  if(strtotime($end_date)<strtotime($due)){
+		echo"error";
+	}else{
+		echo"done";
+	}
+	
+}
+
+if($billing_cycle==12){ 
+
+$time = strtotime($start);
+$final = date("d-m-Y", strtotime("+11 month", $time));
+ $end_date=date("t-m-Y", strtotime($final));
+ if(strtotime($end_date)<strtotime($due)){
+		echo"error";
+	}else{
+		echo"done";
+	}
+	
+}
+
+//echo date("Y-m-t", strtotime($start));
+}
+
 function add_new_party_account_head($party_name=null){
 	$this->layout=null;
 	$s_society_id = (int)$this->Session->read('society_id');

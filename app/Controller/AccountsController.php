@@ -89,6 +89,7 @@ function upload_opening_balance_csv_file()
 }
 //End upload_opening_balance_csv_file//
 //Start read_csv_file_ob//
+
 function read_csv_file_ob()
 {
 	$this->layout=null;
@@ -958,6 +959,28 @@ $this->Session->write('ledd_accc', 1);
 }
 //End Master Ledger Accounts COA (Accounts)//
 //Start Master Ledger Accounts Ajax COA (Accounts)//
+
+function master_ledger_account_validation(){
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$main_id=(int)$this->request->data['main_id'];
+	$cat_name=trim($this->request->data['cat_name']);
+	$this->loadmodel('ledger_account');
+	$conditions =array( '$or' => array( 
+		array("group_id"=>$main_id,"ledger_name"=>$cat_name,"society_id"=>$s_society_id),
+		array("group_id"=>$main_id,"ledger_name"=>$cat_name,"society_id"=>0)
+	));
+	$count=$this->ledger_account->find("count",array("conditions"=>$conditions));
+	
+	if($count==0){
+		echo'true';
+		
+	}else{
+		echo'false';
+		
+	}
+}
+
+
 function master_ledger_account_ajax()
 {
 		$this->layout='blank';

@@ -96,7 +96,16 @@ $(document).ready(function(){
 		  
 		  cat_name: {
 	       
-	        required: true
+	        required: true,
+			remote: {
+					url: "master_ledger_account_validation",
+					type: "post",
+					data: {
+					main_id: function() { return $('select[name=main_id]').val();}
+					
+					}
+			},
+			
 	      },
 		  
 		   rate: {
@@ -112,6 +121,12 @@ $(document).ready(function(){
 	      },
 		 
 		},
+		messages: {
+	                cat_name: {
+	                    remote: "The Ledger Name is Already Exist"
+	                }
+
+	            },
 			highlight: function(element) {
 				$(element).closest('.control-group').removeClass('success').addClass('error');
 			},
@@ -121,7 +136,7 @@ $(document).ready(function(){
 				.closest('.control-group').removeClass('error').addClass('success');
 			},
 			submitHandler: function () {
-				$("button[name=sub]").attr('disabled','disabled');
+				//$("button[name=sub]").attr('disabled','disabled');
 			    form.submit();
 			}
 	  });
@@ -131,42 +146,7 @@ $(document).ready(function(){
 			   
 <script>			   
 $(document).ready(function(){			   
-  $("#vali").bind('click',function(){	
-
-var ledger_name2 = $("#cat").val();	
-var ledger_name2 = $.trim(ledger_name2);
-string2 = ledger_name2.toLowerCase();
-
- var ledger = $("#ledger").val();
-
- var y = $("#yy").val();
  
- var led = ledger.split(",");
-	var hhh = 5;
-	for(k=0; k<y; k++)
-	{
-	ledger_name = led[k];
-    string1 = ledger_name.toLowerCase();
-   
-	if(string1 == string2)
-	{
-	hhh = 555;	
-	break;
-	}
-   	}
-	
-	if(hhh == 555)
-	{
-	$("#over").html('<p style="color:red;">The Ledger Name is Already Exist,Please Select Another</p>');	
-	return false;
-	}
-	else
-	{
-	$("#over").html('<p style="color:red;"></p>');	
-	}
-	
-	
-    });
  });
 </script>			   
 		   

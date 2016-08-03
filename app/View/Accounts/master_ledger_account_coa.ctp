@@ -123,7 +123,7 @@ $(document).ready(function(){
 		},
 		messages: {
 	                cat_name: {
-	                    remote: "The Ledger Name is Already Exist"
+	                    remote: "The ledger name is already exist,Please select another"
 	                }
 
 	            },

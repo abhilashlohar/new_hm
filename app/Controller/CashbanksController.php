@@ -607,6 +607,7 @@ function final_import_bank_receipt_ajax(){
 		foreach($result_import_converted as $import_converted){
 			$bank_receipt_csv_id=$import_converted["bank_receipt_csv_converted"]["auto_id"];
 			$trajection_date=$import_converted["bank_receipt_csv_converted"]["trajection_date"];
+			$date_tra=$trajection_date;
 			$trajection_date = date('Y-m-d',strtotime($trajection_date));
 			$trajection_date = strtotime($trajection_date); 
 			$deposited_in=$import_converted["bank_receipt_csv_converted"]["deposited_in"];
@@ -702,7 +703,7 @@ function final_import_bank_receipt_ajax(){
 									<tbody><tr>
 										<td style="padding:0px 0 2px 5px" colspan="2">Receipt No: '.$receipt_number.'</td>
 										
-										<td colspan="2" align="right" style="padding:0px 5px 0 0px"><b>Date:</b> '.$date.' </td>
+										<td colspan="2" align="right" style="padding:0px 5px 0 0px"><b>Date:</b> '.$date_tra.' </td>
 										
 									</tr>
 									<tr>
@@ -723,7 +724,7 @@ function final_import_bank_receipt_ajax(){
 
 									
 									$html_receipt.='<tr>
-										<td style="padding:0px 0 2px 5px"  colspan="4">'.$received_from.'</td>
+										<td style="padding:0px 0 2px 5px"  colspan="4">'.$receipt_type.'</td>
 										
 									</tr>
 									
@@ -2436,7 +2437,7 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 
 									
 									$html_receipt.='<tr>
-										<td style="padding:0px 0 2px 5px"  colspan="4">'.$member_type.'</td>
+										<td style="padding:0px 0 2px 5px"  colspan="4">'.$receipt_type.'</td>
 										
 									</tr>
 									
@@ -5916,7 +5917,7 @@ function new_bank_receipt(){
 
 									
 									$html_receipt.='<tr>
-										<td style="padding:0px 0 2px 5px"  colspan="4">'.$received_from.'</td>
+										<td style="padding:0px 0 2px 5px"  colspan="4">'.$receipt_type.'</td>
 										
 									</tr>
 									
@@ -8171,8 +8172,9 @@ $this->layout='blank';
 $s_role_id=$this->Session->read('role_id');
 $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id=$this->Session->read('hm_user_id');	
-
+date_default_timezone_set('Asia/Kolkata');
 $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
+
 			$this->loadmodel('society');
 			$conditions=array("society_id" => $s_society_id);
 			$cursor2=$this->society->find('all',array('conditions'=>$conditions));

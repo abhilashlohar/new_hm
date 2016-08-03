@@ -180,7 +180,7 @@ echo $total_debit; ?> <?php //echo "  dr"; ?></b></td>
 	</div>
 	<div class="modal-footer">
 		<button class="btn" id="closed">Close</button>
-		<a href="#" class="btn red" role="button" id="confirm"><i class="icon-trash"></i> Delete</a>
+		<a href="#" class="btn red" role="btn" id="confirm"><i class="icon-trash"></i> Delete</a>
 	</div>
 </div>
 </div>
@@ -188,7 +188,7 @@ echo $total_debit; ?> <?php //echo "  dr"; ?></b></td>
 $(document).ready(function(){
 	$(".delete_r").die().live("click",function(){
 		var h=$(this).attr("href");
-		$("#confirm").attr("href",h);
+	    $("#confirm").attr("href",h);
 		$(".edit_div").show();
 	})
 	$("#closed").die().live("click",function(){

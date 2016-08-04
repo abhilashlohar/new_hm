@@ -78,7 +78,7 @@ $(document).ready(function() {
 $(document).ready(function(){
 		$.validator.setDefaults({ ignore: ":hidden:not(select)" });
 		
-		$('#contact-form').validate({
+		$('#contact-form').validate({ 
 		
 		errorElement: "label",
                     //place all errors in a <div id="errors"> element
@@ -90,7 +90,8 @@ $(document).ready(function(){
 	    rules: {
 	      main_id: {
 	       
-	        required: true
+	        required: true,
+			
 	      },
 		  
 		  
@@ -124,7 +125,8 @@ $(document).ready(function(){
 		messages: {
 	                cat_name: {
 	                    remote: "The ledger name is already exist,Please select another"
-	                }
+	                },
+					
 
 	            },
 			highlight: function(element) {
@@ -145,8 +147,9 @@ $(document).ready(function(){
 </script>			   
 			   
 <script>			   
-$(document).ready(function(){			   
- 
+$(document).ready(function(){	
+
+
  });
 </script>			   
 		   

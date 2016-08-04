@@ -1,11 +1,13 @@
 <div class="hide_at_print"> 
-<?php echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array())); ?>
+<?php echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
+$count=$this->requestAction(array('controller' => 'Fns', 'action' => 'check_approve_receipt_count'),array('pass' => array()));
+ ?>
 </div>
 <div class="hide_at_print" align="center">            
 	<a href="<?php echo $webroot_path; ?>Cashbanks/new_bank_receipt" class="btn" rel='tab'>Create</a>
 	<a href="<?php echo $webroot_path; ?>Cashbanks/bank_receipt_view" class="btn yellow" rel='tab'>View</a>
 	<a href="<?php echo $webroot_path; ?>Cashbanks/bank_receipt_deposit_slip" class="btn" rel='tab'>Deposit Slip</a>
-	<a href="<?php echo $webroot_path; ?>Cashbanks/bank_receipt_approve" class="btn" rel='tab'>Approve Receipts</a>
+	<a href="<?php echo $webroot_path; ?>Cashbanks/bank_receipt_approve" class="btn" rel='tab'>Approve Receipts <span style="color:red;">(<?php echo $count; ?>)</span></a>
 </div>
 
 

@@ -23175,7 +23175,7 @@ $this->ath();
 $this->check_user_privilages();	
 $this->set('s_role_id',$s_role_id);
 $this->loadmodel('ledger_account');
-$conditions=array("group_id" => 4);
+$conditions=array("group_id" => 4,'delete_id'=>0);
 $result_ledger_account=$this->ledger_account->find('all',array('conditions'=>$conditions));
 $this->set('result_ledger_account',$result_ledger_account);
 
@@ -23186,6 +23186,31 @@ $result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditio
 $this->set('result_ledger_sub_account',$result_ledger_sub_account);
 
 }
+
+function fix_assets_add_row()
+{
+$this->layout='blank';
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id = (int)$this->Session->read('user_id');
+
+$this->ath();
+
+$count = (int)$this->request->query('con');
+$this->set('count',$count);	
+	
+$this->loadmodel('ledger_account');
+$conditions=array("group_id" => 4,'delete_id'=>0);
+$result_ledger_account=$this->ledger_account->find('all',array('conditions'=>$conditions));
+$this->set('result_ledger_account',$result_ledger_account);
+
+
+$this->loadmodel('ledger_sub_account');
+$conditions=array("ledger_id" => 15,"society_id"=>$s_society_id);
+$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+$this->set('result_ledger_sub_account',$result_ledger_sub_account);
+	
+}
+
 
 ////////////////////////////////////End Fix Asset Add (Accounts)////////////////////////////////////////// ////////////////////////////////////////////
 
@@ -28795,29 +28820,7 @@ echo $excel;
 	}
 
 //////////////////////// Start fix_assets_add_row ///////////////////////////////////////
-function fix_assets_add_row()
-{
-$this->layout='blank';
-$s_society_id = (int)$this->Session->read('society_id');
-$s_user_id = (int)$this->Session->read('user_id');
 
-$this->ath();
-
-$count = (int)$this->request->query('con');
-$this->set('count',$count);	
-	
-$this->loadmodel('ledger_account');
-$conditions=array("group_id" => 4);
-$result_ledger_account=$this->ledger_account->find('all',array('conditions'=>$conditions));
-$this->set('result_ledger_account',$result_ledger_account);
-
-
-$this->loadmodel('ledger_sub_account');
-$conditions=array("ledger_id" => 15);
-$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-$this->set('result_ledger_sub_account',$result_ledger_sub_account);
-	
-}
 //End fix_assets_add_row//
 //Start Resident drop down//
 function resident_drop_down()

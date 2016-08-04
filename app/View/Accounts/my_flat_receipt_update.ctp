@@ -146,8 +146,10 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 </tr>						
 </table>
 <div class="form-actions">
+
 <button type="submit" class="btn green" name="my_flat_receipt_update">Update Payment Detail </button>
 </div>
+<div id="show_message"></div>
 </div>
 </div>
 </form>
@@ -233,6 +235,8 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 $(document).ready(function() { 
 	$('form').submit( function(ev){
 	ev.preventDefault();
+		$('.form-actions').hide();
+		$('#show_message').html("<center>Please wait.....</center>");
 		
 		var ar = [];
 		var unic = $("#unic_id").val();
@@ -266,14 +270,15 @@ ar.push([transaction_date,mode,cheque_no,cheque_date,drawn_bank,branch,date,utr,
 			url: "<?php echo $webroot_path; ?>Accounts/my_flat_receipt_update_json?q="+myJsonString,
 			dataType:'json',
 			}).done(function(response){
-				
-				if(response.type == 'error'){
-			
-			 $("#validdn").html('<div class="alert alert-error" style="color:red;">'+response.text+'</div>');
-			}
+			if(response.type == 'error'){
+				$('#show_message').html("");
+				 $('.form-actions').show();
+				 $("#validdn").html('<div class="alert alert-error" style="color:red;">'+response.text+'</div>');
+			 }
 		    if(response.type == 'success'){
+				$('#show_message').html("");
 			  $("#shwd").show();
-			 
+			  $('.form-actions').show();
 			}
 });			
 });

@@ -60,6 +60,13 @@ function journal_info_via_voucher_id($voucher_id,$ledger_id){
 	
 }
 
+function check_approve_receipt_count(){
+	$s_society_id=$this->Session->read('hm_society_id');
+	$this->loadmodel('temp_cash_bank');
+	$conditions=array('society_id'=>$s_society_id);
+	return $this->temp_cash_bank->find('count',array('conditions'=>$conditions));
+}
+
 function financial_year_current_open(){
 	
 	$s_society_id=$this->Session->read('hm_society_id');

@@ -3616,10 +3616,10 @@ function balance_sheet_income_expenditure($from){
 				
 				
 			}
-			
+			//echo $total_balace; echo"<br/>"; echo $total_balace_expenditure;
 			if($total_balace>$total_balace_expenditure){
 				return $total_surplus=$total_balace-$total_balace_expenditure;
-				}else{ return $total_surplus=$total_balace_expenditure-$total_balace; }
+				}else{ return $total_surplus=$total_balace-$total_balace_expenditure; } 
 			
 }
 //End balance_sheet_income_expenditure// 

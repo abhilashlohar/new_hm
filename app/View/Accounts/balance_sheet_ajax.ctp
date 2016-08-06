@@ -167,21 +167,21 @@ if($balance_sheet_income_expenditure>0){
 				<td style="border-top:1px solid;"></td> 
 			</tr>	
 	<?php } else{
-				$total_surplus=$balance_sheet_income_expenditure;?>
+				$total_surplus=$balance_sheet_income_expenditure;
+				?>
 			<tr>
 			
 				<td style="border-right: 1px solid;border-top: 1px solid;">
-				
-				
-				<table width="100%" style="border:none;">
-					<tr>
-					<td colspan="2" width="75%" style="border:none;border-right: 1px solid;"> <span ><b>Surplus in expenditure over income </b></span>   </td> 
-					<td align="right"> <span style="float:right;"> <?php echo $this->Currency->formatCurrency($total_surplus, "INR"); $total_balace+=$total_surplus; ?></span>
-					</td>
-					
-					</tr>
-					
-				</table>
+						
+					<table width="100%" style="border:none;">
+						<tr>
+						<td colspan="2" width="75%" style="border:none;border-right: 1px solid;"> <span ><b>Surplus in expenditure over income </b></span>   </td> 
+						<td align="right"> <span style="float:right;"> <?php echo $this->Currency->formatCurrency($total_surplus, "INR"); $total_balace_expenditure+=$total_surplus; ?></span>
+						</td>
+						
+						</tr>
+						
+					</table>
 						
 				</td> 
 				<td style="border-top:1px solid;"></td> 
@@ -202,7 +202,7 @@ if($balance_sheet_income_expenditure>0){
 			</table>
 
 
-  </td>
+</td>
 <td style="border-top: 1px solid;"> 
 
 			<table width="100%" style="border:none;">

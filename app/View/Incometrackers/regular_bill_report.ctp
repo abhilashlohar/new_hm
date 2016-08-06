@@ -1,3 +1,14 @@
+<div id="confirm" style="display:none;">
+	<div class="modal-backdrop fade in"></div>
+	<div style="display: block;" class="modal hide fade in" >
+		<div class="modal-body">
+			<p style="font-size:14px;">Email have sent successfully</p>
+		</div>
+		<div class="modal-footer">
+			<button class="btn" id="close">Close</button>
+		</div>
+	</div>
+</div>
 <div class="portlet box">
 	<div class="portlet-body" >
 		<?php
@@ -118,6 +129,8 @@
 							<li><a href="regular_bill_view/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i> View</a></li>
 							<li>
 							<a href="regular_bill_edit2/<?php echo $auto_id; ?>" role="button" rel="tab"><i class="icon-edit"></i> Edit</a></li>
+							<li>
+							<a href="#" class="send_email" role="button" update_id="<?php echo $auto_id; ?>"><i class="icon-envelope"></i> Email</a></li>
 							</ul>
 							</div>
 							<?php
@@ -160,6 +173,19 @@ input{
 </style>
 <script>
 $(document).ready(function(){
+	$('.send_email').click(function(){
+		var id=$(this).attr('update_id');
+		$.ajax({
+		  url: "individual_send_email/"+id,
+		}).done(function(response){
+			$('#confirm').show();
+		});
+	});	
+	
+	$("#close").click(function(){
+		$("#confirm").hide();
+		});
+		
 	jQuery('.popovers').popover({html: true});
 	var tr=1; 
 	$('#main thead tr th').each(function(i, obj) {

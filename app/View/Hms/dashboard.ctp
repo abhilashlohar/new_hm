@@ -552,10 +552,41 @@ function substrwords($text, $maxchar, $end='...') {
 </div>
 
 
+<!--<div class="controls">
+<select class="span6 chosen send_email " data-placeholder="Choose a Category">
+<option value="" class="hy"></option>
+<option value="1" class="hy">Tharwani</option>
+<option value="2" class="hy">Bhoomi </option>
+<option value="3" class="hy">Iraisa</option>
+<option value="4" class="hy">kamdhenu</option>
+</select>
+</div>-->
+
+
 
 <script>
 
 $(document).ready(function() {
+	/*$('li.hy').removeClass('active-result');
+	
+	$('.chzn-single').click(function(){
+		$('li.hy').removeClass('active-result');
+		
+	});
+		
+	$('input').keyup(function(){
+		var id=$(this).val();
+		
+		var z=id.length;
+		
+		if(z<3){
+			
+			$('li.hy').removeClass('active-result');
+		}
+	});	
+	*/
+	
+	
 <?php 	$change_pass=(int)$this->Session->read('change_pass');	
 if($change_pass==1){
 

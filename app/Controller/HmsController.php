@@ -75,6 +75,19 @@ $dd=explode(' ',$name);
 	}
 }
 
+function find_society_name($search=null){
+	
+$this->loadmodel('society'); 
+$conditions=array("society_name"=> new MongoRegex('/^' . $search . '/i'));
+$result_society_name=$this->society->find('all',array('conditions'=>$conditions));
+	foreach($result_society_name as $data){ 
+	$society_id=(int)$data['society']['society_id'];
+	?>
+			<li class="change_society" society="<?php echo $society_id; ?>"  style="background-color:#fff; width: 212px;background-color: #ffffff;padding: 3px 4px 8px;overflow: hidden;margin-top: -9px !important;margin-left: -24px; "><?php echo $data['society']['society_name']; ?></li>
+
+<?php	}	
+}
+
 function regular_bill_echo(){
 	$this->layout=null;
 	?>
@@ -6934,10 +6947,9 @@ $this->loadmodel('society');
 $this->set('result', $this->society->find('all'));
 if($this->request->is('post')){ 
 		
-		
 			$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 			
-		$society_id=(int)$this->request->data['society'];
+		$society_id=(int)$this->request->data['society_id']; 
 		$tenant=$this->request->data['tenant'];
 		if($tenant=="yes"){
 			$committe=$this->request->data['committe'];

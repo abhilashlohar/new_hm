@@ -1,3 +1,10 @@
+<style>
+.change_society:hover{
+	background-color: #f5f5f5 !important;
+}
+
+</style>
+
 <script type="text/javascript">
 var xobj;
 //modern browers
@@ -76,12 +83,23 @@ xobj.send(null);
 <form id="contact-form" method="post" class="form-vertical login-form" >
 <fieldset>
 <h3 class="form-title">Sign Up</h3>
-
 <div class="control-group">
+<div class="controls">
+<input type="hidden" name="society_id" class="m-wrap span8" id="soc_wing">
+<label class="control-label" style="font-size:16px;">Society  <i style="color:red;font-size:12px;" class="icon-info-sign tooltips" data-placement="right" data-original-title="Please enter 3 or more characters and choose society"></i> </label>
+<input type="text" name="society" class="" autocomplete="off" id="find_society">
+<div>
+<ul>
+<li id="result_data" style="list-style-type: none;"></li>
+</ul>
+</div>
+</div>
+</div>
+<!--<div class="control-group">
 <label class="control-label" style="font-size:16px;">Society </label>
 <div class="controls">
 <select style="width:100%; font-size:16px;" onChange="society_wing()" id="soc_wing" class="m-wrap chosen " name="society"  data-placeholder="Choose a Category"   tabindex="1">
-<option value="" >--Select Name of The Society--</option>
+<option value="" >--Type Name of The Society--</option>
 <?php 
 
 foreach ($result as $db) 
@@ -89,11 +107,11 @@ foreach ($result as $db)
 $society_id=$db['society']["society_id"];
 $society_name=$db['society']["society_name"];
 ?>
-<option value="<?php echo $society_id; ?>"><?php echo $society_name; ?></option>
+<option value="<?php echo $society_id; ?>" class="hy"><?php echo $society_name; ?></option>
 <?php } ?>
 </select>
 </div>
-</div>
+</div>-->
 
 
 <div class="control-group">
@@ -169,7 +187,42 @@ $society_name=$db['society']["society_name"];
 
 <script>
 $(document).ready(function(){
-	   
+$('#find_society').keyup(function(){
+	var value=$(this).val();
+	if(value.length>2){
+	$.ajax({
+			url: "find_society_name/"+value,
+		}).done(function(response){
+			$('#result_data').html(response);
+		});
+	}else{
+		$('#result_data').html('');
+	}	
+});
+	
+$('.change_society').live("click",function(){	
+	var so_name=$(this).html();
+	var society_id=$(this).attr('society');
+	$('#soc_wing').val(society_id);
+	$('#find_society').val(so_name);
+	$('#result_data').html('');
+	society_wing();
+});	
+	/*$('li.hy').removeClass('active-result');
+	$('.chzn-single').click(function(){
+		$('li.hy').removeClass('active-result');
+	});
+
+	$('input').keyup(function(){
+		var id=$(this).val();
+		
+		var z=id.length;
+		
+		if(z<3){
+			
+			$('li.hy').removeClass('active-result');
+		}
+	});	  */ 
 	
 $('#contact-form').validate({
 	

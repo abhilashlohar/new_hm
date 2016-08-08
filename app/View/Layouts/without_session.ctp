@@ -12,7 +12,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <meta content="" name="description" />
   <meta content="" name="author" />
-  <link href="<?php echo $webroot_path; ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+ <link href="<?php echo $webroot_path; ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
   <link href="<?php echo $webroot_path; ?>assets/css/metro.css" rel="stylesheet" />
   <link href="<?php echo $webroot_path; ?>assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
   <link href="<?php echo $webroot_path; ?>assets/css/style1.css" rel="stylesheet" />
@@ -22,6 +22,10 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
   <link rel="shortcut icon" href="<?php echo $webroot_path; ?>favicon.ico" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="<?php echo $webroot_path; ?>assets/css/mobile_responsive1.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/uniform/css/uniform.default.css" />
+
+   <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/chosen-bootstrap/chosen/chosen.css" />
+
 <style>
 label.valid {
   width: 24px;
@@ -44,17 +48,25 @@ border-left:auto;
 }
 </style>
  <!-- BEGIN JAVASCRIPTS -->
+ 
   <script src="<?php echo $webroot_path; ?>assets/js/jquery-1.8.3.min.js"></script>
   <script src="<?php echo $webroot_path; ?>assets/bootstrap/js/bootstrap.min.js"></script>  
   <script src="<?php echo $webroot_path; ?>assets/uniform/jquery.uniform.min.js"></script> 
   <script src="<?php echo $webroot_path; ?>assets/js/jquery.blockui.js"></script>
+  <script src="<?php echo $webroot_path; ?>assets/breakpoints/breakpoints.js"></script>			
+<script type="text/javascript" src="<?php echo $webroot_path; ?>assets/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
+
   <script src="<?php echo $webroot_path; ?>assets/js/app.js"></script>
   <script src="<?php echo $webroot_path; ?>as/js/jquery.validate.js"></script> 
-  <script>
-    jQuery(document).ready(function() {     
-      App.initLogin();
-    });
-  </script>
+ 	
+	<script>
+		jQuery(document).ready(function() {			
+			// initiate layout and plugins
+			App.setPage('calendar');
+			App.init();
+		});
+	</script>
+
   <!-- END JAVASCRIPTS -->
 </head>
 <!-- END HEAD -->

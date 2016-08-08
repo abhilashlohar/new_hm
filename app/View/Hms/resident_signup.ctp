@@ -85,7 +85,7 @@ xobj.send(null);
 <h3 class="form-title">Sign Up</h3>
 <div class="control-group">
 <div class="controls">
-<input type="hidden" name="society_id" class="m-wrap span8" id="soc_wing">
+<input type="hidden" name="society_id" class="" id="soc_wing">
 <label class="control-label" style="font-size:16px;">Society  <i style="color:red;font-size:12px;" class="icon-info-sign tooltips" data-placement="right" data-original-title="Please enter 3 or more characters and choose society"></i> </label>
 <input type="text" name="society" class="" autocomplete="off" id="find_society">
 <div>
@@ -197,6 +197,8 @@ $('#find_society').keyup(function(){
 		});
 	}else{
 		$('#result_data').html('');
+		$('#soc_wing').val('');
+		 society_wing();
 	}	
 });
 	

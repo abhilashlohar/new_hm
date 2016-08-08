@@ -27,14 +27,14 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 					<td>
 						<table style="font-size:12px" cellspacing="0" width="100%">
 							<tr>
-								<td style="padding:2px;background-color:rgb(0,141,210);color:#fff" align="center" width="100%"><b>VRINDAWAN DHAM</b></td>
+								<td style="padding:2px;background-color:rgb(0,141,210);color:#fff" align="center" width="100%"><b><?php echo $society_name; ?></b></td>
 							</tr>
 						</table>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<div style=" text-align: center; background-color: rgba(204, 204, 204, 0.86); font-size: 12px; font-weight: bold; color: #606060; ">Statement of Account From 01-04-2016 to 31-03-2017</div>
+						<div style=" text-align: center; background-color: rgba(204, 204, 204, 0.86); font-size: 12px; font-weight: bold; color: #606060; ">Statement of Account From <?php echo date('d-m-Y',strtotime($from)); ?> to <?php echo date('d-m-Y',strtotime($to)); ?></div>
 					</td>
 				</tr>
 				<tr>

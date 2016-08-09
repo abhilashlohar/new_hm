@@ -63,7 +63,7 @@ $user_id = (int)$result_income_head2[0]['ledger_sub_account']['user_id'];
 @$wing_flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'),array('pass'=>array(@$wing_id,@$flat_id)));
 
 }
-
+$opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_opening_balance'), array('pass' => array($ledger_account_id,$ledger_sub_account_id,strtotime($from)))); 
 ?>
 
 <table border="1">
@@ -80,6 +80,9 @@ $user_id = (int)$result_income_head2[0]['ledger_sub_account']['user_id'];
 	 <td colspan="7" style="text-align:center;">
 	From: <?php echo date('d-m-Y',strtotime($from)); ?> To: <?php echo date('d-m-Y',strtotime($to)); ?>
 	</td>
+	</tr>
+	<tr>
+	 <th colspan="7" style="text-align:right;">Opening Balance: <?php echo $opening_balance; ?></th>
 	</tr>
 	</table>
 
@@ -749,6 +752,23 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			<td colspan="5" align="right"><b>Total</b></td>
 			<td style="text-align:right;"><b><?php echo $total_debit; ?></b></td>
 			<td style="text-align:right;"><b><?php echo $total_credit; ?></b></td>
+		</tr>
+		<tr>
+		<?php
+					if($opening_balance!=0){
+						$opening_be=explode(" ",$opening_balance);
+						$opening_balance=$opening_be[0];
+						if($opening_be[1]=="Dr"){
+							$closing_balance=$opening_balance+$total_debit-$total_credit;
+						}elseif($opening_be[1]=="Cr"){
+							$closing_balance=$total_debit-$total_credit-$opening_balance;
+						}
+					}else{
+						$closing_balance=$total_debit-$total_credit;
+					}
+					?>
+			<td colspan="6" style="text-align:right;font-size:15px;">Closing Balance</td>
+			<td style="text-align:right;font-size:15px;"><?php  echo abs($closing_balance); if($closing_balance>0){ echo " Dr."; }elseif($closing_balance<0){ echo " Cr."; } ?></td>
 		</tr>
 	</tbody>
 </table>

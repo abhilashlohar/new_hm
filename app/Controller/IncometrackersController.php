@@ -8154,22 +8154,22 @@ function account_statement_for_flat_excel($ledger_sub_account_id,$from,$to){
 function account_statement_for_flat_excel1($ledger_sub_account_id,$from,$to){
 	$this->layout=null;
 	$filename="Account_statement";
-	/*header ("Expires: 0");
+	header ("Expires: 0");
 	header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
 	header ("Cache-Control: no-cache, must-revalidate");
 	header ("Pragma: no-cache");
 	header ("Content-type: application/vnd.ms-excel");
 	header ("Content-Disposition: attachment; filename=".$filename.".xls");
 	header ("Content-Description: Generated Report" );
-	*/
-	$from=date("Y-m-d",strtotime($from));
+	
+		$from=date("Y-m-d",strtotime($from));
 		$this->set("from",$from);
-			$to=date("Y-m-d",strtotime($to));
-				$this->set("to",$to);
+		$to=date("Y-m-d",strtotime($to));
+		$this->set("to",$to);
 	
 	
-	$ledger_sub_account_id = (int)$ledger_sub_account_id;
-	
+	 $ledger_sub_account_id = (int)$ledger_sub_account_id;
+	$this->set('ledger_sub_account_id',$ledger_sub_account_id);
 	$this->ath();
 	$s_role_id=$this->Session->read('role_id');
 	$s_society_id = (int)$this->Session->read('hm_society_id');

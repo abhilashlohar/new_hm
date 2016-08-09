@@ -23,12 +23,17 @@ foreach($result_ledger as $ledger_data){
 	}
 	
 }
+
+ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_opening_balance'), array('pass' => array(34,$ledger_sub_account_id,strtotime($from)))); 
 ?>
 
 		<table border="1">
 			<thead>
             <tr>
 			<th colspan="6" style="text-align:center;">Account Statement <?php echo $society_name; ?> Register from : <?php echo date('d-m-Y',strtotime($from)); ?>-to:<?php echo date('d-m-Y',strtotime($to)); ?></th>
+			</tr>
+			<tr>
+			<th colspan="6" style="text-align:right;">Opening Balance: <?php echo $opening_balance; ?></th>
 			</tr>
 			<tr>
 				<th>Transaction Date</th>
@@ -184,7 +189,7 @@ foreach($result_ledger as $ledger_data){
 					</tr>
 				
 			<?php } ?>
-			<?php $closing_balance=$total_credit-$total_debit; ?>
+			
 					<tr>
 						<td colspan="4" style="text-align:right;"><b>Total</b></td>
 						<td style="text-align:right;"><b><?php echo $total_debit; ?></b></td>
@@ -192,9 +197,22 @@ foreach($result_ledger as $ledger_data){
 						
 					</tr>
 					<tr>
-	                <td colspan="4" style="text-align:right;"><b>Closing Balance</b></td>
-					<td colspan="2" style="text-align:right;"><b><?php echo $closing_balance; ?></b></td>					
-     				</tr>
+		<?php
+					if($opening_balance!=0){
+						$opening_be=explode(" ",$opening_balance);
+						$opening_balance=$opening_be[0];
+						if($opening_be[1]=="Dr"){
+							$closing_balance=$opening_balance+$total_debit-$total_credit;
+						}elseif($opening_be[1]=="Cr"){
+							$closing_balance=$total_debit-$total_credit-$opening_balance;
+						}
+					}else{
+						$closing_balance=$total_debit-$total_credit;
+					}
+					?>
+			<td colspan="5" style="text-align:right;font-size:15px;">Closing Balance</td>
+			<td style="text-align:right;font-size:15px;"><?php  echo abs($closing_balance); if($closing_balance>0){ echo " Dr."; }elseif($closing_balance<0){ echo " Cr."; } ?></td>
+		</tr>
                     </tbody>
 		</table>
 

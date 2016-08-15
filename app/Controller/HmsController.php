@@ -6511,7 +6511,7 @@ $this->layout='without_session';
 $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'webroot_path')); 
 $this->set('webroot_path',$webroot_path);
 
-$this->loadmodel('user_role');
+		$this->loadmodel('user_role');
 		$result_user_role=$this->user_role->find('all');
 		foreach($result_user_role as $data){
 			$auto_id=(int)$data['user_role']['auto_id'];

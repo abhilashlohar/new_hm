@@ -33,13 +33,13 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				<tr>
 					<th width="5%">Sr.</th>
 					<th>User Name</th>
-					<th id="unit_number1">unit</th>
-					<th id="unit_number" class="remove_th">unit</th>
+					<th id="unit_number1">Unit</th>
+					<th id="unit_number" class="remove_th">Unit</th>
 					<th>Roles</th>
 					<th>Email</th>
 					<th>Mobile</th>
 					<th>Validation Status</th>
-					<th>Portal Enrollment date</th>
+					<th>Portal Enrollment Date</th>
 					<th>Action</th>
 				</tr>
 			</thead>

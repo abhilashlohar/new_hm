@@ -6,7 +6,7 @@ Multi Society Enrollment
 
 <div class="portlet-body" style="padding:10px;";>
 <!--BEGIN TABS-->
-	<div class="tabbable tabbable-custom">
+	<!--<div class="tabbable tabbable-custom">
 		<ul class="nav nav-tabs">
 			<li class="active" ><a href="multi_society_enrollment" rel='tab' >Multi Society Enrollment </a></li>
 		</ul> 

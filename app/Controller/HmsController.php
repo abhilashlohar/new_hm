@@ -6511,16 +6511,7 @@ $this->layout='without_session';
 $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'webroot_path')); 
 $this->set('webroot_path',$webroot_path);
 
-		$this->loadmodel('user_role');
-		$result_user_role=$this->user_role->find('all');
-		foreach($result_user_role as $data){
-			$auto_id=(int)$data['user_role']['auto_id'];
-			$user_id=(int)$data['user_role']['user_id'];
-			$this->loadmodel('user');
-		    $result_user=$this->user->find('all',array('conditions'=>array('user_id'=>$user_id)));
-			$society_id=(int)$result_user[0]['user']['society_id'];
-			$this->user_role->updateAll(array("society_id"=>$society_id),array("auto_id"=>$auto_id));
-		} 
+		
 
 		$fb_user_name=@$this->request->query['aqazp2yd'];
 		$uid=@$this->request->query['uid'];

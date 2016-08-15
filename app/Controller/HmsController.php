@@ -2802,7 +2802,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -6641,7 +6641,10 @@ function submit_login(){
 		if(is_array($society_id)){
 				$society_id = reset($society_id); 
 			}
-			
+		if($user_type=="hm"){
+
+			$society_id=(int)$society_id;
+		}		
 
 		
 		$verify_set_new_password=(int)@$result_user[0]["user"]["verify_set_new_password"]; 
@@ -6667,7 +6670,7 @@ function submit_login(){
 		
 		$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id_and_society_id'), array('pass' => array($user_id,$society_id)));
 		
-		$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
+		$user_flat_id=@$user_flat_info[0]["user_flat"]["user_flat_id"]; 
 		$owner=@$user_flat_info[0]["user_flat"]["owner"];
 				
 		if($owner=="yes"){ $type="Owner"; }elseif($owner=="no"){ $type="Tenant"; }
@@ -6738,8 +6741,6 @@ function submit_login(){
 				}
 	
 				
-				
-				
 				if($signup_random==$password){
 					
 						$de_user_id=$this->encode($user_id,'housingmatters');
@@ -6749,7 +6750,9 @@ function submit_login(){
 				}else{
 						if(empty($next)){
 							echo $output=json_encode(array('url' => $webroot_path.'hms/dashboard','action' => 'redirect','result' => 'success'));
+							
 						}else{
+							
 							echo $output=json_encode(array('url' => $next,'action' => 'redirect','result' => 'success'));
 						}
 						
@@ -20366,6 +20369,12 @@ $this->loadmodel('society');
 $conditions=array("aprvl_status"=>1);
 $result_society=$this->society->find('all',array("conditions"=>$conditions));	
 $this->set('result_society',$result_society);	
+
+$this->loadmodel('user');
+$conditions=array("active"=>"yes");
+$result_user=$this->user->find('all',array("conditions"=>$conditions));
+$this->set("result_user",$result_user);
+
 	if($this->request->is('post')){
 		date_default_timezone_set('Asia/kolkata');
 		$date=date("d-m-Y");
@@ -20376,6 +20385,10 @@ $this->set('result_society',$result_society);
 		$wing=$this->request->data['wing_name'];
 		$flat=$this->request->data['flat_name'];
 		$owner=$this->request->data['tenant'];
+		
+		$user_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_info_via_user_id'),array('pass'=>array((int)$user_id)));
+		 $da_society_id=$user_info[0]['user']['society_id'];
+		
 			
 		if($owner=="yes"){
 			$committee=$this->request->data['committe'];
@@ -20384,7 +20397,15 @@ $this->set('result_society',$result_society);
 			$committee="no";
 			$role_new_id=4;
 		}
-	
+		
+		if(is_array($da_society_id)){
+			array_push($da_society_id,$society_id);
+			
+		}else{
+			$da_society_id=array($da_society_id,$society_id);
+			
+		}
+	pr($da_society_id);
 /*	
 	$this->loadmodel('user_role');
 	$auto_id=$this->autoincrement('user_role','auto_id');

@@ -6,7 +6,7 @@ Multi Society Enrollment
 
 <div class="portlet-body" style="padding:10px;";>
 <!--BEGIN TABS-->
-	<!--<div class="tabbable tabbable-custom">
+	<div class="tabbable tabbable-custom">
 		<ul class="nav nav-tabs">
 			<li class="active" ><a href="multi_society_enrollment" rel='tab' >Multi Society Enrollment </a></li>
 		</ul> 
@@ -31,8 +31,17 @@ Multi Society Enrollment
 				
 				<div class="control-group" id="member_show">
 					<div class="controls">
-						<select style="font-size:16px;" id="" class="m-wrap chosen " name="user"  data-placeholder="Choose a Category"   tabindex="1">
+						<select style="font-size:16px;" id="" class="m-wrap chosen user_info" name="user"  data-placeholder="Choose a Category"   tabindex="1">
 							<option value="" >--Select member--</option>
+							<?php 
+
+								foreach ($result_user as $db) 
+								{
+								$user_id=$db['user']["user_id"];
+								$user_name=$db['user']["user_name"];
+								?>
+								<option value="<?php echo $user_id; ?>"><?php echo $user_name; ?></option>
+							<?php } ?>
 						</select>
 					</div>
 				</div>
@@ -151,6 +160,10 @@ $(document).ready(function(){
 	});
 	
 	$(".change_society").change(function(){
+		wing_change();
+	});	
+	
+/*	$(".change_society").change(function(){
 		var society_id=$(this).val();
 		//alert(society_id);
 		$.ajax({
@@ -160,7 +173,7 @@ $(document).ready(function(){
 			wing_change();
 		}); 
 		
-	});
+	}); */
 	
 	$(".wing_select").die().live("change",function(){
 		flat_society_wise();

@@ -124,8 +124,7 @@ $(document).ready(function(){
 				   success: function(data){
 					
 					   var obj = jQuery.parseJSON(data);
-					   
-					   if(obj.result=="success"){
+					     if(obj.result=="success"){
 						   $("#result").removeClass("alert alert-error").addClass("alert alert-success").html("Redirecting...");
 						   window.location.href = obj.url;
 					   }

@@ -285,7 +285,7 @@ $("#menus_area>li").live('click',function(e){
 				$profile_pic=@$user_info[0]["user"]["profile_pic"];
 				$g_profile_pic=@$user_info[0]["user"]["g_profile_pic"];
 				$f_profile_pic=@$user_info[0]["user"]["f_profile_pic"];
-				
+				$da_society_id=@$user_info[0]["user"]["society_id"];
 			
 			if($user_type=="third_party" or $user_type=="member" or $user_type=="family_member"){
 				
@@ -389,6 +389,9 @@ $("#menus_area>li").live('click',function(e){
 					 $hms_user_right=@$this->requestAction(array('controller' => 'Fns', 'action' => 'hm_users_right'), array('pass' => array($s_user_id)));
 					 if($user_type=="hm_child" && sizeof(@$hms_user_right)>1){ ?>
 					 <li><a href="<?php echo $webroot_path; ?>Hms/switch_society" rel='tab'><i class="fa fa-home" aria-hidden="true"></i> Switch Society</a></li>
+					 <?php } ?>
+					<?php  if(sizeof(@$da_society_id)>1){ ?>
+					 <li><a href="<?php echo $webroot_path; ?>Hms/switch_society_member" rel='tab'><i class="fa fa-home" aria-hidden="true"></i> Switch Society </a></li>
 					 <?php } ?>
 					  <li><a href="<?php echo $webroot_path; ?>Hms/change_new_password" rel='tab'><i class="fa fa-unlock-alt"></i> Change Password</a></li>
                      <li class="divider"></li>

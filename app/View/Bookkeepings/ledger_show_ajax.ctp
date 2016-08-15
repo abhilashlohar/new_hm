@@ -491,7 +491,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 		
 		}elseif($table_name=="opening_balance"){
 			$source="Opening Balance";
-			$description='principle arrears';
+			$description='Opening balance migrated';
 		
 		 if($subledger_id != 0)
 		{

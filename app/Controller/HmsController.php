@@ -445,7 +445,7 @@ function change_role_member(){
 			
 			$auto_id= (int)$this->request->data['role_change'];
 			$this->loadmodel('user_role');
-			$this->user_role->updateAll(array("default"=>""),array("user_id"=>$s_user_id));
+			$this->user_role->updateAll(array("default"=>""),array("user_id"=>$s_user_id,"society_id"=>$s_society_id));
 			$this->user_role->updateAll(array("default"=>"yes"),array("auto_id"=>$auto_id));
 			
 			$this->loadmodel('user_role');
@@ -1570,11 +1570,11 @@ function final_import_user_enrollment(){
 			$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$s_society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no','owner'=>$type));
 			
 			$auto_role_id=$this->autoincrement('user_role','auto_id');
-			$this->user_role->saveAll(array('auto_id'=>$auto_role_id,'user_id'=>$i,'role_id'=>$role_new_id,'default'=>'yes'));
+			$this->user_role->saveAll(array('auto_id'=>$auto_role_id,'user_id'=>$i,'role_id'=>$role_new_id,'default'=>'yes','society_id'=>$s_society_id));
 			
 			if($committee=="yes"){
 				$auto_role_id=$this->autoincrement('user_role','auto_id');
-				$this->user_role->saveAll(array('auto_id'=>$auto_role_id,'user_id'=>$i,'role_id'=>2));
+				$this->user_role->saveAll(array('auto_id'=>$auto_role_id,'user_id'=>$i,'role_id'=>2,'society_id'=>$s_society_id));
 			}
 			if($owner=="yes"){
 				$this->loadmodel('ledger_sub_account');
@@ -2802,7 +2802,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -6635,10 +6635,15 @@ function submit_login(){
 	$result_user=$this->user->find('all',array('conditions'=>$conditions));
 	if(sizeof($result_user)==1){
 		$user_id=(int)$result_user[0]["user"]["user_id"];
-		$society_id=(int)@$result_user[0]["user"]["society_id"];
+		$society_id=@$result_user[0]["user"]["society_id"];
 		$user_type=@$result_user[0]["user"]["user_type"];
 		$signup_random=@$result_user[0]["user"]["signup_random"];
+		if(is_array($society_id)){
+				$society_id = reset($society_id); 
+			}
 			
+
+		
 		$verify_set_new_password=(int)@$result_user[0]["user"]["verify_set_new_password"]; 
 		
 		
@@ -6660,7 +6665,8 @@ function submit_login(){
 				$this->Cookie->delete('password');
 			}
 		
-		$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));
+		$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id_and_society_id'), array('pass' => array($user_id,$society_id)));
+		
 		$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
 		$owner=@$user_flat_info[0]["user_flat"]["owner"];
 				
@@ -6696,7 +6702,7 @@ function submit_login(){
 				
 				if($user_type=="third_party" or $user_type=="member" or $user_type=="family_member"){
 					
-					 $role_id=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id'), array('pass' => array($user_id)));
+					$role_id=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id_and_society_id'), array('pass' => array($user_id,$society_id))); 
 					$this->Session->write('role_id', $role_id);
 				
 				if(empty($role_id) || $role_id==""){
@@ -8489,6 +8495,19 @@ function dashboard(){
 		
 	
 	/*
+		user role table to put society id for all entry
+		
+		$this->loadmodel('user_role');
+		$result_user_role=$this->user_role->find('all');
+		foreach($result_user_role as $data){
+			$auto_id=(int)$data['user_role']['auto_id'];
+			$user_id=(int)$data['user_role']['user_id'];
+			$this->loadmodel('user');
+		    $result_user=$this->user->find('all',array('conditions'=>array('user_id'=>$user_id)));
+			$society_id=(int)$result_user[0]['user']['society_id'];
+			$this->user_role->updateAll(array("society_id"=>$society_id),array("auto_id"=>$auto_id));
+		} 
+	
 	$this->loadmodel('regular_bill');
 	$conditions=array("start_date" => 1459449000,'society_id'=>8);
 	$regular_bills = $this->regular_bill->find('all',array('conditions'=>$conditions));
@@ -12148,10 +12167,10 @@ $this->user->saveAll(array('user_id' => $i, 'user_name' => $user_name,'email' =>
 
 $this->loadmodel('user_role');
 $auto_id=$this->autoincrement('user_role','auto_id');
-$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => $role_new_id,'default'=>'yes'));
+$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => $role_new_id,'default'=>'yes','society_id' => $society_id));
 if($committee=="yes"){
 	$auto_id=$this->autoincrement('user_role','auto_id');
-	$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => 2));
+	$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => 2,'society_id' => $society_id));
 }
 
 
@@ -14023,14 +14042,14 @@ function user_assign_role_auto_save($chk=null,$role_id=null,$user_id=null){
 					if($default_count>0){ $default="" ; }else{  $default="yes" ; }
 					$this->loadmodel('user_role');
 					$auto_id=$this->autoincrement('user_role','auto_id');
-					$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$user_id,'role_id'=>$role_id,"default"=>$default));	
+					$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$user_id,'role_id'=>$role_id,"default"=>$default,'society_id'=>$s_society_id));	
 				
 			}
 		
 	}else{
 		
 		$this->loadmodel('user_role');
-		$this->user_role->deleteAll(array('user_id'=>$user_id,'role_id'=>$role_id));
+		$this->user_role->deleteAll(array('user_id'=>$user_id,'role_id'=>$role_id,'society_id'=>$s_society_id));
 		
 	}
 	
@@ -14051,16 +14070,18 @@ $this->set('user_id',$user_id);
 
 function user_role($role_id,$user_id)
 {
+$s_society_id=$this->Session->read('hm_society_id');	
 $this->loadmodel('user_role');
-$conditions=array("user_id" => $user_id, "role_id" => $role_id); 
+$conditions=array("user_id" => $user_id, "role_id" => $role_id,"society_id"=>$s_society_id); 
 $result=$this->user_role->find('all',array('conditions'=>$conditions)); 
 return $n=sizeof($result);        
 }
 
 function user_role_default_find($user_id)
 {
+$s_society_id=$this->Session->read('hm_society_id');
 $this->loadmodel('user_role');
-$conditions=array("user_id" => $user_id, "default" =>"yes"); 
+$conditions=array("user_id" => $user_id, "default" =>"yes","society_id"=>$s_society_id); 
 $result=$this->user_role->find('all',array('conditions'=>$conditions)); 
 return $n=sizeof($result);        
 }
@@ -20134,7 +20155,7 @@ function society_member_view(){
 		}
 		
 		$this->loadmodel('user_role');
-		$conditions=array("user_id"=>$user_id);
+		$conditions=array("user_id"=>$user_id,"society_id"=>$s_society_id);
 		$user_role_info=$this->user_role->find('all',array('conditions'=>$conditions));
 		$roles=array(); $count_member_owner=0;
 		$count_member_tenant=0; $count_member_family=0;$count_member_family_owner=0;$count_member_family_tenant=0;
@@ -20303,7 +20324,7 @@ $arranged_users=array();
 		}
 		
 		$this->loadmodel('user_role');
-		$conditions=array("user_id"=>$user_id);
+		$conditions=array("user_id"=>$user_id,"society_id"=>$s_society_id);
 		$user_role_info=$this->user_role->find('all',array('conditions'=>$conditions));
 		$roles=array();
 		foreach($user_role_info as $user_role){
@@ -20339,133 +20360,74 @@ if($this->RequestHandler->isAjax()){
 		$this->layout='session';
 	}
 $this->ath();	
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
 	
 $this->loadmodel('society');
-$result=$this->society->find('all');	
-$this->set('result_society',$result);	
-	if($this->request->is('post')) 
-	{
+$conditions=array("aprvl_status"=>1);
+$result_society=$this->society->find('all',array("conditions"=>$conditions));	
+$this->set('result_society',$result_society);	
+	if($this->request->is('post')){
 		date_default_timezone_set('Asia/kolkata');
 		$date=date("d-m-Y");
 		$time=date('h:i:a',time());
-		$society_id=(int)$this->request->data['society'];
-		$wing=(int)$this->request->data['wing'];
-		$flat=(int)$this->request->data['flat'];
-		//$residing=(int)$this->request->data['residing'];
-		$tenant=(int)$this->request->data['tenant'];
-		if($tenant==1)
-		{
-		 $committee=(int)$this->request->data['committe'];
-		}
-		else
-		{
-		 $committee=2;
-		}
 		
-		$this->loadmodel('user');
-		$conditions=array('user_id'=>$s_user_id);
-		$result_user=$this->user->find('all',array('conditions'=>$conditions));
-		
-		foreach($result_user as $data)
-		{
-			$user_name=$data['user']['user_name'];
-			$login_id=(int)$data['user']['login_id'];
-			$email=$data['user']['email'];
-			$mobile=$data['user']['mobile'];
+		$society_id=$this->request->data['society'];
+		$user_id=$this->request->data['user'];
+		$wing=$this->request->data['wing_name'];
+		$flat=$this->request->data['flat_name'];
+		$owner=$this->request->data['tenant'];
+			
+		if($owner=="yes"){
+			$committee=$this->request->data['committe'];
+			$role_new_id=3;
+		}else{
+			$committee="no";
+			$role_new_id=4;
 		}
-		 $wing_flat=$this->wing_flat($wing,$flat);
 	
-$i=$this->autoincrement('user_temp','user_temp_id');
-$this->loadmodel('user_temp');
-$this->user_temp->save(array('user_temp_id'=>$i,'user_name'=>$user_name,'email'=>$email,'mobile'=>$mobile,'password'=>'',"society_id" => $society_id,"committee" => $committee,'tenant' => $tenant, 'wing' => $wing, 'flat' => $flat,"role"=>2,"complete_signup"=>1,'reject'=>0,'login_id'=>$login_id,'date'=>$date,'time'=>$time,'multiple_society'=>1));
-if($tenant==1)
-{
-$owner="Yes";
-}
-else
-{
-$owner="No";
-}	
-
-$result_society=$this->society_name($society_id);
-foreach($result_society as $data)
-{
-	 $da_user_id=$data['society']['user_id'];
-	  $society_name3=$data['society']['society_name'];
+/*	
+	$this->loadmodel('user_role');
+	$auto_id=$this->autoincrement('user_role','auto_id');
+	$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $user_id,'role_id' =>$role_new_id,'default'=>'yes','society_id' => $society_id));
 	
-}
-$result_user=$this->profile_picture($da_user_id);
-foreach($result_user as $data1)
-{
-	 $to=$data1['user']['email'];
+	if($committee=="yes"){
+		$auto_id=$this->autoincrement('user_role','auto_id');
+		$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $user_id,'role_id' => 2,'society_id' => $society_id));
+	}	
 	
-}
-
-
-@$ip=$this->hms_email_ip();	
-$message_web="<div>
-<img src='$ip".$this->webroot."/as/hm/hm-logo.png'/><span  style='float:right; margin:2.2%;'>
-<span class='test' style='margin-left:5px;'><a href='https://www.facebook.com/HousingMatters.co.in' target='_blank' ><img src='$ip".$this->webroot."/as/hm/fb.png'/></a></span>
-<a href='#' target='_blank'><img src='$ip".$this->webroot."/as/hm/tw.png'/></a><a href'#'><img src='$ip".$this->webroot."/as/hm/ln.png'/ class='test' style='margin-left:5px;'></a></span>
-
-</br><p>Dear Administrator,</p>
-One new user request in your society has been received for your approval.<br/><br/>
-<table  cellpadding='10' width='100%;' border='1' bordercolor='#e1e1e1'  >
-<tr class='tr_heading' style='background-color:#00A0E3;color:white;'>
-<td>Flat</td>
-<td>Name</td>
-<td>Mobile</td>
-<td>Owner</td>
-</tr>
-<tr class='tr_content' style=background-color:#E9E9E9;'>
-<td>$wing_flat</td>
-<td>$user_name</td>
-<td>$mobile</td>
-<td>$owner</td>
-</tr>
-</table>
-<div>
-<p>Kindly log into <a href='http://www.housingmatters.co.in'> HousingMatters portal </a> and review </p>
-<p>the request under 'Admin -> Resident Approve' for further action at your end.</p><br/>
-For any assistance, please email us on support@housingmatters.in<br/><br/>
-Thank you.<br/>
-HousingMatters (Support Team)<br/><br/>
-www.housingmatters.co.in
-</div >
-</div>";
-
-$from_name="HousingMatters";
-$reply="support@housingmatters.in";
-$this->loadmodel('email');
-$conditions=array("auto_id" => 4);
-$result_email = $this->email->find('all',array('conditions'=>$conditions));
-foreach ($result_email as $collection) 
-{
-$from=$collection['email']['from'];
-}
-$subject="[$society_name3]- New User Request for approval";
-$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);	
 	
-?>
-<!----alert-------------->
-<div class="modal-backdrop fade in"></div>
-<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-<div class="modal-body" style="font-size:16px;">
- Your request is sent for approval to Society Administrator.<br/>
-</div> 
-<div class="modal-footer">
-<a href="dashboard" class="btn green">OK</a>
-</div>
-</div>
-<!----alert-------------->
-<?php	
+	$user_flat_id=$this->autoincrement('user_flat','user_flat_id');
+	$this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$user_id,'society_id'=>$society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no','owner'=>$owner));
 	
+	if($owner=="yes"){
+		$this->loadmodel('ledger_sub_account');
+		$j=$this->autoincrement('ledger_sub_account','auto_id');
+		$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$name,'society_id' => $society_id,'user_flat_id'=>$user_flat_id,'exited'=>'no','user_id' => $user_id));
+	}
+	*/
+		echo"submit"; exit;
 	}
 	
 }
 
+function society_wise_member_list($society_id=null,$type=null,$wing=null){
+	
+$this->set("type",$type);	
+$this->loadmodel('user');
+$conditions=array("society_id"=>(int)$society_id,"active"=>"yes");
+$result_user=$this->user->find('all',array("conditions"=>$conditions));
+$this->set("result_user",$result_user);
+
+$this->loadmodel('wing');
+$conditions=array("society_id"=>(int)$society_id);
+$result_wing=$this->wing->find('all',array("conditions"=>$conditions));
+$this->set("result_wing",$result_wing);
+
+$this->loadmodel('flat');
+$conditions=array("society_id"=>(int)$society_id,"wing_id"=>(int)$wing);
+$result_flat=$this->flat->find('all',array("conditions"=>$conditions));
+$this->set("result_flat",$result_flat);
+
+}
 
 ////////////////////////////////////////////////////////
 
@@ -20605,11 +20567,11 @@ $this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email' => $ema
  
 $this->loadmodel('user_role');
 $auto_id=$this->autoincrement('user_role','auto_id');
-$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' =>$role_new_id,'default'=>'yes'));
+$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' =>$role_new_id,'default'=>'yes','society_id' => $society_id));
 
 if($committee=="yes"){
 $auto_id=$this->autoincrement('user_role','auto_id');
-$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => 2));
+$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $i,'role_id' => 2,'society_id' => $society_id));
 }
 
 
@@ -27311,11 +27273,11 @@ $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$s_society_id,'wing'=>$wing,'flat'=>$flat,'exited'=>'no','owner'=>$type));
 
 $auto_id=$this->autoincrement('user_role','auto_id');
-$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>$role_new_id,'default'=>'yes'));	 
+$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>$role_new_id,'default'=>'yes','society_id'=>$s_society_id));	 
  
  if($committee==1){
 			$auto_id=$this->autoincrement('user_role','auto_id');
-			$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>2));
+			$this->user_role->saveAll(array('auto_id'=>$auto_id,'user_id'=>$i,'role_id'=>2,'society_id'=>$s_society_id));
 	}
 
 
@@ -29018,6 +28980,11 @@ function menus_as_per_user_rights(){
 			</a>					
 		</li>
 		<li>
+			<a href="<?php echo $webroot_path; ?>Hms/multi_society_enrollment">
+			<i class="icon-home"></i>Register more society
+			</a>					
+		</li>
+		<li>
 			<a href="<?php echo $webroot_path; ?>app/webroot/backup_db.php">
 			<i class="icon-home"></i>Backup
 			</a>					
@@ -30036,6 +30003,38 @@ function switch_society(){
 	$this->set("hms_rights",$hms_rights);
 }
 
+
+function switch_society_member(){
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	$this->ath();
+	$s_user_id=$this->Session->read('hm_user_id'); 
+	$s_society_id = $this->Session->read('hm_society_id');
+	$this->set("s_user_id",$s_user_id);
+	$this->set("s_society_id",$s_society_id);
+	
+	if(isset($this->request->data['submit'])){ 
+		$society_id=(int)$this->request->data["society_id"];
+		$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id_and_society_id'), array('pass' => array($s_user_id,$society_id)));
+		$user_flat_id=$user_flat_info[0]["user_flat"]["user_flat_id"]; 
+		$role_id=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id_and_society_id'), array('pass' => array($s_user_id,$society_id))); 
+		$this->Session->write('role_id', $role_id);
+		$this->Session->write('hm_user_id', $s_user_id);
+		$this->Session->write('hm_user_flat_id', $user_flat_id);
+		$this->Session->write('hm_society_id', $society_id);
+		$this->redirect(array('action' => 'Dashboard'));
+	}
+	
+	$this->loadmodel('user');
+	$conditions =array('user_id' =>(int)$s_user_id);
+	$result_user=$this->user->find('all',array('conditions'=>$conditions));
+	$result_society=$result_user[0]['user']['society_id'];
+	$this->set("result_society",$result_society);
+	
+}
 
 
 }

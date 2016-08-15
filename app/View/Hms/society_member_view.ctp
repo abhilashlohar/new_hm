@@ -17,7 +17,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<span class="tex-col"> Tenant family member </span> - <span id="tenant_family"> 0 </span> |
 	
 	<span style="color:red; font-size:10px;"><i class=" icon-star"></i></span> <span class="tex-col"> Resident </span> -  <span id="resident">  0 </span> |
-	<span style="color:red; font-size:10px;" > </span><span class="tex-col"> Awaiting User Validation </span> - <span id="awa_count"> 0 </span>  
+	<span class="tex-col"> Awaiting User Validation </span> - <span id="awa_count"> 0 </span> 
+	&nbsp;
 	</div>
 	<a href="society_member_excel" class="blue mini btn" download="download"><i class="fa fa-file-excel-o"></i></a> 
 

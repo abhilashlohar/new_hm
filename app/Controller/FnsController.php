@@ -24,7 +24,7 @@ function find_out_role_assign_member($role_id){
 		}
 		
 		$this->loadmodel('user_role');
-		$conditions=array('role_id'=>(int)$role_id);
+		$conditions=array('role_id'=>(int)$role_id,'society_id'=>$s_society_id);
 		$role_info=$this->user_role->find('all',array('conditions'=>$conditions));
 	
 		foreach($role_info as $data){
@@ -41,9 +41,16 @@ function find_out_role_assign_member($role_id){
 	return $res;
 }
 
-function user_flat_info_via_user_id($user_id){
+function user_flat_info_via_user_id_and_society_id($user_id,$society_id){
 	$this->loadmodel('user_flat');
-	$conditions=array("user_id" =>$user_id);
+	$conditions=array("user_id" =>$user_id,"society_id"=>$society_id);
+	return $this->user_flat->find('all',array('conditions'=>$conditions));
+}
+
+function user_flat_info_via_user_id($user_id){
+	$s_society_id=$this->Session->read('hm_society_id');
+	$this->loadmodel('user_flat');
+	$conditions=array("user_id" =>$user_id,"society_id"=>$s_society_id);
 	return $this->user_flat->find('all',array('conditions'=>$conditions));
 }
 function user_profile_info_via_user_id($user_id){
@@ -123,17 +130,25 @@ function fetch_user_type_via_user_id($user_id){
 }
 
 function fetch_all_role_via_user_id($user_id){
-	
+	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('user_role');
-	$conditions=array('user_id'=>$user_id);
+	$conditions=array('user_id'=>$user_id,'society_id'=>$s_society_id);
 	return $role_info=$this->user_role->find('all',array('conditions'=>$conditions));
 	
 }
 
+function fetch_default_role_via_user_id_and_society_id($user_id,$society_id){
+	
+	$this->loadmodel('user_role');
+	$conditions=array('user_id'=>$user_id,'default'=>'yes','society_id'=>$society_id);
+	$role_info=$this->user_role->find('all',array('conditions'=>$conditions));
+	return @$role_info[0]["user_role"]["role_id"];
+}
 
 function fetch_default_role_via_user_id($user_id){
+	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('user_role');
-	$conditions=array('user_id'=>$user_id,'default'=>'yes');
+	$conditions=array('user_id'=>$user_id,'default'=>'yes','society_id'=>$s_society_id);
 	$role_info=$this->user_role->find('all',array('conditions'=>$conditions));
 	return @$role_info[0]["user_role"]["role_id"];
 }
@@ -492,7 +507,7 @@ function default_role_name_via_user_id($user_id){
 	$user_type=$user_info[0]["user"]["user_type"]; 
 	if($user_type=="third_party" or $user_type=="member" or $user_type=="family_member"){
 		$this->loadmodel('user_role');
-		$conditions=array("user_id" => $user_id,"default"=>"yes");
+		$conditions=array("user_id" => $user_id,"default"=>"yes","society_id"=>$s_society_id);
 		$result=$this->user_role->find('all',array('conditions'=>$conditions));
 		@$role_id=@$result[0]["user_role"]["role_id"];
 		
@@ -1819,7 +1834,7 @@ function sending_option_results($send_to=null,$details=null){
 			foreach($details as $role){
 				if($role!="resident" and $role!="resident_family"){
 					$this->loadmodel('user_role');
-					$conditions=array("user_id"=>$user_id,"role_id"=>(int)$role);
+					$conditions=array("user_id"=>$user_id,"role_id"=>(int)$role,"society_id"=>$s_society_id);
 					$count_role=$this->user_role->find('count',array('conditions'=>$conditions));
 					if($count_role==1){
 						$arranged_array[$user_id]=array("email"=>$email,"mobile"=>$mobile,"user_name"=>$user_name);

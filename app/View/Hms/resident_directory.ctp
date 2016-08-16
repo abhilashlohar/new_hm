@@ -93,7 +93,7 @@ foreach($arranged_users as $user_id=> $user_info){
 						$hobbies=implode(', ',$hobbies_name);
 						
 			 }	
-			 
+		 $b_group=''; 
 	    if($blood_group==1){ $b_group="A+"; }
 		if($blood_group==2){ $b_group="B+"; }
 		if($blood_group==3){ $b_group="AB+"; }

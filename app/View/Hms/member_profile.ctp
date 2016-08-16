@@ -273,6 +273,20 @@ $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' =
 				</td>
 
 			</tr>
+			
+			<tr>
+				<td width="20%">
+				</td>	
+				<td>
+					<p style=" font-size:14px; color:#666;">Blood Group:</p>
+				</td>
+				<td width="20%">
+				</td>
+				<td class="" width="30%">
+					<?php echo $hobbies; ?>
+				</td>
+
+			</tr>
 
 			<?php if(@$medical_pro==1){ ?>
 			<tr>

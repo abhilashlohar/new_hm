@@ -214,7 +214,7 @@ $(document).ready(function(){
 			
 				if(result=="false"){ 
 					var allow="no";
-					$("#error").html('This member is already exist');
+					$("#error").html('This member is already exists');
 				}else{
 					$("#error").html('');
 				}

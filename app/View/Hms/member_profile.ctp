@@ -29,6 +29,8 @@ $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' =
 	$per_address=@$result_user_profile[0]['user_profile']['per_address'];
 	$com_address=@$result_user_profile[0]['user_profile']['comm_address'];
 	$hobbies=@$result_user_profile[0]['user_profile']['hobbies'];
+	$blood_group=@$result_user_profile[0]['user_profile']['blood_group'];
+	
 	$medical_pro = @$result_user_profile[0]['user_profile']['medical_pro'];
 		if($medical_pro==1){ $medical="Yes"; }
 		if($medical_pro==2){ $medical="No"; }
@@ -56,7 +58,15 @@ $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' =
 		if($da_dob==4){ $age_group="45-54"; }
 		if($da_dob==5) { $age_group="55-64"; }
 		if($da_dob==6){ $age_group="65+"; }
-		
+			
+		if($blood_group==1){ $b_group="A+"; }
+		if($blood_group==2){ $b_group="B+"; }
+		if($blood_group==3){ $b_group="AB+"; }
+		if($blood_group==4){ $b_group="O+"; }
+		if($blood_group==5){ $b_group="A-"; }
+		if($blood_group==6){ $b_group="B-"; }
+		if($blood_group==7){ $b_group="AB-"; }
+		if($blood_group==8){ $b_group="O-"; }
 		if($email_privacy=="Private"){ 
 			if($user_id!=$s_user_id){
 				$email="*";
@@ -283,7 +293,7 @@ $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' =
 				<td width="20%">
 				</td>
 				<td class="" width="30%">
-					<?php echo $hobbies; ?>
+					<?php echo @$b_group; ?>
 				</td>
 
 			</tr>

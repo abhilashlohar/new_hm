@@ -83,7 +83,7 @@ foreach($arranged_users as $user_id=> $user_info){
 		
 	$medical_pro=@$result_user_profile[0]['user_profile']['medical_pro'];
 	$hobbies=@$result_user_profile[0]['user_profile']['hobbies'];
-	
+	$blood_group=@$result_user_profile[0]['user_profile']['blood_group'];
 		if(!empty($hobbies)){
 					$hobbies_name=null;
 					foreach($hobbies as $data){
@@ -93,7 +93,16 @@ foreach($arranged_users as $user_id=> $user_info){
 						$hobbies=implode(', ',$hobbies_name);
 						
 			 }	
-	
+			 
+	    if($blood_group==1){ $b_group="A+"; }
+		if($blood_group==2){ $b_group="B+"; }
+		if($blood_group==3){ $b_group="AB+"; }
+		if($blood_group==4){ $b_group="O+"; }
+		if($blood_group==5){ $b_group="A-"; }
+		if($blood_group==6){ $b_group="B-"; }
+		if($blood_group==7){ $b_group="AB-"; }
+		if($blood_group==8){ $b_group="O-"; }
+		
 	foreach($wing_flats as $user_flat_id=>$wing_flat){ $cou++ ; ?>
 	
 	<div class="r_d">
@@ -121,6 +130,7 @@ foreach($arranged_users as $user_id=> $user_info){
 						 <br>
 						<span style="font-size:14px;"><?php echo $wing_flat; ?></span><br>
 						<span style="font-size:14px;display:none;"><?php echo $hobbies; ?></span>
+						<span style="font-size:14px;display:none;"><?php echo @$b_group; ?></span>
 					</div>
 					<?php 
 					if($medical_pro==1){ ?>

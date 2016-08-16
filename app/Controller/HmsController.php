@@ -2772,8 +2772,8 @@ function content_check_des()
 
 function ath()
 {
-$hm_user_flat_id=$this->Session->read('hm_user_flat_id');
-if(empty($hm_user_flat_id))
+ $hm_user_id=$this->Session->read('hm_user_id'); 
+if(empty($hm_user_id))
 {
 $this->Session->destroy();
  $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -2802,7 +2802,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -20380,15 +20380,15 @@ $this->set("result_user",$result_user);
 		$date=date("d-m-Y");
 		$time=date('h:i:a',time());
 		
-		$society_id=$this->request->data['society'];
-		$user_id=$this->request->data['user'];
-		$wing=$this->request->data['wing_name'];
-		$flat=$this->request->data['flat_name'];
+		$society_id=(int)$this->request->data['society'];
+		$user_id=(int)$this->request->data['user'];
+		$wing=(int)$this->request->data['wing_name'];
+		$flat=(int)$this->request->data['flat_name'];
 		$owner=$this->request->data['tenant'];
 		
 		$user_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_info_via_user_id'),array('pass'=>array((int)$user_id)));
 		 $da_society_id=$user_info[0]['user']['society_id'];
-		
+		 $name=$user_info[0]['user']['user_name'];
 			
 		if($owner=="yes"){
 			$committee=$this->request->data['committe'];
@@ -20405,15 +20405,16 @@ $this->set("result_user",$result_user);
 			$da_society_id=array($da_society_id,$society_id);
 			
 		}
-	pr($da_society_id);
-/*	
+	
+	$this->loadmodel('user');
+	$this->user->updateAll(array("society_id"=>$da_society_id),array('user_id'=>$user_id));
 	$this->loadmodel('user_role');
 	$auto_id=$this->autoincrement('user_role','auto_id');
 	$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $user_id,'role_id' =>$role_new_id,'default'=>'yes','society_id' => $society_id));
 	
 	if($committee=="yes"){
 		$auto_id=$this->autoincrement('user_role','auto_id');
-		$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $user_id,'role_id' => 2,'society_id' => $society_id));
+		$this->user_role->saveAll(array('auto_id' => $auto_id, 'user_id' => $user_id,'role_id' => 2,'society_id' => $society_id,'default'=>''));
 	}	
 	
 	
@@ -20425,10 +20426,21 @@ $this->set("result_user",$result_user);
 		$j=$this->autoincrement('ledger_sub_account','auto_id');
 		$this->ledger_sub_account->save(array('auto_id'=>$j,'ledger_id'=>34,'name'=>$name,'society_id' => $society_id,'user_flat_id'=>$user_flat_id,'exited'=>'no','user_id' => $user_id));
 	}
-	*/
-		echo"submit"; exit;
-	}
+		
+ }
 	
+}
+
+function society_member_valid($society_id=null,$user_id=null){
+	
+	$this->loadmodel('user');
+	$conditions=array("user_id"=>(int)$user_id,"society_id"=>(int)$society_id);
+	$result_user=$this->user->find('count',array("conditions"=>$conditions));
+	if($result_user==1){
+		echo"false";
+	}else{
+		echo"true";
+	}
 }
 
 function society_wise_member_list($society_id=null,$type=null,$wing=null){

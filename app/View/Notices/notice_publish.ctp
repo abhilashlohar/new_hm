@@ -1,5 +1,8 @@
 <?php
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
+
+ $result_role_security_dashboard_sub=$this->requestAction(array('controller' => 'hms', 'action' => 'role_security_dashboard_sub'), array('pass' => array($s_society_id,$s_role_id,2,5)));
+pr($result_role_security_dashboard_sub);
 ?>
 
 
@@ -112,7 +115,12 @@ foreach($result_notice_publish as $data){
 				{ ?>
 				<a href='notice_move_archive/<?php echo $notice_id; ?>' class='btn mini tooltips' data-placement="bottom" data-original-title="Send to Archives " style='background-color:#FFA500;' > <i class=' icon-move'></i></a>
 			<?php } ?>
-			<span id="rep<?php echo $notice_id; ?>"><a  class='btn mini red resend_notice tooltips' element_id="<?php echo $notice_id; ?>" data-placement="bottom" data-original-title="Resend Email" > <i class=' icon-envelope'></i></a></span>
+			
+				<?php if(sizeof($result_role_security_dashboard_sub)>0){ ?>
+
+					<span id="rep<?php echo $notice_id; ?>"><a  class='btn mini red resend_notice tooltips' element_id="<?php echo $notice_id; ?>" data-placement="bottom" data-original-title="Resend Email" > <i class=' icon-envelope'></i></a></span>
+
+				<?php } ?>
 				</td>
 				
 				

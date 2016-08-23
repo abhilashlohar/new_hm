@@ -2693,7 +2693,7 @@ function webroot_path() {
 function cronjob()
 {
 
-	 $this->layout=null;
+	$this->layout=null;
 	$this->loadmodel('email_requests');
 	$conditions=array('flag'=>0);
 	$result1_email=$this->email_requests->find('all',array('conditions'=>$conditions,'limit'=>2));
@@ -2802,7 +2802,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 

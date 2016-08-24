@@ -2693,7 +2693,7 @@ function webroot_path() {
 function cronjob()
 {
 
-	$this->layout=null;
+	 $this->layout=null;
 	$this->loadmodel('email_requests');
 	$conditions=array('flag'=>0);
 	$result1_email=$this->email_requests->find('all',array('conditions'=>$conditions,'limit'=>2));
@@ -7389,6 +7389,15 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 $this->set('webroot_path',$webroot_path);	
 $user=(int)$this->request->query['user'];
 $this->set('user_id', $user);
+$this->loadmodel('user_temp');
+$conditions=array("user_temp_id" => $user);
+$result_user_temp = $this->user_temp->find('all',array('conditions'=>$conditions));
+foreach ($result_user_temp as $collection) 
+{
+$email_temp=$collection['user_temp']['email'];
+$mobile_temp=$collection['user_temp']['mobile'];
+$user_name_temp=$collection['user_temp']['user_name'];
+}
 if($this->request->is('post')) 
 {
 	$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
@@ -7472,11 +7481,53 @@ $reply="support@housingmatters.in";
 						
 								<tr>
 										<td style="padding:5px;" width="100%" align="left">
+										<span style="color:rgb(100,100,99)" align="justify"> <p align="justify">Society Name: '.$society_name.' </p> </span> 
+										</td>
+								
+								
+								</tr>
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										<span style="color:rgb(100,100,99)" align="justify"> <p align="justify">Pincode: '.$pin_code.'</p> </span> 
+										</td>
+								
+								
+								</tr>
+								
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										<span style="color:rgb(100,100,99)" align="justify"> <p align="justify">Name: '.$user_name_temp.'</p> </span> 
+										</td>
+								
+								
+								</tr>
+								
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										<span style="color:rgb(100,100,99)" align="justify"> <p align="justify">Mobile: '.$mobile_temp.'</p> </span> 
+										</td>
+								
+								
+								</tr>
+								
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										<span style="color:rgb(100,100,99)" align="justify"> <p align="justify">Email: '.$email_temp.'</p> </span> 
+										</td>
+								
+								
+								</tr>
+								
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
 										<span style="color:rgb(100,100,99)" align="justify"> <p align="justify"> New Request for Society registration into HousingMatters. Kindly approve the request. </p> </span> 
 										</td>
 								
 								
 								</tr>
+								
+								
+								
 								
 								<tr>
 									<td style="padding:5px;" width="100%" align="left">

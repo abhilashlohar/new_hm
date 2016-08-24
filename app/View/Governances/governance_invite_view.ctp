@@ -1,5 +1,7 @@
 <?php
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
+
+ $result_role_security=$this->requestAction(array('controller' => 'hms', 'action' => 'role_security_dashboard_sub'), array('pass' => array($s_society_id,$s_role_id,40,94)));
 ?>
 
 <div style="background-color:#fff;padding:10px;" class="mobile_responce">
@@ -76,7 +78,8 @@ $i++;
 	 <a href="<?php echo $webroot_path; ?>Governances/governance_invite_draft/<?php echo $gov_id; ?>" rel='tab' class="btn mini blue tooltips" data-placement="bottom" data-original-title="Draft" ><i class="icon-inbox"></i></a>
 	<?php } ?>
 	<?php if(!empty($minute_id)){ ?><a href="<?php echo $webroot_path; ?>Governances/governance_minute_view1/<?php echo $minute_id; ?>" rel='tab' class="btn mini yellow tooltips" data-placement="bottom" data-original-title="Minutes View" ><i class="icon-search"></i></a> <?php } ?>
-	<span id="rep<?php echo $gov_id; ?>"><a  class='btn mini red resend_meeting tooltips' element_id="<?php echo $gov_id; ?>" data-placement="bottom" data-original-title="Resend Email" > <i class=' icon-envelope'></i></a></span>
+	<?php if(sizeof($result_role_security)>0){ ?>
+	<span id="rep<?php echo $gov_id; ?>"><a  class='btn mini red resend_meeting tooltips' element_id="<?php echo $gov_id; ?>" data-placement="bottom" data-original-title="Resend Email" > <i class=' icon-envelope'></i></a></span> <?php } ?>
 	</td>
 <?php } ?>	
 	

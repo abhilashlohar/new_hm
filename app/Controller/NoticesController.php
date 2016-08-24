@@ -1419,7 +1419,6 @@ function notice_publish(){
 		$role_id=(int)$this->Session->read('role_id'); 
 		$this->set('s_role_id',$role_id);
 		$this->set('s_society_id',$s_society_id);
-		//$wing=$this->Session->read('wing');
 		$current_date = new MongoDate(strtotime(date("Y-m-d")));
 		$this->loadmodel('master_notice_category');
 		$this->set('result1', $this->master_notice_category->find('all'));

@@ -1248,6 +1248,9 @@ function governance_invite_view()
 	$this->check_user_privilages();
 	$s_society_id=$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');	
+	$role_id=(int)$this->Session->read('role_id'); 
+	$this->set('s_role_id',$role_id);
+	$this->set('s_society_id',$s_society_id);
 	$this->loadmodel('governance_invite');
 	$conditions=array('society_id'=>$s_society_id);
     $order=array('governance_invite.governance_invite_id'=> 'DESC');

@@ -7496,7 +7496,7 @@ $reply="support@housingmatters.in";
 								
 								<tr>
 										<td style="padding:5px;" width="100%" align="left">
-										<span style="color:rgb(100,100,99)" align="justify"> <p align="justify">Name: '.$user_name_temp.'</p> </span> 
+										<span style="color:rgb(100,100,99)" align="justify"> <p align="justify">User Name: '.$user_name_temp.'</p> </span> 
 										</td>
 								
 								

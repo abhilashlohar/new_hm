@@ -2693,25 +2693,25 @@ function webroot_path() {
 function cronjob()
 {
 
-	 $this->layout=null;
-	$this->loadmodel('email_requests');
+	$this->layout=null;
+	$this->loadmodel('email_request');
 	$conditions=array('flag'=>0);
-	$result1_email=$this->email_requests->find('all',array('conditions'=>$conditions,'limit'=>2));
+	$result1_email=$this->email_request->find('all',array('conditions'=>$conditions,'limit'=>2));
 	foreach($result1_email as $data)
 	{
-		$e_id=$data['email_requests']['e_id'];
-		$to=$data['email_requests']['to'];
-		$from=$data['email_requests']['from'];
-		$from_name=$data['email_requests']['from_name'];
-		$subject=$data['email_requests']['subject'];
-		$message_web=$data['email_requests']['message_web'];
-		$reply=$data['email_requests']['reply'];
+		$e_id=(int)$data['email_request']['e_id'];
+		$to=$data['email_request']['to'];
+		$from=$data['email_request']['from'];
+		$from_name=$data['email_request']['from_name'];
+		$subject=$data['email_request']['subject'];
+		$message_web=$data['email_request']['message_web'];
+		$reply=$data['email_request']['reply'];
 		
 		$mail_result=$this->smtpmailer($to,$from,$from_name,$subject,$message_web,$reply);
 		
 		if($mail_result = true){
-			$this->loadmodel('email_requests');
-			$this->email_requests->updateAll(array('flag'=>1),array('e_id'=>$e_id));
+			$this->loadmodel('email_request');
+			$this->email_request->updateAll(array('flag'=>1),array('e_id'=>$e_id));
 		}
 		
 	} 
@@ -2790,7 +2790,7 @@ function send_email($to,$from,$from_name,$subject,$message_web,$reply)
 {
 //$this->layout='session';
 $this->loadmodel('email_request');
-$er=$this->autoincrement('email_request','e_id');
+$er=(int)$this->autoincrement('email_request','e_id');
 $this->email_request->saveAll(array('e_id' => $er, 'to' => $to, 'from' => $from, 'from_name' => $from_name, 'subject' => $subject,'message_web' => $message_web, 'reply' => $reply, 'flag' => 0));
 }
 function logout() 
@@ -2802,7 +2802,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	//Configure::write('debug', 0);
+	Configure::write('debug', 0);
 }
 
 

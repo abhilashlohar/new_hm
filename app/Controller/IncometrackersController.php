@@ -63,6 +63,19 @@ function it_supplimentry_bill_validation($transaction_date=null,$ledger_sub_acco
 	
 }
 
+function financial_year_validation_open($transaction=null){
+$this->layout=null;
+$this->ath();
+$s_society_id = (int)$this->Session->read('hm_society_id');	
+	
+$transaction_date=date('Y-m-d',strtotime($transaction));
+$transaction_date=strtotime($transaction_date);
+$this->loadmodel('financial_year');
+$conditions =array('society_id' =>$s_society_id,'status' =>1,'financial_year.from'=>array('$lte'=>$transaction_date),'financial_year.to'=>array('$gte'=>$transaction_date));
+echo $result_financial_year=$this->financial_year->find('count',array('conditions'=>$conditions));
+
+}
+
 function regular_bill_validation($start=null,$due=null,$billing_cycle=null){
 $this->layout=null;
 $s_society_id = (int)$this->Session->read('hm_society_id');	

@@ -224,6 +224,7 @@ $(document).ready(function(){
 		}
 
 		var start_date=$('input[name="start_date"]').val();
+		var transaction_date=start_date;
 		var due_date=$('input[name="due_date"]').val();
 		start_date=start_date.split('-').reverse().join('');
 		due_date=due_date.split('-').reverse().join('');
@@ -231,7 +232,7 @@ $(document).ready(function(){
 			allow="no";
 			$('#due_date').html('Due date is small than start date');
 		}else{
-		  $('#due_date').html('');	
+		  //$('#due_date').html('');	
 		}
 		
 		if(date_valid==3){
@@ -239,9 +240,22 @@ $(document).ready(function(){
 			$('#due_date').html('Due date is Big according billing cycle');
 		}
 		else{
-			$('#due_date').html('');
+			//$('#due_date').html('');
 		}
 		
+		$.ajax({
+			url:"financial_year_validation_open/"+transaction_date, 
+			async: false,
+			success: function(data){
+			result=data;
+			}
+		});	
+		if(result==0){
+			allow="no";
+			$('#start_date').html('Financial year is not open for transaction date');
+		}else{
+			//$('#start_date').html('');
+		}
 		
 		if(allow=="no"){
 			e.preventDefault();

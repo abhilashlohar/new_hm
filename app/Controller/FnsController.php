@@ -1579,7 +1579,7 @@ if(!empty($hobbies)){ $ccc++; }
 if(!empty($contact_emergency3)){ $ccc++; }
 
 $progres=$ccc*100/10; 
-$profile_status_user=(int)@$result_user["user"]["profile_status_user"];	 
+$profile_status_user=(int)@$result_user[0]["user"]["profile_status_user"];	 
 
 if($profile_status_user==0){
 ?>
@@ -1611,7 +1611,7 @@ if($profile_status_user==0){
 $(document).ready(function() {
 	$(".close_letter").live("click",function(){
 		var user=$(this).attr("update_status");
-		 $.ajax({
+		$.ajax({
 			url: "member_update_status_profile/"+user,
 		}).done(function(response){
 			if(response=="done"){

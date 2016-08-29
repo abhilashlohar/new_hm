@@ -1611,19 +1611,14 @@ if($profile_status_user==0){
 $(document).ready(function() {
 	$(".close_letter").live("click",function(){
 		var user=$(this).attr("update_status");
-		alert(user);
-		$.ajax({
+		 $.ajax({
 			url: "member_update_status_profile/"+user,
 		}).done(function(response){
-			
 			if(response=="done"){
-				
 				$("#div_close").hide();
 			}
 			
 		});
-		
-		
 	});
 
 });

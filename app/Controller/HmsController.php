@@ -18641,8 +18641,8 @@ function profile()
  $s_society_id=$this->Session->read('hm_society_id');
  $s_user_id=$this->Session->read('hm_user_id');
 
-$r=$this->request->query('try');
-
+echo $r=$this->request->query('try');
+exit;
 $this->seen_alert(101,$s_user_id);
 $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
 

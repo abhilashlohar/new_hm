@@ -45,7 +45,7 @@ function substrwords($text, $maxchar, $end='...') {
 }
 
 
-$result_profile=$this->requestAction(array('controller' => 'Fns', 'action' => 'check_profile_update_status'));
+//$result_profile=$this->requestAction(array('controller' => 'Fns', 'action' => 'check_profile_update_status'));
 
 
 

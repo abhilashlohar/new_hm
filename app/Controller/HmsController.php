@@ -18648,14 +18648,9 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 
 if(!empty($r)){
 $this->loadmodel('user');
-$this->user->updateAll(array('profile_status'=>2),array('user_id'=>$s_user_id));
+$this->user->updateAll(array('profile_status_user'=>1),array('user_id'=>$s_user_id));
 $this->redirect(array('action' => 'profile'));
 }
-
-	
-
-
-
 			$this->loadmodel('user_flat');
 			$conditions=array('user_id'=>$s_user_id);
 			$result=$this->user_flat->find('all',array('conditions'=>$conditions));

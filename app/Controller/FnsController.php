@@ -1547,7 +1547,26 @@ function tenancy_agreement_via_user_fetch($society_id,$user_id){
 function check_profile_update_status(){
 $s_society_id=$this->Session->read('hm_society_id');	
 $s_user_id=$this->Session->read('hm_user_id');	
-/*	$ccc=0;
+$this->loadmodel('user');
+$conditions=array("user_id"=>$s_user_id,"society_id"=>$s_society_id);
+$result_user=$this->user->find('all',array('conditions'=>$conditions));
+
+$c_name = $result_user[0]['user']['user_name'];
+$c_email = $result_user[0]['user']['email'];
+$c_mobile = $result_user[0]['user']['mobile'];
+@$profile_pic = @$result_user[0]['user']['profile_pic'];
+
+$result_user_profile = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_profile_info_via_user_id'),array('pass'=>array($s_user_id)));
+$medical_pro = @$result_user_profile[0]['user_profile']['medical_pro'];
+$c_sex = (int)@$result_user_profile[0]['user_profile']['gender'];
+$da_dob=@$result_user_profile[0]['user_profile']['age'];
+$per_address=@$result_user_profile[0]['user_profile']['per_address'];	
+$com_address=@$result_user_profile[0]['user_profile']['comm_address'];
+$hobbies=@$result_user_profile[0]['user_profile']['hobbies'];
+@$blood_group=@$result_user_profile[0]['user_profile']['blood_group'];
+$contact_emergency3=@$result_user_profile[0]['user_profile']['contact_emergency'];
+				
+ $ccc=0;
 if(!empty($c_email)){ $ccc++; }
 if(!empty($c_mobile)){ $ccc++; }
 if(!empty($c_name)){ $ccc++; }
@@ -1555,20 +1574,13 @@ if(!empty($profile_pic)){ $ccc++; }
 if(!empty($c_sex)){ $ccc++; }
 if(!empty($da_dob)){ $ccc++; }
 if(!empty($per_address)){ $ccc++; }
-if(!empty($com_address)){ $ccc++;
-									}
-									if(!empty($hobbies))
-									{
-										$ccc++;
-									}
-									if(!empty($contact_emergency3))
-									{
-										$ccc++;
-									}
-						
-						$progres=$ccc*100/10;
+if(!empty($com_address)){ $ccc++; }
+if(!empty($hobbies)){ $ccc++; }
+if(!empty($contact_emergency3)){ $ccc++; }
 
-$profile_status_user=(int)@$result_user[0]["user"]["profile_status_user"];	
+$progres=$ccc*100/10; 
+$profile_status_user=(int)@$result_user["user"]["profile_status_user"];	 
+
 if($profile_status_user==0){
 ?>
 
@@ -1617,7 +1629,7 @@ $(document).ready(function() {
 });
 </script>
 <?php	
-*/	
+	
 }
 
 

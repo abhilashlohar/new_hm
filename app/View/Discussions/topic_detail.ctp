@@ -103,7 +103,7 @@ if($visible=="group_wise"){
 <div class="chat-form hide_at_print" style="margin-left: 5px;width: 94%;">
 	<form method="post" id="idForm">
 		<input type="hidden" value="<?php echo $discussion_post_id; ?>" name="post_id"/>
-		<textarea class="span12 m-wrap" type="text" name="comment_box" placeholder="Type your comments..." style="background-color:#FFF !important; resize:none;"></textarea>
+		<textarea maxlength="1000" class="span12 m-wrap" type="text" name="comment_box" placeholder="Type your comments..." style="background-color:#FFF !important; resize:none;"></textarea>
 		<div align="right">
 		<div class="pull-left" id="save_comment"></div>
 		<button type="submit" id="sub" style="margin-top:-10px;" class="btn blue icn-only tooltips" data-placement="bottom" data-original-title="Tab + Enter for post comment" >POST</button>
@@ -114,7 +114,7 @@ if($visible=="group_wise"){
 <script>
 $(document).ready(function(){
 	var nn=0;
-	function load_comments(){
+	function load_comments(){ 
 		var post_id=$("div[post_id]").attr("post_id");
 		var comment_id=$("#comments div[comment_id]:last").attr("comment_id");
 		

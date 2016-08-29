@@ -34,7 +34,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </tr>
 </table> 
 <?php if($count == 0){ ?>
-    <div align="center">
+    <div align="center" style="padding: 2px;">
     <a href="master_noc" class='btn red' role="button" rel='tab'>Non Occupancy Charges</a>
     <a href="master_noc_status" class='btn blue' role="button"  rel='tab'>Non Occupancy Status</a>
     </div>

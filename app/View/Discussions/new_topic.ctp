@@ -25,8 +25,8 @@
 				</div>
 				<div class="control-group ">
 					<div class="controls">
-					<label class="" style="font-size:14px;">Description  <span style="font-size:12px; color:#999;">(Maximum 500 characters.)</span></label>
-					<textarea class="span8 m-wrap" e_id="textarea" maxlength="500" style="background-color: #fff !important; resize:none; width:100%" name=description onkeyup=limiter()  rows="4"></textarea>
+					<label class="" style="font-size:14px;">Description  <span style="font-size:12px; color:#999;">(Maximum 1000 characters.)</span></label>
+					<textarea class="span8 m-wrap" e_id="textarea" maxlength="1000" style="background-color: #fff !important; resize:none; width:100%" name=description onkeyup=limiter()  rows="4"></textarea>
 					<label id="textarea" ></label>
 					</div>
 				</div>
@@ -117,7 +117,7 @@ $(document).ready(function(){
 	  
 	  description: {
 		required: true,
-		maxlength: 500,
+		maxlength: 1000,
 	  },
 	  file: {
 		accept: "gif,jpg,jpeg,png",
@@ -134,7 +134,7 @@ $(document).ready(function(){
 					filesize: "File size must be less than 1MB."
 				},
 				description: {
-					maxlength: "Max 500 characters allowed.",
+					maxlength: "Max 1000 characters allowed.",
 					remote:"You have enter wrong word."
 				}
 			},

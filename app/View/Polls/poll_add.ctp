@@ -96,7 +96,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 		<div class="portlet-body">
 		<!-------CONTENT--------->
 		<div class="control-group">
-		  <label class="control-label">Choices</label>
+		  <label class="control-label">Choices <i class=" icon-info-sign tooltips" data-placement="right" data-original-title="Mention the choice of answeres"> </i> </label>
 			<div id="choice_div">
 			  <div class="controls">
 				<input type="text" name="choice1" class="span10 m-wrap" placeholder="1." e_id="choice1" >

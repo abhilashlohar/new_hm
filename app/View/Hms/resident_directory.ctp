@@ -30,7 +30,7 @@ function substrwords($text, $maxchar, $end='...') {
 <div style="background-color: rgb(255, 255, 255); padding: 0px 20px; border: 1px solid rgb(233, 231, 231);">
 <table cellpadding="0" cellspacing="0" width="100%">
 	<tbody><tr>
-		<td><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-book"></i> Resident Directory </span> (<span id="show_resident">0</span>) </td>
+		<td><span style="font-size: 16px; font-weight: bold; color: rgb(83, 81, 81);"><i class="icon-book"></i> Resident Directory </span> (<span id="show_resident">0</span>) <i class=" icon-info-sign tooltips" data-placement="top" data-original-title="List of the residents"> </i></td>
 		<td align="right">
 			   <input class="m-wrap medium"  placeholder="Search:- Name,Flat,Hobbies,blood" id="search" type="text" style="margin-top: 5px; margin-bottom: 5px;">
 		</td>

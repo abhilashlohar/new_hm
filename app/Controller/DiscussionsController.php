@@ -104,7 +104,7 @@ function submit_comment(){
 	$comment_box = nl2br(wordwrap($comment, 25, " ", true));
 	$date=date("Y-m-d");
 	$time=date('h:i:a',time());
-	$comment_box=$this->insert_hyperlink_url_comment_box($comment_box);
+	//$comment_box=$this->insert_hyperlink_url_comment_box($comment_box);
 	$ip= $this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
 	$society_name= $this->requestAction(array('controller' => 'Fns', 'action' => 'society_name_via_society_id'),array('pass'=>array((int)$s_society_id)));
 	

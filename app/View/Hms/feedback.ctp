@@ -41,8 +41,8 @@
 				   </div>
 			   <div class="control-group ">
 					  <div class="controls">
-					   <label class="" style="font-size:14px;" >Subject</label>
-						 <input type="text" class="span8 m-wrap"  name="subject">
+					   <label class="" style="font-size:14px;" >Subject <i class=" icon-info-sign tooltips" data-placement="top" data-original-title="Mention the subject"> </i> <span style="font-size:12px; color:#999;">(Maximum 250 characters.)</span></label>
+						 <input type="text" class="span8 m-wrap"  name="subject" maxlength="250">
 					  </div>
 				   </div>
 							  

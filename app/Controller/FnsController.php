@@ -1548,7 +1548,11 @@ function check_profile_update_status(){
 $s_society_id=$this->Session->read('hm_society_id');	
 $s_user_id=$this->Session->read('hm_user_id');	
 $this->loadmodel('user');
-$conditions=array("user_id"=>$s_user_id,"society_id"=>$s_society_id);
+if(!empty($s_society_id)){ 
+ $conditions=array("user_id"=>$s_user_id,"society_id"=>$s_society_id);
+}else{
+ $conditions=array("user_id"=>$s_user_id);
+}
 $result_user=$this->user->find('all',array('conditions'=>$conditions));
 
 $c_name = $result_user[0]['user']['user_name'];

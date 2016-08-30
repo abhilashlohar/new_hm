@@ -2802,7 +2802,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -6628,7 +6628,7 @@ function submit_login(){
 	 
 	$this->loadmodel('user');
 		$conditions =array( '$or' => array( 
-		array("email" => $username, "password" => $password),
+		array("email" => new MongoRegex('/^' .  $username . '$/i'), "password" => $password),
 		array("mobile" => $username, "password" => $password),
 		array("mobile" => $username, "password" => (int)$password)
 	));
@@ -8458,17 +8458,7 @@ function dashboard(){
 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	
-	$d="RohitKumarJoshi";
-$this->loadmodel('user');
-$conditions=array('email' => new MongoRegex("/^$d/i"));
-
-$result_user= $this->user->find('all', array('conditions' => $conditions));
-//pr($conditions);
-//$result_user=$this->user->find('first',array('conditions' =>$conditions));
-pr($result_user);
-exit;
-
-		   
+	   
 		//////////////Help-desk  last 3 tickets///////////////// 
 		$this->loadmodel('help_desk');
 		if($role_id==1) { 

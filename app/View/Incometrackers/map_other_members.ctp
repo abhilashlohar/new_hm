@@ -38,14 +38,22 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			</thead>
 			<tr>
 				<td id="first">
-				<select class="m-wrap" name="first">
+				<select class="m-wrap first_member" name="first">
 					<option value="" style="display:none;">Select</option>
 					<?php foreach($arranged_accounts as $key=>$data){
 						echo '<option value='.$key.' >'.$data["user_name"].' ('.$data["wing_flat"].')</option>';
 					} ?>
 				</select>
 				</td>
-				<td id="second"></td>
+				<td id="second">
+				<select class="m-wrap second_member" name="second">
+					<option value="" style="display:none;">Select</option>
+					<?php foreach($arranged_accounts1 as $key=>$data){
+						echo '<option class="rem_opt" value='.$key.' >'.$data["user_name"].' ('.$data["wing_flat"].')</option>';
+					} ?>
+				</select>
+				
+				</td>
 				<td valign="top"><button type="submit" name="sub" class="btn blue" id="go">Submit</button></td>
 			</tr>
 		</table>
@@ -98,10 +106,23 @@ $(document).ready(function(){
 			$('#pp').hide();
 		});
 	
-	var sel=$("#first").html();
-	$("#second").html(sel);
+	$(".first_member").on("change",function(){	
+		var user_id =$(this).val();
+		var text2= $(this).children('option[value='+user_id+']').text();
+		alert(user_id);
+		alert(text2);
+		$("#second select").removeClass("chosen");
+		$(".second_member").children('option').show();
+		$(".second_member").children('option[value='+user_id+']').hide();
+		$(".chzn-results>li.rem_opt").show();
+		$(".chzn-results>li.rem_opt:contains("+text2+")").hide();
+	});	
+
+	
+	//var sel=$("#first").html();
+	//$("#second").html(sel);
 	$("#first select").chosen();
 	$("#second select").chosen();
-	$("#second select").attr("name","second");
+	//$("#second select").attr("name","second");
 });
 </script>

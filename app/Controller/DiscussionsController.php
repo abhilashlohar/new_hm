@@ -23,10 +23,12 @@ function insert_hyperlink_url_comment_box($text){
 	
 	$reg_exUrl = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
 	if(preg_match($reg_exUrl, $text, $url)) {
+		$text = nl2br($text);
 		 return preg_replace($reg_exUrl, '<a href="'.$url[0].'" target="_blank" rel="nofollow">'.$url[0].'</a>', $text);
 
 	} else {
-		   return $text;
+		return $text = nl2br(wordwrap($text, 25, " ", true));
+		  // return $text;
 	}
 
 }
@@ -101,10 +103,10 @@ function submit_comment(){
 	if(empty($s_user_id)){
 		exit;
 	}
-	$comment_box = nl2br(wordwrap($comment, 25, " ", true));
+	//$comment_box = nl2br(wordwrap($comment, 25, " ", true));
 	$date=date("Y-m-d");
 	$time=date('h:i:a',time());
-	//$comment_box=$this->insert_hyperlink_url_comment_box($comment_box);
+	$comment_box=$this->insert_hyperlink_url_comment_box($comment);
 	$ip= $this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
 	$society_name= $this->requestAction(array('controller' => 'Fns', 'action' => 'society_name_via_society_id'),array('pass'=>array((int)$s_society_id)));
 	

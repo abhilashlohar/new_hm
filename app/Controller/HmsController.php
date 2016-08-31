@@ -8448,6 +8448,32 @@ function dashboard(){
 	$this->ath();
 	
 
+// The Regular Expression filter
+$reg_exUrl = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
+
+// The Text you want to filter for urls
+$text = "The text you want to filter goes here.dfdsfdsffdfdfdfdfdfdfd https://app.asana.com/0/12809053797924/154762617485961 aaaaaaaaaaaaaaaaabbbbbbbbbbbbbaaaaaaa";
+
+/*
+// Check if there is a url in the text
+if(preg_match($reg_exUrl, $text, $url)) {
+pr($url);
+$text = nl2br(wordwrap($text, 25, " ", true));
+// make the urls hyper links
+ echo $t= preg_replace($reg_exUrl, '<a href="'.$url[0].'" rel="nofollow">'.$url[0].'</a>', $text);
+
+} else {
+
+// if no urls in the text just return the text
+$text = nl2br(wordwrap($text, 25, " ", true));
+echo $text;
+
+}
+	
+	exit;	
+	
+*/	
+	
 	$s_society_id = $this->Session->read('hm_society_id');
 	$profile_status_user = $this->Session->read('profile_status_user');
 	$s_user_id = $this->Session->read('hm_user_id'); 

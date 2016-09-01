@@ -202,9 +202,10 @@ $(document).ready(function() {
 			processData: false,
 			contentType: false,
 			type: 'POST',
+			cache : false,
 			dataType:'json',
 			}).done(function(response) {
-			//	alert(response);
+			//alert(response);
 			$("#output").html(response);
 			if(response.type=='approve'){
 				$(".portlet").remove();

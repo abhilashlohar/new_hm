@@ -5781,8 +5781,19 @@ function map_other_members(){
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');
 	
+	
+	if(isset($this->request->data['sub'])){
+		$first = (int)$this->request->data['first'];
+		$second = (int)$this->request->data['second'];
+		if($first!=$second){
+			$this->loadmodel('ledger_sub_account');
+			$this->ledger_sub_account->updateAll(array('representative'=>'yes','representator'=>$second),array('auto_id'=>$first));
+		}
+		
+	}
+	
 	$this->loadmodel('ledger_sub_account');
-	$conditions=array("society_id"=>$s_society_id,"exited"=>"no");
+	$conditions=array("society_id"=>$s_society_id,"exited"=>"no","representative"=>null);
 	$ledger_sub_accounts = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 	$arranged_accounts=array();
 	foreach($ledger_sub_accounts as $ledger_sub_account){
@@ -5796,15 +5807,22 @@ function map_other_members(){
 	}
 	$this->set('arranged_accounts',$arranged_accounts);
 	
-	if(isset($this->request->data['sub'])){
-		$first = (int)$this->request->data['first'];
-		$second = (int)$this->request->data['second'];
-		if($first!=$second){
-			$this->loadmodel('ledger_sub_account');
-			$this->ledger_sub_account->updateAll(array('representative'=>'yes','representator'=>$second),array('auto_id'=>$first));
-		}
-		
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("society_id"=>$s_society_id,"exited"=>"no");
+	$ledger_sub_accounts = $this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$arranged_accounts1=array();
+	foreach($ledger_sub_accounts as $ledger_sub_account){
+		$ledger_sub_account_id=$ledger_sub_account["ledger_sub_account"]["auto_id"];
+		$member_detail=$this->requestAction(array('controller'=>'Fns','action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+		$user_name = $member_detail['user_name'];
+		$wing_name = $member_detail['wing_name'];
+		$flat_name = $member_detail['flat_name'];
+		$wing_flat=$wing_name.' - '.$flat_name;
+		$arranged_accounts1[$ledger_sub_account_id]=array("user_name"=>$user_name,"wing_flat"=>$wing_flat);
 	}
+	$this->set('arranged_accounts1',$arranged_accounts1);
+	
+	
 	
 	$this->loadmodel('ledger_sub_account');
 	$conditions=array("society_id" => $s_society_id,"representative" => "yes");
@@ -7111,7 +7129,7 @@ function regular_bill_edit2($auto_id=null){
 		
 		if(sizeof(@$other_charges_array)==0){$other_charges_array=array();}
 		
-		
+		pr($other_charges_array);
 		
 		$this->loadmodel('regular_bill');
 		$this->regular_bill->updateAll(array('edited'=>"yes"),array("auto_id"=>$auto_id));
@@ -7141,11 +7159,11 @@ function regular_bill_edit2($auto_id=null){
 		}
 		
 		
-		foreach($other_charges_array as $key=>$vlaue){
+		foreach($other_charges_array as $key=>$value){
 			if(!empty($value)){
 				$this->loadmodel('ledger');
 				$auto_id=$this->autoincrement('ledger','auto_id');
-				$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => $key,"ledger_sub_account_id" => null,"debit"=>null,"credit"=>$vlaue,"table_name"=>"regular_bill","element_id"=>$reg_auto_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+				$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => $key,"ledger_sub_account_id" => null,"debit"=>null,"credit"=>$value,"table_name"=>"regular_bill","element_id"=>$reg_auto_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
 			}
 		}
 		

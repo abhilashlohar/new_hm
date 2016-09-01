@@ -127,9 +127,13 @@ $("#contact-form2").on("submit",function(e){
 	$("#can").live('click',function(){
 			$('#pp').hide();
 		});
-	
+	$(".second_member").on("change",function(){
+		$("#required_field2").html("");
+	});	
 	$(".first_member").on("change",function(){	
 		var user_id =$(this).val();
+		$("#required_field").html("");
+		
 		var text2= $(this).children('option[value='+user_id+']').text();
 		$(".second_member").children('option').show();
 		$(".second_member").children('option[value='+user_id+']').hide();

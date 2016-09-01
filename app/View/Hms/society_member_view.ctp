@@ -178,6 +178,11 @@ $(document).ready(function(){
 	setTimeout(
 	function(){
 		$("#unit_number").click();
+		var i=0;
+		$('#sample_1 tbody tr').each(function(){ 
+			i++;
+			$(this).find('td:first').text(i);
+		});
 	}, 500);
 		var ow= $("#total_member_info").attr("owner_count");
 		var te= $("#total_member_info").attr("tenant_count");

@@ -56,7 +56,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<div class="control-group">
 			 <label class="checkbox">
 			 <div class="checker"><span><div class="checker" id="uniform-undefined"><span><input type="checkbox" value="1" name="ask_no_of_member" style="opacity: 0;"></span></div></span></div>
-			 Do you want to ask how many members will attend this event from participator family to participator?   
+			 Do you want to ask how many members will attend this event from participator family to participate?   
 			 </label>
 		</div>
 		
@@ -84,7 +84,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<div class="control-group">
   <label class="control-label">Location</label>
   <div class="controls">
-	 <textarea name="location" rows="3" id="alloptions" class="span9 m-wrap" placeholder="Location"></textarea>
+	 <textarea name="location" style="resize:none;" rows="3" id="alloptions" class="span9 m-wrap" placeholder="Location"></textarea>
 	 <label report="location" class="remove_report"></label>
   </div>
 </div>

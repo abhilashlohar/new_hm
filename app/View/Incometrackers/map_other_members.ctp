@@ -106,7 +106,7 @@ $(document).ready(function(){
 			$('#pp').hide();
 		});
 	
-	$(".first_member").on("change",function(){	
+	/*$(".first_member").on("change",function(){	
 		var user_id =$(this).val();
 		var text2= $(this).children('option[value='+user_id+']').text();
 		alert(user_id);
@@ -116,7 +116,7 @@ $(document).ready(function(){
 		$(".second_member").children('option[value='+user_id+']').hide();
 		$(".chzn-results>li.rem_opt").show();
 		$(".chzn-results>li.rem_opt:contains("+text2+")").hide();
-	});	
+	});	*/
 
 	
 	//var sel=$("#first").html();

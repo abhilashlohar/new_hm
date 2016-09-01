@@ -64,6 +64,7 @@
 $(document).ready(function(){
 
 		$('#contact-form').validate({
+			ignore: 'null',
 	    rules: {
 	      name: {
 	       

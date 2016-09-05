@@ -9,12 +9,12 @@
 		</div>
 	</div>
 </div>
+
+
 <div class="portlet box">
 	<div class="portlet-body" >
 		<?php
-		//$due_for_payment="-44981.5595"; 
 		
-		//echo $this->Currency->formatCurrency( $due_for_payment, "INR");  
 		$other_charge_ids=array();
 		foreach($regular_bills as $regular_bill){
 			$income_head_array=$regular_bill["regular_bill"]["income_head_array"];

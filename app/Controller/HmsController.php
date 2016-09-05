@@ -2802,7 +2802,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -20255,14 +20255,43 @@ function update_member_info($user_id=null){
 	$this->ath();
 	$this->check_user_privilages();	
 	$s_society_id=$this->Session->read('hm_society_id');
-	
+	$s_user_id=$this->Session->read('hm_user_id');
 	$user_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array((int)$user_id)));
+	
 	$this->set(compact("user_info"));
 	
 	if (isset($this->request->data['sub'])) {
 		$name=$this->request->data['name'];
 		$email=$this->request->data['email'];
 		$mobile=$this->request->data['mobile'];
+		
+	//Store history code
+	
+		$email_old=$user_info['email'];
+		$mobile_old=$user_info['mobile'];
+		date_default_timezone_set('Asia/Kolkata');
+		$date=date("d-m-Y");
+		$time = date(' h:i a', time());
+		$op=$this->autoincrement('profile_log','profile_log_id');
+			
+		if($email!=$email_old and $mobile!=$mobile_old){
+			 $new_email=$email;
+			 $new_mobile=$mobile;
+		}elseif($email!=$email_old){
+			  $new_email=$email;
+			  $new_mobile='';
+		}elseif($mobile!=$mobile_old){
+			$new_email='';
+			$new_mobile=$mobile;
+		}else{
+			 $new_email='';
+			 $new_mobile='';
+		}
+		
+		$this->loadmodel('profile_log');
+		$this->profile_log->saveAll(array('profile_log_id'=>$op,'user_id'=>(int)$user_id,'society_id'=>$s_society_id,'email'=>$email_old,'mobile'=>$mobile_old,'new_email'=>$new_email,'new_mobile'=>$new_mobile,'date'=>$date,'time'=>$time,'updated_by'=>$s_user_id));
+		
+	//// end 
 		
 		$this->loadmodel('user');
 		$this->user->updateAll(array('user_name'=>$name,'email'=>$email,'mobile'=>$mobile),array('user.user_id'=>(int)$user_id));

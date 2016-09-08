@@ -6503,6 +6503,7 @@ $s_user_id=(int)$this->Session->read('hm_user_id');
 
 function index()
 {
+//$this->Session->destroy();	
 $ua=$this->Cookie->read('username');
 $pa=$this->Cookie->read('password');
 $this->set('bgColor',$ua);
@@ -8203,9 +8204,96 @@ function change_new_password(){
 	
 	$s_society_id=$this->Session->read('hm_society_id');
 	$s_user_id=$this->Session->read('hm_user_id');
+	$user_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($s_user_id)));
 	
+	$username=$user_info['user_name'];
+	$to=$user_info['email'];
+	$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
 	if($this->request->is('POST')) {
 		$pass=$this->request->data['pass'];
+		  $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+				  <tbody>
+					<tr>
+						<td>
+							<table width="100%" cellpadding="0" cellspacing="0">
+								<tbody>
+								
+										<tr>
+											<td colspan="2">
+												<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+												<tbody>
+												<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+												<tr>
+												<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
+												<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+												<td width="100%"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px"><span style="color:#00a0e3">Housing</span><span style="color:#777776">Matters</span></a></td>
+												<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
+													
+												</td>
+												</tr>
+												<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+												</tbody>
+												</table>
+											</td>
+										</tr>
+																
+										
+								</tbody>
+							</table>
+							
+							<table width="100%" cellpadding="0" cellspacing="0">
+								<tbody>
+								
+										
+										
+										<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										<span style="color:rgb(100,100,99)" align="justify"> Hi '.$username.',  </span> 
+										</td>
+																		
+										</tr>
+										
+										
+										<tr>
+												<td style="padding:5px;" width="100%" align="left">
+												<span style="color:rgb(100,100,99)" align="justify">The password for your HousingMatters Account '.$to.' was recently changed </span> 
+												</td>
+																		
+										</tr>
+										
+										
+										<tr>
+											<td style="padding:5px;" width="100%" align="left">
+													<span style="color:rgb(100,100,99)"> 
+														Thank you.<br/>
+														HousingMatters (Support Team)<br/>
+														www.housingmatters.in
+													</span>
+											</td>
+																		
+										</tr>
+							
+							</table>
+							
+						</td>
+					</tr>
+
+				</tbody>
+		</table>';
+		
+		$this->loadmodel('email');
+		$conditions=array('auto_id'=>4);
+		$result_email=$this->email->find('all',array('conditions'=>$conditions));
+		foreach ($result_email as $collection) 
+		{
+		$from=$collection['email']['from'];
+		}
+		$reply=$from;
+		$subject="Your Password changed";
+		$from_name="HousingMatters";
+		$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+		//$this->smtpmailer($to,$from,$from_name,$subject,$message_web,$reply);
+		
 		$this->loadmodel('user');
 		$this->user->updateAll(array('password'=>$pass),array('user.user_id'=>$s_user_id));
 		

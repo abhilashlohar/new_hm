@@ -567,13 +567,13 @@ function comments($post_id=null,$comment_id=null){
 	$this->set('s_user_id',$s_user_id);
 	if(empty($comment_id)){
 		$this->loadmodel('discussion_comment');
-		$conditions=array("discussion_post_id"=>(int)$post_id,"delete_id"=>0);
+		$conditions=array("discussion_post_id"=>(int)$post_id,"delete_id"=>0,"society_id"=>$s_society_id);
 		$order=array('discussion_comment.discussion_comment_id'=> 'ASC');
 		$comments=$this->discussion_comment->find('all',array('conditions'=>$conditions,'order'=>$order));
 		$this->set(compact("comments"));
 	}else{
 		$this->loadmodel('discussion_comment');
-		$conditions=array("discussion_post_id"=>(int)$post_id,"discussion_comment_id"=>array('$gt'=>(int)$comment_id),"delete_id"=>0);
+		$conditions=array("discussion_post_id"=>(int)$post_id,"discussion_comment_id"=>array('$gt'=>(int)$comment_id),"delete_id"=>0,"society_id"=>$s_society_id);
 		$order=array('discussion_comment.discussion_comment_id'=> 'ASC');
 		$comments=$this->discussion_comment->find('all',array('conditions'=>$conditions,'order'=>$order));
 		$this->set(compact("comments"));

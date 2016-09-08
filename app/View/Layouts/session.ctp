@@ -229,11 +229,7 @@ $(document).ready(function() {
 		window.history.pushState({path:pageurl},'',pageurl);
 	});
 	
-	window.onpopstate = function(s) {
-		pageurl = location.pathname;
-		$('.page-content').load(pageurl+'?rel=tab');
-		
-	};
+	
 	
 	$("a[role='button']").live('click',function(e){
 		e.preventDefault();
@@ -245,7 +241,7 @@ $(document).ready(function() {
 	
 	window.onpopstate = function(s) {
 		pageurl = location.pathname;
-		$('#ctp_content_area').load(pageurl+'?rel=tab');
+		$('.page-content').load(pageurl+'?rel=tab');
 		
 	};
 	
@@ -395,7 +391,7 @@ $("#menus_area>li").live('click',function(e){
 					 <?php } ?>
 					  <li><a href="<?php echo $webroot_path; ?>Hms/change_new_password" rel='tab'><i class="fa fa-unlock-alt"></i> Change Password</a></li>
                      <li class="divider"></li>
-                     <li><a href="<?php echo $webroot_path; ?>Hms/logout"><i class="icon-key"></i> Log Out</a></li>
+                     <li><a href="<?php echo $webroot_path; ?>Hms/logout" ><i class="icon-key"></i> Log Out</a></li>
                   </ul>
                </li>
                <!-- END USER LOGIN DROPDOWN -->

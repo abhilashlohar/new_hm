@@ -48,11 +48,10 @@
 <div id="delete_topic_result"></div>
 <script>
 $(document).ready(function(){
-
+//setInterval(load_comments,10000);
 
 	var nn=0;
 	function load_comments(){
-		
 		
 		var post_id=$("div[post_id]").attr("post_id");
 		var comment_id=$("#comments div[comment_id]:last").attr("comment_id");

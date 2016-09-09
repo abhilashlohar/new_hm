@@ -4458,7 +4458,10 @@ if($user_type == "hm_child"){
 		$this->loadmodel('role_privilege');
 		$conditions=array("module_id" => @$module_id,"society_id"=>$s_society_id,"role_id" => $default_role);
 		$cursor=$this->role_privilege->find('all',array('conditions'=>$conditions));
+	
 		sort($cursor);
+		
+		
 		if(sizeof($cursor)>1){
 			echo '<div align="center" class="mobile-align">';
 			foreach ($cursor as $collection){
@@ -4472,6 +4475,9 @@ if($user_type == "hm_child"){
 					$controller=$collection['page']['controller'];
 				}
 
+				
+				
+				
 				$this->loadmodel('sub_module');
 				$conditions=array("auto_id" => $sub_module_id);
 				$cursor_sub_module=$this->sub_module->find('all',array('conditions'=>$conditions,'limit'=>1));
@@ -13708,7 +13714,7 @@ function save_role_privilage($module_id=null,$sub_module_id=null,$action=null,$r
 		$conditions=array("society_id" => $s_society_id,'role_id'=>(int)$role_id,"module_id" => (int)$module_id,"sub_module_id" => (int)$sub_module_id);
 		$this->role_privilege->deleteAll($conditions);
 		
-		$auto_id=$this->autoincrement('role','auto_id');
+		$auto_id=$this->autoincrement('role_privilege','auto_id');
 		$this->role_privilege->saveAll(array("auto_id" => $auto_id, "society_id" => $s_society_id,'role_id'=>(int)$role_id, "module_id" => (int)$module_id, "sub_module_id" => (int)$sub_module_id));
 		echo "ok";
 	}else{
@@ -29464,6 +29470,7 @@ function menus_as_per_user_rights(){
 						$icon=$module_info[0]["main_module"]["icon"];
 						
 						$page_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_page_info_via_module_id'),array('pass'=>array($module_id,$default_role)));
+						
 						$controller=$page_info[0]["page"]["controller"];
 						$page_name=$page_info[0]["page"]["page_name"];
 						?>

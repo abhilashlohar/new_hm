@@ -92,7 +92,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 									echo '<td></td>';
 								}
 							}else{
-								echo '<td><a class="btn green mini">'.$validation_status.'</a></td>';
+								echo '<td><a class="btn green mini">'.ucfirst($validation_status).'</a></td>';
 							} ?>
 							<td><?php echo $date; ?></td>
 							<td>
@@ -129,7 +129,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 								echo '<td></td>';
 							}
 						}else{
-							echo '<td><a class="btn green mini">'.$validation_status.'</a></td>';
+							echo '<td><a class="btn green mini">'.ucfirst($validation_status).'</a></td>';
 						} ?>
 						<td><?php echo $date; ?></td>
 						<td>

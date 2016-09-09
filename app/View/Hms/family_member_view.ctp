@@ -218,10 +218,10 @@ if(($owner=="yes" and $family_member==1 and $member_type=="member") or ($owner==
 											Action
 
 											</a>
-											<ul class="dropdown-menu" style="min-width:70px !important;">
-											<li><a href="family_member_add_ajax?con=<?php echo $user_id ; ?>" ><i class="icon-pencil"></i> Edit</a></li>
-
-											<!--<li><a href="#1" role="button" class="dec" atid="<?php echo $user_id ; ?>" ><i class="icon-trash"></i> Deactive</a></li>-->
+											<ul class="dropdown-menu" style="min-width:80px !important;">
+											<li><a href="family_member_add_ajax?con=<?php echo $user_id ; ?>" style=" padding:5px 0 3px 6px;" ><i class="icon-pencil"></i> Edit</a></li>
+											
+											<li><a href="#1" role="button" class="dec" atid="<?php echo $user_id ; ?>" style=" padding:5px 0 3px 6px;"><i class="icon-trash"></i> Delete</a></li>
 											</ul>
 											</div>
 
@@ -317,7 +317,7 @@ $(".dec").live("click",function(){
 
 var d_id=$(this).attr("atid");
 
-$("#show").html('<div id="pp"><div class="modal-backdrop fade in"></div><div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"><div class="modal-body" style="font-size:14px;"><i class="icon-warning-sign" style="color:#d84a38;"></i> Are you sure you want to deactive family members ? </div><div class="modal-footer"><a href="family_member_deactive?con='+d_id+'" class="btn blue" id="yes">Yes</a><a href="#"  role="button" id="can" class="btn">No</a></div></div></div>');
+$("#show").html('<div id="pp"><div class="modal-backdrop fade in"></div><div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"><div class="modal-body" style="font-size:14px;"><i class="icon-warning-sign" style="color:#d84a38;"></i> Are you sure you want to delete family members ? </div><div class="modal-footer"><a href="family_member_deactive?con='+d_id+'" class="btn blue" id="yes">Yes</a><a href="#"  role="button" id="can" class="btn">No</a></div></div></div>');
 
 $("#can").live("click",function(){
 $("#pp").hide();

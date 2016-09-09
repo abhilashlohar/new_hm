@@ -6629,9 +6629,9 @@ function submit_login(){
 	 
 	$this->loadmodel('user');
 		$conditions =array( '$or' => array( 
-		array("email" => new MongoRegex('/^' .  $username . '$/i'), "password" => $password),
-		array("mobile" => $username, "password" => $password),
-		array("mobile" => $username, "password" => (int)$password)
+		array("email" => new MongoRegex('/^' .  $username . '$/i'), "password" => $password,"active"=>'yes'),
+		array("mobile" => $username, "password" => $password,"active"=>'yes'),
+		array("mobile" => $username, "password" => (int)$password,"active"=>'yes')
 	));
 	$result_user=$this->user->find('all',array('conditions'=>$conditions));
 	if(sizeof($result_user)==1){

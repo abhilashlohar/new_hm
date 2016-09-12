@@ -173,7 +173,7 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 											<th>Received From</th>
 											<th>Amount</th>
 											<th>Remarks</th>
-											<th>Status</th>
+											<th>Verification</th>
 											<th>Action</th>
 										</tr>
 									</thead>

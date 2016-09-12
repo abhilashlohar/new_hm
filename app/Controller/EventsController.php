@@ -594,7 +594,7 @@ $this->layout='blank';
 		$this->event->updateAll(array('not_in_rsvp'=>$not_in_rsvp),array('event.event_id'=>$e));
 	}
 	
-		echo "Thanks for tell us.";
+		echo "Thanks for your response.";
 	}
 	
 	if($type==3)

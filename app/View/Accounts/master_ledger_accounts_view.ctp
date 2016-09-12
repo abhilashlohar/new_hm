@@ -18,7 +18,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </div>
 <div class="portlet-body">
 <div style="width:100%;">
-<table style="width:100%; background-color:white;" class="table table-bordered" id="sample_2">
+<table style="width:100%; background-color:white;" class="table table-bordered" id="sample_1">
 <thead>			
 <tr>
 <th>Sr.No.</th>

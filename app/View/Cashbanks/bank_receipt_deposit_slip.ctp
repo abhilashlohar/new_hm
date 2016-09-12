@@ -54,6 +54,7 @@ if($nnn == 555)
 $total_credit = 0;
 $total_debit = 0;
 $n=0;
+
 foreach($cursor1 as $collection){
 	$n++;
 	$receipt_no = $collection['cash_bank']['receipt_number'];

@@ -231,7 +231,7 @@ $m =$time_m+$add;
 	</div>
 <div class="span6">
 <div class="control-group">		
-		<label style="font-size:14px; font-weight:bold;">Time</label>
+		<label style="font-size:14px; font-weight:bold;">Time <i class=" icon-info-sign tooltips" data-placement="right" data-original-title="Please select 15 minutes or later from your current time" style="color:#d84a38;"> </i></label>
 		<select class="span2 m-wrap" name="time_h">
 		<?php for($w=1;$w<=24;$w++) { ?>
 		<option value="<?php echo $w; ?>" <?php if($w==$time_h) { ?> selected <?php } ?>><?php echo $w; ?></option>

@@ -8,13 +8,20 @@
 			font-size: 12px;border:solid 1px #000;
 			}
 		</style>
+		
+<style media="print">
+.print_screen{
+	width:100% !important;
+}
+
+</style>
 <a href="bank_receipt_deposit_slip" class="btn green hide_at_print">Back</a>
 <center>
 <br /><br />
 
 <button type="button" class=" printt btn green hide_at_print" onclick="window.print()" style="margin-left:80%;"><i class="icon-print"></i> Print</button></span>
 <br /><br />
-<div style="width:84%; background-color:#FBFCBC; overflow:hidden; border:solid 1px;" media="print">
+<div style="width:84%; background-color:#FBFCBC; overflow:hidden; border:solid 1px;" class="print_screen" media="print">
 <br />
 <table style="background-color:#FBFCBC;" width="94%" align="center">
 <tr>
@@ -122,3 +129,4 @@ $am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' 
 <br />	
 </div>
 </center>
+

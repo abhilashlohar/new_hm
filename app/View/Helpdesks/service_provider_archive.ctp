@@ -3,9 +3,11 @@
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
 <div align="center" class="mobile-align">
-<a href="service_provider_view" class="btn red" rel='tab' > View</a>
+
+<a href="service_provider_view" class="btn blue" rel='tab' > View</a>
 <a href="service_provider_add" class="btn blue" rel='tab' > Add</a>
-<a href="service_provider_archive" class="btn blue" rel='tab' > Archive</a>
+<a href="service_provider_archive" class="btn red" rel='tab' > Archive</a>
+
 </div>
 </div>
 <style>
@@ -80,11 +82,7 @@ table th { font-size:12px !important ; }
                                    
                                     <th></th>
 									<th class="hide_at_print"><span style="font-size:14px;"><i class="icon-paper-clip"></i></span></th>
-                                   
-									<?php if($role_id==1)
-									{ 
-									?>
-									<th class="hide_at_print"></th><?php }?>
+                                   							
 									</tr>
 									</thead>
 									<tbody>
@@ -189,62 +187,10 @@ table th { font-size:12px !important ; }
                             } ?>
 						
                              </td>
-                             <?php if($role_id==1){ ?>                      
-                            <td class="hide_at_print">
-                
-                <!---- action popup ----->
-                <div class="btn-group">
-                <a class="btn mini blue " href="#" data-toggle="dropdown">
-                <i class=" icon-chevron-down"></i>
-                </a>
-                <ul class="dropdown-menu" style="min-width:50px !important;">
-                <li><a href="service_provider_edit/<?php echo $auto_id; ?>"   rel='tab'><i class="icon-pencil"></i> </a></li>
-                <li><a href="#<?php echo $z; ?>" data-toggle="modal"><i class="icon-trash"></i> </a></li>
-                <li><a href="#mail<?php echo $z; ?>"  data-toggle="modal"><i class="icon-envelope"></i> </a></li>
-                </ul>
-                </div>
-                <!----- end action popup ------->
-   				<!--popup start -->
-                        <div id="mail<?php echo $z; ?>" class="modal hide " tabindex="-1" role="dialog"
-                        aria-labelledby="myModalLabel2" aria-hidden="true" style="display: none; " align="center">
-                        <div class="modal-header">
-                        <h3 id="myModalLabel2"><b>Send Email</b></h3>
-                        </div>
-                        <div class="modal-body">
-                        <div>
-                        <table align="center">
-                        <tr><td>To</td><td><?php echo $name; ?>&nbsp;( <?php echo $email; ?> )</td>
-                        <input type="hidden" name="" id="em<?php echo $z; ?>" value="<?php echo $email; ?>"></tr>
-                        <tr>
-                        <td>Subject</td><td><input type="text" value="HousingMatters" style="width:96%"></td></tr>
-                        <tr>
-                        <td>Message</td><td><textarea rows="7" cols="80" style="resize:none; width:300px;" 
-                        id="texs<?php echo $z; ?>"></textarea></td>
-                        </tr></table> </div>
-                        </div>
-                        <div class="modal-footer">
-                        <button  data-dismiss="modal" onClick="service_provider_mail(<?php echo $z; ?>)"
-                        class="btn green">Send Email</button>
-                         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                        </div>
-                        </div> 
-                        <!--popup end -->  	
-						
-                             </td> <?php }?>
+                            
                         </tr>
                    <!--popup start -->
-				   
-<div id="<?php echo $z; ?>" class="modal hide " tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true" style="display: none;">
-									
-									<div class="modal-body">
-									<span style="color:red;"><i class="icon-warning-sign"></i></span>
-                                    <span style="font-size:16px;font-family:'Times New Roman', Times, serif;">Are you sure you want to archive the vendor record ? </span>
-									</div>
-									<div class="modal-footer">
-                                        <a href="service_provider_delete?con=<?php echo $auto_id; ?>"    class="btn blue" >Yes</a>
-                                        <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
-									</div>
-								</div>
+
 								
 								
 					<!--popup end -->

@@ -1991,6 +1991,25 @@ return $this->vendor->find('all',array('conditions'=>$conditions));
 
 }
 
+function service_provider_archive(){
+	
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	$this->ath();
+	$this->check_user_privilages();
+
+	$s_society_id=$this->Session->read('hm_society_id');
+	$this->set('role_id',$s_role_id=$this->Session->read('role_id'));
+	$this->loadmodel('service_provider');
+	$condition=array("sp_delete"=>1,"society_id"=>$s_society_id);
+	$this->set('result_service_provider',$this->service_provider->find('all',array('conditions'=>$condition)));
+	
+}
+
+
 function service_provider_view()
 {
 if($this->RequestHandler->isAjax()){

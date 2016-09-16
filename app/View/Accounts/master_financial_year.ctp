@@ -35,11 +35,11 @@ $tooo = date('31-3-'.$yyy.'');
 <tr>
 
 <td><label style="font-size:22px;"><b>From</b></label></td>
-<td><input type="text" name="from" class="m-wrap medium date-picker" data-date-format="dd-mm-yyyy" style="background-color:white !important;" id="from" placeholder="Select Start Date" value="">
+<td><input type="text" name="from" class="m-wrap medium date-picker" data-date-format="dd-mm-yyyy"  style="background-color:white !important;" id="from" placeholder="Select Start Date" readonly  data-date-start-date="01-04-2016"data-date-end-date="01-04-2016" value="">
 
 </td>
 <td><label style="font-size:22px;"><b>To</b></label></td>
-<td><input type="text" name="to" class="m-wrap medium date-picker" data-date-format="dd-mm-yyyy" style="background-color:white !important;" id="to" placeholder="Select End Date" value=""></td>
+<td><input type="text" name="to" class="m-wrap medium date-picker mor" data-date-format="dd-mm-yyyy" style="background-color:white !important;" id="to" placeholder="Select End Date" readonly data-date-start-date="31-03-2017" data-date-end-date="31-03-2017" value=""></td>
 
 </tr>
 <tr>
@@ -71,6 +71,9 @@ $tooo = date('31-3-'.$yyy.'');
 
 <script>
 $(document).ready(function(){
+//$('.date-picker').datepicker( "option", "minDate", selectedDate);
+ //$('.date-picker').datepicker({ minDate:'02-09-2016',maxDate:'16-09-2016' });
+
 		$.validator.setDefaults({ ignore: ":hidden:not(select)"});
 		
 		$('#contact-form').validate({

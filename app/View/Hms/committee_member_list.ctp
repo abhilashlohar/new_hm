@@ -6,7 +6,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			<thead>
 				<tr>
 					<th>Sr.</th>
-					<th>User Name</th>
+					<th> Name</th>
 					<th >unit</th>
 					<th>Designation </th>
 					<th>Email</th>

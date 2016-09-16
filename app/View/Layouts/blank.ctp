@@ -12,7 +12,7 @@ $('.date-picker').datepicker().on('changeDate', function(){
  $('.timepicker-default').timepicker();
 $(".chosen").chosen(); 
  $('#sample_1').dataTable({
-            "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+            "sDom": "<'row-fluid hide_at_print'<'span6'l><'span6'f>r>t<'row-fluid hide_at_print'<'span6'i><'span6'p>>",
             "sPaginationType": "bootstrap",
             "oLanguage": {
                 "sLengthMenu": "_MENU_ records per page",

@@ -174,7 +174,8 @@ $.validator.setDefaults({ ignore: ":hidden:not(select)" });
 		  file: {
 	       
 	        required: true,
-			filesize: 2097152
+			filesize: 2097152,
+			accept: "jpg|jpeg|png|gif|pdf"
 	      },
 		  
 	    },

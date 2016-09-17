@@ -16,7 +16,7 @@ if($type==1){
 		<option value="9">9 Members</option>
 		<option value="10">10 Members</option>
 	</select>
-   <button class="btn blue" id="send_member" element_id="<?php echo $e; ?>">Send</button>
+   <button class="btn blue" id="send_member" element_id="<?php echo $e; ?>">Confirm</button>
 </div>
 <?php
 }?>

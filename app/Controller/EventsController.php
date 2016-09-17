@@ -599,17 +599,27 @@ $this->layout='blank';
 	
 	if($type==3)
 	{
-	$no=(int)$this->request->query('no');
+	 $no=(int)$this->request->query('no');
 	
 	$this->loadmodel('event');
 	$conditions=array("event_id" => $e);
 	$event_result=$this->event->find('all', array('conditions' => $conditions));
 	@$no_of_member=@$event_result[0]['event']['no_of_member'];
+	@$no_d=@$event_result[0]['event']['family_member_count'];
 	$no_of_member=$no_of_member+$no;
-	
-	
+	if(!empty($no_d)){ 
+		foreach($no_d as $key=>$da){
+			$mes[$key]=$da;
+		}
+		$mes[$s_user_id]=$no;
+		$no_d_f=$mes;
+	}else{
 		
-	$this->event->updateAll(array('no_of_member'=>$no_of_member),array('event.event_id'=>$e));
+		$f_count[$s_user_id]=$no;
+		$no_d_f=$f_count;
+	}
+	
+	$this->event->updateAll(array('no_of_member'=>$no_of_member,'family_member_count'=>$no_d_f),array('event.event_id'=>$e));
 	
 	
 		echo "Thanks for participation.";

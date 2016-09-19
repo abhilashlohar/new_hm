@@ -11,7 +11,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <div style="border:solid 2px #4cae4c; width:80%; margin-left:10%;">
 <div style="border-bottom:solid 2px #4cae4c; color:white; background-color: #5cb85c; padding:4px; font-size:20px;" ><i class="icon-envelope-alt"></i> Send SMS</div>
 <div style="padding:10px;background-color:#FFF;">
-<form method="post" id="contact-form">
+<form method="post" id="contact-form" onsubmit="return hello()" >
 
 		<div class="controls">
 			<label class="radio">
@@ -213,12 +213,13 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 date_default_timezone_set('Asia/Kolkata');
 $date=date("d-m-Y");
 $time=time();
-$time=strtotime('+15 minutes');
-$time_h = date('H', $time); 
-$time_m = date('i', $time);
-$r=$time_m%15;
-$add=15-$r;
-$m =$time_m+$add;
+ $time=strtotime('+15 minutes');
+ $time_h = date('H', $time); 
+ $time_m = date('i', $time);
+ $r=$time_m%15;
+ $add=15-$r;
+ $m =$time_m+$add;
+ 
 ?>
 <div class="row-fluid">
 	<div class="span4">
@@ -358,6 +359,31 @@ background-color:rgba(207, 202, 255, 0.32);
 <script>
 
 
+$(".chosen").change(function(){
+	$("button[name=send]").removeAttr('disabled');
+});
+
+function hello(){ 
+	$("button[name=send]").removeAttr('disabled');
+	
+	var r=$("input:radio[name=radio]:checked").val();
+	if(r==1){
+		var m=$("#multi").val();
+		
+		if(m==null){
+			//$("button[name=send]").attr('disabled','');
+			$("label#multi").html("<span style='color:red;'>Please select at-least one recipient.</span>");
+			return false;
+		}else{
+			//$("button[name=send]").attr('disabled','');
+			$("label#multi").html("");
+		}
+	}
+	
+	
+}
+
+
 $.validator.addMethod('requirecheck1', function (value, element) {
 	 return $('.requirecheck1:checked').size() > 0;
 }, 'Please select at least one role.');
@@ -396,7 +422,7 @@ return $(e).attr("name")
 
 //$.validator.setDefaults({ ignore: ":hidden:not(select)" });
 $('#contact-form').validate({
-ignore: ".ignore",
+//ignore: ".ignore",
 			errorElement: "label",
                     //place all errors in a <div id="errors"> element
                     errorPlacement: function(error, element) {

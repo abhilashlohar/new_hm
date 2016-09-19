@@ -12,7 +12,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <div style="border:solid 2px #4cae4c; width:90%; margin:auto;">
 <div style="border-bottom:solid 2px #4cae4c; color:white; background-color: #5cb85c; padding:4px; font-size:20px;" ><i class="icon-envelope-alt"></i> Send Email</div>
 <div style="padding:10px;background-color:#FFF;">
-<form method="post" id="contact-form" name="myform" enctype="multipart/form-data" >
+<form method="post" id="contact-form" name="myform" enctype="multipart/form-data" onsubmit="return hello()" >
 
 <div class="controls">
 	<label class="radio">
@@ -31,7 +31,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <div class="control-group" id="d1" >
 <div class="controls">
    
-	<select data-placeholder="Type or select name"  name="multi[]" id="multi" class="chosen span9" multiple="multiple" tabindex="6">
+	<select data-placeholder="Type or select name"  name="multi[]" id="multi" class="chosen span9 ignore" multiple="multiple" tabindex="6">
 		<?php foreach ($result_users as $collection){
 		$user_id=$collection["user"]["user_id"];
 		$user_name=$collection["user"]["user_name"];
@@ -112,9 +112,7 @@ Note: File size must be less than 2 MB and only jpg,png extension are allowed.
 </label>
 <label id="file"></label>				   
 
-
-
-	<button type="submit" name="send" class="btn blue"><i class=" icon-envelope-alt"></i> Send</button>
+	<button type="submit" name="send" class="btn blue send_brodcast"><i class=" icon-envelope-alt"></i> Send</button>
 </form>
 
 </div>
@@ -254,11 +252,34 @@ $.validator.addMethod('filesize', function(value, element, param) {
     return this.optional(element) || (element.files[0].size <= param) 
 });
 
+$(".chosen").change(function(){
+	$("button[name=send]").removeAttr('disabled');
+});
 
+function hello(){ 
+	$("button[name=send]").removeAttr('disabled');
+	
+	var r=$("input:radio[name=radio]:checked").val();
+	if(r==1){
+		var m=$("#multi").val();
+		
+		if(m==null){
+			//$("button[name=send]").attr('disabled','');
+			$("label#multi").html("<span style='color:red;'>Please select at-least one recipient.</span>");
+			return false;
+		}else{
+			//$("button[name=send]").attr('disabled','');
+			$("label#multi").html("");
+		}
+	}
+	
+	
+}
 
 
 
 $(document).ready(function(){
+	
 
 			var checkboxes = $('.requirecheck1');
 			var checkbox_names = $.map(checkboxes, function(e, i) {
@@ -275,9 +296,11 @@ $(document).ready(function(){
 			var checkbox_names3 = $.map(checkboxes3, function(e, i) {
 				return $(e).attr("name")
 			}).join(" ");
-
+			
+//$.validator.setDefaults({ ignore: ":hidden:not(select)" });
 $('#contact-form').validate({
-ignore: ".ignore",
+//ignore: ".ignore",
+ //ignore: 'null', 
 			errorElement: "label",
                     //place all errors in a <div id="errors"> element
                     errorPlacement: function(error, element) {
@@ -346,24 +369,30 @@ messages: {
 
 <script>
 $(document).ready(function(){
-  $("#r1").click(function(){
+  $("#r1").click(function(){ 
     $("#d2").hide();
     $("#d1").show();
 	$("#d3").hide();
 	$(".chosen").removeClass("ignore");
-	
+	//$(".requirecheck1").addClass("ignore");
+	//$(".requirecheck2").addClass("ignore");
+	//$(".requirecheck3").addClass("ignore");
   });
-  $("#r2").click(function(){
+  $("#r2").click(function(){ 
     $("#d1").hide();
     $("#d2").show();
 	$("#d3").hide();
-	$(".chosen").addClass("ignore");
+	//$(".chosen").addClass("ignore");
 });
-  $("#r3").click(function(){
+  $("#r3").click(function(){ 
     $("#d1").hide();
     $("#d3").show();
 	$("#d2").hide();
 	$(".chosen").addClass("ignore");
+	
+	//$(".requirecheck1").removeClass("ignore");
+	//$(".requirecheck2").removeClass("ignore");
+	//$(".requirecheck3").removeClass("ignore");
 	
   });
 });

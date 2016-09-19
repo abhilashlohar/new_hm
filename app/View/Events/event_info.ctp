@@ -194,11 +194,11 @@ $description=$data["event"]["description"];
 
 <script>
 $(document).ready(function() { 
-	 $("#event_yes").live('click',function(){
+	 $("#event_yes").die().live('click',function(){
 		var e=$(this).attr('element_id');
 		$(".alert-block").html('Please wait...').load('<?php echo $this->webroot; ?>Events/save_rsvp?e='+e+'&type=1');
 	 });
-	 $("#event_no").live('click',function(){
+	 $("#event_no").die().live('click',function(){
 		var e=$(this).attr('element_id');
 		$(".alert-block").html('Please wait...').load('<?php echo $this->webroot; ?>Events/save_rsvp?e='+e+'&type=2');
 	 });

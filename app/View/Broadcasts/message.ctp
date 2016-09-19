@@ -77,26 +77,12 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<table  width="100%">
 		<tr>
 			<td>
-				<label style="font-size:14px; font-weight:bold;">Message</label>
-			</td>
-			<td>
-				<div  style="float:right;">
+				<label style="font-size:14px; font-weight:bold;">Message</label> <div  style="float:left;">
 				<span style="background-color:#d84a38; color:white; padding:2px;">Note</span>: Please restrict your message length to 459 characters in one message.
 				</div>
 			</td>
-		</tr>
-	</table>
-	
-	<textarea  style="resize:none;font-size: 18px;" class="m-wrap span12"  onKeyUp="count_msg()" id="massage" name="massage" rows="7"></textarea>
-	<label id="massage"></label>
- 
- <table width="100%">
- <tr>
- <td>
- <div id="count_result"><span style="font-size:14px; color:#666; font-weight:bold;">No. of Messages</span><input type="text" style="width:80px; background-color:#008000; color:#FFF;" value="0 / 1 SMS" readonly ></div>
- </td>
- <td>
-	<a href="#myModal3" role="button" class="btn blue pull-right" data-toggle="modal">Templates</a>
+			<td>
+				<a href="#myModal3" role="button" class="btn blue pull-right" data-toggle="modal">Templates</a>
 	<div id="myModal3" style="margin-top:-5%;" class="modal hide " tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -204,6 +190,20 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
 	</div>
 </div>
+			</td>
+		</tr>
+	</table>
+	
+	<textarea  style="resize:none;font-size: 18px;" class="m-wrap span12"  onKeyUp="count_msg()" id="massage" name="massage" rows="7"></textarea>
+	<label id="massage"></label>
+ 
+ <table width="100%">
+ <tr>
+ <td>
+ <div id="count_result" style="float:right;"><span style="font-size:14px; color:#666; font-weight:bold;">No. of Messages</span><input type="text" style="width:80px; background-color:#008000; color:#FFF;" value="0 / 1 SMS" readonly ></div>
+ </td>
+ <td>
+	
 </td>
 </tr>
 </table>
@@ -225,7 +225,7 @@ $m =$time_m+$add;
 		<div class="control-group">
 			<label style="font-size:14px; font-weight:bold;">Date</label>
 			<div class="controls">
-			<input class="m-wrap m-ctrl-medium date-picker" readonly name="date" size="16" data-date-format="dd-mm-yyyy" type="text" value="<?php echo $date; ?>">
+			<input class="m-wrap m-ctrl-medium date-picker" readonly name="date" size="16" data-date-format="dd-mm-yyyy" type="text" data-date-start-date="<?php echo $date; ?>" value="<?php echo $date; ?>">
 			</div>
 		</div>
 	</div>
@@ -396,7 +396,7 @@ return $(e).attr("name")
 
 //$.validator.setDefaults({ ignore: ":hidden:not(select)" });
 $('#contact-form').validate({
-//ignore: ".ignore",
+ignore: ".ignore",
 			errorElement: "label",
                     //place all errors in a <div id="errors"> element
                     errorPlacement: function(error, element) {

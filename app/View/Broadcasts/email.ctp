@@ -277,7 +277,7 @@ $(document).ready(function(){
 			}).join(" ");
 
 $('#contact-form').validate({
-//ignore: ".ignore",
+ignore: ".ignore",
 			errorElement: "label",
                     //place all errors in a <div id="errors"> element
                     errorPlacement: function(error, element) {

@@ -68,6 +68,65 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 
 
 </form>
+
+<div style="overflow:auto;">
+		<div align="center" style="font-size:15px;padding-bottom: 5px;"> 
+				Multiple Flat Members Report 
+			</div>
+<table class="table table-condensed table-bordered" id="sample_1" >
+			<thead>
+				<tr>
+					<th width="5%">Sr.</th>
+					<th>User Name</th>
+					<th id="unit_number1">Unit</th>
+					<th>Email</th>
+					<th>Mobile</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+			<?php
+			$x=0;
+			foreach($multiple_member_info as $user_id=>$user_info){ 
+				$user_name=$user_info["user_name"];
+				$user_flat_id=$user_info["user_flat_id"];
+				
+				$email=$user_info["email"];
+				$mobile=$user_info["mobile"];
+				$wing_flats=$user_info["wing_flat"];
+				$z=0;
+					if(sizeof($wing_flats)>1){ $x++;  	
+						foreach($wing_flats as $data){ $z++;
+							if($z==1){
+			
+			?>
+			
+									<tr>
+										<td rowspan="<?php echo sizeof($wing_flats); ?>" ><?php echo $x; ?></td>
+										<td rowspan="<?php echo sizeof($wing_flats); ?>" ><?php echo $user_name; ?></td>
+										<td > <?php echo $data; ?> </td>
+										
+										<td rowspan="<?php echo sizeof($wing_flats); ?>" ><?php echo $email; ?> </td>
+										<td rowspan="<?php echo sizeof($wing_flats); ?>" ><?php echo $mobile; ?> </td>
+									</tr>
+				<?php }else{ ?>
+
+								<tr >
+									
+									<td  ><?php echo $data; ?> </td>
+									
+									
+								</tr>
+		<?php 			}				
+					 } 
+			      } 
+		} ?>	
+			</tbody>
+		</table>
+
+</div>
+
+
 <script>
 function wing_functtt(wingg)
 {

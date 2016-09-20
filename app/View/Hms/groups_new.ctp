@@ -9,7 +9,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 </div>
 <?php } ?>
 
-<div style="border:solid 2px #4cae4c; width:80%; margin:auto;" class="portal group_responsive">
+<div style="border:solid 2px #4cae4c; width:80%; margin:auto;overflow: auto;" class="portal group_responsive">
 <div style="border-bottom:solid 2px #4cae4c; color:white; background-color: #5cb85c; padding:4px; font-size:20px;"> All Groups</div>
 <div style="padding:10px;background-color:#FFF;">
 
@@ -23,6 +23,8 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 					<tr>
 						<th width="10%">Sr. No.</th>
 						<th>Group Name</th>
+						<th>Updated by</th>
+						<th>Updated on</th>
 						<th>Members</th>
 						<th></th>
 					</tr>
@@ -35,14 +37,20 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 					$i++;
 					$group_id=$data["group"]["group_id"];
 					$group_name=$data["group"]["group_name"];
+					$update_by=@$data["group"]["update_by"];
+					$update_on=@$data["group"]["update_on"];
 					$users_d=@$data["group"]["users"];
+					$result_user_info=$this->requestAction(array('controller' => 'hms', 'action' => 'profile_picture'), array('pass' => array($update_by)));
+					$user_name=@$result_user_info[0]['user']['user_name'];
 					?>
 						<tr>
 							<td><?php echo $i; ?></td>
 							<td><?php echo $group_name; ?></td>
+							<td><?php echo $user_name; ?></td>
+							<td><?php echo $update_on; ?></td>
 							<td><span class="label label-info"><?php echo sizeof($users_d); ?></span></td>
 							<td>
-							<a href="groupview/<?php echo $group_id; ?>" rel="tab" class="btn mini yellow" ><i class="icon-search" ></i></a>
+							<a href="groupview/<?php echo $group_id; ?>" rel="tab" class="btn mini yellow" ><i class="icon-plus" ></i></a>
 							&nbsp;
 							<a  role="button" class="btn red mini delete_group" group="<?php echo $group_id; ?>" ><i class=" icon-trash"></i></a>
 							</td>

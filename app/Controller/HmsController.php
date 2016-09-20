@@ -2802,7 +2802,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -5354,6 +5354,112 @@ Successfully add multiple flat
 	$conditions=array("society_id"=>$s_society_id);
 	$user_data = $this->user->find('all',array('conditions'=>$conditions));
 	$this->set('user_data',$user_data);
+	
+	$this->loadmodel('user');
+	$conditions=array("society_id"=>$s_society_id,"active"=>"yes");
+	$order=array('user.user_name'=>'ASC');	
+	$users=$this->user->find('all',array('conditions'=>$conditions,'order'=>$order));
+	foreach($users as $user_info){
+		$user_id=$user_info["user"]["user_id"];
+		$user_name=$user_info["user"]["user_name"];
+		$user_type=$user_info["user"]["user_type"];
+		$mobile=$user_info["user"]["mobile"];
+		$email=$user_info["user"]["email"];
+		$validation_status=@$user_info["user"]["validation_status"];
+		$date=$user_info["user"]["date"];
+		
+		if($user_type=="member" or $user_type=="family_member"){
+			$user_flat_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($user_id)));
+			$flats=array(); $resident=array();	$flats1=array();
+			foreach($user_flat_info as $user_flat){
+				$user_flat_id=$user_flat["user_flat"]["user_flat_id"];
+				$wing=$user_flat["user_flat"]["wing"];
+				$flat=$user_flat["user_flat"]["flat"];
+				$owner=@$user_flat["user_flat"]["owner"];
+				$exited=$user_flat["user_flat"]["exited"];
+					if($exited=="no"){
+					$this->loadmodel('wing');
+					$conditions=array("wing_id"=>$wing);
+					$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
+					$wing_name=@$wing_info[0]["wing"]["wing_name"];
+					
+					$this->loadmodel('flat');
+					$conditions=array("flat_id"=>$flat);
+					$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+					$flat_name=ltrim(@$flat_info[0]["flat"]["flat_name"],'0');
+					$flat_name_new=@$flat_info[0]["flat"]["flat_name"];
+					$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
+					$flats1[$user_flat_id]=$wing_name.' - '.$flat_name_new;
+					if($owner=="yes" && (!empty($wing) && !empty($flat))){
+								$this->loadmodel('flat');
+								$conditions=array("wing_id"=>$wing,"flat_id"=>$flat);
+								$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+								
+								$noc_status=@$flat_info[0]["flat"]["noc_ch_tp"];
+								if($noc_status==1){
+									$resident[$user_flat_id]=1;
+								}
+							}elseif($owner=="no" && (!empty($wing) && !empty($flat))){
+								$resident[$user_flat_id]=1;
+							}
+					
+					
+					
+					
+					
+				}
+				
+			} 
+			
+		$this->loadmodel('user_role');
+		$conditions=array("user_id"=>$user_id,"society_id"=>$s_society_id);
+		$user_role_info=$this->user_role->find('all',array('conditions'=>$conditions));
+		$roles=array(); $count_member_owner=0;
+		$count_member_tenant=0; $count_member_family=0;$count_member_family_owner=0;$count_member_family_tenant=0;
+		
+		$x=0;$z=0;$y=0;$f=0;
+		foreach($user_role_info as $user_role){
+			$role_id=$user_role["user_role"]["role_id"];
+			
+			$this->loadmodel('role');
+			$conditions=array("role_id"=>$role_id);
+			$role_info=$this->role->find('all',array('conditions'=>$conditions));
+			$roles[]=$role_info[0]["role"]["role_name"];
+			
+			if($role_id==3){
+				$x++;
+				$count_member_owner+=$x;
+			}
+			
+			if($role_id==4){
+				$z++;
+				$count_member_tenant+=$z;
+			}
+			
+			if($role_id==5){
+				$f++;
+				$count_member_family_owner+=$f;
+			}
+			if($role_id==6){
+				$y++;
+				$count_member_family_tenant+=$y;
+			}
+		}
+		$roles=implode(',',$roles);
+		
+		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id,"count_member_owner"=>$count_member_owner,"count_member_tenant"=>$count_member_tenant,"count_member_family_owner"=>$count_member_family_owner,"count_member_family_tenant"=>$count_member_family_tenant,'resident_member'=>$resident,'user_id'=>$user_id,'flat_asc'=>$flats1,);
+			
+			
+			
+			
+		}
+		
+		
+	}
+	
+	
+	$this->set('multiple_member_info',$arranged_users);
+	
 }
 
 //End multiple_flat//
@@ -30126,7 +30232,7 @@ $this->ath();
 $this->check_user_privilages();
 $s_user_id=$this->Session->read('hm_user_id'); 
 $s_society_id=$this->Session->read('hm_society_id'); 
-
+$current_date=date("d-m-Y");
 if (isset($this->request->data['add'])) 
 {
 	$group_name=$this->request->data['group_name'];
@@ -30140,7 +30246,7 @@ if (isset($this->request->data['add']))
 	{
 		$group_id=$this->autoincrement('group','group_id');
 		$this->loadmodel('group');
-		$multipleRowData = Array( Array("group_id" => $group_id,"delete_id"=>0,"group_name"=>$group_name,"society_id"=>$s_society_id,"users"=>array()));
+		$multipleRowData = Array( Array("group_id" => $group_id,"delete_id"=>0,"group_name"=>$group_name,"society_id"=>$s_society_id,"users"=>array(),'update_by'=>$s_user_id,'update_on'=>$current_date));
 		$this->group->saveAll($multipleRowData); 
 		$this->response->header('Location', 'groupview/'.$group_id);
 		

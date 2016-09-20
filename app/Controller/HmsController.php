@@ -19354,7 +19354,7 @@ $s_society_id=$this->Session->read('hm_society_id');
 			$this->loadmodel('society');
 			$this->society->updateAll(array('society_email'=>$update),array('society_id'=>$s_society_id));
 		}
-		if($field=="society_signature"){
+		if($field=="society_title"){
 			$this->loadmodel('society');
 			$this->society->updateAll(array('sig_title'=>$update),array('society_id'=>$s_society_id));
 		}

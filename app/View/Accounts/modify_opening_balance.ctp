@@ -10,8 +10,8 @@ style="background-color:white !important; margin-top:2.5px;" field="transaction_
 <table class="table table-bordered table-condensed" style="width:100%; background-color:white;" id="open_bal">
 <tr>
 <th>Account Group</th>
-<th>Account Group</th>
-<th>Account Name</th>
+<!--<th>Account Group</th>
+<th>Account Name</th>-->
 <th>Account Name</th>
 <th>Debit</th>
 <th>Credit</th>
@@ -54,7 +54,7 @@ $group_name1= $collection['accounts_group']['group_name'];
 <?php if($group_id2 == 35) { ?> Tax deducted at source (TDS receivable) <?php } ?>
 <?php if($group_id2 == 34) { ?> Members Control Account <?php } ?>
 </td>
-
+<!--
 <td>
 <select class="chosen main_account" update_id="<?php echo $csv_id; ?>"  >
 <?php foreach($cursor3 as $collection){
@@ -78,7 +78,7 @@ $group_name1= $collection['accounts_group']['group_name'];
 <option> hello</option>
 </select>
 
-</td>
+</td>-->
 
 
 

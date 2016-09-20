@@ -5484,7 +5484,7 @@ function multiple_flat_ajax()
 				
 		if(!empty($value)){
 		$this->loadmodel('user_flat');
-		$conditions=array('user_id'=>$wing_id,"society_id"=>$s_society_id);
+		$conditions=array('user_id'=>$wing_id,"society_id"=>$s_society_id,'exited'=>'no');
 		$result2=$this->user_flat->find('all',array('conditions'=>$conditions));
 		$this->set('user_flat_data',$result2);
 		}

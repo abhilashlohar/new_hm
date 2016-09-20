@@ -27,7 +27,7 @@ $society_sig = @$data['society']['signature'];
 		<li  ><a href="<?php echo $webroot_path; ?>Hms/master_sm_wing" rel='tab'> Wing</a></li>
 		<li><a href="<?php echo $webroot_path; ?>Hms/flat_type" rel='tab' >Unit Number</a></li>
 		<li ><a href="<?php echo $webroot_path; ?>Hms/unit_configuration" rel='tab' >Unit Configuration</a></li>
-		<!--<li><a href="<?php //echo $webroot_path; ?>Hms/flat_nu_import" rel='tab' >Flat Number Import</a></li>-->
+		
 		<li class="active" ><a href="<?php echo $webroot_path; ?>Hms/society_details" rel='tab' >Society Details</a></li>
 		<li><a href="<?php echo $webroot_path; ?>Hms/society_settings" rel='tab' >Society Settings</a></li>
 	</ul>
@@ -47,7 +47,7 @@ $society_sig = @$data['society']['signature'];
 					<div class="controls">
 						<input type="text" maxlength="10"  class="m-wrap span9" style="font-size:16px;" field="society_pan"  name="pan" value='<?php echo $society_pan ; ?>'>
 					</div>
-				<label style="font-size:14px;">Society Registrations Number<span style="color:red;">*</span></label>
+				<label style="font-size:14px;">Society Registration Number<span style="color:red;">*</span></label>
 					<div class="controls">
 						<input type="text"   class="m-wrap span9" style="font-size:16px;" field="society_reg_no"  name="s_number" value='<?php echo $society_reg_num ; ?>'>
 					</div>
@@ -57,7 +57,7 @@ $society_sig = @$data['society']['signature'];
 						<textarea rows='5' cols='5' style='resize:none;' name='address' field="society_add"  class="m-wrap span9"><?php echo $society_address ; ?></textarea>
 					</div>
 
-				<label style="font-size:14px;">Society Signature<span style="color:red;">*</span></label>
+				<label style="font-size:14px;">Society Signature</label>
 				<div class="controls">
 					<div class="fileupload fileupload-new" data-provides="fileupload">
 						<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
@@ -102,7 +102,7 @@ $society_sig = @$data['society']['signature'];
 					</div>
 				
 
-				<label style="font-size:14px;">Society Logo<span style="color:red;">*</span></label>
+				<label style="font-size:14px;">Society Logo</label>
 				<div class="controls">
 					<div class="fileupload fileupload-new" data-provides="fileupload">
 						<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">

@@ -29864,20 +29864,21 @@ function login_third_party(){
 	
 		$this->ath();
 		$s_society_id = $this->Session->read('hm_society_id');
-		$s_user_id=$this->Session->read('user_id');	
-		date_default_timezone_set('Asia/kolkata');
+		$s_user_id=$this->Session->read('hm_user_id');	
+		 date_default_timezone_set('Asia/kolkata');
 		$date=date("d-m-Y");
 		$time=date('h:i:a',time());
 		if(isset($this->request->data['sub'])){
 			
 				$name = $this->request->data['name'];
+				$title = $this->request->data['title']; 
 				$email = @$this->request->data['email'];
 				$mobile = @$this->request->data['mobile'];
 				$password = $this->request->data['password'];
 
 				$this->loadmodel('user');
 				$i=$this->autoincrement('user','user_id');
-				$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email'=>$email,'mobile'=>$mobile,'society_id' =>$s_society_id,'signup_random'=>"",'active'=>'yes',"user_type"=>"third_party","password"=>$password,'date' => $date, 'time' => $time,'profile_pic'=>'blank.jpg'));
+				$this->user->saveAll(array('user_id' => $i, 'user_name' => $name,'email'=>$email,'mobile'=>$mobile,'society_id' =>$s_society_id,'signup_random'=>"",'active'=>'yes',"user_type"=>"third_party","password"=>$password,'date' => $date, 'time' => $time,'profile_pic'=>'blank.jpg','created_by'=>$s_user_id,'degination_title'=>$title));
 
 				$this->loadmodel('user_flat');
 				$user_flat_id=$this->autoincrement('user_flat','user_flat_id');

@@ -539,7 +539,7 @@ $(document).ready(function(){
 			$("#validation_email").html('');
 			var filter=/^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 			if(filter.test(email)) {
-				
+				$("#otp_code_email").html("loading......");
 				$.ajax({
 					url: "<?php echo $webroot_path; ?>/Hms/profile_email_verification_already/"+user_id+"/"+email,
 					}).done(function(response){
@@ -556,7 +556,7 @@ $(document).ready(function(){
 							
 							
 						}else{
-							
+							$("#otp_code_email").html("");
 							$("#validation_email").html('Email is Already Exist.');
 							
 						}

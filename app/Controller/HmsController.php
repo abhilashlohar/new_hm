@@ -12859,6 +12859,112 @@ $this->set('result_not_login',$this->user->find('all',array('conditions'=>$condi
 
 }
 
+function profile_email_verification_send($user_id=null,$email=null){
+		$this->layout=null;		
+	    $to=$email;
+		$user_id=(int)$user_id;
+		$this->loadmodel('user');
+		$conditions=array('user_id'=>$user_id);
+		$result_user=$this->user->find('all',array('conditions'=>$conditions));
+		foreach($result_user as $data)
+		{
+		  $user_name=$data['user']['user_name'];
+		  
+		}
+		$user_name=$this->check_charecter_name($user_name);
+		$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));
+		
+		
+		$random=(string)mt_rand(1000,9999);
+		
+		$this->loadmodel('user');
+		$this->user->updateAll(array('signup_random'=>$random,'new_email'=>$email),array('user_id'=>$user_id)); 
+		
+		$message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+				  <tbody>
+					<tr>
+						<td>
+							<table width="100%" cellpadding="0" cellspacing="0">
+								<tbody>
+								
+										<tr>
+											<td colspan="2">
+												<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+												<tbody>
+												<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+												<tr>
+												<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
+												<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+												<td width="100%"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px"><span style="color:#00a0e3">Housing</span><span style="color:#777776">Matters</span></a></td>
+												<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
+													
+												</td>
+												</tr>
+												<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+												</tbody>
+												</table>
+											</td>
+										</tr>
+																
+										
+								</tbody>
+							</table>
+							
+							<table width="100%" cellpadding="0" cellspacing="0">
+								<tbody>
+								
+										
+										
+										<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										<span style="color:rgb(100,100,99)" align="justify"> Hello '.$user_name.', </span> 
+										</td>
+																		
+										</tr>
+										
+										
+										<tr>
+												<td style="padding:5px;" width="100%" align="left">
+												<span style="color:rgb(100,100,99)" align="justify">This is to confirm that you are the secured user of this mail ID. Hence we have updated your mail address on HousingMatters. Here is the 4 digit otp code '.$random.' Kindly do not share												</span> 
+												</td>
+																		
+										</tr>
+										
+										
+
+										
+										<tr>
+											<td style="padding:5px;" width="100%" align="left">
+													<span style="color:rgb(100,100,99)"> 
+														Thank you.<br/>
+														HousingMatters (Support Team)<br/>
+														www.housingmatters.in
+													</span>
+											</td>
+																		
+										</tr>
+							
+							</table>
+							
+						</td>
+					</tr>
+
+				</tbody>
+		</table>';
+		
+		 $from_name="HousingMatters";
+		 $subject="OTP for Email update";
+		 $this->loadmodel('email');
+		$conditions=array('auto_id'=>4);
+		$result_email=$this->email->find('all',array('conditions'=>$conditions));
+		foreach ($result_email as $collection){
+			$from=$collection['email']['from'];
+		}
+		$reply=$from;
+		$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+
+}
+
 function profile_mobile_verification_send($user_id=null,$mobile=null){
 	$this->layout=null;		
 	
@@ -12922,6 +13028,43 @@ $result_user = $this->user->find('all',array('conditions'=>$conditions));
 	
 }
 
+function profile_email_verification_already($user_id=null,$email=null){
+
+$this->layout=null;	
+$email=trim($email);
+
+$this->loadmodel('user');
+$conditions=array("email" => $email,'user_id'=>(int)$user_id);
+$result4 = $this->user->find('all',array('conditions'=>$conditions));
+$n4 = sizeof($result4);
+$e=$n4;
+if ($e > 0) {
+echo "true";
+} else {
+		$this->loadmodel('user_temp');
+		$conditions=array("email" => $email,'reject'=>0);
+		$result3 = $this->user_temp->find('all',array('conditions'=>$conditions));
+		$n3 = sizeof($result3);
+		$this->loadmodel('user');
+		$conditions=array("email" => $email);
+		$result4 = $this->user->find('all',array('conditions'=>$conditions));
+		$n4 = sizeof($result4);
+		$e=$n3+$n4;
+
+		if ($e > 0) {
+		echo"false";
+		} else {
+		echo"true";
+		}
+	
+}
+
+	
+	
+	
+}
+
+
 function profile_mobile_verification_already($user_id=null,$mobile=null){
 	
 $this->layout=null;	
@@ -12953,6 +13096,19 @@ echo "true";
 }
 
 
+	
+}
+
+function profile_email_verification($user_id=null){
+	$this->layout=null;	
+	
+	$this->loadmodel('user');
+	$conditions=array('user_id'=>(int)$user_id);
+	$result_user=$this->user->find('all',array('conditions'=>$conditions));
+	$email=$result_user[0]['user']['email'];
+	$this->set('email',$email);
+	$this->set('user_id',$user_id);	
+	
 	
 }
 

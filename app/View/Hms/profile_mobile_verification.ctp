@@ -16,9 +16,9 @@
 	  <div class="controls">
 		<span style="color:red;vertical-align: middle;">+91</span> <input class="m-wrap " maxlength="10" id="new_mobile"  type="text" value="">
 	  </div>
-	  <div id="validation" style="color:red;"></div>
+	  <div id="validation" style="color:red;margin-left: 24px;"></div>
    </div>
-	<div class="control-group"  id="otp_code">
+	<div class="control-group"  id="otp_code" style="margin-left:24px;">
 	
 	</div>
 					   

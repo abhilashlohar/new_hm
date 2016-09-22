@@ -550,8 +550,8 @@ $(document).ready(function(){
 							}).done(function(response) {
 								$("#new_email").prop("readonly",true);
 								$("#otp_code_email").html(response);
-								
-								
+								$(".save_email").addClass("email_update");
+								$(".email_update").removeClass("save_email");
 							});		
 							
 							
@@ -567,6 +567,33 @@ $(document).ready(function(){
 				
 			}
 		}
+	});
+	
+	$(".email_update").die().live("click",function() {
+		
+		var user_id=$(this).attr("member_id");
+		var otp_number=$("#otp_number").val();
+		
+			if(otp_number==""){
+				
+				$("#validation_otp").html('Please fill 4 digit number');
+			}else{
+				$("#validation_otp").html('');
+				$.ajax({
+					url: "<?php echo $webroot_path; ?>/Hms/profile_email_update/"+user_id+"/"+otp_number,
+					}).done(function(response){
+						if(response=="update"){
+							
+							window.location.href="profile";
+							
+						}else{
+							
+							$("#validation_otp").html('You have enter wrong digit');
+						}
+					});					
+				
+			}
+		
 	});
 	
 	

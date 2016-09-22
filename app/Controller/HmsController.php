@@ -12877,8 +12877,6 @@ function profile_email_verification_send($user_id=null,$email=null){
 		
 		$random=(string)mt_rand(1000,9999);
 		
-		$this->loadmodel('user');
-		$this->user->updateAll(array('signup_random'=>$random,'new_email'=>$email),array('user_id'=>$user_id)); 
 		
 		$message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
 				  <tbody>
@@ -12953,7 +12951,7 @@ function profile_email_verification_send($user_id=null,$email=null){
 		</table>';
 		
 		 $from_name="HousingMatters";
-		 $subject="OTP for Email update";
+		 $subject="Otp for email update";
 		 $this->loadmodel('email');
 		$conditions=array('auto_id'=>4);
 		$result_email=$this->email->find('all',array('conditions'=>$conditions));
@@ -12961,7 +12959,12 @@ function profile_email_verification_send($user_id=null,$email=null){
 			$from=$collection['email']['from'];
 		}
 		$reply=$from;
-		$this->send_email($to,$from,$from_name,$subject,$message_web,$reply);
+		$this->smtpmailer($to,$from,$from_name,$subject,$message_web,$reply);
+		
+		$this->loadmodel('user');
+		$this->user->updateAll(array('signup_random'=>$random,'new_email'=>$email),array('user_id'=>$user_id)); 
+		
+		
 
 }
 
@@ -12996,6 +12999,40 @@ function profile_mobile_verification_send($user_id=null,$mobile=null){
 
 	
 }
+
+function profile_email_update($user_id=null,$otp_number=null){
+$this->layout=null;		
+$this->loadmodel('user');
+$conditions=array("signup_random" => $otp_number,'user_id'=>(int)$user_id);
+$result_user = $this->user->find('all',array('conditions'=>$conditions));
+ $n4 = sizeof($result_user);
+	if($n4>0){
+		
+		$new_email=$result_user[0]['user']['new_email'];
+		$email=$result_user[0]['user']['email'];
+		$society_id=$result_user[0]['user']['society_id'];
+		$mobile_old=$result_user[0]['user']['mobile'];
+		date_default_timezone_set('Asia/Kolkata');
+		$date=date("d-m-Y");
+		$time = date(' h:i a', time());
+		$op=$this->autoincrement('profile_log','profile_log_id');
+		$this->loadmodel('profile_log');
+		$this->profile_log->saveAll(array('profile_log_id'=>$op,'user_id'=>(int)$user_id,'society_id'=>$society_id,'email'=>$email,'mobile'=>$mobile_old,'new_email'=>$new_email,'new_mobile'=>'','date'=>$date,'time'=>$time));
+				
+		$this->loadmodel('user');
+		$this->user->updateAll(array("email"=>$new_email,"new_email"=>"","signup_random"=>""),array('user_id'=>(int)$user_id));
+		
+		echo"update";
+	}else{
+
+		echo"wrong";
+	}	
+
+	
+}
+
+
+
 
 function profile_mobile_update($user_id=null,$otp_number=null){
 $this->layout=null;		
@@ -19115,7 +19152,7 @@ $from=$collection['email']['from'];
 $reply=$from;
 
  
- 
+ /*
  if(!empty($email) && $email!=$email1){
 		
 		
@@ -19207,7 +19244,7 @@ $this->user->updateAll(array('signup_random'=>$s_user_id,'new_email'=>$email),ar
 $this->smtpmailer($email,$from,$from_name,$subject,$message_web,$reply);
 
 
-}
+} */
  
 if(empty($photo_name)){
 $photo_name=$profile;

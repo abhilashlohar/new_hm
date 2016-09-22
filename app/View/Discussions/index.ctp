@@ -16,11 +16,11 @@
 
 <div style="background-color: #FFF; padding: 0px 10px; border: 1px solid rgb(233, 231, 231);margin-top: 2px;min-height:500px;">
 	<div class="row-fluid" id="hello">
-		<div class="span6" id="topic_detail">
+		<div class="span6" id="topic_detail" style="background-color: rgba(233, 239, 242, 0.38);">
 			
 		</div>
 		
-		<div class="span3" id="topic_list">
+		<div class="span3" id="topic_list" >
 		<div align="center" style="color: rgb(84, 83, 83); font-weight: 600;" style="width:100%;">ALL TOPICS</div>
 		<?php foreach($posts as $post){
 			$discussion_post_id=$post["discussion_post"]["discussion_post_id"];
@@ -28,7 +28,7 @@
 			$date=$post["discussion_post"]["date"];
 			$result_count_comment=$this->requestAction(array('controller' => 'Discussions', 'action' => 'count_comment_via_discussion_post_id'), array('pass' => array($discussion_post_id)));
 			$time=$post["discussion_post"]["time"];?>
-			<div class="topic show_list" post_id="<?php echo $discussion_post_id; ?>" style="width:100%;">
+			<div class="topic show_list" post_id="<?php echo $discussion_post_id; ?>" style="width:100%;background-color: rgb(233, 239, 243);">
 				<div align="left" style="font-size: 12px;"><?php echo $topic; ?></div>
 				<div align="left" style="font-size: 10px;"><span>(<?php echo sizeof($result_count_comment); ?> Comments ) </span><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp; <?php echo $time; ?></div>
 			</div>

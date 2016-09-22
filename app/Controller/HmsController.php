@@ -19274,8 +19274,6 @@ $photo_name=$profile;
 	
 $to=$email;
 
-  
-
   @$message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
           <tbody>
 			<tr>

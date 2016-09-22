@@ -11,7 +11,7 @@ if($type_list=="all"){ ?>
 			$result_count_comment=$this->requestAction(array('controller' => 'Discussions', 'action' => 'count_comment_via_discussion_post_id'), array('pass' => array($discussion_post_id)));
 			$time=$post["discussion_post"]["time"];?>
 			
-			<div class="topic show_list" post_id="<?php echo $discussion_post_id; ?>" style="width:100%;">
+			<div class="topic show_list" post_id="<?php echo $discussion_post_id; ?>" style="width:100%;background-color: rgb(233, 239, 243);">
 				<div align="left" style="font-size: 12px;"><?php echo $topic; ?></div>
 				<div align="left" style="font-size: 10px;"><span >(<?php echo sizeof($result_count_comment); ?> Comments ) </span><?php echo date("d-m-Y",$date); ?>&nbsp;&nbsp; <?php echo $time; ?></div>
 			</div>
@@ -30,7 +30,7 @@ if($type_list=="my"){ ?>
 			$result_count_comment=$this->requestAction(array('controller' => 'Discussions', 'action' => 'count_comment_via_discussion_post_id'), array('pass' => array($discussion_post_id)));
 			$time=$post["discussion_post"]["time"];?>
 			
-				<div class="topic show_list" post_id="<?php echo $discussion_post_id; ?>" style="width:100%;">
+				<div class="topic show_list" post_id="<?php echo $discussion_post_id; ?>" style="width:100%;    background-color: rgb(233, 239, 243);">
 				
 				<div style="margin-top: -4px; margin-right: -5px;" class="pull-right">
 				<span class="btn mini pull-right move_archive tooltips" data-placement="top" post_id="<?php echo $discussion_post_id; ?>" style="" data-original-title="close topics" >
@@ -59,7 +59,7 @@ if($type_list=="archive"){ ?>
 			$date=$post["discussion_post"]["date"];
 			$result_count_comment=$this->requestAction(array('controller' => 'Discussions', 'action' => 'count_comment_via_discussion_post_id'), array('pass' => array($discussion_post_id)));
 			$time=$post["discussion_post"]["time"];?>
-			<div class="show_list" style="width:100%;">
+			<div class="show_list" style="width:100%;background-color: rgb(233, 239, 243);">
 				<span class="btn mini pull-right delete_per" style="margin-right: 0px;" post_id="<?php echo $discussion_post_id; ?>">
 				<i class="icon-trash"></i>
 				</span>

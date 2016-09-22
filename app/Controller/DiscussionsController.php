@@ -408,7 +408,7 @@ function submit_comment(){
 	
 					$from_name="HousingMatters";
 					$subject= 'Discussion: ['. $society_name . ']' .'  -   '.'New Comment on '.$topic.'';
-					$this->send_email($current_email,$from,$from_name,$subject,$message_web,$reply);
+					$this->send_email($create_post_email,$from,$from_name,$subject,$message_web,$reply);
 					
 					
 				}

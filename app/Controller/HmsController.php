@@ -2802,7 +2802,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	//Configure::write('debug', 0);
+	Configure::write('debug', 0);
 }
 
 
@@ -8702,9 +8702,31 @@ function dashboard(){
 	$this->set('result_poll_last',$this->poll->find('all', array('conditions' => $conditions,'order' => $order,'limit' =>3)));
 
 	//////////////polls  last 3///////////////// 
+	
+  //log report clean 1 month latter
 
-	 
+	  $new_date=date("Y-m-d");
+	  $new_s=strtotime($new_date);
+	  $final = date("Y-m-d", strtotime("-1 month", $new_s));
+	  $clean_date=strtotime($final);
+	  $this->loadmodel('log');
+      $conditions=array('society_id'=>$s_society_id);
+	  $res= $this->log->find('all', array('conditions' => $conditions));
+	  foreach($res as $data){
+			 $log_id=$data['log']['log_id'];
+			 $date=$data['log']['date']; 
+			 $date_convert=date("Y-m-d",strtotime($date));
+			 $date_convert=strtotime($date_convert);
+			 $this->log->updateAll(array("date_convert"=>$date_convert),array("log_id"=>$log_id));
+		 }
+		 
+		  $this->loadmodel('log');
+	      $conditions=array('society_id'=>$s_society_id,'date_convert'=>array('$lt'=>$clean_date));
+		  $this->log->deleteAll($conditions);
 
+  //////End ///
+		  
+		  
 		//////////////documents  last 3///////////////// 
 		$this->loadmodel('resource');
 	
@@ -13009,6 +13031,7 @@ $result_user = $this->user->find('all',array('conditions'=>$conditions));
 	if($n4>0){
 		
 		$new_email=$result_user[0]['user']['new_email'];
+		$user_name=$result_user[0]['user']['user_name'];
 		$email=$result_user[0]['user']['email'];
 		$society_id=$result_user[0]['user']['society_id'];
 		$mobile_old=$result_user[0]['user']['mobile'];
@@ -13017,7 +13040,7 @@ $result_user = $this->user->find('all',array('conditions'=>$conditions));
 		$time = date(' h:i a', time());
 		$op=$this->autoincrement('profile_log','profile_log_id');
 		$this->loadmodel('profile_log');
-		$this->profile_log->saveAll(array('profile_log_id'=>$op,'user_id'=>(int)$user_id,'society_id'=>$society_id,'email'=>$email,'mobile'=>$mobile_old,'new_email'=>$new_email,'new_mobile'=>'','date'=>$date,'time'=>$time));
+		$this->profile_log->saveAll(array('profile_log_id'=>$op,'user_id'=>(int)$user_id,'society_id'=>$society_id,'email'=>$email,'mobile'=>$mobile_old,'new_email'=>$new_email,'new_mobile'=>'','date'=>$date,'time'=>$time,'user_name'=>$user_name,'new_user_name'=>''));
 				
 		$this->loadmodel('user');
 		$this->user->updateAll(array("email"=>$new_email,"new_email"=>"","signup_random"=>""),array('user_id'=>(int)$user_id));
@@ -13043,6 +13066,7 @@ $result_user = $this->user->find('all',array('conditions'=>$conditions));
 	if($n4>0){
 		
 		$mobile=$result_user[0]['user']['new_mobile'];
+		$user_name=$result_user[0]['user']['user_name'];
 		$email=$result_user[0]['user']['email'];
 		$society_id=$result_user[0]['user']['society_id'];
 		$mobile_old=$result_user[0]['user']['mobile'];
@@ -13051,7 +13075,7 @@ $result_user = $this->user->find('all',array('conditions'=>$conditions));
 		$time = date(' h:i a', time());
 		$op=$this->autoincrement('profile_log','profile_log_id');
 		$this->loadmodel('profile_log');
-		$this->profile_log->saveAll(array('profile_log_id'=>$op,'user_id'=>(int)$user_id,'society_id'=>$society_id,'email'=>$email,'mobile'=>$mobile_old,'new_email'=>'','new_mobile'=>$mobile,'date'=>$date,'time'=>$time));
+		$this->profile_log->saveAll(array('profile_log_id'=>$op,'user_id'=>(int)$user_id,'society_id'=>$society_id,'email'=>$email,'mobile'=>$mobile_old,'new_email'=>'','new_mobile'=>$mobile,'date'=>$date,'time'=>$time,'user_name'=>$user_name,'new_user_name'=>''));
 				
 		$this->loadmodel('user');
 		$this->user->updateAll(array("mobile"=>$mobile,"new_mobile"=>"","signup_random"=>""),array('user_id'=>(int)$user_id));
@@ -21014,13 +21038,20 @@ function update_member_info($user_id=null){
 		
 	//Store history code
 	
+	
+	    $user_name_old=$user_info['user_name'];
+
 		$email_old=$user_info['email'];
 		$mobile_old=$user_info['mobile'];
 		date_default_timezone_set('Asia/Kolkata');
 		$date=date("d-m-Y");
 		$time = date(' h:i a', time());
 		$op=$this->autoincrement('profile_log','profile_log_id');
-			
+		if($user_name_old!=$name){
+			$new_user_name=$name;
+		}else{
+			$new_user_name='';
+		}
 		if($email!=$email_old and $mobile!=$mobile_old){
 			 $new_email=$email;
 			 $new_mobile=$mobile;
@@ -21036,7 +21067,7 @@ function update_member_info($user_id=null){
 		}
 		
 		$this->loadmodel('profile_log');
-		$this->profile_log->saveAll(array('profile_log_id'=>$op,'user_id'=>(int)$user_id,'society_id'=>$s_society_id,'email'=>$email_old,'mobile'=>$mobile_old,'new_email'=>$new_email,'new_mobile'=>$new_mobile,'date'=>$date,'time'=>$time,'updated_by'=>$s_user_id));
+		$this->profile_log->saveAll(array('profile_log_id'=>$op,'user_id'=>(int)$user_id,'society_id'=>$s_society_id,'email'=>$email_old,'mobile'=>$mobile_old,'new_email'=>$new_email,'new_mobile'=>$new_mobile,'date'=>$date,'time'=>$time,'updated_by'=>$s_user_id,'user_name'=>$user_name_old,'new_user_name'=>$new_user_name));
 		
 	//// end 
 		

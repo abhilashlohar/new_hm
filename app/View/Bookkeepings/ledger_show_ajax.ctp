@@ -94,7 +94,7 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 $ledger_account_id;
 $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_opening_balance'), array('pass' => array($ledger_account_id,$ledger_sub_account_id,strtotime($from))));
 ?>
-<div class="pull-right" style="text-align:right;font-size:15px;padding:5px;">Opening Balance: <?php echo $opening_balance; ?></div>
+<div class="pull-right" style="text-align:right;font-size:15px;padding:5px;background-color: antiquewhite;">Opening Balance: <?php echo $opening_balance; ?></div>
 <table width="100%" class="table table-bordered table-striped">
 	<thead>
 		<tr>
@@ -807,7 +807,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			<td style="text-align:right;"><b><?php echo $total_credit; ?></b></td>
 			<td class="hide_at_print"></td>
 		</tr>
-		<tr>
+		<tr >
 		<?php
 					if($opening_balance!=0){
 						$opening_be=explode(" ",$opening_balance);
@@ -821,8 +821,8 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 						$closing_balance=$total_debit-$total_credit;
 					}
 					?>
-			<td colspan="7" style="text-align:right;font-size:15px;">Closing Balance</td>
-			<td style="text-align:right;font-size:15px;"><?php  echo abs($closing_balance); if($closing_balance>0){ echo " Dr."; }elseif($closing_balance<0){ echo " Cr."; } ?></td>
+			<td colspan="7" style="text-align:right;font-size:15px;background-color: aliceblue !important;">Closing Balance</td>
+			<td style="text-align:right;font-size:15px;background-color: aliceblue !important;"><?php  echo abs($closing_balance); if($closing_balance>0){ echo " Dr."; }elseif($closing_balance<0){ echo " Cr."; } ?></td>
 		</tr>
 	</tbody>
 </table>

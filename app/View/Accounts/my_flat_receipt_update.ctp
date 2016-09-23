@@ -34,7 +34,7 @@ $default_date = date('d-m-Y');
 					  <td>
 					  <input type="text" class="date-picker m-wrap span12" 
 					  data-date-format="dd-mm-yyyy" style="background-color:white !important; margin-top:3px;" 
-					  value="<?php echo $default_date; ?>">
+					  value="<?php echo $default_date; ?>" readonly>
 					  </td>
 							  
 							  
@@ -215,7 +215,7 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 											<td><?php echo $amount; ?></td>
 											<td><?php echo $narration; ?></td>
 											<td><span class="label <?php echo $status_class; ?>"><?php echo $status; ?></span></td>
-											<td><a href="<?php echo $webroot_path; ?>Accounts/delete_receipt_by_member/<?php echo $auto_id; ?>" class="btn mini red"><i class="icon-trash"></i></a></td>
+											<td><a receipt_id="<?php echo $auto_id; ?>" class="btn mini red my_flat_receipt "><i class="icon-trash"></i></a></td>
 										</tr>
 									<?php } 
 									if(sizeof($temp_cash_banks)==0){?>
@@ -228,13 +228,22 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 							</div>
 						</div>
 
-
+<div id="delete_topic_result"></div>
 
 
 <script>
 $(document).ready(function() { 
-	$('form').submit( function(ev){
-	ev.preventDefault();
+
+ $(".my_flat_receipt").die().live("click",function(){
+		var dt=$(this).attr('receipt_id');
+		$('#delete_topic_result').html('<div id="pp"><div class="modal-backdrop fade in"></div><div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"><div class="modal-body" style="font-size:14px;"><i class="icon-warning-sign" style="color:#d84a38;"></i> Are you sure you want to delete the receipt ? </div><div class="modal-footer"><a href="<?php echo $webroot_path; ?>Accounts/delete_receipt_by_member/'+dt+'" class="btn blue" id="yes">Yes</a><a href="#"  role="button" id="can" class="btn">No</a></div></div></div>');
+	});
+	$("#can").live('click',function(){
+		$('#pp').hide();
+	});
+
+  $('form').submit( function(ev){
+	  ev.preventDefault();
 		$('.form-actions').hide();
 		$('#show_message').html("<center>Please wait.....</center>");
 		

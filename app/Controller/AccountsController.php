@@ -6249,12 +6249,12 @@ if($process_status==3){
 }
 
 
-function delete_receipt_by_member($auto_id=null){
+function delete_receipt_by_member($auto_id=null){ 
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$this->loadmodel('temp_cash_bank');
-		$conditions4=array('society_id'=>$s_society_id,'auto_id'=>(int)$auto_id);
-		$this->temp_cash_bank->deleteAll($conditions4);
-		$this->redirect(array('action' => 'my_flat_receipt_update'));
+	$conditions4=array('society_id'=>$s_society_id,'auto_id'=>(int)$auto_id);
+	$this->temp_cash_bank->deleteAll($conditions4);
+	$this->redirect(array('action' => 'my_flat_receipt_update'));
 }
 
 function ledger_account_fetch($auto_id) 

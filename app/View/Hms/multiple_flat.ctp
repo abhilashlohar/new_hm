@@ -73,7 +73,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<div align="center" style="font-size:15px;padding-bottom: 5px;"> 
 				Multiple Flat Members Report 
 			</div>
-<table class="table table-condensed table-bordered" id="sample_1" >
+<table class="table table-condensed table-bordered" id="" >
 			<thead>
 				<tr>
 					<th width="5%">Sr.</th>

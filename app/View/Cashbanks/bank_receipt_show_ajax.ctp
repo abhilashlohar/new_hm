@@ -121,7 +121,7 @@
 					<td><?php echo $receipt_mode; ?></td>
 					<td><?php echo $cheque_number; ?></td>
 					<td><?php echo $narration; ?></td>
-					<td style="text-align: right;"><?php $amount_for_view=$this->Currency->formatCurrency( $amount, "INR"); echo $amount_for_view; ?></td>
+					<td style="text-align: right;"><?php $amount_for_view=$this->Currency->formatCurrency( $amount, "INR"); echo $amount_for_view; ?><span style="display:none;"><?php echo $amount; ?></span></td>
 					<td class="hide_at_print">
 						<div class="btn-group" style="margin: 0px !important;">
 							<a class="btn blue mini" href="#" data-toggle="dropdown">

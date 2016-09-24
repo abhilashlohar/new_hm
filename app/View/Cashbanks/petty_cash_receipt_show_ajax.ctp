@@ -136,13 +136,14 @@ if($date >= $from_strto && $date <= $to_strto)
 {
 $date = date('d-m-Y',($date));  
 $total_debit = $total_debit + $amount;
+$new_amount=$amount;
 $amount = number_format($amount);
 ?>
 <tr>
 <td><?php echo $receipt_no; ?> </td>
 <td><?php echo $date; ?> </td>
 <td><?php echo $user_name; ?>  &nbsp&nbsp&nbsp&nbsp<?php echo @$wing_flat; ?> </td>
-<td style="text-align:right;"><?php echo $amount; ?></td>
+<td style="text-align:right;"><?php echo $amount; ?><span style="display:none;"><?php echo $new_amount; ?></span></td>
 <td><?php echo $narration; ?></td>
 <td class="hide_at_print" style="text-align:left;">
 

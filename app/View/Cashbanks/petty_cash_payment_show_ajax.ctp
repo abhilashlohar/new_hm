@@ -114,13 +114,14 @@ if($date >= $m_from && $date <= $m_to)
 {
 $date = date('d-m-Y',($date));	   
 $total_debit = $total_debit + $amount;
+$new_amount=$amount;
 $amount = number_format($amount);
 ?>
 <tr>
 <td><?php echo $receipt_no; ?> </td>
 <td><?php echo $date; ?> </td>
 <td><?php echo $user_name; ?> </td>
-<td><?php echo $amount; ?></td>
+<td><?php echo $amount; ?> <span style="display:none;"><?php echo $new_amount; ?></span></td>
 <td><?php echo $narration; ?></td>
 <td class="hide_at_print">
 <div class="btn-group" style="margin:0 !important;">

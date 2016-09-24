@@ -10,6 +10,8 @@ style="background-color:white !important; margin-top:2.5px;" field="transaction_
 <table class="table table-bordered table-condensed" style="width:100%; background-color:white;" id="open_bal">
 <tr>
 <th>Account Group</th>
+<!--<th>Account Group</th>
+<th>Account Name</th>-->
 <th>Account Name</th>
 <th>Debit</th>
 <th>Credit</th>
@@ -52,6 +54,35 @@ $group_name1= $collection['accounts_group']['group_name'];
 <?php if($group_id2 == 35) { ?> Tax deducted at source (TDS receivable) <?php } ?>
 <?php if($group_id2 == 34) { ?> Members Control Account <?php } ?>
 </td>
+<!--
+<td>
+<select class="chosen main_account" update_id="<?php echo $csv_id; ?>"  >
+<?php foreach($cursor3 as $collection){
+$group_id5 = (int)$collection['accounts_group']['auto_id'];
+$group_name1= $collection['accounts_group']['group_name'];
+?>
+
+<option value="<?php echo $group_id5; ?>,2" <?php if($group_id2 == $group_id5) { ?> selected <?php } ?> ><?php echo $group_name1; ?></option>
+<?php } ?>
+<option value="15,1" <?php if($group_id2 == 15) { ?> selected <?php } ?> > Sundry Creditors Control A/c </option>
+<option value="112,1" <?php if($group_id2 == 112) { ?> selected <?php } ?> > Sundry Debtors Control A/c </option>
+<option value="33,1" <?php if($group_id2 == 33) { ?> selected <?php } ?> > Bank Accounts </option>
+<option value="35,1" <?php if($group_id2 == 35) { ?> selected <?php } ?> > Tax deducted at source (TDS receivable) </option>
+<option value="34,1" <?php if($group_id2 == 34) { ?> selected <?php } ?>> Members Control Account </option>
+</select>
+
+</td>
+
+<td>
+<select class="group_account">
+<option> hello</option>
+</select>
+
+</td>-->
+
+
+
+
 <td>
 <?php if($ledger_type == 1){ ?>	
 <?php foreach($cursor1 as $dataa){
@@ -121,6 +152,14 @@ value="<?php echo @$penalty; ?>" field="penalty" record_id="<?php echo $csv_id; 
 
 <script>
 $( document ).ready(function() {
+
+$( 'select.main_account' ).change(function() {	
+	var accounts_group=$(this).val();
+	var update_id=$(this).attr("update_id");
+	$(this).closest('tr').find('td:nth-child(3)').load('group_wise_show_ledger_account/'+accounts_group+'/'+update_id);
+	
+});	
+	
 	$( 'input[type="text"]' ).blur(function() {
 		var record_id=$(this).attr("record_id");
 		var field=$(this).attr("field");

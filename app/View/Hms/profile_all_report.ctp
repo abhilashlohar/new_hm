@@ -19,11 +19,12 @@
 <thead>
 <tr>
 <th>Sr No.</th>
-
+<th>User Name</th>
 <th>email</th>
 <th>mobile</th>
-<th>Update email</th>
-<th>Update mobile</th>
+<th>Updated User Name</th>
+<th>Updated email</th>
+<th>Updated mobile</th>
 <th>All profile update Logged In Time </th>
 </tr>
 </thead>
@@ -39,6 +40,8 @@ $date=$data['profile_log']['date'];
 $time=$data['profile_log']['time'];
 $old_email=$data['profile_log']['email'];
 $new_email=$data['profile_log']['new_email'];
+$old_user_name=@$data['profile_log']['user_name'];
+$new_user_name=@$data['profile_log']['new_user_name'];
 $old_mobile=$data['profile_log']['mobile'];
 $new_mobile=$data['profile_log']['new_mobile'];
 
@@ -46,10 +49,12 @@ $new_mobile=$data['profile_log']['new_mobile'];
 <tr class="odd gradeX" >
 
 <td><?php echo $i ; ?></td>
+<td><?php echo $old_user_name ; ?></td>
 <td><?php echo $old_email ; ?></td>
 <td><?php echo $old_mobile ; ?></td>
-<td><?php echo $new_email ; ?></td>
-<td><?php echo $new_mobile ; ?></td>
+<td><?php if(!empty($new_user_name)){ echo $new_user_name ; }else{ echo $old_user_name; } ?></td>
+<td><?php if(!empty($new_email)){ echo $new_email ; }else{ echo $old_email; } ?></td>
+<td><?php if(!empty($new_mobile)){ echo $new_mobile ; }else{  echo $old_mobile; } ?></td>
 <td><?php echo @$date ; ?> &nbsp <?php echo @$time ; ?></td>
 
 </tr>

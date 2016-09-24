@@ -1,3 +1,5 @@
+
+
 <?php foreach($comments as $data){
 	$comment_id=$data["discussion_comment"]["discussion_comment_id"];
 	$user_id=$data["discussion_comment"]["user_id"];
@@ -37,4 +39,4 @@
 			</tr>
 		</table>
 	</div>
-<?php } ?>
+<?php }  ?>

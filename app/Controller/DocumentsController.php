@@ -680,7 +680,7 @@ if($this->request->is('post'))
 
 $resource_title= $this->request->data['title'];
 $resource_cat= (int)$this->request->data['sel'];
-$resource_att=$this->request->form['file']['name'];
+/*$resource_att=$this->request->form['file']['name'];
 if(empty($resource_att))
 {
 $resource_att=$attachment;
@@ -688,9 +688,9 @@ $resource_att=$attachment;
 $target = "resource_file/";
 $target=@$target.basename( @$this->request->form['file']['name']);
 $ok=1;
-move_uploaded_file(@$this->request->form['file']['tmp_name'],@$target); 
+move_uploaded_file(@$this->request->form['file']['tmp_name'],@$target); */
 $this->loadmodel('resource');
-$this->resource->updateAll( array("resource_attachment" => $resource_att,"resource_title"=>$resource_title,'resource_category'=> $resource_cat),array("resource_id" => $res_id));
+$this->resource->updateAll( array("resource_title"=>$resource_title,'resource_category'=> $resource_cat),array("resource_id" => $res_id));
 
 $this->redirect(array("controller"=>"Documents","action"=>"resource_view"));
 }

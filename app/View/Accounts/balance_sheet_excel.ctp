@@ -180,7 +180,7 @@ if($balance_sheet_income_expenditure>0){
 				<table width="100%" style="border:none;">
 					<tr>
 					<td colspan="2" width="75%" style="border:none;border-right: 1px solid;"> <span ><b>Surplus in expenditure over income </b></span>   </td>
-					<td align="right"> <span style="float:right;"> <?php echo number_format($total_surplus); $total_balace+=$total_surplus; ?></span>
+					<td align="right"> <span style="float:right;"> <?php echo number_format($total_surplus); $total_balace_expenditure+=$total_surplus; ?></span>
 					</td>
 					
 					</tr>
@@ -219,8 +219,6 @@ if($balance_sheet_income_expenditure>0){
 					</tr>
 				
 			</table>
-
-
 
  </td>
 </tr>

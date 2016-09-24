@@ -594,25 +594,130 @@ $this->layout='blank';
 		$this->event->updateAll(array('not_in_rsvp'=>$not_in_rsvp),array('event.event_id'=>$e));
 	}
 	
-		echo "Thanks for tell us.";
+		echo "Thanks for your response.";
 	}
 	
 	if($type==3)
 	{
-	$no=(int)$this->request->query('no');
+	 $no=(int)$this->request->query('no');
 	
 	$this->loadmodel('event');
 	$conditions=array("event_id" => $e);
 	$event_result=$this->event->find('all', array('conditions' => $conditions));
+	@$user_id=@$event_result[0]['event']['user_id'];
+	@$e_name=@$event_result[0]['event']['e_name'];
 	@$no_of_member=@$event_result[0]['event']['no_of_member'];
+	@$no_d=@$event_result[0]['event']['family_member_count'];
 	$no_of_member=$no_of_member+$no;
-	
-	
+	if(!empty($no_d)){ 
+		foreach($no_d as $key=>$da){
+			$mes[$key]=$da;
+		}
+		$mes[$s_user_id]=$no;
+		$no_d_f=$mes;
+	}else{
 		
-	$this->event->updateAll(array('no_of_member'=>$no_of_member),array('event.event_id'=>$e));
+		$f_count[$s_user_id]=$no;
+		$no_d_f=$f_count;
+	}
 	
+	$this->event->updateAll(array('no_of_member'=>$no_of_member,'family_member_count'=>$no_d_f),array('event.event_id'=>$e));
+
+///Email code
+	$society_result=$this->society_name($s_society_id);
+	foreach($society_result as $data){
+		@$society_name=@$data['society']['society_name'];
+	}
 	
-		echo "Thanks for participation.";
+	$from="Support@housingmatters.in";
+	$from_name="HousingMatters";
+	
+	$result_user_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'), array('pass' => array($s_user_id)));
+		foreach($result_user_info as $collection2){
+		 $user_name_created=$collection2["user"]["user_name"];
+		 $reply_email=$collection2["user"]["email"];
+		}
+		if(!empty($reply_email)){
+			$reply=$reply_email;
+		}else{
+			$reply="Support@housingmatters.in";
+		}
+		$result_user_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'), array('pass' => array($user_id)));
+		foreach($result_user_info as $collection2){
+			$user_name=$collection2["user"]["user_name"];
+		    $to=$collection2["user"]["email"];
+		}
+		@$ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
+	 $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tbody>
+			<tr>
+                <td>
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                        <tbody>
+						
+								<tr>
+									<td colspan="2">
+										<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+										<tbody>
+										<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+										<tr>
+										<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
+										<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+										<td width="100%"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px"><span style="color:#00a0e3">Housing</span><span style="color:#777776">Matters</span></a></td>
+										<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
+											
+										</td>
+										</tr>
+										<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+										</tbody>
+										</table>
+									</td>
+								</tr>
+						</tbody>
+					</table>
+			        <table width="100%" cellpadding="0" cellspacing="0">
+                        <tbody>
+								<tr>
+										<td style="padding:5px;" width="100%" align="left">
+										<span style="color:rgb(100,100,99)" align="justify"> Dear  '.$user_name.', </span> <br>
+										</td>
+								</tr>
+								<tr>
+									<td style="padding:5px;" width="100%" align="left">
+											<span style="color:rgb(100,100,99)"> This is to update you that '.$user_name_created.' along with his '.$no.' family members has accepted invitation for the event '.$e_name.' </span>
+									</td>
+								</tr>
+								
+					
+					</table>
+					<br/>
+					
+					<table width="100%" cellpadding="0" cellspacing="0">
+						<tbody>
+						
+								<tr>
+									<td style="" width="100%" align="left">
+										Thank you.<br/>
+										HousingMatters (Support Team) <br/>
+										www.housingmatters.in
+									</td>
+								</tr>
+							
+						</tbody>
+					</table>
+					
+					
+					
+					
+				</td>
+			</tr>
+
+        </tbody>
+</table>';
+	
+	@$subject.= '['. $society_name . ']' .'  - New event:  '.' '.$e_name.'';
+	$this->send_email(@$to,$from,$from_name,@$subject,$message_web,$reply); 
+	echo "Thanks for participation.";
 	}
 }
 //End save_rsvp// 

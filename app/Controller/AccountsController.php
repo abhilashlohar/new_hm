@@ -4794,6 +4794,67 @@ function pay_bill()
 		<?php
 	}
 }
+
+function group_wise_show_ledger_account($group_account=null,$auto_id=null){
+	
+ $this->layout=null;
+ $s_society_id = (int)$this->Session->read('hm_society_id');
+ $s_user_id = (int)$this->Session->read('hm_user_id');	
+
+    $group=explode(',',$group_account);
+	$group_id=(int)$group[0];
+	$ledger_type=$group[1];
+	if($ledger_type==2){
+		$this->loadmodel('ledger_account');
+		$conditions = array( '$or' => array(array("group_id" => $group_id,'society_id' =>$s_society_id),array("group_id" => $group_id,'society_id' =>0)));
+		$order=(array('ledger_account.ledger_name'=>'ASC'));
+		$ledger_accounts= $this->ledger_account->find('all',array('conditions'=>$conditions,'order'=>$order));
+		?>
+		<select class="chosen"> 
+		<option> </option>
+		<?php
+		foreach($ledger_accounts as $data){
+				$ledger_account_id = (int)$data['ledger_account']['auto_id'];
+				$name = $data['ledger_account']['ledger_name'];
+				?>
+				
+			<option <?php echo $ledger_account_id; ?>> <?php echo $name; ?> </option>
+			
+		<?php }
+		?>
+		</select>
+		
+		<?php
+		
+	}else{
+		
+			$this->loadmodel('ledger_sub_account');
+			$conditions = array("ledger_id" => $group_id,'society_id' =>$s_society_id);
+			$order=(array('ledger_sub_account.name'=>'ASC'));
+			$ledger_sub_account= $this->ledger_sub_account->find('all',array('conditions'=>$conditions,'order'=>$order));
+		
+		
+		?>
+		<select class="chosen"> 
+		<option> </option>
+		<?php
+		foreach($ledger_sub_account as $data){
+				$ledger_sub_account_id = (int)$data['ledger_sub_account']['auto_id'];
+				$name = $data['ledger_sub_account']['name'];
+				?>
+			<option <?php echo $ledger_sub_account_id; ?>> <?php echo $name; ?> </option>
+			
+		<?php }
+		?>
+		</select>
+		
+		<?php
+		
+	}
+	
+}
+
+
 //End pay Bill//
 //Start open_excel//
 function open_excel()
@@ -6188,12 +6249,12 @@ if($process_status==3){
 }
 
 
-function delete_receipt_by_member($auto_id=null){
+function delete_receipt_by_member($auto_id=null){ 
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$this->loadmodel('temp_cash_bank');
-		$conditions4=array('society_id'=>$s_society_id,'auto_id'=>(int)$auto_id);
-		$this->temp_cash_bank->deleteAll($conditions4);
-		$this->redirect(array('action' => 'my_flat_receipt_update'));
+	$conditions4=array('society_id'=>$s_society_id,'auto_id'=>(int)$auto_id);
+	$this->temp_cash_bank->deleteAll($conditions4);
+	$this->redirect(array('action' => 'my_flat_receipt_update'));
 }
 
 function ledger_account_fetch($auto_id) 

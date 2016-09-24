@@ -29,7 +29,7 @@ $mobile=$user_info["mobile"];
 			    <div class="control-group">
 				  <label class="control-label">Mobile</label>
 				  <div class="controls">
-					 <input class="span6 m-wrap" type="text" value="<?php echo $mobile; ?>" name="mobile" >
+					 <input class="span6 m-wrap" type="text" maxlength="10" value="<?php echo $mobile; ?>" name="mobile" >
 					  <span id="mobile"></span>
 				  </div>
 			   </div>
@@ -62,6 +62,8 @@ $(document).ready(function(){
 						if(data!=""){
 							allow=data;
 							$('#email').html("Email is not unique.");
+						}else{
+							$('#email').html("");
 						}
 						
 					}
@@ -84,15 +86,22 @@ $(document).ready(function(){
 						if(data!=""){
 							allow=data;
 							$('#mobile').html("Mobile is not unique.");
+						}else{
+							$('#mobile').html("");
 						}
 						
 						
 					}
 				});
 			}else{
+				
 				allow="no";
 				$('#mobile').html("Mobile is not valid.");
 			}
+			if(mobile.length!=10){
+				allow="no";
+				$('#mobile').html("Mobile is required 10 digits.");
+				}
 		}
 			
 			

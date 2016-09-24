@@ -4,6 +4,7 @@
 $result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_flat_id'),array('pass'=>array((int)$user_flat_id)));
 
 	$wing_flat=$result_member_info["wing_flat"];
+
 	$owner=$result_member_info["owner"];
 	
 	$result_user=$result_member_info["result_user"];

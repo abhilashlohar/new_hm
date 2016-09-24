@@ -1,3 +1,16 @@
+<div id="confirm" style="display:none;">
+	<div class="modal-backdrop fade in"></div>
+	<div style="display: block;" class="modal hide fade in" >
+		<div class="modal-body">
+			<p style="font-size:14px;">Email have sent successfully</p>
+		</div>
+		<div class="modal-footer">
+			<button class="btn" id="close">Close</button>
+		</div>
+	</div>
+</div>
+
+
 <div class="portlet box">
 	<div class="portlet-body">
 	<?php
@@ -125,8 +138,7 @@
 					
 				<li><a href="#" target="_blank" role="button" onclick="cancel_receipt(<?php echo $auto_id; ?>)"><i class="icon-search"></i>Cancel</a></li>
 				<?php } ?>		
-							
-							
+				<li><a href="#" class="send_email" role="button" update_id="<?php echo $auto_id; ?>"><i class="icon-envelope"></i> Email</a></li>
 							</ul>
 						</div>
 						
@@ -164,6 +176,24 @@ $(document).ready(function(){
 	$(".close_popup").live("click",function(){	
 		$(".popup_cancel").hide();
 	});
+	
+	$('.send_email').click(function(){ 
+		var id=$(this).attr('update_id');
+		
+		$.ajax({
+		  url: "individual_send_email/"+id,
+		}).done(function(response){
+			//$('#cancel_popup').html(response);
+			$('#confirm').show();
+		});
+	});	
+	
+	$("#close").click(function(){
+		$("#confirm").hide();
+		});
+	
+	
+	
 	
 	/* var tr=1; 
 	$('#receiptmain thead tr th').each(function(i, obj) {

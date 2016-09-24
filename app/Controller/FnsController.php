@@ -12,8 +12,7 @@ function webroot_path(){
 
 function find_out_role_assign_member($role_id){
 	$res="true";
-	
-	
+		
 	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('user');
 	$conditions=array('society_id'=>$s_society_id,'active'=>'yes');
@@ -191,11 +190,21 @@ function fetch_page_info_via_module_id($module_id,$default_role){
 	$this->loadmodel('role_privilege');
 	$conditions=array('module_id'=>$module_id,'society_id'=>$s_society_id,'role_id'=>(int)$default_role);
 	$privilege=$this->role_privilege->find('all',array('conditions'=>$conditions,'limit'=>1));
-	$sub_module_id=$privilege[0]["role_privilege"]["sub_module_id"];
 	
-	$this->loadmodel('page');
-	$conditions=array('module_id'=>$module_id,'sub_module_id'=>$sub_module_id);
-	return $this->page->find('all',array('conditions'=>$conditions));
+/*	$conditions1=array('module_id'=>$module_id,'society_id'=>$s_society_id,'role_id'=>(int)$default_role,'sub_module_id'=>15);
+	$privilege_count=$this->role_privilege->find('count',array('conditions'=>$conditions1));
+		if($privilege_count>0){
+			$sub_module_id=15;
+			
+		}else{
+		
+			$sub_module_id=$privilege[0]["role_privilege"]["sub_module_id"];
+		}
+*/
+       $sub_module_id=$privilege[0]["role_privilege"]["sub_module_id"];
+		$this->loadmodel('page');
+		$conditions=array('module_id'=>$module_id,'sub_module_id'=>$sub_module_id);
+		return $this->page->find('all',array('conditions'=>$conditions));
 }
 
 function fetch_page_info_via_module_id_for_hm($module_id){
@@ -1581,8 +1590,8 @@ if(!empty($per_address)){ $ccc++; }
 if(!empty($com_address)){ $ccc++; }
 if(!empty($hobbies)){ $ccc++; }
 if(!empty($contact_emergency3)){ $ccc++; }
-
-$progres=$ccc*100/10; 
+if(!empty($blood_group)){ $ccc++; }
+$progres=$ccc*100/11; 
 $profile_status_user=(int)@$result_user[0]["user"]["profile_status_user"];	 
 
 if($profile_status_user==0){

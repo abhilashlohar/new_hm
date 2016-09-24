@@ -11,9 +11,18 @@
 		<th><input type="text" class="m-wrap span12" name="name" id="name" Placeholder="Name"><br>
 		<span id="nam" style="color:red;"></span>
 		</th>
+		<th><input type="text" class="m-wrap span12" name="title" id="title" Placeholder="Title"><br>
+		  <span id="nam" style="color:red;"></span>
+		</th>
 		<th>
-		<input type="text" class="m-wrap span12 email_mobile" name="email" id="email" Placeholder="E-mail"><br>
-		<span id="mail" style="color:red;"></span>
+			
+				<input type="text" class="m-wrap span12 email_mobile" name="email" id="email" Placeholder="E-mail"> 
+					
+			
+			<br>
+			<span id="mail" style="color:red;"></span>
+		</th>
+		<th style="border-left: aliceblue;"> <span style="color:red;"><i class=" icon-info-sign tooltips" data-placement="top" data-original-title="Atleast one field required email or mobile"> </i></span>
 		</th>
 		<th>
 		<input type="text" class="m-wrap span12 email_mobile" name="mobile" id="mobile" maxlength="10"  Placeholder="Mobile"><br>
@@ -36,22 +45,33 @@
 	   <th width="20%">Name</th>
 	   <th width="30%">Email</th>
 	   <th width="15%">Mobile</th>
-	   <!--<th width="15%">Password</th>-->
+	   <th width="15%">Title</th>
 	  <th></th>
 	</tr>
 	<?php $n=0; foreach($result_user as $data){ $n++;
 		$user_id=(int)$data['user']['user_id'];
 		$user_name=$data['user']['user_name'];
+		$date=$data['user']['date'];
 		@$email=@$data['user']['email'];
 		@$mobile=@$data['user']['mobile'];
-		$password=$data['user']['password']; ?>
+		$degination_title=@$data['user']['degination_title']; 
+		$created_by=@$data['user']['created_by'];
+		
+		$result_data=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_info_via_user_id'), array('pass' => array($created_by)));
+		$created_by_name=@$result_data[0]['user']['user_name'];
+		?>
 	<tr>
 	    <td><?php echo $n; ?></td>
 		<td><?php echo $user_name; ?></td>
 		<td><?php echo @$email; ?></td>
 		<td><?php echo @$mobile; ?></td>
-		<!--<td><?php echo $password; ?></td>-->
-		<th><a href="user_assign_role" role="button" rel="tab">Assign role</a></th>
+		<td><?php echo $degination_title; ?></td>
+		<th>
+		<a href="user_assign_role" role="button" rel="tab">Assign role</a>
+		<?php if(!empty($created_by_name) and !empty($date)){ ?>
+				<a href="#" class="btn mini black popovers pull-right" data-trigger="hover" data-placement="left" data-content="<b>created By: </b><?php echo @$created_by_name; ?>  - <br/><b>created On: </b><?php echo $date; ?>" role="button" data-original-title=""><i class="icon-exclamation-sign"></i></a> 
+			<?php } ?>
+		</th>
 	</tr>
 		
 		<?php } ?>

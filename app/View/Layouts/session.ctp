@@ -33,7 +33,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
    <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/jquery-tags-input/jquery.tagsinput.css" />
    <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/clockface/css/clockface.css" />
    <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
-   <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/bootstrap-datepicker/css/datepicker.css" />
+   <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/bootstrap-datepicker1/css/datepicker.css" />
    <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/bootstrap-timepicker/compiled/timepicker.css" />
    <link rel="stylesheet" type="text/css" href="<?php echo $webroot_path; ?>assets/bootstrap-colorpicker/css/colorpicker.css" />
    <link rel="stylesheet" href="<?php echo $webroot_path; ?>assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
@@ -105,7 +105,7 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
    <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
    <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/jquery-tags-input/jquery.tagsinput.min.js"></script>
    <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/bootstrap-toggle-buttons/static/js/jquery.toggle.buttons.js"></script>
-   <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+   <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/bootstrap-datepicker1/js/bootstrap-datepicker.js"></script>
    <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/clockface/js/clockface.js"></script>
    <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/bootstrap-daterangepicker/date.js"></script>
    <script type="text/javascript" src="<?php echo $webroot_path; ?>assets/bootstrap-daterangepicker/daterangepicker.js"></script> 
@@ -229,11 +229,7 @@ $(document).ready(function() {
 		window.history.pushState({path:pageurl},'',pageurl);
 	});
 	
-	window.onpopstate = function(s) {
-		pageurl = location.pathname;
-		$('.page-content').load(pageurl+'?rel=tab');
-		
-	};
+	
 	
 	$("a[role='button']").live('click',function(e){
 		e.preventDefault();
@@ -245,7 +241,7 @@ $(document).ready(function() {
 	
 	window.onpopstate = function(s) {
 		pageurl = location.pathname;
-		$('#ctp_content_area').load(pageurl+'?rel=tab');
+		$('.page-content').load(pageurl+'?rel=tab');
 		
 	};
 	
@@ -395,7 +391,7 @@ $("#menus_area>li").live('click',function(e){
 					 <?php } ?>
 					  <li><a href="<?php echo $webroot_path; ?>Hms/change_new_password" rel='tab'><i class="fa fa-unlock-alt"></i> Change Password</a></li>
                      <li class="divider"></li>
-                     <li><a href="<?php echo $webroot_path; ?>Hms/logout"><i class="icon-key"></i> Log Out</a></li>
+                     <li><a href="<?php echo $webroot_path; ?>Hms/logout" ><i class="icon-key"></i> Log Out</a></li>
                   </ul>
                </li>
                <!-- END USER LOGIN DROPDOWN -->

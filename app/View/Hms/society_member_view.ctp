@@ -92,7 +92,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 									echo '<td></td>';
 								}
 							}else{
-								echo '<td><a class="btn green mini">'.$validation_status.'</a></td>';
+								echo '<td><a class="btn green mini">'.ucfirst($validation_status).'</a></td>';
 							} ?>
 							<td><?php echo $date; ?></td>
 							<td>
@@ -129,7 +129,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 								echo '<td></td>';
 							}
 						}else{
-							echo '<td><a class="btn green mini">'.$validation_status.'</a></td>';
+							echo '<td><a class="btn green mini">'.ucfirst($validation_status).'</a></td>';
 						} ?>
 						<td><?php echo $date; ?></td>
 						<td>
@@ -178,6 +178,11 @@ $(document).ready(function(){
 	setTimeout(
 	function(){
 		$("#unit_number").click();
+		var i=0;
+		$('#sample_1 tbody tr').each(function(){ 
+			i++;
+			$(this).find('td:first').text(i);
+		});
 	}, 500);
 		var ow= $("#total_member_info").attr("owner_count");
 		var te= $("#total_member_info").attr("tenant_count");

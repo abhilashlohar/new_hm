@@ -1,0 +1,3 @@
+<script>
+$('.chosen').chosen();
+</script>

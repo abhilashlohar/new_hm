@@ -13,7 +13,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		
 		
 		<div class="control-group">
-		  <label class="control-label">Event Name</label>
+		  <label class="control-label">Event Name <span style="font-size:12px; color:#999;">(Maximum 50 characters.)</span></label>
 		  <div class="controls">
 			 <input type="text" name="e_name" class="span9 m-wrap" maxlength="50" id="alloptions" placeholder="Event Name">
 			 <label report="e_name" class="remove_report"></label>
@@ -23,7 +23,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<div class="control-group ">
 		  <div class="controls">
 		   <label class="" style="font-size:14px;">Description</label>
-			  <textarea name="description" rows="2"  id="textarea" maxlength="500" class="span9 m-wrap" style="resize:none;" placeholder="More info about event"></textarea>
+			  <textarea name="description" rows="2"  id="textarea" maxlength="500" class="span9 m-wrap" style="" placeholder="More info about event"></textarea>
 			  <label report="description" class="remove_report"></label>
 		  </div>
 		</div>
@@ -56,7 +56,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<div class="control-group">
 			 <label class="checkbox">
 			 <div class="checker"><span><div class="checker" id="uniform-undefined"><span><input type="checkbox" value="1" name="ask_no_of_member" style="opacity: 0;"></span></div></span></div>
-			 Do you want to ask how many members will attend this event from participator family to participate?   
+			 Do you want to ask how many members will attend this event from family member's ?   
 			 </label>
 		</div>
 		

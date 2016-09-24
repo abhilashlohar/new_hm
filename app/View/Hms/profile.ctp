@@ -11,6 +11,10 @@
 					@$f_profile_pic = @$collection['user']['f_profile_pic'];
 					@$g_profile_pic = @$collection['user']['g_profile_pic'];
 					
+					$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($da_user_id))); 
+					
+					$wing_flat_result=$result_member_info["wing_flat"];
+					
 					$result_user_flat = $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($da_user_id)));
 					 $c_wing_id = (int)@$result_user_flat[0]['user_flat']['wing'];
 					 $c_flat_id = (int)@$result_user_flat[0]['user_flat']['flat']; 
@@ -94,8 +98,13 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 									{
 										$ccc++;
 									}
+									if(!empty($blood_group))
+									{
+										$ccc++;
+									}
+									
 						//$progres=$ccc*100/11;
-						$progres=$ccc*100/10;
+						$progres=$ccc*100/11;
 				
 
 ?>
@@ -169,8 +178,9 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 											Name
 									   </div>
 									<div class="span3"> 
-											<input type="text" class="m-wrap" readonly id="name" value="<?php echo $c_name;  ?>" name="name">
-									   </div>
+											<input type="hidden" class="m-wrap" readonly id="name" value="<?php echo $c_name;  ?>" name="name">
+											<span><?php echo $c_name;  ?></span>
+									</div>
 									   
 									</div>
 										
@@ -188,20 +198,7 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 											 Wing-Flat
 									</div>
 									<div class="span3"> 
-										<?php if(!empty($multi_flat)) { ?>
-											<select name='wing_flt'>
-											<option style='display:none;'></option>
-											<?php 
-											foreach($multi_flat as $ds)
-											{
-											 
-												$wing_id=$ds[0];
-												$flat_id=$ds[1];
-												$wing_flat1 = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'),array('pass'=>array($wing_id,$flat_id)));
-											?>
-											<option value='<?php echo $wing_id; ?>,<?php echo $flat_id ; ?>' <?php if($flat==$wing_flat1) { ?> selected <?php } ?>><?php echo $wing_flat1 ; ?> </option>
-											<?php }  ?>
-											</select> <?php } else { echo $flat ; } ?>
+										<?php  echo implode(', ',$wing_flat_result); ?>
 								   </div>
                                  </div>
 								
@@ -211,14 +208,14 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 											
 									</div>
 										<div class="span3"> 
-												 Mobile Number <span style="color:red">+91</span> 
+												 Mobile Number 
 										</div>
 										<div class="span3"> 
-												<input type="text" class="m-wrap change_mobile" value="<?php echo $c_mobile; ?>" name="mobile1" readonly maxlength="10" member_update="<?php echo $da_user_id; ?>">
+												<span style="color:red;margin-left:-24px;vertical-align: middle;">+91</span> <input type="text" class="m-wrap change_mobile" value="<?php echo $c_mobile; ?>" name="mobile1"  maxlength="10" member_update="<?php echo $da_user_id; ?>">
 										</div>
 										<div class="span3"> 
 											<select class="span12 m-wrap check_privacy" data-placeholder="Choose a Category" tabindex="1" name="sel_private" change_field="mobile" >
-											<option value="Public" <?php if($mobile_privacy=='Public'){ ?> selected <?php } ?> >Public</option>
+											<option value="Public" <?php if($mobile_privacy=='Public'){ ?> selected <?php } ?> > <span style="color:red;"> <i class="fa fa-unlock-alt" ></i></span> Public</option>
 											<option value="Private" <?php if($mobile_privacy=='Private'){ ?> selected <?php } ?>>Private</option>
 
 											</select>
@@ -235,7 +232,7 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 												Email-Id
 										</div>
 										<div class="span3"> 
-												<input type="text" value="<?php echo $c_email;  ?>"   class=" m-wrap" name="email">
+												<input type="text" value="<?php echo $c_email;  ?>"   class=" m-wrap change_email" name="email" member_update="<?php echo $da_user_id; ?>">
 										</div>
 										
 										<div class="span3"> 
@@ -481,7 +478,7 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 								
 								<div class="span12"> 
 									  <div align="center">
-										<span style="color:red; font-size:10px;"> <i class=" icon-star"></i></span><span> Private:- Visible to Society Admin/Managing Committee only </span> | <span > Public:- Visible to all your society members</span>
+										 <i class="fa fa-unlock-alt" ></i><span> Private:- Visible to Society Admin/Managing Committee only </span> | <span > <i class="fa fa-unlock" ></i> Public:- Visible to all your society members</span>
 		
 										</div>
 								  </div>
@@ -519,9 +516,90 @@ $flat = $this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat
 <script>
 
 $(document).ready(function(){
+	
+	$( ".change_email" ).click(function() {
+		var user_id = $(this).attr("member_update");
+		$("#profile_edit_content").html('');
+		$(".edit_div").show();
+		$.ajax({
+			url: "<?php echo $webroot_path; ?>/Hms/profile_email_verification/"+user_id,
+			}).done(function(response) {
+			$("#profile_edit_content").html(response);	
+		});		
+	});
+	
+	$(".save_email").die().live("click",function() {
+		
+		var email=$("#new_email").val();
+		var user_id=$(this).attr("member_id");
+		if(email==''){
+			
+			$("#validation_email").html('Please fill email address');
+		}else{
+			$("#validation_email").html('');
+			var filter=/^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+			if(filter.test(email)) {
+				$("#otp_code_email").html("loading......");
+				$.ajax({
+					url: "<?php echo $webroot_path; ?>/Hms/profile_email_verification_already/"+user_id+"/"+email,
+					}).done(function(response){
+						if(response=="true"){
+							
+							$.ajax({
+								url: "<?php echo $webroot_path; ?>/Hms/profile_email_verification_send/"+user_id+"/"+email,
+							}).done(function(response) {
+								$("#new_email").prop("readonly",true);
+								$("#otp_code_email").html(response);
+								$(".save_email").addClass("email_update");
+								$(".email_update").removeClass("save_email");
+							});		
+							
+							
+						}else{
+							$("#otp_code_email").html("");
+							$("#validation_email").html('Email is Already Exist.');
+							
+						}
+					});
+				
+			}else{
+				$("#validation_email").html('Email is not valid.');
+				
+			}
+		}
+	});
+	
+	$(".email_update").die().live("click",function() {
+		
+		var user_id=$(this).attr("member_id");
+		var otp_number=$("#otp_number").val();
+		
+			if(otp_number==""){
+				
+				$("#validation_otp").html('Please fill 4 digit number');
+			}else{
+				$("#validation_otp").html('');
+				$.ajax({
+					url: "<?php echo $webroot_path; ?>/Hms/profile_email_update/"+user_id+"/"+otp_number,
+					}).done(function(response){
+						if(response=="update"){
+							
+							window.location.href="profile";
+							
+						}else{
+							
+							$("#validation_otp").html('You have enter wrong digit');
+						}
+					});					
+				
+			}
+		
+	});
+	
+	
 	$( ".change_mobile" ).click(function() {
 		var user_id = $(this).attr("member_update");
-		
+		$("#profile_edit_content").html('');
 		$(".edit_div").show();
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>/Hms/profile_mobile_verification/"+user_id,
@@ -530,7 +608,7 @@ $(document).ready(function(){
 		});		
 	});
 	
-	$(".save_edited").live("click",function() {
+	$(".save_edited").die().live("click",function() {
 		var mob=$("#new_mobile").val();
 		var user_id=$(this).attr("member_id");
 		//$("#load_data").html('<div ><img src="<?php echo $this->webroot ; ?>/as/indicator_blue_small.gif" /><br/><h5>Please Wait</h5></div>');

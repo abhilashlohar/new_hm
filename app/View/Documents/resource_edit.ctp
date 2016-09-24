@@ -63,7 +63,7 @@ $category = $this->requestAction(array('controller' => 'hms', 'action' => 'resou
                            </div>
 
 						  
-						     <div class="control-group ">
+						   <!--  <div class="control-group ">
                               <div class="controls">
                               <label class="" style="font-size:14px;">Attachment  <span style="font-size:12px; color:#999; margin:2%">(Limit 2MB)</span></label>
                                  <div class="fileupload fileupload-new" data-provides="fileupload"><input type="hidden">
@@ -81,11 +81,11 @@ $category = $this->requestAction(array('controller' => 'hms', 'action' => 'resou
                                     </div>
                                  </div>
                               </div>
-                           </div>
+                           </div>-->
 						   
                            <div class="control-group ">
                               <div class="controls">
-								<input type="submit" class="btn green" value="Publish" name="sub">
+								<input type="submit" class="btn green" value="Update" name="sub">
 							  </div>
                            </div>
                            

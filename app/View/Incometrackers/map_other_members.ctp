@@ -28,7 +28,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </table>
 
 <div align="center">
-	<form method="post" id="contact-form">
+	<form method="post" id="contact-form2">
 		<table>
 			<thead>
 				<tr>
@@ -37,22 +37,23 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				</tr>
 			</thead>
 			<tr>
-				<td id="first">
-				<select class="m-wrap first_member" name="first">
+				<td id="first" style="vertical-align: top;">
+				<select class="m-wrap first_member" name="first" >
 					<option value="" style="display:none;">Select</option>
 					<?php foreach($arranged_accounts as $key=>$data){
 						echo '<option value='.$key.' >'.$data["user_name"].' ('.$data["wing_flat"].')</option>';
 					} ?>
 				</select>
+				<label id="required_field"></label>
 				</td>
-				<td id="second">
+				<td id="second" style="vertical-align: top;">
 				<select class="m-wrap second_member" name="second">
 					<option value="" style="display:none;">Select</option>
 					<?php foreach($arranged_accounts1 as $key=>$data){
 						echo '<option class="rem_opt" value='.$key.' >'.$data["user_name"].' ('.$data["wing_flat"].')</option>';
 					} ?>
 				</select>
-				
+				<label id="required_field2"></label>
 				</td>
 				<td valign="top"><button type="submit" name="sub" class="btn blue" id="go">Submit</button></td>
 			</tr>
@@ -94,7 +95,28 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 
 <script>
 $(document).ready(function(){
-	
+
+$("#contact-form2").on("submit",function(e){
+	allow="yes";
+	var x=$("select.first_member").val();
+	var y=$("select.second_member").val();
+	if(x==""){
+		allow="no";
+		$("#required_field").html("<span style='color:red;'>This field is required</span>");
+	}else{
+		$("#required_field").html("");
+	}
+	if(y==""){
+		allow="no";
+		$("#required_field2").html("<span style='color:red;'>This field is required</span>");
+	}else{
+		$("#required_field2").html("");
+	}
+	if(allow=="no"){
+		e.preventDefault();
+	}
+});
+
 	$(".rep_delete").on("click",function(){
 		
 		var user_flat_id=$(this).attr("led_sub_id");
@@ -105,18 +127,19 @@ $(document).ready(function(){
 	$("#can").live('click',function(){
 			$('#pp').hide();
 		});
-	
-	/*$(".first_member").on("change",function(){	
+	$(".second_member").on("change",function(){
+		$("#required_field2").html("");
+	});	
+	$(".first_member").on("change",function(){	
 		var user_id =$(this).val();
+		$("#required_field").html("");
+		
 		var text2= $(this).children('option[value='+user_id+']').text();
-		alert(user_id);
-		alert(text2);
-		$("#second select").removeClass("chosen");
 		$(".second_member").children('option').show();
 		$(".second_member").children('option[value='+user_id+']').hide();
 		$(".chzn-results>li.rem_opt").show();
 		$(".chzn-results>li.rem_opt:contains("+text2+")").hide();
-	});	*/
+	});	
 
 	
 	//var sel=$("#first").html();

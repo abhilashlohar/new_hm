@@ -11,7 +11,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <div style="border:solid 2px #4cae4c; width:80%; margin-left:10%;">
 <div style="border-bottom:solid 2px #4cae4c; color:white; background-color: #5cb85c; padding:4px; font-size:20px;" ><i class="icon-envelope-alt"></i> Send SMS</div>
 <div style="padding:10px;background-color:#FFF;">
-<form method="post" id="contact-form">
+<form method="post" id="contact-form" onsubmit="return hello()" >
 
 		<div class="controls">
 			<label class="radio">
@@ -77,26 +77,12 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<table  width="100%">
 		<tr>
 			<td>
-				<label style="font-size:14px; font-weight:bold;">Message</label>
-			</td>
-			<td>
-				<div  style="float:right;">
+				<label style="font-size:14px; font-weight:bold;">Message</label> <div  style="float:left;">
 				<span style="background-color:#d84a38; color:white; padding:2px;">Note</span>: Please restrict your message length to 459 characters in one message.
 				</div>
 			</td>
-		</tr>
-	</table>
-	
-	<textarea  style="resize:none;font-size: 18px;" class="m-wrap span12"  onKeyUp="count_msg()" id="massage" name="massage" rows="7"></textarea>
-	<label id="massage"></label>
- 
- <table width="100%">
- <tr>
- <td>
- <div id="count_result"><span style="font-size:14px; color:#666; font-weight:bold;">No. of Messages</span><input type="text" style="width:80px; background-color:#008000; color:#FFF;" value="0 / 1 SMS" readonly ></div>
- </td>
- <td>
-	<a href="#myModal3" role="button" class="btn blue pull-right" data-toggle="modal">Templates</a>
+			<td>
+				<a href="#myModal3" role="button" class="btn blue pull-right" data-toggle="modal">Templates</a>
 	<div id="myModal3" style="margin-top:-5%;" class="modal hide " tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -204,6 +190,20 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
 	</div>
 </div>
+			</td>
+		</tr>
+	</table>
+	
+	<textarea  style="resize:none;font-size: 18px;" class="m-wrap span12"  onKeyUp="count_msg()" id="massage" name="massage" rows="7"></textarea>
+	<label id="massage"></label>
+ 
+ <table width="100%">
+ <tr>
+ <td>
+ <div id="count_result" style="float:right;"><span style="font-size:14px; color:#666; font-weight:bold;">No. of Messages</span><input type="text" style="width:80px; background-color:#008000; color:#FFF;" value="0 / 1 SMS" readonly ></div>
+ </td>
+ <td>
+	
 </td>
 </tr>
 </table>
@@ -213,25 +213,26 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 date_default_timezone_set('Asia/Kolkata');
 $date=date("d-m-Y");
 $time=time();
-$time=strtotime('+15 minutes');
-$time_h = date('H', $time); 
-$time_m = date('i', $time);
-$r=$time_m%15;
-$add=15-$r;
-$m =$time_m+$add;
+ $time=strtotime('+15 minutes');
+ $time_h = date('H', $time); 
+ $time_m = date('i', $time);
+ $r=$time_m%15;
+ $add=15-$r;
+ $m =$time_m+$add;
+ 
 ?>
 <div class="row-fluid">
 	<div class="span4">
 		<div class="control-group">
 			<label style="font-size:14px; font-weight:bold;">Date</label>
 			<div class="controls">
-			<input class="m-wrap m-ctrl-medium date-picker" readonly name="date" size="16" data-date-format="dd-mm-yyyy" type="text" value="<?php echo $date; ?>">
+			<input class="m-wrap m-ctrl-medium date-picker" readonly name="date" size="16" data-date-format="dd-mm-yyyy" type="text" data-date-start-date="<?php echo $date; ?>" value="<?php echo $date; ?>">
 			</div>
 		</div>
 	</div>
 <div class="span6">
 <div class="control-group">		
-		<label style="font-size:14px; font-weight:bold;">Time</label>
+		<label style="font-size:14px; font-weight:bold;">Time <i class=" icon-info-sign tooltips" data-placement="right" data-original-title="Please select 15 minutes or later from your current time" style="color:#d84a38;"> </i></label>
 		<select class="span2 m-wrap" name="time_h">
 		<?php for($w=1;$w<=24;$w++) { ?>
 		<option value="<?php echo $w; ?>" <?php if($w==$time_h) { ?> selected <?php } ?>><?php echo $w; ?></option>
@@ -356,6 +357,31 @@ background-color:rgba(207, 202, 255, 0.32);
 
 
 <script>
+
+
+$(".chosen").change(function(){
+	$("button[name=send]").removeAttr('disabled');
+});
+
+function hello(){ 
+	$("button[name=send]").removeAttr('disabled');
+	
+	var r=$("input:radio[name=radio]:checked").val();
+	if(r==1){
+		var m=$("#multi").val();
+		
+		if(m==null){
+			//$("button[name=send]").attr('disabled','');
+			$("label#multi").html("<span style='color:red;'>Please select at-least one recipient.</span>");
+			return false;
+		}else{
+			//$("button[name=send]").attr('disabled','');
+			$("label#multi").html("");
+		}
+	}
+	
+	
+}
 
 
 $.validator.addMethod('requirecheck1', function (value, element) {

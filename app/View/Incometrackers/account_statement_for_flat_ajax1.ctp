@@ -33,7 +33,7 @@
 	<?php
 	$opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_opening_balance'), array('pass' => array(34,$ledger_sub_account_id,strtotime($from))));
 	?>
-	<div class="pull-right" style="text-align:right;font-size:15px;padding:5px;">Opening Balance: <?php echo $opening_balance; ?></div>
+	<div class="pull-right" style="text-align:right;font-size:15px;padding:5px;background-color: antiquewhite;">Opening Balance: <?php echo $opening_balance; ?></div>
 		<table width="100%" class="table table-bordered table-condensed">
 			<thead>
             <tr>
@@ -182,9 +182,9 @@
 						$closing_balance=$total_debit-$total_credit;
 					}
 					?>
-	                <td colspan="4" style="text-align:right;font-size:15px;">Closing Balance</td>
-					<td colspan="2" style="text-align:right;font-size:15px;"><?php echo $this->Currency->formatCurrency( abs($closing_balance), "INR"); if($closing_balance>0){ echo " Dr."; }elseif($closing_balance<0){ echo " Cr."; } ?></td>
-					<td class="hide_at_print"></td>					
+	                <td colspan="4" style="text-align:right;font-size:15px;background-color: aliceblue !important;">Closing Balance</td>
+					<td colspan="2" style="text-align:right;font-size:15px;background-color: aliceblue !important;"><?php echo $this->Currency->formatCurrency( abs($closing_balance), "INR"); if($closing_balance>0){ echo " Dr."; }elseif($closing_balance<0){ echo " Cr."; } ?></td>
+					<td class="hide_at_print" style="background-color: aliceblue !important;"></td>					
      				</tr>
 				    </tbody>
 		</table>

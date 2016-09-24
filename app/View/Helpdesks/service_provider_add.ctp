@@ -1,9 +1,10 @@
 <?php
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>	
-<div align="center" class="mobile-align">
+<div align="center" class="mobile-align" style="padding-bottom: 2px;">
 <a href="service_provider_view" class="btn blue" rel='tab'> View</a>
 <a href="service_provider_add" class="btn red" rel='tab'> Add</a>
+<a href="service_provider_archive" class="btn blue" rel='tab' > Archive</a>
 </div>
 
  <script type="text/javascript">

@@ -34,6 +34,8 @@ $event_id=$data["event"]["event_id"];
 $e_name=$data["event"]["e_name"];
 $e_time=@$data["event"]["time"];
 $day_type=$data["event"]["day_type"];
+$family_member_count=@$data["event"]["family_member_count"];
+$no_of_member=@$data["event"]["no_of_member"];
 $d_user_id=(int)$data["event"]["user_id"];
 $rsvp=@$data["event"]["rsvp"];
 if(sizeof($rsvp)==0) { $rsvp=array();}
@@ -72,6 +74,7 @@ $description=$data["event"]["description"];
 
 @$wing_flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'), array('pass' => array(@$wing,@$flat)));
 ?>
+
 
 <div style="width:80%; margin-left:10%;margin-top:4px;">
 <a href="<?php echo $webroot_path; ?>Events/event_info/<?php echo $e_id; ?>" class="event_tab tab_active" rel='tab'> Event Details</a>
@@ -114,7 +117,7 @@ $description=$data["event"]["description"];
 				<a class="btn red" href="#" id="event_no" element_id="<?php echo $event_id; ?>" role="button">No</a>
 			</p>
 		</div>
-		  <?php } ?>
+		  <?php }  ?>
 		
 		
 		
@@ -124,10 +127,10 @@ $description=$data["event"]["description"];
 		<?php if(sizeof($rsvp)>0) { ?>
 			<div class="span6">
 			<h5 style="font-weight: bold;">
-			users who accepted invitation</h5>
+			users who accepted invitation (<?php echo sizeof($rsvp)+$no_of_member; ?>)</h5>
 			<!-------content----------->
 			<?php foreach($rsvp as $data1)
-			{
+			{ 
 	$result_user_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'), array('pass'=>array((int)$data1)));
 	foreach($result_user_info as $collection2){
 	$user_name=$collection2["user"]["user_name"];
@@ -141,7 +144,14 @@ $description=$data["event"]["description"];
 
 @$wing_flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'), array('pass' => array(@$wing,@$flat)));
 				?>
-				<span><?php echo $user_name.' '.@$wing_flat; ?><br/></span>
+				<span>
+				<?php echo $user_name.' '.@$wing_flat; 
+					if(array_key_exists($data1, $family_member_count)) { 
+						echo " + family member (" .$family_member_count[$data1].")";
+					}
+				
+				
+				?><br/></span>
 				<?php
 			}
 			?>
@@ -167,7 +177,7 @@ $description=$data["event"]["description"];
 
 @$wing_flat=$this->requestAction(array('controller'=>'Fns','action'=>'wing_flat_via_wing_id_and_flat_id'), array('pass' => array(@$wing,@$flat)));
 				?>
-				<span><?php echo $user_name.' '.@$wing_flat; ?><br/></span>
+				<span><?php echo $user_name.' '.@$wing_flat; ?> <br/></span>
 				<?php
 			}
 			?>
@@ -184,15 +194,15 @@ $description=$data["event"]["description"];
 
 <script>
 $(document).ready(function() { 
-	 $("#event_yes").live('click',function(){
+	 $("#event_yes").die().live('click',function(){
 		var e=$(this).attr('element_id');
 		$(".alert-block").html('Please wait...').load('<?php echo $this->webroot; ?>Events/save_rsvp?e='+e+'&type=1');
 	 });
-	 $("#event_no").live('click',function(){
+	 $("#event_no").die().live('click',function(){
 		var e=$(this).attr('element_id');
 		$(".alert-block").html('Please wait...').load('<?php echo $this->webroot; ?>Events/save_rsvp?e='+e+'&type=2');
 	 });
-	 $("#send_member").live('click',function(){
+	 $("#send_member").die().live('click',function(){ 
 		var e=$(this).attr('element_id');
 		var no=$("#members").val();
 		$(".alert-block").html('Please wait...').load('<?php echo $this->webroot; ?>Events/save_rsvp?e='+e+'&type=3'+'&no='+no);

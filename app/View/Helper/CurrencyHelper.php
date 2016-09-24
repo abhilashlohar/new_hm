@@ -143,12 +143,24 @@ class CurrencyHelper extends AppHelper {
             $input = substr($input,0,$pos);  
         }  
         $num = substr($input,-3); //get the last 3 digits  
-        $input = substr($input,0, -3); //omit the last 3 digits already stored in $num  
+        $input = substr($input,0, -3); //omit the last 3 digits already stored in $num 
+		
+		$new_data=explode("-",$input);
+		if(sizeof($new_data)>1){
+			$input=$new_data[1];
+		}
+		$sign="-";
         while(strlen($input) > 0) //loop the process - further get digits 2 by 2  
         {  
             $num = substr($input,-2).",".$num;  
             $input = substr($input,0,-2);  
         }  
-        return $num . $dec;  
+		if(sizeof($new_data)>1){
+			return $sign.$num . $dec;
+		}else{
+			return $num . $dec;
+		}
+		
+       // return $num . $dec;  
     }  
 }

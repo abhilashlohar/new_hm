@@ -9,12 +9,12 @@
 		</div>
 	</div>
 </div>
+
+
 <div class="portlet box">
 	<div class="portlet-body" >
 		<?php
-		//$due_for_payment="-44981.5595"; 
 		
-		//echo $this->Currency->formatCurrency( $due_for_payment, "INR");  
 		$other_charge_ids=array();
 		foreach($regular_bills as $regular_bill){
 			$income_head_array=$regular_bill["regular_bill"]["income_head_array"];
@@ -122,7 +122,7 @@
 						<td><?php echo $arrear_intrest; ?></td>
 						<td><?php echo $intrest_on_arrears; ?></td>
 						<td><?php echo $credit_stock; ?></td>
-						<td><?php echo $this->Currency->formatCurrency( $due_for_payment, "INR"); ?></td>
+						<td><?php echo $this->Currency->formatCurrency( $due_for_payment, "INR"); ?> <span style="display:none;"><?php echo $due_for_payment; ?></span></td>
 						<td>
 							<div class="btn-group" style="margin: 0px !important;">
 							<a class="btn blue mini" href="#" data-toggle="dropdown">

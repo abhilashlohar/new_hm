@@ -41,10 +41,10 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 					<td style="padding:5px;">
 						<table width="100%">
 							<tr>
-								<td>
+								<td style="background-color: antiquewhite;">
 									<?php echo $user_name; ?> (<?php echo $wing_flat; ?>)
 								</td>
-								<td align="right">
+								<td align="right" style="background-color: antiquewhite;">
 									Opening Balance: <?php echo $opening_balance; ?>
 								</td>
 							</tr>
@@ -228,8 +228,8 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 								$closing_balance=$total_debit-$total_credit;
 							}
 							?>
-								<td colspan="5" style="text-align:right;font-size:14px;">Closing Balance</td>
-								<td style="text-align:right;font-size:14px;"><?php echo abs($closing_balance); if($closing_balance>0){ echo " Dr."; }elseif($closing_balance<0){ echo " Cr."; } ?></td>
+								<td colspan="5" style="text-align:right;font-size:14px;background-color: aliceblue !important;">Closing Balance</td>
+								<td style="text-align:right;font-size:14px;background-color: aliceblue !important;"><?php echo abs($closing_balance); if($closing_balance>0){ echo " Dr."; }elseif($closing_balance<0){ echo " Cr."; } ?></td>
 							</tr>
 							</tbody>
 						</table>
@@ -246,7 +246,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 								</tr>
 								
 								<tr>
-									<td align="center"> support@housingmatters.in | <a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end"><img src="http://localhost/new_hm//as/hm/whatsup.png" width="18px"></a> +919869157561 | <a href="http://www.housingmatters.in" target="_blank" style="color:#FFF !important;">www.housingmatters.in</a></td>
+									<td align="center"> support@housingmatters.in | <a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end" style="display:none;"><img src="http://localhost/new_hm//as/hm/whatsup.png" width="18px"></a><span style="display:none;"> +919869157561 | </span> <a href="http://www.housingmatters.in" target="_blank" style="color:#FFF !important;">www.housingmatters.in</a></td>
 								</tr>
 																   
 							</tbody>

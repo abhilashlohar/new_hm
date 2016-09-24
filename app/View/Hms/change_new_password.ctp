@@ -17,7 +17,7 @@
 						 
 								<div class="controls">
 									 <label >Current Password</label>
-									<input type="password" class="m-wrap" name="current_password"  style="font-size:16px;" placeholder="Current Password*">
+									<input type="password" class="m-wrap" name="current_password" id="c_pass" style="font-size:16px;" placeholder="Current Password*">
 									
 								</div>
 							</div>
@@ -55,6 +55,9 @@
 			
 	
 <script>
+jQuery.validator.addMethod("notEqualTo", function(value, element, param) {
+ return this.optional(element) || value != $(param).val();
+ }, "You used this password recently. Please choose a different one.");
 $(document).ready(function(){
 		$('#contact-form').validate({
 	    rules: {
@@ -66,7 +69,8 @@ $(document).ready(function(){
 	      },
 	      pass: {
 	       
-	        required: true
+	        required: true,
+			notEqualTo: "#c_pass"
 			
 	      },
 		   cpass: {

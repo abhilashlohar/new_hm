@@ -26,6 +26,7 @@ Family Member
 <br>
 <div style="width:30%; margin-left:30%;" class="family-responsive">
 <form id="contact-form" method="POST" class="" />
+<input type="hidden" value="<?php echo $user_id; ?>" id="meber_info">
 <center>
 <table width="100%">
 <tr>
@@ -40,14 +41,14 @@ Family Member
  </td></tr>
 <tr><td> 
 
-<input type="text" class=" span12 m-wrap" placeholder="Email Address" style="font-size:16px;" readonly name="email1" value="<?php echo @$email; ?>" id="1" >
+<input type="text" class=" span12 m-wrap" placeholder="Email Address" style="font-size:16px;"  name="email1" value="<?php echo @$email; ?>" id="1" >
 
 
 </td></tr>
 <tr><td> 
 
 
-<input type="text"   class="span12 m-wrap" placeholder="Mobile No"style="font-size:16px;" readonly id="mob" maxlength="10" name="mobile1"  value="<?php echo @$mobile; ?>" >
+<input type="text"   class="span12 m-wrap" placeholder="Mobile No"style="font-size:16px;"  id="mob" maxlength="10" name="mobile1"  value="<?php echo @$mobile; ?>" >
 
 
 
@@ -128,6 +129,14 @@ email1: {
 
 //required: true,
 email: true,
+remote: {
+			url: "family_member_check_email",
+			type: "post",
+			data: {
+				society: function() { return $("#meber_info").val();}
+		 
+			}
+		}
  
 },
 dob1: {
@@ -141,7 +150,14 @@ mobile1: {
 number: true,
 minlength: 10,
 maxlength: 10,
-//remote: "signup_mobileexit"
+remote: {
+			url: "family_member_check_mobile",
+			type: "post",
+			data: {
+				society: function() { return $("#meber_info").val();}
+		 
+			}
+		}
 }
 },
 

@@ -1,50 +1,103 @@
-Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Receipt Type,Amount,Narration 
- 01-01-2015 , SBI, cheque,1111,01-01-2015,Allahabad Bank,Sec-4,Anupam Tagore, A,101,M,1000,1 Receipt for jan
-02-01-2015,SBI, neft,2222,02-01-2015,Allahabad Bank,Sec-5,B L Naik, A,102,O,2000,2 Receipt for jan
-03-01-2015,SBI,pg,3333,03-01-2015,Allahabad Bank,Sec-6,B L Naik,A,103,M,3000,3 Receipt for jan
-04-01-2015,SBI,cheque,4444,04-01-2015,Allahabad Bank,Sec-7,Anupam Tagore,A,104,M,4000,4 Receipt for jan
-05-01-2015,SBI,neft,5555,05-01-2015,Allahabad Bank,Sec-8,B L Naik,A,105,O,5000,5 Receipt for jan
-06-01-2015,SBI,pg,6666,06-01-2015,Allahabad Bank,Sec-9,B L Naik,B,201,M,6000,6 Receipt for jan
-07-01-2015,SBI,cheque,7777,07-01-2015,Allahabad Bank,Sec-10,Anupam Tagore,A,101,M,7000,7 Receipt for jan
-08-01-2015,SBI,neft,8888,08-01-2015,Allahabad Bank,Sec-11,B L Naik,A,102,O,8000,8 Receipt for jan
-09-01-2015,SBI,pg,9999,09-01-2015,Allahabad Bank,Sec-12,B L Naik,A,103,M,9000,9 Receipt for jan
-10-01-2015,SBI,,11110,10-01-2015,Allahabad Bank,Sec-13,Anupam Tagore,A,104,M,10000,10 Receipt for jan
-11-01-2015,SBI,neft,12221,11-01-2015,Allahabad Bank,Sec-14,B L Naik,A,105,,11000,11 Receipt for jan
-12-01-2015,SBI,pg,13332,12-01-2015,Allahabad Bank,Sec-15,B L Naik,,201,M,12000,12 Receipt for jan
-13-01-2015,SBI,cheque,14443,13-01-2015,Allahabad Bank,Sec-16,Anupam Tagore,A,101,M,13000,13 Receipt for jan
-14-01-2015,SBI,neft,15554,14-01-2015,Allahabad Bank,Sec-17,B L Naik,A,102,O,14000,14 Receipt for jan
-15-01-2015,SBI,pg,16665,15-01-2015,Allahabad Bank,Sec-18,B L Naik,A,103,M,15000,15 Receipt for jan
-16-01-2015,SBI,cheque,17776,16-01-2015,Allahabad Bank,Sec-19,Anupam Tagore,A,104,M,16000,16 Receipt for jan
-17-01-2015,SBI,neft,18887,17-01-2015,Allahabad Bank,Sec-20,B L Naik,A,105,O,17000,17 Receipt for jan
-18-01-2015,SBI,pg,19998,18-01-2015,Allahabad Bank,Sec-21,B L Naik,B,201,M,18000,18 Receipt for jan
-19-01-2015,SBI,cheque,21109,19-01-2015,Allahabad Bank,Sec-22,Anupam Tagore,,101,M,,19 Receipt for jan
-20-01-2015,SBI,neft,22220,20-01-2015,Allahabad Bank,Sec-23,B L Naik,A,102,O,20000,20 Receipt for jan
-21-01-2015,SBI,pg,23331,21-01-2015,Allahabad Bank,Sec-24,B L Naik,A,103,M,21000,21 Receipt for jan
-22-01-2015,SBI,cheque,24442,22-01-2015,Allahabad Bank,Sec-25,Anupam Tagore,A,104,M,22000,22 Receipt for jan
-23-01-2015,SBI,neft,25553,23-01-2015,Allahabad Bank,Sec-26,B L Naik,A,105,O,23000,23 Receipt for jan
-24-01-2015,SBI,pg,26664,24-01-2015,Allahabad Bank,Sec-27,B L Naik,B,201,M,24000,24 Receipt for jan
-25-01-2015,SBI,cheque,27775,25-01-2015,Allahabad Bank,Sec-28,Anupam Tagore,A,101,M,25000,25 Receipt for jan
-26-01-2015,SBI,neft,28886,26-01-2015,Allahabad Bank,Sec-29,B L Naik,A,,O,26000,26 Receipt for jan
-27-01-2015,SBI,,29997,27-01-2015,Allahabad Bank,Sec-30,B L Naik,A,103,M,27000,27 Receipt for jan
-28-01-2015,SBI,cheque,31108,28-01-2015,Allahabad Bank,Sec-31,Anupam Tagore,A,104,M,28000,28 Receipt for jan
-29-01-2015,SBI,neft,32219,29-01-2015,Allahabad Bank,Sec-32,B L Naik,A,105,O,29000,29 Receipt for jan
-30-01-2015,SBI,pg,33330,30-01-2015,Allahabad Bank,Sec-33,B L Naik,B,201,M,30000,30 Receipt for jan
-31-01-2015,SBI,cheque,34441,31-01-2015,Allahabad Bank,Sec-34,Anupam Tagore,A,101,M,31000,31 Receipt for jan
-01-02-2015,SBI,neft,35552,01-02-2015,Allahabad Bank,Sec-35,B L Naik,A,102,O,32000,32 Receipt for jan
-02-02-2015,SBI,pg,36663,02-02-2015,Allahabad Bank,Sec-36,B L Naik,A,103,M,33000,33 Receipt for jan
-03-02-2015,SBI,cheque,37774,03-02-2015,Allahabad Bank,Sec-37,Anupam Tagore,A,104,M,34000,34 Receipt for jan
-04-02-2015,SBI,neft,38885,04-02-2015,Allahabad Bank,Sec-38,B L Naik,A,105,O,35000,35 Receipt for jan
-05-02-2015,SBI,pg,39996,05-02-2015,Allahabad Bank,Sec-39,B L Naik,B,201,M,36000,36 Receipt for jan
-06-02-2015,SBI,cheque,41107,06-02-2015,Allahabad Bank,Sec-40,Anupam Tagore,A,101,M,37000,37 Receipt for jan
-07-02-2015,SBI,neft,42218,07-02-2015,Allahabad Bank,Sec-41,B L Naik,A,102,O,38000,38 Receipt for jan
-08-02-2015,SBI,pg,43329,08-02-2015,Allahabad Bank,Sec-42,B L Naik,A,103,M,39000,39 Receipt for jan
-09-02-2015,SBI,cheque,44440,09-02-2015,Allahabad Bank,Sec-43,Anupam Tagore,A,104,M,40000,40 Receipt for jan
-10-02-2015,SBI,neft,45551,10-02-2015,Allahabad Bank,Sec-44,B L Naik,A,105,O,41000,41 Receipt for jan
-11-02-2015,SBI,pg,46662,11-02-2015,Allahabad Bank,Sec-45,B L Naik,B,201,M,42000,42 Receipt for jan
-12-02-2015,SBI,cheque,47773,12-02-2015,Allahabad Bank,Sec-46,Anupam Tagore,A,101,M,43000,43 Receipt for jan
-13-02-2015,SBI,neft,48884,13-02-2015,Allahabad Bank,Sec-47,B L Naik,A,102,O,44000,44 Receipt for jan
-14-02-2015,SBI,pg,49995,14-02-2015,Allahabad Bank,Sec-48,B L Naik,A,103,M,45000,45 Receipt for jan
-15-02-2015,SBI,,51106,15-02-2015,Allahabad Bank,Sec-49,Anupam Tagore,A,104,M,46000,46 Receipt for jan
-16-02-2015,SBI,neft,52217,16-02-2015,Allahabad Bank,Sec-50,B L Naik,A,105,O,47000,47 Receipt for jan
-17-02-2015,SBI,pg,53328,17-02-2015,Allahabad Bank,Sec-51,B L Naik,B,201,M,sfsdf,48 Receipt for jan
-18-02-2015,SBI,cheque,54439,18-02-2015,Allahabad Bank,Sec-52,Anupam Tagore,B,201,M,49000,49 Receipt for jan
+Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Amount,Narration 
+13-Aug-16,Abhyudaya Co-op Bank Ltd,,r no 5700,,,,To Vineeth V Kurup,A,202,"3,948.00",Rec.No. 2517 vide Chq No. 028221 FEDRAL BK
+13-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5739,,,,To Vineeth V Kurup,A,202,"3,445.00",Rec.No. 2552 vide Chq No. 0100650 FEDRAL BK
+15-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5757,,,,To Jayakumar K Nair,A,204,"5,625.00",Rec.No. 2573 vide Chq No. 214795 VIJAYA BK
+10-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5734,,,,To Sahi Kharak Bahadur & Mini Sahi,A,304,"4,245.00",Rec.No. 2547 vide Chq No. 000119 BOB
+07-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5730,,,,To Kailash Chapatwala Ketna Chapatwala,A,501,"3,600.00",Rec.No. 2543 vide Chq No. 254202 SBI
+13-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5738,,,,To Hembru Charran Murmu,A,502,"3,082.00",Rec.No. 2551 vide Chq No. 155925 icic
+11-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5737,,,,To Vikram Deo,A,503,"3,643.00",Rec.No. 2550 vide Chq No. 758780 UCO
+16-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5755,,,,To Sheela Chhokera & Rachit Chhokera,A,504,"3,948.00",Rec.No. 2571 vide Chq No. NEFT
+14-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5742,,,,To Kuntal Bhowmick & Kanai Lal Bhowmick,A,602,"1,948.00",Rec.No. 2555 vide Chq No. 508566 \AXIS
+15-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5744,,,,To Gangadhar Rama Birkodi & Sheetal G Birkodi,A,603,"1,668.00",Rec.No. 2557 vide Chq No. 677307 ICICI
+14-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5743,,,,To ARVIND CHAUDHARY & KAVITA CHAUDHARY,A,703,"3,643.00",Rec.No. 2556 vide Chq No. 00132 HDFC BK
+11-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5752,,,,To Mohit Krishna,A,802,"3,948.00",Rec.No. 2568 vide Chq No. NEFT
+07-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5729,,,,To Kiran Jamnadas Mehta & Purnima K. Mehta,A,804,"3,600.00",Rec.No. 2542 vide Chq No. 702969 SBI
+25-Aug-16,Abhyudaya Co-op Bank Ltd,,AS PER PASS BOOK,,,,To Vilas Narayan Ghodke & Sandhya V. Ghodake,A,902,"3,797.00",Rec.No. 2593 vide Chq No. 31264 DENA BK
+08-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5732,,,,To Santosh Krishna Bangera,A,1003,"1,668.00",Rec.No. 2545 vide Chq No. 377077 kARNATAKA bk
+09-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5733,,,,To Sukhjit Singh,A,1004,"5,600.00",Rec.No. 2546 vide Chq No. 481171 SBI
+11-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5736,,,,To Gunin Mishra & Anima Mishra,A,1102,"3,082.00",Rec.No. 2549 vide Chq No. 478013 BOM
+16-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5754,,,,To Gunjan Varshney,A,1103,"3,643.00",Rec.No. 2570 vide Chq No. NEFT
+09-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5749,,,,To Rohan C Deshmukh,A,1201,"4,634.00",Rec.No. 2565 vide Chq No. NEFT
+16-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5753,,,,To Bhuwnesh Kumar & Vijay Laxmi,A,1204,"2,812.00",Rec.No. 2569 vide Chq No. NEFT
+14-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5741,,,,To Subramaniam Sunder,B,101,"6,642.00",Rec.No. 2554 vide Chq No. 210089 AXIS BK
+08-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5748,,,,To Bandaru Sreenivas,B,102,"3,381.00",Rec.No. 2564 vide Chq No. NEFT
+15-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5758,,,,To Vinay Krishnan,B,103,"10,000.00",Rec.No. 2574 vide Chq No. 001871 ICICI BK
+04-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5728,,,,To Deepali Prasad Bhagare,B,301,"7,633.00",Rec.No. 2541 vide Chq No. 344112 CITI BK
+15-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5760,,,,To Ravi M Hegde,B,302,"4,024.00",Rec.No. 2576 vide Chq No. 00061 HDFC
+10-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5750,,,,To Surya Kumar Gupta & Mayank Gupta,B,401,"4,905.00",Rec.No. 2566 vide Chq No. NEFT
+10-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5751,,,,To Surya Kumar Gupta & Mayank Gupta,B,401,"7,277.00",Rec.No. 2567 vide Chq No. NEFT
+14-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5740,,,,To C Bose & Bhanumati Bose,B,404,"4,232.00",Rec.No. 2553 vide Chq No. 0012 HDFC
+15-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5759,,,,To RAJIB CHAKRABARTI,B,502,"4,024.00",Rec.No. 2575 vide Chq No. 00142 HDFC Bk
+04-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5726,,,,To SHANJIB PRADHAN,B,504,"4,933.00",Rec.No. 2540 vide Chq No. 042533 BOM
+03-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5745,,,,To Kailash Chandar Mittal,B,701,"7,303.00",Rec.No. 2561 vide Chq No. NEFT
+10-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5735,,,,To Baldev G Aulakh & Prem Aulakh,B,801,"7,277.00",Rec.No. 2548 vide Chq No. 354560 CANARA
+20-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5756,,,,To Madhu Varshney,B,802,"4,024.00",Rec.No. 2572 vide Chq No. NEFT
+05-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5747,,,,To Bala Jindal &G hanshyam Das Jindal,B,901,"7,303.00",Rec.No. 2563 vide Chq No. NEFT
+22-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5761,,,,To D K Prasad,B,904,"4,913.00",Rec.No. 2578 vide Chq No. NEFT
+08-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5731,,,,To Sidharth Kumar Sinha,B,1002,"65,663.00",Rec.No. 2544 vide Chq No. 435761 ICICI
+30-Aug-16,Abhyudaya Co-op Bank Ltd,,AS PER BANK,,,,To Samarth Saxena & Mrs. Vartika Saxena,B,1101,"7,303.00",Rec.No. 2592 vide Chq No. NEFT
+05-Aug-16,Abhyudaya Co-op Bank Ltd,,R NO 5746,,,,To Umesh Chandra Bhartiya & Usha Bhartiya,B,1104,"4,125.00",Rec.No. 2562 vide Chq No. NEFT
+14-Aug-16,Karnataka Bank Ltd,,r no 5804,,,,To VIJAYAN NAIR & MRINALI NAIR,Shop,10,"2,000.00",Rec.No. 2521 vide Chq No. 382857 ICIICI BK
+03-Aug-16,Karnataka Bank Ltd,,R NO 5686,,,,To Bharati Avinash Deshpande AndAvinash T Deshpande,A,101,"4,870.00",Rec.No. 2503 vide Chq No. NEFT
+08-Aug-16,Karnataka Bank Ltd,,R NO 5690,,,,To Ninad D. Bhide,A,102,"8,000.00",Rec.No. 2507 vide Chq No. NEFT
+20-Aug-16,Karnataka Bank Ltd,,R NO 5828,,,,To Prakash Bajirao Gosalkar & Sunita Ravindra Mathapati,A,103,"78,425.00",Rec.No. 2584 vide Chq No. NEFT
+15-Aug-16,Karnataka Bank Ltd,,R NO 5809,,,,To B.B. Deshmukh,A,104,"4,995.00",Rec.No. 2526 vide Chq No. 612739 SOUTH INDIAN
+14-Aug-16,Karnataka Bank Ltd,,r no 5805,,,,To Israr Ahmed Siddiqui,A,203,"83,625.00",Rec.No. 2522 vide Chq No. 098330 axis
+13-Aug-16,Karnataka Bank Ltd,,R NO 5832,,,,To Jayakumar K Nair,A,204,"4,270.00",Rec.No. 2589 vide Chq No. 214791 VIJAYA BK
+23-Aug-16,Karnataka Bank Ltd,,R NO 5825,,,,To R Kannan & Mangalam Kannan,A,301,"1,09,091.00",Rec.No. 2581 vide Chq No. 028697 KARNATAKA
+27-Aug-16,Karnataka Bank Ltd,,R NO 5830,,,,To Superna Verma & Rajesh Kumar Verma,A,302,"14,718.00",Rec.No. 2586 vide Chq No. NEFT
+09-Aug-16,Karnataka Bank Ltd,,R NO 5680,,,,To Sahi Kharak Bahadur & Mini Sahi,A,304,"4,908.00",Rec.No. 2497 vide Chq No. 00118 BOB
+07-Aug-16,Karnataka Bank Ltd,,R NO 5675,,,,To Kailash Chapatwala Ketna Chapatwala,A,501,"3,600.00",Rec.No. 2492 vide Chq No. 254214 SBI
+13-Aug-16,Karnataka Bank Ltd,,r no 5696,,,,To Hembru Charran Murmu,A,502,"3,082.00",Rec.No. 2513 vide Chq No. 155925 icic
+11-Aug-16,Karnataka Bank Ltd,,r no 5695,,,,To Vikram Deo,A,503,"2,945.00",Rec.No. 2512 vide Chq No. 758779 UCO
+15-Aug-16,Karnataka Bank Ltd,,R NO 5815,,,,To Sheela Chhokera & Rachit Chhokera,A,504,"3,445.00",Rec.No. 2532 vide Chq No. NEFT
+14-Aug-16,Karnataka Bank Ltd,,r no 5807,,,,To Kuntal Bhowmick & Kanai Lal Bhowmick,A,602,"3,595.00",Rec.No. 2524 vide Chq No. 508565 \AXIS
+15-Aug-16,Karnataka Bank Ltd,,r no 5808,,,,To Gangadhar Rama Birkodi & Sheetal G Birkodi,A,603,"3,208.00",Rec.No. 2525 vide Chq No. 677306 ICICI
+13-Aug-16,Karnataka Bank Ltd,,r no 5699,,,,To Jagdeep Kaur Sodhi & Dharmindra Singh Sodhi,A,701,"9,819.00",Rec.No. 2516 vide Chq No. 032826 union bk
+14-Aug-16,Karnataka Bank Ltd,,r no 5806,,,,To ARVIND CHAUDHARY & KAVITA CHAUDHARY,A,703,"3,545.00",Rec.No. 2523 vide Chq No. 00131 HDFC BK
+09-Aug-16,Karnataka Bank Ltd,,R NO 5678,,,,To Rekha Agrawal & Ramavtar Agrawal,A,704,"4,195.00",Rec.No. 2495 vide Chq No. 070760 CITIZEN CREDIT
+08-Aug-16,Karnataka Bank Ltd,,R NO 5676,,,,To Dinesh K Sharma,A,801,"10,208.00",Rec.No. 2493 vide Chq No. 0005 HDFC
+11-Aug-16,Karnataka Bank Ltd,,R NO 5693,,,,To Mohit Krishna,A,802,"3,350.00",Rec.No. 2510 vide Chq No. NEFT
+14-Aug-16,Karnataka Bank Ltd,,r no 5801,,,,To Gurvinder Singh Sandhu & Gursharan Sandhu,A,803,"6,700.00",Rec.No. 2518 vide Chq No. cash
+07-Aug-16,Karnataka Bank Ltd,,R NO 5674,,,,To Kiran Jamnadas Mehta & Purnima K. Mehta,A,804,"4,200.00",Rec.No. 2491 vide Chq No. 702968 SBI
+12-Aug-16,Karnataka Bank Ltd,,AS PER BANK,,,,To Vilas Narayan Ghodke & Sandhya V. Ghodake,A,902,"3,382.00",Rec.No. 2590 vide Chq No. 31263 DENA BK
+15-Aug-16,Karnataka Bank Ltd,,R NO 5812,,,,To Varun Sharma & Rajni Sharma & Vijay Sharma,A,903,"52,340.00",Rec.No. 2529 vide Chq No. 346158 ICICI
+12-Aug-16,Karnataka Bank Ltd,,R NO 5822,,,,To K R Sreenath & Jeeja Sreenath,A,1002,"7,336.00",Rec.No. 2539 vide Chq No. neft
+08-Aug-16,Karnataka Bank Ltd,,R NO5677,,,,To Santosh Krishna Bangera,A,1003,"3,308.00",Rec.No. 2494 vide Chq No. 377076 kARNATAKA bk
+09-Aug-16,Karnataka Bank Ltd,,R NO 5679,,,,To Sukhjit Singh,A,1004,"4,282.00",Rec.No. 2496 vide Chq No. 481172 SBI
+08-Aug-16,Karnataka Bank Ltd,,R NO 5691,,,,To Subhasis Banerjee,A,1101,"4,000.00",Rec.No. 2508 vide Chq No. neft
+11-Aug-16,Karnataka Bank Ltd,,R NO 5684,,,,To Gunin Mishra & Anima Mishra,A,1102,"1,922.00",Rec.No. 2501 vide Chq No. 478014 BOM
+16-Aug-16,Karnataka Bank Ltd,,R NO 5817,,,,To Gunjan Varshney,A,1103,"3,223.00",Rec.No. 2534 vide Chq No. NEFT
+09-Aug-16,Karnataka Bank Ltd,,R NO 5692,,,,To Rohan C Deshmukh,A,1201,"3,876.00",Rec.No. 2509 vide Chq No. NEFT
+16-Aug-16,Karnataka Bank Ltd,,R NO 5816,,,,To Bhuwnesh Kumar & Vijay Laxmi,A,1204,"3,520.00",Rec.No. 2533 vide Chq No. NEFT
+14-Aug-16,Karnataka Bank Ltd,,r no 5803,,,,To Subramaniam Sunder,B,101,"4,420.00",Rec.No. 2520 vide Chq No. 210088 AXIS BK
+08-Aug-16,Karnataka Bank Ltd,,R NO 5689,,,,To Bandaru Sreenivas,B,102,"3,132.00",Rec.No. 2506 vide Chq No. NEFT
+12-Aug-16,Karnataka Bank Ltd,,R NO 5814,,,,To Rupesh Malladi,B,201,"9,734.00",Rec.No. 2531 vide Chq No. NEFT
+15-Aug-16,Karnataka Bank Ltd,,R NO 5811,,,,To R. Kamalasanan & Mrs. Sheela Kamlasanan,B,202,"6,964.00",Rec.No. 2528 vide Chq No. 102147 ABHYUDAYA BK
+10-Aug-16,Karnataka Bank Ltd,,R NO 5682,,,,To Anshuman Roy,B,204,"11,308.00",Rec.No. 2499 vide Chq No. 398960 ICICI
+02-Aug-16,Karnataka Bank Ltd,,R NO 5668,,,,To Deepali Prasad Bhagare,B,301,"4,908.00",Rec.No. 2486 vide Chq No. 985740 CITI BK
+15-Aug-16,Karnataka Bank Ltd,,R NO 5827,,,,To Ravi M Hegde,B,302,"2,962.00",Rec.No. 2583 vide Chq No. 00060 HDFC
+16-Aug-16,Karnataka Bank Ltd,,R NO 5818,,,,To Jyoti Prakash Biswas,B,303,"5,013.00",Rec.No. 2535 vide Chq No. NEFT
+04-Aug-16,Karnataka Bank Ltd,,R NO 5670,,,,To Mrs.Anuradha Vinjamuri & Mr. V.N.P Sharma,B,304,"3,908.00",Rec.No. 2488 vide Chq No. 000154 BOB
+14-Aug-16,Karnataka Bank Ltd,,r no 5802,,,,To C Bose & Bhanumati Bose,B,404,"5,549.00",Rec.No. 2519 vide Chq No. HDFC
+15-Aug-16,Karnataka Bank Ltd,,R NO 5826,,,,To RAJIB CHAKRABARTI,B,502,"3,482.00",Rec.No. 2582 vide Chq No. 000143 HDFC Bk
+04-Aug-16,Karnataka Bank Ltd,,R NO 5669,,,,To SHANJIB PRADHAN,B,504,"4,208.00",Rec.No. 2487 vide Chq No. 042532 BOM
+07-Aug-16,Karnataka Bank Ltd,,R NO 5673,,,,To Swapnil Krishna Bhaik,B,602,"7,456.00",Rec.No. 2490 vide Chq No. 00039 HDFC
+17-Aug-16,Karnataka Bank Ltd,,R NO 5821,,,,To Saraswathy Subramanyam lyer,B,603,"30,000.00",Rec.No. 2538 vide Chq No. NEFT
+03-Aug-16,Karnataka Bank Ltd,,R NO 5685,,,,To Kailash Chandar Mittal,B,701,"5,095.00",Rec.No. 2502 vide Chq No. NEFT
+10-Aug-16,Karnataka Bank Ltd,,R NO 5683,,,,To Baldev G Aulakh & Prem Aulakh,B,801,"4,732.00",Rec.No. 2500 vide Chq No. 354559 CANARA
+16-Aug-16,Karnataka Bank Ltd,,R NO 5819 SUDHR KUMAR,,,,To Madhu Varshney,B,802,"6,154.00",Rec.No. 2536 vide Chq No. NEFT
+06-Aug-16,Karnataka Bank Ltd,,R NO 5687,,,,To Bala Jindal &G hanshyam Das Jindal,B,901,"5,345.00",Rec.No. 2504 vide Chq No. NEFT
+15-Aug-16,Karnataka Bank Ltd,,R NO 5823,,,,To Sanjay kumar p panicker,B,902,"2,500.00",Rec.No. 2579 vide Chq No. 438355 SBOPATIYALA
+15-Aug-16,Karnataka Bank Ltd,,R NO 5824,,,,To Sanjay kumar p panicker,B,902,"50,000.00",Rec.No. 2580 vide Chq No. 007783 SBO TRAVANCOR
+09-Aug-16,Karnataka Bank Ltd,,R NO 5681,,,,To Nagesh Chandra Kothari,B,903,"3,055.00",Rec.No. 2498 vide Chq No. 108898 DEUTSCHE BK
+22-Aug-16,Karnataka Bank Ltd,,R NO 5829,,,,To D K Prasad,B,904,"3,570.00",Rec.No. 2585 vide Chq No. NEFT
+13-Aug-16,Karnataka Bank Ltd,,r no 5698,,,,To Prahalad Namdeo Narkhede & Chitrarekha Narkhede,B,1001,"11,941.00",Rec.No. 2515 vide Chq No. 818858 PNB
+12-Aug-16,Karnataka Bank Ltd,,R NO 5813,,,,To DineshDutt Sharma & Mrs. Urmila Sharma,B,1003,"4,905.00",Rec.No. 2530 vide Chq No. NEFT
+30-Aug-16,Karnataka Bank Ltd,,R NO 5831,,,,To Samarth Saxena & Mrs. Vartika Saxena,B,1101,"9,611.00",Rec.No. 2587 vide Chq No. NEFT
+06-Aug-16,Karnataka Bank Ltd,,R NO 5688,,,,To Anurag Arora,B,1102,"7,156.00",Rec.No. 2505 vide Chq No. NEFT
+13-Aug-16,Karnataka Bank Ltd,,r no 5697,,,,To Harish S. Prabhu & Babita H. Parbhu,B,1103,"7,293.00",Rec.No. 2514 vide Chq No. 00144 HDFC BK
+05-Aug-16,Karnataka Bank Ltd,,r no 5694,,,,To Umesh Chandra Bhartiya & Usha Bhartiya,B,1104,"3,182.00",Rec.No. 2511 vide Chq No. NEFT
+06-Aug-16,Karnataka Bank Ltd,,R NO 5672,,,,To Kirtivardhan Ashok Jaiswar & J A Jaiswar & A M Jaiswar,B,1202,"10,644.00",Rec.No. 2489 vide Chq No. 514976 VIJAYA BK
+11-Aug-16,Karnataka Bank Ltd,,R NO 5656 DT 24-7-2016,,,,To Amrut Ramesh Patel & Mr.Premji Patel,Shop,2,"41,974.00",Rec.No. 2588 vide Chq No. 20704 BOI
+,,,,,,,,,,,

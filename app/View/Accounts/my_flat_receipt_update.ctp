@@ -302,12 +302,20 @@ function receipt_mode(value)
 		if(value == "Cheque")	
 		{
 		$("#bnkkk").removeAttr("readonly","readonly");
-		$("#branchh").removeAttr("readonly","readonly");		
+		$("#branchh").removeAttr("readonly","readonly");	
+		$("#branchh").removeAttr("style","background-color: #ddd !important");
+		$("#bnkkk").removeAttr("style","background-color: #ddd !important");	
+		$('#bnkkk').attr('style', 'background-color: #fff !important');
+		$('#branchh').attr('style', 'background-color: #fff !important');		
 		}
 		else
-		{
+		{ 
 		$("#bnkkk").attr("readonly","readonly");
 		$("#branchh").attr("readonly","readonly");	
+		
+		$('#bnkkk').attr('style', 'background-color: #ddd !important');
+		$('#branchh').attr('style', 'background-color: #ddd !important');
+	  
 		$("#bnkkk").val("");
 		$("#branchh").val("");
 		}	

@@ -58,6 +58,8 @@ $default_date = date('d-m-Y');
 </div>
 <div class="portlet-body form">
 
+
+
 <form  method="POST" onSubmit="return balance()" >	
 <input type="text" id="date"  name="date" class="all_validate  m-wrap m-ctrl-medium date-picker"  data-date-format="dd-mm-yyyy" style="background-color:#FFF !important;" placeholder="Transaction Date" value="<?php echo $default_date; ?>">
 <br><br>

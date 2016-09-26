@@ -10,9 +10,10 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <a href="<?php echo $webroot_path; ?>Accounts/master_ledger_sub_account_view" class="btn" rel='tab'>Master Ledger Sub Account View</a>
 </center>
 <?php ///////////////////////////////////////////////////////////////////////////////////////////////////// ?>
-<br />
-<center>
+<br /> <a href="master_ledger_accounts_view_excel" class="btn green mini tooltips pull-right" data-placement="left" data-original-title="Download in excel"><i class="fa fa-file-excel-o"></i></a>
+<center> 
 <div class="portlet box grey" style="width:100%;">
+
 <div style="background-color:#B2B2B2; border-top:1px solid #e6e6e6; border-bottom:1px solid #e6e6e6; padding:10px; box-shadow:5px; font-size:16px; color:#006;">
 <b style="color:white;">  Ledger Accounts View </b>
 </div>

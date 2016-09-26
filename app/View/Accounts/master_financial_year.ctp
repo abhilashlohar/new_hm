@@ -11,11 +11,21 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <br />
 <center>
 <?php
+
+if(!empty($td1)){
+	
 $yy = date('Y',strtotime(@$td1));
 $yyy = $yy + 1;
 
-$fromm = date('1-4-'.$yy.'');
-$tooo = date('31-3-'.$yyy.'');
+$fromm = date('01-04-'.$yy.'');
+$tooo = date('31-03-'.$yyy.'');
+}else{
+    $date=date('Y-m-d');
+	$yy = date('Y',strtotime(@$date));
+	$yyy = $yy + 1;
+	$fromm = date('01-04-'.$yy.'');
+	$tooo = date('31-03-'.$yyy.'');
+}
 
 ?>
 
@@ -35,11 +45,11 @@ $tooo = date('31-3-'.$yyy.'');
 <tr>
 
 <td><label style="font-size:22px;"><b>From</b></label></td>
-<td><input type="text" name="from" class="m-wrap medium date-picker" data-date-format="dd-mm-yyyy"  style="background-color:white !important;" id="from" placeholder="Select Start Date" readonly  data-date-start-date="01-04-2016"data-date-end-date="01-04-2016" value="">
+<td><input type="text" name="from" class="m-wrap medium date-picker" data-date-format="dd-mm-yyyy"  style="background-color:white !important;" id="from" placeholder="Select Start Date" readonly  data-date-start-date="<?php echo $fromm; ?>"data-date-end-date="<?php echo $fromm; ?>" value="<?php echo $fromm; ?>">
 
 </td>
 <td><label style="font-size:22px;"><b>To</b></label></td>
-<td><input type="text" name="to" class="m-wrap medium date-picker mor" data-date-format="dd-mm-yyyy" style="background-color:white !important;" id="to" placeholder="Select End Date" readonly data-date-start-date="31-03-2017" data-date-end-date="31-03-2017" value=""></td>
+<td><input type="text" name="to" class="m-wrap medium date-picker mor" data-date-format="dd-mm-yyyy" style="background-color:white !important;" id="to" placeholder="Select End Date" readonly data-date-start-date="<?php echo $tooo; ?>" data-date-end-date="<?php echo $tooo; ?>" value="<?php echo $tooo; ?>"></td>
 
 </tr>
 <tr>

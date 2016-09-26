@@ -31,6 +31,8 @@
 <div>  <a href="profile_report" target="_blank">Profile reports for users </a> </div>
 <b> <i class="icon-user-md"></i> Exited User Reports </b>
 <div>  <a href="exited_member_report" target="_blank">Exited reports for users </a> </div>
+<b> <i class="fa fa-foursquare"></i> Financial year Reports </b>
+<div>  <a href="financial_year_log" target="_blank">Financial year log Reports </a> </div>
 </div>
 
 <!--<strong>Help-Desk Graphical Reports</strong>-->

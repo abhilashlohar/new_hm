@@ -19,11 +19,11 @@ $count=$this->requestAction(array('controller' => 'Fns', 'action' => 'check_appr
 			<thead>
 				<tr>
 					<th width="130px">Transaction Date <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
-					<th width="190px">Deposited In <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
-					<th>Receipt Mode <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
-					<th width="200px">Received From <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th width="50px">Deposited In <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th width="">Receipt Mode <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th width="110px">Received From <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
 					<th  width="125px">Amount Applied <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
-					<th>Narration</th>
+					<th width="210px">Narration</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -44,8 +44,8 @@ $count=$this->requestAction(array('controller' => 'Fns', 'action' => 'check_appr
 			<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy"  value="<?php echo $current_date; ?>" name="transaction_date[]">
 		</td>
 		<td>
-			<select name="deposited_in[]">
-				<option value="" style="display:none;width:200px;">Select Bank</option>
+			<select name="deposited_in[]" style="width: 130px;">
+				<option value="" style="display:none;width:50px;">Select Bank</option>
 				<?php 
 				foreach($bank_data as $bank_info){ 
 					$bank_id=$bank_info["ledger_sub_account"]["auto_id"];
@@ -71,13 +71,13 @@ $count=$this->requestAction(array('controller' => 'Fns', 'action' => 'check_appr
 			
 		</td>
 		<td>
-			<select name="received_from[]" class="m-wrap span12" style="width:200px;">
+			<select name="received_from[]" class="m-wrap span12" style="width:130px;">
 				<option value="" style="display:none;">--select--</option>
 				<option value="residential">Residential</option>
 				<option value="non_residential">Non-Residential</option>
 			</select>
 			<div id="residential" style="display:none;">
-				<select name="ledger_sub_account[]" class="m-wrap" style="width:200px;">
+				<select name="ledger_sub_account[]" class="m-wrap" style="width:130px;">
 					<option value="" style="display:none;">--member--</option>
 					<?php foreach($members_for_billing as $ledger_sub_account_id){
 						$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
@@ -86,7 +86,7 @@ $count=$this->requestAction(array('controller' => 'Fns', 'action' => 'check_appr
 				</select>
 			</div>
 			<div id="non_residential" style="display:none;">
-		<select name="non_member_ledger_sub_account[]" class="m-wrap" style="width:200px;">
+		<select name="non_member_ledger_sub_account[]" class="m-wrap" style="width:130px;">
 		<option value="" style="display:none;">--non member--</option>
 		<?php foreach($non_members as $ledger_sub_account_data){
 		       $ledger_sub_account_id = $ledger_sub_account_data['ledger_sub_account']['auto_id'];
@@ -108,7 +108,7 @@ $count=$this->requestAction(array('controller' => 'Fns', 'action' => 'check_appr
 		</div>
 			
 			
-			<input type="text" class="m-wrap span9 pull-left" placeholder="Narration" name="narration[]">
+			<input type="text" class="m-wrap span10 pull-left" placeholder="Narration" name="narration[]">
 			
 		</td>
 	</tr>

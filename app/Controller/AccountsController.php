@@ -689,6 +689,34 @@ function final_import_opening_balance()
 }
 //End final_import_opening_balance//
 //Start master_financial_period_status (Accounts)//
+
+function master_financial_period_status_update($id=null,$status=null){
+	
+	$this->layout=null;
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');	
+	
+	date_default_timezone_set('Asia/Kolkata');	
+	$date=date("d-m-Y");
+	$time = date(' h:i a', time());
+	
+	$this->loadmodel('financial_year');
+	$conditions=array("society_id" => $s_society_id,"auto_id"=>(int)$id);
+	$result_financial_year=$this->financial_year->find('all',array('conditions'=>$conditions));
+
+	$from=$result_financial_year[0]['financial_year']['from'];
+	$to=$result_financial_year[0]['financial_year']['to'];
+	
+	$a_id=$this->autoincrement('financial_year','auto_id');
+	$this->loadmodel('financial_year_log');
+	$this->financial_year_log->saveAll(array('auto_id'=>$a_id,'from'=>$from,'to'=>$to,'status'=>(int)$status,'society_id'=>$s_society_id,'update_by'=>$s_user_id,'date'=>$date,'time'=>$time));
+	
+	$this->loadmodel('financial_year');
+	$this->financial_year->updateAll(array("status" =>(int)$status),array('auto_id'=> (int)$id,'society_id'=>$s_society_id));
+
+}
+
+
 function master_financial_period_status()
 {
 		if($this->RequestHandler->isAjax()){
@@ -4356,6 +4384,42 @@ $this->set('result_accounts_category',$result_accounts_category);
 		$cursor3=$this->accounts_group->find('all',array('conditions'=>$conditions));
 		$this->set('cursor3',$cursor3);
 }
+
+
+function master_ledger_accounts_view_excel()
+{
+	
+	$this->layout=null;
+
+		//$s_role_id=$this->Session->read('role_id');
+		$s_society_id = (int)$this->Session->read('hm_society_id');
+		$s_user_id=$this->Session->read('hm_user_id');	
+		$this->set('s_user_id',$s_user_id);
+
+	$this->ath();
+	$this->check_user_privilages();
+
+	
+$this->loadmodel('accounts_category');
+$order=array('accounts_category.category_name'=>'ASC');
+$conditions=array("delete_id" => 0);
+$result_accounts_category=$this->accounts_category->find('all',array('conditions'=>$conditions,'order'=>$order));
+$this->set('result_accounts_category',$result_accounts_category);
+	
+
+	
+	$this->loadmodel('ledger_account');
+	$conditions = array( '$or' => array(array('society_id' =>$s_society_id,"delete_id" => 0),array('society_id' =>0,"delete_id" => 0)));
+	$cursor2=$this->ledger_account->find('all',array('conditions'=>$conditions));
+	$this->set('cursor2',$cursor2);	
+
+		$this->loadmodel('accounts_group');
+		$conditions=array("delete_id" => 0);
+		$cursor3=$this->accounts_group->find('all',array('conditions'=>$conditions));
+		$this->set('cursor3',$cursor3);
+}
+
+
 //End Master Ledger Accounts View//
 //Start ledger Edit//
 function ledger_edit()

@@ -2802,7 +2802,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -17350,13 +17350,25 @@ function login_report_unit()
 {
 
 $this->layout='session';
-$s_society_id=$this->Session->read('society_id');
+$s_society_id=$this->Session->read('hm_society_id');
 $this->loadmodel('user');
 $conditions=array('society_id'=>$s_society_id);
 $result=$this->user->find('all',array('conditions'=>$conditions));
 $this->set('result_user',$result);
 }
 
+function financial_year_log(){
+
+$this->ath();
+	$this->layout='session';
+	$s_society_id=$this->Session->read('hm_society_id');
+    $s_user_id=$this->Session->read('hm_user_id');
+	$this->loadmodel('financial_year_log');
+	$conditions=array("society_id" => $s_society_id);
+	$result_financial_year_log = $this->financial_year_log->find('all',array('conditions'=>$conditions));
+	
+	$this->set(compact('result_financial_year_log'));
+}
 
 function complaint_closed_report()
 {

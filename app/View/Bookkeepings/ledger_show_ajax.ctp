@@ -99,7 +99,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 	<thead>
 		<tr>
 			<th>Transaction Date</th>
-			<th>Party</th>
+			<th>Corresponding a/c </th>
             <th>Description</th>
 			<th>Source</th>
             <th>Reference</th>

@@ -91,7 +91,7 @@ $nnn = 555;
 			<th style="text-align:center;">Bill Date</th>
 			<th style="text-align:center;">Due date</th>
 			<th style="text-align:center;">Bill Amount</th>
-			<th style="text-align:center;">Due Amount</th>
+			<th style="text-align:center;"><?php if($wise == 2){ }else { ?> Due Amount <?php } ?></th>
 			<th style="text-align:center;" class="hide_at_print">Bill View</th>
 		</tr>
 	</thead>
@@ -157,7 +157,7 @@ $xccc=$due_amt2; $total_due_amt=$total_due_amt+$due_amt;
 	<td style="text-align:center;"><?php echo $bill_start_date_for_view; ?></td>
 	<td style="text-align:center;"><?php echo $due_date_for_view; ?></td>
 	<td style="text-align:right;"><?php echo $total_amt; ?></td>
-	<td style="text-align:right;"><?php echo $xccc;  ?></td>
+	<td style="text-align:right;"></td>
 	<td style="text-align:left;" class="hide_at_print">
 		<div class="btn-group">
 		<a class="btn blue mini" href="#" data-toggle="dropdown">
@@ -202,7 +202,7 @@ $total_bill_amt = number_format($total_bill_amt);
 <tr>
 <td style="text-align:right;" colspan="4"><b>Total</b></td>
 <td style="text-align:right;"><b><?php echo $total_bill_amt; ?></b></td>
-<td style="text-align:right;"><b><?php echo $total_due_amt; ?></b></td>
+<td style="text-align:right;"><b><?php if($wise == 2){ echo "Due Amount = " ; }  echo $total_due_amt; ?></b></td>
 <td style="text-align:right;" class="hide_at_print"></td>
 </tr>
 </tbody>

@@ -96,8 +96,8 @@ $nnn = 555;
 		</tr>
 	</thead>
 	<tbody id="table">
-<?php $c=0; $total_due_amt = 0; $total_bill_amt = 0; $xc=0;
-foreach($cursor1 as $collection){ $xccc=0;
+<?php $c=0; $total_due_amt = 0; $total_bill_amt = 0; $to_due=0;
+foreach($cursor1 as $collection){ 
 $auto_id = (int)@$collection['regular_bill']['auto_id'];
 $bill_no = @$collection['regular_bill']['bill_number'];	
 $date_from = @$collection['regular_bill']['start_date'];	
@@ -142,12 +142,12 @@ $new_total = @$collection['regular_bill']['new_total'];
 if($wise == 2){ 
 if($ledger_sub_account_id == $ledger_sub_account_id_via_regular_bill){
 if($date_from >= $from_date_renge && $date_from <= $to_date_renge){
-if($due_amt>0){	$xc++;
+if($due_amt>0){	$to_due++;
 $total_bill_amt = $total_bill_amt+$total_amt;
 
 $total_amt = number_format($total_amt);
 $due_amt2 = number_format($due_amt);
-if($xc==1){ 
+if($to_due==1){ 
  $total_due_amt=$total_due_amt+$due_amt;
 }
 ?>

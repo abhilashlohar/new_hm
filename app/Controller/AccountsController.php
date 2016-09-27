@@ -1303,7 +1303,7 @@ function over_due_report_show_ajax()
 		$this->set("wing",$wing);
 
 	$this->loadmodel('ledger_sub_account');
-	$condition=array('ledger_id'=>34);
+	$condition=array('ledger_id'=>34,'society_id'=>$s_society_id);
 	$order=array('ledger_sub_account.auto_id'=>'ASC');
 	$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$condition,'order'=>$order));
 	$this->set('result_ledger_sub_account',$result_ledger_sub_account);	
@@ -1318,7 +1318,7 @@ function over_due_report_show_ajax()
 	$this->set('to',$to);
 					
 	$this->loadmodel('regular_bill');
-	$conditions=array("society_id"=> $s_society_id);
+	$conditions=array("society_id"=> $s_society_id,'edited'=>"no");
 	$cursor1=$this->regular_bill->find('all',array('conditions'=>$conditions));
 	$this->set('cursor1',$cursor1);	
 		

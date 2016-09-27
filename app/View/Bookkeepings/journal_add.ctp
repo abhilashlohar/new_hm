@@ -26,6 +26,14 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 	margin-bottom: 0px !important;
 	font-size: 12px;
 }
+
+#date{ border: 1px solid black !important;
+    border-radius: 3px !important;
+    -webkit-transition: box-shadow .3s !important;
+    transition: box-shadow .3s !important;
+	 box-shadow: 0px 0px 7px black !important;
+}
+
 </style>
 
 <?php
@@ -61,11 +69,8 @@ $default_date = date('d-m-Y');
 
 
 <form  method="POST" onSubmit="return balance()" >	
-<input type="text" id="date"  name="date" class="all_validate  m-wrap m-ctrl-medium date-picker"  data-date-format="dd-mm-yyyy" style="background-color:#FFF !important;" placeholder="Transaction Date" value="<?php echo $default_date; ?>">
+<input type="text" id="date"  name="date" class="all_validate  m-wrap m-ctrl-medium date-picker" readonly data-date-format="dd-mm-yyyy" style="background-color:#FFF !important;" placeholder="Transaction Date" value="<?php echo $default_date; ?>">
 <br><br>
-
-
-
 
 <div id="error_msg"></div>
 <div id="result11"></div>
@@ -76,7 +81,7 @@ $default_date = date('d-m-Y');
 <table width="100%" id="main_table" >
 <thead>
 <tr class="table table-bordered table-hover" style="font-size:16px;" >
-<th>Ledger A/c</th>
+<th>Ledger A/c <span style="float:right;margin-right: 18px;">Group Name</span></th>
 <th>Debits</th>
 <th>Credits</th>
 <th></th>
@@ -85,7 +90,7 @@ $default_date = date('d-m-Y');
 <tbody>
 <tr class="table table-bordered table-hover" id="tr1">
 <td style="padding-left:5px; padding-right:5px; padding-top:5px; padding-bottom:0px; ">
-<select class="large m-wrap chosen">
+<select class="large m-wrap chosen ledger_account_by_group">
 						<option value="" style="display:none;">Select Ledger A/c</option>
 						<?php
 							 foreach ($cursor1 as $collection) 
@@ -123,7 +128,7 @@ $default_date = date('d-m-Y');
 					<option value="<?php echo $auto_id2; ?>,1"><?php echo $name2; ?> &nbsp;&nbsp; <?php echo @$wing_flat; ?><?php echo @$account_number; ?></option>
 						  
 						  <?php } ?>
-						</select>
+						</select><div class="group_name" style="float:right"></div>
 </td>	
 				
 <td style="padding-left:5px; padding-right:5px; padding-top:5px; padding-bottom:0px;">
@@ -149,7 +154,7 @@ $default_date = date('d-m-Y');
 
 <td style="padding-left:5px; padding-right:5px; padding-top:5px; padding-bottom:0px; ">
 
-<select class="large m-wrap chosen">
+<select class="large m-wrap chosen ledger_account_by_group">
 						<option value="" style="display:none;">Select Ledger A/c</option>
 						<?php
 							 foreach ($cursor1 as $collection) 
@@ -186,7 +191,7 @@ $default_date = date('d-m-Y');
 					<option value="<?php echo $auto_id2; ?>,1"><?php echo $name2; ?> &nbsp;&nbsp; <?php echo @$wing_flat; ?><?php echo @$account_number; ?></option>
 						  
 						  <?php } ?>
-						</select>
+						</select><div class="group_name" style="float:right"></div>
 
 </td>
 
@@ -304,6 +309,12 @@ return false;
 
 <script>
 $(document).ready(function() {
+
+$(".ledger_account_by_group").die().live('change',function(){ 
+	var id=$(this).val();
+	$(this).closest('tr').find('.group_name').load( "journal_add_show_group_name/"+id );
+});
+
 $("#button_add").bind('click',function(){
 var c=$("#main_table tbody tr").length;
 

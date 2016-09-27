@@ -85,6 +85,42 @@ $this->set('cc',$cc);
 }
 //End Cash Bank Vali (Accounts)//
 //Start Journal Add (Accounts)//
+
+function journal_add_show_group_name($acount_id=null){
+	$this->layout=null;	
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$ac=explode(',',$acount_id)	;
+	if($ac[1]==2){
+		
+			$this->loadmodel('ledger_account');
+			$conditions = array( '$or' => array(array('society_id' =>$s_society_id,'auto_id'=>(int)$ac[0]),array('society_id' =>0,'auto_id'=>(int)$ac[0])));
+			$result_ledger_account=$this->ledger_account->find('all',array('conditions'=>$conditions));
+			$group_id=$result_ledger_account[0]['ledger_account']['group_id'];
+			$this->loadmodel('accounts_group');
+			$conditions = array('auto_id'=>(int)$group_id);
+			$result_account_group=$this->accounts_group->find('all',array('conditions'=>$conditions));
+			echo $result_account_group[0]['accounts_group']['group_name'];
+	}else{
+		
+		$this->loadmodel('ledger_sub_account');
+		$conditions=array("society_id" => $s_society_id,'auto_id'=>(int)$ac[0]);
+		$result_ledger_sub_acc=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+		$ledger_id=$result_ledger_sub_acc[0]['ledger_sub_account']['ledger_id'];
+		
+		$this->loadmodel('ledger_account');
+		$conditions =array('auto_id'=>(int)$ledger_id);
+		$result_ledger_account=$this->ledger_account->find('all',array('conditions'=>$conditions));
+		$group_id=$result_ledger_account[0]['ledger_account']['group_id'];
+		$this->loadmodel('accounts_group');
+		$conditions = array('auto_id'=>(int)$group_id);
+		$result_account_group=$this->accounts_group->find('all',array('conditions'=>$conditions));
+		echo $result_account_group[0]['accounts_group']['group_name'];
+		
+		
+	}
+}
+
+
 function journal_add(){
 if($this->RequestHandler->isAjax()){
 $this->layout='blank';

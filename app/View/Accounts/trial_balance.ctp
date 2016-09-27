@@ -16,9 +16,9 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<option value="4" style="text-align:left">1) Summarized Trial balance (w/o subledgers)</option>
 		<option value="5" style="text-align:left">2) Detailed Trial balance (with subledger)</option>
 		<option value="2" style="text-align:left">3) Members Control Accounts</option>
-		<option value="6" style="text-align:left">4) Sundry Debtors Control A/c</option>
-		<option value="3" style="text-align:left">5) Bank Accounts</option>
-		<option value="1" style="text-align:left">6) Sundry Creditors Control A/c</option>
+		<!--<option value="6" style="text-align:left">4) Sundry Debtors Control A/c</option>-->
+		<option value="3" style="text-align:left">4) Bank Accounts</option>
+		<option value="1" style="text-align:left">5) Sundry Creditors Control A/c</option>
 	</select> 
 	<input type="text" id="from" class="date-picker m-wrap small" data-date-format="dd-mm-yyyy" name="from" placeholder="From"  value="<?php echo $default_from; ?>" style="background-color:#FFF !important; margin-top:3px;">
 	<input type="text" id="to" class="date-picker m-wrap small" data-date-format="dd-mm-yyyy" name="to" placeholder="To"  value="<?php echo $default_to; ?>" style="background-color:#FFF !important; margin-top:3px;">

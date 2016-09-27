@@ -1,7 +1,7 @@
 
 <tr class="table table-bordered table-hover" id="tr<?php echo $t; ?>">
 <td style="padding-left:5px; padding-right:5px; padding-top:5px; padding-bottom:0px; ">
-<select class="large m-wrap chosen">
+<select class="large m-wrap chosen ledger_account_by_group">
 						<option value="" style="display:none;">Select Ledger A/c</option>
 						<?php
 							 foreach ($cursor1 as $collection) 
@@ -38,7 +38,7 @@
 					<option value="<?php echo $auto_id2; ?>,1"><?php echo $name2; ?> &nbsp;&nbsp; <?php echo @$wing_flat; ?><?php echo @$account_number; ?></option>
 						  
 						  <?php } ?>
-					</select>
+					</select><div class="group_name" style="float:right"></div>
 
 </td>
 

@@ -26,13 +26,14 @@ $pdf_view.='<div class="bg_co" align="center" style="background-color: rgb(0, 14
 
 
 <div align="" style="padding: 10px;">
-<span style="font-size:14px; float:left;"> <b> Journal Voucher # : </b> '.$voc_id.'</span>
-<span style="font-size:14px; float:right;"> <b> Date :</b>';
+<table><tr><td>
+<span style="font-size:14px; text-align:left !important;"> <b> Journal Voucher # : </b> '.$voc_id.'</span></td><td>
+<span style="font-size:14px; text-align:right !important;"> <b> Date :</b>';
  $transaction_date=$result_journal[0]['journal']['transaction_date'];
 $transaction_date=date('d-m-Y',$transaction_date);
-$pdf_view.=''.$transaction_date.'</span>
+$pdf_view.=''.$transaction_date.'</span></td></tr></table>
 </div>
-<br/>
+
 <div align="" style="padding: 5px;">
 <table cellpadding="5" width="100%;" border="1">
 <tr>
@@ -104,15 +105,17 @@ $pdf_view.='<tr>
 }
 
 $pdf_view.='<tr>
-<td align="right" colspan="1" ><span style="float:left;"><b>Narration:</b>'.$remark.'</span><span><b> Total </b> </span> </td>
+<td align="right" colspan="1" ><span><b> Total </b> </span> </td>
 <td align="right" >'.$total_debit.'</td>
 <td align="right">'.$total_credit.'</td>
 </tr>
 </table>
 </div>
-<div align="" style="padding: 10px;">
-<center><span style="font-size:14px;float:left;"><b> Prepared By : </b>  '. $prepared_by.' '. @$wing_flat_prepared.'</span>
- <span style="font-size:14px;"><b> Approved By : </b>   </span > </center>
+
+<span style="padding: 10px;"><b style="font-size:12px;"> Narration:</b> '.$remark.'</span>
+<div align="" style="padding: 10px;"><table><tr><td>
+<span style="font-size:14px;float:left;"><b> Prepared By : </b>  '. $prepared_by.' '. @$wing_flat_prepared.'</span></td><td>
+ <span style="font-size:14px;"><b> Approved By : </b>   </span > </td></tr></table>
 </div>'; 
 $pdf_view.='<br><br></td></tr></table>'; 
 $tcpdf->writeHTML($pdf_view);

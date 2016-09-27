@@ -46,10 +46,10 @@ font-size: 12px;
 <th>Journal voucher Id </th>
 <th>Transaction Date</th>
 <th>Ledger A/c</th>
-<th>Narration</th>
+<th width='230px'>Narration</th>
 <th >Debit</th>
 <th >Credit</th>
-<th class="hide_at_print" style="width:20px;">view</th>
+<th class="hide_at_print" style="width:20px;">Action</th>
 </tr>
 
 </thead>

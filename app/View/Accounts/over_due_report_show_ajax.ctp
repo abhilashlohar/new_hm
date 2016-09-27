@@ -96,8 +96,8 @@ $nnn = 555;
 		</tr>
 	</thead>
 	<tbody id="table">
-<?php $c=0; $total_due_amt = 0; $total_bill_amt = 0;
-foreach($cursor1 as $collection){
+<?php $c=0; $total_due_amt = 0; $total_bill_amt = 0; $xc=0;
+foreach($cursor1 as $collection){ $xccc=0;
 $auto_id = (int)@$collection['regular_bill']['auto_id'];
 $bill_no = @$collection['regular_bill']['bill_number'];	
 $date_from = @$collection['regular_bill']['start_date'];	
@@ -142,11 +142,14 @@ $new_total = @$collection['regular_bill']['new_total'];
 if($wise == 2){ 
 if($ledger_sub_account_id == $ledger_sub_account_id_via_regular_bill){
 if($date_from >= $from_date_renge && $date_from <= $to_date_renge){
-if($due_amt>0){	
+if($due_amt>0){	$xc++;
 $total_bill_amt = $total_bill_amt+$total_amt;
-$total_due_amt=$total_due_amt+$due_amt;
+
 $total_amt = number_format($total_amt);
-$due_amt2 = number_format($due_amt);	
+$due_amt2 = number_format($due_amt);
+if($xc==1){ 
+$xccc=$due_amt2; $total_due_amt=$total_due_amt+$due_amt;
+}
 ?>
 <tr>
 	<td style="text-align:center;"><?php echo $bill_no; ?></td>
@@ -154,7 +157,7 @@ $due_amt2 = number_format($due_amt);
 	<td style="text-align:center;"><?php echo $bill_start_date_for_view; ?></td>
 	<td style="text-align:center;"><?php echo $due_date_for_view; ?></td>
 	<td style="text-align:right;"><?php echo $total_amt; ?></td>
-	<td style="text-align:right;"><?php echo $due_amt2; ?></td>
+	<td style="text-align:right;"><?php echo $xccc;  ?></td>
 	<td style="text-align:left;" class="hide_at_print">
 		<div class="btn-group">
 		<a class="btn blue mini" href="#" data-toggle="dropdown">

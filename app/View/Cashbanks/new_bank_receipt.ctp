@@ -94,7 +94,7 @@ $count=$this->requestAction(array('controller' => 'Fns', 'action' => 'check_appr
 			   <option value="<?php echo $ledger_sub_account_id; ?>"><?php echo $non_member_name; ?></option>
 		<?php } ?>
 		</select>
-		<input type="text" class="m-wrap" style="width:190px;" name="bill_reference[]" Placeholder="Bill Reference">
+		<input type="text" class="m-wrap" style="width:130px;" name="bill_reference[]" Placeholder="Bill Reference">
 			</div>
 		</td>
 		<td>

@@ -148,7 +148,7 @@ $total_bill_amt = $total_bill_amt+$total_amt;
 $total_amt = number_format($total_amt);
 $due_amt2 = number_format($due_amt);
 if($xc==1){ 
-$xccc=$due_amt2; $total_due_amt=$total_due_amt+$due_amt;
+ $total_due_amt=$total_due_amt+$due_amt;
 }
 ?>
 <tr>

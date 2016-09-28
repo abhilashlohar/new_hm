@@ -169,9 +169,9 @@ if($to_due==1){
 	</td>
 </tr>
 <?php }}}}else{ 
-if($wing == $wing_id){
+if($wing == $wing_id){ 
 if($date_from >= $from_date_renge && $date_from <= $to_date_renge){
-if($due_amt > 0){
+if($due_amt > 0){ 
 $total_bill_amt = $total_bill_amt+$total_amt;
 $total_due_amt=$total_due_amt+$due_amt;
 $total_amt = number_format($total_amt);

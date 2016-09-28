@@ -1,6 +1,6 @@
 <?php
 $account_name2=str_replace(' ', '-', $account_name);
-$filename="".$socc_namm."_Ledger_Report_".$fdddd."_".$tdddd."-".$account_name2."";
+$filename="".$socc_namm."_Ledger_Report_".date('d-m-Y',strtotime($from))."_".date('d-m-Y',strtotime($to))."-".$account_name2."";
 header ("Expires: 0");
 header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
 header ("Cache-Control: no-cache, must-revalidate");

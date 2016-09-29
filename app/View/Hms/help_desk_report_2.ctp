@@ -10,24 +10,24 @@ function check_in_range($d1, $d2, $help_desk_date)
 	  return (($help_desk_date >= $d1) && ($help_desk_date <= $d2));
 	}
 	
-foreach ($result_help_desk_report1 as $collection) 
+foreach($result_help_desk_report1 as $collection) 
 {
 $help_desk_date=$collection['help_desk']['help_desk_date'];
-$help_desk_date=date("Y-m-d",strtotime(date("d-m-y",strtotime($help_desk_date))));
-	
+$help_desk_date=date("Y-m-d",strtotime(date("d-m-Y",strtotime($help_desk_date))));
+
 	if(check_in_range($d1, $d2, $help_desk_date)==1)
-	{
-	$help_desk_result[]=$collection['help_desk'];
+	{ 
+	 $help_desk_result[]=$collection['help_desk'];
 	}
 }
 if(sizeof(@$help_desk_result)==0){ $help_desk_result=array(); };
 foreach ($help_desk_result as $data) 
 {
 $help_desk_date=$data['help_desk_date'];
-$help_desk_date=date("Y-m-d",strtotime(date("d-m-y",strtotime($help_desk_date))));
+$help_desk_date=date("Y-m-d",strtotime(date("d-m-Y",strtotime($help_desk_date))));
 
 $help_desk_close_date=$data['help_desk_close_date'];
-$help_desk_close_date=date("Y-m-d",strtotime(date("d-m-y",strtotime($help_desk_close_date))));
+$help_desk_close_date=date("Y-m-d",strtotime(date("d-m-Y",strtotime($help_desk_close_date))));
 
 $help_desk_date = strtotime($help_desk_date);
 $help_desk_close_date = strtotime($help_desk_close_date);

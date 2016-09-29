@@ -37,9 +37,11 @@
         </div>
 	</div>
 </div>
- 				
+ <div style="padding-left: 2px;">
+	<a href="<?php echo $webroot_path; ?>Bookkeepings/journal_view" role="button" rel="tab" class="btn blue"> Back </a>
+ </div>			
 <div id="succ">
-<h4>Edit Journal Voucher: <?php echo $result_journal[0]["journal"]["voucher_id"]; ?></h4>
+<center><h4>Edit Journal Voucher: <?php echo $result_journal[0]["journal"]["voucher_id"]; ?></h4></center>
 <div class="portlet box" style="width:100%;">
 <div class="portlet-title">
 <h4><i class="icon-reorder"></i>Create Journal Voucher</h4>
@@ -73,6 +75,7 @@ $remark=$result_journal[0]["journal"]["remark"]; ?>
 <?php 
 $cq=0;
 foreach($result_journal as $data) { $cq++;
+	$journal_id=$data["journal"]["journal_id"];
 	$ledger_account_id=$data["journal"]["ledger_account_id"];
 	$ledger_sub_account_id=$data["journal"]["ledger_sub_account_id"];
 	$debit=$data["journal"]["debit"];
@@ -134,7 +137,7 @@ foreach($result_journal as $data) { $cq++;
 			</div>
 		</div>
 	</td>
-	<td width="2%"></td>
+	<td width="2%">  <?php  if($cq!=1){ ?> <a href="#" role="button" class="btn mini delete_ledger" update_id="<?php echo $journal_id; ?>"><i class="icon-trash"></i></a><?php } ?></td>
 </tr>
 <?php } ?>
 
@@ -231,6 +234,18 @@ return false;
 
 <script>
 $(document).ready(function() {
+	
+	$(".delete_ledger").die().live('click',function(){ 
+		var id=$(this).attr("update_id");
+		/* $.ajax({
+			url: "<?php echo $webroot_path; ?>/Bookkeepings/journal_edit_delete_row/"+id,
+			}).done(function(response) {
+				
+		});	*/
+		$(this).closest("tr").remove();	
+	});
+	
+	
 $("#button_add").bind('click',function(){
 var c=$("#main_table tbody tr").length;
 

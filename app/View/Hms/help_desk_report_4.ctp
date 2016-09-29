@@ -9,11 +9,11 @@ function check_in_range($d1, $d2, $help_desk_date)
 	  // Check that user date is between start & end
 	  return (($help_desk_date >= $d1) && ($help_desk_date <= $d2));
 	}
-	
+	//pr($result_help_desk_report1);
 foreach ($result_help_desk_report1 as $collection) 
 {
 $help_desk_date=$collection['help_desk']['help_desk_date'];
-$help_desk_date=date("Y-m-d",strtotime(date("d-m-y",strtotime($help_desk_date))));
+$help_desk_date=date("Y-m-d",strtotime(date("d-m-Y",strtotime($help_desk_date))));
 	
 	if(check_in_range($d1, $d2, $help_desk_date)==1)
 	{

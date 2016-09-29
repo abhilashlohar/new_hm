@@ -1075,9 +1075,7 @@ $ledger_sub_account2=null;
 			$conditions4=array('society_id'=>$s_society_id,'voucher_id'=>$voucher_id);
 			$this->journal->deleteAll($conditions4);
 		}
-	
-				
-				
+			
 				
 		$journal_id=$this->autoincrement('journal','journal_id');
 		$this->loadmodel('journal');
@@ -1106,7 +1104,20 @@ $output = json_encode(array('type'=>'succ', 'text' => 'Journal voucher '.$vouche
 	
 }
 
+function journal_edit_delete_row($id=null){
+	
+$this->layout=null;
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
 
+	/*$this->loadmodel('ledger');
+	$conditions4=array('society_id'=>$s_society_id,"table_name"=>"journal",'element_id'=>(int)$id);
+	$this->ledger->deleteAll($conditions4);
+	
+	$this->loadmodel('journal');
+	$conditions5=array('society_id'=>$s_society_id,'journal_id'=>(int)$id);
+	$this->journal->deleteAll($conditions5); */
+}
 
 
 

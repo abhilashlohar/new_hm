@@ -10,10 +10,12 @@ function check_in_range($d1, $d2, $help_desk_date)
 	  return (($help_desk_date >= $d1) && ($help_desk_date <= $d2));
 	}
 	
+	//pr($result_help_desk_report1);
+	
 foreach ($result_help_desk_report1 as $collection) 
 {
 $help_desk_date=$collection['help_desk']['help_desk_date'];
-$help_desk_date=date("Y-m-d",strtotime(date("d-m-y",strtotime($help_desk_date))));
+$help_desk_date=date("Y-m-d",strtotime(date("d-m-Y",strtotime($help_desk_date))));
 	
 	if(check_in_range($d1, $d2, $help_desk_date)==1)
 	{
@@ -34,8 +36,13 @@ if($data['help_desk_status']==1) { $closed++;}
 }
 
 @$open_per=($open*100)/sizeof($help_desk_result);
+$open_per=number_format((float)$open_per, 2, '.', '');
+
 @$open_and_assigned_per=($open_and_assigned*100)/sizeof($help_desk_result);
+$open_and_assigned_per=number_format((float)$open_and_assigned_per, 2, '.', '');
+
 @$closed_per=($closed*100)/sizeof($help_desk_result);
+$closed_per=number_format((float)$closed_per, 2, '.', '');
 ?>
 
 <div style="background-color:#fff;padding:20px;">

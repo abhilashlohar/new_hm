@@ -17429,8 +17429,8 @@ function sp_performance_report_pdf()
 
 $this->layout="pdf";
 $this->layout="session";
-$s_society_id=$this->Session->read('society_id');
-$s_user_id=$this->Session->read('user_id');
+$s_society_id=$this->Session->read('hm_society_id');
+$s_user_id=$this->Session->read('hm_user_id');
  $date1=$this->request->query('con');
  $date2=$this->request->query('con2');
 
@@ -17470,15 +17470,15 @@ $close_date=@$data['help_desk']['help_desk_close_date'];
 $help_desk_date=$data['help_desk']['help_desk_date'];
 $sp_id=$data['help_desk']['help_desk_service_provider_id'];
 $ticket_id=$data['help_desk']['ticket_id'];
- $help_desk_date1=date("d-m-y", strtotime($help_desk_date));
+ $help_desk_date1=date("d-m-Y", strtotime($help_desk_date));
  $help_desk_date2 = date("Y-m-d", strtotime($help_desk_date1));
  $help_desk_date3 = date("d-m-Y", strtotime($help_desk_date2));
 
 if(!empty($assign_date) && !empty($close_date))
 {
-$newDate = date("d-m-y", strtotime($assign_date));
+$newDate = date("d-m-Y", strtotime($assign_date));
 $newDate1 = date("Y-m-d", strtotime($newDate));
-$newDate2 = date("d-m-y", strtotime($close_date));
+$newDate2 = date("d-m-Y", strtotime($close_date));
 $newDate3 = date("Y-m-d", strtotime($newDate2));
 $datetime1 = date_create($newDate1);
 $datetime2 = date_create($newDate3);

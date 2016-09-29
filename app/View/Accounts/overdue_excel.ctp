@@ -5,12 +5,12 @@ $from1 = strtotime($from1);
 $to1 = date("Y-m-d", strtotime($to));
 $to1 = strtotime($to1);  
 
-$fdddd = date('d-M-Y',strtotime($from));
-$tdddd = date('d-M-Y',strtotime($to));
+$fdddd = date('d-m-Y',strtotime($from));
+$tdddd = date('d-m-Y',strtotime($to));
 
 $socc_namm = str_replace(' ', '_', $society_name);
 	
-	$filename="".$socc_namm."OverDue_Report".$fdddd."_".$tdddd."";
+	$filename="".$socc_namm."OverDue_Report".$fdddd."_to_".$tdddd."";
 	header ("Expires: 0");
 	header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
 	header ("Cache-Control: no-cache, must-revalidate");

@@ -1,5 +1,5 @@
 <?php
-$filename="".$socc_namm."_TDS_Payment_Report_".$fdddd."_".$tdddd."";
+$filename="".$socc_namm."_TDS_Payment_Report_".$from."_to_".$to."";
 header ("Expires: 0");
 header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
 header ("Cache-Control: no-cache, must-revalidate");

@@ -1707,7 +1707,7 @@ $this->ath();
 	}
 	$sss_namm = str_replace(' ','-',$society_name);
 
-$filename="".$sss_namm."_Bank_Payment_Register_".$fdddd."_".$tdddd."";
+$filename="".$sss_namm."_Bank_Payment_Register_".$from."_to_".$to."";
 header ("Expires: 0");
 header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
 header ("Cache-Control: no-cache, must-revalidate");
@@ -1939,7 +1939,7 @@ function petty_cash_receipt_excel()
 		$tdddd = date('d-M-Y',strtotime($to));
 		$socitty_nammm = str_replace(' ','-',$society_name);
 	
-	$filename="".$socitty_nammm."_Petty_Cash_Receipt_Register_".$fdddd."_".$tdddd."";
+	$filename="".$socitty_nammm."_Petty_Cash_Receipt_Register_".$from."_to_".$to."";
 	header ("Expires: 0");
 	header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
 	header ("Cache-Control: no-cache, must-revalidate");
@@ -2286,7 +2286,7 @@ $this->set('to',$to);
 $fdddd = date('d-M-Y',strtotime($from));
 $tdddd = date('d-M-Y',strtotime($to));
 $socitty_nammm = str_replace(' ','-',$society_name);
-$filename="".$socitty_nammm."_Petty_Cash_Payment_Register_".$fdddd."_".$tdddd."";
+$filename="".$socitty_nammm."_Petty_Cash_Payment_Register_".$from."_to_".$to."";
 header ("Expires: 0");
 header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
 header ("Cache-Control: no-cache, must-revalidate");

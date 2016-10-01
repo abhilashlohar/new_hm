@@ -8638,6 +8638,345 @@ function member_update_status_profile($user_id=null){
  echo"done";
 }
 
+function trial_balance_report_up($from=null,$to=null){
+	
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	
+	$this->ath();
+	$from=date('Y-m-d',strtotime($from));
+	$from=strtotime($from);
+	
+	$to=date('Y-m-d',strtotime($to));
+	$to=strtotime($to);
+	
+	$this->loadmodel('trial_balance_report');
+	$today = date("d-M-Y");
+	$this->loadmodel('trial_balance_report');
+	$auto_id=$this->autoincrement('trial_balance_report','auto_id');
+	$this->trial_balance_report->saveAll(Array( Array("auto_id" => $auto_id,"module_name" => "TB", "step1" => 1,"date"=>$today,"from"=>$from,"to"=>$to))); 
+	die(json_encode("UPLOADED"));
+	
+}
+
+function trial_balance_report_read(){
+
+if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	$this->loadmodel('trial_balance_report');
+    $conditions=array("module_name" => "TB");
+	$result_trial_report=$this->trial_balance_report->find('all',array("conditions"=>$conditions));
+	$from=$result_trial_report[0]['trial_balance_report']['from'];
+	$to=$result_trial_report[0]['trial_balance_report']['to'];
+	$date=$result_trial_report[0]['trial_balance_report']['date'];
+	$this->loadmodel("society");
+	$result_society=$this->society->find('all',array('conditions'=>array('aprvl_status'=>1)));	
+	foreach($result_society as $data){
+		$society_id=(int)$data['society']['society_id'];
+		$society_name=$data['society']['society_name'];
+		
+		$this->loadmodel('trial_balance_report_read');
+		$auto_id=$this->autoincrement('trial_balance_report_read','auto_id');
+		$this->trial_balance_report_read->saveAll(Array(Array("auto_id" => $auto_id,"society_name"=>$society_name,"society_id"=> $society_id,"is_converted"=>"NO","from"=>$from,"to"=>$to,"date"=>$date)));
+	}
+	$this->loadmodel('trial_balance_report');
+	$this->trial_balance_report->updateAll(array("step2" => 1),array("module_name" => "TB"));
+	die(json_encode("READ"));	
+}
+
+
+function trial_balance_converted(){
+	
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	
+	$this->loadmodel('trial_balance_report_read');
+	$conditions=array("is_converted" => "NO");
+	$result_import_record = $this->trial_balance_report_read->find('all',array('conditions'=>$conditions,'limit'=>1));
+	foreach($result_import_record as $import_record){
+		
+		$auto_id=(int)$import_record['trial_balance_report_read']['auto_id'];
+		$society_id=(int)$import_record['trial_balance_report_read']['society_id'];
+		$society_name=$import_record['trial_balance_report_read']['society_name'];
+		$from=$import_record['trial_balance_report_read']['from'];
+		$to=$import_record['trial_balance_report_read']['to'];
+		$date=$import_record['trial_balance_report_read']['date'];
+		
+			$result_ledger_account=array();	
+			$this->loadmodel('accounts_category');
+			$result_accounts_category=$this->accounts_category->find('all');
+			foreach($result_accounts_category as $data){
+				$accounts_category_id=(int)$data["accounts_category"]["auto_id"];
+
+				$this->loadmodel('accounts_group');
+				$conditions2=array("accounts_id" => $accounts_category_id);
+				$result_accounts_group=$this->accounts_group->find('all',array('conditions'=>$conditions2));
+				foreach($result_accounts_group as $data2){
+					$accounts_group_ids[]=(int)$data2["accounts_group"]["auto_id"];
+				}
+
+				foreach($accounts_group_ids as $accounts_group_id){
+					$condition_array[]=array("group_id" => $accounts_group_id,"society_id" => $society_id);
+					$condition_array[]=array("group_id" => $accounts_group_id,"society_id" => 0);
+				}
+
+
+				$this->loadmodel('ledger_account');
+				$conditions =array( '$or' =>$condition_array);
+
+				$order=array('ledger_account.ledger_name'=> 'ASC');
+				$result_ledger_account_1=$this->ledger_account->find('all',array('conditions'=>$conditions,'order'=>$order));
+
+
+				$result_ledger_account=array_merge($result_ledger_account,$result_ledger_account_1);
+
+				unset($accounts_group_ids); unset($condition_array);
+			}
+		
+			$total_cb_debit=0; $total_cb_credit=0;
+			foreach($result_ledger_account as $ledger_account){ 
+				$ledger_account_id=(int)$ledger_account["ledger_account"]["auto_id"];
+			
+				$trail_balance=$this->calculate_opening_balance_for_trail_balance_society($society_id,$from,$to,$ledger_account_id);
+				
+				if($trail_balance["closing_balance"][1]=="Dr"){
+					$total_cb_debit+=$trail_balance["closing_balance"][0];
+				}
+				
+				if($trail_balance["closing_balance"][1]=="Cr"){
+					$total_cb_credit+=$trail_balance["closing_balance"][0];
+				}
+			}	
+		
+		
+			$this->loadmodel('trial_balance_converted');
+			$auto_id_n=$this->autoincrement('trial_balance_converted','auto_id');
+			$this->trial_balance_converted->saveAll(Array(Array("auto_id" => $auto_id_n,"society_id"=>$society_id,'society_name'=>$society_name,"is_imported"=>"NO",'closing_debit'=>$total_cb_debit,'closing_credit'=>$total_cb_credit,'date'=>$date)));
+		
+		$this->loadmodel('trial_balance_report_read');
+		$this->trial_balance_report_read->updateAll(array("is_converted" => "YES"),array("auto_id" => $auto_id));
+		
+		
+	}
+	
+	$this->loadmodel('trial_balance_report_read');
+	$conditions=array("is_converted" => "YES");
+	$total_converted_records = $this->trial_balance_report_read->find('count',array('conditions'=>$conditions));
+	
+	$this->loadmodel('trial_balance_report_read');
+	//$conditions=array("society_id" => $s_society_id);
+	$total_records = $this->trial_balance_report_read->find('count');
+	
+	$converted_per=($total_converted_records*100)/$total_records;
+	if($converted_per==100){ $again_call_ajax="NO"; 
+		$this->loadmodel('trial_balance_report');
+		$this->trial_balance_report->updateAll(array("step3" => 1),array("module_name" => "TB"));
+	}else{
+		$again_call_ajax="YES"; 
+			
+		}
+	die(json_encode(array("again_call_ajax"=>$again_call_ajax,"converted_per"=>$converted_per)));
+	
+}
+
+function trial_balance_report_modify(){
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	$this->loadmodel('trial_balance_report');
+	$result_trial_balance_report=$this->trial_balance_report->find('all');
+	$date=@$result_trial_balance_report[0]['trial_balance_report']['date'];
+	$this->set(compact('date'));
+	
+	$this->loadmodel('trial_balance_converted');
+	$result_trial_balance=$this->trial_balance_converted->find('all');
+	$this->set(compact('result_trial_balance'));
+}
+
+function trial_balance_report_society_wise(){
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	$this->ath();
+	
+	
+	$this->loadmodel('trial_balance_report');
+	$conditions=array("module_name" => "TB");
+	$result_import_record = $this->trial_balance_report->find('all',array('conditions'=>$conditions));
+	$this->set('result_import_record',$result_import_record);
+	foreach($result_import_record as $data_import){
+		$step1=(int)@$data_import["trial_balance_report"]["step1"];
+		$step2=(int)@$data_import["trial_balance_report"]["step2"];
+		$step3=(int)@$data_import["trial_balance_report"]["step3"];
+		$step4=(int)@$data_import["trial_balance_report"]["step4"];
+	}
+	$process_status= @$step1+@$step2+@$step3+@$step4;
+
+	if(@$process_status==2){
+		$this->loadmodel('trial_balance_report_read');
+		$conditions=array("is_converted" => "YES");
+		$total_converted_records = $this->trial_balance_report_read->find('count',array('conditions'=>$conditions));
+		
+		$this->loadmodel('trial_balance_report_read');
+		
+		$total_records = $this->trial_balance_report_read->find('count');
+		
+		$this->set("converted_per",($total_converted_records*100)/$total_records);
+	}
+	/* if(@$process_status==4){
+		$this->loadmodel('bank_receipt_csv_converted');
+		$conditions=array("society_id" => $s_society_id,"is_imported" => "YES");
+		$total_converted_records = $this->bank_receipt_csv_converted->find('count',array('conditions'=>$conditions));
+		
+		$this->loadmodel('bank_receipt_csv_converted');
+		$conditions=array("society_id" => $s_society_id);
+		$total_records = $this->bank_receipt_csv_converted->find('count',array('conditions'=>$conditions));
+		
+		$this->set("converted_per_im",($total_converted_records*100)/$total_records);
+	}
+	*/
+	
+	
+	
+	/*$this->loadmodel('society');
+	$result_society=$this->society->find('all',array('conditions'=>array('aprvl_status'=>1)));
+	foreach($result_society as $data){
+			$s_society_id=$data['society']['society_id'];
+			$society_name=$data['society']['society_name'];
+
+			$result_ledger_account=array();	
+			$this->loadmodel('accounts_category');
+			$result_accounts_category=$this->accounts_category->find('all');
+	  foreach($result_accounts_category as $data){
+			$accounts_category_id=(int)$data["accounts_category"]["auto_id"];
+		
+			$this->loadmodel('accounts_group');
+			$conditions2=array("accounts_id" => $accounts_category_id);
+			$result_accounts_group=$this->accounts_group->find('all',array('conditions'=>$conditions2));
+		foreach($result_accounts_group as $data2){
+				$accounts_group_ids[]=(int)$data2["accounts_group"]["auto_id"];
+			}
+		
+		  foreach($accounts_group_ids as $accounts_group_id){
+				$condition_array[]=array("group_id" => $accounts_group_id,"society_id" => $s_society_id);
+				$condition_array[]=array("group_id" => $accounts_group_id,"society_id" => 0);
+			}
+		
+		
+			$this->loadmodel('ledger_account');
+			$conditions =array( '$or' =>$condition_array);
+
+			$order=array('ledger_account.ledger_name'=> 'ASC');
+			$result_ledger_account_1=$this->ledger_account->find('all',array('conditions'=>$conditions,'order'=>$order));
+
+
+			$result_ledger_account=array_merge($result_ledger_account,$result_ledger_account_1);
+
+			unset($accounts_group_ids); unset($condition_array);
+	   }
+	$from="01-04-2016";$to="2017-03-31";
+	$total_ob_debit=0; $total_ob_credit=0; $total_debit=0; $total_credit=0; $total_cb_debit=0; $total_cb_credit=0;
+		foreach($result_ledger_account as $ledger_account){ 
+			$ledger_account_id=(int)$ledger_account["ledger_account"]["auto_id"];
+			
+			 $trail_balance=$this->requestAction(array('controller' => 'Hms', 'action' => 'calculate_opening_balance_for_trail_balance'),array('pass'=>array($s_society_id,$from,$to,$ledger_account_id)));
+				
+				if($trail_balance["closing_balance"][1]=="Dr"){
+					$total_cb_debit+=$trail_balance["closing_balance"][0];
+				}
+				
+				if($trail_balance["closing_balance"][1]=="Cr"){
+					$total_cb_credit+=$trail_balance["closing_balance"][0];
+				}
+		}			
+	
+				
+		$report_trial_balance[]=array("society_name"=>$society_name,"debit"=>$total_cb_debit,"credit"=>$total_cb_credit); 
+		 pr($report_trial_balance); exit; 
+		
+	}
+	
+ pr($report_trial_balance);
+	//pr($trail_balance);
+	*/
+}
+
+
+function calculate_opening_balance_for_trail_balance_society($society_id=null,$from=null,$to=null,$ledger_account_id=null){
+	$this->ath();
+	
+	$s_society_id = (int)$society_id;
+	//$from=date('Y-m-d',strtotime($from));
+	
+	$this->loadmodel('ledger');
+	$conditions=array('society_id'=>$s_society_id,'ledger_account_id'=>$ledger_account_id,'transaction_date'=>array('$lt'=>$from));
+	$ledger_result_ob=$this->ledger->find('all',array('conditions'=>$conditions));
+	
+	$credit_ob=0; $debit_ob=0;
+	foreach($ledger_result_ob as $data_ob){
+		$debit_ob+=$data_ob["ledger"]["debit"];
+		$credit_ob+=$data_ob["ledger"]["credit"];
+	}
+	$difference_ob=$debit_ob-$credit_ob;
+	if($difference_ob>0){
+		$type_ob="Dr";
+	}
+	if($difference_ob<0){
+		$type_ob="Cr";
+	}
+	if($difference_ob==0){
+		$type_ob=null;
+	}
+	
+	$this->loadmodel('ledger');
+	$conditions2=array('society_id'=>$s_society_id,'ledger_account_id'=>$ledger_account_id,'transaction_date'=>array('$gte'=>$from,'$lte'=>$to));	
+	$ledger_result_dc=$this->ledger->find('all',array('conditions'=>$conditions2));
+	$credit_dc=0; $debit_dc=0;
+	foreach($ledger_result_dc as $data_dc){
+		$debit_dc+=$data_dc["ledger"]["debit"];
+		$credit_dc+=$data_dc["ledger"]["credit"];
+	}
+	
+	
+	$difference_cb=$debit_dc-$credit_dc;
+	
+	
+	
+	$close_bal=$difference_ob+$difference_cb;
+	
+	if($close_bal>0){
+		$type_cb="Dr";
+	}
+	if($close_bal<0){
+		$type_cb="Cr";
+	}
+	if($close_bal==0){
+		$type_cb=null;
+	}
+	
+	$trail_balance=array(
+		"opening_balance"=>array(abs($difference_ob),$type_ob),
+		"debit"=>$debit_dc,
+		"credit"=>$credit_dc,
+		"closing_balance"=>array(abs($close_bal),$type_cb)
+		);
+	return $trail_balance; 
+	
+}
+
 
 function dashboard(){
 	if($this->RequestHandler->isAjax()){
@@ -8659,7 +8998,8 @@ function dashboard(){
 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	
-	   
+	
+	 
 		//////////////Help-desk  last 3 tickets///////////////// 
 		$this->loadmodel('help_desk');
 		if($role_id==1) { 
@@ -8714,7 +9054,7 @@ function dashboard(){
 	  $res= $this->log->find('all', array('conditions' => $conditions));
 	  foreach($res as $data){
 			 $log_id=$data['log']['log_id'];
-			 $date=$data['log']['date']; 
+			 $date=@$data['log']['date']; 
 			 $date_convert=date("Y-m-d",strtotime($date));
 			 $date_convert=strtotime($date_convert);
 			 $this->log->updateAll(array("date_convert"=>$date_convert),array("log_id"=>$log_id));

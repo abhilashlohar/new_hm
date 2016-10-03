@@ -8858,7 +8858,7 @@ function trial_balance_report_send_email(){
 													
 												</td>
 												</tr>
-												<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+												
 												</tbody>
 												</table>
 											</td>
@@ -8873,15 +8873,15 @@ function trial_balance_report_send_email(){
 
 				</tbody>
 		</table>';
-		$message_web.=$mes;
+		 $message_web.=$mes;
 		
-	    $this->send_email($to,$from,$from_name,$subject,$message_web,$reply);	
+	  $this->send_email($to,$from,$from_name,$subject,$message_web,$reply);	
 		$this->loadmodel('trial_balance_report');
 		$this->loadmodel('trial_balance_report_read');
 		$this->loadmodel('trial_balance_converted');
 		$this->trial_balance_report->deleteAll(array('module_name'=>'TB'));
 		$this->trial_balance_report_read->deleteAll(array('is_converted'=>'YES'));
-		$this->trial_balance_converted->deleteAll(array('is_imported'=>'NO'));
+		$this->trial_balance_converted->deleteAll(array('is_imported'=>'NO')); 
 	
 	    die(json_encode("SEND"));
 }

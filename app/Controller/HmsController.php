@@ -8794,14 +8794,96 @@ function trial_balance_report_modify(){
 	}else{
 		$this->layout='session';
 	}
+	$this->ath();
 	$this->loadmodel('trial_balance_report');
 	$result_trial_balance_report=$this->trial_balance_report->find('all');
 	$date=@$result_trial_balance_report[0]['trial_balance_report']['date'];
+	$from=@$result_trial_balance_report[0]['trial_balance_report']['from'];
+	$to=@$result_trial_balance_report[0]['trial_balance_report']['to'];
 	$this->set(compact('date'));
-	
+	$this->set(compact('from'));
+	$this->set(compact('to'));
 	$this->loadmodel('trial_balance_converted');
 	$result_trial_balance=$this->trial_balance_converted->find('all');
 	$this->set(compact('result_trial_balance'));
+}
+
+function trial_balance_report_closed(){
+	
+	$this->layout=null ;
+	
+	$this->loadmodel('trial_balance_report');
+	$this->loadmodel('trial_balance_report_read');
+	$this->loadmodel('trial_balance_converted');
+	$this->trial_balance_report->deleteAll(array('module_name'=>'TB'));
+	$this->trial_balance_report_read->deleteAll(array('is_converted'=>'YES'));
+	$this->trial_balance_converted->deleteAll(array('is_imported'=>'NO'));
+	$this->response->header('location','trial_balance_report_society_wise');
+}
+
+function trial_balance_report_send_email(){
+	
+	 $mes=$this->request->query('con');
+	 $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
+	 
+	// $to="rohitkumarjoshi43@gmail.com";
+	 $to="admin@housingmatters.in";
+	 $from_name="HousingMatters Support Team";
+	 $subject="All Society Report";
+		$this->loadmodel('email');
+		$conditions=array('auto_id'=>4);
+		$result_email=$this->email->find('all',array('conditions'=>$conditions));
+		foreach ($result_email as $collection) {
+			$from=$collection['email']['from'];
+		}
+		$reply=$from;
+		
+		 $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+				  <tbody>
+					<tr>
+						<td>
+							<table width="100%" cellpadding="0" cellspacing="0">
+								<tbody>
+								
+										<tr>
+											<td colspan="2">
+												<table style="border-collapse:collapse" cellpadding="0" cellspacing="0" width="100%">
+												<tbody>
+												<tr><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+												<tr>
+												<td style="height:32;line-height:0px" align="left" valign="middle" width="32"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/HM-LOGO-small.jpg" style="border:0" height="50" width="50"></a></td>
+												<td style="display:block;width:15px" width="15">&nbsp;&nbsp;&nbsp;</td>
+												<td width="100%"><a href="#150d7894359a47c6_" style="color:#3b5998;text-decoration:none;font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19px;line-height:32px"><span style="color:#00a0e3">Housing</span><span style="color:#777776">Matters</span></a></td>
+												<td align="right"><a href="https://www.facebook.com/HousingMatters.co.in" target="_blank"><img class="CToWUd" src="'.$ip.$this->webroot.'as/hm/SMLogoFB.png" style="max-height:30px;min-height:30px;width:30px;max-width:30px" height="30px" width="30px"></a>
+													
+												</td>
+												</tr>
+												<tr style="border-bottom:solid 1px #e5e5e5"><td style="line-height:16px" colspan="4" height="16">&nbsp;</td></tr>
+												</tbody>
+												</table>
+											</td>
+										</tr>
+																
+										
+								</tbody>
+							</table>
+						</td>	
+							
+					</tr>
+
+				</tbody>
+		</table>';
+		$message_web.=$mes;
+		
+	    $this->send_email($to,$from,$from_name,$subject,$message_web,$reply);	
+		$this->loadmodel('trial_balance_report');
+		$this->loadmodel('trial_balance_report_read');
+		$this->loadmodel('trial_balance_converted');
+		$this->trial_balance_report->deleteAll(array('module_name'=>'TB'));
+		$this->trial_balance_report_read->deleteAll(array('is_converted'=>'YES'));
+		$this->trial_balance_converted->deleteAll(array('is_imported'=>'NO'));
+	
+	    die(json_encode("SEND"));
 }
 
 function trial_balance_report_society_wise(){
@@ -30226,6 +30308,11 @@ function menus_as_per_user_rights(){
 		<li>
 			<a href="<?php echo $webroot_path; ?>app/webroot/backup_db.php">
 			<i class="icon-home"></i>Backup
+			</a>					
+		</li>
+		<li>
+			<a href="<?php echo $webroot_path; ?>Hms/trial_balance_report_society_wise">
+			<i class="icon-home"></i> Trial Balance Report
 			</a>					
 		</li>
 		<?php

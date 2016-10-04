@@ -34,7 +34,7 @@ function message()
 		$result_society=$this->society->find('all',array('conditions'=>$conditions));
 		$sms_s_count=(int)$result_society[0]['society']['sms_credit'];
 		$count_sms=(int)@$result_society[0]['society']['sms_credit'];
-		$sms_limit=@$result_society[0]['society']['sms_limit'];
+		$sms_limit=(int)@$result_society[0]['society']['sms_limit'];
 		$this->set(compact('count_sms'));
 		$this->set(compact('sms_limit'));
 		

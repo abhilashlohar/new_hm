@@ -13,13 +13,17 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 
 <div id="all_message" class="fadeleftsome">
 <label class="m-wrap pull-right">Search: <input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;"></label>
+
 <div class="portlet-body" style="padding-left:20px;padding-right:20px;">
+<span class="btn mini purple" style="padding: 5px;font-size: 12px;margin-bottom: 2px;" ><b> Limit of sms : <?php echo $sms_limit; ?> </b></span> <span class="btn mini red" style="padding: 5px;font-size: 12px;margin-bottom: 2px;" ><b> Remaining of sms : <?php echo $sms_limit-$count_sms;  ?> </b></span>
 <div style="border:solid 2px #4cae4c;">
+
 <table class="table table-striped table-hover">
 	<thead>
 		<tr style="background-color: #5cb85c;border-bottom: solid 2px #4cae4c; color:#fff;">
 			<th width="80%">Message </th>
-			<th width="20%">Time</th>
+			<th width="10%">Time</th>
+			<th width="10%">Sms count</th>
 		</tr>
 	</thead>
 	<tbody id="table">
@@ -30,10 +34,12 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	$text=$data["sms"]["text"];
 	$date=$data["sms"]["date"];
 	$time=$data["sms"]["time"];
+	$send_sms_count=@$data["sms"]["send_sms_count"];
 	?>
 		<tr class="hand" onclick="message_detail(<?php echo $sms_id; ?>)">
 			<td><?php echo $text; ?></td>
 			<td><span class="label"><?php echo $date; ?>&nbsp;&nbsp;<?php echo $time; ?></span></td>
+			<td>&nbsp; <?php echo @$send_sms_count; ?></td>
 		</tr>
 	<?php } ?>
 	</tbody>

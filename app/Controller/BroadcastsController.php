@@ -29,6 +29,18 @@ function message()
 		$conditions=array("society_id"=>$s_society_id,'user.mobile'=>array('$ne'=>""));
 		$this->set('result_users',$this->user->find('all',array('conditions'=>$conditions))); 
 
+		$this->loadmodel('society');
+		$conditions=array("society_id"=>$s_society_id);
+		$result_society=$this->society->find('all',array('conditions'=>$conditions));
+		$sms_s_count=(int)$result_society[0]['society']['sms_credit'];
+		$count_sms=@$result_society[0]['society']['sms_credit'];
+		$sms_limit=@$result_society[0]['society']['sms_limit'];
+		$this->set(compact('count_sms'));
+		$this->set(compact('sms_limit'));
+		
+	 
+		
+		
 		/*$this->loadmodel('group');
 		$conditions=array("society_id"=>$s_society_id);
 		$result_group=$this->group->find('all',array('conditions'=>$conditions)); 
@@ -70,7 +82,7 @@ $this->set('result_template6',$this->template->find('all',array('conditions'=>$c
 $this->loadmodel('template');
 $conditions=array("cat"=>7);
 $this->set('result_template7',$this->template->find('all',array('conditions'=>$conditions))); 
-
+$sms_sount_total=0;
 if(isset($this->request->data['send'])) 
 {
 $radio=$this->request->data['radio'];
@@ -110,7 +122,7 @@ $sms_allow=(int)$r_sms->sms_allow;
 		$multi[]="$s_user_id,$sender_mobile";
 
 		$multi=array_unique($multi);
-
+	
 		for($i=0; $i<sizeof($multi); $i++)
 		{
 		$multi_new=$multi[$i];
@@ -118,16 +130,18 @@ $sms_allow=(int)$r_sms->sms_allow;
 		$mobile[]=$ex[1];
 		$user[]=$ex[0];
 		}
-		$mobile_im=implode(",", $mobile);
+		 $mobile_im=implode(",", $mobile);
 		
 		$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m;
-		if($sms_allow==1){
+		if($sms_allow==1){ 
+		$sms_count=$this->check_sms_count($massage_str,$multi);
 		$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m);
-		}	
+		}
+	
 		$store_time=$time_h.':'.$time_m;
 		$sms_id=$this->autoincrement('sms','sms_id');
 		$this->loadmodel('sms');
-		$multipleRowData=Array( Array("sms_id"=>$sms_id,"text"=>$massage,"user_id"=>$user,"date"=>$date,"time"=>$time,"society_id"=>$s_society_id,"type"=>1,"deleted"=>0,"send_sms_time"=>$store_time));
+		$multipleRowData=Array( Array("sms_id"=>$sms_id,"text"=>$massage,"user_id"=>$user,"date"=>$date,"time"=>$time,"society_id"=>$s_society_id,"type"=>1,"deleted"=>0,"send_sms_time"=>$store_time,"send_sms_count"=>$sms_count));
 		$this->sms->saveAll($multipleRowData);
 		}
 
@@ -170,13 +184,18 @@ $mobile_array_implode = implode(',',$mobile_array);
 	$sms_sender=$r_sms->sms_sender; 
 	$sms_allow=(int)$r_sms->sms_allow;
 	if($sms_allow==1){
+	$sms_count=$this->check_sms_count($massage_str,$user_id_array);
 	$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_array_implode.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m);
 	}
+
 $sms_id=$this->autoincrement('sms','sms_id');
 $this->loadmodel('sms');
-$multipleRowData = Array( Array("sms_id" => $sms_id,"text"=>$massage,"user_id"=>$user_id_array,"date"=>$date,"time"=>$time,"type"=>1,"society_id"=>$s_society_id,"deleted"=>0));	
+$multipleRowData = Array( Array("sms_id" => $sms_id,"text"=>$massage,"user_id"=>$user_id_array,"date"=>$date,"time"=>$time,"type"=>1,"society_id"=>$s_society_id,"deleted"=>0,"send_sms_count"=>$sms_count));	
 $this->sms->saveAll($multipleRowData);
 }
+	 $sms_s_count+=$sms_count;
+     $this->loadmodel('society');
+	 $this->society->updateAll(array('sms_credit'=>$sms_s_count),array('society_id'=>$s_society_id));
 ?>
 <!----alert-------------->
 <div class="modal-backdrop fade in"></div>
@@ -190,7 +209,6 @@ Your SMS has been Sent.
 </div>
 <!----alert-------------->
 <?php	
-
 }
 
 
@@ -210,7 +228,20 @@ $this->ath();
 $this->check_user_privilages();
 $s_user_id=$this->Session->read('hm_user_id'); 
 $s_society_id=$this->Session->read('hm_society_id'); 
+ 
+ ///SMS COUNT
+    $count_sms=0;
+	$this->loadmodel('society');
+	$conditions=array("society_id"=>$s_society_id);
+	$result_sms=$this->society->find('all',array('conditions'=>$conditions));
+	$count_sms=@$result_sms[0]['society']['sms_credit'];
+	$sms_limit=@$result_sms[0]['society']['sms_limit'];
+	$this->set(compact('count_sms'));
+	$this->set(compact('sms_limit'));
+	 
+//////
 
+	 
 $this->loadmodel('sms');
 $conditions=array("society_id"=>$s_society_id,"deleted"=>0);
 $order=array('sms.sms_id'=>'DESC');

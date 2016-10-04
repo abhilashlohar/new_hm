@@ -75,6 +75,18 @@ $dd=explode(' ',$name);
 	}
 }
 
+function check_sms_count($str,$member){
+	
+	$mem=sizeof($member);
+	$value=strlen($str);
+	if($value<153) { $c = 1; }
+	if($value>=153 && $value<306) { $c = 2; }
+	if($value>=306 && $value<=459) { $c = 3; }
+	return $c*$mem;
+	
+}
+
+
 function find_society_name($search=null){
 	
 $this->loadmodel('society'); 
@@ -2802,7 +2814,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -8636,6 +8648,28 @@ function member_update_status_profile($user_id=null){
  $this->loadmodel("user");
  $this->user->updateAll(array('profile_status_user'=>1),array('user_id'=>(int)$user_id));
  echo"done";
+}
+
+
+function hm_sms_allow_society(){
+	
+if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	
+	$this->loadmodel('society');
+	$result_society=$this->society->find('all',array('conditions'=>array('aprvl_status'=>1)));
+	$this->set(compact('result_society'));
+}
+
+
+function hm_sms_allow_society_ajax($id=null,$value=null){
+		
+		$this->loadmodel('society');
+		$this->society->updateAll(array('sms_limit'=>$value),array("society_id"=>(int)$id));
+
 }
 
 function trial_balance_report_up($from=null,$to=null){
@@ -30313,6 +30347,12 @@ function menus_as_per_user_rights(){
 		<li>
 			<a href="<?php echo $webroot_path; ?>Hms/trial_balance_report_society_wise">
 			<i class="icon-home"></i> Trial Balance Report
+			</a>					
+		</li>
+		
+		<li>
+			<a href="<?php echo $webroot_path; ?>Hms/hm_sms_allow_society">
+			<i class="icon-home"></i> Sms allow society
 			</a>					
 		</li>
 		<?php

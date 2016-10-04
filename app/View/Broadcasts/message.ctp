@@ -7,7 +7,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <a href="message" class="btn red" rel='tab'>Send SMS</a>
 </div>
 
-<span class="btn mini purple" style="padding: 5px;font-size: 12px;margin-left:10%;margin-bottom: 2px;" ><b> Limit of sms : <?php echo @$sms_limit; ?> </b></span> <span class="btn mini red" style="padding: 5px;font-size: 12px;margin-bottom: 2px;" ><b> Remaining of sms : <?php echo @$sms_limit-@$count_sms;  ?> </b></span>
+<span class="btn mini purple" style="padding: 5px;font-size: 12px;margin-left:10%;margin-bottom: 2px;" ><b> Sms limit  : <?php echo @$sms_limit; ?> </b></span> <span class="btn mini red" style="padding: 5px;font-size: 12px;margin-bottom: 2px;" ><b> Sms remaining  : <?php echo @$sms_limit-@$count_sms;  ?> </b></span>
 
 <div style="border:solid 2px #4cae4c; width:80%; margin-left:10%;">
 

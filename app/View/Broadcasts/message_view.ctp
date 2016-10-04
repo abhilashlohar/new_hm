@@ -15,7 +15,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <label class="m-wrap pull-right">Search: <input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;"></label>
 
 <div class="portlet-body" style="padding-left:20px;padding-right:20px;">
-<span class="btn mini purple" style="padding: 5px;font-size: 12px;margin-bottom: 2px;" ><b> Limit of sms : <?php echo $sms_limit; ?> </b></span> <span class="btn mini red" style="padding: 5px;font-size: 12px;margin-bottom: 2px;" ><b> Remaining of sms : <?php echo $sms_limit-$count_sms;  ?> </b></span>
+<span class="btn mini purple" style="padding: 5px;font-size: 12px;margin-bottom: 2px;" ><b> Sms limit : <?php echo $sms_limit; ?> </b></span> <span class="btn mini red" style="padding: 5px;font-size: 12px;margin-bottom: 2px;" ><b> Sms remaining : <?php echo $sms_limit-$count_sms;  ?> </b></span>
 <div style="border:solid 2px #4cae4c;">
 
 <table class="table table-striped table-hover">

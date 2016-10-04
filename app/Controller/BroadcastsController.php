@@ -33,7 +33,7 @@ function message()
 		$conditions=array("society_id"=>$s_society_id);
 		$result_society=$this->society->find('all',array('conditions'=>$conditions));
 		$sms_s_count=(int)$result_society[0]['society']['sms_credit'];
-		$count_sms=@$result_society[0]['society']['sms_credit'];
+		$count_sms=(int)@$result_society[0]['society']['sms_credit'];
 		$sms_limit=@$result_society[0]['society']['sms_limit'];
 		$this->set(compact('count_sms'));
 		$this->set(compact('sms_limit'));
@@ -234,8 +234,8 @@ $s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('society');
 	$conditions=array("society_id"=>$s_society_id);
 	$result_sms=$this->society->find('all',array('conditions'=>$conditions));
-	$count_sms=@$result_sms[0]['society']['sms_credit'];
-	$sms_limit=@$result_sms[0]['society']['sms_limit'];
+	$count_sms=(int)@$result_sms[0]['society']['sms_credit'];
+	$sms_limit=(int)@$result_sms[0]['society']['sms_limit'];
 	$this->set(compact('count_sms'));
 	$this->set(compact('sms_limit'));
 	 

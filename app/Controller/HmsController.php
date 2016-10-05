@@ -87,6 +87,18 @@ function check_sms_count($str,$member){
 }
 
 
+function check_sms_allow_for_generate($sms_limit,$credit,$generate){
+	
+	 $total_generate=$credit+$generate;
+	 $sms_limit;
+	if($total_generate<=$sms_limit){
+		return 'yes';
+	}else{
+		return 'no';
+	}
+	
+}
+
 function find_society_name($search=null){
 	
 $this->loadmodel('society'); 

@@ -134,7 +134,14 @@ $sms_allow=(int)$r_sms->sms_allow;
 		
 		$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m;
 		if($sms_allow==1){ 
-		$sms_count=$this->check_sms_count($massage_str,$multi);
+			$sms_count=$this->check_sms_count($massage_str,$multi);
+			
+			$allow= $this->check_sms_allow_for_generate($sms_limit,$sms_s_count,$sms_count);
+			if($allow=='no'){
+				goto a;
+			}
+		
+		
 		$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m);
 		}
 	
@@ -184,7 +191,14 @@ $mobile_array_implode = implode(',',$mobile_array);
 	$sms_sender=$r_sms->sms_sender; 
 	$sms_allow=(int)$r_sms->sms_allow;
 	if($sms_allow==1){
-	$sms_count=$this->check_sms_count($massage_str,$user_id_array);
+	   $sms_count=$this->check_sms_count($massage_str,$user_id_array);
+	
+    	$allow= $this->check_sms_allow_for_generate($sms_limit,$sms_s_count,$sms_count);
+			if($allow=='no'){
+				goto a;
+			}
+		
+	
 	$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_array_implode.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m);
 	}
 
@@ -196,6 +210,7 @@ $this->sms->saveAll($multipleRowData);
 	 $sms_s_count+=$sms_count;
      $this->loadmodel('society');
 	 $this->society->updateAll(array('sms_credit'=>$sms_s_count),array('society_id'=>$s_society_id));
+	
 ?>
 <!----alert-------------->
 <div class="modal-backdrop fade in"></div>
@@ -209,6 +224,24 @@ Your SMS has been Sent.
 </div>
 <!----alert-------------->
 <?php	
+
+a: 
+	if($allow=='no'){
+	?>
+	<!----alert-------------->
+	<div class="modal-backdrop fade in"></div>
+	<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+	<div class="modal-body" style="font-size:16px;">
+	Your sms pack limit is expired. Kindly renew it from housingmatters portal.
+	</div> 
+	<div class="modal-footer">
+	<a href="message_view" class="btn green">OK</a>
+	</div>
+	</div>
+	<!----alert-------------->
+
+<?php	}
+
 }
 
 

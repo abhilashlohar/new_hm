@@ -848,7 +848,7 @@ $ledger = (int)$sub_ledgerr['ledger_sub_account']['ledger_id'];
 if($ledger == 34)
 {
 //$flat_id = (int)$sub_ledgerr['ledger_sub_account']['flat_id'];
-$ledger_sub_account = (int)$ledger_sub_account;
+$ledger_sub_account2 = (int)$ledger_sub_account;
 
 }
 }
@@ -880,7 +880,7 @@ $ledger_sub_account2=null;
 		$journal_id=$this->autoincrement('journal','journal_id');
 		$this->loadmodel('journal');
 		$multipleRowData = Array( Array("journal_id" => $journal_id, 
-		"ledger_account_id" => $ledger,"ledger_sub_account_id"=>(int)@$ledger_sub_account,"user_id" => $s_user_id, "transaction_date" => $transaction_date,"current_date" => $date, "credit" => $credit,'debit'=>$debit, "remark" => $desc ,"society_id" => $s_society_id,'voucher_id'=>$voucher_id));
+		"ledger_account_id" => $ledger,"ledger_sub_account_id"=>(int)@$ledger_sub_account2,"user_id" => $s_user_id, "transaction_date" => $transaction_date,"current_date" => $date, "credit" => $credit,'debit'=>$debit, "remark" => $desc ,"society_id" => $s_society_id,'voucher_id'=>$voucher_id));
 		$this->journal->saveAll($multipleRowData);
 		
 		$this->loadmodel('ledger');

@@ -76,8 +76,8 @@ $remark=$result_journal[0]["journal"]["remark"]; ?>
 $cq=0;
 foreach($result_journal as $data) { $cq++;
 	$journal_id=$data["journal"]["journal_id"];
-	$ledger_account_id=$data["journal"]["ledger_account_id"];
-	$ledger_sub_account_id=$data["journal"]["ledger_sub_account_id"];
+	 $ledger_account_id=$data["journal"]["ledger_account_id"];echo"<br>";
+	 $ledger_sub_account_id=$data["journal"]["ledger_sub_account_id"];
 	$debit=$data["journal"]["debit"];
 	$credit=$data["journal"]["credit"];?>
 <tr class="table table-bordered table-hover" id="tr<?php echo $cq; ?>">
@@ -103,7 +103,7 @@ foreach($result_journal as $data) { $cq++;
 			$name2 = $collection['ledger_sub_account']['name']; 
 			$ledger_id = (int)$collection['ledger_sub_account']['ledger_id'];
 
-			if($ledger_sub_account_id==$auto_id2){$checked='selected="selected"';}else{$checked='';}
+			if($ledger_sub_account_id==$auto_id2 ){$checked='selected="selected"';}else{$checked='';}
 			
 			if($ledger_id == 34){
 				$result_member = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($auto_id2)));

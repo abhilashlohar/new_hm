@@ -561,11 +561,11 @@ if(!empty($credit))
 	//if($total_credit == $total_debit) { $tt_v = 0;  }else{   $tt_v = 1;   }
 
 	foreach($v_result as $data){
-	if(array_sum($data)==0) { $tt ="T"; }else{ $tt="F"; break;  }
+		if(array_sum($data)==0) { $tt ="T"; }else{ $tt="F"; break;  }
 	}
 			
 		
-			if($tt == "T" && $trr_v == 0 && $trajection_date_v == 0 ){
+			if($tt == "T" && $trajection_date_v == 0 ){
 			$this->loadmodel('import_ob_record');
 			$this->import_ob_record->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "OB"));	
 		    }else{ echo "F"; die; }
@@ -4859,7 +4859,15 @@ function pay_bill()
 	}
 }
 
-function group_wise_show_ledger_account($group_account=null,$auto_id=null){
+
+function group_wise_update($group_account=null,$auto_id=null){
+	$this->layout=null;
+    $s_society_id = (int)$this->Session->read('hm_society_id');
+	$this->loadmodel('opening_balance_csv_converted');
+	$this->opening_balance_csv_converted->updateAll(array('ledger_id'=>(int)$group_account),array('society_id'=>$s_society_id,'auto_id'=>(int)$auto_id));
+}
+
+function group_wise_show_ledger_account($group_account=null,$auto_id=null,$check=null){
 	
  $this->layout=null;
  $s_society_id = (int)$this->Session->read('hm_society_id');
@@ -4868,13 +4876,19 @@ function group_wise_show_ledger_account($group_account=null,$auto_id=null){
     $group=explode(',',$group_account);
 	$group_id=(int)$group[0];
 	$ledger_type=$group[1];
+	$ledger_id=$group[2];
+	if($check==1){
+		$this->loadmodel('opening_balance_csv_converted');
+		$this->opening_balance_csv_converted->updateAll(array('ledger_type'=>$ledger_type,'group_id'=>$group_id,'ledger_id'=>null),array('society_id'=>$s_society_id,'auto_id'=>(int)$auto_id));
+	}	
 	if($ledger_type==2){
+		
 		$this->loadmodel('ledger_account');
 		$conditions = array( '$or' => array(array("group_id" => $group_id,'society_id' =>$s_society_id),array("group_id" => $group_id,'society_id' =>0)));
 		$order=(array('ledger_account.ledger_name'=>'ASC'));
 		$ledger_accounts= $this->ledger_account->find('all',array('conditions'=>$conditions,'order'=>$order));
 		?>
-		<select class="chosen"> 
+		<select class="chosen group_account_new" update_id="<?php echo $auto_id; ?>"> 
 		<option> </option>
 		<?php
 		foreach($ledger_accounts as $data){
@@ -4882,7 +4896,7 @@ function group_wise_show_ledger_account($group_account=null,$auto_id=null){
 				$name = $data['ledger_account']['ledger_name'];
 				?>
 				
-			<option <?php echo $ledger_account_id; ?>> <?php echo $name; ?> </option>
+			<option value="<?php echo $ledger_account_id; ?>" <?php if($ledger_id==$ledger_account_id){ ?> selected <?php } ?> > <?php echo $name; ?> </option>
 			
 		<?php }
 		?>
@@ -4899,14 +4913,14 @@ function group_wise_show_ledger_account($group_account=null,$auto_id=null){
 		
 		
 		?>
-		<select class="chosen"> 
+		<select class="chosen group_account_new" update_id="<?php echo $auto_id; ?>"> 
 		<option> </option>
 		<?php
 		foreach($ledger_sub_account as $data){
 				$ledger_sub_account_id = (int)$data['ledger_sub_account']['auto_id'];
 				$name = $data['ledger_sub_account']['name'];
 				?>
-			<option <?php echo $ledger_sub_account_id; ?>> <?php echo $name; ?> </option>
+			<option value="<?php echo $ledger_sub_account_id; ?>" <?php if($ledger_id==$ledger_sub_account_id){ ?> selected <?php } ?> > <?php echo $name; ?> </option>
 			
 		<?php }
 		?>

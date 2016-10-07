@@ -1,3 +1,6 @@
 <script>
 $('.chosen').chosen();
+
+
+
 </script>

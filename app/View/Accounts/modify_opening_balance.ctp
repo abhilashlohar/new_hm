@@ -2,16 +2,13 @@
 <input type="hidden" id="ti" value="<?php echo $datet1; ?>" />
 <input type="hidden" id="cn" value="<?php echo $count; ?>" />
 
-<input type="text" class="date-picker m-wrap span4" data-date-format="dd-mm-yyyy" 
-value="<?php echo $tra_date; ?>" 
-style="background-color:white !important; margin-top:2.5px;" field="transaction_date" record_id="1" placeholder="Transaction Date" id="date">
+<input type="text" class="date-picker m-wrap span4" data-date-format="dd-mm-yyyy" value="<?php echo $tra_date; ?>" style="background-color:white !important; margin-top:2.5px;" field="transaction_date" record_id="1" placeholder="Transaction Date" id="date">
 
 <div style="background-color: #FFF;"> 
 <table class="table table-bordered table-condensed" style="width:100%; background-color:white;" id="open_bal">
 <tr>
+
 <th>Account Group</th>
-<!--<th>Account Group</th>
-<th>Account Name</th>-->
 <th>Account Name</th>
 <th>Debit</th>
 <th>Credit</th>
@@ -42,7 +39,7 @@ $grand_total_credit=0;
  $grand_total_debit=$grand_total_debit+$debit+$penalty;
  ?>
 <tr id="<?php echo $csv_id; ?>">
-<td>
+<!--<td>
 <?php foreach($cursor3 as $collection){
 $group_id5 = (int)$collection['accounts_group']['auto_id'];
 $group_name1= $collection['accounts_group']['group_name'];
@@ -53,8 +50,8 @@ $group_name1= $collection['accounts_group']['group_name'];
 <?php if($group_id2 == 33) { ?> Bank Accounts <?php } ?>
 <?php if($group_id2 == 35) { ?> Tax deducted at source (TDS receivable) <?php } ?>
 <?php if($group_id2 == 34) { ?> Members Control Account <?php } ?>
-</td>
-<!--
+</td>-->
+
 <td>
 <select class="chosen main_account" update_id="<?php echo $csv_id; ?>"  >
 <?php foreach($cursor3 as $collection){
@@ -62,28 +59,28 @@ $group_id5 = (int)$collection['accounts_group']['auto_id'];
 $group_name1= $collection['accounts_group']['group_name'];
 ?>
 
-<option value="<?php echo $group_id5; ?>,2" <?php if($group_id2 == $group_id5) { ?> selected <?php } ?> ><?php echo $group_name1; ?></option>
+<option value="<?php echo $group_id5; ?>,2,<?php echo $ledger_id; ?>" <?php if($group_id2 == $group_id5) { ?> selected <?php } ?> ><?php echo $group_name1; ?></option>
 <?php } ?>
-<option value="15,1" <?php if($group_id2 == 15) { ?> selected <?php } ?> > Sundry Creditors Control A/c </option>
-<option value="112,1" <?php if($group_id2 == 112) { ?> selected <?php } ?> > Sundry Debtors Control A/c </option>
-<option value="33,1" <?php if($group_id2 == 33) { ?> selected <?php } ?> > Bank Accounts </option>
-<option value="35,1" <?php if($group_id2 == 35) { ?> selected <?php } ?> > Tax deducted at source (TDS receivable) </option>
-<option value="34,1" <?php if($group_id2 == 34) { ?> selected <?php } ?>> Members Control Account </option>
+<option value="15,1,<?php echo $ledger_id; ?>" <?php if($group_id2 == 15) { ?> selected <?php } ?> > Sundry Creditors Control A/c </option>
+<option value="112,1,<?php echo $ledger_id; ?>" <?php if($group_id2 == 112) { ?> selected <?php } ?> > Sundry Debtors Control A/c </option>
+<option value="33,1,<?php echo $ledger_id; ?>" <?php if($group_id2 == 33) { ?> selected <?php } ?> > Bank Accounts </option>
+<option value="35,1,<?php echo $ledger_id; ?>" <?php if($group_id2 == 35) { ?> selected <?php } ?> > Tax deducted at source (TDS receivable) </option>
+<option value="34,1,<?php echo $ledger_id; ?>" <?php if($group_id2 == 34) { ?> selected <?php } ?>> Members Control Account </option>
 </select>
 
 </td>
 
 <td>
 <select class="group_account">
-<option> hello</option>
+<option> </option>
 </select>
 
-</td>-->
+</td>
 
 
 
 
-<td>
+<!--<td>
 <?php if($ledger_type == 1){ ?>	
 <?php foreach($cursor1 as $dataa){
 $auto_id = (int)$dataa['ledger_sub_account']['auto_id'];
@@ -107,7 +104,7 @@ $name = $dataa['ledger_account']['ledger_name'];
 <?php	
 }
 ?>
-</td>
+</td>-->
 
 <td>
 <input type="text" class="m-wrap span10 debit" style="background-color:white !important; text-align:right;"
@@ -153,17 +150,37 @@ value="<?php echo @$penalty; ?>" field="penalty" record_id="<?php echo $csv_id; 
 <script>
 $( document ).ready(function() {
 
+$('select.group_account_new').die().live('change',function() {	
+	var accounts_group=$(this).val();
+	var update_id=$(this).attr("update_id");
+	$.ajax({
+		url: "group_wise_update/"+accounts_group+"/"+update_id,
+	}).done(function(response){
+		
+	});	
+});	
+
+$('#open_bal tbody tr select.main_account').die().each(function(i, obj){
+	var accounts_group=$(this).val();
+	var update_id=$(this).attr("update_id");
+	
+	$(this).closest('tr').find('td:nth-child(2)').load('group_wise_show_ledger_account/'+accounts_group+'/'+update_id+'/'+0);
+});
+
+
 $( 'select.main_account' ).change(function() {	
 	var accounts_group=$(this).val();
 	var update_id=$(this).attr("update_id");
-	$(this).closest('tr').find('td:nth-child(3)').load('group_wise_show_ledger_account/'+accounts_group+'/'+update_id);
+	$(this).closest('tr').find('td:nth-child(2)').load('group_wise_show_ledger_account/'+accounts_group+'/'+update_id+'/'+1);
 	
 });	
+
 	
-	$( 'input[type="text"]' ).blur(function() {
+	$( 'input[type="text"]' ).blur(function() { 
 		var record_id=$(this).attr("record_id");
 		var field=$(this).attr("field");
 		var value=$(this).val();
+		
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Accounts/auto_save_opening_balance/"+record_id+"/"+field+"/"+value,
 		}).done(function(response){
@@ -192,7 +209,7 @@ $( 'select.main_account' ).change(function() {
 
 <script>
 $( document ).ready(function() {
-	$( 'input[type="text"]' ).blur(function() {
+	$( 'input[type="text"]' ).change(function() { 
 		
 		var record_id=$(this).attr("record_id");
 		var field=$(this).attr("field");
@@ -230,6 +247,9 @@ $("#validat").html('Total Debit Shold be Equal to Total Credit');
 return false;	
 }	
 
+
+
+
 var fi = document.getElementById("fi").value;
 var ti = document.getElementById("ti").value;
 var cn = document.getElementById("cn").value;
@@ -266,13 +286,16 @@ if(nnn == 55)
 $("#validat").html('Date Should be in Open Financial Year');	
 return false;		
 }	
+
+
+
 	
 $("#check_validation_result").html('<img src="<?php echo $webroot_path; ?>as/loding.gif" /><span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Importing Receipts.</span>');
 
 $.ajax({
 url: "<?php echo $webroot_path; ?>Accounts/allow_import_opening_balance",
 }).done(function(response){
-	//alert(response);
+	
 response = response.replace(/\s+/g,' ').trim();
 if(response=="F"){
 $("#check_validation_result").html("");

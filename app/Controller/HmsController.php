@@ -1824,6 +1824,71 @@ function delete_user_enrollment_row($record_id=null){
 	
 }
 
+function workflow_setting(){
+	if($this->RequestHandler->isAjax()){
+	$this->layout='blank';
+	}else{
+	$this->layout='session';
+	}
+	
+   $s_society_id=(int)$this->Session->read('hm_society_id');	
+   $this->ath();
+  
+if(isset($this->request->data['sub'])){
+	$user=@$this->request->data['multi'];
+	$this->loadmodel('society');
+	$this->society->updateAll(array('help_desk_raised_ticket'=>@$user),array('society_id'=>$s_society_id));
+}
+   
+   $this->loadmodel('society');
+   $result_society=$this->society->find('all',array('conditions'=>array('society_id'=>$s_society_id)));
+   $ticket_raised_by=@$result_society[0]['society']['help_desk_raised_ticket'];
+   if(empty($ticket_raised_by)){ $ticket_raised_by=array(); } 
+   $this->set(compact('ticket_raised_by')); 
+
+   $this->loadmodel('user');
+	$conditions2=array("society_id"=>$s_society_id,'active'=>'yes');
+	$result_user=$this->user->find('all',array('conditions'=>$conditions2));
+	//pr($result_user);
+	
+	foreach($result_user as $data){
+				$user_id=$data['user']['user_id'];
+				$user_name=$data['user']['user_name'];
+			
+				$this->loadmodel('user_flat');
+				$conditions1=array("user_id"=>$user_id);
+				$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions1));
+				foreach($result_user_flat as $data){
+							$user_flat_id=$data["user_flat"]["user_flat_id"];
+							$wing=@$data["user_flat"]["wing"];
+							$flat=@$data["user_flat"]["flat"];
+
+							$this->loadmodel('wing');
+							$conditions=array("wing_id"=>$wing);
+							$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
+							@$wing_name=$wing_info[0]["wing"]["wing_name"];
+
+							$this->loadmodel('flat');
+							$conditions=array("flat_id"=>$flat);
+							$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+							@$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
+							$flats=$wing_name.' - '.$flat_name;
+					}
+				
+				$this->loadmodel('user_role');
+				$conditions3=array("user_id"=>$user_id,'role_id'=>2);
+				$result_user_role=$this->user_role->find('all',array('conditions'=>$conditions3));
+				if(!empty($result_user_role)){
+						$result_users_com[]=array('user_name'=>$user_name,'wing_flat'=>$flats,'user_id'=>$user_id,'user_flat_id'=>$user_flat_id);
+					}
+				
+	}
+	
+	$this->set(compact('result_users_com'));
+	
+}
+
+
 function email_mobile_update(){
 	
 	if($this->RequestHandler->isAjax()){
@@ -2826,7 +2891,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 

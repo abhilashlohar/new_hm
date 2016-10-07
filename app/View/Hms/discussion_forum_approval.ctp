@@ -1,11 +1,13 @@
 <?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu'), array('pass' => array()));?>
-<script>
-$(document).ready(function() {
-$("#fix<?php echo $id_current_page; ?>").removeClass("blue");
-$("#fix<?php echo $id_current_page; ?>").addClass("red");
-});
-</script>
+echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));?>
+
+<div style="padding:5px;" align="center" class="mobile-align">
+<a href="discussion_forum_approval" class="btn red" rel='tab'>Discussion Approval</a>
+<a href="poll_approve" class="btn blue" rel='tab'>Polls Approval</a>
+<a href="resource_approval" class="btn blue" rel='tab'>Documents Approval</a>
+<a href="notice_approval" class="btn blue" rel='tab'>Notice Approval</a>
+</div>
+
 <div class="portlet box light-grey">
     <div style="background-color:#EFEFEF; border-top:1px solid #e6e6e6; border-bottom:1px solid #e6e6e6; padding:10px; box-shadow:5px; font-size:16px; color:#006;">
             Discussion Forum for  Approval &nbsp; <span>

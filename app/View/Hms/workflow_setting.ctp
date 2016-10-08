@@ -12,7 +12,7 @@ margin-left: 13%;'>
 
 <tr>
 <td>
-<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>1.Who member ticket raised ? </span><br><br>
+<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>1. Ticket will be raised to which members? </span><br><br>
 <select data-placeholder="Type or select name"  name="multi[]" id="multi" class="chosen span9" multiple="multiple" tabindex="6">
 		<?php 
 		

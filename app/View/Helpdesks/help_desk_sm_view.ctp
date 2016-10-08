@@ -115,8 +115,10 @@ Ticket has been closed on <?php echo @$help_desk_close_date ;?>
 					<?php echo $sp_name; ?>
 					</a>
 				</div>
+				
 				<div id="myModal<?php echo @$sp_id; ?>" class="accordion-body collapse">
 					<div class="accordion-inner">
+					<?php if(!empty($sp_email) or !empty($sp_mobile)){ ?>
 					<div>
 					<p style="font-size:14px;"><span><i class=" icon-question-sign" style=""></i> Assign ticket via SMS or Email ?</span></p>
 					
@@ -129,7 +131,8 @@ Ticket has been closed on <?php echo @$help_desk_close_date ;?>
 						Sms
 						</label>
 						
-					</div>
+					</div> 
+					<?php } ?>
 					<br/>
 						<form method="post" id="contact_form" >
 						<input type="hidden" value="<?php echo $hd_id; ?>" id="hd_id" name="hd_id">
@@ -181,6 +184,7 @@ Ticket has been closed on <?php echo @$help_desk_close_date ;?>
 						</form>
 					</div>
 				</div>
+				
 			</div>
 	<?php } ?>
 		</div>

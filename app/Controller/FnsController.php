@@ -693,6 +693,11 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 	$arrear_intrest=$last_bill_arrear_intrest;
 	$intrest_on_arrears=$last_bill_intrest_on_arrears;
 	
+	
+	
+	
+	
+	
 	$new_interest=0;
 	
 	$this->loadmodel('ledger');
@@ -738,10 +743,10 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 		}
 		//echo date("d-m-Y",$last_trasanction_date); echo"<br>";
 		//echo date("d-m-Y",$current_transaction_date); echo"<br>";
-		
+		if($last_bill_maint_arrear>0){
 		   $days=abs(floor(($last_trasanction_date-$current_transaction_date)/(60*60*24))); 
 		   $new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
-		
+		}
 		if($current_transaction_date>$last_due_date && $bill_count>0){
 			
 			 $last_due_date=date('Y-m-d', strtotime('0 day', $last_due_date));
@@ -820,17 +825,27 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 		$last_bill_amount=$bill_amount;
 	}
 	
+	////code  
+	//fetch opening balance main balance 
+	//if credit minus lastbillamoinut-open
+	//$last_bill_amount-openign
+	
+	
 		$last_bill_arrear_intrest=$arrear_intrest+$intrest_on_arrears;
 		if($last_bill_maint_arrear>0){
 			 $days=abs(floor(($last_trasanction_date-$current_bill_start_date)/(60*60*24)));
 			 $new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
+		}else{
+			if(!empty($last_bill_amount)){
+				$last_bill_amount=$last_bill_amount-abs($last_bill_maint_arrear);
+			}
 		}
 		if($current_bill_start_date>$last_due_date && $bill_count>0){
-			$last_due_date=date('Y-m-d', strtotime('0 day', $last_due_date));
-			$last_due_date=strtotime($last_due_date);
+			 $last_due_date=date('Y-m-d', strtotime('0 day', $last_due_date));
+			 $last_due_date=strtotime($last_due_date);
 			
-			$days=abs(floor(($last_due_date-$current_bill_start_date)/(60*60*24)));
-			$new_interest+=($last_bill_amount*$days*$tax_factor)/365;
+			 $days=abs(floor(($last_due_date-$current_bill_start_date)/(60*60*24)));
+			 $new_interest+=($last_bill_amount*$days*$tax_factor)/365;
 			
 			$last_due_date=$current_transaction_date;
 			

@@ -636,7 +636,7 @@ function it_regular_bill(){
 		
 		//Start billing calculation//
 		foreach($members_for_billing as $ledger_sub_account_id){
-			$total=0; $due_for_payment=0;
+			$total=0; $due_for_payment=0; 
 			//Income head amount calculation//
 			$income_head_array=array();
 			foreach($income_heads as $income_head_id){
@@ -696,7 +696,7 @@ function it_regular_bill(){
 			$this->regular_bill_temp->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => (int)$ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_principle"=> $arrear_principle,"maint_arrear"=> $maint_arrear,"non_maint_arrear"=> $non_maint_arrear, "arrear_intrest" => $arrear_interest, "intrest_on_arrears" => $intrest_on_arrears,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>strtotime($start_date),"due_date"=>strtotime($due_date),"credit_stock"=>0,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$s_user_flat_id,"current_date"=>strtotime($current_date),"sent_for_approval"=>"no","approved"=>"no","end_date"=>strtotime($end_date),"terms_condition_id"=>$terms_condition_id));
 		
 		}  
-
+//exit;
 		$this->redirect(array('controller' => 'Incometrackers','action' => 'preview_regular_bill'));
 	
 	}

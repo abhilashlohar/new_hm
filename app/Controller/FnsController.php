@@ -749,6 +749,7 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 		}else{
 			if(!empty($last_bill_amount)){
 				$last_bill_amount=$last_bill_amount-abs($last_bill_maint_arrear);
+				$last_bill_maint_arrear=0;
 			}
 		}
 		if($current_transaction_date>$last_due_date && $bill_count>0){
@@ -842,6 +843,7 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 		}else{
 			if(!empty($last_bill_amount)){
 				$last_bill_amount=$last_bill_amount-abs($last_bill_maint_arrear);
+				$last_bill_maint_arrear=0;
 			}
 		}
 		if($current_bill_start_date>$last_due_date && $bill_count>0){

@@ -746,6 +746,10 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 		if($last_bill_maint_arrear>0){
 		   $days=abs(floor(($last_trasanction_date-$current_transaction_date)/(60*60*24))); 
 		   $new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
+		}else{
+			if(!empty($last_bill_amount)){
+				$last_bill_amount=$last_bill_amount-abs($last_bill_maint_arrear);
+			}
 		}
 		if($current_transaction_date>$last_due_date && $bill_count>0){
 			

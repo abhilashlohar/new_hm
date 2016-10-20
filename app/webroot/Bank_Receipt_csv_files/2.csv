@@ -1,18 +1,12 @@
 Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Amount,Narration 
-12-05-2016,Uco Bank,Cheque,170451,12-05-2016,NKGS Bank,N/A,,Shop,3,5258,Apr- June Qtr 2016 Payment - Bank Book/May/16
-10-05-2016,Uco Bank,Neft,999,10-05-2016,,,,Shop,8,37500,Apr- June Qtr 2016 Payment - Bank Book/May/17
-11-05-2016,Uco Bank,Neft,999,11-05-2016,,,,Flat,902,10264,Apr- June Qtr 2016 Payment - Bank Book/May/18
-11-05-2016,Uco Bank,Neft,999,11-05-2015,,,,Flat,1403,11700,Apr- June Qtr 2016 Payment - Bank Book/May/19
-13-05-2016,Uco Bank,Neft,999,13-05-2016,,,,Flat,801,10354,Apr- June Qtr 2016 Payment - Bank Book/May/20
-11-05-2016,Uco Bank,Neft,999,11-05-2016,,,,Flat,302,9364,Apr- June Qtr 2016 Payment - Bank Book/May/21
-14-05-2016,Uco Bank,Cheque,324103,14-05-2016,SBI,N/A,,Flat,1101,10519,Apr- June Qtr 2016 Payment - Bank Book/May/22
-15-05-2016,Uco Bank,Neft,999,15-05-2016,,,,Flat,903,10024,Apr- June Qtr 2016 Payment - Bank Book/May/23
-15-05-2016,Uco Bank,Neft,999,15-05-2016,,,,Shop,17,2573,Apr- June Qtr 2016 Payment - Bank Book/May/24
-15-05-2016,Uco Bank,Cheque,17,15-05-2016,HDFC,N/A,,Flat,1701,10519,Apr- June Qtr 2016 Payment - Bank Book/May/25
-18-05-2016,Uco Bank,Cheque,353753,18-05-2016,N/A,,,Flat,402,9100,Apr- June Qtr 2016 Payment - Bank Book/May/26
-15-05-2016,Uco Bank,Cheque,21,15-05-2016,PMC Bank,,,Flat,1001,11254,Apr- June Qtr 2016 Payment - Bank Book/May/27
-14-05-2016,Uco Bank,Cheque,6,14-05-2016,PMC Bank,N/A,,Flat,203,10553,Apr- June Qtr 2016 Payment - Bank Book/May/28
-18-05-2016,Uco Bank,Cheque,345128,18-05-2016,N/A,,,Shop,6,5310,Apr- June Qtr 2016 Payment - Bank Book/May/29
-16-05-2016,Uco Bank,Neft,613600898,16-05-2016,,,,Shop,5,5258,Apr- June Qtr 2016 Payment - Bank Book/May/30
-,,,,,,,,,,,
-,,,,,,,,,,,
+27-07-2016,Uco Bank,Cheque,108,27-07-2016,HDFC,,,FLAT,502,10375,Jul-Sep Qtr 2016 Reciept-Bank Book/Aug/40
+16-08-2016,Uco Bank,NEFT,999,16-08-2016,,,,FLAT,1002,20000,Jul-Sep Qtr 2016 Reciept-Bank Book/Aug/41
+12-08-2016,Uco Bank,NEFT,999,12-08-2016,,,,FLAT,302,10375,Jul-Sep Qtr 2016 Reciept-Bank Book/Aug/43
+26-08-2016,Uco Bank,Cheque,788051,26-08-2016,SBI,,,FLAT,1401,41416,Jul-Sep Qtr 2016 Reciept-Bank Book/Aug/44
+01-09-2016,Uco Bank,NEFT,999,01-09-2016,,,,SHOP,6,12245,Jul-Sep Qtr 2016 Reciept-Bank Book/Sep/1
+03-09-2016,Uco Bank,Cheque,10,03-09-2016,HDFC,,,SHOP,4,10096,Jul-Sep Qtr 2016 Reciept-Bank Book/Sep/2
+17-09-2016,Uco Bank,NEFT,999,17-09-2016,,,,SHOP,7,12245,Jul-Sep Qtr 2016 Reciept-Bank Book/Sep/3
+03-09-2016,Uco Bank,NEFT,999,03-09-2016,,,A SINGAL,FLAT,1403,12141,Jul-Sep Qtr 2016 Reciept-Bank Book/Sep/6
+05-09-2016,Uco Bank,NEFT,999,05-09-2016,,,PANKAJ KISHOR,FLAT,803,11500,Jul-Sep Qtr 2016 Reciept-Bank Book/Sep/7
+27-09-2016,Uco Bank,NEFT,999,27-09-2016,,,PRADEEP WAGH,FLAT,802,9075,Jul-Sep Qtr 2016 Reciept-Bank Book/Sep/8
+30-09-2016,Uco Bank,Cheque,1443,30-09-2016,ICICI,,MOHIT BHATT,FLAT,303,21000,Jul-Sep Qtr 2016 Reciept-Bank Book/Sep/9

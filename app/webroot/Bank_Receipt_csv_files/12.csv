@@ -1,25 +1,54 @@
 Transaction Date,Deposited In,Receipt Mode,Cheque No/Reference/UTR #,Date,Drawn on which Bank?,Branch of Bank,Member Name,Wing,Flat,Amount,Narration 
+01-08-2016,Andhra Bank,NEFT,999,01-08-2016,,,,A,201,10349,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/03
+02-08-2016,Andhra Bank,NEFT,999,02-08-2016,,,,B,402,9649,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/05
+05-08-2016,Andhra Bank,NEFT,999,05-08-2016,,,,B,1003,19301,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/07
+06-08-2016,Andhra Bank,Cheque,406181,06-08-2016,SBI,N/A,,B,704,9742,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/08
+07-08-2016,Andhra Bank,Cheque,47,07-08-2016,HDFC,N/A,,B,304,9742,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/09
+09-08-2016,Andhra Bank,Cheque,5,09-08-2016,Andhra Bank,N/A,,B,302,9742,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/10
+10-08-2016,Andhra Bank,Cheque,343468,10-08-2016,ICICI,N/A,,A,203,9649,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/11
+08-08-2016,Andhra Bank,NEFT,999,08-08-2016,,,,A,403,9649,Jul-Sep Qtr 2016 Bank Reciept IMPS-Bank Book/Aug/14
+08-08-2016,Andhra Bank,NEFT,999,08-08-2016,,,,A,1004,10614,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/15
+10-08-2016,Andhra Bank,NEFT,999,10-08-2016,,,,A,901,10696,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/19
+12-08-2016,Andhra Bank,Cheque,999,12-08-2016,UCO Bank,N/A,,B,1401,9635,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/22
+12-08-2016,Andhra Bank,Cheque,999,12-08-2016,HDFC,N/A,,B,203,9639,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/23
+12-08-2016,Andhra Bank,Cheque,999,12-08-2016,Indian Bank,N/A,,B,602,11063,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/24
+13-08-2016,Andhra Bank,Cheque,999,13-08-2016,HDFC,N/A,,B,1001,9649,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/25
+13-08-2016,Andhra Bank,Cheque,999,13-08-2016,ICICI,N/A,,A,503,9742,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/26
+14-08-2016,Andhra Bank,Cheque,999,14-08-2016,SBI,N/A,,B,1004,9649,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/27
+16-08-2016,Andhra Bank,Cheque,489364,16-08-2016,OBC,N/A,,A,602,7042,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/28
+12-08-2016,Andhra Bank,NEFT,999,12-08-2016,,,,B,902,9742,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/30
+12-08-2016,Andhra Bank,NEFT,999,12-08-2016,,,,A,904,10716,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/31
+16-08-2016,Andhra Bank,NEFT,999,16-08-2016,,,,B,1204,9655,Jul-Sep Qtr 2016 Bank Reciept IMPS-Bank Book/Aug/35
+16-08-2016,Andhra Bank,NEFT,999,16-08-2016,,,,A,1201,10333,Jul-Sep Qtr 2016 Bank Reciept IMPS-Bank Book/Aug/36
+16-08-2016,Andhra Bank,NEFT,999,16-08-2016,,,,A,701,10692,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/37
+16-08-2016,Andhra Bank,NEFT,999,16-08-2016,,,,B,1202,9649,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/38
+17-08-2016,Andhra Bank,NEFT,999,17-08-2016,,,,A,504,19489,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/42
+18-08-2016,Andhra Bank,NEFT,999,18-08-2016,,,,A,202,7042,Jul-Sep Qtr 2016 Bank Reciept IMPS-Bank Book/Aug/44
 20-08-2016,Andhra Bank,NEFT,999,20-08-2016,,,,B,701,10716,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/46
 22-08-2016,Andhra Bank,NEFT,999,22-08-2016,,,,A,1103,9742,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/47
 23-08-2016,Andhra Bank,NEFT,999,23-08-2016,,,,B,1101,19489,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/48
 24-08-2016,Andhra Bank,NEFT,999,24-08-2016,,,,B,403,11579,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/49
 26-08-2016,Andhra Bank,NEFT,999,26-08-2016,,,,A,502,7028,Jul-Sep Qtr 2016 Bank Reciept IMPS -Bank Book/Aug/50
 29-08-2016,Andhra Bank,NEFT,999,29-08-2016,,,,B,202,9649,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/51
-31-08-2016,Andhra Bank,NEFT,999,31-08-2016,,,,A,601,10349,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/59
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
+25-08-2016,Andhra Bank,NEFT,999,25-08-2016,,,,A,902,7028,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/52
+15-08-2016,Andhra Bank,Cheque,16,15-08-2016,HDFC,N/A,,A,303,9742,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/53
+26-08-2016,Andhra Bank,NEFT,999,26-08-2016,,,,B,204,9649,Jul-Sep Qtr 2016 Bank Reciept IMPS-Bank Book/Aug/54
+27-08-2016,Andhra Bank,Cheque,127884,27-08-2016,ICICI,N/A,,A,1304,39024,Jul-Sep Qtr 2016 Bank Reciept -Bank Book/Aug/55
+31-08-2016,Andhra Bank,Cheque,577719,31-08-2016,ICICI,N/A,,B,1301,3229,Jul-Sep Qtr 2016 Bank Reciept-Bank Book/Aug/56
+31-08-2016,Andhra Bank,Cheque,577720,31-08-2016,ICICI,N/A,,B,1302,3229,Jul-Sep Qtr 2016 Bank Reciept-Bank Book/Aug/57
+30-08-2016,Andhra Bank,NEFT,999,30-08-2016,,,,A,1404,9649,Jul-Sep Qtr 2016 Bank Reciept-Bank Book/Aug/58
+31-08-2016,Andhra Bank,NEFT,999,31-08-2016,,,,A,601,10349,Jul-Sep Qtr 2016 Bank Reciept-Bank Book/Aug/59
+01-09-2016,Andhra Bank,Cheque,458510,01-09-2016,PNB,N/A,,B,1502,16704,Jun-Sep Qtr 2016 Reciept  Bank Book/Sep/60
+01-09-2016,Andhra Bank,Cheque,571489,01-09-2016,PNB,N/A,,A,1501,10412,Jun-Sep Qtr 2016 Reciept  Bank Book/Sep/61
+01-09-2016,Andhra Bank,Cheque,458510,01-09-2016,PNB,N/A,,A,1501,9338,Jun-Sep Qtr 2016 Reciept  Bank Book/Sep/62
+03-09-2016,Andhra Bank,Cheque,282630,03-09-2016,State Bank Of India,N/A,,A,1202,6402,Jun-Sep Qtr 2016 Reciept  Bank Book/Sep/63
+03-09-2016,Andhra Bank,NEFT,999,03-09-2016,,,,B,1203,6413,Jun-Sep Qtr 2016 Reciept  Bank Book/Sep/64
+03-09-2015,Andhra Bank,NEFT,999,03-09-2015,,,,B,303,6481,Jun-Sep Qtr 2016 Reciept  Bank Book/Sep/65
+05-09-2016,Andhra Bank,NEFT,999,05-09-2016,,,,B,503,9742,Jun-Sep Qtr 2016 Reciept  Bank Book/Sep/66
+12-09-2016,Andhra Bank,Cheque,13291,12-09-2016,ICICI,N/A,,B,1501,11825,Jun-Sep Qtr 2016 Reciept  Bank Book/Sep/67
+16-09-2016,Andhra Bank,Cheque,63,16-09-2016,HDFC,N/A,,A,801,10349,Jun-Sep Qtr 2016 Reciept  Bank Book/Sep/68
+18-09-2016,Andhra Bank,Cheque,19,18-09-2016,HDFC,N/A,,B,803,9649,Jun-Sep Qtr 2016 Reciept  Bank Book/Sep/69
+29-09-2016,Andhra Bank,Cheque,683761,29-09-2016,Indian Overseas Bank,N/A,,A,603,54825,Jun-Sep Qtr 2016 Reciept  Bank Book/Sep/70
+19-09-2016,Andhra Bank,NEFT,999,19-09-2016,,,,B,1102,10716,Jun-Sep Qtr 2016 Reciept  Bank Book/Sep/71
+19-09-2016,Andhra Bank,NEFT,999,19-09-2016,,,,A,703,9747,Jun-Sep Qtr 2016 Reciept  Bank Book/Sep/72
+23-09-2016,Andhra Bank,NEFT,999,23-09-2016,,,,B,401,10000,Jun-Sep Qtr 2016 Reciept  Bank Book/Sep/73

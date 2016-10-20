@@ -13,7 +13,7 @@ function auto_backup_data(){
   $this->layout=null;
 	App::import('Vendor', 'PhpMailer', array('file' => 'phpmailer' . DS . 'class.phpmailer.php')); 
 
-		$output1 = shell_exec('/usr/bin/mongodump --db new_version 2>&1');
+		$output1 = shell_exec('/usr/bin/mongodump --db housingmatters 2>&1');
 		$output1 = shell_exec('/usr/bin/zip -r dump.zip dump 2>&1');
 	
 		global $error;
@@ -25,7 +25,7 @@ function auto_backup_data(){
 		$subject="Backup of database";
 		$message_web="Backup of HousingMatters database";
 
-		$file='/var/www/html/Housingmatters/app/webroot/dump.zip';
+		$file='/var/www/html/new_hm/app/webroot/dump.zip';
 		
 		$mail = new PHPMailer();
 		$mail->IsSMTP();
@@ -53,7 +53,8 @@ function auto_backup_data(){
 		$mail->AddReplyTo($reply ,"HousingMatters");
 	}
 	$mail->addAddress($to);
-
+	$mail->addBCC('ankit@phppoets.com');
+	$mail->addBCC('ankit.sisodiya27@gmail.com');
 		if(!$mail->Send()) {
 			$error = 'Mail error: '.$mail->ErrorInfo;
 			return false;
@@ -30098,7 +30099,7 @@ echo $excel;
 	function smtpmailer($to,$from, $from_name, $subject, $message_web,$reply, $is_gmail=true)
 	{
 	App::import('Vendor', 'PhpMailer', array('file' => 'phpmailer' . DS . 'class.phpmailer.php')); 
-
+/*
 		global $error;
 		
 		$mail = new PHPMailer();
@@ -30134,7 +30135,7 @@ echo $excel;
 			$error = 'Message sent!';
 			return true;
 		}
-		
+		*/
 	}
 	
 	function check_slide_show_displayed_or_not(){

@@ -30099,7 +30099,7 @@ echo $excel;
 	function smtpmailer($to,$from, $from_name, $subject, $message_web,$reply, $is_gmail=true)
 	{
 	App::import('Vendor', 'PhpMailer', array('file' => 'phpmailer' . DS . 'class.phpmailer.php')); 
-/*
+
 		global $error;
 		
 		$mail = new PHPMailer();
@@ -30135,7 +30135,7 @@ echo $excel;
 			$error = 'Message sent!';
 			return true;
 		}
-		*/
+		
 	}
 	
 	function check_slide_show_displayed_or_not(){

@@ -30856,7 +30856,7 @@ $hms_rights_result=$this->hms_right->find('all',array('conditions'=>$conditions)
 $this->set('hms_rights_result',$hms_rights_result);
 	
 $this->loadmodel('society');
-$result_society=$this->society->find('all');
+$result_society=$this->society->find('all',array('conditions'=>array('aprvl_status'=>1)));
 $this->set('result_society',$result_society);
 
 $this->loadmodel('hms_role');

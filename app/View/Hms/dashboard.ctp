@@ -44,9 +44,11 @@ function substrwords($text, $maxchar, $end='...') {
     return $output;
 }
 
+if($user_type!='hm_child'){
 
-$result_profile=$this->requestAction(array('controller' => 'Fns', 'action' => 'check_profile_update_status'));
+  $result_profile=$this->requestAction(array('controller' => 'Fns', 'action' => 'check_profile_update_status'));
 
+}
 
 
 ?>

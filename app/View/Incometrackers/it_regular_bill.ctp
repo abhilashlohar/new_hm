@@ -295,8 +295,13 @@ $('input[name="start_date"]').die().live("blur",function(){
 					$.ajax({url:"regular_bill_validation_ajax/"+start_date, 
 						success: function(result){
 					if(result=="match"){
+<<<<<<< HEAD
 				//	validation(5)
 			//	$('#start_date').html('Bills already generated for this period');
+=======
+					//validation(5)
+				//$('#start_date').html('Bills already generated for this period');
+>>>>>>> 72ad5226f33615f40582b6555332661717708dad
 				}else{
 					$('#start_date').html('');
 				validation(10)		

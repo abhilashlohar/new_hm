@@ -5,7 +5,9 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <center>
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_payment" class="btn yellow" rel='tab'>Create</a>
 <a href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_payment_view" class="btn" rel='tab'>View</a>
-</center>	   
+</center>	
+<a href="<?php echo $webroot_path; ?>Cashbanks/import_petty_cash_payment_csv" class="btn purple" role="button" style="float:right; margin-right:8px;" rel="tab"><i class="fa fa-database"></i> Import csv</a>  
+ 
 <?php
 $default_date = date('d-m-Y');
 ?>

@@ -9192,7 +9192,7 @@ function dashboard(){
 
 	$user_type=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_user_type_via_user_id'), array('pass' => array($s_user_id)));
 	
-	
+	$this->set('user_type',$user_type);
 	 
 		//////////////Help-desk  last 3 tickets///////////////// 
 		$this->loadmodel('help_desk');
@@ -30857,7 +30857,7 @@ $hms_rights_result=$this->hms_right->find('all',array('conditions'=>$conditions)
 $this->set('hms_rights_result',$hms_rights_result);
 	
 $this->loadmodel('society');
-$result_society=$this->society->find('all');
+$result_society=$this->society->find('all',array('conditions'=>array('aprvl_status'=>1)));
 $this->set('result_society',$result_society);
 
 $this->loadmodel('hms_role');

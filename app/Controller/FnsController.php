@@ -1391,7 +1391,7 @@ function regular_bill_info_via_ledger_sub_account($ledger_sub_account_id){
 function is_empty_for_owner($flat_id){
 	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('user_flat');
-	$conditions=array("flat"=>$flat_id,'owner'=>"yes");
+	$conditions=array("flat"=>(int)$flat_id,'owner'=>"yes",'exited'=>'no');
 	return $this->user_flat->find('count',array('conditions'=>$conditions));
 }
 function ledger_info_via_ledger_sub_account_id($ledger_sub_account_id){

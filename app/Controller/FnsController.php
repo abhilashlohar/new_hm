@@ -1370,7 +1370,7 @@ function user_flat_info_via_user_flat_id($user_flat_id){
 }
 function user_flat_info_via_wing_flat_id($wing,$flat){
 	$this->loadmodel('user_flat');
-	$conditions=array("wing"=>$wing,"flat"=>$flat);
+	$conditions=array("wing"=>$wing,"flat"=>$flat,'owner'=>'yes');
 	return $this->user_flat->find('all',array('conditions'=>$conditions));
 }
 

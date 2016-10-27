@@ -270,7 +270,10 @@ $(document).ready(function() {
 		len=len+1;
 		
 		$("#other_charges_count_extra").val(len);
-		var z= $(".income_cha:first").clone().insertAfter($('[class^=income_cha]:last'));
+		//var z= $(".income_cha:first").clone().insertAfter($('[class^=income_cha]:last'));
+		
+		var z= $(".income_cha:first").clone().insertAfter($('[class^=income_cha]:last')).find("input:text").val("");
+		
 		bill_calculation();
 	})
 	

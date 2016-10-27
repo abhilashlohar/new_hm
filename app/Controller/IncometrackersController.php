@@ -7127,9 +7127,44 @@ function regular_bill_edit2($auto_id=null){
 		$due_for_payment=$this->request->data['due_for_payment'];
 		$description=htmlspecialchars($this->request->data['description']);
 		
+		$income_head_data_extra=@$this->request->data['income_head_data'];
+		$charge_other_amount=@$this->request->data['charge_other_amount'];
+						
+		$income_head_data_extra = array_filter($income_head_data_extra);
+		$income_head_data_extra=array_values($income_head_data_extra);
+		
+	    $charge_other_amount = array_filter($charge_other_amount);
+	    $charge_other_amount=array_values($charge_other_amount);
+		
+		
 		if(sizeof(@$other_charges_array)==0){$other_charges_array=array();}
 		
-		pr($other_charges_array);
+			if(!empty($income_head_data_extra)){ 
+				
+				$count_extra_same=array_count_values($income_head_data_extra);
+				$mn=0;
+				foreach($income_head_data_extra as $other_id){
+					$other_charges_extra_allow[$other_id]=$charge_other_amount[$mn];
+					$mn++;	
+				 }
+			}
+			  if(!empty($count_extra_same)){
+					foreach($count_extra_same as $data){
+						if($data>=2){
+							goto not_valid;
+						}
+					 }
+			     }
+			
+			if(!empty($other_charges_array) and !empty($other_charges_extra_allow)){
+				  $other_charges_array=$other_charges_extra_allow+$other_charges_array;
+			  }elseif(!empty($other_charges_array) and empty($other_charges_extra_allow)){
+				 $other_charges_array=$other_charges_array;
+			  }elseif(empty($other_charges_array) and !empty($other_charges_extra_allow)){
+				 $other_charges_array=$other_charges_extra_allow;
+			 }
+			
+		
 		
 		$this->loadmodel('regular_bill');
 		$this->regular_bill->updateAll(array('edited'=>"yes"),array("auto_id"=>$auto_id));
@@ -7553,6 +7588,10 @@ function regular_bill_edit2($auto_id=null){
 		
 		
 		$this->redirect(array('controller' => 'Incometrackers','action' => 'in_head_report'));
+		
+		not_valid: 
+		$this->set('other_same','Other charges should not be same select ');
+		
 	}
 }
 

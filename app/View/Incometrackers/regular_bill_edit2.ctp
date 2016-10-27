@@ -7,12 +7,41 @@ input[readonly=""]{
     border: medium none !important;
 	background-color: transparent;
 }
+
+
 </style>
 <a href="<?php echo $webroot_path; ?>Incometrackers/in_head_report" role="button" rel="tab" class="btn"><i class="icon-arrow-left"></i> Back</a>
 <?php if($count>0){
 	echo "<br/>You can not edit this bill."; exit;
 } ?>
 <?php 
+
+$result1 = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch'),array('pass'=>array(7)));			
+foreach($result1 as $collection)
+{
+$ac_name = $collection['ledger_account']['ledger_name'];
+$ac_id = (int)$collection['ledger_account']['auto_id'];		
+if($ac_id != 43 && $ac_id != 39 && $ac_id != 40)
+{
+$income_head_arr1[] = (int)$ac_id;	
+}
+}
+$income_head_selected_arr=$society_info[0]["society"]["income_head"];
+if(!empty($income_head_selected_arr))
+{
+@$income_head_arr2 = array_diff($income_head_arr1,$income_head_selected_arr);
+}
+else
+{
+$income_head_arr2 = $income_head_arr1;	
+}
+foreach($income_head_arr2 as $data)
+{
+$income_arrr[] = $data;
+}
+
+
+
 $tax=(float)$society_info[0]["society"]["tax"];
 foreach($regular_bill_info as $regular_bill){
 	$ledger_sub_account_id=(int)$regular_bill["regular_bill"]["ledger_sub_account_id"];
@@ -64,6 +93,12 @@ foreach($regular_bill_info as $regular_bill){
 		<h4><i class="icon-edit"></i> Regeneration of Bill -<?php echo $bill_number; ?></h4>
 	</div>
 	<div class="portlet-body" style="overflow:auto;">
+		<?php if(!empty($other_same)){ ?> 
+						<div class="alert alert-error">
+							<button class="close" data-dismiss="alert"></button>
+								<strong>Error!</strong> <?php echo $other_same; ?>
+						</div> 
+				<?php } ?>
 		<table style="width:100%; float:left;" >
 			<tr>
 				<td width="10%">Name: </td>
@@ -80,7 +115,7 @@ foreach($regular_bill_info as $regular_bill){
 		</table>
 		<form method="post">
 		<div class="portlet-body span6">
-			<table class="table table-bordered">
+			<table class="table table-bordered" id="table_bill">
 				<thead>
 					<tr>
 						<th>Particulars of charges</th>
@@ -116,6 +151,40 @@ foreach($regular_bill_info as $regular_bill){
 						<td><input type="text" class="m-wrap textbx call_calculation" value="<?php echo $other_charge_amount; ?>" name="other_charges[<?php echo $other_charge_id; ?>]" id="other_charges<?php echo $j; ?>" /></td>
 					</tr>
 					<?php } } ?>
+					
+					<tr class="income_cha" >
+						<td>
+							<select name="income_head_data[]"  class="m-wrap" data-placeholder="Select Income Head" tabindex="1">
+								<option > </option>
+								<?php
+								
+							if(!empty($income_arrr)){
+							for($r=0; $r<sizeof($income_arrr); $r++){ 
+							
+								$income_id = (int)$income_arrr[$r];
+
+								$ledgerac = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch2'),array('pass'=>array($income_id)));			
+								foreach($ledgerac as $collection2){
+									$ac_name = $collection2['ledger_account']['ledger_name'];
+									$ac_id = (int)$collection2['ledger_account']['auto_id'];		
+								}
+
+							?>
+							<option value="<?php echo $ac_id; ?>"><?php echo $ac_name; ?> </option>
+							<?php }} ?>
+							</select>
+						</td>
+						
+						<td>
+						 <input type="text" name="charge_other_amount[]" class="m-wrap call_calculation">
+							<div style="margin-top: -4px; margin-right: -5px;font-size: 14px !important;" class="pull-right">
+								<a role="button" class="btn mini  remove_row" href="#" ><i class="icon-trash"></i></a><br>
+								<a href="#" class="btn mini add_row" role="button">	 
+								<i class="icon-plus"></i></a>
+							</div>
+						</td>
+					
+					</tr>
 					
 					<tr>
 						<?php $due_for_payment=0; ?>
@@ -185,6 +254,7 @@ foreach($regular_bill_info as $regular_bill){
 </div>
 <input type="hidden" value="<?php echo sizeof($income_head_array); ?>" id="income_head_count"/>
 <input type="hidden" value="<?php echo sizeof($other_charges_array); ?>" id="other_charges_count"/>
+<input type="hidden" value="1" id="other_charges_count_extra"/>
 <input type="hidden" value="0" id="confirm"/>
 
 
@@ -194,11 +264,34 @@ foreach($regular_bill_info as $regular_bill){
 
 <script>
 $(document).ready(function() {
+	
+	$(".add_row").die().live("click",function(){
+		var len=$(".add_row").length;
+		len=len+1;
+		
+		$("#other_charges_count_extra").val(len);
+		var z= $(".income_cha:first").clone().insertAfter($('[class^=income_cha]:last'));
+		bill_calculation();
+	})
+	
+	$(".remove_row").die().live("click",function(){
+		
+		var len=$(".remove_row").length;
+		if(len!=1){
+			len=len-1;
+			
+		$("#other_charges_count_extra").val(len);	
+		  $(this).closest("tr").remove();
+		}
+		bill_calculation();
+	})
+	
 	$('.call_calculation').live('keyup',function(){
 		bill_calculation();
 	});
 	 
 	$('.submit_button').live('click',function(){
+		
 		$('.confirm_div').show();
 	});
 	$('#close_button').live('click',function(){
@@ -208,7 +301,13 @@ $(document).ready(function() {
 
 function bill_calculation(){
 	$(document).ready(function() {
-		var total=0; var due_for_payment=0;
+		var total=0; var due_for_payment=0; 
+		$('input[name="charge_other_amount[]"]').die().each(function(i, obj){
+			var charge_extra=parseInt($(this).val());
+			if($.isNumeric(charge_extra)==false){ charge_extra=0; }
+			 total=total+charge_extra;
+		});
+		
 		var income_head_count=$('#income_head_count').val();
 		var other_charges_count=$('#other_charges_count').val();
 		

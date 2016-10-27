@@ -7164,7 +7164,7 @@ function regular_bill_edit2($auto_id=null){
 				 $other_charges_array=$other_charges_extra_allow;
 			 }
 			
-		//pr($other_charges_array); exit;
+		
 		
 		$this->loadmodel('regular_bill');
 		$this->regular_bill->updateAll(array('edited'=>"yes"),array("auto_id"=>$auto_id));

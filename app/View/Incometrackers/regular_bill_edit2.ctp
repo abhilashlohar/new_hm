@@ -176,7 +176,7 @@ foreach($regular_bill_info as $regular_bill){
 						</td>
 						
 						<td>
-						 <input type="text" name="charge_other_amount[]" class="m-wrap call_calculation">
+						 <input type="text" maxlength="6" name="charge_other_amount[]" class="m-wrap call_calculation">
 							<div style="margin-top: -4px; margin-right: -5px;font-size: 14px !important;" class="pull-right">
 								<a role="button" class="btn mini  remove_row" href="#" ><i class="icon-trash"></i></a><br>
 								<a href="#" class="btn mini add_row" role="button">	 

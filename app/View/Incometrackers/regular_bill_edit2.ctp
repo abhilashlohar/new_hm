@@ -305,14 +305,14 @@ $(document).ready(function() {
 			var am=$(this).closest('tr').find('input[name="charge_other_amount[]"]').val();
 			 if(ot!=""){
 				if(am==""){
-					alert('please fill amount'); 
+					alert('Please fill amount.'); 
 					 allow="no";
 				 }
 			 }
 			 
 			  if(am!=""){
 				if(ot==""){
-					alert('please select other charges'); 
+					alert('Please select other charges.'); 
 					 allow="no";
 				 }
 			 }

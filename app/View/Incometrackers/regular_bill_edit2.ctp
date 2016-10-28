@@ -154,6 +154,7 @@ foreach($regular_bill_info as $regular_bill){
 					
 					<tr class="income_cha" >
 						<td>
+						<label> Select other charges</label>
 							<select name="income_head_data[]"  class="m-wrap" data-placeholder="Select Income Head" tabindex="1">
 								<option > </option>
 								<?php
@@ -176,6 +177,7 @@ foreach($regular_bill_info as $regular_bill){
 						</td>
 						
 						<td>
+						<label> Amount</label>
 						 <input type="text" maxlength="6" name="charge_other_amount[]" class="m-wrap call_calculation">
 							<div style="margin-top: -4px; margin-right: -5px;font-size: 14px !important;" class="pull-right">
 								<a role="button" class="btn mini  remove_row" href="#" ><i class="icon-trash"></i></a><br>
@@ -224,7 +226,7 @@ foreach($regular_bill_info as $regular_bill){
 					</tr>
 					<tr>
 						<td style="text-align: right;"><b>Description</b></td>
-						<td><input type="text" class="m-wrap textbx" value="<?php echo $description; ?>" name="description"  />
+						<td><input type="text" class="span12 textbx" value="<?php echo $description; ?>" name="description"  />
 						</td>
 					</tr>
 				</tbody>
@@ -265,6 +267,8 @@ foreach($regular_bill_info as $regular_bill){
 <script>
 $(document).ready(function() {
 	
+	
+	
 	$(".add_row").die().live("click",function(){
 		var len=$(".add_row").length;
 		len=len+1;
@@ -293,8 +297,31 @@ $(document).ready(function() {
 	});
 	 
 	$('.submit_button').live('click',function(){
+		var allow="yes";
+		//$('.confirm_div').show();
+		  
+		$('.income_cha').die().each(function(i, obj){
+			var ot=$(this).closest('tr').find('select[name="income_head_data[]"]').val();
+			var am=$(this).closest('tr').find('input[name="charge_other_amount[]"]').val();
+			 if(ot!=""){
+				if(am==""){
+					alert('please fill amount'); 
+					 allow="no";
+				 }
+			 }
+			 
+			  if(am!=""){
+				if(ot==""){
+					alert('please select other charges'); 
+					 allow="no";
+				 }
+			 }
+		}); 
 		
-		$('.confirm_div').show();
+		if(allow=="yes"){
+			$('.confirm_div').show();
+		}
+		
 	});
 	$('#close_button').live('click',function(){
 		$('.confirm_div').hide();

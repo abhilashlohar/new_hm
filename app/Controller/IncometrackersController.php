@@ -7136,7 +7136,6 @@ function regular_bill_edit2($auto_id=null){
 	    $charge_other_amount = array_filter($charge_other_amount);
 	    $charge_other_amount=array_values($charge_other_amount);
 		
-		
 		if(sizeof(@$other_charges_array)==0){$other_charges_array=array();}
 		
 			if(!empty($income_head_data_extra)){ 
@@ -7163,7 +7162,6 @@ function regular_bill_edit2($auto_id=null){
 			  }elseif(empty($other_charges_array) and !empty($other_charges_extra_allow)){
 				 $other_charges_array=$other_charges_extra_allow;
 			 }
-			
 		
 		
 		$this->loadmodel('regular_bill');
@@ -7194,13 +7192,35 @@ function regular_bill_edit2($auto_id=null){
 		}
 		
 		
-		foreach($other_charges_array as $key=>$value){
+	/*	foreach($other_charges_array as $key=>$value){
 			if(!empty($value)){
 				$this->loadmodel('ledger');
 				$auto_id=$this->autoincrement('ledger','auto_id');
 				$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => $key,"ledger_sub_account_id" => null,"debit"=>null,"credit"=>$value,"table_name"=>"regular_bill","element_id"=>$reg_auto_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
 			}
+		} */
+		
+		foreach($other_charges_array as $key=>$value){
+			if(!empty($value)){
+				 if($value>0){
+						$this->loadmodel('ledger');
+						$auto_id=$this->autoincrement('ledger','auto_id');
+						$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => $key,"ledger_sub_account_id" => null,"debit"=>null,"credit"=>$value,"table_name"=>"regular_bill","element_id"=>$reg_auto_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+					
+				} 
+				if($value<0){
+					$this->loadmodel('ledger');
+					$auto_id=$this->autoincrement('ledger','auto_id');
+					$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => $key,"ledger_sub_account_id" => null,"debit"=>abs($value),"credit"=>null,"table_name"=>"regular_bill","element_id"=>$reg_auto_id,"society_id"=>$s_society_id,"transaction_date"=>$start_date));
+					
+				}
+				
+				
+			}
 		}
+		
+		
+		
 		
 		if(!empty($total)){
 			$this->loadmodel('ledger');

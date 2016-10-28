@@ -296,7 +296,7 @@ $(document).ready(function() {
 		bill_calculation();
 	});
 	 
-	$('.submit_button').live('click',function(){
+	$('.submit_button').die().live('click',function(){
 		var allow="yes";
 		//$('.confirm_div').show();
 		  

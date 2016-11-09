@@ -2892,7 +2892,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -5582,6 +5582,7 @@ function multiple_flat_ajax()
 		$this->loadmodel('flat');
 		$conditions=array('wing_id'=>$wing_id,"society_id"=>$s_society_id);
 		$result=$this->flat->find('all',array('conditions'=>$conditions));
+		
 		$this->set('flat_data',$result);
 
 }	

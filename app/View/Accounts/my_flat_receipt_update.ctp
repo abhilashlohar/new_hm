@@ -22,12 +22,12 @@ $default_date = date('d-m-Y');
                         
 <table class="table table-bordered" id="sub_table">
 					 <tr style="background-color:#E8EAE8;">
-							<th style="width:13%;">Transaction Date</th>
-							<th style="width:17%;">Deposited In</th>
-							<th style="width:20%;">Receipt Mode</th>
-							<th style="width:15%;">Cheque/UTR Ref</th>
-							<th style="width:15%;">Date</th>
-							<th style="width:20%;">Drawn on which bank</th>
+							<th style="width:13%;">Transaction Date <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+							<th style="width:17%;">Deposited In <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+							<th style="width:20%;">Receipt Mode <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+							<th style="width:15%;">Cheque/UTR Ref <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+							<th style="width:15%;">Date <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+							<th style="width:20%;">Drawn on which bank <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
 					 </tr>
 	  <tr style="background-color:#E8F3FF;">
 					  
@@ -88,9 +88,9 @@ $default_date = date('d-m-Y');
 				 </tr>
 				 
 				 <tr style="background-color:#E8EAE8;">
-				    <th>Branch</th>
-                    <th>Received From</th>
-		            <th>Amount (Rupees)</th>
+				    <th>Branch <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+                    <th>Received From <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+		            <th>Amount (Rupees) <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
                     <th>Remarks</th>
 					<th></th>
 					<th></th>

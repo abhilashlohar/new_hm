@@ -9,29 +9,26 @@ input.m-wrap[type="text"]{
 	<thead>
 	<tr>
 		<th width="130px">Transaction Date <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
-		<th>Deposited In <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
-		<th>Receipt Mode <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
-		<th>Member <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
-		<th>Amount Applied <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+		<th>A/c Group <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+		<th>Expense/Party A/c <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+		<th>Paid From </th>
+		<th>Amount <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
 		<th>Narration</th>
 		<th>Delete</th>
 	</tr>
 	</thead>
 	<tbody>
 	<?php foreach($result_bank_receipt_converted as $receipt_converted){ 
-		$auto_id=$receipt_converted["bank_receipt_csv_converted"]["auto_id"];
-		$trajection_date=$receipt_converted["bank_receipt_csv_converted"]["trajection_date"];
-		$deposited_in=(int)$receipt_converted["bank_receipt_csv_converted"]["deposited_in"];
-		$receipt_mode=$receipt_converted["bank_receipt_csv_converted"]["receipt_mode"];
-		$cheque_or_reference_no=$receipt_converted["bank_receipt_csv_converted"]["cheque_or_reference_no"];
-		$date=$receipt_converted["bank_receipt_csv_converted"]["date"];
-		$drown_in_which_bank=$receipt_converted["bank_receipt_csv_converted"]["drown_in_which_bank"];
-		$branch_of_bank=$receipt_converted["bank_receipt_csv_converted"]["branch_of_bank"];
-		$ledger_sub_account_id=(int)$receipt_converted["bank_receipt_csv_converted"]["ledger_sub_account_id"];
-		$amount=$receipt_converted["bank_receipt_csv_converted"]["amount"];
-		//$receipt_type=$receipt_converted["bank_receipt_csv_converted"]["receipt_type"];
-		$narration=$receipt_converted["bank_receipt_csv_converted"]["narration"];
-		?>
+			$auto_id=$receipt_converted["petty_cash_csv_converted"]["auto_id"];
+			$trajection_date=$receipt_converted["petty_cash_csv_converted"]["trajection_date"];
+			$account_type=$receipt_converted["petty_cash_csv_converted"]["account_type"];
+			$sundry_creditor_id=$receipt_converted["petty_cash_csv_converted"]["sundry_creditor_id"];
+			$account_head=$receipt_converted["petty_cash_csv_converted"]["account_head"];
+			$amount=$receipt_converted["petty_cash_csv_converted"]["amount"];
+			$narration=$receipt_converted["petty_cash_csv_converted"]["narration"];
+
+
+	?>
 	<tr id="<?php echo $auto_id; ?>">
 		<td valign="top">
 			<div class="transaction">
@@ -39,96 +36,24 @@ input.m-wrap[type="text"]{
 			</div>
 		</td>
 		<td valign="top">
-			<div class="deposited">
-			<select class="m-wrap chosen" style="width=100%;" record_id="<?php echo $auto_id; ?>" field="deposited_in">
-				<option value="" style="display:none;">Select...</option>
-				 <?php
-				foreach ($result_banks as $banks_info){
-					$bank_id = (int)$banks_info['ledger_sub_account']["auto_id"];
-					$bank_name = $banks_info['ledger_sub_account']["name"];
-					$bank_account_number = $banks_info['ledger_sub_account']["bank_account"];
-					if($deposited_in==$bank_id){
-						$select_string='selected="selected"';
-					}else{ $select_string=''; }
-					?>
-					<option value="<?php echo $bank_id; ?>" <?php echo $select_string; ?> ><?php echo $bank_name; ?> &nbsp;&nbsp; <?php echo $bank_account_number; ?></option>
-				<?php } ?>
+			<select class="m-wrap span12 account_head" record_id="<?php echo $auto_id; ?>" field="ac_group" sundry_id="<?php echo $sundry_creditor_id; ?>" >
+			<option value="" style="display:none;">Select</option>
+			<option value="1" <?php if($account_type==1){ ?> selected <?php } ?>>Sundry Creditors Control A/c</option>
+			<option value="2" <?php if($account_type==2){ ?> selected <?php } ?>>All Expenditure A/cs</option>
+			<option value="3" <?php if($account_type==3){ ?> selected <?php } ?>>Liability</option>
 			</select>
-			</div>
 		</td>
 		<td valign="top">
-			<div class="receipt_m">
-			<select class="m-wrap receipt_mode"  style="width=100%;margin: 0px;" record_id="<?php echo $auto_id; ?>" field="receipt_mode" >
-				<option value="" style="display:none;">receipt mode</option>    
-				<option value="Cheque" <?php if($receipt_mode=="cheque" || empty($receipt_mode)){ echo 'selected="selected"'; } ?> >Cheque</option>
-				<option value="NEFT" <?php if($receipt_mode=="neft"){ echo 'selected="selected"'; } ?> >NEFT</option>
-				<option value="PG" <?php if($receipt_mode=="pg"){ echo 'selected="selected"'; } ?> >PG</option>
+			<select class="m-wrap span12">
+			<option value="" style="display:none;">Select</option>
 			</select>
-			</div>
-			<div id="cheque_div<?php echo $auto_id; ?>" <?php if($receipt_mode=="neft" || $receipt_mode=="pg"){ echo 'style="display:none;"'; } ?> >
-				<div class="row-fluid">
-					<div class="span6">
-						<div class="cheque_utr">
-						<input placeholder="Cheque No." class="m-wrap span12" value="<?php echo $cheque_or_reference_no; ?>" type="text" style="margin: 0px;" record_id="<?php echo $auto_id; ?>" field="cheque_or_reference_no">
-						</div>
-					</div>
-					<div class="span6">
-						<div class="date">
-						<input class="date-picker m-wrap span12" value="<?php echo $date; ?>" data-date-format="dd-mm-yyyy" placeholder="Date" type="text" style="margin: 0px;" record_id="<?php echo $auto_id; ?>" field="date">
-						</div>
-					</div>
-				</div>
-				<div class="row-fluid">
-					<div class="span6">
-						<div class="drown">
-						<input class="m-wrap span12" value="<?php echo $drown_in_which_bank; ?>" placeholder="Drawn on which bank?" type="text" style="margin: 0px;" record_id="<?php echo $auto_id; ?>" field="drown_in_which_bank">
-						</div>
-					</div>
-					<div class="span6">
-						<div class="branch">
-						<input class="m-wrap span12" value="<?php echo $branch_of_bank; ?>" placeholder="Branch of Bank"  type="text" style="margin: 0px;" record_id="<?php echo $auto_id; ?>" field="branch_of_bank">
-						</div>
-					</div>
-				</div>
-			</div>
-			<div id="neft_pg<?php echo $auto_id; ?>" <?php if($receipt_mode=="cheque" || empty($receipt_mode)){ echo 'style="display:none;"'; } ?> >
-				<div class="row-fluid">
-					<div class="span6">
-						<div class="cheque_utr">
-						<input class="m-wrap span12" value="<?php echo $cheque_or_reference_no; ?>" placeholder="Reference/UTR #" type="text" style="margin: 0px;" record_id="<?php echo $auto_id; ?>" field="cheque_or_reference_no">
-						</div>
-					</div>
-					<div class="span6">
-						<div class="date">
-						<input class="date-picker m-wrap span12" value="<?php echo $date; ?>" data-date-format="dd-mm-yyyy" placeholder="Date" type="text" style="margin: 0px;" record_id="<?php echo $auto_id; ?>" field="date">
-						</div>
-					</div>
-				</div>
-			</div>
 			
 		</td>
 		<td valign="top">
-			<div class="member">
-			<select class="m-wrap new_load " style="width=100%;" record_id="<?php echo $auto_id; ?>"field="ledger_sub_account_id" >
-				<option value="" style="display:none;">Select...</option>
-				 <?php
-				foreach ($result_members as $member_info){
-					$member_id = (int)$member_info['ledger_sub_account']["auto_id"];
-					
-					$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($member_id)));
-					$user_name=$member_info["user_name"];
-					$wing_name=$member_info["wing_name"];
-					$flat_name=$member_info["flat_name"];
-					$wing_flat=$wing_name.' - '.$flat_name;
-					
-					if($ledger_sub_account_id==$member_id){
-						$select_string='selected="selected"';
-					}else{ $select_string=''; }
-					?>
-					<option value="<?php echo $member_id; ?>" <?php echo $select_string; ?> ><?php echo $user_name; ?> &nbsp;&nbsp; <?php echo $wing_flat; ?></option>
-				<?php } ?>
+			<select class="m-wrap span12">
+			<option value="" style="display:none;">Select</option>
+			<option value="32" selected="selected">Cash-in-hand</option>
 			</select>
-			</div>
 		</td>
 		<td valign="top">
 			<div class="amount">
@@ -155,12 +80,12 @@ input.m-wrap[type="text"]{
 <div class="pagination pagination-large ">
 <ul>
 <?php 
-$loop=(int)($count_bank_receipt_converted/20);
-if($count_bank_receipt_converted%20>0){
+$loop=(int)($count_bank_receipt_converted/2);
+if($count_bank_receipt_converted%2>0){
 	$loop++;
 }
 for($ii=1;$ii<=$loop;$ii++){ ?>
-	<li><a href="<?php echo $webroot_path; ?>Cashbanks/modify_bank_receipt_csv_data/<?php echo $ii; ?>" rel='tab' role="button" ><?php echo $ii; ?></a></li>
+	<li><a href="<?php echo $webroot_path; ?>Cashbanks/modify_petty_cash_csv_data/<?php echo $ii; ?>" rel='tab' role="button" ><?php echo $ii; ?></a></li>
 <?php } ?>
 </ul>
 </div>
@@ -187,6 +112,32 @@ for($ii=1;$ii<=$loop;$ii++){ ?>
 		
 <script>
 $(document).ready(function() {
+	$('#report_tb tbody tr select.account_head').die().each(function(i, obj){ 
+		var accounts_group=$(this).val(); 
+		var update_id=$(this).attr("record_id");  
+		var sundry_id=$(this).attr("sundry_id"); 
+		$(this).closest('tr').find('td:nth-child(3)').load('<?php echo $webroot_path; ?>Cashbanks/party_account_change_by_acgroup/'+accounts_group+'/'+update_id+'/'+sundry_id+"/"+0);
+	});
+	
+	$('#report_tb tbody tr select.account_head').die().live("change",function(){ 
+		var accounts_group=$(this).val(); 
+		var update_id=$(this).attr("record_id");  
+		var sundry_id=$(this).attr("sundry_id"); 
+		 alert(update_id);
+		$(this).closest('tr').find('td:nth-child(3)').load('<?php echo $webroot_path; ?>Cashbanks/party_account_change_by_acgroup/'+accounts_group+'/'+update_id+'/'+sundry_id+"/"+1);
+	});
+	
+	$('#report_tb tbody tr input,select').die().live("change",function(){ 
+		var value=$(this).val(); 
+		var update_id=$(this).attr("record_id");  
+		var field=$(this).attr("field"); 
+		$.ajax({
+				url: "<?php echo $webroot_path; ?>Cashbanks/auto_save_petty_cash_payment/"+update_id+"/"+field+"/"+value,
+			}).done(function(response){
+			 alert(response);
+		});
+	});
+	
 	$('.new_load').chosen();
 	$("#cancel_process").on("click",function(){
 		$(".confirm_div").show();
@@ -195,21 +146,9 @@ $(document).ready(function() {
 		$(".confirm_div").hide();
 	});
 	
-	$( ".receipt_mode" ).change(function() {
-		var record_id=$(this).attr('record_id');
-		var mode=$("option:selected",this).text();
-		if(mode=="Cheque"){
-			$("#neft_pg"+record_id).hide();
-			$("#cheque_div"+record_id).show();
-		}
-		if(mode=="NEFT" || mode=="PG"){
-			$("#cheque_div"+record_id).hide();
-			$("#neft_pg"+record_id).show();
-		}
-		
-	});
 	
-	$( "#final_import" ).click(function() {
+	
+	$("#final_import" ).click(function() {
 		var allow="yes";
 		
 		$('#report_tb tbody tr select[field=deposited_in]').each(function(i, obj) {

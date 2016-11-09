@@ -156,7 +156,6 @@ $(document).ready(function(){
 		var allow="yes";
 		
 		
-		
 		$('#main tbody tr select[name="deposited_in[]"]').die().each(function(i, obj){
 			var deposited_in=$(this).val();
 			if(deposited_in==""){

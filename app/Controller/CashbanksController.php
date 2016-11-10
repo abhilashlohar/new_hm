@@ -649,8 +649,8 @@ function party_account_change_by_acgroup($account_type=null,$auto_id=null,$sundr
 	//$conditions=array("society_id"=>(int)$s_society_id,"");
 	
 	if($type==1){
-		
-		
+		$this->loadmodel('petty_cash_csv_converted');
+		//$this->petty_cash_csv_converted->updateAll(array("account_type" => (int)$account_type,"sundry_creditor_id"=>null),array("auto_id" => (int)$auto_id));
 	}
 	
  
@@ -664,7 +664,7 @@ function party_account_change_by_acgroup($account_type=null,$auto_id=null,$sundr
 			 <?php 	
 			 foreach($result_ledger_sub_account as $data){
 				 
-				 $ledger_sub_ac_id=$data['ledger_sub_account']['auto_id'];
+				 $ledger_sub_ac_id=(int)$data['ledger_sub_account']['auto_id'];
 				 $name=$data['ledger_sub_account']['name'];
 				 ?>
 					<option value="<?php echo $ledger_sub_ac_id; ?>" <?php if($ledger_sub_ac_id==(int)$sundry_creditor){ ?> selected <?php } ?> ><?php echo $name; ?></option>
@@ -740,13 +740,38 @@ function auto_save_petty_cash_payment($auto_save_id=null,$field=null,$value=null
 	}	
 	
 	if($field=="party_account"){
-		
+		echo $value ;
 		$this->loadmodel('petty_cash_csv_converted');
-		$this->petty_cash_csv_converted->updateAll(array("sundry_creditor_id" => $value),array("auto_id" => $record_id));
+		$this->petty_cash_csv_converted->updateAll(array("sundry_creditor_id" => (int)$value),array("auto_id" => $record_id));
 	
 	}
 	
 	
+}
+
+function allow_import_petty_cash_payment(){
+	
+	$this->layout=null;
+
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+
+	$this->loadmodel("petty_cash_csv_converted");
+	$conditions=array("society_id"=>$s_society_id);
+	$result_petty_cash_csv=$this->petty_cash_csv_converted->find('all',array('conditions'=>$conditions));
+	//pr($result_petty_cash_csv); 
+	
+	foreach($result_petty_cash_csv as $data){
+	
+			$account_type=$data['petty_cash_csv_converted']['account_type'];
+			$amount=$data['petty_cash_csv_converted']['amount'];
+			$sundry_creditor_id=$data['petty_cash_csv_converted']['sundry_creditor_id'];
+			$trajection_date=$data['petty_cash_csv_converted']['trajection_date'];
+						
+            if(empty($account_type) or empty($amount) or empty($sundry_creditor_id) or empty($trajection_date)){
+					die("not_validate");
+			}
+	}
 }
 
 //Start import_bank_receipts_csv// 

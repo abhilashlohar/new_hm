@@ -134,43 +134,15 @@ $(document).ready(function() {
 		$.ajax({
 				url: "<?php echo $webroot_path; ?>Cashbanks/auto_save_petty_cash_payment/"+update_id+"/"+field+"/"+value,
 			}).done(function(response){
-			 alert(response);
+			 //alert(response);
 		});
 	});
 	
-	$('.new_load').chosen();
-	$("#cancel_process").on("click",function(){
-		$(".confirm_div").show();
-	});
-	$("#close_button").on("click",function(){
-		$(".confirm_div").hide();
-	});
-	
-	
-	
-	$("#final_import" ).click(function() {
+});	
+
+$("#final_import" ).click(function() {
 		var allow="yes";
-		
-		$('#report_tb tbody tr select[field=deposited_in]').each(function(i, obj) {
-			var deposited_in=$(this).val();
-			if(deposited_in==""){
-				$(this).closest('td').find(".er").remove();
-				$(this).closest('td').append('<span class="er">Required</span>');
-				allow="no";
-			}else{
-				$(this).closest('td').find(".er").remove();
-			}
-		});
-		$('#report_tb tbody tr select[field=ledger_sub_account_id]').each(function(i, obj){
-			var deposited_in=$(this).val();
-			if(deposited_in==""){
-				$(this).closest('td').find(".er").remove();
-				$(this).closest('td').append('<span class="er">Required</span>');
-				allow="no";
-			}else{
-				$(this).closest('td').find(".er").remove();
-			}
-		});
+	 
 		$('#report_tb tbody tr input[field=amount]').each(function(i, obj) {
 			var a=$(this).val();
 			if(a=="" || a==0){
@@ -182,42 +154,52 @@ $(document).ready(function() {
 			}
 		});
 		
-		$('#report_tb tbody tr input[field="trajection_date"]').die().each(function(ii, obj){
-			var transaction_date=$(this).val();
-			var ledger_sub_account_id=$('#report_tb tbody tr:eq('+ii+') select[field="ledger_sub_account_id"]').val();
-			var result=""; 
-		$.ajax({
-			url:"<?php echo $webroot_path; ?>Cashbanks/bank_receipt_date_validation/"+transaction_date+"/"+ledger_sub_account_id, 
-			async: false,
-			success: function(data){
-			result=data;
+		$('#report_tb tbody tr input[field=trajection_date]').each(function(i, obj) {
+			var a=$(this).val();  alert(i);
+			if(a==""){ 
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
 			}
 		});
-		if(result=="financial_year"){
-			allow="no";
-			$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').find(".er").remove();
-			$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').append('<p class="er">Not in financial year</p>');
-		}else if(result=="match"){
-		 allow="no";
-			$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').find(".er").remove();
-			$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').append('<p class="er">Regular bill date error</p>');
-		}
-		if(result=="not_match"){
-		$('#report_tb tbody tr:eq('+ii+') input[field="trajection_date"]').closest('td').find(".er").remove();	
-		}
-			
-	});
 		
-		if(allow=="yes"){
+		$('#report_tb tbody tr select[field=ac_group]').each(function(i, obj) {
+			var a=$(this).val(); 
+			if(a==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+	  
+		$('#report_tb tbody tr select[field=party_account]').each(function(i, obj) {
+			var a=$(this).val(); 
+			if(a==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		
+		
+	  
+	  if(allow=="yes"){
 			$.ajax({
-				url: "<?php echo $webroot_path; ?>Cashbanks/allow_import_bank_receipt",
+				url: "<?php echo $webroot_path; ?>Cashbanks/allow_import_petty_cash_payment",
 			}).done(function(response){
-				//alert(response);
+				alert(response);
 				if(response=="not_validate"){
 					$("#submit_sec").find(".alert-error").remove();
 					$("#final_import").before('<div class="alert alert-error" style="width: 50%;">There are errors on other pages.</div>');
 				}else{
-					change_page_automatically("<?php echo $webroot_path; ?>Cashbanks/import_bank_receipts_csv");
+					
+					change_page_automatically("<?php echo $webroot_path; ?>Cashbanks/import_petty_cash_payment_csv");
 				}
 				
 			});
@@ -225,40 +207,9 @@ $(document).ready(function() {
 			$("#submit_sec").find(".alert-error").remove();
 			$("#final_import").before('<div class="alert alert-error" style="width: 50%;">There are errors above, marked with red color.</div>');
 		}
-		
-	});
-	$('select[field=deposited_in]').die().live("change",function(){
-		var ledger_sub_account=$(this).val();
-		if(ledger_sub_account==""){
-			$(this).closest('td').find(".er").remove();
-			$(this).closest('td').append('<span class="er">Required</span>');
-			allow="no";
-		}else{
-			$(this).closest('td').find(".er").remove();
-		}
-	});
-	$('select[field=ledger_sub_account_id]').die().live("change",function(){
-		var ledger_sub_account=$(this).val();
-		if(ledger_sub_account==""){
-			$(this).closest('td').find(".er").remove();
-			$(this).closest('td').append('<span class="er">Required</span>');
-			allow="no";
-		}else{
-			$(this).closest('td').find(".er").remove();
-		}
-	});
-	$('input[field=amount]').die().live("keyup blur",function(){
-		var amount=$(this).val();
-		if(amount=="" || amount==0){
-			$(this).closest('td').find(".er").remove();
-			$(this).closest('td').append('<span class="er">Required</span>');
-			allow="no";
-		}else{
-			$(this).closest('td').find(".er").remove();
-		}
-		
-	});
+	  
 });
+
 
 function change_page_automatically(pageurl){
 	$("#loading").show();
@@ -278,84 +229,6 @@ function change_page_automatically(pageurl){
 	window.history.pushState({path:pageurl},'',pageurl);
 }
 
-$( document ).ready(function() {
-    $.ajax({
-		url: "<?php echo $webroot_path; ?>Cashbanks/check_bank_receipt_csv_validation/<?php echo $page; ?>",
-		dataType: 'json'
-	}).done(function(response){
-		
-		response.forEach(function(item) {
-			
-			if(item[0]==1){ $("table#report_tb tr#"+item[9]+" td:nth-child(1) .transaction").css("border", "solid 1px red","!important"); }
-			if(item[1]==1){ $("table#report_tb tr#"+item[9]+" td:nth-child(2) .deposited").css("border", "solid 1px red","!important"); }
-			if(item[2]==1){ $("table#report_tb tr#"+item[9]+" td:nth-child(3) .receipt_m").css("border", "solid 1px red","!important"); }
-			if(item[3]==1){ $("table#report_tb tr#"+item[9]+" td:nth-child(3) .cheque_utr").css("border", "solid 1px red","!important"); }
-			if(item[4]==1){ $("table#report_tb tr#"+item[9]+" td:nth-child(3) .date").css("border", "solid 1px red","!important"); }
-			if(item[5]==1){ $("table#report_tb tr#"+item[9]+" td:nth-child(3) .drown").css("border", "solid 1px red","!important"); }
-			if(item[6]==1){ $("table#report_tb tr#"+item[9]+" td:nth-child(3) .branch").css("border", "solid 1px red","!important"); }
-			if(item[7]==1){ $("table#report_tb tr#"+item[9]+" td:nth-child(4) .member").css("border", "solid 1px red","!important"); }
-			if(item[8]==1){ $("table#report_tb tr#"+item[9]+" td:nth-child(5) .amount").css("border", "solid 1px red","!important"); }
-			if(item[9]==1){ $("table#report_tb tr#"+item[9]+" td:nth-child(6) .r_type").css("border", "solid 1px red","!important"); }
-		});
-	});
-});
-
-$( document ).ready(function() {
-	$( 'input[type="text"]' ).blur(function() {
-		var record_id=$(this).attr("record_id");
-		var field=$(this).attr("field");
-		var value=$(this).val();
-		$.ajax({
-			url: "<?php echo $webroot_path; ?>Cashbanks/auto_save_bank_receipt/"+record_id+"/"+field+"/"+value,
-		}).done(function(response){
-			if(response=="F"){
-				$("table#report_tb tr#"+record_id+" td").each(function(){
-					$(this).find('input[field="'+field+'"]').parent("div").css("border", "");
-				});
-			}else{
-				$("table#report_tb tr#"+record_id+" td").each(function(){
-					$(this).find('input[field="'+field+'"]').parent("div").css("border", "");
-				});
-			}
-		});
-	});
-	
-	$( 'select' ).change(function() {
-		var record_id=$(this).attr("record_id");
-		var field=$(this).attr("field");
-		var value=$("option:selected",this).val();
-		$.ajax({
-			url: "<?php echo $webroot_path; ?>Cashbanks/auto_save_bank_receipt/"+record_id+"/"+field+"/"+value,
-		}).done(function(response){
-			if(response=="F"){
-				$("table#report_tb tr#"+record_id+" td").each(function(){
-					$(this).find('select[field="'+field+'"]').parent("div").css("border", "solid 1px red");
-				});
-			}else{
-				$("table#report_tb tr#"+record_id+" td").each(function(){
-					$(this).find('select[field="'+field+'"]').parent("div").css("border", "");
-				});
-			}
-		});
-	});
-});
-
-
-$( document ).ready(function() {
-	$( '.delete_row' ).click(function() {
-		var record_id=$(this).attr("record_id");
-		$.ajax({
-			url: "<?php echo $webroot_path; ?>Cashbanks/delete_bank_receipt_row/"+record_id,
-		}).done(function(response){
-			if(response=="1"){
-				$( '#'+record_id ).addClass('animated zoomOut')
-				setTimeout(function() {
-					$( '#'+record_id ).remove();
-				}, 1000);
-			}
-		});
-	});
-});
 
 </script>
 <style>

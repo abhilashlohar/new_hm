@@ -139,7 +139,7 @@ $( document ).ready(function() {
 function final_import_bank_receipt_ajax(){
 	$( document ).ready(function() {
 		$.ajax({
-			url: "<?php echo $webroot_path; ?>Cashbanks/final_import_bank_receipt_ajax",
+			url: "<?php echo $webroot_path; ?>Cashbanks/final_import_petty_cash_payment_ajax",
 			dataType: 'json'
 		}).done(function(response){
 			
@@ -149,7 +149,7 @@ function final_import_bank_receipt_ajax(){
 				final_import_bank_receipt_ajax();
 			}
 			if(response.again_call_ajax=="NO"){
-				$("#first_div").html('<div class="alert alert-block alert-success fade in"><h4 class="alert-heading">Success!</h4><p>Receipts Imported successfully.</p><p><a class="btn green" href="<?php echo $webroot_path; ?>Cashbanks/bank_receipt_view" >OK</a> </p></div>');
+				$("#first_div").html('<div class="alert alert-block alert-success fade in"><h4 class="alert-heading">Success!</h4><p>Receipts Imported successfully.</p><p><a class="btn green" href="<?php echo $webroot_path; ?>Cashbanks/petty_cash_payment_view" >OK</a> </p></div>');
 			}
 		});
 	});

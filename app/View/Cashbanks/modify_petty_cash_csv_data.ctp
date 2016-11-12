@@ -105,7 +105,7 @@ for($ii=1;$ii<=$loop;$ii++){ ?>
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn" id="close_button">NO</button>
-		<a href="<?php echo $webroot_path; ?>Cashbanks/cancle_bank_receipt_import" class="btn red">YES</a>
+		<a href="<?php echo $webroot_path; ?>Cashbanks/cancle_petty_cash_payment_import" class="btn red">YES</a>
 	</div>
 	</div>
 </div>
@@ -123,7 +123,7 @@ $(document).ready(function() {
 		var accounts_group=$(this).val(); 
 		var update_id=$(this).attr("record_id");  
 		var sundry_id=$(this).attr("sundry_id"); 
-		 alert(update_id);
+		 //alert(update_id);
 		$(this).closest('tr').find('td:nth-child(3)').load('<?php echo $webroot_path; ?>Cashbanks/party_account_change_by_acgroup/'+accounts_group+'/'+update_id+'/'+sundry_id+"/"+1);
 	});
 	
@@ -140,6 +140,29 @@ $(document).ready(function() {
 	
 });	
 
+$('.delete_row').click(function() {
+		var record_id=$(this).attr("record_id");
+		$.ajax({
+			url: "<?php echo $webroot_path; ?>Cashbanks/delete_petty_cash_payment_row/"+record_id,
+		}).done(function(response){
+			//alert(response);
+			if(response=="1"){
+				$( '#'+record_id ).addClass('animated zoomOut')
+				setTimeout(function() {
+					$( '#'+record_id ).remove();
+				}, 1000);
+			}
+		});
+		
+});
+
+$("#cancel_process").on("click",function(){
+	$(".confirm_div").show();
+});
+$("#close_button").on("click",function(){
+	$(".confirm_div").hide();
+});
+
 $("#final_import" ).click(function() {
 		var allow="yes";
 	 
@@ -155,7 +178,7 @@ $("#final_import" ).click(function() {
 		});
 		
 		$('#report_tb tbody tr input[field=trajection_date]').each(function(i, obj) {
-			var a=$(this).val();  alert(i);
+			var a=$(this).val();  
 			if(a==""){ 
 				$(this).closest('td').find(".er").remove();
 				$(this).closest('td').append('<span class="er">Required</span>');
@@ -188,12 +211,12 @@ $("#final_import" ).click(function() {
 		});
 		
 		
-	  
+		
 	  if(allow=="yes"){
 			$.ajax({
 				url: "<?php echo $webroot_path; ?>Cashbanks/allow_import_petty_cash_payment",
 			}).done(function(response){
-				alert(response);
+
 				if(response=="not_validate"){
 					$("#submit_sec").find(".alert-error").remove();
 					$("#final_import").before('<div class="alert alert-error" style="width: 50%;">There are errors on other pages.</div>');

@@ -412,13 +412,13 @@ function import_petty_cash_payment_csv(){
 		$this->set("converted_per",($total_converted_records*100)/$total_records);
 	}
 	if(@$process_status==4){
-		$this->loadmodel('bank_receipt_csv_converted');
+		$this->loadmodel('petty_cash_csv_converted');
 		$conditions=array("society_id" => $s_society_id,"is_imported" => "YES");
-		$total_converted_records = $this->bank_receipt_csv_converted->find('count',array('conditions'=>$conditions));
+		$total_converted_records = $this->petty_cash_csv_converted->find('count',array('conditions'=>$conditions));
 		
-		$this->loadmodel('bank_receipt_csv_converted');
+		$this->loadmodel('petty_cash_csv_converted');
 		$conditions=array("society_id" => $s_society_id);
-		$total_records = $this->bank_receipt_csv_converted->find('count',array('conditions'=>$conditions));
+		$total_records = $this->petty_cash_csv_converted->find('count',array('conditions'=>$conditions));
 		
 		$this->set("converted_per_im",($total_converted_records*100)/$total_records);
 	}
@@ -650,7 +650,7 @@ function party_account_change_by_acgroup($account_type=null,$auto_id=null,$sundr
 	
 	if($type==1){
 		$this->loadmodel('petty_cash_csv_converted');
-		//$this->petty_cash_csv_converted->updateAll(array("account_type" => (int)$account_type,"sundry_creditor_id"=>null),array("auto_id" => (int)$auto_id));
+		$this->petty_cash_csv_converted->updateAll(array("account_type" => (int)$account_type,"sundry_creditor_id"=>null),array("auto_id" => (int)$auto_id));
 	}
 	
  
@@ -715,7 +715,7 @@ function auto_save_petty_cash_payment($auto_save_id=null,$field=null,$value=null
 	
 	$this->ath();
 	$s_society_id = $this->Session->read('society_id');
-	echo $record_id=(int)$auto_save_id; 
+	$record_id=(int)$auto_save_id; 
 	
 	if($field=="trajection_date"){
 		
@@ -726,7 +726,7 @@ function auto_save_petty_cash_payment($auto_save_id=null,$field=null,$value=null
 	
 	if($field=="amount"){ 
 		   
-		   $this->loadmodel('petty_cash_csv_converted');
+		    $this->loadmodel('petty_cash_csv_converted');
 			$this->petty_cash_csv_converted->updateAll(array("amount" => $value),array("auto_id" => $record_id));
 			
 		}
@@ -740,7 +740,7 @@ function auto_save_petty_cash_payment($auto_save_id=null,$field=null,$value=null
 	}	
 	
 	if($field=="party_account"){
-		echo $value ;
+		
 		$this->loadmodel('petty_cash_csv_converted');
 		$this->petty_cash_csv_converted->updateAll(array("sundry_creditor_id" => (int)$value),array("auto_id" => $record_id));
 	
@@ -772,7 +772,137 @@ function allow_import_petty_cash_payment(){
 					die("not_validate");
 			}
 	}
+	
+	$this->loadmodel('import_record_petty_payment');
+	$this->import_record_petty_payment->updateAll(array("step4" => 1),array("society_id" => $s_society_id, "module_name" => "PCP"));
 }
+
+function delete_petty_cash_payment_row($id=null){
+ 	$this->layout=null;
+	$this->loadmodel('petty_cash_csv_converted');
+	//$this->petty_cash_csv_converted->deleteAll(array('auto_id'=>(int)$id));
+	echo "1";
+}
+
+function cancle_petty_cash_payment_import(){
+	$s_society_id = $this->Session->read('hm_society_id');
+	
+	$this->loadmodel('petty_cash_csv_converted');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$this->petty_cash_csv_converted->deleteAll($conditions);
+	
+	$this->loadmodel('petty_cash_payment_csv');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$this->petty_cash_payment_csv->deleteAll($conditions);
+	
+	$this->loadmodel('import_record_petty_payment');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$this->import_record_petty_payment->deleteAll($conditions);
+	
+	$this->redirect(array('controller' => 'Cashbanks','action' => 'import_petty_cash_payment_csv'));
+}
+
+
+
+function final_import_petty_cash_payment_ajax(){
+	
+	$this->layout=null;
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$this->ath();
+	
+	$this->loadmodel('import_record_petty_payment');
+	$conditions=array("society_id" => $s_society_id,"module_name" => "PCP");
+	$result_import_record = $this->import_record_petty_payment->find('all',array('conditions'=>$conditions));
+	$this->set('result_import_record',$result_import_record);
+	foreach($result_import_record as $data_import){
+		$step1=(int)@$data_import["import_record_petty_payment"]["step1"];
+		$step2=(int)@$data_import["import_record_petty_payment"]["step2"];
+		$step3=(int)@$data_import["import_record_petty_payment"]["step3"];
+		$step4=(int)@$data_import["import_record_petty_payment"]["step4"];
+	}
+	$process_status= @$step1+@$step2+@$step3+@$step4;
+	
+	if($process_status==4){
+	
+		$this->loadmodel('petty_cash_csv_converted');
+		$conditions=array("society_id" => $s_society_id,"is_imported" => "NO");
+
+		$result_import_converted = $this->petty_cash_csv_converted->find('all',array('conditions'=>$conditions,'limit'=>2));
+		
+		foreach($result_import_converted as $import_converted){
+					$bank_receipt_csv_id=$import_converted["petty_cash_csv_converted"]["auto_id"];
+					$trajection_date=$import_converted["petty_cash_csv_converted"]["trajection_date"];
+					$trajection_date = date('Y-m-d',strtotime($trajection_date));
+					$trajection_date = strtotime($trajection_date); 
+					$account_group_id=$import_converted["petty_cash_csv_converted"]["account_type"];
+					$expense_party=$import_converted["petty_cash_csv_converted"]["sundry_creditor_id"];
+					$paid_from_id=$import_converted["petty_cash_csv_converted"]["account_head"];
+					$amount=$import_converted["petty_cash_csv_converted"]["amount"];
+					$narration=$import_converted["petty_cash_csv_converted"]["narration"];
+					
+					
+						
+					$current_date = date('Y-m-d');
+					$auto=$this->autoincrement('cash_bank','transaction_id');
+					$i=$this->autoincrement_with_receipt_source('cash_bank','receipt_number','petty_cash_payment');
+					$this->loadmodel('cash_bank');
+					$multipleRowData=Array(Array("transaction_id"=>$auto,"receipt_number"=>$i,"sundry_creditor_id"=>$expense_party,"created_on"=>$current_date,"account_type"=>$account_group_id,"transaction_date"=>$trajection_date,"created_by"=>$s_user_id,"narration"=>$narration,"account_head"=>$paid_from_id,"amount"=>$amount,"society_id"=>$s_society_id,"source"=>"petty_cash_payment","auto_inc"=>"YES"));
+					$this->cash_bank->saveAll($multipleRowData); 
+						
+					if($account_group_id == 1){
+						$l=$this->autoincrement('ledger','auto_id');
+						$this->loadmodel('ledger');
+						$multipleRowData = Array( Array("auto_id"=>$l,"transaction_date"=>$trajection_date, "debit"=>$amount,"credit" =>null,"ledger_account_id"=>15,"ledger_sub_account_id"=>$expense_party, "table_name"=>"cash_bank","element_id"=>$auto,"society_id" => $s_society_id));
+						$this->ledger->saveAll($multipleRowData);
+					}else{
+						$l=$this->autoincrement('ledger','auto_id');
+						$this->loadmodel('ledger');
+						$multipleRowData = Array( Array("auto_id"=>$l,"transaction_date"=>$trajection_date, "debit"=>$amount,"credit"=>null,"ledger_account_id"=>$expense_party,"ledger_sub_account_id" =>null,"table_name"=>"cash_bank","element_id"=>$auto,"society_id"=>$s_society_id));
+						$this->ledger->saveAll($multipleRowData);
+					}
+					
+						$l=$this->autoincrement('ledger','auto_id');
+						$this->loadmodel('ledger');
+						$multipleRowData = Array( Array("auto_id" => $l,"transaction_date"=>$trajection_date, "debit" => null,"credit" =>$amount,"ledger_account_id"=>$paid_from_id,"ledger_sub_account_id"=>null,"table_name"=>"cash_bank","element_id"=>$auto,"society_id"=>$s_society_id));
+						$this->ledger->saveAll($multipleRowData);		
+							
+						$this->loadmodel('petty_cash_csv_converted');
+						$this->petty_cash_csv_converted->updateAll(array("is_imported" => "YES"),array("auto_id" => $bank_receipt_csv_id));
+					}
+					
+				$this->loadmodel('petty_cash_csv_converted');
+				$conditions=array("society_id" => $s_society_id,"is_imported" => "YES");
+				$total_converted_records = $this->petty_cash_csv_converted->find('count',array('conditions'=>$conditions));
+
+				$this->loadmodel('petty_cash_csv_converted');
+				$conditions=array("society_id" => $s_society_id);
+				$total_records = $this->petty_cash_csv_converted->find('count',array('conditions'=>$conditions));
+
+				$converted_per=($total_converted_records*100)/$total_records;
+				if($converted_per==100){ $again_call_ajax="NO"; 
+
+				$this->loadmodel('petty_cash_csv_converted');
+				$conditions4=array('society_id'=>$s_society_id);
+				$this->petty_cash_csv_converted->deleteAll($conditions4);
+
+				$this->loadmodel('petty_cash_payment_csv');
+				$conditions4=array('society_id'=>$s_society_id);
+				$this->petty_cash_payment_csv->deleteAll($conditions4);
+
+				$this->loadmodel('import_record_petty_payment');
+				$conditions4=array("society_id" => $s_society_id, "module_name" => "PCP");
+				$this->import_record_petty_payment->deleteAll($conditions4);
+				}else{
+				 $again_call_ajax="YES"; 
+				}
+			die(json_encode(array("again_call_ajax"=>$again_call_ajax,"converted_per_im"=>$converted_per)));
+			
+		
+	}
+	
+}
+
 
 //Start import_bank_receipts_csv// 
 function import_bank_receipts_csv(){

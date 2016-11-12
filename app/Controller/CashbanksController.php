@@ -629,7 +629,7 @@ function modify_petty_cash_csv_data($page=null){
 	if($process_status==3){
 		$this->loadmodel('petty_cash_csv_converted'); 
 		$conditions=array("society_id"=>(int)$s_society_id);
-		$result_bank_receipt_converted=$this->petty_cash_csv_converted->find('all',array('conditions'=>$conditions,"limit"=>2,"page"=>$page));
+		$result_bank_receipt_converted=$this->petty_cash_csv_converted->find('all',array('conditions'=>$conditions,"limit"=>20,"page"=>$page));
 		$this->set('result_bank_receipt_converted',$result_bank_receipt_converted);
 		
 		$this->loadmodel('petty_cash_csv_converted'); 

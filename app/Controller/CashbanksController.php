@@ -780,7 +780,7 @@ function allow_import_petty_cash_payment(){
 function delete_petty_cash_payment_row($id=null){
  	$this->layout=null;
 	$this->loadmodel('petty_cash_csv_converted');
-	//$this->petty_cash_csv_converted->deleteAll(array('auto_id'=>(int)$id));
+	$this->petty_cash_csv_converted->deleteAll(array('auto_id'=>(int)$id));
 	echo "1";
 }
 

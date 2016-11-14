@@ -80,8 +80,8 @@ input.m-wrap[type="text"]{
 <div class="pagination pagination-large ">
 <ul>
 <?php 
-$loop=(int)($count_bank_receipt_converted/3);
-if($count_bank_receipt_converted%3>0){
+$loop=(int)($count_bank_receipt_converted/20);
+if($count_bank_receipt_converted%20>0){
 	$loop++;
 }
 for($ii=1;$ii<=$loop;$ii++){ ?>

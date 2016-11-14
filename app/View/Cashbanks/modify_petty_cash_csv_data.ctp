@@ -18,7 +18,7 @@ input.m-wrap[type="text"]{
 	</tr>
 	</thead>
 	<tbody>
-	<?php foreach($result_bank_receipt_converted as $receipt_converted){ 
+	<?php  foreach($result_bank_receipt_converted as $receipt_converted){ 
 			$auto_id=$receipt_converted["petty_cash_csv_converted"]["auto_id"];
 			$trajection_date=$receipt_converted["petty_cash_csv_converted"]["trajection_date"];
 			$account_type=$receipt_converted["petty_cash_csv_converted"]["account_type"];
@@ -80,8 +80,8 @@ input.m-wrap[type="text"]{
 <div class="pagination pagination-large ">
 <ul>
 <?php 
-$loop=(int)($count_bank_receipt_converted/20);
-if($count_bank_receipt_converted%20>0){
+$loop=(int)($count_bank_receipt_converted/3);
+if($count_bank_receipt_converted%3>0){
 	$loop++;
 }
 for($ii=1;$ii<=$loop;$ii++){ ?>
@@ -112,6 +112,7 @@ for($ii=1;$ii<=$loop;$ii++){ ?>
 		
 <script>
 $(document).ready(function() {
+		
 	$('#report_tb tbody tr select.account_head').die().each(function(i, obj){ 
 		var accounts_group=$(this).val(); 
 		var update_id=$(this).attr("record_id");  
@@ -163,6 +164,7 @@ $("#close_button").on("click",function(){
 	$(".confirm_div").hide();
 });
 
+
 $("#final_import" ).click(function() {
 		var allow="yes";
 	 
@@ -201,7 +203,7 @@ $("#final_import" ).click(function() {
 	  
 		$('#report_tb tbody tr select[field=party_account]').each(function(i, obj) {
 			var a=$(this).val(); 
-			if(a==""){
+			if(a==""){ 
 				$(this).closest('td').find(".er").remove();
 				$(this).closest('td').append('<span class="er">Required</span>');
 				allow="no";
@@ -211,12 +213,33 @@ $("#final_import" ).click(function() {
 		});
 		
 		
+		$('#report_tb tbody tr input[field=trajection_date]').each(function(i, obj) {
+			var transaction_date=$(this).val();
+			var id=$(this).attr('record_id');
+			$.ajax({
+				url:"<?php echo $webroot_path; ?>Cashbanks/financial_year_validation_open/"+transaction_date, 
+				async: false,
+				success: function(data){ 
+					result=data;
+				}
+				
+			});	
+			if(result==0){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Not in financial year</span>');
+				allow="no";
+				
+			}else{
+				
+			}
+		});
+		
 		
 	  if(allow=="yes"){
 			$.ajax({
 				url: "<?php echo $webroot_path; ?>Cashbanks/allow_import_petty_cash_payment",
 			}).done(function(response){
-
+             
 				if(response=="not_validate"){
 					$("#submit_sec").find(".alert-error").remove();
 					$("#final_import").before('<div class="alert alert-error" style="width: 50%;">There are errors on other pages.</div>');
@@ -233,6 +256,52 @@ $("#final_import" ).click(function() {
 	  
 });
 
+$('#report_tb tbody tr input[field=trajection_date]').each(function(i, obj) {
+	
+			var transaction_date=$(this).val();
+			var id=$(this).attr('record_id');
+			$.ajax({
+				url:"<?php echo $webroot_path; ?>Cashbanks/financial_year_validation_open/"+transaction_date, 
+				async: false,
+				success: function(data){ 
+					result=data;
+				}
+				
+			});	
+			
+			if(result==0){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Not in financial year</span>');
+				
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		
+
+	$('#report_tb tbody tr input[field=trajection_date]').die().live("change",function(){
+	
+			var transaction_date=$(this).val();
+			var id=$(this).attr('record_id');
+			$.ajax({
+				url:"<?php echo $webroot_path; ?>Cashbanks/financial_year_validation_open/"+transaction_date, 
+				async: false,
+				success: function(data){ 
+					result=data;
+				}
+				
+			});	
+			
+			if(result==0){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Not in financial year</span>');
+				
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		
+	
 
 function change_page_automatically(pageurl){
 	$("#loading").show();

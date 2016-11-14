@@ -603,6 +603,7 @@ function modify_petty_cash_csv_data($page=null){
 	$this->loadmodel('financial_year');
 	$conditions=array("society_id" => $s_society_id,"status"=>1);
 	$financial_years=$this->financial_year->find('all',array('conditions'=>$conditions));
+
 	$financial_year_array=array();
 	foreach($financial_years as $financial_year){
 		$from=date("d-m-Y",$financial_year["financial_year"]["from"]);
@@ -611,7 +612,9 @@ function modify_petty_cash_csv_data($page=null){
 		$pair=implode('/',$pair);
 		$financial_year_array[]=$pair;
 	}
+	
 	$financial_year_string=implode(',',$financial_year_array);
+
 	$this->set(compact("financial_year_string"));
 	
 	$this->loadmodel('import_record_petty_payment');
@@ -629,7 +632,7 @@ function modify_petty_cash_csv_data($page=null){
 	if($process_status==3){
 		$this->loadmodel('petty_cash_csv_converted'); 
 		$conditions=array("society_id"=>(int)$s_society_id);
-		$result_bank_receipt_converted=$this->petty_cash_csv_converted->find('all',array('conditions'=>$conditions,"limit"=>20,"page"=>$page));
+		$result_bank_receipt_converted=$this->petty_cash_csv_converted->find('all',array('conditions'=>$conditions,"limit"=>4,"page"=>$page));
 		$this->set('result_bank_receipt_converted',$result_bank_receipt_converted);
 		
 		$this->loadmodel('petty_cash_csv_converted'); 
@@ -767,8 +770,16 @@ function allow_import_petty_cash_payment(){
 			$amount=$data['petty_cash_csv_converted']['amount'];
 			$sundry_creditor_id=$data['petty_cash_csv_converted']['sundry_creditor_id'];
 			$trajection_date=$data['petty_cash_csv_converted']['trajection_date'];
+			if(!empty($trajection_date)){
+				$transaction_date1=date('Y-m-d',strtotime($trajection_date));
+				$transaction_date1=strtotime($transaction_date1);
+				$this->loadmodel('financial_year');
+				$conditions =array('society_id' =>$s_society_id,'status' =>1,'financial_year.from'=>array('$lte'=>$transaction_date1),'financial_year.to'=>array('$gte'=>$transaction_date1));
+				$result_financial_year=$this->financial_year->find('count',array('conditions'=>$conditions));
+			}
+			
 						
-            if(empty($account_type) or empty($amount) or empty($sundry_creditor_id) or empty($trajection_date)){
+            if(empty($account_type) or empty($amount) or empty($sundry_creditor_id) or empty($trajection_date) or $result_financial_year==0){
 					die("not_validate");
 			}
 	}
@@ -802,6 +813,21 @@ function cancle_petty_cash_payment_import(){
 	$this->redirect(array('controller' => 'Cashbanks','action' => 'import_petty_cash_payment_csv'));
 }
 
+function financial_year_validation_open($transaction=null){
+$this->layout=null;
+$this->ath();
+$s_society_id = (int)$this->Session->read('hm_society_id');	
+
+	if(!empty($transaction)){	
+		$transaction_date=date('Y-m-d',strtotime($transaction));
+		$transaction_date=strtotime($transaction_date);
+		$this->loadmodel('financial_year');
+		$conditions =array('society_id' =>$s_society_id,'status' =>1,'financial_year.from'=>array('$lte'=>$transaction_date),'financial_year.to'=>array('$gte'=>$transaction_date));
+		echo $result_financial_year=$this->financial_year->find('count',array('conditions'=>$conditions));
+	}else{
+		echo"allow"	;
+	}
+}
 
 
 function final_import_petty_cash_payment_ajax(){

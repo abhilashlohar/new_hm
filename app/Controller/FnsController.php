@@ -167,12 +167,12 @@ function fetch_default_society_hm_child_user_id($user_id){
 }
 
 
-function fetch_default_society_hm_child_user_id_and_society_id($user_id,$society_id){
+/*function fetch_default_society_hm_child_user_id_and_society_id($user_id,$society_id){
 	$this->loadmodel('hms_right');
 	$conditions=array('user_id'=>$user_id,'society_id'=>$society_id);
 	return $role_info=$this->hms_right->find('all',array('conditions'=>$conditions));
 	
-}
+} */
 
 function fetch_module_type_id_via_module_id($module_id){
 	$this->loadmodel('main_module');

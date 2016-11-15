@@ -41,7 +41,7 @@
 	   <th width="20%">Name</th>
 	   <th width="30%">Email</th>
 	   <th width="20%">Mobile</th>
-	   <th width="20%">Password</th>
+	   <!--<th width="20%">Password</th>-->
 	   <th></th>
 	</tr>
 	<?php $n=0; foreach($result_user as $data){ $n++;
@@ -55,7 +55,7 @@
 		<td><?php echo $user_name; ?></td>
 		<td><?php echo @$email; ?></td>
 		<td><?php echo @$mobile; ?></td>
-		<td><?php echo $password; ?></td>
+		<!--<td><?php echo $password; ?></td>-->
 		<td><a href="asign_role_to_user/<?php echo $user_id; ?>" class="btn mini blue">Access</a></td>
 	</tr>
 		

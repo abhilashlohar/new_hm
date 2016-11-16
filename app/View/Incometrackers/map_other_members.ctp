@@ -41,7 +41,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				<select class="m-wrap first_member" name="first" >
 					<option value="" style="display:none;">Select</option>
 					<?php foreach($arranged_accounts as $key=>$data){
-						echo '<option value='.$key.' >'.$data["user_name"].' ('.$data["wing_flat"].')</option>';
+						echo '<option value='.$key.' >'.$data["user_name"].' '.$data["wing_flat"].'</option>';
 					} ?>
 				</select>
 				<label id="required_field"></label>
@@ -50,7 +50,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				<select class="m-wrap second_member" name="second">
 					<option value="" style="display:none;">Select</option>
 					<?php foreach($arranged_accounts1 as $key=>$data){
-						echo '<option class="rem_opt" value='.$key.' >'.$data["user_name"].' ('.$data["wing_flat"].')</option>';
+						echo '<option class="rem_opt" value='.$key.' >'.$data["user_name"].' '.$data["wing_flat"].' </option>';
 					} ?>
 				</select>
 				<label id="required_field2"></label>

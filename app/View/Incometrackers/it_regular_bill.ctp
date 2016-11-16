@@ -179,7 +179,7 @@ font-size: 11px;"></p>
 				<div class="control-group">
 				  <label class="control-label">Billing Description</label>
 				  <div class="controls">
-					<input type="text" name="description" class="m-wrap span12" placeholder="Billing Description" >
+					<input type="text" name="description" class="m-wrap span12" placeholder="Billing Description" maxlength="35">
 				  </div>
 			   </div>
 			</div>

@@ -758,6 +758,25 @@ function preview_regular_bill(){
 	
 }
 
+function preview_regular_bill_excel(){
+	$this->layout='blank';
+
+	$this->ath();
+
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$s_user_flat_id=$this->Session->read('hm_user_flat_id');
+	
+	$this->loadmodel('regular_bill_temp');
+	$condition=array('society_id'=>$s_society_id,'sent_for_approval'=>"no");
+	$order=array('regular_bill_temp.auto_id'=>'ASC');
+	$regular_bills = $this->regular_bill_temp->find('all',array('conditions'=>$condition,'order'=>$order)); 
+	$this->set(compact("regular_bills"));
+	
+}
+
+
+
 function cancel_bill(){
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$this->loadmodel('regular_bill_temp');	
@@ -5802,7 +5821,7 @@ function map_other_members(){
 		$user_name = $member_detail['user_name'];
 		$wing_name = $member_detail['wing_name'];
 		$flat_name = $member_detail['flat_name'];
-		$wing_flat=$wing_name.' - '.$flat_name;
+		$wing_flat=$wing_name.'-'.$flat_name;
 		$arranged_accounts[$ledger_sub_account_id]=array("user_name"=>$user_name,"wing_flat"=>$wing_flat);
 	}
 	$this->set('arranged_accounts',$arranged_accounts);
@@ -5817,7 +5836,7 @@ function map_other_members(){
 		$user_name = $member_detail['user_name'];
 		$wing_name = $member_detail['wing_name'];
 		$flat_name = $member_detail['flat_name'];
-		$wing_flat=$wing_name.' - '.$flat_name;
+		$wing_flat=$wing_name.'-'.$flat_name;
 		$arranged_accounts1[$ledger_sub_account_id]=array("user_name"=>$user_name,"wing_flat"=>$wing_flat);
 	}
 	$this->set('arranged_accounts1',$arranged_accounts1);

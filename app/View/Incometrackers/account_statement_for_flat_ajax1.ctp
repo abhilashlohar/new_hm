@@ -20,13 +20,11 @@
 		Email: <?php echo $society_email; ?> | Phone : <?php echo $society_phone; ?>
 	</div>
 	<div class="row-fluid" style="font-size:14px;">
-		<div class="span6">
-			For : <?php echo $user_name; ?> (<?php echo $wing_flat; ?>)
-		</div>
-		<div class="span6" align="right">
-			<span style="font-size:16px;">Statement of Account</span><br/>
+		<div class="span12" align="center">
+			Statement of Account : <?php echo $user_name; ?> (<?php echo $wing_flat; ?>)<br/>
 			<span style="font-size:12px;">From <?php echo date("d-m-Y",strtotime($from)); ?> to <?php echo date("d-m-Y",strtotime($to)); ?></span>
 		</div>
+		
 	</div>
 	
 	<div>
@@ -42,7 +40,7 @@
 				<th>Description</th>
 				<th>Source</th>
 				<th>Debit</th>
-				<th>Credits</th>
+				<th>Credit</th>
 				<th class="hide_at_print"></th>
 			</tr>
 			<?php 

@@ -68,7 +68,16 @@ input:read-only {
 	});
 </script>
 <?php 
-$income_head_array_th=@$regular_bills[0]["regular_bill_temp"]["income_head_array"];
+
+$start_date_billing=@$regular_bills[0]["regular_bill_temp"]["start_date"];
+$start_date_billing= date("d-M-Y",$start_date_billing);
+$billing_cycle_find=@$regular_bills[0]["regular_bill_temp"]["billing_cycle"];
+$due_date_bill=@$regular_bills[0]["regular_bill_temp"]["due_date"];
+$due_date_bill= date("d-M-Y",$due_date_bill);
+
+
+
+//$income_head_array_th=@$regular_bills[0]["regular_bill_temp"]["income_head_array"];
 $income_head_array_th=@$regular_bills[0]["regular_bill_temp"]["income_head_array"];
 $other_charge_ih_ids=array();
 foreach($regular_bills as $regular_bill){
@@ -81,12 +90,31 @@ if(sizeof($other_charge_ih_ids)>0){
 	$other_charge_ih_ids = array_unique($other_charge_ih_ids);
 }
 
+if($billing_cycle_find==1){
+	$billing_cycle_show="Monthly";
+}elseif($billing_cycle_find==2){
+	$billing_cycle_show="Bi-Monthly";
+}elseif($billing_cycle_find==3){
+	$billing_cycle_show="Quarterly";
+}elseif($billing_cycle_find==6){
+	$billing_cycle_show="Half Yearly";
+}elseif($billing_cycle_find==12){
+	$billing_cycle_show="Yearly";
+}
 
 ?>
-<a href="#" style="float: left;" id="send_for_approval">SEND FOR APPROVAL</a> &nbsp|   <a href="float:left;" style="" id="cancel_bill">CANCEL BILLS</a>
+
+
+<a href="#" style="float: left;" id="send_for_approval">SEND FOR APPROVAL</a> &nbsp|   <a href="float:left;" style="" id="cancel_bill">CANCEL BILLS</a> &nbsp|
+<a href="preview_regular_bill_excel" target="_blank"> Excel Download </a>
 
 
 <div align="right" id="save_result" style="height:20px;float:right;"></div>
+<div align="center">
+<span> Bill start date: <?php echo @$start_date_billing; ?>  </span> &nbsp| <span> Bill due date: <?php echo @$due_date_bill; ?> </span> &nbsp|
+<span> Billing cycle: <?php echo @$billing_cycle_show; ?> </span>
+ 
+</div>
 <table id="fixed_hdr1">
 	<thead>
 		<tr>
@@ -102,10 +130,10 @@ if(sizeof($other_charge_ih_ids)>0){
 			<th><?php echo $income_head_name; ?></th>
 			<?php } ?>
 			<th>Total</th>
-			<th>Arrear Principle</th>
-			<th>Arrear intrest</th>
-			<th>Intrest on arrears</th>
-			<th>Credit stock</th>
+			<th>Arrears-Principal</th> 
+			<th>Arrears-Interest</th> 
+			<th>Interest on Arrears</th> 
+			<th>Credit/Adjustment</th>
 			<th>Due for payment</th>
 		</tr>
 	</thead>

@@ -131,7 +131,12 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 	$total_credit=$total_credit+$credit;
 		
 	if($table_name=="regular_bill"){
-		$source="Regular Bill";
+		/*if($arrear_int_type=="YES"){
+			$source="Regular Bill (interest)";
+		}else{
+		  $source="Regular Bill";
+		} */
+		 $source="Regular Bill";
 			$result_regular_bill=$this->requestAction(array('controller' => 'Bookkeepings', 'action'=>'regular_bill_info_via_auto_id'), array('pass' => array($element_id)));
 			$bill_approved="";
 			if(sizeof($result_regular_bill)>0){

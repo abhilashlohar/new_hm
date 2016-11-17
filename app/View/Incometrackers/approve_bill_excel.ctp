@@ -1,10 +1,16 @@
-<?php
-echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'), array('pass' => array()));
-?>
-<div class="portlet box">
-	<form method="post" >
-	<div class="portlet-body" style="overflow-x: scroll;">
-	<?php 
+<?php 
+$filename='Approve_bill_excel';
+$filename = str_replace(' ', '_', $filename);
+$filename = str_replace(' ', '-', $filename);
+@header("Expires: 0");
+@header("border: 1");
+@header("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+@header("Cache-Control: no-cache, must-revalidate");
+@header("Pragma: no-cache");
+@header("Content-type: application/vnd.ms-excel");
+@header("Content-Disposition: attachment; filename=".$filename.".xls");
+@header("Content-Description: Generated Report");
+ 
 	$other_charge_ids=array();
 	if(sizeof(@$arranged_bills)==0){$arranged_bills=array(); echo 'No bills for approval.'; } 
 	foreach($arranged_bills as $start_date=>$arranged_bill){
@@ -29,13 +35,13 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		$income_head_ids=array_unique($income_head_ids);
 		$other_charge_ids=array_unique($other_charge_ids);
 	
-		echo '<span style="font-size: 14px;">Billing Period: '.date("d-m-Y",$start_date).' - '.date("d-m-Y",$end_date).'</span> <a href="approve_bill_excel" target="_blank" class="btn mini green pull-right"><i class="fa fa-file-excel-o"></i> Excel </a> <br/>'; ?>
+		echo '<center><span style="font-size: 14px;">Billing Period: '.date("d-m-Y",$start_date).' - '.date("d-m-Y",$end_date).'</span></center>'; ?>
 		
 		
-		<table class="table table-condensed table-bordered">
+		<table border="1">
 			<thead>
 				<tr>
-					<th><input type="checkbox" class="checkall" /></th>
+					
 					<th>Unit</th>
 					<th>Name</th>
 					<th>Unit area</th>
@@ -73,7 +79,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				$credit_stock=$data["regular_bill_temp"]["credit_stock"];
 				$due_for_payment=$data["regular_bill_temp"]["due_for_payment"];?>
 				<tr>
-					<td><input type="checkbox" name="auto_id[]" value="<?php echo $auto_id; ?>"/></td>
+					
 					<td><?php echo $member_info["wing_name"].'-'.$member_info["flat_name"]; ?></td>
 					<td><?php echo $member_info["user_name"]; ?></td>
 					<td><?php echo $flat_area; ?></td>
@@ -95,60 +101,5 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			</tbody>
 		</table>
 		<?php } ?>
-	</div>
-	<button type="submit" href="#" class="btn blue" name="submit">APPROVE</button>
-	</form>
-</div>
+	
 
-<?php if($approved_bills>0){ ?>
-	<div class="modal-backdrop fade in" ></div>
-	<div style="display: block;" id="myModal1" class="modal hide fade in session_destroy_container" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="false">
-		<div class="modal-body">
-			<p><b>Please wait, Bills are under Process.</b></p><br>
-			<div style="font-size:12px;"><span id="approval_progress">0</span> Bills approved.</div>
-		</div>
-	</div>
-	<script>
-	$(document).ready(function(){
-		generate_bills();
-		function generate_bills(){
-			$.ajax({
-				url: "<?php echo $webroot_path; ?>Incometrackers/generate_bills",
-			}).done(function(response){
-				if(response=="yes"){
-					var c=parseInt($("#approval_progress").text());
-					c=c+2;
-					$("#approval_progress").text(c);
-					generate_bills();
-				}else{
-					window.location.href = '<?php echo $webroot_path; ?>Incometrackers/aprrove_bill';
-				}
-			});
-		}
-	});
-	</script>
-<?php } ?>
-<script>
-$(document).ready(function(){
-	$(".checkall").click(function(){
-		var checked = $(this).is(':checked');
-		if(checked===true){
-			$(this).closest("table").find('input[type="checkbox"]').each(function(i, obj) {
-				$(this).attr("checked","checked");
-				$(this).closest("span").addClass("checked");
-			});
-		}else{
-			$(this).closest("table").find('input[type="checkbox"]').each(function(i, obj) {
-				$(this).removeAttr("checked");
-				$(this).closest("span").removeClass("checked");
-			});
-		}
-	});
-});
-</script>
-<style>
-th,td{
-	font-size: 12px !important;
-	white-space: nowrap;
-}
-</style>

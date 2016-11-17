@@ -8569,6 +8569,29 @@ function aprrove_bill(){
 	$approved_bills=$this->regular_bill_temp->find('count',array('conditions'=>$conditions));
 	$this->set(compact("approved_bills"));
 }
+
+function approve_bill_excel(){
+	
+	$this->layout=null;
+	$this->ath();
+
+	$s_society_id=$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+
+	
+	$this->loadmodel('regular_bill_temp');
+	$conditions=array("society_id"=>$s_society_id,"sent_for_approval"=>"yes","approved"=>"no");
+	$order=array('regular_bill_temp.auto_id'=>'ASC');
+	$regular_bill_temps=$this->regular_bill_temp->find('all',array('conditions'=>$conditions,'order'=>$order));
+	foreach($regular_bill_temps as $regular_bill_temp){
+		$start_date=$regular_bill_temp["regular_bill_temp"]["start_date"];
+		$arranged_bills[$start_date][]=$regular_bill_temp;
+	}
+	$this->set(compact("arranged_bills"));
+	
+	
+}
+
 //End Approve Bill//
 //Start NEFT Add//
 function neft_add()

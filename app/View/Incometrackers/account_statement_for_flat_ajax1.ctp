@@ -65,7 +65,7 @@
 				$element_id=$ledger_data["ledger"]["element_id"];
 				$debit=$ledger_data["ledger"]["debit"];
 				$credit=$ledger_data["ledger"]["credit"];
-				
+				@$intrest_on_arrears=@$ledger_data['ledger']['intrest_on_arrears'];
 		if($table_name=="opening_balance"){
 			@$intrest_on_arrears=@$ledger_data['ledger']['intrest_on_arrears'];
 				if(@$intrest_on_arrears=="YES"){
@@ -78,7 +78,13 @@
 		}
 			
 		if($table_name=="regular_bill"){
-			$source="Regular Bill";
+			
+			if($intrest_on_arrears=="YES"){
+				$source="Regular Bill (interest)";
+			}else{
+				$source="Regular Bill";
+			}
+			//$source="Regular Bill";
 			$result_regular_bill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'regular_bill_info_via_auto_id'), array('pass' => array($element_id)));
 			if(sizeof($result_regular_bill)>0){
 				$refrence_no=$result_regular_bill[0]["regular_bill"]["bill_number"];

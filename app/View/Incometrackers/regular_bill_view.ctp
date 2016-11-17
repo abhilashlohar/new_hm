@@ -195,7 +195,7 @@
 										<table style="font-size:11px" width="100%">
 											<tbody>
 											<tr>
-												<td colspan="2" style="padding: 0 0 0 5px;">Cheque/NEFT payment instructions:</td>
+												<td colspan="2" style="padding: 0 0 0 5px;"><b>Cheque/NEFT payment instructions: </b></td>
 											</tr>
 											<tr>
 												<td width="40%" style="padding: 0 0 0 5px;"><b>Account Name:</b></td>

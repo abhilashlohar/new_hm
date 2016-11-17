@@ -130,7 +130,7 @@ function individual_send_email($auto_id=null){
 								</table>
 								<table style="font-size:12px;border-bottom:solid 1px #767575;" width="100%" cellspacing="0">
 									<tbody><tr>
-										<td style="padding:0px 0 2px 5px" colspan="2">Receipt No: '.$receipt_number.'</td>
+										<td style="padding:0px 0 2px 5px" colspan="2"><b>Receipt No: </b>'.$receipt_number.'</td>
 										
 										<td colspan="2" align="right" style="padding:0px 5px 0 0px"><b>Date:</b> '.$date.' </td>
 										
@@ -3308,7 +3308,7 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 								</table>
 								<table style="font-size:12px;border-bottom:solid 1px #767575;" width="100%" cellspacing="0">
 									<tbody><tr>
-										<td style="padding:0px 0 2px 5px" colspan="2">Receipt No: '.$receipt_number.'-R</td>
+										<td style="padding:0px 0 2px 5px" colspan="2"><b>Receipt No: </b> '.$receipt_number.'-R</td>
 										
 										<td colspan="2" align="right" style="padding:0px 5px 0 0px"><b>Date:</b> '.$transaction_date.' </td>
 										
@@ -6862,7 +6862,7 @@ function new_bank_receipt(){
 								</table>
 								<table style="font-size:12px;border-bottom:solid 1px #767575;" width="100%" cellspacing="0">
 									<tbody><tr>
-										<td style="padding:0px 0 2px 5px" colspan="2">Receipt No: '.$receipt_number.'</td>
+										<td style="padding:0px 0 2px 5px" colspan="2"><b>Receipt No:</b> '.$receipt_number.'</td>
 										
 										<td colspan="2" align="right" style="padding:0px 5px 0 0px"><b>Date:</b> '.$date.' </td>
 										

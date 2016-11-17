@@ -145,7 +145,34 @@
 				?>
 					<tr>
 						<td><?php echo date("d-m-Y",$transaction_date); ?></td>
-						<td><?php echo $refrence_no; ?></td>
+						<td>
+
+			<?php if($table_name=="regular_bill"){
+				echo '<a href="'.$this->webroot.'Incometrackers/regular_bill_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
+			}
+			if($table_name=="cash_bank"){
+				if($receipt_source == "bank_receipt")
+				{
+				echo '<a href="'.$this->webroot.'Cashbanks/bank_receipt_html_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
+			}else if($receipt_source == "bank_payment") { echo '<a href="'.$this->webroot.'Cashbanks/bank_payment_html_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>'; } else if($receipt_source == "petty_cash_payment") { echo '<a href="'.$this->webroot.'Cashbanks/petty_cash_payment_html_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>'; }else if($receipt_source == "petty_cash_receipt"){
+				 echo '<a href="'.$this->webroot.'Cashbanks/petty_cash_receipt_html_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>'; } } ?>
+				 
+			<?php if($table_name=="journal"){
+				echo '<a href="'.$this->webroot.'Bookkeepings/journal_voucher_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
+			}?>
+				<?php if($table_name=="supplimentry_bill"){
+				echo '<a href="'.$this->webroot.'Incometrackers/supplimentry_view/'.$element_id.'" target="_blank">'.$refrence_no.'</a>';
+			}?> 
+			
+			<?php if($table_name=="expense_tracker"){
+				echo $refrence_no;
+			}?> 
+			
+			<?php if($table_name=="fix_asset"){
+				echo $refrence_no;
+			}?> 
+			
+						</td>
 						<td><?php echo $description; ?></td>
 						<td><?php echo $source; ?></td>
 						

@@ -63,7 +63,7 @@ function adhoc_info_via_auto_id($auto_id){
 	}
 	
 	function ledger_account_detail_via_auto_id($auto_id){
-	$s_society_id = (int)$this->Session->read('society_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$auto_id=(int)$auto_id;
 	$this->loadmodel('ledger_account');
 	$conditions=array('$or'=>array( 

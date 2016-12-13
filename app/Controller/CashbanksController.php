@@ -434,6 +434,7 @@ function Upload_petty_cash_payment_csv_file(){
 	if(isset($_FILES['file'])){
 		$file_name=$s_society_id.".csv";
 		$file_tmp_name =$_FILES['file']['tmp_name'];
+		 mkdir("Petty_Cash_payment_csv_files");
 		$target = "Petty_Cash_payment_csv_files/";
 		$target=@$target.basename($file_name);
 		move_uploaded_file($file_tmp_name,@$target);

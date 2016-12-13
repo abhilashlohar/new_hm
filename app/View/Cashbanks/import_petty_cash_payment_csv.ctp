@@ -44,7 +44,7 @@ $process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
 <script>
 $( document ).ready(function() {
     $.ajax({
-		url: "petty_cash_payment_read_csv_file",
+		url: "<?php echo $webroot_path; ?>Cashbanks/petty_cash_payment_read_csv_file",
 		dataType: 'json'
 	}).done(function(response){
 		//alert(response);
@@ -78,7 +78,7 @@ $( document ).ready(function() {
 function convert_csv_data_ajax(){
 	$( document ).ready(function() {
 		$.ajax({
-			url: "convert_imported_data_pcp",
+			url: "<?php echo $webroot_path; ?>Cashbanks/convert_imported_data_pcp",
 			dataType: 'json'
 		}).done(function(response){
 			if(response.again_call_ajax=="YES"){

@@ -212,7 +212,7 @@ $default_date = date('d-m-Y');
 </td>
 
 
-<td width="2%"><a href="#" role="button" class="btn mini delete_row" id="2"><i class="icon-trash"></i></a></td>
+<td width="2%"><!--<a href="#" role="button" class="btn mini delete_row" id="2"><i class="icon-trash"></i></a>--></td>
 </tr>	
 
 

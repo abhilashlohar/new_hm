@@ -73,8 +73,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 
 
 	<label style="font-size:14px; font-weight:bold;">Subject</label>
-	<div class="controls">
-	<input type="text" name="subject" id="subject" class="span9 m-wrap">
+	<div class="controls" >
+	<input type="text" name="subject" id="subject"  class="span9 m-wrap">
 	<label id="subject"></label>
 	</div>
 
@@ -107,6 +107,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	 </div>
   </div>
 </div>
+
+
 <label style="color: #696969;font-size: 12px;">
 Note: File size must be less than 2 MB and only jpg,png extension are allowed.
 </label>

@@ -14,7 +14,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<select class="m-wrap chosen large" id="wise"> 
 		<option value="" style="display:none;">Select Option</option>
 		<option value="4" style="text-align:left">1) Summarized Trial balance (w/o subledgers)</option>
-		<!--<option value="5" style="text-align:left">2) Detailed Trial balance (with subledger)</option>-->
+		<option value="5" style="text-align:left">2) Detailed Trial balance (with subledger)</option>
 		<option value="2" style="text-align:left">3) Members Control Accounts</option>
 		<!--<option value="6" style="text-align:left">4) Sundry Debtors Control A/c</option>-->
 		<option value="3" style="text-align:left">4) Bank Accounts</option>

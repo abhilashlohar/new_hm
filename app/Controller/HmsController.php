@@ -6754,8 +6754,12 @@ $this->set('webroot_path',$webroot_path);
 					
 					if($user_type=="third_party" or $user_type=="member" or $user_type=="family_member"){
 
-						$role_id=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id'), array('pass' => array($user_id)));
+						/*$role_id=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id'), array('pass' => array($user_id)));
 						$this->Session->write('role_id', $role_id);
+						*/
+						
+						$role_id=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_default_role_via_user_id_and_society_id'), array('pass' => array($user_id,$society_id))); 
+					   $this->Session->write('role_id', $role_id);
 					}
 					
 					$user_flat_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'), array('pass' => array($user_id)));

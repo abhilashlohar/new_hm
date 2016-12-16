@@ -91,11 +91,13 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<input type="text" class="m-wrap small" name="amount[]" style="text-align:right;">
 	</td>
 	<td>
+	
+	<input type="text" class="m-wrap span10" style="width:150px;" name="narration[]">
+	
 	<div style="margin-top: -4px; margin-right: -5px;" class="pull-right">
 	<a style="" role="button" class="btn mini  remove_row" href="#"><i class="icon-trash"></i></a><br>
 	<a href="#" role="button" class="btn mini add_row"><i class="icon-plus"></i></a>
 	</div>
-	<input type="text" class="m-wrap span10" style="width:150px;" name="narration[]">
 	
 	</td>
 </tr>

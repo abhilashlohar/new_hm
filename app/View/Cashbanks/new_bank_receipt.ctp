@@ -41,7 +41,7 @@ $count=$this->requestAction(array('controller' => 'Fns', 'action' => 'check_appr
 <tbody>
 	<tr>
 		<td>
-			<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy"  value="<?php echo $current_date; ?>" name="transaction_date[]">
+			<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy"  value="<?php echo $current_date; ?>" name="transaction_date[]" >
 		</td>
 		<td>
 			<select name="deposited_in[]" style="width: 130px;">
@@ -101,15 +101,14 @@ $count=$this->requestAction(array('controller' => 'Fns', 'action' => 'check_appr
 			<input type="text" class="m-wrap span12" placeholder="Amount Applied" name="amount[]">
 		</td>
 		<td>
+		
+			<input type="text" class="m-wrap span10 pull-left" placeholder="Narration" name="narration[]">
 		<div style="margin-top: -4px; margin-right: -5px;font-size: 14px !important;" class="pull-right">
+
 			<a style="" role="button" class="btn mini  remove_row" href="#"><i class="icon-trash"></i></a><br>
-		<a href="#" class="btn mini add_row" role="button">	 
+			<a href="#" class="btn mini add_row" role="button">	 
 			<i class="icon-plus"></i></a>
 		</div>
-			
-			
-			<input type="text" class="m-wrap span10 pull-left" placeholder="Narration" name="narration[]">
-			
 		</td>
 	</tr>
 </tbody>

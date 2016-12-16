@@ -78,7 +78,7 @@ $income_arrr[] = $data;
 					<div class="control-group">
 						<label class="control-label">Select Income Head</label>
 						<div class="controls">
-							<select name="income_head"  id="income_head" class="m-wrap large chosen" data-placeholder="Select Income Head" tabindex="1">
+							<select name="income_head"  id="income_head" class="m-wrap large chosen" data-placeholder="Select Income Head" >
 								<option value="">
 								<?php
 					if(!empty($income_arrr)){
@@ -106,7 +106,7 @@ $income_arrr[] = $data;
 					<div class="control-group">
 						  <label class="control-label">Select members</label>
 						  <div class="controls">
-							<select name="members[]" data-placeholder="select members" id="flats" class="chosen m-wrap large" multiple="multiple" tabindex="6">
+							<select name="members[]" data-placeholder="select members" id="flats" class="chosen m-wrap large" multiple="multiple" >
 								<option value="">
 								<?php 
 								if(!empty($members_for_billing)){

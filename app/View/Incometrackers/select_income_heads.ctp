@@ -70,7 +70,7 @@ foreach($result1 as $collection){
 <div class="span6">
 <label style="font-size:14px;"> &nbsp;&nbsp;&nbsp; Select Income Heads<span style="color:red;">*</span></label>
 <div class="controls">
-&nbsp;&nbsp;&nbsp;	<select data-placeholder="Select Account Heads"  name="i_head[]" id="i_head" class="m-wrap span10 chosen" multiple="multiple" tabindex="6" required="required">	
+&nbsp;&nbsp;&nbsp;	<select data-placeholder="Select Account Heads"  name="i_head[]" id="i_head" class="m-wrap span10 chosen" multiple="multiple"  required="required">	
 <option value="" style="display:none;">Select</option>
 <?php
 for($r=0; $r<sizeof($income_arrr); $r++)

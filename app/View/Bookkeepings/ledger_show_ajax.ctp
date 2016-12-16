@@ -92,7 +92,7 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
  
 <?php
 $ledger_account_id;
-$opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_opening_balance'), array('pass' => array($ledger_account_id,$ledger_sub_account_id,strtotime($from))));
+$opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_opening_balance_for_ledger'), array('pass' => array($ledger_account_id,$ledger_sub_account_id,strtotime($from))));
 ?>
 <div class="pull-right" style="text-align:right;font-size:15px;padding:5px;background-color: antiquewhite;">Opening Balance: <?php echo $opening_balance; ?></div>
 <table width="100%" class="table table-bordered table-striped">

@@ -100,10 +100,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			readonly="readonly" style="background-color:white !important; margin-top:2.5px;" Placeholder="Net Amount" name="net_amount[]">
 		 </td>
 		 <td>
-		 <div style="margin-top: -4px; margin-right: -5px;" class="pull-right">
-		 <a style="" role="button" class="btn mini remove_row" href="#"><i class="icon-trash"></i></a><br>
-		 <a href="#" role="button" class="btn mini add_row"><i class="icon-plus"></i></a>
-		 </div>
+		 
 		 
 		 
 				<select class="m-wrap span10" name="bank_account[]">
@@ -119,6 +116,11 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				<?php } ?>
 				</select>
 				<input type="text" class="m-wrap span10" style="background-color:white !important; margin-top:2.5px;" Placeholder="Narration" name="narration[]">
+				
+				<div style="margin-top: -4px; margin-right: -5px;" class="pull-right">
+				<a style="" role="button" class="btn mini remove_row" href="#"><i class="icon-trash"></i></a><br>
+				<a href="#" role="button" class="btn mini add_row"><i class="icon-plus"></i></a>
+				</div>
 		 </td>
 	</tr>
 	</tbody>

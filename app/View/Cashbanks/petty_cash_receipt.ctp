@@ -85,12 +85,15 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<input type="text" class="m-wrap span12" style="text-align:right; background-color:white !important; margin-top:2.5px;" maxlength="5" name="amount[]" id="amount">
 	</td>
 	<td>
+
+	
+	<input type="text" class="m-wrap span10"  name="narration[]" style="background-color:white !important; margin-top:2.5px;">
+	
 	<div style="margin-top: -4px; margin-right: -5px;" class="pull-right">
 	<a style="" role="button" class="btn mini  remove_row" href="#"><i class="icon-trash"></i></a><br>
 	<a href="#" role="button" class="btn mini add_row"><i class="icon-plus"></i></a>
 	</div>
 	
-	<input type="text" class="m-wrap span10"  name="narration[]" style="background-color:white !important; margin-top:2.5px;">
 	</td>
 </tr>
 </tbody>

@@ -24,6 +24,9 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 	</div>
 </div>
 <div style="width:100%; overflow:auto; margin-top:10px;" class="hide_at_print">
+<label class="m-wrap pull-left"> 
+<a class="btn blue" href="<?php echo $webroot_path; ?>Accounts/cancle_report_detail_trial_balance">Cancel Report</a>
+</label>
 <label class="m-wrap pull-right"><input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;" placeholder="Search"></label>	
 </div>	
 

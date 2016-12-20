@@ -6634,6 +6634,29 @@ function trial_balance_report_modify(){
 	$this->set(compact('result_trial_balance'));
 }
 
+function cancle_report_detail_trial_balance(){
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	 $s_society_id = (int)$this->Session->read('hm_society_id');
+	$this->loadmodel('trial_balance_report_read_society');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$this->trial_balance_report_read_society->deleteAll($conditions);
+	
+	$this->loadmodel('trial_balance_detail_society');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$this->trial_balance_detail_society->deleteAll($conditions);
+	
+	$this->loadmodel('trial_balance_converted_society');
+	$conditions=array("society_id"=>(int)$s_society_id);
+	$this->trial_balance_converted_society->deleteAll($conditions);
+	
+	$this->redirect(array('controller' => 'Accounts','action' => 'trial_balance_report_society'));
+	
+}
+
 
 //End opening_balance_new//
 }

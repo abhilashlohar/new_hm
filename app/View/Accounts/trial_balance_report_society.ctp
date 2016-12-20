@@ -1,4 +1,7 @@
-<?php foreach($result_import_record as $data_import){
+<?php 
+echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'));
+
+foreach($result_import_record as $data_import){
 	$step1=(int)@$data_import["trial_balance_detail_society"]["step1"];
 	$step2=(int)@$data_import["trial_balance_detail_society"]["step2"];
 	$step3=(int)@$data_import["trial_balance_detail_society"]["step3"];
@@ -12,7 +15,7 @@ $process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
 <?php if(sizeof($result_import_record)==0){ ?>
 <div class="portlet box green" style="width: 50%; margin: auto;">
 	<div class="portlet-title">
-		<h4><i class="icon-cogs"></i>Trial Balance Report All Society</h4>
+		<h4><i class="icon-cogs"></i>Detail Trial Balance Report for Society</h4>
 	</div>
 	<div class="portlet-body" align="">
 		
@@ -44,7 +47,7 @@ $process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
 
 <div style="width: 40%; margin: auto; background-color: rgb(210, 243, 196); border: 2px solid rgb(113, 177, 85); padding: 10px;">
 	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
-	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Society trial balance report Succesfully preparing.</span>
+	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Society detail trial balance report Succesfully preparing.</span>
 	<br/><span style="padding-left: 35px; color: rgb(114, 113, 113);"><b>Uploaded on:</b> </span><span style="color: rgb(114, 113, 113);"> <?php echo $date; ?></span>
 	<br/><br/>
 	<img src="<?php echo $webroot_path; ?>as/loding.gif" /> 
@@ -68,7 +71,7 @@ $( document ).ready(function() {
 <?php if(@$process_status==2){ ?>
 <div style="width: 40%; margin: auto; background-color: rgb(210, 243, 196); border: 2px solid rgb(113, 177, 85); padding: 10px;">
 	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
-	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Society trial balance report Succesfully  preparing</span>
+	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Society detail trial balance report Succesfully  preparing</span>
 	<br/><span style="padding-left: 35px; color: rgb(114, 113, 113);"><b>Uploaded on:</b> </span><span style="color: rgb(114, 113, 113);"> <?php echo $date; ?></span>
 	<br/><br/>
 	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
@@ -100,6 +103,7 @@ function convert_csv_data_ajax(){
 			if(response.again_call_ajax=="NO"){
 				change_page_automatically("<?php echo $webroot_path; ?>Accounts/trial_balance_report_society");
 			}
+			//convert_csv_data_ajax();
 		});
 	});
 }
@@ -109,7 +113,7 @@ function convert_csv_data_ajax(){
 <?php if(@$process_status==3){ ?>
 <div style="width: 40%; margin: auto; background-color: rgb(210, 243, 196); border: 2px solid rgb(113, 177, 85); padding: 10px;">
 	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
-	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Society trial balance report Succesfully</span>
+	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Society Detail trial balance report Succesfully</span>
 	<br/><span style="padding-left: 35px; color: rgb(114, 113, 113);"><b>Uploaded on:</b> </span><span style="color: rgb(114, 113, 113);"> <?php echo $date; ?></span>
 	<br/><br/>
 	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>

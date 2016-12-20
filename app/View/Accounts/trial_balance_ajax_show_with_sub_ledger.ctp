@@ -45,7 +45,8 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 	</thead>
 	<tbody id="table">
 	<?php  
-	$total_ob_debit=0; $total_ob_credit=0; $total_debit=0; $total_credit=0; $total_cb_debit=0; $total_cb_credit=0;
+	$total_ob_debit=0; $total_ob_credit=0; $total_debit=0; $total_credit=0; $total_cb_debit=0; $total_cb_credit=0;// pr($result_ledger_account); exit;
+	
 	foreach($result_ledger_account as $ledger_account){ 
 		  $ledger_account_id= $ledger_account["ledger_account"]["auto_id"];
 		
@@ -59,25 +60,88 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 		foreach($result_ledger_sub_account as $ledger_sub_account){ 
 		$ledger_sub_account_id=(int)$ledger_sub_account["ledger_sub_account"]["auto_id"];
 		$ledger_sub_account_name=$ledger_sub_account["ledger_sub_account"]["name"];
-		if($ledger_account_id==34){
+		
+		$ledger_id=(int)$ledger_sub_account["ledger_sub_account"]["ledger_id"];
+		if($ledger_account_id==34 and $ledger_id==34){
 				$result_member = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 						$ledger_sub_account_name=$result_member['user_name'];
 						$wing_name=$result_member['wing_name'];
 						$flat_name=$result_member['flat_name'];
 						$wing_flat=$wing_name.'-'.$flat_name;
 						$ledger_extra_info=$wing_flat;
+						
+					//	if($trail_balance["opening_balance"][0]==0 && $trail_balance["debit"]==0 && $trail_balance["credit"]==0 && $trail_balance["closing_balance"][0]==0){ continue; }
+						$trail_balance=$this->requestAction(array('controller' => 'Accounts', 'action' => 'calculate_opening_balance_for_trail_balance_for_sub_account'),array('pass'=>array($from,$to,$ledger_account_id,$ledger_sub_account_id)));
+						?>
+			
+			<tr>
+				<td><?php echo $ledger_sub_account_name; ?> <span style="padding-left: 10px;font-weight: 100;"><?php echo $ledger_extra_info; ?></span></td>
+				<?php if($trail_balance["opening_balance"][1]=="Dr"){
+					?>
+					<td style="text-align: right;">
+						<?php echo $this->Currency->formatCurrency( $trail_balance["opening_balance"][0], "INR"); 
+						$total_ob_debit+=$trail_balance["opening_balance"][0]; ?>
+					</td>
+					<td style="text-align: right;">0</td>
+				<?php } 
+				if($trail_balance["opening_balance"][1]=="Cr"){
+					?>
+					<td style="text-align: right;">0</td>
+					<td style="text-align: right;">
+						<?php echo $this->Currency->formatCurrency( $trail_balance["opening_balance"][0], "INR"); 
+						$total_ob_credit+=$trail_balance["opening_balance"][0]; ?>
+					</td>
+					<?php
+				}
+				if($trail_balance["opening_balance"][1]==null){
+					?>
+					<td style="text-align: right;">0</td>
+					<td style="text-align: right;">0</td>
+					<?php
+				}
+				?>
+				
+				<td style="text-align: right;"><?php echo $this->Currency->formatCurrency( $trail_balance["debit"], "INR"); 
+				$total_debit+=$trail_balance["debit"];
+				?></td>
+				<td style="text-align: right;"><?php echo $this->Currency->formatCurrency( $trail_balance["credit"], "INR"); 
+				$total_credit+=$trail_balance["credit"];
+				?></td>
+				
+				<?php if($trail_balance["closing_balance"][1]=="Dr"){
+					?>
+					<td style="text-align: right;">
+						<?php echo $this->Currency->formatCurrency( $trail_balance["closing_balance"][0], "INR"); 
+						$total_cb_debit+=$trail_balance["closing_balance"][0]; ?>
+					</td>
+					<td style="text-align: right;">0</td>
+				<?php } 
+				if($trail_balance["closing_balance"][1]=="Cr"){
+					?>
+					<td style="text-align: right;">0</td>
+					<td style="text-align: right;">
+						<?php echo $this->Currency->formatCurrency( $trail_balance["closing_balance"][0], "INR"); 
+						$total_cb_credit+=$trail_balance["closing_balance"][0]; ?>
+					</td>
+					<?php
+				}
+				if($trail_balance["closing_balance"][1]==null){
+					?>
+					<td style="text-align: right;">0</td>
+					<td style="text-align: right;">0</td>
+					<?php
+				}
+				?>
+				
+				
+			</tr>
+			<?php
 		}
-		if($ledger_account_id==33){
+		if($ledger_account_id==33 and $ledger_id==33){
 			@$bank_account=@$ledger_sub_account["ledger_sub_account"]["bank_account"];
 			$ledger_extra_info=$bank_account;
-		}
-		if($ledger_account_id==15){
-			$ledger_extra_info="";
-		}
-			
+			//if($trail_balance["opening_balance"][0]==0 && $trail_balance["debit"]==0 && $trail_balance["credit"]==0 && $trail_balance["closing_balance"][0]==0){ continue; }
 			$trail_balance=$this->requestAction(array('controller' => 'Accounts', 'action' => 'calculate_opening_balance_for_trail_balance_for_sub_account'),array('pass'=>array($from,$to,$ledger_account_id,$ledger_sub_account_id)));
-			
-			if($trail_balance["opening_balance"][0]==0 && $trail_balance["debit"]==0 && $trail_balance["credit"]==0 && $trail_balance["closing_balance"][0]==0){ continue; }
 			?>
 			
 			<tr>
@@ -142,6 +206,81 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 				
 			</tr>
 			<?php
+		}
+		if($ledger_account_id==15 and $ledger_id==15){
+			$ledger_extra_info="";
+			//if($trail_balance["opening_balance"][0]==0 && $trail_balance["debit"]==0 && $trail_balance["credit"]==0 && $trail_balance["closing_balance"][0]==0){ continue; }
+			$trail_balance=$this->requestAction(array('controller' => 'Accounts', 'action' => 'calculate_opening_balance_for_trail_balance_for_sub_account'),array('pass'=>array($from,$to,$ledger_account_id,$ledger_sub_account_id)));
+			?>
+			
+			<tr>
+				<td><?php echo $ledger_sub_account_name; ?> <span style="padding-left: 10px;font-weight: 100;"><?php echo $ledger_extra_info; ?></span></td>
+				<?php if($trail_balance["opening_balance"][1]=="Dr"){
+					?>
+					<td style="text-align: right;">
+						<?php echo $this->Currency->formatCurrency( $trail_balance["opening_balance"][0], "INR"); 
+						$total_ob_debit+=$trail_balance["opening_balance"][0]; ?>
+					</td>
+					<td style="text-align: right;">0</td>
+				<?php } 
+				if($trail_balance["opening_balance"][1]=="Cr"){
+					?>
+					<td style="text-align: right;">0</td>
+					<td style="text-align: right;">
+						<?php echo $this->Currency->formatCurrency( $trail_balance["opening_balance"][0], "INR"); 
+						$total_ob_credit+=$trail_balance["opening_balance"][0]; ?>
+					</td>
+					<?php
+				}
+				if($trail_balance["opening_balance"][1]==null){
+					?>
+					<td style="text-align: right;">0</td>
+					<td style="text-align: right;">0</td>
+					<?php
+				}
+				?>
+				
+				<td style="text-align: right;"><?php echo $this->Currency->formatCurrency( $trail_balance["debit"], "INR"); 
+				$total_debit+=$trail_balance["debit"];
+				?></td>
+				<td style="text-align: right;"><?php echo $this->Currency->formatCurrency( $trail_balance["credit"], "INR"); 
+				$total_credit+=$trail_balance["credit"];
+				?></td>
+				
+				<?php if($trail_balance["closing_balance"][1]=="Dr"){
+					?>
+					<td style="text-align: right;">
+						<?php echo $this->Currency->formatCurrency( $trail_balance["closing_balance"][0], "INR"); 
+						$total_cb_debit+=$trail_balance["closing_balance"][0]; ?>
+					</td>
+					<td style="text-align: right;">0</td>
+				<?php } 
+				if($trail_balance["closing_balance"][1]=="Cr"){
+					?>
+					<td style="text-align: right;">0</td>
+					<td style="text-align: right;">
+						<?php echo $this->Currency->formatCurrency( $trail_balance["closing_balance"][0], "INR"); 
+						$total_cb_credit+=$trail_balance["closing_balance"][0]; ?>
+					</td>
+					<?php
+				}
+				if($trail_balance["closing_balance"][1]==null){
+					?>
+					<td style="text-align: right;">0</td>
+					<td style="text-align: right;">0</td>
+					<?php
+				}
+				?>
+				
+				
+			</tr>
+			<?php
+		}
+			
+			
+			
+			//if($trail_balance["opening_balance"][0]==0 && $trail_balance["debit"]==0 && $trail_balance["credit"]==0 && $trail_balance["closing_balance"][0]==0){ continue; }
+			
 		} 	
 			
 		}

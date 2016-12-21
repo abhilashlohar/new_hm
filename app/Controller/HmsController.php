@@ -8,6 +8,97 @@ public $components = array(
 );
 var $name = 'Hms';
 
+function bank_reconciliation(){
+	
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	$this->loadmodel("ledger_sub_account");
+	$conditions=array("society_id"=>$s_society_id,"ledger_id"=>33);
+    $result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$this->set(compact('result_ledger_sub_account'));
+}
+
+function bank_reconciliation_ajax($ledger_sub_ac_id=null,$from=null,$to=null){
+		$this->layout="blank";	
+		$this->ath();
+		$from = date("Y-m-d",strtotime($from));
+		$to = date("Y-m-d",strtotime($to));
+	    $s_society_id = $this->Session->read('hm_society_id');
+	    $this->loadmodel('ledger');
+		$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>33,
+		"ledger_sub_account_id"=>(int)$ledger_sub_ac_id,
+		'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
+		
+		$order=array('ledger.transaction_date'=>'ASC');
+		$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
+		
+		foreach($result_ledger as $data){
+			$transaction_date=$data['ledger']['transaction_date'];
+			$debit=$data['ledger']['debit'];
+			$credit=$data['ledger']['credit'];
+			$table_name=$data['ledger']['table_name'];
+			$element_id=(int)$data['ledger']['element_id'];
+			$this->loadmodel('bank_reconciliation');
+			$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$ledger_sub_ac_id,'transaction_date'=>$transaction_date,'element_id'=>$element_id);
+		     $count=$this->bank_reconciliation->find('count',array('conditions'=>$conditions)); 
+			if($count==0){
+				$this->loadmodel('bank_reconciliation');
+				$auto_id=$this->autoincrement('bank_reconciliation','auto_id');
+				$this->bank_reconciliation->saveAll(Array( Array("auto_id" => $auto_id, "table_name" => $table_name,"society_id" => $s_society_id, "transaction_date" => $transaction_date, "credit" =>$credit,"debit" =>$debit,"element_id" =>$element_id,"flag"=>0,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$ledger_sub_ac_id))); 
+			}
+			
+		}
+		
+		$this->loadmodel('bank_reconciliation');
+		$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>33,
+		"ledger_sub_account_id"=>(int)$ledger_sub_ac_id,"flag"=>0,
+		'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
+		$order=array('bank_reconciliation.transaction_date'=>'ASC');
+		$result_bank_reconciliation=$this->bank_reconciliation->find('all',array('conditions'=>$conditions,'order'=>$order));
+		$this->set(compact('result_bank_reconciliation'));
+	
+}
+
+function bank_reconciliation_update($auto_id=null,$date=null){
+	
+	$this->loadmodel('bank_reconciliation');
+	$this->bank_reconciliation->updateAll(array("pass_book_date"=>$date,"flag"=>1),array("auto_id"=>(int)$auto_id));
+	echo "done";
+}
+
+function reconciliation_match_report(){
+	
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	
+}
+
+
+function reconciliation_match_report_ajax($from=null,$to=null){
+	
+	    $this->ath();
+	    $s_society_id = $this->Session->read('hm_society_id');
+		$this->loadmodel('bank_reconciliation');
+		$conditions=array('society_id'=>$s_society_id,"flag"=>1,
+		'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
+		$order=array('bank_reconciliation.transaction_date'=>'ASC');
+		$result_bank_reconciliation=$this->bank_reconciliation->find('all',array('conditions'=>$conditions,'order'=>$order));
+		$this->set(compact('result_bank_reconciliation'));
+	
+}
+
+
+
 function auto_backup_data(){
 	
   $this->layout=null;
@@ -30365,6 +30456,13 @@ function menus_as_per_user_rights(){
 				<i class="icon-phone"></i> Feedback
 				</a>					
 			</li>
+			
+			<li>
+				<a href="<?php echo $webroot_path; ?>Hms/bank_reconciliation" rel='tab'>
+				<i class="icon-phone"></i> Bank Reconciliation
+				</a>					
+			</li>
+			
 			<?php
 		
 		}else{

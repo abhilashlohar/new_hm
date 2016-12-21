@@ -67,7 +67,7 @@ function bank_reconciliation_ajax($ledger_sub_ac_id=null,$from=null,$to=null){
 function bank_reconciliation_update($auto_id=null,$date=null){
 	
 	$this->loadmodel('bank_reconciliation');
-	$this->bank_reconciliation->updateAll(array("pass_book_date"=>$date,"flag"=>1),array("auto_id"=>(int)$auto_id));
+	$this->bank_reconciliation->updateAll(array("pass_book_date"=>$date,"flag"=>1),array("auto_id"=>$auto_id));
 	echo "done";
 }
 

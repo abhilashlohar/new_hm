@@ -15,7 +15,7 @@ $process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
 <?php if(sizeof($result_import_record)==0){ ?>
 <div class="portlet box green" style="width: 50%; margin: auto;">
 	<div class="portlet-title">
-		<h4><i class="icon-cogs"></i>Detail Trial Balance Report for Society</h4>
+		<h4><i class="icon-cogs"></i>Detail Trial Balance Report with subledger for Society</h4>
 	</div>
 	<div class="portlet-body" align="">
 		
@@ -48,7 +48,7 @@ $process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
 <div style="width: 40%; margin: auto; background-color: rgb(210, 243, 196); border: 2px solid rgb(113, 177, 85); padding: 10px;">
 	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
 	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Society detail trial balance report Succesfully preparing.</span>
-	<br/><span style="padding-left: 35px; color: rgb(114, 113, 113);"><b>Uploaded on:</b> </span><span style="color: rgb(114, 113, 113);"> <?php echo $date; ?></span>
+	<br/><span style="padding-left: 35px; color: rgb(114, 113, 113);"><b>Created on:</b> </span><span style="color: rgb(114, 113, 113);"> <?php echo $date; ?></span>
 	<br/><br/>
 	<img src="<?php echo $webroot_path; ?>as/loding.gif" /> 
 	<span style="padding-left: 10px; font-weight: bold; color: red;">Do Not Close Window, Reading report file...</span>
@@ -72,7 +72,7 @@ $( document ).ready(function() {
 <div style="width: 40%; margin: auto; background-color: rgb(210, 243, 196); border: 2px solid rgb(113, 177, 85); padding: 10px;">
 	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
 	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Society detail trial balance report Succesfully  preparing</span>
-	<br/><span style="padding-left: 35px; color: rgb(114, 113, 113);"><b>Uploaded on:</b> </span><span style="color: rgb(114, 113, 113);"> <?php echo $date; ?></span>
+	<br/><span style="padding-left: 35px; color: rgb(114, 113, 113);"><b>Created on:</b> </span><span style="color: rgb(114, 113, 113);"> <?php echo $date; ?></span>
 	<br/><br/>
 	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
 	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">To Read report File Succesfully Done.</span>
@@ -114,10 +114,10 @@ function convert_csv_data_ajax(){
 <div style="width: 40%; margin: auto; background-color: rgb(210, 243, 196); border: 2px solid rgb(113, 177, 85); padding: 10px;">
 	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
 	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">Society Detail trial balance report Succesfully</span>
-	<br/><span style="padding-left: 35px; color: rgb(114, 113, 113);"><b>Uploaded on:</b> </span><span style="color: rgb(114, 113, 113);"> <?php echo $date; ?></span>
+	<br/><span style="padding-left: 35px; color: rgb(114, 113, 113);"><b>Created on:</b> </span><span style="color: rgb(114, 113, 113);"> <?php echo $date; ?></span>
 	<br/><br/>
 	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
-	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">To Read Uploaded File Succesfully Done.</span>
+	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">To Read report File Succesfully Done.</span>
 	<br/><br/>
 	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
 	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);"> Data Is Ready To More Modification.</span>
@@ -135,7 +135,7 @@ $( document ).ready(function() {
 <div style="width: 40%; margin: auto; background-color: rgb(210, 243, 196); border: 2px solid rgb(113, 177, 85); padding: 10px;">
 	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
 	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">File Uploaded Succesfully.</span>
-	<br/><span style="padding-left: 35px; color: rgb(114, 113, 113);"><b>Uploaded on:</b> </span><span style="color: rgb(114, 113, 113);"> <?php echo $date; ?></span>
+	<br/><span style="padding-left: 35px; color: rgb(114, 113, 113);"><b>Creted on:</b> </span><span style="color: rgb(114, 113, 113);"> <?php echo $date; ?></span>
 	<br/><br/>
 	<img src="<?php echo $webroot_path; ?>img/test-pass-icon.png" style="height: 20px;"/>
 	<span style="padding-left: 10px; font-weight: bold; color: rgb(0, 106, 0);">To Read report File Succesfully Done.</span>

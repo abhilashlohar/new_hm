@@ -46,8 +46,8 @@ function substrwords($text, $maxchar, $end='...') {
 
 //$opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_opening_balance_for_ledger'), array('pass' => array($ledger_account_id,$ledger_sub_account_id,strtotime($from))));
 ?>
-
-<table width="100%" class="table table-bordered ">
+<input class="m-wrap medium pull-right hide_at_print" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
+<table width="100%" class="table table-bordered " id="receiptmain">
 	<thead>
 		<tr>
 			<th>Transaction Date</th>
@@ -475,6 +475,16 @@ $(document).ready(function() {
 			
 		});
 		
+	});
+	
+	var $rows = $('#receiptmain tbody tr');
+	$('#search').keyup(function() {
+		var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+
+		$rows.show().filter(function() {
+			var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+			return !~text.indexOf(val);
+		}).hide();
 	});
 });
 

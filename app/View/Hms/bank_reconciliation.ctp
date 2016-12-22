@@ -1,7 +1,8 @@
 <center>
 <div align="center" class="mobile-align">
-	<a href="bank_reconciliation"  rel='tab' class="btn red tooltips space-responsive"  ><i class="icon-folder-open"></i> Reconciliation </a>
+	<a href="bank_reconciliation"  rel='tab' class="btn red tooltips space-responsive"  ><i class="icon-folder-open"></i> Ledger Matching </a>
 	<a href="reconciliation_match_report"  rel='tab' class="btn blue  tooltips space-responsive" ><i class="icon-folder-close"></i> Reconciliation Match Report</a>
+	<a href="reconciliation_form"  rel='tab' class="btn blue  tooltips space-responsive" ><i class="icon-folder-close"></i> Reconciliation Form</a>
 </div>
 <form method="post" onSubmit="return valid()">
 <div  class="hide_at_print">

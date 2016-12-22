@@ -50,6 +50,7 @@ function substrwords($text, $maxchar, $end='...') {
 <table width="100%" class="table table-bordered " id="receiptmain">
 	<thead>
 		<tr>
+		    <th>Passbook Date </th>
 			<th>Transaction Date</th>
 			<th>Corresponding a/c </th>
             <th>Description</th>
@@ -66,6 +67,7 @@ function substrwords($text, $maxchar, $end='...') {
 	$i=0; $total_debit=0; $total_credit=0; 
 	foreach($result_bank_reconciliation as $data){ $i++;
 	$auto_id=(int)$data["bank_reconciliation"]["auto_id"];
+	$pass_book_date=$data["bank_reconciliation"]["pass_book_date"];
 	$debit=$data["bank_reconciliation"]["debit"];
 	$credit=$data["bank_reconciliation"]["credit"];
 	$transaction_date=$data["bank_reconciliation"]["transaction_date"];
@@ -415,7 +417,8 @@ function substrwords($text, $maxchar, $end='...') {
 		
 		
 		?>
-		<tr >
+		<tr> 
+		<td><?php echo $pass_book_date; ?></td>
 			<td><?php echo date("d-m-Y",$transaction_date); ?></td>
 		    <td><?php echo @$user_name; ?>  <?php echo @$wing_flat; ?></td>
             <td><?php echo @$description; ?></td>
@@ -442,7 +445,7 @@ function substrwords($text, $maxchar, $end='...') {
 		</tr>
 	<?php } ?>
 		<tr>
-			<td colspan="5" style="text-align:right;"><b>Total</b></td>
+			<td colspan="6" style="text-align:right;"><b>Total</b></td>
 			<td style="text-align:right;"><b><?php echo $total_debit; ?></b></td>
 			<td style="text-align:right;"><b><?php echo $total_credit; ?></b></td>
 			

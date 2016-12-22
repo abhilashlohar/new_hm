@@ -468,7 +468,7 @@ $(document).ready(function() {
 		var bank_id=$(this).attr("bank_id");
 		$.ajax({
 			url: "bank_reconciliation_update/"+bank_id+"/"+date,
-		}).done(function(response) { alert(response);
+		}).done(function(response) { 
 			if(response=="done"){ 
 				z.closest('tr').remove();
 			}

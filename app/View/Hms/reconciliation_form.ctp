@@ -30,7 +30,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 		Deposited
 		</label>
 		<label class="radio">
-		<div class="radio" id="uniform-undefined"><span ><input type="radio" name="type_mettings" value="2"  style="opacity: 0;"></span></div>
+		<div class="radio" id="uniform-undefined"><span ><input type="radio" name="transection_type" value="2"  style="opacity: 0;"></span></div>
 		Withdraw
 		</label>  
 		 
@@ -89,7 +89,28 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 </div>
 
 <div class="row-fluid">
-<div class="span6 responsive">
+<div class="span3 responsive">
+
+<div class="control-group">
+		<label style="font-size:14px; font-weight:bold;">Amount type</label>
+		<div class="controls">
+		<label class="radio">
+		<div class="radio" id="uniform-undefined"><span class="checked"><input type="radio" name="amount_type" value="1" style="opacity: 0;" checked=""></span></div>
+		Credit
+		</label>
+		<label class="radio">
+		<div class="radio" id="uniform-undefined"><span ><input type="radio" name="amount_type" value="2"  style="opacity: 0;"></span></div>
+		Debit
+		</label>  
+		 
+		 
+		</div>
+</div>
+
+</div>
+
+<div class="span3 responsive">
+
 
 
 <div class="control-group" >
@@ -102,6 +123,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 
 
 </div>
+
 <div class="span6 responsive">
 
 

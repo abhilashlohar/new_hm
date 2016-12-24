@@ -2,153 +2,254 @@
 	<a href="bank_reconciliation"  rel='tab' class="btn blue tooltips space-responsive"  ><i class="icon-folder-open"></i> Ledger Matching </a>
 	<a href="reconciliation_match_report"  rel='tab' class="btn blue  tooltips space-responsive" ><i class="icon-folder-close"></i> Reconciliation Match Report</a>
 	<a href="reconciliation_form"  rel='tab' class="btn red  tooltips space-responsive" ><i class="icon-folder-close"></i> Reconciliation Form</a>
+	<a href="reconciliation_report"  rel='tab' class="btn blue  tooltips space-responsive" ><i class="icon-folder-close"></i> Reconciliation Report</a>
 </div>
 <br>
-
+<style>
+.er{
+color: rgb(198, 4, 4);
+font-size: 11px;
+}
+</style>
 
 
 <?php
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
 
-<div style="border:solid 2px #4cae4c; width:90%; margin:auto;" class='portal'>
-<div style="border-bottom:solid 2px #4cae4c; color:white; background-color: #5cb85c; padding:4px; font-size:20px;" ><i class="icon-envelope-alt"></i> Reconciliation Form </div>
-<div style="padding:10px;background-color:#FFF;">
-<form method="post" id="contact-form" name="myform" enctype="multipart/form-data" >
-<div id="output"></div>
 
-
-<div class="row-fluid">
-
-<div class="span6 responsive">
-
-<div class="control-group">
-		<label style="font-size:14px; font-weight:bold;">Transection type</label>
-		<div class="controls">
-		<label class="radio">
-		<div class="radio" id="uniform-undefined"><span class="checked"><input type="radio" name="transection_type" value="1" style="opacity: 0;" checked=""></span></div>
-		Deposited
-		</label>
-		<label class="radio">
-		<div class="radio" id="uniform-undefined"><span ><input type="radio" name="transection_type" value="2"  style="opacity: 0;"></span></div>
-		Withdraw
-		</label>  
-		 
-		 
-		</div>
+<div class="portlet box">
+	<div class="portlet-body">
+	<form method="post" id="myForm">
+		<table class="table table-condensed table-bordered" id="main">
+			<thead>
+				<tr>
+					<th width="130px">Passbook Date <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th width="50px">Bank name <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th width="150px">Check number/Neft <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th width="150px">Transection type <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th width="125px" >Amount <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th width="" >Narration</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				
+			</tbody>
+		</table>
+		<button type="submit" class="btn blue pull-right" name="submit">Create Receipt</button>
+	</form>
+		<!--<a href="#" role="button" id="add_row" class="btn"><i class="icon-plus"></i> Add Row</a>-->
+	</div>
 </div>
-</div>
-<div class="span6 responsive">
- <label style="font-size:14px; font-weight:bold;">Bank Name</label>
-<div class="controls">
-					<select class="medium m-wrap chosen" id="ledger_account" name="bank_name">
-						<option value="" style="display:none;">Select Bank A/c</option>
-						<?php
+
+<table id="sample" style="display:none;">
+<tbody>
+	<tr>
+		<td>
+			<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy"  value="" name="passbook_date[]" placeholder="Passbook date">
+		</td>
+		<td>
+				<select class="medium m-wrap"  name="bank_name[]" style="width:130px !important;">
+				<option value="" style="display:none;width:50px;">Select Bank</option>
+					<?php
 						 foreach($result_ledger_sub_account as $data){
 							 
 							  $ledger_sub_ac_id=$data['ledger_sub_account']['auto_id'];
 							  $bank_name=$data['ledger_sub_account']['name'];
 							 ?>
-                          
+						  
 								<option value="<?php echo $ledger_sub_ac_id; ?>"><?php echo $bank_name; ?> </option>
 						  
-						  <?php } ?>
-						</select>
-</div>
-</div>
-
-</div>
-
-<!-------------------------->
-
-<div class="row-fluid">
-
-<div class="span6 responsive">
-
-
-<label style="font-size:14px; font-weight:bold;">Passbook entry Date</label>
-<div class="control-group" id="single_date">
-  <div class="controls">
-	<input type="text" name="passbook_date" data-date-format="dd-mm-yyyy" class="span6 m-wrap date-picker" placeholder="Date">
-  </div>
-  <label report="date" class="remove_report"></label>
-</div>
-
-</div>
-<div class="span6 responsive">
-
-<div class="control-group">
-  <label class="control-label" style="font-size:14px; font-weight:bold;">Check number/Neft</label>
-  <div class="controls">
-	 <input type="text" name="check_number" data-date-format="dd-mm-yyyy" class="span6 m-wrap" placeholder="">
-  </div>
-</div>
-
-
-</div>
-</div>
-
-<div class="row-fluid">
-<div class="span3 responsive">
-
-<div class="control-group">
-		<label style="font-size:14px; font-weight:bold;">Amount type</label>
-		<div class="controls">
-		<label class="radio">
-		<div class="radio" id="uniform-undefined"><span class="checked"><input type="radio" name="amount_type" value="1" style="opacity: 0;" checked=""></span></div>
-		Credit
-		</label>
-		<label class="radio">
-		<div class="radio" id="uniform-undefined"><span ><input type="radio" name="amount_type" value="2"  style="opacity: 0;"></span></div>
-		Debit
-		</label>  
-		 
-		 
-		</div>
-</div>
-
-</div>
-
-<div class="span3 responsive">
-
-
-
-<div class="control-group" >
-  <label class="control-label" style="font-size:14px; font-weight:bold;">Amount</label>
-  <div class="controls">
-	 <input type="text" name="amount" data-date-format="dd-mm-yyyy" class="span6 m-wrap" placeholder="">
-	 <label report="location" class="remove_report"></label>
-  </div>
-</div>
-
-
-</div>
-
-<div class="span6 responsive">
-
-
-<div class="control-group" >
-  <label class="control-label" style="font-size:14px; font-weight:bold;">Description:</label>
-  <div class="controls">
-	 <textarea name="covering_note" rows="3" id="alloptions" class="span12 m-wrap" placeholder="Description" style="resize:none;"></textarea>
-	 <label report="" class="remove_report"></label>
-  </div>
-</div>
-
-
-</div>
-</div>
-
-	<div id="hide_sub">
-		<button type="submit" name="sub" class="btn blue test" value="1"><i class=" icon-envelope-alt "></i> Submit</button>
+					<?php } ?>
+				</select>
+		</td>
+		<td>
+			
+			<input type="text" placeholder="Cheque/Utr No." class="m-wrap span12" name="cheque_number[]">
+					
+		</td>
+		<td>
+			<select class="medium m-wrap "  name="transection_type[]" style="width:150px !important;">
+					<option value="" style="display:none;">Select transection type</option>
+						<option value="Deposit">Deposited</option>
+						<option value="Withdraw">Withdraw</option>
+					
+			</select>
+			
+		</td>
+		<td>
+			<input type="text" class="m-wrap span12" placeholder="Amount" name="amount[]">
+		</td>
+		<td>
 		
-	</div>
-</form>
+			<input type="text" class="m-wrap span11 pull-left" placeholder="Narration" name="narration[]">
+		<div style="margin-top: -4px; margin-right: -5px;font-size: 14px !important;" class="pull-right">
 
-</div>
-</div>
+			<a style="" role="button" class="btn mini  remove_row" href="#"><i class="icon-trash"></i></a><br>
+			<a href="#" class="btn mini add_row" role="button">	 
+			<i class="icon-plus"></i></a>
+		</div>
+		</td>
+	</tr>
+</tbody>
+</table>
+<script>
+$(document).ready(function(){
+	add_row();
+	$(".add_row").die().live("click",function(){
+		add_row();
+	});
+	
+	$(".remove_row").die().live("click",function(){
+		$(this).closest("tr").remove();
+	})
+	
+	function add_row(){
+		var new_line=$("#sample tbody").html();
+		$("#main tbody").append(new_line);
+		$('#main tbody tr:last select[name="bank_name[]"]').chosen();
+		$('#main tbody tr:last select[name="transection_type[]"]').chosen();
+		$('#main tbody tr:last input[name="passbook_date[]"]').datepicker();
+	}
+	
+	$("form").die().on("submit",function(e){
+		var allow="yes";
+		
+		
+		
+		$('#main tbody tr input[name="passbook_date[]"]').die().each(function(i, obj){
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		
+		
+		$('#main tbody tr input[name="cheque_number[]"]').die().each(function(i, obj){
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		
+		
+		$('#main tbody tr input[name="amount[]"]').die().each(function(i, obj) {
+			var a=$(this).val();
+			if(a=="" || a==0){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		
+		
+		$('#main tbody tr select[name="transection_type[]"]').die().each(function(i, obj){
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		
+		$('#main tbody tr select[name="bank_name[]"]').die().each(function(i, obj){
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		
+		
+		if(allow=="no"){
+			e.preventDefault();
+		}else{
+			$("button[name=submit]").hide();	
+		}
+		
+	});
+	
+	
+	$('select[name="bank_name[]"]').die().live("change",function(){
+		var ledger_sub_account=$(this).val();
+		if(ledger_sub_account==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+	
+	$('input[name="passbook_date[]"]').die().live("change",function(){
+		var ledger_sub_account=$(this).val();
+		if(ledger_sub_account==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+	
+	
+	$('input[name="cheque_number[]"]').die().live("keyup blur",function(){
+		var ledger_sub_account=$(this).val();
+		if(ledger_sub_account==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+	
+	$('select[name="transection_type[]"]').die().live("change",function(){
+		var ledger_sub_account=$(this).val();
+		if(ledger_sub_account==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+	
+	$('input[name="amount[]"]').die().live("keyup blur",function(){
+		var amount=$(this).val();
+		if(amount=="" || amount==0){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+		$(this).val($(this).val().toString().replace(/^[0-9]\./g, ',')
+    .replace(/\./g, ''));
+			if($.isNumeric(amount))
+		{
+		}else{
+		$(this).val('');	
+		}
+	});
+	
+	
+});
 
-<div class="alert alert-block alert-success fade in" style="display:none;">
-	<h4 class="alert-heading">Success!</h4>
-</div>
-
+</script>

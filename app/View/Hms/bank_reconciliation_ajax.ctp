@@ -1,7 +1,4 @@
 
-<?php
-$webroot_path=$this->requestAction(array('controller' => 'Hms', 'action' => 'webroot_path'));
-?>
 <style>
 #report_tb th{
 	font-size: 14px !important;background-color:#C8EFCE;padding:5px;border:solid 1px #55965F;

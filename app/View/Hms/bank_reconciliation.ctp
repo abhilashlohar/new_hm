@@ -7,7 +7,7 @@
 </div>
 <form method="post" onSubmit="return valid()">
 <div  class="hide_at_print">
-        <table style="width:60%;">
+        <table style="">
         <tr>
         
 				<td>
@@ -26,12 +26,10 @@
 						</select>
 				</td>
 		
-				<td>
-					<input type="text" placeholder="From" id="date1" class="date-picker medium m-wrap" data-date-format="dd-mm-yyyy" name="from" style="background-color:white !important; margin-top:7px;" value="">
-				</td>
+				
 
 				<td>
-				<input type="text" placeholder="To" id="date2" class="date-picker medium m-wrap" data-date-format="dd-mm-yyyy" name="to" style="background-color:white !important; margin-top:7px;" value="">
+				<input type="text" placeholder="To" id="date2" class="date-picker medium m-wrap" data-date-format="dd-mm-yyyy" name="to" style="background-color:white !important; margin-top:7px;" value="<?php echo date("d-m-Y"); ?>">
 				</td>
 		
 				<td valign="top">
@@ -43,7 +41,7 @@
 </form>
 </center>
 
-<div id="ledger_view" style="width:100%;">
+<div id="ledger_view_1" style="width:100%;">
 </div>
 
 
@@ -52,9 +50,9 @@ $(document).ready(function() {
 	
 	    $("#go").bind('click',function(){
 			var ledger_account_id = $('#ledger_account').val();
-			var from=$('#date1').val();
+			//var from=$('#date1').val();
 		    var to=$('#date2').val();
-			$("#ledger_view").html('<div align="center" style="padding:10px;"><img src="<?php echo $webroot_path; ?>as/loding.gif" />Loading....</div>').load("bank_reconciliation_ajax/" +ledger_account_id+ "/" +from+ "/" +to+"");
+			$("#ledger_view_1").html('<div align="center" style="padding:10px;"><img src="<?php echo $webroot_path; ?>as/loding.gif" />Loading....</div>').load("bank_reconciliation_ajax/" +ledger_account_id+ "/" +to+"");
 	});
 });
 </script>

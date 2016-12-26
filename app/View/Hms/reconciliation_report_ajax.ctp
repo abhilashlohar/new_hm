@@ -13,8 +13,14 @@ background-color: #E6ECE7;
 </style>
 
 <div style="background-color:#fff;" align="center">
+<div>
+<?php echo $society_name; ?><br>
+Bank Reconciliation Statement as on <?php echo $to; ?><br>
+<?php echo $bank_name; ?> Bank
+
+</div>
 <div class="pull-right">
-Opening balance as  per passbook <input class="m-wrap small call_calculation  hide_at_print" placeholder="" id="opening_balance" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
+Closing balance as  per passbook <input class="m-wrap small call_calculation  hide_at_print" placeholder="" id="opening_balance" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
 </div>
 <table width="100%" class="table table-bordered " id="receiptmain">
 	<thead>

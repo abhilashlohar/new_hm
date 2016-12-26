@@ -11,6 +11,14 @@ table#report_tb tr:hover td {
 background-color: #E6ECE7;
 }
 </style>
+<style>
+.er{
+color: rgb(198, 4, 4);
+font-size: 11px;
+}
+</style>
+
+
 <?php 
 function substrwords($text, $maxchar, $end='...') {
     if (strlen($text) > $maxchar || $text == '') {
@@ -147,8 +155,7 @@ function substrwords($text, $maxchar, $end='...') {
 		$wing_flat=$this->requestAction(array('controller'=>'Fns','action' => 'wing_flat_via_wing_id_and_flat_id'), array('pass' => array($wing_id,$flat_id)));
 		
 		}
-    }
-	if($receipt_source == "bank_payment")
+    }elseif($receipt_source == "bank_payment")
 	{
 		$tds_amount=0;
 		$tds_array_for_bank_payment = array();
@@ -247,8 +254,7 @@ function substrwords($text, $maxchar, $end='...') {
             $tds_array_for_bank_payment[] = array($total_tds_amount,$description,$creater_name,$current_datttt);	
 			}
 		}
-	}
-	if($receipt_source == "petty_cash_receipt")
+	}elseif($receipt_source == "petty_cash_receipt")
 	{
 	$source="Petty Cash Receipt";
 		$trans_id=(int)$result_cash_bank[0]["cash_bank"]["transaction_id"]; 
@@ -304,8 +310,7 @@ function substrwords($text, $maxchar, $end='...') {
 			}
 		}
 
-	}
-	if($receipt_source == "petty_cash_payment")
+	}elseif($receipt_source == "petty_cash_payment")
 	{
 		$source="Petty Cash Payment";
 		$trans_id = (int)$result_cash_bank[0]["cash_bank"]["transaction_id"]; 
@@ -363,9 +368,7 @@ function substrwords($text, $maxchar, $end='...') {
 
 
 		
-		} 
-		
-			if($table_name=="journal"){
+		}elseif($table_name=="journal"){
 			
 			$source="Journal";
 			
@@ -438,7 +441,7 @@ function substrwords($text, $maxchar, $end='...') {
 			<td>
 		
 			<input type="text" class="m-wrap span8 pull-left date-picker" placeholder="Date" name="pass_book" data-date-format="dd-mm-yyyy">
-			<a href="#" class="btn blue icn-only add_row" role="button" bank_id="<?php echo $auto_id; ?>" >	 
+			<a href="#" class="btn blue icn-only move_match" role="button" bank_id="<?php echo $auto_id; ?>" >	 
 			<i class="m-icon-swapright m-icon-white"></i></a>
 		
 		   </td>
@@ -455,11 +458,150 @@ function substrwords($text, $maxchar, $end='...') {
 		
 	</tbody>
 </table>
+
+
+
+
+<!---- reconciliation form --->
+<h3>Reconciliation Form</h3>
+
+<div class="portlet box">
+	<div class="portlet-body">
+	<form method="post" id="myForm">
+		<table class="table table-condensed table-bordered" id="main">
+			<thead>
+				<tr>
+					<th width="130px">Passbook Date <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th width="50px">Bank name <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th width="150px">Check number/Neft <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th width="150px">Deposit amount <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th width="150px" >Withdraw Amount <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th width="" >Narration</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				
+			</tbody>
+		</table>
+		<button type="submit" class="btn blue pull-right" name="submit">Submit</button>
+	</form>
+		<!--<a href="#" role="button" id="add_row" class="btn"><i class="icon-plus"></i> Add Row</a>-->
+	</div>
 </div>
-<?php echo $webroot_path ; ?>
+
+<table id="sample" style="display:none;">
+<tbody>
+	<tr>
+		<td>
+			<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy"  value="" name="passbook_date[]" placeholder="Passbook date">
+		</td>
+		<td>
+				<select class="medium m-wrap"  name="bank_name[]" style="width:130px !important;">
+				<option value="" style="display:none;width:50px;">Select Bank</option>
+					<?php
+						 foreach($result_ledger_sub_account as $data){
+							 
+							  $ledger_sub_ac_id=$data['ledger_sub_account']['auto_id'];
+							  $bank_name=$data['ledger_sub_account']['name'];
+							 ?>
+						  
+								<option value="<?php echo $ledger_sub_ac_id; ?>"><?php echo $bank_name; ?> </option>
+						  
+					<?php } ?>
+				</select>
+		</td>
+		<td>
+			
+			<input type="text" placeholder="Cheque/Utr No." class="m-wrap span12" name="cheque_number[]">
+					
+		</td>
+		<td>
+			<!--<select class="medium m-wrap "  name="transection_type[]" style="width:150px !important;">
+					<option value="" style="display:none;">Select transection type</option>
+						<option value="Deposit">Deposited</option>
+						<option value="Withdraw">Withdraw</option>
+					
+			</select>-->
+			<input type="text" class="m-wrap span12" placeholder="Amount" name="deposit_amount[]">
+			
+		</td>
+		<td>
+			<input type="text" class="m-wrap span12" placeholder="Amount" name="withdraw_amount[]">
+		</td>
+		<td>
+		
+			<input type="text" class="m-wrap span11 pull-left" placeholder="Narration" name="narration[]">
+		<div style="margin-top: -4px; margin-right: -5px;font-size: 14px !important;" class="pull-right">
+
+			<a style="" role="button" class="btn mini  remove_row" href="#"><i class="icon-trash"></i></a><br>
+			<a href="#" class="btn mini add_row" role="button">	 
+			<i class="icon-plus"></i></a>
+		</div>
+		</td>
+	</tr>
+</tbody>
+</table>
+
+
+
+
+<!-----  end ---->
+
+
+
+<!-- reconciliation report --->
+<br>
+
+<center>
+<h3>Reconciliation Report</h3>
+<form method="post" onSubmit="return valid()">
+<div  class="hide_at_print">
+        <table style="">
+        <tr>
+        
+				<td>
+						<select class="medium m-wrap chosen" id="ledger_account1">
+						<option value="" style="display:none;">Select Bank A/c</option>
+						<?php
+						 foreach($result_ledger_sub_account as $data){
+							 
+							  $ledger_sub_ac_id=$data['ledger_sub_account']['auto_id'];
+							  $bank_name=$data['ledger_sub_account']['name'];
+							 ?>
+                          
+								<option value="<?php echo $ledger_sub_ac_id; ?>"><?php echo $bank_name; ?> </option>
+						  
+						  <?php } ?>
+						</select>
+				</td>
+		
+				<td>
+				<input type="text" placeholder="To" id="date2" class="date-picker medium m-wrap" data-date-format="dd-mm-yyyy" name="to" style="background-color:white !important; margin-top:7px;" value="<?php echo date("d-m-Y"); ?>">
+				</td>
+		
+				<td valign="top">
+				<button type="button" id="go_1" name="sub" class="btn yellow" style="margin-top:7px;">Search</button>
+				</td>
+		</tr>
+</table>
+</div>
+</form>
+</center>
+
+<div id="ledger_view" style="width:100%;">
+</div>
+
+
+
+
+<!-- end code --->
+
+</div>
+
 <script>
 $(document).ready(function() {
-	$(".add_row").bind('click',function(){
+	$(".move_match").bind('click',function(){
 		var z=$(this);
 		var date=$(this).closest('tr').find('input').val();
 		var bank_id=$(this).attr("bank_id");
@@ -483,7 +625,179 @@ $(document).ready(function() {
 			return !~text.indexOf(val);
 		}).hide();
 	});
+	
+<!-- Reconciliation form code ---->
+	
+	add_row();
+	$(".add_row").die().live("click",function(){
+		add_row();
+	});
+	
+	$(".remove_row").die().live("click",function(){
+		$(this).closest("tr").remove();
+	})
+	
+	function add_row(){
+		var new_line=$("#sample tbody").html();
+		$("#main tbody").append(new_line);
+		$('#main tbody tr:last select[name="bank_name[]"]').chosen();
+		$('#main tbody tr:last select[name="transection_type[]"]').chosen();
+		$('#main tbody tr:last input[name="passbook_date[]"]').datepicker();
+	}
+	
+	
+	$("form").die().on("submit",function(e){
+		var allow="yes";
+		
+		
+		
+		$('#main tbody tr input[name="passbook_date[]"]').die().each(function(i, obj){
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		
+		
+		$('#main tbody tr input[name="cheque_number[]"]').die().each(function(i, obj){
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		
+		
+	$('#main tbody tr').die().each(function(i, obj) {
+		var deposit_amount=$('#main tbody tr:eq('+i+') td').find('input[name="deposit_amount[]"]').val();
+		var withdraw_amount=$('#main tbody tr:eq('+i+') td').find('input[name="withdraw_amount[]"]').val();
+		if(deposit_amount && withdraw_amount ){
+			$('#main tbody tr:eq('+i+') td').find('input[name="deposit_amount[]"]').closest('td').find(".er").remove();
+			$('#main tbody tr:eq('+i+') td').find('input[name="deposit_amount[]"]').closest('td').append('<span class="er">only one amount required</span>');
+			allow="no";
+		}else{
+			$('#main tbody tr:eq('+i+') td').find('input[name="deposit_amount[]"]').closest('td').find(".er").remove();
+		}
+		if(!deposit_amount && !withdraw_amount ){
+			$('#main tbody tr:eq('+i+') td').find('input[name="deposit_amount[]"]').closest('td').append('<span class="er">one amount required</span>');
+			allow="no";
+		}
+	});
+		
+		$('#main tbody tr select[name="bank_name[]"]').die().each(function(i, obj){
+			var deposited_in=$(this).val();
+			if(deposited_in==""){
+				$(this).closest('td').find(".er").remove();
+				$(this).closest('td').append('<span class="er">Required</span>');
+				allow="no";
+			}else{
+				$(this).closest('td').find(".er").remove();
+			}
+		});
+		
+		
+		if(allow=="no"){
+			e.preventDefault();
+		}else{
+			$("button[name=submit]").hide();	
+		}
+		
+	});
+	
+		
+	$('select[name="bank_name[]"]').die().live("change",function(){
+		var ledger_sub_account=$(this).val();
+		if(ledger_sub_account==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+	
+	$('input[name="passbook_date[]"]').die().live("change",function(){
+		var ledger_sub_account=$(this).val();
+		if(ledger_sub_account==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+	
+	
+	$('input[name="cheque_number[]"]').die().live("keyup blur",function(){
+		var ledger_sub_account=$(this).val();
+		if(ledger_sub_account==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+	
+	$('select[name="transection_type[]"]').die().live("change",function(){
+		var ledger_sub_account=$(this).val();
+		if(ledger_sub_account==""){
+			$(this).closest('td').find(".er").remove();
+			$(this).closest('td').append('<span class="er">Required</span>');
+			allow="no";
+		}else{
+			$(this).closest('td').find(".er").remove();
+		}
+	});
+	
+	$('input[name="deposit_amount[]"]').die().live("keyup blur",function(){
+		var amount=$(this).val();
+		
+		$(this).val($(this).val().toString().replace(/^[0-9]\./g, ',')
+    .replace(/\./g, ''));
+			if($.isNumeric(amount))
+		{
+		}else{
+		$(this).val('');	
+		}
+	});
+	
+ <!-- end code ---->
+ 
+ <!-- Reconciliation report code --->
+ 
+		$("#go_1").bind('click',function(){
+			var ledger_account_id = $('#ledger_account').val();
+			//var from=$('#date1').val();
+		    var to=$('#date2').val();
+			$("#ledger_view").html('<div align="center" style="padding:10px;"><img src="<?php echo $webroot_path; ?>as/loding.gif" />Loading....</div>').load("reconciliation_report_ajax/" +ledger_account_id+ "/" +to+"");
+		});
+ 
+ 
+ 
+ 
+ <!--end --->
+ 
+ 
+ 
+	
 });
+
+
+
+
+
+
+
+
+
 
 </script>
 

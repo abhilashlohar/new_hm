@@ -27,8 +27,8 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 					<th width="130px">Passbook Date <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
 					<th width="50px">Bank name <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
 					<th width="150px">Check number/Neft <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
-					<th width="150px">Transection type <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
-					<th width="125px" >Amount <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th width="150px">Deposit amount <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
+					<th width="150px" >Withdraw Amount <span style="color:red; font-size:10px;"><i class=" icon-star"></i></span></th>
 					<th width="" >Narration</th>
 				</tr>
 			</thead>
@@ -37,7 +37,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 				
 			</tbody>
 		</table>
-		<button type="submit" class="btn blue pull-right" name="submit">Create Receipt</button>
+		<button type="submit" class="btn blue pull-right" name="submit">Submit</button>
 	</form>
 		<!--<a href="#" role="button" id="add_row" class="btn"><i class="icon-plus"></i> Add Row</a>-->
 	</div>
@@ -70,16 +70,17 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 					
 		</td>
 		<td>
-			<select class="medium m-wrap "  name="transection_type[]" style="width:150px !important;">
+			<!--<select class="medium m-wrap "  name="transection_type[]" style="width:150px !important;">
 					<option value="" style="display:none;">Select transection type</option>
 						<option value="Deposit">Deposited</option>
 						<option value="Withdraw">Withdraw</option>
 					
-			</select>
+			</select>-->
+			<input type="text" class="m-wrap span12" placeholder="Amount" name="deposit_amount[]">
 			
 		</td>
 		<td>
-			<input type="text" class="m-wrap span12" placeholder="Amount" name="amount[]">
+			<input type="text" class="m-wrap span12" placeholder="Amount" name="withdraw_amount[]">
 		</td>
 		<td>
 		
@@ -142,28 +143,21 @@ $(document).ready(function(){
 		});
 		
 		
-		$('#main tbody tr input[name="amount[]"]').die().each(function(i, obj) {
-			var a=$(this).val();
-			if(a=="" || a==0){
-				$(this).closest('td').find(".er").remove();
-				$(this).closest('td').append('<span class="er">Required</span>');
-				allow="no";
-			}else{
-				$(this).closest('td').find(".er").remove();
-			}
-		});
-		
-		
-		$('#main tbody tr select[name="transection_type[]"]').die().each(function(i, obj){
-			var deposited_in=$(this).val();
-			if(deposited_in==""){
-				$(this).closest('td').find(".er").remove();
-				$(this).closest('td').append('<span class="er">Required</span>');
-				allow="no";
-			}else{
-				$(this).closest('td').find(".er").remove();
-			}
-		});
+	$('#main tbody tr').die().each(function(i, obj) {
+		var deposit_amount=$('#main tbody tr:eq('+i+') td').find('input[name="deposit_amount[]"]').val();
+		var withdraw_amount=$('#main tbody tr:eq('+i+') td').find('input[name="withdraw_amount[]"]').val();
+		if(deposit_amount && withdraw_amount ){
+			$('#main tbody tr:eq('+i+') td').find('input[name="deposit_amount[]"]').closest('td').find(".er").remove();
+			$('#main tbody tr:eq('+i+') td').find('input[name="deposit_amount[]"]').closest('td').append('<span class="er">only one amount required</span>');
+			allow="no";
+		}else{
+			$('#main tbody tr:eq('+i+') td').find('input[name="deposit_amount[]"]').closest('td').find(".er").remove();
+		}
+		if(!deposit_amount && !withdraw_amount ){
+			$('#main tbody tr:eq('+i+') td').find('input[name="deposit_amount[]"]').closest('td').append('<span class="er">one amount required</span>');
+			allow="no";
+		}
+	});
 		
 		$('#main tbody tr select[name="bank_name[]"]').die().each(function(i, obj){
 			var deposited_in=$(this).val();

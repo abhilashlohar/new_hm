@@ -36,7 +36,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <tbody>
 <tr>
 	<td>
-	<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy"  data-date-start-date="+0d" style="background-color:white !important; margin-top:2.5px;" value="<?php echo $default_date; ?>" name="transaction_date[]">
+	<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy"  data-date-start-date="" style="background-color:white !important; margin-top:2.5px;" value="<?php echo $default_date; ?>" name="transaction_date[]">
 	</td>
 	
 	<td>

@@ -1457,7 +1457,7 @@ function member_info_via_user_id($user_id){
 		$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
 		@$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
 		
-		$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
+		$flats[$user_flat_id]=$wing_name.'-'.$flat_name;
 	}
 	return array("user_name"=>$user_name,"wing_flat"=>$flats,"email"=>$email,"mobile"=>$mobile,"profile_pic"=>$profile_pic,"validation_status"=>$validation_status);
 }

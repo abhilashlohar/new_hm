@@ -185,7 +185,7 @@ $result_member=$this->requestAction(array('controller' => 'Fns', 'action' => 'me
 		}
 
 ?>
-<option value="<?php echo $user_id; ?>"><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $flat; ?>,<?php echo $email; ?></option>
+<option value="<?php echo $user_id; ?>"><?php echo $user_name; ?> <?php echo $flat; ?></option>
 <?php } ?>           
 		  
 	 </select>

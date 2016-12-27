@@ -43,7 +43,7 @@
 
 <div id="ledger_view_1" style="width:100%;">
 </div>
-
+<?php echo $webroot_path; ?>
 
 <script>
 $(document).ready(function() {

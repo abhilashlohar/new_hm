@@ -118,7 +118,7 @@ function bank_reconciliation_ajax($ledger_sub_ac_id=null,$to=null){
 }
 
 function bank_reconciliation_update($auto_id=null,$date=null){
-	
+	$this->layout=null;
 	$this->loadmodel('bank_reconciliation');
 	$this->bank_reconciliation->updateAll(array("pass_book_date"=>$date,"flag"=>1),array("auto_id"=>(int)$auto_id));
 	echo "done";
@@ -15279,7 +15279,7 @@ function user_assign_role(){
 				$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
 				@$flat_name=ltrim($flat_info[0]["flat"]["flat_name"],'0');
 				
-				$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
+				$flats[$user_flat_id]=$wing_name.'-'.$flat_name;
 			}
 			$result_member[]=array("user_name"=>$user_name,"wing_flat"=>$flats,"email"=>$email,"mobile"=>$mobile,"profile_pic"=>$profile_pic,'user_id'=>$user_id);
 	}	
@@ -31375,7 +31375,7 @@ function groupview($gid=null)
 			foreach($result5 as $data){
 					@$flat_name=ltrim(@$data["flat"]["flat_name"],'0');
 					$flat_id=(int)@$data["flat"]["flat_id"];
-					$flats=$wing_name.' - '.$flat_name;
+					$flats=$wing_name.'-'.$flat_name;
 					$this->loadmodel('user_flat');
 					$conditions=array('society_id'=>$s_society_id,'flat'=>$flat_id,'exited'=>'no');
 					$result_user_flat= $this->user_flat->find('all',array('conditions'=>$conditions));

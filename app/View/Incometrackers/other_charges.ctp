@@ -114,7 +114,7 @@ $income_arrr[] = $data;
 								$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
 								
 								?>
-								<option  value="<?php echo $ledger_sub_account_id; ?>"><?php echo $member_info["user_name"]." ".$member_info["wing_name"]." - ".$member_info["flat_name"]; ?>
+								<option  value="<?php echo $ledger_sub_account_id; ?>"><?php echo $member_info["user_name"]." ".$member_info["wing_name"]."-".$member_info["flat_name"]; ?>
 								<?php }} ?>
 							</select>
 							 <label id="flats"></label>

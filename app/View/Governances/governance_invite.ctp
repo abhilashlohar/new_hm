@@ -73,7 +73,7 @@ foreach($result_users as $collection)
 			
 		}
 ?>
-<option value="<?php echo $user_id; ?>"><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $flat; ?>,<?php echo $email; ?></option>
+<option value="<?php echo $user_id; ?>"><?php echo $user_name; ?> <?php echo $flat; ?></option>
 <?php } ?>           
 		  
 	 </select>

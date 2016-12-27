@@ -73,7 +73,7 @@ $result_member=$this->requestAction(array('controller' => 'Fns', 'action' => 'me
 		}
 
 ?>
-<option value="<?php echo $user_id; ?>" <?php if(in_array($user_id,$present_user)){ ?> selected <?php } ?> ><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $flat; ?></option>
+<option value="<?php echo $user_id; ?>" <?php if(in_array($user_id,$present_user)){ ?> selected <?php } ?> ><?php echo $user_name; ?> <?php echo $flat; ?></option>
 <?php } ?>           
 		  
 	 </select>

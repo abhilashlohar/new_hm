@@ -25,7 +25,7 @@ $wing_flat=$result_user["wing_flat"];
 	}
 
 ?>
-<option value="<?php echo $collection; ?>" selected><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $flat; ?></option>
+<option value="<?php echo $collection; ?>" selected><?php echo $user_name; ?> <?php echo $flat; ?></option>
 <?php } ?>           
 		  
 	 </select>

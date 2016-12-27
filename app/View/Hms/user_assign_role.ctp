@@ -70,7 +70,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 					}
 
 			?>
-					<option value="<?php echo $user_id; ?>" ><?php echo $user_name; ?> &nbsp;&nbsp;(<?php echo $flat ; ?>)</option>
+					<option value="<?php echo $user_id; ?>" ><?php echo $user_name; ?> <?php echo $flat ; ?></option>
 			<?php } ?>
 		 </select>
  </span>

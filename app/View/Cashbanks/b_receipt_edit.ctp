@@ -159,7 +159,7 @@ font-size: 11px;"></p></td></tr></table>
 	<option value="" style="display:none;">--member--</option>
 	<?php foreach($members_for_billing as $ledger_sub_account_ids){
 	$member_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_ids))); ?>
-	<option value="<?php echo $ledger_sub_account_ids; ?>" <?php if($ledger_sub_account_id== $ledger_sub_account_ids){ ?> selected="selected" <?php } ?>><?php echo $member_info["user_name"]; echo $member_info["wing_name"]; echo ltrim($member_info["flat_name"]); ?></option>
+	<option value="<?php echo $ledger_sub_account_ids; ?>" <?php if($ledger_sub_account_id== $ledger_sub_account_ids){ ?> selected="selected" <?php } ?>><?php echo $member_info["user_name"]; echo" ". $member_info["wing_name"]; echo"-". ltrim($member_info["flat_name"]); ?></option>
 	<?php } ?>
 	</select>
 

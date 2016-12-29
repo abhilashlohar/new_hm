@@ -374,6 +374,39 @@ function calculate_income_head_amount($ledger_sub_account_id,$income_head_id,$bi
 	}
 }
 
+
+function calculate_rate_for_income_head($ledger_sub_account_id,$income_head_id,$billing_cycle){
+	$s_society_id=$this->Session->read('hm_society_id');
+	
+	$this->loadmodel('ledger_sub_account');
+	$conditions=array("auto_id" => $ledger_sub_account_id);
+	$result2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$user_flat_id=(int)@$result2[0]["ledger_sub_account"]["user_flat_id"];
+	
+	$this->loadmodel('user_flat');
+	$conditions=array("user_flat_id" => $user_flat_id,"owner"=>"yes");
+	$result3=$this->user_flat->find('all',array('conditions'=>$conditions));
+	$flat_id=(int)@$result3[0]["user_flat"]["flat"];
+	
+	$this->loadmodel('flat');
+	$conditions=array("flat_id" => $flat_id);
+	$result4=$this->flat->find('all',array('conditions'=>$conditions));
+	$flat_type_id=(int)@$result4[0]["flat"]["flat_type_id"];
+	$flat_area=(int)@$result4[0]["flat"]["flat_area"];
+	
+	$this->loadmodel('rate_card');
+	$conditions=array("flat_type_id" => $flat_type_id,"income_head_id" => $income_head_id,"society_id" => $s_society_id);
+	$result5=$this->rate_card->find('all',array('conditions'=>$conditions));
+	$rate_type=(int)@$result5[0]["rate_card"]["rate_type"];
+	$rate=$result5[0]["rate_card"]["rate"];
+	/*if($rate_type==1 or $rate_type==3){
+		return $rate;
+	}*/
+	if($rate_type==2){
+		return $rate;
+	}
+}
+
 function calculate_noc_charge($ledger_sub_account_id,$billing_cycle){
 	$s_society_id=$this->Session->read('hm_society_id');
 	

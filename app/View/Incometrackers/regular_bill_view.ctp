@@ -154,7 +154,7 @@
 							<table style="font-size:12px;border-bottom: solid 1px #767575;" width="100%" cellspacing="0">
 								<tbody><tr>
 									<td style="padding: 0 0 0 5px;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;border-right: solid 1px #FFFFFF;" align="left" width="60%"><b>Particulars of charges</b></td>
-									<td style="padding: 0 5px  0;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;" align="left" width="20%"><b>Rate (sq.ft.)</b> </td>
+									<td style="padding: 0 5px  0;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;border-right: solid 1px #FFFFFF;" align="center" width="20%"><b>Rate (sq.ft.)</b> </td>
 									<td style="padding: 0 5px 0 0;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;" align="right" width="20%"><b>Amount (Rs.)</b> </td>
 								</tr>';
 								
@@ -167,7 +167,7 @@
 								if(!empty($value)){
 									$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >'.$income_head_name.'</td>
-										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">'.$income_head_for_rate[$key].'</td>
+										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">'.$income_head_for_rate[$key].'</td>
 										<td align="right" style="padding: 0 5px 0 0;">'.$value.'</td>
 									</tr>';
 								}
@@ -177,7 +177,7 @@
 							if(!empty($noc_charge)){
 							$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >Non Occupancy charges</td>
-										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;"></td>
+										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;"></td>
 										<td align="right" style="padding: 0 5px 0 0;">'.$noc_charge.'</td>
 									</tr>';
 							}
@@ -187,7 +187,7 @@
 																
 								$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >'.$income_head_name.'</td>
-										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;"></td>
+										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;"></td>
 										<td align="right" style="padding: 0 5px 0 0;">'.$vlaue.'</td>
 									</tr>';
 							} 

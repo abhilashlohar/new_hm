@@ -1141,7 +1141,7 @@ function generate_bills(){
 							<table style="font-size:12px;border-bottom: solid 1px #767575;" width="100%" cellspacing="0">
 								<tbody><tr>
 									<td style="padding: 0 0 0 5px;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;border-right: solid 1px #FFFFFF;" align="left" width="60%"><b>Particulars of charges</b></td>
-									<td style="border-right: solid 1px #fff;padding: 0 0  0 5px;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;" align="left" width="20%"><b>Rate (sq.ft.)</b> </td>
+									<td style="padding: 0 5px  0;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;border-right: solid 1px #FFFFFF;" align="center" width="20%"><b>Rate (sq.ft.)</b> </td>
 									<td style="padding: 0 5px 0 0;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;" align="right" width="20%"><b>Amount (Rs.)</b> </td>
 								</tr>';
 								
@@ -1154,7 +1154,7 @@ function generate_bills(){
 								if(!empty($value)){
 									$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >'.$income_head_name.'</td>
-										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">'.$income_head_for_rate[$key].' </td>
+										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">'.$income_head_for_rate[$key].' </td>
 										<td align="right" style="padding: 0 5px 0 0;">'.$value.'</td>
 									</tr>';
 								}
@@ -1164,7 +1164,7 @@ function generate_bills(){
 							if(!empty($noc_charge)){
 							$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >Non Occupancy charges</td>
-										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;"></td>
+										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;"></td>
 										<td align="right" style="padding: 0 5px 0 0;">'.$noc_charge.'</td>
 									</tr>';
 							}
@@ -1174,7 +1174,7 @@ function generate_bills(){
 																
 								$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >'.$income_head_name.'</td>
-										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;"></td>
+										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;"></td>
 										<td align="right" style="padding: 0 5px 0 0;">'.$vlaue.'</td>
 									</tr>';
 							} 
@@ -7473,6 +7473,7 @@ function regular_bill_edit2($auto_id=null){
 	$created_by=$regular_bill_info[0]["regular_bill"]["created_by"];
 	$created_on=$regular_bill_info[0]["regular_bill"]["current_date"];
 	$terms_condition_id=(int)$regular_bill_info[0]["regular_bill"]["terms_condition_id"];
+	$income_head_for_rate=$regular_bill_info[0]["regular_bill"]["income_head_for_rate"];
 	$terms_condition_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_terms_condition'), array('pass' => array($terms_condition_id)));
 	$terms_conditions=@$terms_condition_info[0]["terms_condition"]["terms_conditions"];
 	if(empty($terms_conditions)){
@@ -7573,7 +7574,7 @@ function regular_bill_edit2($auto_id=null){
 		$current_date = date('Y-m-d');
 		
 		$reg_auto_id=$this->autoincrement('regular_bill','auto_id');
-		$this->regular_bill->saveAll(array("auto_id"=>$reg_auto_id,"bill_number"=>$bill_number,"ledger_sub_account_id"=>$ledger_sub_account_id,"income_head_array"=>$income_head_array,"noc_charge"=>$non_occupancy_charges,"other_charge"=>$other_charges_array,"total"=>$total,"arrear_principle"=>$arrear_principle,"maint_arrear"=> $maint_arrear,"non_maint_arrear"=> $non_maint_arrear,"arrear_intrest"=>$arrear_intrest,"intrest_on_arrears"=>$interest_on_arrears,"credit_stock"=>$credit_stock,"due_for_payment"=>$due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"end_date"=>$end_date,"edited"=>"no","description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by,"current_date"=>$created_on,'edit_text'=>"-R","edited_by"=>$s_user_id,"edited_on"=>$current_date,"terms_condition_id"=>$terms_condition_id));
+		$this->regular_bill->saveAll(array("auto_id"=>$reg_auto_id,"bill_number"=>$bill_number,"ledger_sub_account_id"=>$ledger_sub_account_id,"income_head_array"=>$income_head_array,"noc_charge"=>$non_occupancy_charges,"other_charge"=>$other_charges_array,"total"=>$total,"arrear_principle"=>$arrear_principle,"maint_arrear"=> $maint_arrear,"non_maint_arrear"=> $non_maint_arrear,"arrear_intrest"=>$arrear_intrest,"intrest_on_arrears"=>$interest_on_arrears,"credit_stock"=>$credit_stock,"due_for_payment"=>$due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"end_date"=>$end_date,"edited"=>"no","description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by,"current_date"=>$created_on,'edit_text'=>"-R","edited_by"=>$s_user_id,"edited_on"=>$current_date,"terms_condition_id"=>$terms_condition_id,"income_head_for_rate"=>$income_head_for_rate));
 		
 		$edit_text="-R";
 		//LEDGER CODE START//

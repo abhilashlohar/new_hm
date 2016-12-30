@@ -32,6 +32,7 @@ foreach($regular_bills as $data){
 					$ledger_sub_account_id=(int)$data["regular_bill"]["ledger_sub_account_id"];
 					$billing_cycle=$data["regular_bill"]["billing_cycle"];	
 					$income_head_array=$data["regular_bill"]["income_head_array"];
+					$income_head_for_rate=$data["regular_bill"]["income_head_for_rate"];
 					$noc_charge=$data["regular_bill"]["noc_charge"];
 					$other_charge=$data["regular_bill"]["other_charge"];
 					$total=$data["regular_bill"]["total"];
@@ -159,7 +160,8 @@ foreach($regular_bills as $data){
 							<table style="font-size:12px;border-bottom: solid 1px #767575;" width="100%" cellspacing="0">
 								<tbody><tr>
 									<td style="padding: 0 0 0 5px;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;border-right: solid 1px #FFFFFF;" align="left" width="60%"><b>Particulars of charges</b></td>
-									<td style="padding: 0 5px 0 0;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;" align="right" width="40%"><b>Amount (Rs.)</b> </td>
+									<td style="padding: 0 5px  0;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;border-right: solid 1px #FFFFFF;" align="center" width="20%"><b>Rate (sq.ft.)</b> </td>
+									<td style="padding: 0 5px 0 0;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;" align="right" width="20%"><b>Amount (Rs.)</b> </td>
 								</tr>';
 								
 								
@@ -171,6 +173,7 @@ foreach($regular_bills as $data){
 								if(!empty($value)){
 									$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >'.$income_head_name.'</td>
+										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">'.$income_head_for_rate[$key].'</td>
 										<td align="right" style="padding: 0 5px 0 0;">'.$value.'</td>
 									</tr>';
 								}
@@ -180,6 +183,7 @@ foreach($regular_bills as $data){
 							if(!empty($noc_charge)){
 							$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >Non Occupancy charges</td>
+										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;"></td>
 										<td align="right" style="padding: 0 5px 0 0;">'.$noc_charge.'</td>
 									</tr>';
 							}
@@ -189,6 +193,7 @@ foreach($regular_bills as $data){
 																
 								$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >'.$income_head_name.'</td>
+										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;"></td>
 										<td align="right" style="padding: 0 5px 0 0;">'.$vlaue.'</td>
 									</tr>';
 							} 

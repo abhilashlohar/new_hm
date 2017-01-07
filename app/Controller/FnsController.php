@@ -683,9 +683,7 @@ function calculate_arrears_and_interest_new($ledger_sub_account_id,$start_date){
 				}
 			}else{
 				 $total_credit+=$credit;
-			}
-	   }
-		$reminder=$arrear_interest-$total_credit;
+				 $reminder=$arrear_interest-$total_credit;
 				if($reminder<0){
 					$total_credit=abs($reminder);
 					$arrear_interest=0;
@@ -705,6 +703,9 @@ function calculate_arrears_and_interest_new($ledger_sub_account_id,$start_date){
 				}else{
 					$arrear_interest=abs($reminder);
 				}
+			}
+	   }
+		
 		
 		 $arrear_principle=$maint_arrear+$non_maint_arrear;
 		 

@@ -613,7 +613,7 @@ function calculate_arrears_and_interest_new($ledger_sub_account_id,$start_date){
 	$society_result=$this->society->find('all',array('conditions'=>$condition));
 	$tax=(float)$society_result[0]["society"]["tax"];
 	$tax_factor=$tax/100;
-	$maint_arrear=0;$non_maint_arrear=0;$arrear_interest=0;
+	$maint_arrear=0;$non_maint_arrear=0;$arrear_interest=0;$total_credit=0;
 		$this->requestAction(array('controller' => 'Hms', 'action' => 'ath'));
 		$s_society_id=$this->Session->read('hm_society_id');
 	  
@@ -621,7 +621,8 @@ function calculate_arrears_and_interest_new($ledger_sub_account_id,$start_date){
 		$this->loadmodel('ledger');
 		$order=array('transaction_date'=>'ASC');
 		$ledgers = $this->ledger->find('all',array('conditions'=>$conditions,"order"=>$order));
-	   foreach($ledgers as $data2){
+		//pr($ledgers);
+	 /*  foreach($ledgers as $data2){
 			$debit=$data2["ledger"]["debit"];
 			$credit=$data2["ledger"]["credit"];
 			$table_name=$data2["ledger"]["table_name"];
@@ -637,11 +638,11 @@ function calculate_arrears_and_interest_new($ledger_sub_account_id,$start_date){
 					$non_maint_arrear+=$debit;
 				}
 			}else{
-				$reminder=$arrear_interest-$credit;
+				 $reminder=$arrear_interest-$credit;
 				if($reminder<0){
 					$credit=abs($reminder);
 					$arrear_interest=0;
-					$reminder=$non_maint_arrear-$credit;
+					 $reminder=$non_maint_arrear-$credit;
 					if($reminder<0){
 						$credit=abs($reminder);
 						$non_maint_arrear=0;
@@ -659,11 +660,55 @@ function calculate_arrears_and_interest_new($ledger_sub_account_id,$start_date){
 				}
 			}
 			
-		}
-		$arrear_principle=$maint_arrear+$non_maint_arrear;
-		return array("maint_arrear" =>$maint_arrear,"non_maint_arrear" =>$non_maint_arrear,"arrear_principle" =>$arrear_principle,"arrear_intrest" =>$arrear_interest);
+		} */
 		
-	
+		//echo $arrear_interest;
+		
+		
+		//pr($ledgers);
+	  foreach($ledgers as $data2){
+			$debit=$data2["ledger"]["debit"];
+			$credit=$data2["ledger"]["credit"];
+			$table_name=$data2["ledger"]["table_name"];
+			$arrear_int_type=@$data2["ledger"]["intrest_on_arrears"];
+			if(empty($credit) && $debit>0){
+				if($table_name=="opening_balance" or $table_name=="regular_bill"){
+					if($arrear_int_type=="YES"){
+						$arrear_interest+=$debit;
+					}else{
+						$maint_arrear+=$debit;
+					}
+				}else{
+					$non_maint_arrear+=$debit;
+				}
+			}else{
+				 $total_credit+=$credit;
+			}
+	   }
+		$reminder=$arrear_interest-$total_credit;
+				if($reminder<0){
+					$total_credit=abs($reminder);
+					$arrear_interest=0;
+					 $reminder=$non_maint_arrear-$total_credit;
+					if($reminder<0){
+						$total_credit=abs($reminder);
+						$non_maint_arrear=0;
+						$reminder=$maint_arrear-$total_credit;
+						if($reminder<0){
+							$maint_arrear=$reminder;
+						}else{
+							$maint_arrear=abs($reminder);
+						}
+					}else{
+						$non_maint_arrear=abs($reminder);
+					}
+				}else{
+					$arrear_interest=abs($reminder);
+				}
+		
+		 $arrear_principle=$maint_arrear+$non_maint_arrear;
+		 
+		return array("maint_arrear" =>$maint_arrear,"non_maint_arrear" =>$non_maint_arrear,"arrear_principle" =>$arrear_principle,"arrear_intrest" =>$arrear_interest);
 	
 }
 
@@ -882,6 +927,7 @@ function calculate_arrears_and_interest($ledger_sub_account_id,$start_date){
 			 $days=abs(floor(($last_trasanction_date-$current_bill_start_date)/(60*60*24)));
 			 $new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
 		}else{
+			//$last_bill_maint_arrear=$last_bill_maint_arrear+$last_bill_arrear_intrest;
 			if(!empty($last_bill_amount)){
 				$last_bill_amount=$last_bill_amount-abs($last_bill_maint_arrear);
 				$last_bill_maint_arrear=0;
@@ -948,7 +994,7 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 		$conditions =array('society_id' =>$s_society_id,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'start_date'=>array('$lt'=>strtotime($start_date)));
 		$order=array('regular_bill.auto_id'=>'DESC');
 		$last_bill_info=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1));
-		//pr($last_bill_info);
+
 		$last_bill_start_date=$last_bill_info[0]["regular_bill"]["start_date"];
 		//$last_bill_start_date_for_ledger=date('Y-m-d', strtotime('+1 day', $last_bill_start_date));
 		$last_bill_start_date_for_ledger=date('Y-m-d', $last_bill_start_date);
@@ -957,8 +1003,8 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 		$last_bill_start_date_for_ledger_ob=strtotime($last_bill_start_date_for_ledger_ob);
 		$last_bill_due_date=$last_bill_info[0]["regular_bill"]["due_date"];
 		
-		$last_bill_amount=$last_bill_info[0]["regular_bill"]["total"];
-		$last_bill_maint_arrear=@$last_bill_info[0]["regular_bill"]["maint_arrear"];
+		 $last_bill_amount=$last_bill_info[0]["regular_bill"]["total"];
+		 $last_bill_maint_arrear=@$last_bill_info[0]["regular_bill"]["maint_arrear"];
 		$last_bill_non_maint_arrear=@$last_bill_info[0]["regular_bill"]["non_maint_arrear"];
 		$last_bill_arrear_intrest=$last_bill_info[0]["regular_bill"]["arrear_intrest"];
 		$last_bill_intrest_on_arrears=$last_bill_info[0]["regular_bill"]["intrest_on_arrears"];
@@ -1019,10 +1065,21 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 		$current_transaction_date=strtotime($current_transaction_date);
 		}
 		
+		if($last_bill_maint_arrear>0){
+		    $days=abs(floor(($last_trasanction_date-$current_transaction_date)/(60*60*24))); 
+		    $new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
+		}else{
+			if(!empty($last_bill_amount)){
+				$last_bill_amount=$last_bill_amount-abs($last_bill_maint_arrear);
+				$last_bill_maint_arrear=0;
+			}
+		}
+				
+
 		//echo date("d-m-Y",$last_trasanction_date); echo"<br>";
 		//echo date("d-m-Y",$current_transaction_date); echo"<br>";
-		  $days=abs(floor(($last_trasanction_date-$current_transaction_date)/(60*60*24)));
-		  $new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
+		  //$days=abs(floor(($last_trasanction_date-$current_transaction_date)/(60*60*24)));
+		 //$new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
 	
 		if($current_transaction_date>$last_due_date && $bill_count>0){
 			$last_due_date=date('Y-m-d', strtotime('0 day', $last_due_date));
@@ -1101,12 +1158,22 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 		$last_bill_amount=$bill_amount;
 	}
 	
+	
+	
+		
+	
 		$last_bill_arrear_intrest=$arrear_intrest+$intrest_on_arrears;
 		 if($last_bill_maint_arrear>0){
 			 $days=abs(floor(($last_trasanction_date-$current_bill_start_date)/(60*60*24))); 
 			
 			 $new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365; 
-		 }
+		 }else{
+			 //$last_bill_maint_arrear=$last_bill_maint_arrear+$last_bill_arrear_intrest;
+			if(!empty($last_bill_amount)){
+				$last_bill_amount=$last_bill_amount-abs($last_bill_maint_arrear);
+				$last_bill_maint_arrear=0;
+			}
+		}
 		if($current_bill_start_date>$last_due_date && $bill_count>0){
 			$last_due_date=date('Y-m-d', strtotime('0 day', $last_due_date));
 			$last_due_date=strtotime($last_due_date);
@@ -1127,7 +1194,7 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 
 function calculate_arrears_and_without_interest_edit($ledger_sub_account_id,$start_date){
 	
-		$maint_arrear=0;$non_maint_arrear=0;$arrear_interest=0;
+		$maint_arrear=0;$non_maint_arrear=0;$arrear_interest=0;$total_credit=0;
 		$this->requestAction(array('controller' => 'Hms', 'action' => 'ath'));
 		$s_society_id=$this->Session->read('hm_society_id');
 	    $this->loadmodel('ledger');
@@ -1159,15 +1226,20 @@ function calculate_arrears_and_without_interest_edit($ledger_sub_account_id,$sta
 					$non_maint_arrear+=$debit;
 				}
 			}else{
-				$reminder=$arrear_interest-$credit;
+				$total_credit+=$credit;
+			}
+			
+		}
+		
+			  $reminder=$arrear_interest-$total_credit;
 				if($reminder<0){
-					$credit=abs($reminder);
+					$total_credit=abs($reminder);
 					$arrear_interest=0;
-					$reminder=$non_maint_arrear-$credit;
+					$reminder=$non_maint_arrear-$total_credit;
 					if($reminder<0){
-						$credit=abs($reminder);
+						$total_credit=abs($reminder);
 						$non_maint_arrear=0;
-						$reminder=$maint_arrear-$credit;
+						$reminder=$maint_arrear-$total_credit;
 						if($reminder<0){
 							$maint_arrear=$reminder;
 						}else{
@@ -1179,9 +1251,7 @@ function calculate_arrears_and_without_interest_edit($ledger_sub_account_id,$sta
 				}else{
 					$arrear_interest=abs($reminder);
 				}
-			}
-			
-		}
+		
 		$arrear_principle=$maint_arrear+$non_maint_arrear;
 		return array("maint_arrear" =>$maint_arrear,"non_maint_arrear" =>$non_maint_arrear,"arrear_principle" =>$arrear_principle,"arrear_intrest" =>$arrear_interest);
 	

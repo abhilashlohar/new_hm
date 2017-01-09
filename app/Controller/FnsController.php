@@ -1226,15 +1226,19 @@ function calculate_arrears_and_without_interest_edit($ledger_sub_account_id,$sta
 					$non_maint_arrear+=$debit;
 				}
 			}else{
-				$reminder=$arrear_interest-$credit;
+				$total_credit+=$credit;
+			}
+			
+		}
+			$reminder=$arrear_interest-$total_credit;
 				if($reminder<0){
-					$credit=abs($reminder);
+					$total_credit=abs($reminder);
 					$arrear_interest=0;
-					$reminder=$non_maint_arrear-$credit;
+					$reminder=$non_maint_arrear-$total_credit;
 					if($reminder<0){
-						$credit=abs($reminder);
+						$total_credit=abs($reminder);
 						$non_maint_arrear=0;
-						$reminder=$maint_arrear-$credit;
+						$reminder=$maint_arrear-$total_credit;
 						if($reminder<0){
 							$maint_arrear=$reminder;
 						}else{
@@ -1246,10 +1250,6 @@ function calculate_arrears_and_without_interest_edit($ledger_sub_account_id,$sta
 				}else{
 					$arrear_interest=abs($reminder);
 				}
-			}
-			
-		}
-		
 			  
 		
 		$arrear_principle=$maint_arrear+$non_maint_arrear;

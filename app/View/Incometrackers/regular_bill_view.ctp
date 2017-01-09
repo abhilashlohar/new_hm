@@ -163,11 +163,11 @@
 							$result_income_head = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch2'),array('pass'=>array($key)));	
 								foreach($result_income_head as $data2){ 
 									$income_head_name = $data2['ledger_account']['ledger_name'];
-								}
+								} 
 								if(!empty($value)){
 									$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >'.$income_head_name.'</td>
-										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">'.$income_head_for_rate[$key].'</td>
+										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">';if(!empty($income_head_for_rate[$key])){ $bill_html.=''.number_format($income_head_for_rate[$key] ,2).''; } $bill_html.=' </td>
 										<td align="right" style="padding: 0 5px 0 0;">'.$value.'</td>
 									</tr>';
 								}
@@ -338,6 +338,11 @@
         </tbody></table>
                    
             </div>';
+			
+			
+		
+			
+			
 	//End Bill html 
 }	
 	/*$to="rohitkumarjoshi43@gmail.com";

@@ -17,6 +17,7 @@
 		<?php foreach($result_user_info_csv_converted as $data){
 			$auto_id=$data["user_info_csv_converted"]["auto_id"];
 			$user_id=$data["user_info_csv_converted"]["user_id"];
+			$user_flat_id=$data["user_info_csv_converted"]["user_flat_id"];
 			$email=$data["user_info_csv_converted"]["email"];
 			$mobile=$data["user_info_csv_converted"]["mobile"];
 			$emailErr=$data["user_info_csv_converted"]["emailErr"];
@@ -24,13 +25,11 @@
 			if($emailErr==0){ $err="erred"; }else{ $err=""; }
 			if($mobileErr==0){ $mrr="erred"; }else{ $mrr=""; }
 			if(!empty($user_id)){
-			$result_user_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'profile_picture'),array('pass'=>array($user_id)));
-				foreach($result_user_info as $user_info){
-					$user_name=$user_info["user"]["user_name"];
-					$wing=$user_info["user"]["wing"];
-					$flat=$user_info["user"]["flat"];
-				}
-				$wing_flat=$this->requestAction(array('controller' => 'Hms', 'action' => 'wing_flat'),array('pass'=>array($wing,$flat)));
+			$result_user_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_user_id'),array('pass'=>array($user_id)));
+			
+			 $user_name=$result_user_info['user_name'];
+			 $wing_flat=$result_user_info['wing_flat'];	
+			 $wing_flat=$wing_flat[$user_flat_id];
 			
 			 ?>
 			<tr id="<?php echo $auto_id; ?>">

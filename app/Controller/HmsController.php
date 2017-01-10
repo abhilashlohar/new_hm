@@ -2151,7 +2151,7 @@ function email_mobile_update(){
 	$this->layout='session';
 	}
 	
-   $s_society_id=$this->Session->read('society_id');	
+   $s_society_id=$this->Session->read('hm_society_id');	
    $this->ath();
    
 		$this->loadmodel('user_info_import_record');
@@ -2172,8 +2172,8 @@ function email_mobile_update(){
 
 function Upload_user_info_csv_file(){
 	
-	$s_society_id = $this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	$this->ath();
 	
 		if(isset($_FILES['file'])){
@@ -2196,7 +2196,7 @@ $this->user_info_import_record->saveAll(Array( Array("auto_id" => $auto_id, "fil
 function read_user_info_csv_file(){
 	
 	$this->layout=null;
-	$s_society_id = $this->Session->read('society_id');
+	$s_society_id = $this->Session->read('hm_society_id');
 	
 		$f = fopen('user_email_mobile_csv/'.$s_society_id.'.csv', 'r') or die("ERROR OPENING DATA");
 		$batchcount=0;
@@ -2231,7 +2231,7 @@ function read_user_info_csv_file(){
 function convert_user_info_data(){
 	
 	$this->layout=null;
-	$s_society_id = $this->Session->read('society_id');
+	$s_society_id = $this->Session->read('hm_society_id');
 	
 	$this->loadmodel('user_info_csv');
 	$conditions=array("society_id" => $s_society_id,"is_converted" => "NO");
@@ -2241,40 +2241,49 @@ function convert_user_info_data(){
 		$name=trim($import_record["user_info_csv"]["name"]);
 		$wing_name=trim($import_record["user_info_csv"]["wing_name"]);
 		$flat_name=trim($import_record["user_info_csv"]["flat_name"]);
+		$flat_name = str_pad($flat_name,10,"0",STR_PAD_LEFT);  
+
 		$owner_tenant=trim($import_record["user_info_csv"]["owner_tenant"]);
 		$email=trim($import_record["user_info_csv"]["email"]);
 		$mobile=trim($import_record["user_info_csv"]["mobile"]);
 		
 				$this->loadmodel('wing'); 
-				$conditions=array("wing_name"=> new MongoRegex('/^' . $wing_name . '$/i'),"society_id"=>$s_society_id);
+				$conditions=array("wing_name"=> $wing_name,"society_id"=>$s_society_id);
 				$result_ac=$this->wing->find('all',array('conditions'=>$conditions));
 				if(sizeof($result_ac)>0){
 				foreach($result_ac as $collection){
-				$wing_id = (int)$collection['wing']['wing_id'];
+				 $wing_id = (int)$collection['wing']['wing_id'];
 				}
 				}else{
-				$wing_id=0;
+				 $wing_id=0;
 				}
 		
 		$this->loadmodel('flat'); 
-		$conditions=array("flat_name"=> new MongoRegex('/^' . $flat_name . '$/i'),"society_id"=>$s_society_id);
+		$conditions=array("flat_name"=>$flat_name,"wing_id"=>$wing_id,"society_id"=>$s_society_id);
 		$result_ac=$this->flat->find('all',array('conditions'=>$conditions));
 			if(sizeof($result_ac)>0){
 			foreach($result_ac as $collection){
-			$flat_id = (int)$collection['flat']['flat_id'];
+			 $flat_id = (int)$collection['flat']['flat_id'];
 			}
 			}else{
 			$flat_id=0;
 			}
 		
-		if($owner_tenant=="owner"){ $tenant=1; }else{ $tenant=2; }
+		if($owner_tenant=="owner"){ 
+		  $tenant="yes"; 
+		}elseif($owner_tenant=="tenant"){ 
+		 $tenant="no";
+		}else{
+		 $tenant=null;
+		}
 		
-			$this->loadmodel('user'); 
-			$conditions=array("wing"=>$wing_id,"flat"=>$flat_id,"tenant"=>$tenant);
-			$result_user=$this->user->find('all',array('conditions'=>$conditions));
+			$this->loadmodel('user_flat'); 
+			$conditions=array("wing"=>$wing_id,"flat"=>$flat_id,"owner"=>$tenant,"exited"=>"no");
+			$result_user=$this->user_flat->find('all',array('conditions'=>$conditions));
 			$user_id =0;
 			foreach($result_user as $collection){
-			$user_id = (int)$collection['user']['user_id'];
+			$user_id = (int)$collection['user_flat']['user_id'];
+			$user_flat_id = (int)$collection['user_flat']['user_flat_id'];
 			}
 
 	$emailErr = 1;
@@ -2319,7 +2328,7 @@ function convert_user_info_data(){
 			
 		$this->loadmodel('user_info_csv_converted');
 		$auto_id=$this->autoincrement('user_info_csv_converted','auto_id');
-		$this->user_info_csv_converted->saveAll(Array(Array("auto_id" => $auto_id,"user_id" => $user_id, "email" => $email, "mobile" => $mobile,"emailErr" => $emailErr,"mobileErr" => $mobileErr,"user_id"=>$user_id,"society_id"=>$s_society_id,"is_imported"=>"NO")));
+		$this->user_info_csv_converted->saveAll(Array(Array("auto_id" => $auto_id,"user_id" => $user_id, "email" => $email, "mobile" => $mobile,"emailErr" => $emailErr,"mobileErr" => $mobileErr,"user_id"=>$user_id,"society_id"=>$s_society_id,"is_imported"=>"NO","user_flat_id"=>$user_flat_id)));
 		
 		$this->loadmodel('user_info_csv');
 		$this->user_info_csv->updateAll(array("is_converted" => "YES"),array("auto_id" => $user_info_csv_id));
@@ -2346,7 +2355,7 @@ function convert_user_info_data(){
 
 function check_user_info_before_submit(){
 	$this->layout=null;
-	$s_society_id = $this->Session->read('society_id');
+	$s_society_id = $this->Session->read('hm_society_id');
 	
 	$this->loadmodel('user_info_csv_converted');
 	$conditions =array( '$or' => array( 
@@ -2370,7 +2379,7 @@ function modify_user_info_csv_data($page=null){
 	$this->layout='session';
 	}
 	$this->ath();
-	$s_society_id = $this->Session->read('society_id');
+	$s_society_id = $this->Session->read('hm_society_id');
 	$page=(int)$page;
 	$this->set('page',$page);
 	
@@ -2473,8 +2482,8 @@ function check_user_info_csv_validation($id=null,$field=null,$val=null){
 
 function final_import_user_info_ajax(){
 	$this->layout=null;
-	$s_society_id = $this->Session->read('society_id');
-	$s_user_id=$this->Session->read('user_id');
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
 	
 	$this->loadmodel('user_info_import_record');
 	$conditions=array("society_id" => $s_society_id);
@@ -2518,14 +2527,14 @@ function final_import_user_info_ajax(){
 				$this->user->updateAll(array("mobile" => $mobile),array("user_id" => (int)$user_id));
 			}
 			
-			if(empty($al_email) && empty($al_mobile)){
+			/*if(empty($al_email) && empty($al_mobile)){
 				$this->loadmodel('login');
 				$login_id=$this->autoincrement('login','login_id');
 				$this->login->saveAll(array('login_id' => $login_id, 'user_name' => $email, 'mobile' => $mobile, 'signup_random' => ""));
 				
 				$this->loadmodel('user');
 				$this->user->updateAll(array("login_id" => $login_id),array("user_id" => (int)$user_id));
-			}
+			}*/
 			
 			$this->loadmodel('user_info_csv_converted');
 			$this->user_info_csv_converted->updateAll(array("is_imported" => "YES"),array("auto_id" => (int)$auto_id));
@@ -2580,34 +2589,51 @@ function email_mobile_import_file(){
 	header ("Content-Description: Generated Report" );
 
 	$s_role_id=$this->Session->read('role_id');
-	$s_society_id = (int)$this->Session->read('society_id');
-	$s_user_id = (int)$this->Session->read('user_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id = (int)$this->Session->read('hm_user_id');
 	
 	$output= "Name,wing,unit,owner/tenant,email,mobile \n";
 	
 	
 	$this->loadmodel('user');
-	$conditions=array("society_id" => $s_society_id,"deactive"=>0);
+	$conditions=array("society_id" => $s_society_id,"active"=>"yes");
 	$order=array('user.user_name'=>'ASC');
 	$result_users=$this->user->find('all',array('conditions'=>$conditions,'order'=>$order));
 	
 	foreach($result_users as $user_info){
 		$user_name=$user_info["user"]["user_name"];
-		$wing=$user_info["user"]["wing"];
-		$flat=$user_info["user"]["flat"];
+		$user_id=(int)$user_info["user"]["user_id"];
 		$email=$user_info["user"]["email"];
 		$mobile=$user_info["user"]["mobile"];
-		$tenant=$user_info["user"]["tenant"];
-		if($tenant==1){
-			$ownership="owner";
-		}else{
-			$ownership="tenant";
-		}
-		
-		$wing_name=$this->fetch_wingname_via_wingid($wing);
-		$flat_name=$this->fetch_flatname_via_flatid($flat);
-		
+		$user_type=$user_info["user"]["user_type"];
+		if($user_type=="member" or $user_type=="family_member"){
+			$user_flat_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id'),array('pass'=>array($user_id)));
+				foreach($user_flat_info as $user_flat){
+					$user_flat_id=$user_flat["user_flat"]["user_flat_id"];
+					$wing=$user_flat["user_flat"]["wing"];
+					$flat=$user_flat["user_flat"]["flat"];
+					$owner=@$user_flat["user_flat"]["owner"];
+					$this->loadmodel('wing');
+					$conditions=array("wing_id"=>$wing);
+					$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
+					$wing_name=@$wing_info[0]["wing"]["wing_name"];
+					
+					$this->loadmodel('flat');
+					$conditions=array("flat_id"=>$flat);
+					$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+					$flat_name=ltrim(@$flat_info[0]["flat"]["flat_name"],'0');
+				 
+			if($owner=="yes"){
+				$ownership="owner";
+			}elseif($owner=="no"){
+				$ownership="tenant";
+			}else{
+				$ownership="family member";
+			}
+	
 		$output.= $user_name.",".$wing_name.",".$flat_name.",".$ownership.",".$email.",".$mobile." \n";
+		} 
+	 }
 	}
 	echo $output;
 }
@@ -3145,7 +3171,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 

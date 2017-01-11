@@ -216,7 +216,7 @@ $( document ).ready(function() {
 			if(response=="true"){
 				window.location.replace("<?php echo $webroot_path; ?>Hms/email_mobile_update");
 			}else{
-				alert("There is error.");
+				alert("There is error or next page error");
 			}
 		});
 	});
@@ -229,7 +229,6 @@ $( document ).ready(function() {
 				url: "<?php echo $webroot_path; ?>Hms/user_info_delete_row/"+record_id,
 			}).done(function(response){
 				z.closest("tr").remove();
-				
 			});
 	});
 	

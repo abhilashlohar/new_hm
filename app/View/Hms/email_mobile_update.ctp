@@ -144,7 +144,7 @@ function final_import_user_info_ajax(){
 				final_import_user_info_ajax();
 			}
 			if(response.again_call_ajax=="NO"){
-				$("#first_div").html('<div class="alert alert-block alert-success fade in"><h4 class="alert-heading">Success!</h4><p>Receipts Imported successfully.</p><p><a class="btn green" href="<?php echo $webroot_path; ?>Hms/email_mobile_update" >OK</a> </p></div>');
+				$("#first_div").html('<div class="alert alert-block alert-success fade in"><h4 class="alert-heading">Success!</h4><p>Email and mobile imported successfully.</p><p><a class="btn green" href="<?php echo $webroot_path; ?>Hms/email_mobile_update" >OK</a> </p></div>');
 			}
 		});
 	});

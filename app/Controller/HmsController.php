@@ -2527,15 +2527,7 @@ function final_import_user_info_ajax(){
 				$this->user->updateAll(array("mobile" => $mobile),array("user_id" => (int)$user_id));
 			}
 			
-			/*if(empty($al_email) && empty($al_mobile)){
-				$this->loadmodel('login');
-				$login_id=$this->autoincrement('login','login_id');
-				$this->login->saveAll(array('login_id' => $login_id, 'user_name' => $email, 'mobile' => $mobile, 'signup_random' => ""));
-				
-				$this->loadmodel('user');
-				$this->user->updateAll(array("login_id" => $login_id),array("user_id" => (int)$user_id));
-			}*/
-			
+						
 			$this->loadmodel('user_info_csv_converted');
 			$this->user_info_csv_converted->updateAll(array("is_imported" => "YES"),array("auto_id" => (int)$auto_id));
 			
@@ -2574,8 +2566,24 @@ function final_import_user_info_ajax(){
 	}
 }
 
+function user_info_delete_row($auto_id=null){
+	$this->layout=null;	
+	$this->loadmodel('user_info_csv_converted');
+	$this->user_info_csv_converted->deleteAll(array('auto_id'=>(int)$auto_id));
+}
 
-
+function user_info_delete_all(){
+	$this->layout=null;
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$this->loadmodel('user_info_csv_converted');
+	$this->user_info_csv_converted->deleteAll(array('society_id'=>$s_society_id));
+	$this->loadmodel('user_info_csv');
+	$this->user_info_csv->deleteAll(array('society_id'=>$s_society_id));
+	$this->loadmodel('user_info_import_record');
+	$this->user_info_import_record->deleteAll(array('society_id'=>$s_society_id));
+	
+	$this->redirect(array('action' => 'email_mobile_update'));
+}
 
 function email_mobile_import_file(){
 	$this->layout="";
@@ -2592,7 +2600,7 @@ function email_mobile_import_file(){
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$s_user_id = (int)$this->Session->read('hm_user_id');
 	
-	$output= "Name,wing,unit,owner/tenant,email,mobile \n";
+	$output= "Name,wing,unit,owner/tenant/family member,email,mobile \n";
 	
 	
 	$this->loadmodel('user');
@@ -2613,6 +2621,8 @@ function email_mobile_import_file(){
 					$wing=$user_flat["user_flat"]["wing"];
 					$flat=$user_flat["user_flat"]["flat"];
 					$owner=@$user_flat["user_flat"]["owner"];
+					$exited=@$user_flat["user_flat"]["exited"];
+					if($exited=="no"){
 					$this->loadmodel('wing');
 					$conditions=array("wing_id"=>$wing);
 					$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
@@ -2623,17 +2633,18 @@ function email_mobile_import_file(){
 					$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
 					$flat_name=ltrim(@$flat_info[0]["flat"]["flat_name"],'0');
 				 
-			if($owner=="yes"){
-				$ownership="owner";
-			}elseif($owner=="no"){
-				$ownership="tenant";
-			}else{
-				$ownership="family member";
-			}
+					if($owner=="yes"){
+						$ownership="owner";
+					}elseif($owner=="no"){
+						$ownership="tenant";
+					}else{
+						$ownership="family member";
+					}
 	
-		$output.= $user_name.",".$wing_name.",".$flat_name.",".$ownership.",".$email.",".$mobile." \n";
-		} 
-	 }
+						$output.= $user_name.",".$wing_name.",".$flat_name.",".$ownership.",".$email.",".$mobile." \n";
+				} 
+			}
+		}
 	}
 	echo $output;
 }

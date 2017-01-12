@@ -8,6 +8,37 @@ public $components = array(
 );
 var $name = 'Hms';
 
+
+function member_search(){
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+}
+
+function member_search_ajax($value=null,$field=null){
+	$this->layout=null;
+	if(!empty($value) and !empty($field)){ 
+		$search=new MongoRegex("/^$value/i");
+		if($field=="name"){
+			$conditions=array("user_name"=>$search,"active"=>"yes");
+		}
+		if($field=="email"){
+			$conditions=array("email"=>$search,"active"=>"yes");
+		}
+		if($field=="mobile"){
+			$conditions=array("mobile"=>$search,"active"=>"yes");
+		}
+		//pr($conditions);
+		$this->loadmodel("user");
+		$result_user=$this->user->find("all",array("conditions"=>$conditions));
+		//pr($result_user);
+		$this->set(compact('result_user'));
+		
+	}
+}
+
 function bank_reconciliation(){
 	
 	if($this->RequestHandler->isAjax()){
@@ -3182,7 +3213,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -30733,6 +30764,11 @@ function menus_as_per_user_rights(){
 		<li>
 			<a href="<?php echo $webroot_path; ?>Hms/hm_sms_allow_society">
 			<i class="icon-home"></i> Sms allow society
+			</a>					
+		</li>
+		<li>
+			<a href="<?php echo $webroot_path; ?>Hms/member_search">
+			<i class="icon-home"></i> Member Search
 			</a>					
 		</li>
 		<?php

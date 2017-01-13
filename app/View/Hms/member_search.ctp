@@ -13,23 +13,21 @@ Member Search
 <div id="search_record">
 </div>
 
-
 <script>
 $(document).ready(function() {
-	$('.search_member').die().keyup(function() {
+	$('.search_member').keyup(function() {
 		var field=$(this).attr("id");
 		var vl=$(this).val();
 		if(vl!=""){
-		$.ajax({
-				url: "member_search_ajax/"+vl+"/"+field,
-			}).done(function(response){
-				$('#search_record').html(response);
-		});
-	}else{
-		$('#search_record').html("");
-	}
+			$.ajax({
+					url: "member_search_ajax/"+vl+"/"+field,
+				}).done(function(response){
+					$('#search_record').html(response);
+			});
+		}else{
+			$('#search_record').html("");
+		}
 	});	
 });
-
 
 </script>

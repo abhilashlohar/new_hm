@@ -134,7 +134,7 @@ data-source="[<?php if(!empty($kendo_implode2)) { echo $kendo_implode2; } ?>]" i
 				 </td>
 								 
 				 <td>
-				 <input type="text" class="m-wrap span12" style="background-color:#FFF !important; margin-top:3px;"/>
+				 <input type="text" class="m-wrap span12" style="background-color:#FFF !important; margin-top:3px;"  maxlength="100"/>
 				 </td>
 				  <td></td>
 				  <td></td>

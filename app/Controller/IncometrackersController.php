@@ -921,13 +921,12 @@ function generate_bills(){
 		if($area_scale==1){
 			$area_scale_text="sq.mtr.";
 		}
-		
-		
-		
+			
 		
 	$this->loadmodel('regular_bill_temp');
 	$condition=array('society_id'=>$s_society_id,"approved"=>"yes");
-	$regular_bills = $this->regular_bill_temp->find('all',array('conditions'=>$condition,'limit'=>2));
+	$order=array('regular_bill_temp.auto_id'=>'ASC');
+	$regular_bills = $this->regular_bill_temp->find('all',array('conditions'=>$condition,'order'=>$order,'limit'=>2));
 
 	foreach($regular_bills as $regular_bill){
 		$temp_auto_id=$regular_bill["regular_bill_temp"]["auto_id"];

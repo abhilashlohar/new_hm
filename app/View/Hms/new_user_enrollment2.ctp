@@ -34,7 +34,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	</div>
 	</form>
 </div>
-<!--<a href="email_mobile_update" class="btn purple" role="btn" id="import_email">Import Email and Mobile</a>-->
+<a href="email_mobile_update" class="btn purple" role="btn" id="import_email">Import Email and Mobile</a>
 <div id="report_id"></div>								
 <div id="report"></div>
 <table class="table table-bordered" style="background-color:#FFC;">

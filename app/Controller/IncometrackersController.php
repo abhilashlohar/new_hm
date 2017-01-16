@@ -5705,6 +5705,58 @@ $this->other_charge->deleteAll($conditions);
 	$this->response->header('location:other_charges');
 }
 
+function other_charge_excel(){
+
+	$this->layout=null;
+	$this->ath();	
+	$s_role_id=$this->Session->read('hm_role_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');	
+	
+	$this->loadmodel('ledger_account');
+	$conditions=array("group_id"=>7);
+	$result_ledger_account=$this->ledger_account->find('all',array('conditions'=>$conditions));
+	$this->set('result_ledger_account',$result_ledger_account);
+		
+	$this->loadmodel('society');
+	$conditions=array("society_id"=>$s_society_id);
+	$cursor3=$this->society->find('all',array('conditions'=>$conditions));
+	$this->set('cursor3',$cursor3);
+		
+	$this->loadmodel('ledger_sub_account');
+	$condition=array('society_id'=>$s_society_id);
+	$members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
+	foreach($members as $data3){
+		$ledger_sub_account_ids[]=$data3["ledger_sub_account"]["auto_id"];
+	}
+		
+	$this->loadmodel('wing');
+	$condition=array('society_id'=>$s_society_id);
+	$order=array('wing.wing_name'=>'ASC');
+	$wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+	foreach($wings as $data){
+		$wing_id=$data["wing"]["wing_id"];
+		$this->loadmodel('flat');
+		$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+		$order=array('flat.flat_name'=>'ASC');
+		$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+		foreach($flats as $data2){
+			$flat_id=$data2["flat"]["flat_id"];
+			$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing_id,$flat_id)));
+			if(!empty($ledger_sub_account_id)){
+				if (in_array($ledger_sub_account_id, $ledger_sub_account_ids)){
+					$members_for_billing[]=$ledger_sub_account_id;
+				    $flats_for_bill[]=$flat_id;
+				}
+			}
+			
+		}
+	}	
+	$this->set(compact("members_for_billing"));	
+	$this->set(compact("flats_for_bill"));	
+}
+
+
 function other_charges(){
 	if($this->RequestHandler->isAjax()){
 	$this->layout='blank';
@@ -5760,7 +5812,21 @@ function other_charges(){
 	$this->set(compact("members_for_billing"));	
 	$this->set(compact("flats_for_bill"));	
 	
-		
+		if(isset($this->request->data['delete_all'])){ 
+			
+			$all=@$this->request->data['all_check'];
+			if(!empty($all)){
+				foreach($all as $data){
+					$check=explode(',',$data);
+					$ledger_sub_account_id=(int)$check[0];
+					$inc_head_id=(int)$check[1];
+					$this->loadmodel('other_charge');
+					$conditions=array('ledger_sub_account_id'=>$ledger_sub_account_id,'income_head_id'=>$inc_head_id);
+					$this->other_charge->deleteAll($conditions);
+				}
+			}	
+			
+		}
 	
 	if(isset($this->request->data['add_charges'])){ 
 		$income_head_id=(int)$this->request->data['income_head'];

@@ -162,9 +162,9 @@ $income_arrr[] = $data;
 			</div>
 			
 			
-			<hr>
+			<br>
 			
-			<table class="table table-striped table-bordered table-advance">
+			<!--<table class="table table-striped table-bordered table-advance">
 				<tbody>
 				<?php  
 								if(!empty($flats_for_bill)) { $sr_no=0; foreach($flats_for_bill as $flat){ $sr_no++;
@@ -238,22 +238,119 @@ $income_arrr[] = $data;
 						</tr>
 				<?php } } } }?>
 				</tbody>
-			</table>
-		
+			</table>-->
 		
 		</form>
 		<!-- END FORM-->
 		
 		
+		<form method="post" >
+		<table class="table table-condensed table-bordered" >
+		<thead>
+		<tr>
+		<td><input type="checkbox" class="check_all"></td>
+		<td><b>Unit </b></td>
+		<td><b>Name </b></td>
+		<td><b>Income head </b></td>
+		<td><b>Amount </b></td>
+		<td><b>Charge Type </b>
 		
+			
+			<span style="float:right;" class="" data-placement="left" data-original-title="delete all charge">
+			<a href="#" role="button" idd="" class="btn black mini other_charges_delete">Delete All</a>
+			</span>
+			
+			<span style="float:right;margin-right: 2px;">
+			<a href="other_charge_excel" class="btn green mini"><i class="fa fa-file-excel-o"></i> Excel</a>
+			</span>
+		</td>
+		</tr>
+		</thead>
 		
+				<tbody>
+				<?php  
+								if(!empty($flats_for_bill)) { $sr_no=0; foreach($flats_for_bill as $flat){ $sr_no++;
+				
+				
+								//wing_id via flat_id//
+								$result_flat_info=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_wing_id_via_flat_id'),array('pass'=>array($flat)));
+								foreach($result_flat_info as $flat_info){
+								$wing=$flat_info["flat"]["wing_id"];
+								} 
 
-		
+								
+								
+					$ledger_sub_account_id=$this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id'),array('pass'=>array($wing,$flat)));
+				
+				$result_user_flat=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_wing_flat_id'),array('pass'=>array($wing,$flat)));
+				foreach($result_user_flat as $data)
+				{
+				$user_id = $data['user_flat']['user_id'];
+				}
+
+								
+								$result_user_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'user_info_via_user_id'),array('pass'=>array($user_id)));
+								foreach($result_user_info as $user_info){
+								$user_id=(int)$user_info["user"]["user_id"];
+								$user_name=$user_info["user"]["user_name"];
+								} 
+									
+					    if(!empty($flat)){
+						$wing_flat=$this->requestAction(array('controller' => 'hms', 'action' => 'wing_flat'), array('pass' => array($wing,$flat))); 
+						
+						$result_other_charges = $this->requestAction(array('controller' => 'Incometrackers', 'action' => 'fetch_other_charges_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id))); 
+						if(sizeof($result_other_charges)>0){
+						?>
+						  
+							
+							<?php 
+							if(sizeof($result_other_charges)>0){
+									
+										
+								foreach($result_other_charges as $other_charges){ 
+								 
+							 $amount2=$other_charges['other_charge']['amount'];
+							 $type=$other_charges['other_charge']['charge_type'];
+							 $income_head_id=$other_charges['other_charge']['income_head_id'];
+							$result_income_head = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch2'),array('pass'=>array($income_head_id)));	
+							foreach($result_income_head as $data2){
+										$income_head_name = $data2['ledger_account']['ledger_name'];
+									} ?>
+								<tr>
+									<td><input type="checkbox" name="all_check[]" class="all_check"
+									value="<?php echo $ledger_sub_account_id ; ?>,<?php echo $income_head_id ; ?>">
+									</td>
+									<td><?php echo $wing_flat; ?></td>
+									<td><?php echo $user_name; ?></td>
+									<td><?php echo $income_head_name; ?></td>
+									<td><?php echo $amount2; ?> </td> 
+									<td>
+										<?php if($type ==1){ ?> One Time/Lumpsum <?php }else if($type ==2){ ?> Periodic <?php } ?>
+											<span style="float:right;" class="tooltips" data-placement="left" data-original-title="delete current charge">
+											<a href="#" role="button" idd="<?php echo $ledger_sub_account_id ; ?>" inch_id="<?php echo $income_head_id ; ?>" class="btn black mini other_charges_delete_oneby"><i class="icon-remove-sign"></i></a>
+											</span>
+										</td>
+								</tr>
+										
+								<?php } ?>
+							<?php } ?>
+							
+								
+							
+				<?php } } } }?>
+				</tbody>
+			</table>
+			<div id="delete_topic_result1" style="display:none;">
+			<div id="pp"><div class="modal-backdrop fade in"></div><div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"><div class="modal-body" style="font-size:14px;"><i class="icon-warning-sign" style="color:#d84a38;"></i> Are you sure you want to delete all charges for this flat ? </div><div class="modal-footer"><input type="submit" name="delete_all" value="yes" class="btn blue"><a href="#"  role="button" id="can" class="btn">No</a></div></div></div>
+			
+			</div>	
+
+		</form>
 		
 	 </div>
 	</div>
-	
 	<div id="delete_topic_result"></div>
+	
 	<!-- END VALIDATION STATES-->
 <script>
 $(document).ready(function(){
@@ -306,24 +403,41 @@ messages: {
 });
 
 
+$('.check_all').bind('click',function(){
+	
+	if($(this).is(':checked')){
+		$('.all_check').each(function(){
+			$(this).closest('span').addClass('checked');
+			$(this).attr("checked", "checked");
+		});
+		
+	}else{
+		$('.all_check').each(function(){
+			$(this).closest('span').removeClass('checked');
+			$(this).removeAttr("checked", "checked");
+		});
+		
+	}
+});
 
 $('.other_charges_delete').bind('click',function(){
 	
 	var id=$(this).attr('idd');
   
-	$('#delete_topic_result').html('<div id="pp"><div class="modal-backdrop fade in"></div><div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"><div class="modal-body" style="font-size:14px;"><i class="icon-warning-sign" style="color:#d84a38;"></i> Are you sure you want to delete all charges for this flat ? </div><div class="modal-footer"><a href="<?php echo $webroot_path; ?>Incometrackers/other_charges_all_remove?con='+id+'&con2=0" class="btn blue" id="yes">Yes</a><a href="#"  role="button" id="can" class="btn">No</a></div></div></div>');
+	$('#delete_topic_result1').show();
 	$("#can").live('click',function(){
-	   $('#pp').hide();
+	   $('#delete_topic_result1').hide();
 	});
 }); 
 
 $('.other_charges_delete_oneby').bind('click',function(){
+	
 	var id=$(this).attr('idd');
     var inch_id=$(this).attr('inch_id');
 	
-	$('#delete_topic_result').html('<div id="pp"><div class="modal-backdrop fade in"></div><div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"><div class="modal-body" style="font-size:14px;"><i class="icon-warning-sign" style="color:#d84a38;"></i> Are you sure you want to delete this charge for flat ? </div><div class="modal-footer"><a href="<?php echo $webroot_path; ?>Incometrackers/other_charges_all_remove?con='+id+'&con2=1&con3='+inch_id+'" class="btn blue" id="yes">Yes</a><a href="#"  role="button" id="can" class="btn">No</a></div></div></div>');
-	$("#can").live('click',function(){
-	   $('#pp').hide();
+	$('#delete_topic_result').html('<div id="pp1"><div class="modal-backdrop fade in"></div><div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"><div class="modal-body" style="font-size:14px;"><i class="icon-warning-sign" style="color:#d84a38;"></i> Are you sure you want to delete this charge for flat ? </div><div class="modal-footer"><a href="<?php echo $webroot_path; ?>Incometrackers/other_charges_all_remove?con='+id+'&con2=1&con3='+inch_id+'" class="btn blue" id="yes">Yes</a><a href="#"  role="button" id="can1" class="btn">No</a></div></div></div>');
+	$("#can1").live('click',function(){
+	   $('#pp1').hide();
 	});
 });
 

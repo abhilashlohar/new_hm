@@ -13,7 +13,7 @@ $society_name=$society_result[0]["society"]["society_name"];
 ?>
 <div align="center">
 <span style="font-size: 14px;"><?php echo $society_name; ?></span><br/>
-<span >Trail-Balance Report</span><br/>
+<span >Trial-Balance Report</span><br/>
 From: <?php echo $from; ?> To: <?php echo $to; ?>
 	<div style="overflow: auto;">
 	<a href="trial_balance_ajax_show_sub_ledger_excel/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $wise; ?>" class="btn mini green pull-right tooltips" data-placement="left" data-original-title="Download in excel" ><i class="fa fa-file-excel-o"></i></a>

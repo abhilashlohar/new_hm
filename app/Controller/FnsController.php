@@ -622,7 +622,7 @@ function calculate_arrears_and_interest_new($ledger_sub_account_id,$start_date){
 		$order=array('transaction_date'=>'ASC');
 		$ledgers = $this->ledger->find('all',array('conditions'=>$conditions,"order"=>$order));
 		//pr($ledgers);
-	 /*  foreach($ledgers as $data2){
+	  foreach($ledgers as $data2){
 			$debit=$data2["ledger"]["debit"];
 			$credit=$data2["ledger"]["credit"];
 			$table_name=$data2["ledger"]["table_name"];
@@ -660,12 +660,15 @@ function calculate_arrears_and_interest_new($ledger_sub_account_id,$start_date){
 				}
 			}
 			
-		} */
+		} 
 		
+		if($maint_arrear<=0){
+			$maint_arrear=$maint_arrear+$arrear_interest;
+			$arrear_interest=0;
+		}
 		//echo $arrear_interest;
 		
-		
-		//pr($ledgers);
+	/*	//pr($ledgers);
 	  foreach($ledgers as $data2){
 			$debit=$data2["ledger"]["debit"];
 			$credit=$data2["ledger"]["credit"];
@@ -705,7 +708,7 @@ function calculate_arrears_and_interest_new($ledger_sub_account_id,$start_date){
 				}else{
 					$arrear_interest=abs($reminder);
 				}
-		
+		*/
 		 $arrear_principle=$maint_arrear+$non_maint_arrear;
 		 
 		return array("maint_arrear" =>$maint_arrear,"non_maint_arrear" =>$non_maint_arrear,"arrear_principle" =>$arrear_principle,"arrear_intrest" =>$arrear_interest);

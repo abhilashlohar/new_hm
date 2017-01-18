@@ -33,8 +33,83 @@ function member_search_ajax($value=null,$field=null){
 		//pr($conditions);
 		$this->loadmodel("user");
 		$result_user=$this->user->find("all",array("conditions"=>$conditions));
-		//pr($result_user);
-		$this->set(compact('result_user'));
+	
+		$arranged_users=array();
+		foreach($result_user as $data){
+			
+			$user_id=(int)$data['user']['user_id'];
+			$society_id=(int)$data['user']['society_id'];
+			$user_name=$data["user"]["user_name"];
+			$user_type=$data["user"]["user_type"];
+			$mobile=$data["user"]["mobile"];
+			$email=$data["user"]["email"];
+			$validation_status=@$data["user"]["validation_status"];
+			
+			if(is_array($society_id)){
+				$society_id=$society_id[0];
+			}else{
+				$society_id;
+			}
+
+			$society_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'society_name_via_society_id'), array('pass' => array($society_id)));
+
+			
+		if($user_type=="member" or $user_type=="family_member"){
+			$user_flat_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id_and_society_id'),array('pass'=>array($user_id,$society_id)));
+			$flats=array(); 
+			
+			foreach($user_flat_info as $user_flat){
+				 $user_flat_id=$user_flat["user_flat"]["user_flat_id"];
+				$wing=$user_flat["user_flat"]["wing"];
+				$flat=$user_flat["user_flat"]["flat"];
+				$owner=@$user_flat["user_flat"]["owner"];
+				$exited=$user_flat["user_flat"]["exited"];
+				if($exited=="no"){
+					$this->loadmodel('wing');
+					$conditions=array("wing_id"=>$wing);
+					$wing_info=$this->wing->find('all',array('conditions'=>$conditions));
+					$wing_name=@$wing_info[0]["wing"]["wing_name"];
+					
+					$this->loadmodel('flat');
+					$conditions=array("flat_id"=>$flat);
+					$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
+					$flat_name=ltrim(@$flat_info[0]["flat"]["flat_name"],'0');
+					$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
+									
+				}
+				
+			} 
+		}else{
+			$user_flat_info= $this->requestAction(array('controller' => 'Fns', 'action' => 'user_flat_info_via_user_id_and_society_id'),array('pass'=>array($user_id,$society_id)));
+			$user_flat_id=@$user_flat_info[0]["user_flat"]["user_flat_id"];
+			$flats=array();
+			}
+		
+			
+		$this->loadmodel('user_role');
+		$conditions=array("user_id"=>$user_id,"society_id"=>$society_id);
+		$user_role_info=$this->user_role->find('all',array('conditions'=>$conditions));
+		$roles=array();
+		foreach($user_role_info as $user_role){
+			$role_id=$user_role["user_role"]["role_id"];
+			
+			$this->loadmodel('role');
+			$conditions=array("role_id"=>$role_id);
+			$role_info=$this->role->find('all',array('conditions'=>$conditions));
+			$roles[]=$role_info[0]["role"]["role_name"];
+			
+		}
+		$roles=implode(',',$roles);
+		
+		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"society_name"=>$society_name,"user_flat_id"=>$user_flat_id);	
+				
+		}
+		
+		
+		
+		
+		
+		$this->set(compact('arranged_users'));
 		
 	}
 }

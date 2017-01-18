@@ -1,30 +1,38 @@
-<table class="table table-striped table-bordered">
+<table class="table table-condensed table-bordered dataTable">
 <thead>
 <tr>
-<th>Society Name</th> <th>User Name</th> <th>Email</th> <th>mobile</th>
+ <th>Sr no.</th>
+ <th>User Name</th>
+ <th>Unit </th>
+ <th>Roles </th>
+ <th>Email</th>
+ <th>Mobile</th>
+ <th> Validation Status </th>
+ <th>Society Name</th> 
 </tr>
 </thead>
 <tbody>
-<?php if(sizeof(@$result_user)>0){
-foreach($result_user as $data){
-$user_name=$data['user']['user_name'];
-$email=$data['user']['email'];
-$mobile=$data['user']['mobile'];
-$society_id=@$data['user']['society_id'];
-if(is_array($society_id)){
-		$society_id=$society_id[0];
-	}else{
-		$society_id;
-	}
-
-$society_name=$this->requestAction(array('controller' => 'Fns', 'action' => 'society_name_via_society_id'), array('pass' => array($society_id)));
+<?php pr($arranged_users); if(sizeof(@$arranged_users)>0){ $i=0;
+foreach($arranged_users as $data){ $i++;
+$user_name=$data['user_name'];
+$email=$data['email'];
+$mobile=$data['mobile'];
+$society_name=$data['society_name'];
+$validation_status=$data['validation_status'];
+$wing_flat=$data['wing_flat'];
+$user_flat_id=$data['user_flat_id'];
+$roles=$data['roles'];
 ?>
 <tr>
-<td><?php echo $society_name; ?></td>
+<td><?php echo $i; ?></td>
 <td><?php echo $user_name; ?></td>
+<td><?php echo @$wing_flat[$user_flat_id]; ?></td>
+<td><?php echo $roles; ?></td>
 <td><?php echo $email; ?></td>
 <td><?php echo $mobile; ?></td>
+<td><?php  ?></td>
+<td><?php echo $society_name; ?></td>
 </tr>
-<?php } } if(sizeof(@$result_user)==0){ ?> <tr><td colspan="4"> No matching records found</td></tr> <?php } ?>
+<?php } } if(sizeof(@$result_user)==0){ ?> <tr><td colspan="8"> No matching records found</td></tr> <?php } ?>
 </tbody>
 </table>

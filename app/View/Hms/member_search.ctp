@@ -15,7 +15,7 @@ Member Search
 
 <script>
 $(document).ready(function() {
-	$('.search_member').keyup(function() {
+	$('.search_member').blur(function() {
 		var field=$(this).attr("id");
 		var vl=$(this).val();
 		if(vl!=""){

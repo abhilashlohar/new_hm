@@ -7,6 +7,7 @@ Member Search
 		<input type="text" class="span4 m-wrap search_member" id="name" name="name" placeholder="Name" style="background-color:#FFF !important;">
 		<input type="text" class=" span4 m-wrap search_member " id="email"  name="email" placeholder="Email" style="background-color:#FFF !important;" >
 		<input type="text" class="span4 m-wrap search_member " id="mobile" name="mobile" placeholder="Mobile" style="background-color:#FFF !important;" >
+		
 	</div>
 </div>
 
@@ -15,19 +16,23 @@ Member Search
 
 <script>
 $(document).ready(function() {
-	$('.search_member').blur(function() {
-		var field=$(this).attr("id");
-		var vl=$(this).val();
-		if(vl!=""){
-			$.ajax({
-					url: "member_search_ajax/"+vl+"/"+field,
-				}).done(function(response){
-					$('#search_record').html(response);
-			});
-		}else{
-			$('#search_record').html("");
-		}
+	$(".search_member").bind('blur keyup',function(e) {  
+		 if (e.type == 'blur' || e.keyCode == '13'){ 
+				var field=$(this).attr("id");
+				var vl=$(this).val();
+				if(vl!=""){
+					$.ajax({
+							url: "member_search_ajax/"+vl+"/"+field,
+						}).done(function(response){
+							$('#search_record').html(response);
+					});
+				}else{
+					$('#search_record').html("");
+				}
+		   }
 	});	
+	
+	
 });
 
 </script>

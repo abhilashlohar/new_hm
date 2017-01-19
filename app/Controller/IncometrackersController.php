@@ -357,7 +357,7 @@ function individual_send_email($auto_id=null){
 								if(!empty($value)){
 									$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >'.$income_head_name.'</td>
-										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">';if(!empty($income_head_for_rate[$key])){ $bill_html.='' .number_format($income_head_for_rate[$key],2).'';} $bill_html.='</td>
+										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">';if(!empty($income_head_for_rate[$key])){ $size_of= explode('.',$income_head_for_rate[$key]); if(strlen($size_of[1])>2){ $bill_html.=''.number_format($income_head_for_rate[$key] ,3).''; }else{ $bill_html.=''.number_format($income_head_for_rate[$key] ,2).'';} } $bill_html.=' </td>
 										<td align="right" style="padding: 0 5px 0 0;">'.$value.'</td>
 									</tr>';
 								}
@@ -8064,10 +8064,10 @@ function regular_bill_edit2($auto_id=null){
 						
 						$user_name=$this->check_charecter_name($user_name);				
 							if($billing_cycle==1){
-							    $sms="Hi! Your ".$society_name." ".$wing_flat." maintenance bill - Rs ".$due_for_payment." of ".date('M Y',$end_date)." is sent via email, kindly check %26 pay by ".date('d-M',$due_date).".";
+							    $sms="Hi! Your ".$society_name." ".$wing_flat." Revised maintenance bill - Rs ".$due_for_payment." of ".date('M Y',$end_date)." is sent via email, kindly check %26 pay by ".date('d-M',$due_date).".";
 							}else{
 								
-								   $sms="Hi! Your ".$society_name." ".$wing_flat." maintenance bill - Rs ".$due_for_payment." of ".date('M',$start_date)."-".date('M Y',$end_date)." is sent via email, kindly check %26 pay by ".date('d-M',$due_date).".";
+								   $sms="Hi! Your ".$society_name." ".$wing_flat." Revised maintenance bill - Rs ".$due_for_payment." of ".date('M',$start_date)."-".date('M Y',$end_date)." is sent via email, kindly check %26 pay by ".date('d-M',$due_date).".";
 							}
 							
 							$sms1=str_replace(' ', '+', $sms);

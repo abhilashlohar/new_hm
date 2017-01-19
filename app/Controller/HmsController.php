@@ -38,7 +38,7 @@ function member_search_ajax($value=null,$field=null){
 		foreach($result_user as $data){
 			
 			$user_id=(int)$data['user']['user_id'];
-			$society_id=(int)$data['user']['society_id'];
+			$society_id=(int)@$data['user']['society_id'];
 			$user_name=$data["user"]["user_name"];
 			$user_type=$data["user"]["user_type"];
 			$mobile=$data["user"]["mobile"];
@@ -104,8 +104,6 @@ function member_search_ajax($value=null,$field=null){
 		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"society_name"=>$society_name,"user_flat_id"=>$user_flat_id);	
 				
 		}
-		
-		
 		
 		
 		
@@ -3288,7 +3286,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 

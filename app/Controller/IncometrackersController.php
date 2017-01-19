@@ -1157,7 +1157,8 @@ function generate_bills(){
 								if(!empty($value)){
 									$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >'.$income_head_name.'</td>
-										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">';if(!empty($income_head_for_rate[$key])){ $bill_html.=''.number_format($income_head_for_rate[$key],2).''; } $bill_html.=' </td>
+										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">';if(!empty($income_head_for_rate[$key])){ $size_of= explode('.',$income_head_for_rate[$key]); if(strlen($size_of[1])>2){ $bill_html.=''.number_format($income_head_for_rate[$key] ,3).''; }else{ $bill_html.=''.number_format($income_head_for_rate[$key] ,2).'';} } $bill_html.=' </td>
+																	
 										<td align="right" style="padding: 0 5px 0 0;">'.$value.'</td>
 									</tr>';
 								}
@@ -7865,7 +7866,7 @@ function regular_bill_edit2($auto_id=null){
 								if(!empty($value)){
 									$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >'.$income_head_name.'</td>
-										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">';if(!empty($income_head_for_rate[$key])){ $bill_html.=''.number_format($income_head_for_rate[$key],2).'';} $bill_html.=' </td>
+										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">';if(!empty($income_head_for_rate[$key])){ $size_of= explode('.',$income_head_for_rate[$key]); if(strlen($size_of[1])>2){ $bill_html.=''.number_format($income_head_for_rate[$key] ,3).''; }else{ $bill_html.=''.number_format($income_head_for_rate[$key] ,2).'';} } $bill_html.=' </td>
 										<td align="right" style="padding: 0 5px 0 0;">'.$value.'</td>
 									</tr>';
 								}
@@ -8044,7 +8045,7 @@ function regular_bill_edit2($auto_id=null){
 					if(!empty($email)){
 							
 
-							 $subject="[".$society_name."]- Maintenance e-bill, ".date('d-M',$start_date)." to ".date('d-M-Y',$end_date)."";
+							 $subject="[".$society_name."]- Revised Maintenance e-bill, ".date('d-M',$start_date)." to ".date('d-M-Y',$end_date)."";
 							$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$bill_html,'donotreply@housingmatters.in');
 					}
 				}

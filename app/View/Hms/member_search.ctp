@@ -20,6 +20,7 @@ $(document).ready(function() {
 		 if (e.type == 'blur' || e.keyCode == '13'){ 
 				var field=$(this).attr("id");
 				var vl=$(this).val();
+				$("#search_record").html("<center>loading.....</center>");
 				if(vl!=""){
 					$.ajax({
 							url: "member_search_ajax/"+vl+"/"+field,

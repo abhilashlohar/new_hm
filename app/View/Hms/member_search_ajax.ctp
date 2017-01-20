@@ -13,7 +13,7 @@
 </thead>
 <tbody>
 <?php  if(sizeof(@$arranged_users)>0){  $sr_no=0; $i=0;
-foreach($arranged_users as $data){ $i++;
+foreach($arranged_users as $user_id=> $data){ $i++;
 $user_name=$data['user_name'];
 $email=$data['email'];
 $mobile=$data['mobile'];
@@ -36,9 +36,9 @@ if(sizeof($wing_flats)>0){
 							<td><?php echo $mobile; ?></td>
 							<?php if(empty($validation_status)){
 								if(!empty($email)){
-									echo '<td> </td>'; 
+									echo '<td> <a href="#" role="button" class="resend btn red mini" id="'.$user_id.'" style="white-space: nowrap;">  Send Reminder </a> </td>'; 
 								}elseif(!empty($mobile)){
-									echo '<td>  </td>';
+									echo '<td> <a href="#" role="button" class="resend btn red mini" id="'.$user_id.'" style="white-space: nowrap;">  Send Reminder </a> </td>';
 								}else{
 									echo '<td></td>';
 								}
@@ -59,9 +59,9 @@ if(sizeof($wing_flats)>0){
 							<td><?php echo $mobile; ?></td>
 							<?php if(empty($validation_status)){
 								if(!empty($email)){
-									echo '<td>  </td>'; 
+									echo '<td> <a href="#" role="button" class="resend btn red mini" id="'.$user_id.'" style="white-space: nowrap;">  Send Reminder </a> </td>'; 
 								}elseif(!empty($mobile)){
-									echo '<td>  </td>';
+									echo '<td> <a href="#" role="button" class="resend btn red mini" id="'.$user_id.'" style="white-space: nowrap;">  Send Reminder </a> </td>';
 								}else{
 									echo '<td></td>';
 								}

@@ -106,7 +106,6 @@ function member_search_ajax($value=null,$field=null){
 		}
 		
 		
-		
 		$this->set(compact('arranged_users'));
 		
 	}
@@ -9580,7 +9579,6 @@ function dashboard(){
 	$this->ath();
 	
 
-	
 	$s_society_id = $this->Session->read('hm_society_id');
 	$profile_status_user = $this->Session->read('profile_status_user');
 	$s_user_id = $this->Session->read('hm_user_id'); 

@@ -28,7 +28,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	</table>
 </div>
 
-<div id="ajax_result">
+<div id="ajax_result" >
 
 </div>
 <script>
@@ -41,6 +41,7 @@ $(document).ready(function(){
 			$.ajax({
 				url: "<?php echo $webroot_path; ?>Incometrackers/regular_bill_report/"+period,
 			}).done(function(response){
+				$("#ajax_result").css('overflow-x','scroll');
 				$("#ajax_result").html(response);
 				
 			});

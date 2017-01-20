@@ -40,7 +40,7 @@
 			<input type="text" id="search" class="m-wrap medium" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" placeholder="Search">
 		</div>
 		</div>
-		<div style="overflow-x: scroll;">
+		<div style="">
 		<table class="table table-condensed table-bordered table-striped table-hover" id="main">
 			<thead>
 				<tr>

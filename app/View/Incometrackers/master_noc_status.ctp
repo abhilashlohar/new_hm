@@ -40,12 +40,26 @@ $z=0;$j=0;
 <div id="new_update">
 <span class="label label-info"> Number of Self Occupied flats <span style="font-size:15px;"><?php echo $result_count_flat_self; ?> </span> </span> 
 <span class="label label-info"> Number of Leased flats <span style="font-size:15px;"><?php echo $result_count_flat_les; ?> </span></span> </div>
+
+
 </div>
 <form method="post">
 
 <div style="background-color: #fff;">
 <br/>
  <span><span class="label label-important">NOTE</span><span> No need to save this form. The system will automatically save updated data. </span></span>
+ 
+<select class="span2 wing pull-right">
+<option value="all"> All </option>
+<?php 
+foreach($result_wing as $data_wing){
+$wing_id_n = (int)$data_wing['wing']['wing_id'];	
+$wing_name_n = $data_wing['wing']['wing_name'];		
+?>
+<option value="<?php echo $wing_id_n; ?>"><?php echo $wing_name_n; ?></option>
+<?php } ?>
+</select>
+ 
 <table class="table table-striped table-bordered dataTable" id="" aria-describedby="sample_1_info" >
 <thead>
 <tr>
@@ -56,7 +70,8 @@ $z=0;$j=0;
  &nbsp; 
 <label class="radio"><input type="radio"  name="" class="all_chk" value="1" ><span style="font-size:12px;">Select All (Self Occupied)</span></label>
 <label class="radio"><input type="radio"  name="" class="all_chk"  value="2" ><span style="font-size:12px;">Select All (Leased)</span></label>
-	</th>
+
+</th>
 </tr>
 </thead>
 <tbody>
@@ -104,6 +119,16 @@ $ledger_name = $this->requestAction(array('controller' => 'Fns', 'action' => 'le
 
 <script>
 $(document).ready(function(){
+	function all_update_status(){
+		var x='';
+		$.ajax({
+				url: "<?php echo $webroot_path; ?>Incometrackers/master_noc_status_update_ajax_all/"+x,
+				 }).done(function(response){
+				$('#new_update').html(response);
+			});	
+	}
+	
+	
 	var x='';
 	$.ajax({
 			url: "<?php echo $webroot_path; ?>Incometrackers/master_noc_status_update_ajax_all/"+x,
@@ -112,20 +137,43 @@ $(document).ready(function(){
 		});	
 	
 	
+	
+	$('.wing').change(function() {
+		var v=$(this).val();
+			if(v=="all"){
+				all_update_status();
+			}else{
+					$.ajax({
+						url: "<?php echo $webroot_path; ?>Incometrackers/master_noc_status_update_wing/"+v,
+					}).done(function(response){
+						
+						$('#new_update').html(response);
+					});	
+				}
+	});
+	
+	
 	$('input[type="radio"].noc_updat').click(function() {
+		
+		var xx=$('.wing option:selected').val();
+		if(xx!="all"){
+			$('.wing option[value=all]').attr('selected','selected');
+		}
 		var value=$(this).val();
 		var flat_id=$(this).attr('update');	
 		$.ajax({
 				url: "<?php echo $webroot_path; ?>Incometrackers/master_noc_status_update_ajax/"+value+"/"+flat_id,
 			}).done(function(response){
-			$('#new_update').html(response);	
+			$('#new_update').html(response);
+			
 		});	
 
 });
 
 $(".all_chk").bind("click",function(){
-var r=$(this).val();
-
+	var r=$(this).val();
+	var xx=$('.wing option:selected').val();
+	if(xx!="all"){ $('.wing option[value=all]').attr('selected','selected'); }
 if(r==1)
 {
 $(".self_occ").attr('checked','checked');
@@ -138,6 +186,10 @@ $(".leas").removeAttr('checked','checked');
 			url: "<?php echo $webroot_path; ?>Incometrackers/master_noc_status_update_ajax_all/"+r,
 		     }).done(function(response){
 			$('#new_update').html(response);
+			var xx=$('.wing option:selected').val();
+			if(xx!="all"){
+				$('.wing option[value=all]').attr('selected','selected');
+			}
 		});	
 
 }
@@ -151,7 +203,8 @@ $(".self_occ").removeAttr('checked','checked');
 		$.ajax({
 				url: "<?php echo $webroot_path; ?>Incometrackers/master_noc_status_update_ajax_all/"+r,
 			}).done(function(response){
-			$('#new_update').html(response);	
+			$('#new_update').html(response);
+	
 		});	
 }
 });

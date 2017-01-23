@@ -22,6 +22,7 @@ function member_search_ajax($value=null,$field=null){
 	if(!empty($value) and !empty($field)){ 
 		$search=new MongoRegex("/^$value/i");
 		if($field=="name"){
+			$search=new MongoRegex("/$value/i");
 			$conditions=array("user_name"=>$search,"active"=>"yes");
 		}
 		if($field=="email"){

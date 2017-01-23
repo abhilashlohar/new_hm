@@ -48,8 +48,8 @@ foreach($result_society as $data){
 		$email_is_on_off=(int)@$data["society"]["account_email"];
 		$sms_is_on_off=(int)@$data["society"]["account_sms"];
 		}
-	 
-if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type) || $nn==555 || $nnn==555 || $financial_year_count==0 || empty($society_reg_num) || empty($society_address) || empty($sig_title))
+	
+if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type) || $nn==555 || $nnn==555 || $financial_year_count==0 || empty($society_reg_num) || empty($society_address) || empty($sig_title) || $flat_count>0)
 {
 ?>
 <br>
@@ -57,13 +57,16 @@ if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type) 
 <div style="width:100%;">
 <br>
 	<ul>
-	    <?php if(empty($select_income_head_array)){ ?>
+	    <?php  if(empty($select_income_head_array)){ ?>
 		<li style="text-align:left;"><p style="font-size:18px;">Please Select Income Heads in Selection of Income Head</p></li><?php } ?>
 		<?php if(empty($penalty_tax)){ ?>
 		<li style="text-align:left;"><p style="font-size:18px;">Please Fill Penalty</p></li>
 		<?php } ?>
 		<?php if(empty($neft_type)){ ?>
 		<li style="text-align:left;"><p style="font-size:18px;">Please Fill NEFT Detail</p></li>
+		<?php } ?>
+		<?php if($flat_count>0){ ?>
+		<li style="text-align:left;"><p style="font-size:18px;">Please Fill NOC Status</p></li>
 		<?php } ?>
 		<?php if($nn==555 || empty($select_income_head_array)){?>
 		<li style="text-align:left;"><p style="font-size:18px;">Please Fill Rate Card</p></li>
@@ -77,7 +80,7 @@ if(empty($select_income_head_array) || empty($penalty_tax) || empty($neft_type) 
 		<?php if($financial_year_count == 0){ ?>
 		<li style="text-align:left;"><p style="font-size:18px;">Kindly Open Financial Year.</p></li>	
 		<?php } ?>
-		<?php if(empty($society_reg_num) || empty($society_address) || empty($society_email) || empty($society_phone) || empty($sig_title) || empty($society_logo)){ ?>
+		<?php if(empty($society_reg_num) || empty($society_address) || empty($society_email) || empty($society_phone) || empty($sig_title)){ ?>
 		<li style="text-align:left;"><p style="font-size:18px;">Kindly Fill the Society Details.</p></li>	
 		<?php } ?>
 	</ul>
@@ -96,7 +99,7 @@ if(sizeof($result_regular_bill_temp)>0){
 
 ?>
 
-<?php if(!empty($select_income_head_array) && !empty($penalty_tax) && !empty($neft_type) && $nn==55 && $nnn==55 && $financial_year_count>0 && !empty($society_reg_num) && !empty($society_address) && !empty($sig_title)){ ?>
+<?php if(!empty($select_income_head_array) && !empty($penalty_tax) && !empty($neft_type) && $nn==55 && $nnn==55 && $financial_year_count>0 && !empty($society_reg_num) && !empty($society_address) && !empty($sig_title ) && $flat_count==0){ ?>
 <input type="hidden" id="validat_value">
 <input type="hidden" id="validat_date">
 <div class="portlet box blue">
@@ -170,7 +173,7 @@ font-size: 11px;"></p>
 				  <?php foreach($result_wing as $wings){
 					$wing_id=$wings["wing"]["wing_id"];
 					$wing_name=$wings["wing"]["wing_name"];?>
-					<label><input type="checkbox" value="<?php echo $wing_id; ?>" name="wings[]"><?php echo $wing_name; ?></label>
+					<label><input type="checkbox" class="requirecheck3" value="<?php echo $wing_id; ?>" name="wings[]"><?php echo $wing_name; ?></label>
 				  <?php } ?>
 					
 				  </div>
@@ -257,6 +260,34 @@ $(document).ready(function(){
 			//$('#start_date').html('');
 		}
 		
+		
+		var allVals = [];
+			var bill_for=$("input[name='bill_for']:checked").val();
+				if(bill_for=="wing_wise"){
+					
+					$('.requirecheck3:checked').each(function() {
+					   allVals.push($(this).val());
+					});
+				}
+			
+				 if(start_date!=""){
+						    
+							$.ajax({
+								url:"regular_bill_validation_ajax/"+start_date+"/"+bill_for+"/"+allVals, 
+								async: false,
+								success: function(result){
+									
+								if(result=="match"){
+									allow="no";
+									$('#start_date').html('Bills already generated for this period');
+
+								}
+							}
+						});
+					}
+		
+		
+		
 		if(allow=="no"){
 			e.preventDefault();
 		}
@@ -291,20 +322,31 @@ $('select[name="billing_cycle"]').die().live("change",function(){
 });	
 $('input[name="start_date"]').die().live("blur",function(){ 
 			var start_date=$(this).val();
-				var a1=0;	    
-					$.ajax({url:"regular_bill_validation_ajax/"+start_date, 
-						success: function(result){
-					if(result=="match"){
+			var allVals = [];
+			var bill_for=$("input[name='bill_for']:checked").val();
+				if(bill_for=="wing_wise"){
+					
+					$('.requirecheck3:checked').each(function() {
+					   allVals.push($(this).val());
+					});
+				}
+			
+			if(start_date!=""){
+						var a1=0;	    
+							$.ajax({url:"regular_bill_validation_ajax/"+start_date+"/"+bill_for+"/"+allVals, 
+								success: function(result){
+									
+								if(result=="match"){
+								validation(5)
+						   $('#start_date').html('Bills already generated for this period');
 
-				//	validation(5)
-			//	$('#start_date').html('Bills already generated for this period');
-
-				}else{
-					$('#start_date').html('');
-				validation(10)		
+						}else{
+							$('#start_date').html('');
+						validation(10)		
+					}
+					}
+				});
 			}
-			}
-		});
 	});	
 	
 	$('input[name="due_date"]').die().live("blur keyup",function(){	

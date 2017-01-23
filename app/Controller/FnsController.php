@@ -334,11 +334,12 @@ function ledger_member_name_via_wing_id_and_flat_id($wing_id,$flat_id){
 	$conditions=array("wing" => $wing_id,"flat" => $flat_id,"owner" =>"yes","exited" =>"no");
 	$result=$this->user_flat->find('all',array('conditions'=>$conditions));
 	$user_flat_id=(int)@$result[0]["user_flat"]["user_flat_id"];
-	
-	$this->loadmodel('ledger_sub_account');
-	$conditions=array("user_flat_id" => $user_flat_id);
-	$result2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
-	return @$result2[0]["ledger_sub_account"]["name"];
+	if(!empty($user_flat_id)){
+		$this->loadmodel('ledger_sub_account');
+		$conditions=array("user_flat_id" => $user_flat_id);
+		$result2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+		return @$result2[0]["ledger_sub_account"]["name"];
+	}
 }
 
 

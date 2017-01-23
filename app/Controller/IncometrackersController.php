@@ -563,6 +563,12 @@ function it_regular_bill(){
 	$financial_year_count=$this->financial_year->find('count',array('conditions'=>$conditions));
 	$this->set(compact("financial_year_count"));
 	
+	$this->loadmodel('flat');
+	$conditions =array('society_id' =>$s_society_id,'noc_ch_tp' =>null);
+	$flat_count=$this->flat->find('count',array('conditions'=>$conditions));
+	
+	$this->set(compact("flat_count"));
+	
 	$this->loadmodel('society');
 	$condition=array('society_id'=>$s_society_id);
 	$result_society = $this->society->find('all',array('conditions'=>$condition));
@@ -6398,6 +6404,23 @@ $this->set('area_type',@$area_type);
 
 }
 
+function master_noc_status_update_wing($wing=null){
+$this->layout=null;	
+  $s_society_id = (int)$this->Session->read('hm_society_id');
+ 	
+		$this->loadmodel('flat');
+		$conditions=array("society_id"=>$s_society_id,'noc_ch_tp'=>1,'wing_id'=>(int)$wing);
+		$result_count_flat_self = $this->flat->find('count',array('conditions'=>$conditions));
+       
+		$this->loadmodel('flat');
+		$conditions1=array("society_id"=>$s_society_id,'noc_ch_tp'=>2,'wing_id'=>(int)$wing);
+		$result_count_flat_les = $this->flat->find('count',array('conditions'=>$conditions1));
+
+		echo '<span class="label label-info"> Number of Self Occupied flats <span style="font-size:15px;">'.$result_count_flat_self.'</span> </span> 
+		<span class="label label-info"> Number of Leased flats <span style="font-size:15px;">'.$result_count_flat_les.'</span></span>';
+				
+}
+
 function master_noc_status_update_ajax($update=null,$flat_id=null){
 				
 				$s_society_id = (int)$this->Session->read('hm_society_id');
@@ -6469,7 +6492,7 @@ $s_role_id=$this->Session->read('role_id');
 	
 $this->loadmodel('flat');
 $conditions=array("society_id"=>$s_society_id,'noc_ch_tp'=>'1');
- $result_count_flat_self = $this->flat->find('count',array('conditions'=>$conditions));
+$result_count_flat_self = $this->flat->find('count',array('conditions'=>$conditions));
 $this->set('result_count_flat_self',$result_count_flat_self);
 
 
@@ -7857,7 +7880,7 @@ function regular_bill_edit2($auto_id=null){
 									<td style="padding: 0 5px 0 0;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;" align="right" width="20%"><b>Amount (Rs.)</b> </td>
 								</tr>';
 								
-								
+								//pr($income_head_array); exit;
 							foreach($income_head_array as $key=>$value){
 							$result_income_head = $this->requestAction(array('controller' => 'hms', 'action' => 'ledger_account_fetch2'),array('pass'=>array($key)));	
 								foreach($result_income_head as $data2){
@@ -9535,26 +9558,68 @@ $this->society->updateAll(array("tax"=>$penalty),array('society_id'=>$s_society_
 }
 //End auto_save_penalty//
 //Start regular_bill_validation_ajax// 
-function regular_bill_validation_ajax($start_date=null)
+function regular_bill_validation_ajax($start_date=null,$bill_for=null,$wing_id=null)
 {
-$s_society_id=(int)$this->Session->read('hm_society_id');	
-$start_date=date('Y-m-d',strtotime($start_date));
-$start_date_for_compare=strtotime($start_date);
-$result="not_match";
-$this->loadmodel('regular_bill');
-$order=array('regular_bill.start_date'=>'ASC');
-$conditions=array("society_id"=>$s_society_id);
-$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order));
-foreach($result_regular_bill as $data){
-	$start_date_from_table=$data['regular_bill']['start_date'];	
-	$end_date_from_table=$data['regular_bill']['end_date'];
-if($start_date_for_compare<=$end_date_from_table){
-	$result="match";
-	break;
-}}
-echo $result;
+	$s_society_id=(int)$this->Session->read('hm_society_id');	
+	$start_date=date('Y-m-d',strtotime($start_date));
+	$start_date_for_compare=strtotime($start_date);
+	$result="not_match";
+	
+if($bill_for=="all"){	
+	
+	$this->loadmodel('regular_bill');
+	$order=array('regular_bill.start_date'=>'ASC');
+	$conditions=array("society_id"=>$s_society_id);
+	$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order));
+	foreach($result_regular_bill as $data){
+		$start_date_from_table=$data['regular_bill']['start_date'];	
+		$end_date_from_table=$data['regular_bill']['end_date'];
+			if($start_date_for_compare<=$end_date_from_table){
+				$result="match";
+				break;
+			}
+	}
+  echo $result;
+}else{
+	
+	$rtn=array();
+	$wings=explode(',',$wing_id);
+	
+	foreach($wings as $wing_ids){
+		$this->loadmodel('user_flat');
+		$conditions=array("wing" => (int)$wing_ids,"owner" =>"yes","society_id"=>$s_society_id);
+		$result=$this->user_flat->find('all',array('conditions'=>$conditions));
+		foreach($result as $data){
+			$user_flat_id=(int)@$data["user_flat"]["user_flat_id"];
+			
+			$this->loadmodel('ledger_sub_account');
+			$conditions=array("user_flat_id" => $user_flat_id);
+			$result2=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+			$rtn[]=$result2[0]["ledger_sub_account"]["auto_id"];
+		}
+	}
+	
+	$this->loadmodel('regular_bill');
+	$order=array('regular_bill.start_date'=>'ASC');
+	$conditions=array("society_id"=>$s_society_id);
+	$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order));
+	foreach($result_regular_bill as $data){
+		$start_date_from_table=$data['regular_bill']['start_date'];	
+		$end_date_from_table=$data['regular_bill']['end_date'];
+		$ledger_sub_account_id=$data['regular_bill']['ledger_sub_account_id'];
+			if($start_date_for_compare<=$end_date_from_table){ 
+				if(in_array($ledger_sub_account_id,$rtn)){
+					$result="match";
+				     break;
+				}
+				
+			}
+	}
+	
+	echo $result;
+	
 }
-
+}
 
 function calculate_bill_data(){
 	$this->layout='';

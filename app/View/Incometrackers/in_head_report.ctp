@@ -35,6 +35,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 $(document).ready(function(){
 	
 	$("#go").on("click",function(){
+		$("#ajax_result").css('overflow-x','');
 		var period=$("#period option:selected").val();
 		if(period!=""){
 			$("#ajax_result").html("<div align='center'>Loading...</div>");

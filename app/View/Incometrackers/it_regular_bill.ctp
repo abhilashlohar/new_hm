@@ -175,10 +175,10 @@ font-size: 11px;"></p>
 					$wing_name=$wings["wing"]["wing_name"];?>
 					<label><input type="checkbox" class="requirecheck3" value="<?php echo $wing_id; ?>" name="wings[]"><?php echo $wing_name; ?></label>
 				  <?php } ?>
-					
+	         
 				  </div>
 				</div>
-				
+				<div id="flat_empty" style="color: rgb(198, 4, 4);font-size: 11px;" align="center"> </div>
 				<div class="control-group">
 				  <label class="control-label">Billing Description</label>
 				  <div class="controls">
@@ -201,8 +201,10 @@ $(document).ready(function(){
 	$("input[name=bill_for]").on("click",function(){
 		var bill_for=$(this).val();
 		if(bill_for=="wing_wise"){
+			$('#flat_empty').html('');
 			$("#wing_box").show();
 		}else{
+			$('#flat_empty').html('');
 			$("#wing_box").hide();
 		}
 	});
@@ -285,6 +287,24 @@ $(document).ready(function(){
 							}
 						});
 					}
+					
+					
+					
+					$.ajax({
+								url:"regular_bill_validation_empty_member/"+bill_for+"/"+allVals, 
+								async: false,
+								success: function(result){
+								 if(result=="match"){
+									allow="no";
+									$('#flat_empty').html('Member is not enrolled for unit');
+
+								 }
+							  }
+						});
+					
+					
+					
+					
 		
 		
 		

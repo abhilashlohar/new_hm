@@ -9557,6 +9557,57 @@ $this->loadmodel('society');
 $this->society->updateAll(array("tax"=>$penalty),array('society_id'=>$s_society_id));
 }
 //End auto_save_penalty//
+
+function regular_bill_validation_empty_member($bill_for=null,$wing_id=null){
+$result="not_match";
+$s_society_id=(int)$this->Session->read('hm_society_id');	
+	if($bill_for=="all"){
+		
+		$this->loadmodel('flat');
+		$conditions=array('society_id'=>$s_society_id);
+		$result_flat=$this->flat->find('all',array('conditions'=>$conditions));
+		//pr($result_flat);
+			foreach($result_flat as $data){
+				
+				$flat_id=$data['flat']['flat_id'];
+			    $wing_id=$data['flat']['wing_id'];
+				
+				$this->loadmodel('user_flat');
+				$conditions=array("wing" => $wing_id,"flat" => $flat_id,"owner" =>"yes","exited" =>"no");
+				$result_count=$this->user_flat->find('count',array('conditions'=>$conditions));
+				if($result_count==0){
+					$result="match"; 
+					break;
+				}
+			}
+			echo $result;
+	}else{
+		$wings=explode(',',$wing_id);
+		foreach($wings as $wing_ids){
+					$this->loadmodel('flat');
+					$conditions=array('society_id'=>$s_society_id,"wing_id"=>(int)$wing_ids);
+					$result_flat=$this->flat->find('all',array('conditions'=>$conditions));
+					
+					foreach($result_flat as $data){
+				
+							$flat_id=$data['flat']['flat_id'];
+							$wing_id=$data['flat']['wing_id'];
+
+							$this->loadmodel('user_flat');
+							$conditions=array("wing" => $wing_id,"flat" => $flat_id,"owner" =>"yes","exited" =>"no");
+							$result_count=$this->user_flat->find('count',array('conditions'=>$conditions));
+								if($result_count==0){
+									$result="match"; 
+									break;
+								}
+						}
+		}
+		echo $result;
+	}
+
+}
+
+
 //Start regular_bill_validation_ajax// 
 function regular_bill_validation_ajax($start_date=null,$bill_for=null,$wing_id=null)
 {

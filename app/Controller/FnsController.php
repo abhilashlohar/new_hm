@@ -2270,13 +2270,15 @@ function calculate_opening_balance_for_ledger($ledger_account_id=null,$ledger_su
 		$conditions =array('society_id' =>$s_society_id,'status' =>1,'financial_year.from'=>array('$lte'=>$date),'financial_year.to'=>array('$gte'=>$date));
 		$financial_years=$this->financial_year->find('all',array('conditions'=>$conditions));
 		$last_bill_start_date=@$financial_years[0]["financial_year"]["from"];
+		$last_bill_end=@$financial_years[0]["financial_year"]["to"];
+		
 		$first_date=$last_bill_start_date;
 		$current_year_date= date("01-04-Y");
 		$current_year_date=strtotime($current_year_date);
 		
-		if($first_date==$current_year_date){
+		if($first_date<=$current_year_date){ 
 			return 0;
-		}else{
+		}else{ 
 		
 		$this->loadmodel('ledger');
 		$conditions=array("society_id"=>$s_society_id,"ledger_account_id"=>$ledger_account_id,"ledger_sub_account_id"=>$ledger_sub_account_id,"transaction_date"=>array('$gte'=>$first_date),"transaction_date"=>array('$lt'=>$date));

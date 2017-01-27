@@ -8,93 +8,93 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 Society Setup
 </div>
 <div class="tabbable tabbable-custom">
-<ul class="nav nav-tabs">
-<li><a href="<?php echo $webroot_path; ?>Hms/master_sm_wing" rel='tab'> Wing</a></li>
-<li class="active"><a href="<?php echo $webroot_path; ?>Hms/flat_type" rel='tab'>Unit Number</a></li>
-<li><a href="<?php echo $webroot_path; ?>Hms/unit_configuration" rel='tab'>Unit Configuration</a></li>
-<!--<li><a href="<?php echo $webroot_path; ?>Hms/flat_nu_import" rel='tab'>Flat Number Import</a></li>-->
-<li><a href="<?php echo $webroot_path; ?>Hms/society_details" rel='tab'>Society Details</a></li>
-<li><a href="<?php echo $webroot_path; ?>Hms/society_settings" rel='tab'>Society Settings</a></li>
-</ul>
-<div class="tab-content" style="min-height:500px;">
-<div class="tab-pane active" id="succ">
-<a href="#"role="button" class="btn purple" id="import_btn"><i class="fa fa-database"></i> Import csv</a>
-<div id="error_msg"></div>
-<div id="don"></div>
- 
-<div style="background-color:#fff;padding:5px;width:96%;margin:auto; overflow:auto;" class="form_div">    
+	<ul class="nav nav-tabs">
+	<li><a href="<?php echo $webroot_path; ?>Hms/master_sm_wing" rel='tab'> Wing</a></li>
+	<li class="active"><a href="<?php echo $webroot_path; ?>Hms/flat_type" rel='tab'>Unit Number</a></li>
+	<li><a href="<?php echo $webroot_path; ?>Hms/unit_configuration" rel='tab'>Unit Configuration</a></li>
+	<!--<li><a href="<?php echo $webroot_path; ?>Hms/flat_nu_import" rel='tab'>Flat Number Import</a></li>-->
+	<li><a href="<?php echo $webroot_path; ?>Hms/society_details" rel='tab'>Society Details</a></li>
+	<li><a href="<?php echo $webroot_path; ?>Hms/society_settings" rel='tab'>Society Settings</a></li>
+	</ul>
+	<div class="tab-content" style="min-height:500px;">
+		<div class="tab-pane active" id="succ">
+			<a href="#"role="button" class="btn purple" id="import_btn"><i class="fa fa-database"></i> Import csv</a>
+			<div id="error_msg"></div>
+			<div id="don"></div>
+			 
+			<div style="background-color:#fff;padding:5px;width:96%;margin:auto; overflow:auto;" class="form_div">    
    
-<div class="form_div">    
-<div class="row-fluid">
-<div class="span5">    
-<form  method="post" id="form2">
-<br />
-<div id="error_msg"></div>
-<br />   
-<label style="font-size:14px;">Select Wing</label>   
-<div class="controls">
-<select name="wing" id="tp" class="m-wrap span7 chosen">
-<option value="">Select</option>
-<?php
-foreach($wings as $collection)
-{
-$wing_id = (int)$collection['wing']['wing_id'];	 
-$wing_name = $collection['wing']['wing_name'];		 
-?>
-<option value="<?php echo $wing_id; ?>"><?php echo $wing_name; ?></option>
-<?php } ?>
-</select> 
-<label report="wing" class="remove_report"></label>  
-</div>
-<br />   
+				<div class="form_div">    
+					<div class="row-fluid">
+						<div class="span5">    
+							<form  method="post" id="form2">
+								<br />
+								<div id="error_msg"></div>
+								<br />   
+								<label style="font-size:14px;">Select Wing</label>   
+								<div class="controls">
+								<select name="wing" id="tp" class="m-wrap span7 chosen">
+								<option value="">Select</option>
+								<?php
+								foreach($wings as $collection)
+								{
+								$wing_id = (int)$collection['wing']['wing_id'];	 
+								$wing_name = $collection['wing']['wing_name'];		 
+								?>
+								<option value="<?php echo $wing_id; ?>"><?php echo $wing_name; ?></option>
+								<?php } ?>
+								</select> 
+								<label report="wing" class="remove_report"></label>  
+								</div>
+								<br />   
 
-<label style="font-size:14px;">Unit Number</label>
-<div id="url_main">
-<div>
-<input type="text" class="m-wrap span7" maxlength="10" id="nu">
-<a href="#" role="button" id="add_row" class="btn black mini"><i class="icon-plus-sign"></i> Add row</a>
-</div>
-</div>
-<br />
-<button type="submit" class="btn form_post" style="background-color: #09F; color:#fff;" value="xyz">Submit</button>
-</form>
-</div>
-<div class="span7">
+								<label style="font-size:14px;">Unit Number</label>
+								<div id="url_main">
+									<div>
+									<input type="text" class="m-wrap span7" maxlength="10" id="nu">
+									<a href="#" role="button" id="add_row" class="btn black mini"><i class="icon-plus-sign"></i> Add row</a>
+									</div>
+								</div>
+								<br />
+								<button type="submit" class="btn form_post" style="background-color: #09F; color:#fff;" value="xyz">Submit</button>
+							</form>
+						</div>
+						<div class="span7">
 
-<table class="table table-condensed table-bordered">
-<tr>
-<th style="text-align:center;">Sr #</th>
-<th style="text-align:center;">Wing Name</th>
-<th style="text-align:center;">Unit Number</th>
-</tr>
-<?php
-$c=0;
+							<table class="table table-condensed table-bordered">
+								<tr>
+									<th style="text-align:center;">Sr #</th>
+									<th style="text-align:center;">Wing Name</th>
+									<th style="text-align:center;">Unit Number</th>
+									</tr>
+										<?php
+										$c=0;
 
-foreach($units as $collection)
-{
-$c++;
-$wing_id = (int)$collection['wing_id'];	
-$flat_number = $collection['flat_name'];	
-$flat_num = ltrim($flat_number,0);
-$wing_name = $collection['wing_name'];
+										foreach($units as $collection)
+										{
+										$c++;
+										$wing_id = (int)$collection['wing_id'];	
+										$flat_number = $collection['flat_name'];	
+										$flat_num = ltrim($flat_number,0);
+										$wing_name = $collection['wing_name'];
 
 
-?>
-<tr>
-<td style="text-align:center;"><?php echo $c; ?></td>
-<td style="text-align:center;"><?php echo $wing_name; ?></td>
-<td style="text-align:center;"><?php echo $flat_num; ?></td>
-</tr>
-<?php } ?>
-</table>
-</div>
-</div>
-</div>
+										?>
+										<tr>
+											<td style="text-align:center;"><?php echo $c; ?></td>
+											<td style="text-align:center;"><?php echo $wing_name; ?></td>
+											<td style="text-align:center;"><?php echo $flat_num; ?></td>
+										</tr>
+										<?php } ?>
+							</table>
+						</div>
+					</div>
+				</div>
 
+			</div>
+		</div>
+	</div>
 </div>
-</div>
-</div>
-
 
 <script>
 $(document).ready(function(){
@@ -176,31 +176,31 @@ $(document).ready(function() {
 <div id="myModal3" class="modal hide fade in" style="display: none;">
 <div class="modal-backdrop fade in"></div>
 	<form id="form1" method="post">
-	<div class="modal content_model">
-	<input type="hidden" value="1" id="stype"/>
-   
-    <div class="modal-header">
-			<h4 id="myModalLabel1">Import csv</h4>
+		<div class="modal content_model">
+			<input type="hidden" value="1" id="stype"/>
+		   
+			<div class="modal-header">
+					<h4 id="myModalLabel1">Import csv</h4>
+				</div>
+				<div class="modal-body">
+					<input type="file" name="file" class="default" id="image-file">
+					<label id="vali"></label>
+					<strong><a href="<?php echo $this->webroot; ?>csv_file/demo/unit_import.csv" download>Click here for sample format</a></strong>
+					<br/>
+					<h4>Instruction set to import users</h4>
+					<ol>
+					<li>All the field are compulsory.</li>
+					<li>Wing and Flat number be valid as per society setting.</li>
+					<li>Flat number should be not same.</li>
+					<li style="color:red;">You can Import Maximum 100 Unit once.</li>
+					</ol>
+				</div>
+				<div class="modal-footer">
+					<a href="" ><button type="button" class="btn" id="import_close">Cancel </button></a>
+					<button type="submit" class="btn blue import_btn" id="imppp">Import</button>
+				</div>
+			
 		</div>
-		<div class="modal-body">
-			<input type="file" name="file" class="default" id="image-file">
-			<label id="vali"></label>
-			<strong><a href="<?php echo $this->webroot; ?>csv_file/demo/unit_import.csv" download>Click here for sample format</a></strong>
-			<br/>
-			<h4>Instruction set to import users</h4>
-			<ol>
-			<li>All the field are compulsory.</li>
-			<li>Wing and Flat number be valid as per society setting.</li>
-			<li>Flat number should be not same.</li>
-			<li style="color:red;">You can Import Maximum 100 Unit once.</li>
-			</ol>
-		</div>
-		<div class="modal-footer">
-			<a href="" ><button type="button" class="btn" id="import_close">Cancel </button></a>
-			<button type="submit" class="btn blue import_btn" id="imppp">Import</button>
-		</div>
-		
-	</div>
 	</form>
 </div>
 
@@ -235,6 +235,7 @@ $("#myModal3").show();
 });
 	$("#import_close").live('click',function(){
 		$("#myModal3").hide();
+		
 	});
 	
 	

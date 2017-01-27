@@ -2271,12 +2271,14 @@ function calculate_opening_balance_for_ledger($ledger_account_id=null,$ledger_su
 		$financial_years=$this->financial_year->find('all',array('conditions'=>$conditions));
 		$last_bill_start_date=@$financial_years[0]["financial_year"]["from"];
 		$last_bill_end=@$financial_years[0]["financial_year"]["to"];
-		
+		$last_bill_start_year= date("Y",$last_bill_start_date);
+		$last_bill_end_year= date("Y",$last_bill_end);
 		$first_date=$last_bill_start_date;
-		$current_year_date= date("01-04-Y");
-		$current_year_date=strtotime($current_year_date);
+		//$current_year_date= date("01-04-Y");
+		$current_year= date("Y");
+		//$current_year_date=strtotime($current_year_date);
 		
-		if($first_date<=$current_year_date){ 
+		if($last_bill_start_year==$current_year or $last_bill_end_year==$current_year){ 
 			return 0;
 		}else{ 
 		

@@ -130,7 +130,6 @@ $webroot_path=$this->requestAction(array('controller' => 'Fns', 'action' => 'web
 	<script src="<?php echo $webroot_path; ?>assets/js/demo.gmaps.js"></script>
 		<script type="text/javascript" src="<?php echo $webroot_path; ?>assets/data-tables/jquery.dataTables1.js"></script>
 	<script type="text/javascript" src="<?php echo $webroot_path; ?>assets/data-tables/DT_bootstrap.js"></script>
-	<script src="<?php echo $webroot_path; ?>/assets_table/tableHeadFixer.js"></script>
 		<script src="<?php echo $webroot_path; ?>assets/js/app.js"></script>		
 	<script>
 		jQuery(document).ready(function() {			
@@ -477,7 +476,6 @@ $("#menus_area>li").live('click',function(e){
 		});
 	}
 	</script>
-	
 </body>
 <!-- END BODY -->
 </html>

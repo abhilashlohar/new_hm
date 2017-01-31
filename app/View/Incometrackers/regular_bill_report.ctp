@@ -214,6 +214,7 @@ $('#search').keyup(function() {
 <script src="<?php echo $webroot_path; ?>/assets_table/tableHeadFixer.js"></script>
 
 <style>
+
 	#parent {
 		height: 500px;
 	}
@@ -225,6 +226,10 @@ $('#search').keyup(function() {
 		width: 1800px !important;
 	}
 
+ #main thead tr th{
+		background-color:#C49F47 !important;
+		color: white;
+	}
 </style>
 
 <script>

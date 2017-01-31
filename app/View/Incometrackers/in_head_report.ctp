@@ -35,14 +35,14 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 $(document).ready(function(){
 	
 	$("#go").on("click",function(){
-		$("#ajax_result").css('overflow-x','');
+		//$("#ajax_result").css('overflow-x','');
 		var period=$("#period option:selected").val();
 		if(period!=""){
 			$("#ajax_result").html("<div align='center'>Loading...</div>");
 			$.ajax({
 				url: "<?php echo $webroot_path; ?>Incometrackers/regular_bill_report/"+period,
 			}).done(function(response){
-				$("#ajax_result").css('overflow-x','scroll');
+				//$("#ajax_result").css('overflow-x','scroll');
 				$("#ajax_result").html(response);
 				
 			});

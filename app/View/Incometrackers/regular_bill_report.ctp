@@ -11,6 +11,7 @@
 </div>
 
 
+
 <div class="portlet box">
 	<div class="portlet-body" >
 		<?php
@@ -40,7 +41,7 @@
 			<input type="text" id="search" class="m-wrap medium" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" placeholder="Search">
 		</div>
 		</div>
-		<div style="">
+		<div id="parent">
 		<table class="table table-condensed table-bordered table-striped table-hover" id="main">
 			<thead>
 				<tr>
@@ -63,7 +64,7 @@
 					<th>Interest on Arrears</th>
 					<th>Credit/Adjustment</th>
 					<th>Due For Payment</th>
-					<th></th>
+					<th style="z-index:999;"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -165,15 +166,7 @@
 		</div>
 	</div>
 </div>
-<style>
-th,td{
-	font-size: 12px !important;
-	white-space: nowrap;
-}
-input{
-	margin: 0px !important;
-}
-</style>
+
 <script>
 $(document).ready(function(){
 	$('.send_email').click(function(){
@@ -218,3 +211,27 @@ $('#search').keyup(function() {
 	}).hide();
 });
 </script>
+<script src="<?php echo $webroot_path; ?>/assets_table/tableHeadFixer.js"></script>
+
+<style>
+	#parent {
+		height: 500px;
+	}
+	#parent > div { 
+	  height:0px !important;
+	  margin-bottom: -5px;
+	}
+	#main {
+		width: 1800px !important;
+	}
+
+</style>
+
+<script>
+$(document).ready(function() { 
+	$("#main").tableHeadFixer({"head" : true, "left" : 2}); 
+	
+});
+</script>
+		
+	

@@ -211,7 +211,7 @@ $('#search').keyup(function() {
 	}).hide();
 });
 </script>
-<script src="<?php echo $webroot_path; ?>/assets_table/tableHeadFixer.js"></script>
+
 
 <style>
 

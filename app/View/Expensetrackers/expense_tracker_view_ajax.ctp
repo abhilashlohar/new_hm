@@ -23,7 +23,7 @@
 <div style="width:100%; overflow:auto; margin-top:10px;" class="hide_at_print">
 <label class="m-wrap pull-right"><input type="text" id="search" class="m-wrap medium" style="background-color:#FFF !important;" placeholder="Search"></label>	
 </div>	
-<div style="width:100%; overflow-x:scroll;"> 
+<div id="parent" > 
 <table class="table table-bordered table-striped table-hover" width="100%" id="table_ex">
 <thead>
 <tr>
@@ -36,7 +36,7 @@
 <th >Expense Head</th>
 <th width="20%">Description</th>
 <th >Amount</th>
-<th class="hide_at_print"><span style="font-size:14px;"><i class="icon-paper-clip"></i></span></th>
+<th class="hide_at_print" style="z-index:999;"><span style="font-size:14px;"><i class="icon-paper-clip"></i></span></th>
 </tr>
 
 </thead>
@@ -145,14 +145,18 @@ $prepaired_by_name=$result_user[0]['user']['user_name'];
 </tr>
 <?php  } ?>
 
+
+</tbody>
+<tfoot>
+
 <tr>
+
 <td colspan="8" style="text-align:right;"> <b> Total </b> </td>
 <td style="text-align:right;" > <b><?php echo $this->Currency->formatCurrency( $total, "INR"); ?></b> </td>
 <td class="hide_at_print"></td>
 
 </tr>
-
-</tbody>
+</tfoot>
 </table>
 </div>
 
@@ -193,6 +197,32 @@ $(document).ready(function() {
 });
  </script>	
 
+<style>
+
+	#parent {
+		height: 500px;
+	}
+	#parent > div { 
+	  height:0px !important;
+	  margin-bottom: -5px;
+	}
+	#table_ex {
+		width: 1800px !important;
+	}
+
+ #table_ex thead tr th{
+		background-color:#C49F47 !important;
+		color: white;
+	}
+</style>
+
+<script>
+$(document).ready(function() { 
+	$("#table_ex").tableHeadFixer({"head" : true, "left" : 2}); 
+	
+});
+</script>
+		
 
 
 

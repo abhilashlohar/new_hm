@@ -8119,7 +8119,7 @@ function print_show_last_receipt($led_sub_id){
 	$this->loadmodel('cash_bank');
 	$conditions=array("ledger_sub_account_id"=>$led_sub_id,"society_id"=>$s_society_id,"source"=>"bank_receipt");
 	$order=array("transaction_id"=>"DESC");
-	return $this->cash_bank->find('all',array('conditions'=>$conditions,"order"=>$order,"limit"=>1));
+	return $this->cash_bank->find('all',array('conditions'=>$conditions,"order"=>$order,"limit"=>3));
 	
 }
 

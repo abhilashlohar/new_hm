@@ -32,7 +32,7 @@ foreach($regular_bills as $data){
 					$ledger_sub_account_id=(int)$data["regular_bill"]["ledger_sub_account_id"];
 					$billing_cycle=$data["regular_bill"]["billing_cycle"];	
 					$income_head_array=$data["regular_bill"]["income_head_array"];
-					$income_head_for_rate=$data["regular_bill"]["income_head_for_rate"];
+					$income_head_for_rate=@$data["regular_bill"]["income_head_for_rate"];
 					$noc_charge=$data["regular_bill"]["noc_charge"];
 					$other_charge=$data["regular_bill"]["other_charge"];
 					$total=$data["regular_bill"]["total"];
@@ -346,10 +346,62 @@ foreach($regular_bills as $data){
 					
 	 echo $bill_html;
 	
-	 
+	 $html_receipt='<table style="padding:24px;background-color:#F5F8F9" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" class="">
+				<tbody><tr>
+					<td>
+						<table style="padding:38px 30px 30px 30px;background-color:#fafafa" align="center" border="0" cellpadding="0" cellspacing="0" width="540">
+							<tbody>
+							<tr>
+								<td height="10">
+								<table width="100%" class="hmlogobox">
+		<tr>
+		<td width="50%" style="padding: 10px 0px 0px 10px;"><img src="'.$ip.$this->webroot.'/as/hm/hm-logo.png" style="max-height: 60px; " height="60px" /></td>
+		<td width="50%" align="right" valign="middle"  style="padding: 7px 10px 0px 0px;">
+		<a href="https://www.facebook.com/HousingMatters.co.in"><img src="'.$ip.$this->webroot.'/as/hm/SMLogoFB.png" style="max-height: 30px; height: 30px; width: 30px; max-width: 30px;" height="30px" width="30px" /></a>
+		</td>
+		</tr>
+								</table>
+								</td>
+							</tr>
+							<tr>
+								<td height="10"></td>
+							</tr>
+							<tr>
+								<td colspan="2" style="font-size:12px;line-height:1.4;font-family:Arial,Helvetica,sans-serif;color:#34495e;border:solid 1px #767575">
+								<table style="font-size:12px" width="100%" cellspacing="0">
+									<tbody><tr>
+										<td style="padding:2px;background-color:rgb(0,141,210);color:#fff" align="center" width="100%"><b>'.strtoupper($society_name).'</b></td>
+									</tr>
+								</tbody></table>
+								<table style="font-size:12px" width="100%" cellspacing="0">
+									<tbody>
+									<tr>
+										<td style="padding:5px;border-top:solid 1px #767575" width="100%" align="center">
+										<span style="color:rgb(100,100,99)">Regn# &nbsp; '.$society_reg_num.'</span><br>
+										<span style="color:rgb(100,100,99)">'.$society_address.'</span><br
+										</td>
+									</tr>
+									</tbody>
+								</table>
+								</td>
+								</tr>
+								
+								<tr>
+								<td colspan="2" style="font-size:12px;line-height:1.4;font-family:Arial,Helvetica,sans-serif;color:#34495e;border:solid 1px #767575;border-bottom:none;border-top:none;">
+								
+								<table style="font-size:12px;" width="100%" cellspacing="0">
+								<thead>
+								<th>Date</th>
+								<th>Receipt no.</th>
+								<th>Cheque no.</th>
+								<th>Amount</th>
+								
+								</thead>
+								<tbody>';
 	
 	 $result_last_receipt=$this->requestAction(array('controller' => 'Incometrackers', 'action' => 'print_show_last_receipt'), array('pass' => array($ledger_sub_account_id)));
 	if(sizeof($result_last_receipt)>0){
+		$total_receipt=0;
 			foreach($result_last_receipt as $receipt){
 
 				$auto_id=$receipt["cash_bank"]["transaction_id"];
@@ -396,83 +448,51 @@ foreach($regular_bills as $data){
 				$amount=$receipt["cash_bank"]["amount"];
 				$drown_in_which_bank=$receipt["cash_bank"]["drown_in_which_bank"];
 				$cheque_date=$receipt["cash_bank"]["date"];
-			}	
-			
+				
+			    $total_receipt+=$amount;
 				
 				// start Email & Sms code
-					
-					$amount = str_replace( ',', '', $amount );
-					$am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($amount))));
-					
-				
-				
-				
-				
-					$html_receipt='<table style="padding:24px;background-color:#F5F8F9" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" class="">
-				<tbody><tr>
-					<td>
-						<table style="padding:38px 30px 30px 30px;background-color:#fafafa" align="center" border="0" cellpadding="0" cellspacing="0" width="540">
-							<tbody>
-							<tr>
-								<td height="10">
-								<table width="100%" class="hmlogobox">
-		<tr>
-		<td width="50%" style="padding: 10px 0px 0px 10px;"><img src="'.$ip.$this->webroot.'/as/hm/hm-logo.png" style="max-height: 60px; " height="60px" /></td>
-		<td width="50%" align="right" valign="middle"  style="padding: 7px 10px 0px 0px;">
-		<a href="https://www.facebook.com/HousingMatters.co.in"><img src="'.$ip.$this->webroot.'/as/hm/SMLogoFB.png" style="max-height: 30px; height: 30px; width: 30px; max-width: 30px;" height="30px" width="30px" /></a>
-		</td>
-		</tr>
+				$html_receipt.='<tr>
+								<td style="text-align:center;">'.$date.'</td>
+								<td style="text-align:center;">'.$receipt_number.'</td>
+								<td style="text-align:center;">'.$cheque_number.'</td>
+								<td style="text-align:center;">'.$amount.'</td>
+								</tr>';
+								
+								
+		
+	   }
+	
+				$total_receipt = str_replace( ',', '', $total_receipt );
+					$am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($total_receipt))));
+	
+	$html_receipt.='</tbody>
+								
+								
+								
 								</table>
+								
 								</td>
-							</tr>
-							<tr>
-								<td height="10"></td>
-							</tr>
-							<tr>
+								
+								</tr>
+																							
+								<tr>
 								<td colspan="2" style="font-size:12px;line-height:1.4;font-family:Arial,Helvetica,sans-serif;color:#34495e;border:solid 1px #767575">
-								<table style="font-size:12px" width="100%" cellspacing="0">
-									<tbody><tr>
-										<td style="padding:2px;background-color:rgb(0,141,210);color:#fff" align="center" width="100%"><b>'.strtoupper($society_name).'</b></td>
-									</tr>
-								</tbody></table>
-								<table style="font-size:12px" width="100%" cellspacing="0">
-									<tbody>
-									<tr>
-										<td style="padding:5px;border-bottom:solid 1px #767575;border-top:solid 1px #767575" width="100%" align="center">
-										<span style="color:rgb(100,100,99)">Regn# &nbsp; '.$society_reg_num.'</span><br>
-										<span style="color:rgb(100,100,99)">'.$society_address.'</span><br
-										</td>
-									</tr>
-									</tbody>
-								</table>
+								
 								<table style="font-size:12px;border-bottom:solid 1px #767575;" width="100%" cellspacing="0">
 									<tbody><tr>
-										<td style="padding:0px 0 2px 5px" colspan="2"><b>Receipt No:</b> '.$receipt_number.'</td>
+										<td style="padding:0px 0 2px 5px" colspan="2" width="81%"> Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b></td>
 										
-										<td colspan="2" align="right" style="padding:0px 5px 0 0px"><b>Date:</b> '.$date.' </td>
+										<td colspan="2" align="left" style="padding:0px 5px 0 0px"><b>Total:  </b> '.$total_receipt.' </td>
 										
-									</tr>
-									<tr>
-										<td style="padding:0px 0 2px 5px" colspan="2"> Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b></td>
-																			
 									</tr>
 									<tr>
 										<td style="padding:0px 0 2px 5px"  colspan="4">Rupees '.$am_in_words.' Only </td>
 										
 									</tr>';
+								
 									
-								if($receipt_mode=="cheque"){
-								$receipt_type='Via '.$receipt_mode.'-'.$cheque_number.' drawn on '.$drown_in_which_bank.' dated '.$cheque_date;
-								}
-								else{
-								$receipt_type='Via '.$receipt_mode.'-'.$cheque_number.' dated '.$cheque_date;
-								}
-
-									
-									$html_receipt.='<tr>
-										<td style="padding:0px 0 2px 5px"  colspan="4">'.$receipt_type.'</td>
-										
-									</tr>
+									$html_receipt.='
 									
 									<tr>
 										<td style="padding:0px 0 2px 5px" colspan="4">Payment of previous bill</td>
@@ -486,7 +506,7 @@ foreach($regular_bills as $data){
 								<table style="font-size:12px;" width="100%" cellspacing="0">
 									<tbody><tr>
 										<td width="50%" style="padding:5px" valign="top">
-										<span style="font-size:16px;"> <b>Rs '.$amount.'</b></span><br>';
+										<span style="font-size:16px;"> <b>Rs '.$total_receipt.'</b></span><br>';
 										$receipt_title_cheq="";
 										if($receipt_mode=="cheque"){
 											$receipt_title_cheq='Subject to realization of Cheque(s)';
@@ -540,10 +560,8 @@ foreach($regular_bills as $data){
 				</tr>
 			</tbody>
 		</table>';
-
-		echo $html_receipt;
-	}
-
+echo $html_receipt;
+}
  echo '<DIV style="page-break-after:always"></DIV>';	
 }
 ?>

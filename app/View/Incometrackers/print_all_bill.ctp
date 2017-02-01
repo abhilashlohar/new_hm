@@ -391,10 +391,10 @@ foreach($regular_bills as $data){
 								
 								<table style="font-size:12px;" width="100%" cellspacing="0">
 								<thead>
-								<th>Date</th>
-								<th>Receipt no.</th>
-								<th>Cheque no.</th>
-								<th>Amount</th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Date</th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Receipt no.</th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Cheque no.</th>
+								<th style="border-bottom: solid 1px;">Amount</th>
 								
 								</thead>
 								<tbody>';
@@ -453,9 +453,9 @@ foreach($regular_bills as $data){
 				
 				// start Email & Sms code
 				$html_receipt.='<tr>
-								<td style="text-align:center;">'.$date.'</td>
-								<td style="text-align:center;">'.$receipt_number.'</td>
-								<td style="text-align:center;">'.$cheque_number.'</td>
+								<td style="text-align:center;border-right: solid 1px;">'.$date.'</td>
+								<td style="text-align:center;border-right: solid 1px;">'.$receipt_number.'</td>
+								<td style="text-align:center;border-right: solid 1px;">'.$cheque_number.'</td>
 								<td style="text-align:center;">'.$amount.'</td>
 								</tr>';
 								
@@ -481,9 +481,7 @@ foreach($regular_bills as $data){
 								
 								<table style="font-size:12px;border-bottom:solid 1px #767575;" width="100%" cellspacing="0">
 									<tbody><tr>
-										<td style="padding:0px 0 2px 5px" colspan="2" width="81%"> Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b></td>
-										
-										<td colspan="2" align="left" style="padding:0px 5px 0 0px"><b>Total:  </b> '.$total_receipt.' </td>
+										<td style="padding:0px 0 2px 5px" colspan="4" width="81%"> Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b></td>
 										
 									</tr>
 									<tr>

@@ -7,6 +7,13 @@
 } 
 </style>
 
+<!--<style media="print">
+#parent{
+	 height: auto !important;
+	 overflow:hidden !important;
+	
+}
+</style>-->
 <div style="">
 <div align="center"> 
 <span style="font-size:16px;"><?php echo $society_name; ?><span>
@@ -150,14 +157,16 @@ $prepaired_by_name=$result_user[0]['user']['user_name'];
 <tfoot>
 
 <tr>
-
-<td colspan="8" style="text-align:right;"> <b> Total </b> </td>
+<td colspan="2"></td>
+<td colspan="6" style="text-align:right;"> <b> Total </b> </td>
 <td style="text-align:right;" > <b><?php echo $this->Currency->formatCurrency( $total, "INR"); ?></b> </td>
 <td class="hide_at_print"></td>
 
 </tr>
 </tfoot>
 </table>
+<div style="height:25px;" />
+		</div>
 </div>
 
 <script>
@@ -196,6 +205,7 @@ $(document).ready(function() {
 	 });
 });
  </script>	
+<script src="<?php echo $webroot_path; ?>/assets_table/tableHeadFixer.js"></script>
 
 <style>
 

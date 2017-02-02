@@ -215,6 +215,16 @@ $('#search').keyup(function() {
 
 <style>
 
+#parent::-webkit-scrollbar {
+    width: 10px;
+	height:10px;
+}
+ 
+
+#parent::-webkit-scrollbar-thumb {
+   
+	    background-color:hsla(16, 25%, 38%, 0.89);
+}
 	#parent {
 		height: 500px;
 	}

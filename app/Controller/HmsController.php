@@ -14535,7 +14535,7 @@ $user_flat_id=$this->autoincrement('user_flat','user_flat_id');
 $this->user_flat->saveAll(array('user_flat_id'=>$user_flat_id,'user_id'=>$i,'society_id'=>$society_id,'exited'=>'no'));
 
 $auro_id=$this->autoincrement('user_role','auto_id');
-$this->user_role->saveAll(array('auto_id'=>$auro_id,'user_id'=>$i,'role_id'=>1,'default'=>'yes'));
+$this->user_role->saveAll(array('auto_id'=>$auro_id,'user_id'=>$i,'role_id'=>1,'default'=>'yes','society_id'=>$society_id));
 
 
  $message_web='<table  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">

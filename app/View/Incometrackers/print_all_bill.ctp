@@ -355,9 +355,8 @@ foreach($regular_bills as $data){
 								<td height="10">
 								<table width="100%" class="hmlogobox">
 		<tr>
-		<td width="50%" style="padding: 10px 0px 0px 10px;"><img src="'.$ip.$this->webroot.'/as/hm/hm-logo.png" style="max-height: 60px; " height="60px" /></td>
+		<td width="50%" style="padding: 10px 0px 0px 10px;"></td>
 		<td width="50%" align="right" valign="middle"  style="padding: 7px 10px 0px 0px;">
-		<a href="https://www.facebook.com/HousingMatters.co.in"><img src="'.$ip.$this->webroot.'/as/hm/SMLogoFB.png" style="max-height: 30px; height: 30px; width: 30px; max-width: 30px;" height="30px" width="30px" /></a>
 		</td>
 		</tr>
 								</table>
@@ -377,8 +376,9 @@ foreach($regular_bills as $data){
 									<tbody>
 									<tr>
 										<td style="padding:5px;border-top:solid 1px #767575" width="100%" align="center">
-										<span style="color:rgb(100,100,99)">Regn# &nbsp; '.$society_reg_num.'</span><br>
-										<span style="color:rgb(100,100,99)">'.$society_address.'</span><br
+										<span style="color:rgb(100,100,99)">
+										There are showing last three receipt.
+										</span>
 										</td>
 									</tr>
 									</tbody>
@@ -393,13 +393,15 @@ foreach($regular_bills as $data){
 								<thead>
 								<th style="border-bottom: solid 1px;border-right: solid 1px;">Date</th>
 								<th style="border-bottom: solid 1px;border-right: solid 1px;">Receipt no.</th>
-								<th style="border-bottom: solid 1px;border-right: solid 1px;">Cheque no.</th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Cheque/Neft </th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Drawn in which bank</th>
 								<th style="border-bottom: solid 1px;">Amount</th>
 								
 								</thead>
 								<tbody>';
 	
 	 $result_last_receipt=$this->requestAction(array('controller' => 'Incometrackers', 'action' => 'print_show_last_receipt'), array('pass' => array($ledger_sub_account_id)));
+	// pr($result_last_receipt);
 	if(sizeof($result_last_receipt)>0){
 		$total_receipt=0;
 			foreach($result_last_receipt as $receipt){
@@ -456,7 +458,8 @@ foreach($regular_bills as $data){
 								<td style="text-align:center;border-right: solid 1px;">'.$date.'</td>
 								<td style="text-align:center;border-right: solid 1px;">'.$receipt_number.'</td>
 								<td style="text-align:center;border-right: solid 1px;">'.$cheque_number.'</td>
-								<td style="text-align:center;">'.$amount.'</td>
+								<td style="text-align:center;border-right: solid 1px;">'.$drown_in_which_bank.'</td>
+								<td align="right" style="padding-right: 6px;">'.$amount.'</td>
 								</tr>';
 								
 								
@@ -522,43 +525,13 @@ foreach($regular_bills as $data){
 								</td>
 							</tr>
 							
-							<tr>
-								<td colspan="2">
-									<table style="background-color:#008dd2;font-size:11px;color:#fff;border:solid 1px #767575;border-top:none" width="100%" cellspacing="0">
-									 <tbody>
-									 
-										<tr>
-											<td align="center" colspan="7"><b>
-											Your Society is empowered by HousingMatters - <b> <i>"Making Life Simpler"</i>
-											</b></b></td>
-										</tr>
-										<tr>
-											<td width="50" align="right" style="font-size: 10px;"><b>Email :</b></td>
-											<td width="120" style="color:#fff!important;font-size: 10px;"> 
-											<a href="mailto:support@housingmatters.in" style="color:#fff!important" target="_blank"><b>support@housingmatters.in</b></a>
-											</td>
-											<td align="center" style="font-size: 10px;"></td>
-										   
-											<td align="right" width="50"><b><a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end" style="display:none;"><img src="'.$ip.$this->webroot.'/as/hm/whatsup.png"  width="18px" /></a></b></td>
-											<td width="104" style="color:#FFF !important;text-decoration: none;"><b style="display:none;">+91-9869157561</b></td>
-											<td align="center" style="font-size: 10px;"></td>
-											<td width="100" style="padding-right:10px;text-decoration:none"> <a href="http://www.housingmatters.in" style="color:#fff!important" target="_blank"><b>www.housingmatters.in</b></a></td>
-										</tr>
-										
-										
-									</tbody>
-								</table>
-								</td>
-							</tr>
-							<tr>
-								<td align="center"><div class="hmlogobox" ><a href="mailto:Support@housingmatters.in">Do not miss important e-mails from HousingMatters,  add us to your address book</a></div></td>
-							</tr>
 						</tbody></table>
 					</td>
 				</tr>
 			</tbody>
 		</table>';
 echo $html_receipt;
+
 }
  echo '<DIV style="page-break-after:always"></DIV>';	
 }
@@ -584,7 +557,6 @@ echo $html_receipt;
 	display:none;
 }
 </style>
-
 
 
 

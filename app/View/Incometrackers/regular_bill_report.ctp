@@ -259,6 +259,12 @@ $('#search').keyup(function() {
 		background-color:#C49F47 !important;
 		color: white;
 	}
+	
+	
+#main th,td{
+	font-size: 12px !important;
+	white-space: nowrap;
+}
 </style>
 
 <script>

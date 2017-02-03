@@ -29,7 +29,7 @@ foreach($regular_bills as $data){
 					$auto_id=$data["regular_bill"]["auto_id"];
 					$bill_number=$data["regular_bill"]["bill_number"];
 					$edit_text=@$data["regular_bill"]["edit_text"];
-					$ledger_sub_account_id=(int)$data["regular_bill"]["ledger_sub_account_id"];
+					 $ledger_sub_account_id=(int)$data["regular_bill"]["ledger_sub_account_id"];
 					$billing_cycle=$data["regular_bill"]["billing_cycle"];	
 					$income_head_array=$data["regular_bill"]["income_head_array"];
 					$income_head_for_rate=@$data["regular_bill"]["income_head_for_rate"];

@@ -222,8 +222,27 @@ $('#search').keyup(function() {
  
 
 #parent::-webkit-scrollbar-thumb {
-   
+    border-radius: 15px;
 	    background-color:hsla(16, 25%, 38%, 0.89);
+		
+}
+#parent::-webkit-scrollbar-button {
+	 -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	 background-color:grey;
+	 border-radius: 10px;
+}
+
+#parent::-webkit-scrollbar-track {
+     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+ #parent::-webkit-scrollbar-corner       { 
+ -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+ }
+ 
+ #parent::-webkit-scrollbar-button:horizontal:decrement:hover {
+   
 }
 	#parent {
 		height: 500px;

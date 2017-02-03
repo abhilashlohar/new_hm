@@ -275,7 +275,7 @@ foreach($regular_bills as $data){
 									<td width="100%" style="font-size:12px;border-bottom: solid 1px #767575;padding: 0 0 0 5px;"><b>Due For Payment (in words) :</b> '.$write_am_word.'</td>
 								</tr>
 							</tbody></table>';
-							$bill_html.='<table style="font-size:12px;border-bottom: dotted 1px;" width="100%" cellspacing="0">
+							$bill_html.='<table style="font-size:12px;" width="100%" cellspacing="0">
 								<tbody><tr>
 									<td width="100%" style="padding:5px;" valign="top">
 									<span>Remarks:</span><br>';
@@ -286,8 +286,91 @@ foreach($regular_bills as $data){
 									
 									$bill_html.='</td>
 								</tr>
-							</tbody></table>
-							<table style="font-size:12px;border-bottom: dotted 1px;" width="100%" cellspacing="0">
+							</tbody></table>';
+							/// Receipt code start //
+							$result_last_receipt=$this->requestAction(array('controller' => 'Incometrackers', 'action' => 'print_show_last_receipt'), array('pass' => array($ledger_sub_account_id)));
+							if(sizeof($result_last_receipt)>0){ 
+							$bill_html.='<table style="font-size:12px;border-top: 1px solid;" width="100%" cellspacing="0">
+									<tbody><tr>
+										<td style="padding:2px;background-color:rgb(0,141,210);color:#fff" align="center" width="100%"><b>R E C E I P T</b></td>
+									</tr>
+								</tbody></table>
+								<table style="font-size:12px;border-bottom:1px solid;" width="100%" cellspacing="0">
+									<tbody>
+									<tr>
+										<td style="padding:5px;border-top:solid 1px #767575" width="100%" align="left">
+										<span style="color:rgb(100,100,99)">
+										There are showing last three receipt. to Details of last three payments received.<br/>
+										Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b>
+										
+										</span>
+										</td>
+									</tr>
+									</tbody>
+								</table>
+								<table style="font-size:12px;border-bottom:1px solid;" width="100%" cellspacing="0">
+								<thead>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Date</th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Receipt# </th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Cheque/Neft </th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Drawee Bank</th>
+								<th style="border-bottom: solid 1px;">Amount(Rs.)</th>
+								
+								</thead>
+								<tbody>';
+								
+								 
+	// pr($result_last_receipt);
+	
+		$total_receipt=0;
+			foreach($result_last_receipt as $receipt){
+
+				$auto_id=$receipt["cash_bank"]["transaction_id"];
+				$receipt_number=$receipt["cash_bank"]["receipt_number"];
+				$transaction_date=$receipt["cash_bank"]["transaction_date"];
+				$received_from=$receipt["cash_bank"]["received_from"];
+				$date=date("d-m-Y",$transaction_date);			
+				$cheque_number=$receipt["cash_bank"]["cheque_number"];
+				$narration=$receipt["cash_bank"]["narration"];
+				$amount=$receipt["cash_bank"]["amount"];
+				$drown_in_which_bank=$receipt["cash_bank"]["drown_in_which_bank"];
+				$cheque_date=$receipt["cash_bank"]["date"];
+				
+			    $total_receipt+=$amount;
+				
+				// start Email & Sms code
+				$bill_html.='<tr>
+								<td style="text-align:center;border-right: solid 1px;">'.$date.'</td>
+								<td style="text-align:center;border-right: solid 1px;">'.$receipt_number.'</td>
+								<td style="border-right: solid 1px;" align="right">'.$cheque_number.'</td>
+								<td style="text-align:center;border-right: solid 1px;">'.$drown_in_which_bank.'</td>
+								<td align="right" style="padding-right: 6px;">'.$amount.'</td>
+								</tr>';
+								
+								
+		
+	   }
+	
+				$total_receipt = str_replace( ',', '', $total_receipt );
+					$am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($total_receipt))));
+								
+						$bill_html.='</tbody></table>
+						<table style="font-size:12px;border-bottom:1px solid" width="100%" cellspacing="0">
+									<tbody>
+									<tr>
+										<td style="padding:0px 0 2px 5px"  colspan="4">Rupees '.$am_in_words.' Only </td>
+										<td align="right"><b>Total: '.$total_receipt.'</b></td>
+									</tr>';
+								
+									
+									$bill_html.='
+									
+									
+									
+								</tbody></table>';	
+							}								
+								
+							$bill_html.='<table style="font-size:12px;border-bottom: dotted 1px;" width="100%" cellspacing="0">
 								<tbody><tr>
 								<td align="right" width="60%" style="padding:5px;" valign="top">
 									<br/>For  <b>'.$society_name.'</b>: <span >'.$sig_title.'</span>
@@ -298,6 +381,7 @@ foreach($regular_bills as $data){
 									</td>
 								</tr>
 							</tbody></table>
+							
 							<table style="font-size:12px" width="100%" cellspacing="0">
 								<tbody><tr>
 									<td align="center" width="100%">Note: This is a computer generated bill hence no signature required.</td>
@@ -346,7 +430,7 @@ foreach($regular_bills as $data){
 					
 	 echo $bill_html;
 	
-	 $html_receipt='<table style="padding:24px;background-color:#F5F8F9" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" class="">
+	/* $html_receipt='<table style="padding:24px;background-color:#F5F8F9" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" class="">
 				<tbody><tr>
 					<td>
 						<table style="padding:38px 30px 30px 30px;background-color:#fafafa" align="center" border="0" cellpadding="0" cellspacing="0" width="540">
@@ -369,15 +453,17 @@ foreach($regular_bills as $data){
 								<td colspan="2" style="font-size:12px;line-height:1.4;font-family:Arial,Helvetica,sans-serif;color:#34495e;border:solid 1px #767575">
 								<table style="font-size:12px" width="100%" cellspacing="0">
 									<tbody><tr>
-										<td style="padding:2px;background-color:rgb(0,141,210);color:#fff" align="center" width="100%"><b>'.strtoupper($society_name).'</b></td>
+										<td style="padding:2px;background-color:rgb(0,141,210);color:#fff" align="center" width="100%"><b>R E C E I P T</b></td>
 									</tr>
 								</tbody></table>
 								<table style="font-size:12px" width="100%" cellspacing="0">
 									<tbody>
 									<tr>
-										<td style="padding:5px;border-top:solid 1px #767575" width="100%" align="center">
+										<td style="padding:5px;border-top:solid 1px #767575" width="100%" align="left">
 										<span style="color:rgb(100,100,99)">
-										There are showing last three receipt.
+										There are showing last three receipt. to Details of last three payments received.<br/>
+										Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b>
+										
 										</span>
 										</td>
 									</tr>
@@ -392,10 +478,10 @@ foreach($regular_bills as $data){
 								<table style="font-size:12px;" width="100%" cellspacing="0">
 								<thead>
 								<th style="border-bottom: solid 1px;border-right: solid 1px;">Date</th>
-								<th style="border-bottom: solid 1px;border-right: solid 1px;">Receipt no.</th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Receipt# </th>
 								<th style="border-bottom: solid 1px;border-right: solid 1px;">Cheque/Neft </th>
-								<th style="border-bottom: solid 1px;border-right: solid 1px;">Drawn in which bank</th>
-								<th style="border-bottom: solid 1px;">Amount</th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Drawee Bank</th>
+								<th style="border-bottom: solid 1px;">Amount(Rs.)</th>
 								
 								</thead>
 								<tbody>';
@@ -410,41 +496,7 @@ foreach($regular_bills as $data){
 				$receipt_number=$receipt["cash_bank"]["receipt_number"];
 				$transaction_date=$receipt["cash_bank"]["transaction_date"];
 				$received_from=$receipt["cash_bank"]["received_from"];
-				if($received_from == "residential"){				
-				$receipt_type="Residential";
-				$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];
-				 $date=date("d-m-Y",$transaction_date);
-				$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($ledger_sub_account_id))); 
-				
-						 $user_name=$result_member_info["user_name"];
-						 $wing_name=$result_member_info["wing_name"];
-						 $flat_name=$result_member_info["flat_name"];
-						 $wing_flat=$wing_name.'-'.$flat_name;
-						 $email=$result_member_info["email"];
-						 $mobile=$result_member_info["mobile"];
-						 $wing_id=$result_member_info["wing_id"];
-				
-				}else{
-					$wing_flat="";
-					 $date=date("d-m-Y",$transaction_date);
-				$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];
-				$ledger_sub_account_id=$receipt["cash_bank"]["ledger_sub_account_id"];	
-				$result_ledger_sub_account = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array((int)$ledger_sub_account_id)));
-				foreach($result_ledger_sub_account as $data)
-				{
-				$user_name = $data['ledger_sub_account']['name'];	
-				}	
-					
-					
-				}
-				
-						
-				$deposited_in=$receipt["cash_bank"]["deposited_in"];
-				$deposited_in_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_ledger_sub_account_info_via_ledger_sub_account_id'),array('pass'=>array($deposited_in)));
-
-				$bank_name=$deposited_in_info[0]["ledger_sub_account"]["name"];
-				$bank_account=$deposited_in_info[0]["ledger_sub_account"]["bank_account"];
-				$receipt_mode=$receipt["cash_bank"]["receipt_mode"];
+				$date=date("d-m-Y",$transaction_date);			
 				$cheque_number=$receipt["cash_bank"]["cheque_number"];
 				$narration=$receipt["cash_bank"]["narration"];
 				$amount=$receipt["cash_bank"]["amount"];
@@ -457,7 +509,7 @@ foreach($regular_bills as $data){
 				$html_receipt.='<tr>
 								<td style="text-align:center;border-right: solid 1px;">'.$date.'</td>
 								<td style="text-align:center;border-right: solid 1px;">'.$receipt_number.'</td>
-								<td style="text-align:center;border-right: solid 1px;">'.$cheque_number.'</td>
+								<td style="border-right: solid 1px;" align="right">'.$cheque_number.'</td>
 								<td style="text-align:center;border-right: solid 1px;">'.$drown_in_which_bank.'</td>
 								<td align="right" style="padding-right: 6px;">'.$amount.'</td>
 								</tr>';
@@ -482,45 +534,21 @@ foreach($regular_bills as $data){
 								<tr>
 								<td colspan="2" style="font-size:12px;line-height:1.4;font-family:Arial,Helvetica,sans-serif;color:#34495e;border:solid 1px #767575">
 								
-								<table style="font-size:12px;border-bottom:solid 1px #767575;" width="100%" cellspacing="0">
-									<tbody><tr>
-										<td style="padding:0px 0 2px 5px" colspan="4" width="81%"> Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b></td>
-										
-									</tr>
+								<table style="font-size:12px;" width="100%" cellspacing="0">
+									<tbody>
 									<tr>
 										<td style="padding:0px 0 2px 5px"  colspan="4">Rupees '.$am_in_words.' Only </td>
-										
+										<td align="right"><b>Total: '.$total_receipt.'</b></td>
 									</tr>';
 								
 									
 									$html_receipt.='
 									
-									<tr>
-										<td style="padding:0px 0 2px 5px" colspan="4">Payment of previous bill</td>
-										
-									</tr>
+									
 									
 								</tbody></table>
 								
-								
-								
-								<table style="font-size:12px;" width="100%" cellspacing="0">
-									<tbody><tr>
-										<td width="50%" style="padding:5px" valign="top">
-										<span style="font-size:16px;"> <b>Rs '.$total_receipt.'</b></span><br>';
-										$receipt_title_cheq="";
-										if($receipt_mode=="cheque"){
-											$receipt_title_cheq='Subject to realization of Cheque(s)';
-										}
-																			
-										$html_receipt.='<span>'.@$receipt_title_cheq.' </span></td>
-										<td align="center" width="50%" style="padding:5px" valign="top">
-										For  <b>'.$society_name.'</b><br><br><br>
-										<div><span style="border-top:solid 1px #424141">'.$sig_title.'</span></div>
-										</td>
-									</tr>
-								</tbody></table>
-													
+												
 								
 								</td>
 							</tr>
@@ -530,9 +558,9 @@ foreach($regular_bills as $data){
 				</tr>
 			</tbody>
 		</table>';
-echo $html_receipt;
+echo $html_receipt; 
 
-}
+} */
  echo '<DIV style="page-break-after:always"></DIV>';	
 }
 ?>

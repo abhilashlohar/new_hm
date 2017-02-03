@@ -3286,7 +3286,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	//Configure::write('debug', 0);
+	Configure::write('debug', 0);
 }
 
 
@@ -5869,7 +5869,7 @@ foreach($regular_bills as $data){
 									<td width="100%" style="font-size:12px;border-bottom: solid 1px #767575;padding: 0 0 0 5px;"><b>Due For Payment (in words) :</b> '.$write_am_word.'</td>
 								</tr>
 							</tbody></table>';
-							$bill_html.='<table style="font-size:12px;" width="100%" cellspacing="0">
+							$bill_html.='<table style="font-size:12px;border-bottom:1px solid;" width="100%" cellspacing="0">
 								<tbody><tr>
 									<td width="100%" style="padding:5px;" valign="top">
 									<span>Remarks:</span><br>';
@@ -5884,7 +5884,7 @@ foreach($regular_bills as $data){
 							/// Receipt code start //
 							$result_last_receipt=$this->requestAction(array('controller' => 'Incometrackers', 'action' => 'print_show_last_receipt'), array('pass' => array($ledger_sub_account_id)));
 							if(sizeof($result_last_receipt)>0){ 
-							$bill_html.='<table style="font-size:12px;border-top: 1px solid;" width="100%" cellspacing="0">
+							$bill_html.='<table style="font-size:12px;" width="100%" cellspacing="0">
 									<tbody><tr>
 										<td style="padding:2px;background-color:rgb(0,141,210);color:#fff" align="center" width="100%"><b>R E C E I P T</b></td>
 									</tr>

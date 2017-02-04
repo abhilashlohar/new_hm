@@ -9300,6 +9300,7 @@ $this->regular_bill->updateAll(array("remaining_amount" => $due_amt,"arrears_amt
 if(isset($this->request->data['sub']))
 {
 $ac_name = $this->request->data['acno'];
+$account_type = $this->request->data['account_type'];
 $bank_name = $this->request->data['bank_name'];
 $branch = $this->request->data['branch'];
 $ifsc_code = $this->request->data['ifsc'];
@@ -9324,6 +9325,7 @@ $this->society->updateAll(array("neft_detail" => "","neft_type" => ""),array("so
 }
 
 $sub_neft['account_name']=$ac_name;
+$sub_neft['account_type']=$account_type;
 $sub_neft['bank_name']=$bank_name;
 $sub_neft['account_number']=$ac_number;
 $sub_neft['branch']=$branch;
@@ -9334,6 +9336,7 @@ $neft[$wing_id] = $sub_neft;
 else
 {
 $neft['account_name']=$ac_name;
+$neft['account_type']=$account_type;
 $neft['bank_name']=$bank_name;
 $neft['account_number']=$ac_number;
 $neft['branch']=$branch;

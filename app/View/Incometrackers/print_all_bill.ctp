@@ -159,7 +159,7 @@ foreach($regular_bills as $data){
 							</tbody></table>
 							<table style="font-size:12px;border-bottom: solid 1px #767575;" width="100%" cellspacing="0">
 								<tbody><tr>
-									<td style="padding: 0 0 0 5px;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;border-right: solid 1px #FFFFFF;" align="left" width="60%"><b>Particulars of charges</b></td>
+									<td style="padding: 0 0 0 5px;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;border-right: solid 1px #FFFFFF;" align="left" width="60%"><b>  B I L L - Particulars of charges</b></td>
 									<td style="padding: 0 5px  0;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;border-right: solid 1px #FFFFFF;" align="center" width="20%"><b>Rate (sq.ft.)</b> </td>
 									<td style="padding: 0 5px 0 0;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;" align="right" width="20%"><b>Amount (Rs.)</b> </td>
 								</tr>';
@@ -360,7 +360,7 @@ foreach($regular_bills as $data){
 									<tbody>
 									<tr>
 										<td style="padding:0px 0 2px 5px"  colspan="4">Rupees '.$am_in_words.' Only </td>
-										<td align="right" style="padding-right: 6px;"><b>Total: '.$total_receipt.'</b></td>
+										<td align="right" style="padding-right: 6px;"><b>Total: Rs '.$total_receipt.'</b></td>
 									</tr>';
 								
 									

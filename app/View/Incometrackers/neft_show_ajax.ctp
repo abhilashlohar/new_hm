@@ -34,6 +34,17 @@ $ifsc_code = @$neft_detail2['ifsc_code'];
 ?>
 
 <div class="span6">
+
+<label  style="font-size:14px;">Account Type<span style="color:red;">*</span> </label>
+<div class="controls">
+<select name="account_type" class="large m-wrap " >
+<option value="" style="display:none;">Select account type</option>
+
+<option value="saving">Savings a/c </option>
+<option value="current">Current a/c </option>
+</select>
+</div> <br/>
+
 <label style="font-size:14px;">Account Name<span style="color:red;">*</span></label>
 <div class="controls">
 <input type="text" class="m-wrap span9" name="acno" id="acno" value="<?php echo $account_name; ?>">

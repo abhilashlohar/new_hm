@@ -287,8 +287,9 @@ foreach($regular_bills as $data){
 									$bill_html.='</td>
 								</tr>
 							</tbody></table>';
-							/// Receipt code start //
-							$result_last_receipt=$this->requestAction(array('controller' => 'Incometrackers', 'action' => 'print_show_last_receipt'), array('pass' => array($ledger_sub_account_id)));
+			///................ Receipt code start..................... /// 
+			
+							$result_last_receipt=$this->requestAction(array('controller' => 'Incometrackers', 'action' => 'print_show_last_receipt'), array('pass' => array($ledger_sub_account_id,$start_date)));
 							if(sizeof($result_last_receipt)>0){ 
 							$bill_html.='<table style="font-size:12px;" width="100%" cellspacing="0">
 									<tbody><tr>
@@ -296,13 +297,13 @@ foreach($regular_bills as $data){
 									</tr>
 								</tbody></table>
 								<table style="font-size:12px;border-bottom:1px solid;" width="100%" cellspacing="0">
-									<tbody>
+								   <tbody>
 									<tr>
 										<td style="padding:5px;border-top:solid 1px #767575" width="100%" align="left">
 										<span style="color:rgb(100,100,99)">
-										There are showing last three receipt. to Details of last three payments received.<br/>
 										Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b>
-										
+										 <br/>
+										Details of last three payments received before '.date("d-m-Y",$start_date).'
 										</span>
 										</td>
 									</tr>
@@ -314,7 +315,7 @@ foreach($regular_bills as $data){
 								<th style="border-bottom: solid 1px;border-right: solid 1px;">Receipt# </th>
 								<th style="border-bottom: solid 1px;border-right: solid 1px;">Cheque/Neft </th>
 								<th style="border-bottom: solid 1px;border-right: solid 1px;">Drawee Bank</th>
-								<th style="border-bottom: solid 1px;">Amount(Rs.)</th>
+								<th style="border-bottom: solid 1px;">Amount (Rs.)</th>
 								
 								</thead>
 								<tbody>';
@@ -338,11 +339,11 @@ foreach($regular_bills as $data){
 				
 			    $total_receipt+=$amount;
 				
-				// start Email & Sms code
+				
 				$bill_html.='<tr>
 								<td style="text-align:center;border-right: solid 1px;">'.$date.'</td>
 								<td style="text-align:center;border-right: solid 1px;">'.$receipt_number.'</td>
-								<td style="border-right: solid 1px;" align="right">'.$cheque_number.'</td>
+								<td style="border-right: solid 1px;padding-right: 6px;" align="right">'.$cheque_number.'</td>
 								<td style="text-align:center;border-right: solid 1px;">'.$drown_in_which_bank.'</td>
 								<td align="right" style="padding-right: 6px;">'.$amount.'</td>
 								</tr>';
@@ -359,7 +360,7 @@ foreach($regular_bills as $data){
 									<tbody>
 									<tr>
 										<td style="padding:0px 0 2px 5px"  colspan="4">Rupees '.$am_in_words.' Only </td>
-										<td align="right"><b>Total: '.$total_receipt.'</b></td>
+										<td align="right" style="padding-right: 6px;"><b>Total: '.$total_receipt.'</b></td>
 									</tr>';
 								
 									
@@ -368,8 +369,10 @@ foreach($regular_bills as $data){
 									
 									
 								</tbody></table>';	
-							}								
-								
+							}					
+							
+			////.......end receipt code ..................////////		
+			
 							$bill_html.='<table style="font-size:12px;border-bottom: dotted 1px;" width="100%" cellspacing="0">
 								<tbody><tr>
 								<td align="right" width="60%" style="padding:5px;" valign="top">

@@ -469,8 +469,97 @@ function individual_send_email($auto_id=null){
 									
 									$bill_html.='</td>
 								</tr>
-							</tbody></table>
-							<table style="font-size:12px;border-bottom: dotted 1px;" width="100%" cellspacing="0">
+							</tbody></table>';
+							
+								///................ Receipt code start..................... /// 
+			
+							$result_last_receipt=$this->requestAction(array('controller' => 'Incometrackers', 'action' => 'print_show_last_receipt'), array('pass' => array($ledger_sub_account_id,$start_date)));
+							if(sizeof($result_last_receipt)>0){ 
+							$bill_html.='<table style="font-size:12px;" width="100%" cellspacing="0">
+									<tbody><tr>
+										<td style="padding:2px;background-color:rgb(0,141,210);color:#fff" align="center" width="100%"><b>R E C E I P T</b></td>
+									</tr>
+								</tbody></table>
+								<table style="font-size:12px;border-bottom:1px solid;" width="100%" cellspacing="0">
+								   <tbody>
+									<tr>
+										<td style="padding:5px;border-top:solid 1px #767575" width="100%" align="left">
+										<span style="color:rgb(100,100,99)">
+										Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b>
+										 <br/>
+										Details of last three payments received before '.date("d-m-Y",$start_date).'
+										</span>
+										</td>
+									</tr>
+									</tbody>
+								</table>
+								<table style="font-size:12px;border-bottom:1px solid;" width="100%" cellspacing="0">
+								<thead>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Date</th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Receipt# </th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Cheque/Neft </th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Drawee Bank</th>
+								<th style="border-bottom: solid 1px;">Amount (Rs.)</th>
+								
+								</thead>
+								<tbody>';
+								
+								 
+	// pr($result_last_receipt);
+	
+		$total_receipt=0;
+			foreach($result_last_receipt as $receipt){
+
+				$auto_id=$receipt["cash_bank"]["transaction_id"];
+				$receipt_number=$receipt["cash_bank"]["receipt_number"];
+				$transaction_date=$receipt["cash_bank"]["transaction_date"];
+				$received_from=$receipt["cash_bank"]["received_from"];
+				$date=date("d-m-Y",$transaction_date);			
+				$cheque_number=$receipt["cash_bank"]["cheque_number"];
+				$narration=$receipt["cash_bank"]["narration"];
+				$amount=$receipt["cash_bank"]["amount"];
+				$drown_in_which_bank=$receipt["cash_bank"]["drown_in_which_bank"];
+				$cheque_date=$receipt["cash_bank"]["date"];
+				
+			    $total_receipt+=$amount;
+				
+				
+				$bill_html.='<tr>
+								<td style="text-align:center;border-right: solid 1px;">'.$date.'</td>
+								<td style="text-align:center;border-right: solid 1px;">'.$receipt_number.'</td>
+								<td style="border-right: solid 1px;padding-right: 6px;" align="right">'.$cheque_number.'</td>
+								<td style="text-align:center;border-right: solid 1px;">'.$drown_in_which_bank.'</td>
+								<td align="right" style="padding-right: 6px;">'.$amount.'</td>
+								</tr>';
+								
+								
+		
+	   }
+	
+				$total_receipt = str_replace( ',', '', $total_receipt );
+					$am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($total_receipt))));
+								
+						$bill_html.='</tbody></table>
+						<table style="font-size:12px;border-bottom:1px solid" width="100%" cellspacing="0">
+									<tbody>
+									<tr>
+										<td style="padding:0px 0 2px 5px"  colspan="4">Rupees '.$am_in_words.' Only </td>
+										<td align="right" style="padding-right: 6px;"><b>Total: '.$total_receipt.'</b></td>
+									</tr>';
+								
+									
+									$bill_html.='
+									
+									
+									
+								</tbody></table>';	
+							}					
+							
+			////.......end receipt code ..................////////		
+			
+							
+							
+							$bill_html.='<table style="font-size:12px;border-bottom: dotted 1px;" width="100%" cellspacing="0">
 								<tbody><tr>
 								<td align="right" width="60%" style="padding:5px;" valign="top">
 									<br/>For  <b>'.$society_name.'</b>: <span >'.$sig_title.'</span>
@@ -8113,12 +8202,12 @@ function regular_bill_edit2($auto_id=null){
 	}
 }
 
-function print_show_last_receipt($led_sub_id){
+function print_show_last_receipt($led_sub_id,$start_date){
 	
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$this->loadmodel('cash_bank');
-	$conditions=array("ledger_sub_account_id"=>$led_sub_id,"society_id"=>$s_society_id,"source"=>"bank_receipt");
-	$order=array("transaction_id"=>"DESC");
+	$conditions=array("ledger_sub_account_id"=>$led_sub_id,"society_id"=>$s_society_id,"source"=>"bank_receipt","transaction_date"=>array('$lt'=>$start_date));
+	$order=array("transaction_date"=>"DESC");
 	return $this->cash_bank->find('all',array('conditions'=>$conditions,"order"=>$order,"limit"=>3));
 	
 }

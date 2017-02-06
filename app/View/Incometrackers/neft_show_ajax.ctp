@@ -19,7 +19,7 @@ $branch = "";
 $ifsc_code = "";		
 	
 @$neft_detail2 = @$neft_detail[@$wing_id];	
-
+$account_type = @$neft_detail2['account_type'];	
 $account_name = @$neft_detail2['account_name'];	
 $bank_name = @$neft_detail2['bank_name'];
 $account_number = @$neft_detail2['account_number'];
@@ -37,12 +37,13 @@ $ifsc_code = @$neft_detail2['ifsc_code'];
 
 <label  style="font-size:14px;">Account Type<span style="color:red;">*</span> </label>
 <div class="controls">
-<select name="account_type" class="large m-wrap " >
+<select name="account_type" class="large m-wrap " id="account_type" >
 <option value="" style="display:none;">Select account type</option>
 
-<option value="saving">Savings a/c </option>
-<option value="current">Current a/c </option>
+<option value="Saving" <?php if($account_type=='Saving'){?>  selected <?php } ?> >Savings a/c </option>
+<option value="Current" <?php if($account_type=='Current'){?>  selected <?php } ?> >Current a/c </option>
 </select>
+<label id="account_type"></label>
 </div> <br/>
 
 <label style="font-size:14px;">Account Name<span style="color:red;">*</span></label>
@@ -68,7 +69,7 @@ $ifsc_code = @$neft_detail2['ifsc_code'];
 <input type="text" name="acnu" class="m-wrap span9" id="acn" value="<?php echo $account_number; ?>"/>
 <label id="acn"></label>
 </div>
-<br />
+<br/>
 
 
 <label style="font-size:14px;">Branch<span style="color:red;">*</span></label>

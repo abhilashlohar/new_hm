@@ -66,6 +66,7 @@ foreach($regular_bills as $data){
 					
 					if($neft_type ==  "ALL"){
 						$account_name = @$neft_detail['account_name'];	
+						$account_type = @$neft_detail['account_type'];	
 						$bank_name = @$neft_detail['bank_name'];
 						$account_number = @$neft_detail['account_number'];
 						$branch = @$neft_detail['branch'];
@@ -74,6 +75,7 @@ foreach($regular_bills as $data){
 					if($neft_type ==  "WW"){			
 						$neft_detail2 = @$neft_detail[$wing_id];
 						$account_name = @$neft_detail2['account_name'];	
+						$account_type = @$neft_detail['account_type'];
 						$bank_name = @$neft_detail2['bank_name'];
 						$account_number = @$neft_detail2['account_number'];
 						$branch = @$neft_detail2['branch'];
@@ -213,7 +215,7 @@ foreach($regular_bills as $data){
 												<td width="60%">'.$account_name.'</td>
 											</tr>
 											<tr>
-												<td width="40%" style="padding: 0 0 0 5px;"><b>Account No.:</b></td>
+												<td width="40%" style="padding: 0 0 0 5px;"><b>'.$account_type.' account no.:</b></td>
 												<td width="60%">'.$account_number.'</td>
 											</tr>
 											<tr>
@@ -233,7 +235,7 @@ foreach($regular_bills as $data){
 									<td width="40%" valign="top">
 										<table style="font-size:12px" width="100%">
 											<tbody><tr>
-												<td align="right" width="70%">Total:</td>
+												<td align="right" width="70%">Sub-total:</td>
 												<td align="right" width="30%" style="padding: 0 5px 0 0;">'.$total.'</td>
 											</tr>
 											<tr>

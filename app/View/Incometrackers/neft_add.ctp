@@ -9,19 +9,19 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			$neft_detail = @$collection['society']['neft_detail'];
 	}
 if($type == "ALL"){
-	$account_name = $neft_detail['account_name'];	
-		$bank_name = $neft_detail['bank_name'];
-			$account_number = $neft_detail['account_number'];
-				$branch = $neft_detail['branch'];
-					$ifsc_code = $neft_detail['ifsc_code'];	
-}
-else
-{
-	$account_name = "";
+	$account_name = $neft_detail['account_name'];
+	$account_type = $neft_detail['account_type'];	
+	$bank_name = $neft_detail['bank_name'];
+	$account_number = $neft_detail['account_number'];
+	$branch = $neft_detail['branch'];
+	$ifsc_code = $neft_detail['ifsc_code'];	
+}else{
+		$account_name = "";
+
 		$bank_name = "";
-			$account_number = "";
-				$branch = "";
-					$ifsc_code = "";	
+		$account_number = "";
+		$branch = "";
+		$ifsc_code = "";	
 }
 ?>
 
@@ -74,16 +74,18 @@ Wing Wise
 
 
 <br />
-<input type="hidden" value="ALL" name="neft_for">
+<input type="hidden" value="ALL" name="neft_for_">
 <div id="show1">
 <label  style="font-size:14px;">Account Type<span style="color:red;">*</span> </label>
 <div class="controls">
-<select name="account_type" class="large m-wrap " >
+<select name="account_type" class="large m-wrap " id="account_type">
 <option value="" style="display:none;">Select account type</option>
 
-<option value="saving">Savings a/c </option>
-<option value="current">Current a/c </option>
+<option value="Saving" <?php if($account_type=='Saving'){?>  selected <?php } ?> >Savings a/c </option>
+<option value="Current" <?php if($account_type=='Current'){?>  selected <?php } ?> >Current a/c </option>
+
 </select>
+<label id="account_type"></label>
 </div>
 <br/>
 
@@ -205,7 +207,7 @@ return this.optional(element) || value !== param;
 }, "Please choose Other value!");	
 
 
-$.validator.setDefaults({ ignore: ":hidden:not(select)" });
+$.validator.setDefaults({ ignore: ":hidden" });
 
 $('#contact-form').validate({
 errorElement: "label",
@@ -220,7 +222,9 @@ rules: {
 acno: {
 required: true
 },
-
+account_type: {
+required: true
+},
 acnu : {
 	required: true,
 	number:true

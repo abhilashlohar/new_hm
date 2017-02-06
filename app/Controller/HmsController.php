@@ -6022,13 +6022,270 @@ foreach($regular_bills as $data){
             </div>';
 	
 	
-	}	
+	}
+$bill='<div style="margin: 0px;">
+        <table style="padding:24px;background-color:#34495e" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" class="main_table">
+            <tbody><tr>
+                <td>
+                    <table style="padding:38px 30px 30px 30px;background-color:#fafafa" align="center" border="0" cellpadding="0" cellspacing="0" width="540">
+                        <tbody>
+						<tr>
+							<td height="10">
+							<table width="100%" class="hmlogobox">
+								<tr>
+									<td width="50%" style="padding: 10px 0px 0px 10px;"><img src="http://app.housingmatters.co.in/new_hm//as/hm/hm-logo.png" style="max-height: 60px; " height="60px" /></td>
+									<td width="50%" align="right" valign="middle"  style="padding: 7px 10px 0px 0px;">
+									<a href="https://www.facebook.com/HousingMatters.co.in"><img src="http://app.housingmatters.co.in/new_hm//as/hm/SMLogoFB.png"    style="max-height: 30px; height: 30px; width: 30px; max-width: 30px;" height="30px" width="30px" /></a>
+									</td>
+								</tr>
+							</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="10"></td>
+						</tr>
+                        <tr>
+                            <td colspan="2" style="font-size:12px;line-height:1.4;font-family:Arial,Helvetica,sans-serif;color:#34495e;border: solid 1px #767575;">
+							<table style="font-size:12px" width="100%" cellspacing="0">
+								<tbody><tr>
+									<td style="padding:2px;background-color:rgb(0,141,210);color:#fff" align="center" width="100%"><b>SKYLARK CHS LTD</b></td>
+								</tr>
+							</tbody></table>
+							<table style="font-size:12px" width="100%" cellspacing="0">
+								<tbody>
+								<tr>
+									<td width="30%" style="border-bottom: solid 1px #767575;    border-top: solid 1px #767575;"></td>
+									<td style="padding:5px;border-bottom: solid 1px #767575;    border-top: solid 1px #767575;"  width="70%" align="right">
+									<span style="color: rgb(100, 100, 99); ">Regn# &nbsp; NBOM/CIDCO/HSG(OH)/2821/JTR/2008-09</span><br>
+									<span style="color: rgb(100, 100, 99); ">Sector-6 Plot no. 8- B Kharghar Navi Mumbai -410210</span><br><span>Email :</span><a href="mailto:jaisonkamble@yahoo.com" target="_blank" style="color:#000 !important;text-decoration: none;"> jaisonkamble@yahoo.com</a> | <span>Phone : 9322851515</span>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+							<table style="font-size:12px" width="100%" cellspacing="0">
+								<tbody><tr>
+									<td style="padding: 0px 0 0 5px;"><b>Name:</b></td>
+									<td>Harichha Joshi & Ashok M Joshi</td>
+									<td><b>Flat/Shop No.:</b></td>
+									<td>Flat-101</td>
+								</tr>
+								<tr>
+									<td style="padding: 0px 0 0 5px;"><b>Bill No.:</b></td>
+									<td>1130</td>
+									<td><b>Area (sq.ft.):</b></td>
+									<td>889</td>
+								</tr>
+								<tr>
+									<td style="padding: 0px 0 0 5px;"><b>Bill Date:</b></td>
+									<td>01-01-2017</td>
+									<td><b>Billing Period:</b></td>
+									<td>Jan - Mar  2017</td>
+								</tr>
+								<tr>
+									<td style="padding: 0px 0 0 5px;"><b>Due Date:</b></td>
+									<td>15-02-2017</td>
+									<td><b>Description:</b></td>
+									<td></td>
+								</tr>
+							</tbody></table>
+							<table style="font-size:12px;border-bottom: solid 1px #767575;" width="100%" cellspacing="0">
+								<tbody><tr>
+									<td style="padding: 0 0 0 5px;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;border-right: solid 1px #FFFFFF;" align="left" width="60%"><b>  B I L L - Particulars of charges</b></td>
+									<td style="padding: 0 5px  0;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;border-right: solid 1px #FFFFFF;" align="center" width="20%"><b>Rate (sq.ft.)</b> </td>
+									<td style="padding: 0 5px 0 0;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;" align="right" width="20%"><b>Amount (Rs.)</b> </td>
+								</tr><tr>
+										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >Building Painting Fund</td>
+										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">1.20 </td>
+																	
+										<td align="right" style="padding: 0 5px 0 0;">3200</td>
+									</tr><tr>
+										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >Maintenance charges</td>
+										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">1.95 </td>
+																	
+										<td align="right" style="padding: 0 5px 0 0;">5201</td>
+									</tr><tr>
+										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >Sinking Fund</td>
+										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">0.65 </td>
+																	
+										<td align="right" style="padding: 0 5px 0 0;">1734</td>
+									</tr></tbody></table>
+							<table style="font-size:12px;border-bottom: solid 1px #767575;" width="100%" cellspacing="0">
+								<tbody><tr>
+									<td width="60%" valign="top" style="border-right: solid 1px #767575;">
+										<table style="font-size:11px" width="100%">
+											<tbody>
+											<tr>
+												<td colspan="2" style="padding: 0 0 0 5px;"><b>Cheque/NEFT payment instructions:</b></td>
+											</tr>
+											<tr>
+												<td width="40%" style="padding: 0 0 0 5px;"><b>Account Name:</b></td>
+												<td width="60%">Skylark CHS Ltd</td>
+											</tr>
+											<tr>
+												<td width="40%" style="padding: 0 0 0 5px;"><b>Current account no.:</b></td>
+												<td width="60%">056011100002832</td>
+											</tr>
+											<tr>
+												<td width="40%" style="padding: 0 0 0 5px;"><b>Bank Name:</b></td>
+												<td width="60%">ABHYUDAYA CO-OP BANK LTD</td>
+											</tr>
+											<tr>
+												<td width="40%" style="padding: 0 0 0 5px;"><b>Branch Name:</b></td>
+												<td width="60%">KHARGHAR</td>
+											</tr>
+											<tr>
+												<td width="40%" style="padding: 0 0 0 5px;"><b>IFSC no.:</b></td>
+												<td width="60%">ABHY0065042</td>
+											</tr>
+										</tbody></table>
+									</td>
+									<td width="40%" valign="top">
+										<table style="font-size:12px" width="100%">
+											<tbody><tr>
+												<td align="right" width="70%">Sub-total:</td>
+												<td align="right" width="30%" style="padding: 0 5px 0 0;">10135</td>
+											</tr>
+											<tr>
+												<td align="right">Interest on arrears:</td>
+												<td align="right" style="padding: 0 5px 0 0;">0</td>
+											</tr>
+											<tr>
+												<td align="right">Arrears-Principal:</td>
+												<td align="right" style="padding: 0 5px 0 0;">10135</td>
+											</tr>
+											<tr>
+												<td align="right">Arrears-Interest:</td>
+												<td align="right" style="padding: 0 5px 0 0;">0</td>
+											</tr><tr>
+												<td align="right" width="60%">Credit/Adjustment:</td>
+												<td align="right" width="40%" style="padding: 0 5px 0 0;">0</td>
+											</tr><tr>
+												<td align="right" width="60%"><b>Due For Payment:</b></td>
+												<td align="right" width="40%" style="padding: 0 5px 0 0;">20270</td>
+											</tr>
+										</tbody></table>
+									</td>
+								</tr>
+							</tbody></table><table style="font-size:12px" width="100%" cellspacing="0">
+								<tbody><tr>
+									<td width="100%" style="font-size:12px;border-bottom: solid 1px #767575;padding: 0 0 0 5px;"><b>Due For Payment (in words) :</b> Rupees Twenty Thousand  Two Hundred And Seventy Only</td>
+								</tr>
+							</tbody></table><table style="font-size:12px;border-bottom: dotted 1px;" width="100%" cellspacing="0">
+								<tbody><tr>
+									<td width="100%" style="padding:5px;" valign="top">
+									<span>Remarks:</span><br><span>1. Please promptly pay by due date.</span><br><span>2. Late payment charges @21% p.a.</span><br><span>3. Pay by a/c payee cheque or bank transfers. Kindly update Society office for direct deposits/bank transfers.</span><br><span>4. All payments till 30.09.2016 are accounted in this bill. Subsequent payments will be reflected/credited in next quarter bills.</span><br><span>5. Go green, keep our society neat and clean!</span><br></td>
+								</tr>
+							</tbody></table><table style="font-size:12px;" width="100%" cellspacing="0">
+									<tbody><tr>
+										<td style="padding:2px;background-color:rgb(0,141,210);color:#fff" align="center" width="100%"><b>R E C E I P T</b></td>
+									</tr>
+								</tbody></table>
+								<table style="font-size:12px;border-bottom:1px solid;" width="100%" cellspacing="0">
+								   <tbody>
+									<tr>
+										<td style="padding:5px;border-top:solid 1px #767575" width="100%" align="left">
+										<span style="color:rgb(100,100,99)">
+										Received with thanks from: <b>Harichha Joshi & Ashok M Joshi Flat-101</b>
+										 <br/>
+										Details of last three payments received before 01-01-2017
+										</span>
+										</td>
+									</tr>
+									</tbody>
+								</table>
+								<table style="font-size:12px;border-bottom:1px solid;" width="100%" cellspacing="0">
+								<thead>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Date</th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Receipt# </th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Cheque/Neft </th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Drawee Bank</th>
+								<th style="border-bottom: solid 1px;">Amount (Rs.)</th>
+								
+								</thead>
+								<tbody><tr>
+								<td style="text-align:center;border-right: solid 1px;">27-09-2016</td>
+								<td style="text-align:center;border-right: solid 1px;">1042</td>
+								<td style="border-right: solid 1px;padding-right: 6px;" align="right">478765</td>
+								<td style="text-align:center;border-right: solid 1px;">SBI</td>
+								<td align="right" style="padding-right: 6px;">10137</td>
+								</tr><tr>
+								<td style="text-align:center;border-right: solid 1px;">27-05-2016</td>
+								<td style="text-align:center;border-right: solid 1px;">1001</td>
+								<td style="border-right: solid 1px;padding-right: 6px;" align="right">478757</td>
+								<td style="text-align:center;border-right: solid 1px;">NA</td>
+								<td align="right" style="padding-right: 6px;">10137</td>
+								</tr></tbody></table>
+						<table style="font-size:12px;border-bottom:1px solid" width="100%" cellspacing="0">
+									<tbody>
+									<tr>
+										<td style="padding:0px 0 2px 5px"  colspan="4">Rupees Twenty Thousand  Two Hundred And Seventy-four Only </td>
+										<td align="right" style="padding-right: 6px;"><b>Total: Rs 20274</b></td>
+									</tr>
+									
+									
+									
+								</tbody></table><table style="font-size:12px;border-bottom: dotted 1px;" width="100%" cellspacing="0">
+								<tbody><tr>
+								<td align="right" width="60%" style="padding:5px;" valign="top">
+									<br/>For  <b>Skylark CHS Ltd</b>: <span >Treasurer</span>
+									
+									</td>
+									<td align="right" width="40%" style="padding:0px 20px 5px 20px;" valign="bottom">
+									<br/><div style="border-bottom:solid 1px #424141"></div>
+									</td>
+								</tr>
+							</tbody></table>
+							<table style="font-size:12px" width="100%" cellspacing="0">
+								<tbody><tr>
+									<td align="center" width="100%">Note: This is a computer generated bill hence no signature required.</td>
+								</tr>
+							</tbody></table>
+							
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="2" >
+                                <table style="background-color: #008DD2;font-size:11px;color:#FFF;border: solid 1px #767575;border-top:none;" width="100%" cellspacing="0">
+                                 <tbody>
+								 
+									<tr>
+                                        <td  align="center" colspan="7"><b>
+										Your Society is empowered by HousingMatters - <b/> <i>"Making Life Simpler"</i>
+										</td>
+                                    </tr>
+									<tr>
+                                        <td width="20" align="right"><b></b></td>
+                                        <td  width="120" style="color:#FFF !important;"> 
+										<a href="mailto:support@housingmatters.in" target="_blank" style="color:#FFF !important;"><b>support@housingmatters.in</b></a>
+                                        </td>
+										<td align="center"></td>
+                                        <td align="right" width="50"><b></b></td>
+                                        <td width="104" style="color:#FFF !important;text-decoration: none;"></td>
+										<td align="center"></td>
+                                        <td width="100" style="padding-right: 10px;text-decoration: none;"> <a href="http://www.housingmatters.in" target="_blank" style="color:#FFF !important;"><b>www.housingmatters.in</b></a></td>
+                                    </tr>
+                                                                       
+                                </tbody>
+							</table>
+                            </td>
+                        </tr>
+                        <tr>
+							<td align="center"><div class="hmlogobox" ><a href="mailto:Support@housingmatters.in">Do not miss important e-mails from HousingMatters,  add us to your address book</a></div></td>
+						</tr>
+                    </tbody></table>
+                </td>
+            </tr>
+        </tbody></table>
+                   
+            </div>';
+	
 	$to="rohitkumarjoshi43@gmail.com";
 	$reply="rohitkumarjoshi43@gmail.com";
 	$from="alerts@housingmatters.in";
-	$from_name="HMS";
+	$from_name="HMS_responsive";
 	$subject="responsive Content last";
-	//$this->smtpmailer($to,$from,$from_name,$subject,$bill_html,$reply);
+	//$this->smtpmailer($to,$from,$from_name,$subject,$bill,$reply);
 	
 	
 }

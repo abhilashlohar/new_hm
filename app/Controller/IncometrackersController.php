@@ -1145,6 +1145,7 @@ function generate_bills(){
 					
 					if($neft_type ==  "ALL"){
 						$account_name = @$neft_detail['account_name'];	
+						$account_type = @$neft_detail['account_type'];
 						$bank_name = @$neft_detail['bank_name'];
 						$account_number = @$neft_detail['account_number'];
 						$branch = @$neft_detail['branch'];
@@ -1153,6 +1154,7 @@ function generate_bills(){
 					if($neft_type ==  "WW"){			
 						$neft_detail2 = @$neft_detail[$wing_id];
 						$account_name = @$neft_detail2['account_name'];	
+						$account_type = @$neft_detail['account_type'];
 						$bank_name = @$neft_detail2['bank_name'];
 						$account_number = @$neft_detail2['account_number'];
 						$branch = @$neft_detail2['branch'];
@@ -1238,7 +1240,7 @@ function generate_bills(){
 							</tbody></table>
 							<table style="font-size:12px;border-bottom: solid 1px #767575;" width="100%" cellspacing="0">
 								<tbody><tr>
-									<td style="padding: 0 0 0 5px;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;border-right: solid 1px #FFFFFF;" align="left" width="60%"><b>Particulars of charges</b></td>
+									<td style="padding: 0 0 0 5px;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;border-right: solid 1px #FFFFFF;" align="left" width="60%"><b>  B I L L - Particulars of charges</b></td>
 									<td style="padding: 0 5px  0;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;border-right: solid 1px #FFFFFF;" align="center" width="20%"><b>Rate (sq.ft.)</b> </td>
 									<td style="padding: 0 5px 0 0;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;" align="right" width="20%"><b>Amount (Rs.)</b> </td>
 								</tr>';
@@ -1254,7 +1256,7 @@ function generate_bills(){
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >'.$income_head_name.'</td>
 										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">';if(!empty($income_head_for_rate[$key])){ $size_of= explode('.',$income_head_for_rate[$key]); if(strlen($size_of[1])>2){ $bill_html.=''.number_format($income_head_for_rate[$key] ,3).''; }else{ $bill_html.=''.number_format($income_head_for_rate[$key] ,2).'';} } $bill_html.=' </td>
 																	
-										<td align="right" style="padding: 0 5px 0 0;">'.$value.'</td>
+										<td align="right" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($value, "INR").'</td>
 									</tr>';
 								}
 							}
@@ -1264,7 +1266,7 @@ function generate_bills(){
 							$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >Non Occupancy charges</td>
 										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;"></td>
-										<td align="right" style="padding: 0 5px 0 0;">'.$noc_charge.'</td>
+										<td align="right" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($noc_charge, "INR").'</td>
 									</tr>';
 							}
 							
@@ -1274,7 +1276,7 @@ function generate_bills(){
 								$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >'.$income_head_name.'</td>
 										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;"></td>
-										<td align="right" style="padding: 0 5px 0 0;">'.$vlaue.'</td>
+										<td align="right" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($vlaue, "INR").'</td>
 									</tr>';
 							} 
 							
@@ -1293,7 +1295,7 @@ function generate_bills(){
 												<td width="60%">'.$account_name.'</td>
 											</tr>
 											<tr>
-												<td width="40%" style="padding: 0 0 0 5px;"><b>Account No.:</b></td>
+												<td width="40%" style="padding: 0 0 0 5px;"><b>'.$account_type.' account no.:</b></td>
 												<td width="60%">'.$account_number.'</td>
 											</tr>
 											<tr>
@@ -1313,30 +1315,30 @@ function generate_bills(){
 									<td width="40%" valign="top">
 										<table style="font-size:12px" width="100%">
 											<tbody><tr>
-												<td align="right" width="70%">Total:</td>
-												<td align="right" width="30%" style="padding: 0 5px 0 0;">'.$total.'</td>
+												<td align="right" width="70%">Sub-total:</td>
+												<td align="right" width="30%" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($total, "INR").'</td>
 											</tr>
 											<tr>
 												<td align="right">Interest on arrears:</td>
-												<td align="right" style="padding: 0 5px 0 0;">'.$intrest_on_arrears.'</td>
+												<td align="right" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($intrest_on_arrears, "INR").'</td>
 											</tr>
 											<tr>
 												<td align="right">Arrears-Principal:</td>
-												<td align="right" style="padding: 0 5px 0 0;">'.$arrear_principle.'</td>
+												<td align="right" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($arrear_principle, "INR").'</td>
 											</tr>
 											<tr>
 												<td align="right">Arrears-Interest:</td>
-												<td align="right" style="padding: 0 5px 0 0;">'.$arrear_intrest.'</td>
+												<td align="right" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($arrear_intrest, "INR").'</td>
 											</tr>';
 								
 								$credit_stock_text=$credit_stock;
 								$bill_html.='<tr>
 												<td align="right" width="60%">Credit/Adjustment:</td>
-												<td align="right" width="40%" style="padding: 0 5px 0 0;">'.$credit_stock_text.'</td>
+												<td align="right" width="40%" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($credit_stock_text, "INR").'</td>
 											</tr>';
 								$bill_html.='<tr>
 												<td align="right" width="60%"><b>Due For Payment:</b></td>
-												<td align="right" width="40%" style="padding: 0 5px 0 0;">'.$due_for_payment.'</td>
+												<td align="right" width="40%" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($due_for_payment, "INR").'</td>
 											</tr>
 										</tbody></table>
 									</td>
@@ -1365,8 +1367,96 @@ function generate_bills(){
 									
 									$bill_html.='</td>
 								</tr>
-							</tbody></table>
-							<table style="font-size:12px;border-bottom: dotted 1px;" width="100%" cellspacing="0">
+							</tbody></table>';
+				// Receipt code start
+					
+				///................ Receipt code start..................... /// 
+			
+							$result_last_receipt=$this->requestAction(array('controller' => 'Incometrackers', 'action' => 'print_show_last_receipt'), array('pass' => array($ledger_sub_account_id,$start_date)));
+							if(sizeof($result_last_receipt)>0){ 
+							$bill_html.='<table style="font-size:12px;" width="100%" cellspacing="0">
+									<tbody><tr>
+										<td style="padding:2px;background-color:rgb(0,141,210);color:#fff" align="center" width="100%"><b>R E C E I P T</b></td>
+									</tr>
+								</tbody></table>
+								<table style="font-size:12px;border-bottom:1px solid;" width="100%" cellspacing="0">
+								   <tbody>
+									<tr>
+										<td style="padding:5px;border-top:solid 1px #767575" width="100%" align="left">
+										<span style="color:rgb(100,100,99)">
+										Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b>
+										 <br/>
+										Details of last three payments received before '.date("d-m-Y",$start_date).'
+										</span>
+										</td>
+									</tr>
+									</tbody>
+								</table>
+								<table style="font-size:12px;border-bottom:1px solid;" width="100%" cellspacing="0">
+								<thead>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Date</th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Receipt# </th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Cheque/Neft </th>
+								<th style="border-bottom: solid 1px;border-right: solid 1px;">Drawee Bank</th>
+								<th style="border-bottom: solid 1px;">Amount (Rs.)</th>
+								
+								</thead>
+								<tbody>';
+								
+								 
+	// pr($result_last_receipt);
+	
+		$total_receipt=0;
+			foreach($result_last_receipt as $receipt){
+
+				$auto_id=$receipt["cash_bank"]["transaction_id"];
+				$receipt_number=$receipt["cash_bank"]["receipt_number"];
+				$transaction_date=$receipt["cash_bank"]["transaction_date"];
+				$received_from=$receipt["cash_bank"]["received_from"];
+				$date=date("d-m-Y",$transaction_date);			
+				$cheque_number=$receipt["cash_bank"]["cheque_number"];
+				$narration=$receipt["cash_bank"]["narration"];
+				$amount=$receipt["cash_bank"]["amount"];
+				$drown_in_which_bank=$receipt["cash_bank"]["drown_in_which_bank"];
+				$cheque_date=$receipt["cash_bank"]["date"];
+				
+			    $total_receipt+=$amount;
+				
+				
+				$bill_html.='<tr>
+								<td style="text-align:center;border-right: solid 1px;">'.$date.'</td>
+								<td style="text-align:center;border-right: solid 1px;">'.$receipt_number.'</td>
+								<td style="border-right: solid 1px;padding-right: 6px;" align="right">'.$cheque_number.'</td>
+								<td style="text-align:center;border-right: solid 1px;">'.$drown_in_which_bank.'</td>
+								<td align="right" style="padding-right: 6px;">'.$this->Currency->formatCurrency($amount, "INR").'</td>
+								</tr>';
+								
+								
+		
+	   }
+	
+				$total_receipt = str_replace( ',', '', $total_receipt );
+					$am_in_words=ucwords($this->requestAction(array('controller' => 'hms', 'action' => 'convert_number_to_words'), array('pass' => array($total_receipt))));
+								
+						$bill_html.='</tbody></table>
+						<table style="font-size:12px;border-bottom:1px solid" width="100%" cellspacing="0">
+									<tbody>
+									<tr>
+										<td style="padding:0px 0 2px 5px"  colspan="4">Rupees '.$am_in_words.' Only </td>
+										<td align="right" style="padding-right: 6px;"><b>Total: Rs '.$this->Currency->formatCurrency($total_receipt, "INR").'</b></td>
+									</tr>';
+								
+									
+									$bill_html.='
+									
+									
+									
+								</tbody></table>';	
+							}					
+							
+			////.......end receipt code ..................////////		
+						
+							$bill_html.='<table style="font-size:12px;border-bottom: dotted 1px;" width="100%" cellspacing="0">
 								<tbody><tr>
 								<td align="right" width="60%" style="padding:5px;" valign="top">
 									<br/>For  <b>'.$society_name.'</b>: <span >'.$sig_title.'</span>

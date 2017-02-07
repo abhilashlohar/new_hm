@@ -530,7 +530,7 @@ function individual_send_email($auto_id=null){
 								<td style="text-align:center;border-right: solid 1px;">'.$receipt_number.'</td>
 								<td style="border-right: solid 1px;padding-right: 6px;" align="right">'.$cheque_number.'</td>
 								<td style="text-align:center;border-right: solid 1px;">'.$drown_in_which_bank.'</td>
-								<td align="right" style="padding-right: 6px;">'.$this->Currency->formatCurrency($amount, "INR").'</td>
+								<td align="right" style="padding-right: 6px;">'.$amount.'</td>
 								</tr>';
 								
 								
@@ -545,7 +545,7 @@ function individual_send_email($auto_id=null){
 									<tbody>
 									<tr>
 										<td style="padding:0px 0 2px 5px"  colspan="4">Rupees '.$am_in_words.' Only </td>
-										<td align="right" style="padding-right: 6px;"><b>Total: Rs '.$this->Currency->formatCurrency($total_receipt, "INR").'</b></td>
+										<td align="right" style="padding-right: 6px;"><b>Total: Rs '.$total_receipt.'</b></td>
 									</tr>';
 								
 									

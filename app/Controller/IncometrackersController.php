@@ -1256,7 +1256,7 @@ function generate_bills(){
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >'.$income_head_name.'</td>
 										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">';if(!empty($income_head_for_rate[$key])){ $size_of= explode('.',$income_head_for_rate[$key]); if(strlen($size_of[1])>2){ $bill_html.=''.number_format($income_head_for_rate[$key] ,3).''; }else{ $bill_html.=''.number_format($income_head_for_rate[$key] ,2).'';} } $bill_html.=' </td>
 																	
-										<td align="right" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($value, "INR").'</td>
+										<td align="right" style="padding: 0 5px 0 0;">'.$value.'</td>
 									</tr>';
 								}
 							}
@@ -1266,7 +1266,7 @@ function generate_bills(){
 							$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >Non Occupancy charges</td>
 										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;"></td>
-										<td align="right" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($noc_charge, "INR").'</td>
+										<td align="right" style="padding: 0 5px 0 0;">'.$noc_charge.'</td>
 									</tr>';
 							}
 							
@@ -1276,7 +1276,7 @@ function generate_bills(){
 								$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >'.$income_head_name.'</td>
 										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;"></td>
-										<td align="right" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($vlaue, "INR").'</td>
+										<td align="right" style="padding: 0 5px 0 0;">'.$vlaue.'</td>
 									</tr>';
 							} 
 							
@@ -1316,29 +1316,29 @@ function generate_bills(){
 										<table style="font-size:12px" width="100%">
 											<tbody><tr>
 												<td align="right" width="70%">Sub-total:</td>
-												<td align="right" width="30%" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($total, "INR").'</td>
+												<td align="right" width="30%" style="padding: 0 5px 0 0;">'.$total.'</td>
 											</tr>
 											<tr>
 												<td align="right">Interest on arrears:</td>
-												<td align="right" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($intrest_on_arrears, "INR").'</td>
+												<td align="right" style="padding: 0 5px 0 0;">'.$intrest_on_arrears.'</td>
 											</tr>
 											<tr>
 												<td align="right">Arrears-Principal:</td>
-												<td align="right" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($arrear_principle, "INR").'</td>
+												<td align="right" style="padding: 0 5px 0 0;">'.$arrear_principle.'</td>
 											</tr>
 											<tr>
 												<td align="right">Arrears-Interest:</td>
-												<td align="right" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($arrear_intrest, "INR").'</td>
+												<td align="right" style="padding: 0 5px 0 0;">'.$arrear_intrest.'</td>
 											</tr>';
 								
 								$credit_stock_text=$credit_stock;
 								$bill_html.='<tr>
 												<td align="right" width="60%">Credit/Adjustment:</td>
-												<td align="right" width="40%" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($credit_stock_text, "INR").'</td>
+												<td align="right" width="40%" style="padding: 0 5px 0 0;">'.$credit_stock_text.'</td>
 											</tr>';
 								$bill_html.='<tr>
 												<td align="right" width="60%"><b>Due For Payment:</b></td>
-												<td align="right" width="40%" style="padding: 0 5px 0 0;">'.$this->Currency->formatCurrency($due_for_payment, "INR").'</td>
+												<td align="right" width="40%" style="padding: 0 5px 0 0;">'.$due_for_payment.'</td>
 											</tr>
 										</tbody></table>
 									</td>
@@ -1428,7 +1428,7 @@ function generate_bills(){
 								<td style="text-align:center;border-right: solid 1px;">'.$receipt_number.'</td>
 								<td style="border-right: solid 1px;padding-right: 6px;" align="right">'.$cheque_number.'</td>
 								<td style="text-align:center;border-right: solid 1px;">'.$drown_in_which_bank.'</td>
-								<td align="right" style="padding-right: 6px;">'.$this->Currency->formatCurrency($amount, "INR").'</td>
+								<td align="right" style="padding-right: 6px;">'.$amount.'</td>
 								</tr>';
 								
 								
@@ -1443,7 +1443,7 @@ function generate_bills(){
 									<tbody>
 									<tr>
 										<td style="padding:0px 0 2px 5px"  colspan="4">Rupees '.$am_in_words.' Only </td>
-										<td align="right" style="padding-right: 6px;"><b>Total: Rs '.$this->Currency->formatCurrency($total_receipt, "INR").'</b></td>
+										<td align="right" style="padding-right: 6px;"><b>Total: Rs '.$total_receipt.'</b></td>
 									</tr>';
 								
 									

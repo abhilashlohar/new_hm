@@ -1,4 +1,5 @@
 <?php
+App::import('Helper', 'Currency');
 class HmsController extends AppController {
 var $helpers = array('Html', 'Form','Js','Number','Currency');
 
@@ -6065,13 +6066,13 @@ $bill='<div style="margin: 0px;">
 							<table style="font-size:12px" width="100%" cellspacing="0">
 								<tbody><tr>
 									<td style="padding: 0px 0 0 5px;"><b>Name:</b></td>
-									<td>Harichha Joshi & Ashok M Joshi</td>
+									<td>Harichha Joshi & Jethalal C Joshi</td>
 									<td><b>Flat/Shop No.:</b></td>
-									<td>Flat-101</td>
+									<td>Flat-102</td>
 								</tr>
 								<tr>
 									<td style="padding: 0px 0 0 5px;"><b>Bill No.:</b></td>
-									<td>1130</td>
+									<td>1131</td>
 									<td><b>Area (sq.ft.):</b></td>
 									<td>889</td>
 								</tr>
@@ -6185,7 +6186,7 @@ $bill='<div style="margin: 0px;">
 									<tr>
 										<td style="padding:5px;border-top:solid 1px #767575" width="100%" align="left">
 										<span style="color:rgb(100,100,99)">
-										Received with thanks from: <b>Harichha Joshi & Ashok M Joshi Flat-101</b>
+										Received with thanks from: <b>Harichha Joshi & Jethalal C Joshi Flat-102</b>
 										 <br/>
 										Details of last three payments received before 01-01-2017
 										</span>
@@ -6204,14 +6205,14 @@ $bill='<div style="margin: 0px;">
 								</thead>
 								<tbody><tr>
 								<td style="text-align:center;border-right: solid 1px;">27-09-2016</td>
-								<td style="text-align:center;border-right: solid 1px;">1042</td>
-								<td style="border-right: solid 1px;padding-right: 6px;" align="right">478765</td>
-								<td style="text-align:center;border-right: solid 1px;">SBI</td>
+								<td style="text-align:center;border-right: solid 1px;">1043</td>
+								<td style="border-right: solid 1px;padding-right: 6px;" align="right">301336</td>
+								<td style="text-align:center;border-right: solid 1px;">IDBI</td>
 								<td align="right" style="padding-right: 6px;">10137</td>
 								</tr><tr>
 								<td style="text-align:center;border-right: solid 1px;">27-05-2016</td>
-								<td style="text-align:center;border-right: solid 1px;">1001</td>
-								<td style="border-right: solid 1px;padding-right: 6px;" align="right">478757</td>
+								<td style="text-align:center;border-right: solid 1px;">1002</td>
+								<td style="border-right: solid 1px;padding-right: 6px;" align="right">604376</td>
 								<td style="text-align:center;border-right: solid 1px;">NA</td>
 								<td align="right" style="padding-right: 6px;">10137</td>
 								</tr></tbody></table>
@@ -6283,8 +6284,8 @@ $bill='<div style="margin: 0px;">
 	$to="rohitkumarjoshi43@gmail.com";
 	$reply="rohitkumarjoshi43@gmail.com";
 	$from="alerts@housingmatters.in";
-	$from_name="HMS_responsive";
-	$subject="responsive Content last";
+	$from_name="Bill and receipt responsive";
+	$subject="Bill and receipt responsive";
 	//$this->smtpmailer($to,$from,$from_name,$subject,$bill,$reply);
 	
 	
@@ -10281,8 +10282,8 @@ function dashboard(){
 		$this->layout='session';
 	}
 	$this->ath();
-	
 
+	
 	$s_society_id = $this->Session->read('hm_society_id');
 	$profile_status_user = $this->Session->read('profile_status_user');
 	$s_user_id = $this->Session->read('hm_user_id'); 

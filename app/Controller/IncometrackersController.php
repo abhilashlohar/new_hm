@@ -225,7 +225,7 @@ function individual_send_email($auto_id=null){
 		if($area_scale==1){
 			$area_scale_text="sq.mtr.";
 		}
-	
+	  $Currency = new CurrencyHelper(new View());
 	 $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip')); 
 
 				$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($ledger_sub_account_id))); 
@@ -344,7 +344,7 @@ function individual_send_email($auto_id=null){
 							</tbody></table>
 							<table style="font-size:12px;border-bottom: solid 1px #767575;" width="100%" cellspacing="0">
 								<tbody><tr>
-									<td style="padding: 0 0 0 5px;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;border-right: solid 1px #FFFFFF;" align="left" width="60%"><b>Particulars of charges</b></td>
+									<td style="padding: 0 0 0 5px;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;border-right: solid 1px #FFFFFF;" align="left" width="60%"><b>B I L L - Particulars of charges</b></td>
 									<td style="padding: 0 5px  0;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;border-right: solid 1px #FFFFFF;" align="center" width="20%"><b>Rate (sq.ft.)</b> </td>
 									<td style="padding: 0 5px 0 0;background-color:rgb(0,141,210);color:#fff;border-top: solid 1px #767575;border-bottom: solid 1px #767575;" align="right" width="20%"><b>Amount (Rs.)</b> </td>
 								</tr>';
@@ -359,7 +359,7 @@ function individual_send_email($auto_id=null){
 									$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >'.$income_head_name.'</td>
 										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;">';if(!empty($income_head_for_rate[$key])){ $size_of= explode('.',$income_head_for_rate[$key]); if(strlen($size_of[1])>2){ $bill_html.=''.number_format($income_head_for_rate[$key] ,3).''; }else{ $bill_html.=''.number_format($income_head_for_rate[$key] ,2).'';} } $bill_html.=' </td>
-										<td align="right" style="padding: 0 5px 0 0;">'.$value.'</td>
+										<td align="right" style="padding: 0 5px 0 0;">'.$Currency->formatCurrency($value, "INR").'</td>
 									</tr>';
 								}
 							}
@@ -369,7 +369,7 @@ function individual_send_email($auto_id=null){
 							$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >Non Occupancy charges</td>
 										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;"></td>
-										<td align="right" style="padding: 0 5px 0 0;">'.$non_occupancy_charges.'</td>
+										<td align="right" style="padding: 0 5px 0 0;">'.$Currency->formatCurrency($non_occupancy_charges, "INR").'</td>
 									</tr>';
 							}
 							
@@ -379,7 +379,7 @@ function individual_send_email($auto_id=null){
 								$bill_html.='<tr>
 										<td align="left" style="border-right: solid 1px #767575;padding: 0 0 0 5px;" >'.$income_head_name.'</td>
 										<td align="center" style="border-right: solid 1px #767575;padding: 0 0 0 5px;"></td>
-										<td align="right" style="padding: 0 5px 0 0;">'.$vlaue.'</td>
+										<td align="right" style="padding: 0 5px 0 0;">'.$Currency->formatCurrency($vlaue, "INR").'</td>
 									</tr>';
 							}
 							
@@ -419,29 +419,29 @@ function individual_send_email($auto_id=null){
 										<table style="font-size:12px" width="100%">
 											<tbody><tr>
 												<td align="right" width="70%">Total:</td>
-												<td align="right" width="30%" style="padding: 0 5px 0 0;">'.$total.'</td>
+												<td align="right" width="30%" style="padding: 0 5px 0 0;">'.$Currency->formatCurrency($total, "INR").'</td>
 											</tr>
 											<tr>
 												<td align="right">Interest on arrears:</td>
-												<td align="right" style="padding: 0 5px 0 0;">'.$interest_on_arrears.'</td>
+												<td align="right" style="padding: 0 5px 0 0;">'.$Currency->formatCurrency($interest_on_arrears, "INR").'</td>
 											</tr>
 											<tr>
 												<td align="right">Arrears-Principal:</td>
-												<td align="right" style="padding: 0 5px 0 0;">'.$arrear_principle.'</td>
+												<td align="right" style="padding: 0 5px 0 0;">'.$Currency->formatCurrency($arrear_principle, "INR").'</td>
 											</tr>
 											<tr>
 												<td align="right">Arrears-Interest:</td>
-												<td align="right" style="padding: 0 5px 0 0;">'.$arrear_intrest.'</td>
+												<td align="right" style="padding: 0 5px 0 0;">'.$Currency->formatCurrency($arrear_intrest, "INR").'</td>
 											</tr>';
 								
 								$credit_stock_text=$credit_stock;
 								$bill_html.='<tr>
 												<td align="right" width="60%">Credit/Adjustment:</td>
-												<td align="right" width="40%" style="padding: 0 5px 0 0;">'.$credit_stock_text.'</td>
+												<td align="right" width="40%" style="padding: 0 5px 0 0;">'.$Currency->formatCurrency($credit_stock_text, "INR").'</td>
 											</tr>';
 								$bill_html.='<tr>
 												<td align="right" width="60%"><b>Due For Payment:</b></td>
-												<td align="right" width="40%" style="padding: 0 5px 0 0;">'.$due_for_payment.'</td>
+												<td align="right" width="40%" style="padding: 0 5px 0 0;">'.$Currency->formatCurrency($due_for_payment, "INR").'</td>
 											</tr>
 										</tbody></table>
 									</td>
@@ -472,7 +472,7 @@ function individual_send_email($auto_id=null){
 								</tr>
 							</tbody></table>';
 							
-								///................ Receipt code start..................... /// 
+						///................ Receipt code start..................... /// 
 			
 							$result_last_receipt=$this->requestAction(array('controller' => 'Incometrackers', 'action' => 'print_show_last_receipt'), array('pass' => array($ledger_sub_account_id,$start_date)));
 							if(sizeof($result_last_receipt)>0){ 
@@ -530,7 +530,7 @@ function individual_send_email($auto_id=null){
 								<td style="text-align:center;border-right: solid 1px;">'.$receipt_number.'</td>
 								<td style="border-right: solid 1px;padding-right: 6px;" align="right">'.$cheque_number.'</td>
 								<td style="text-align:center;border-right: solid 1px;">'.$drown_in_which_bank.'</td>
-								<td align="right" style="padding-right: 6px;">'.$amount.'</td>
+								<td align="right" style="padding-right: 6px;">'.$Currency->formatCurrency($amount, "INR").'</td>
 								</tr>';
 								
 								
@@ -545,7 +545,7 @@ function individual_send_email($auto_id=null){
 									<tbody>
 									<tr>
 										<td style="padding:0px 0 2px 5px"  colspan="4">Rupees '.$am_in_words.' Only </td>
-										<td align="right" style="padding-right: 6px;"><b>Total: Rs '.$total_receipt.'</b></td>
+										<td align="right" style="padding-right: 6px;"><b>Total: Rs '.$Currency->formatCurrency($total_receipt, "INR").'</b></td>
 									</tr>';
 								
 									
@@ -556,9 +556,7 @@ function individual_send_email($auto_id=null){
 								</tbody></table>';	
 							}					
 							
-			////.......end receipt code ..................////////	
-								
-								
+			////.......end receipt code ..................////////		
 								
 							
 							$bill_html.='<table style="font-size:12px;border-bottom: dotted 1px;" width="100%" cellspacing="0">
@@ -581,7 +579,7 @@ function individual_send_email($auto_id=null){
                             </td>
                         </tr>
                         
-                        <tr>
+                       <tr>
                             <td colspan="2" >
                                 <table style="background-color: #008DD2;font-size:11px;color:#FFF;border: solid 1px #767575;border-top:none;" width="100%" cellspacing="0">
                                  <tbody>
@@ -597,8 +595,8 @@ function individual_send_email($auto_id=null){
 										<a href="mailto:support@housingmatters.in" target="_blank" style="color:#FFF !important;"><b>support@housingmatters.in</b></a>
                                         </td>
 										<td align="center"></td>
-                                        <td align="right" width="50"><b><a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end"><img src="'.$ip.$this->webroot.'/as/hm/whatsup.png"  width="18px" /></a></b></td>
-                                        <td width="104" style="color:#FFF !important;text-decoration: none;"><b>+91-9869157561</b></td>
+                                        <td align="right" width="50"><b></b></td>
+                                        <td width="104" style="color:#FFF !important;text-decoration: none;"></td>
 										<td align="center"></td>
                                         <td width="100" style="padding-right: 10px;text-decoration: none;"> <a href="http://www.housingmatters.in" target="_blank" style="color:#FFF !important;"><b>www.housingmatters.in</b></a></td>
                                     </tr>

@@ -3287,7 +3287,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -10283,6 +10283,8 @@ function dashboard(){
 	}
 	$this->ath();
 
+	//$Currency = new CurrencyHelper(new View());
+	//$Currency->formatCurrency("987541", "INR");
 	
 	$s_society_id = $this->Session->read('hm_society_id');
 	$profile_status_user = $this->Session->read('profile_status_user');

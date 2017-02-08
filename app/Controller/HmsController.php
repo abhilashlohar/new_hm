@@ -5218,7 +5218,7 @@ $this->layout='session';
 			@$account_email=$this->request->data['account1'];
 			@$account_sms=$this->request->data['account2'];
 			@$account_zero_ammount=$this->request->data['account3'];
-			@$merge_receipt=(int)$this->request->data['merge_receipt'];
+			//@$merge_receipt=(int)$this->request->data['merge_receipt'];
 			@$access_tenant=(int)$this->request->data['access_tenant'];
 			
 			@$banned_word=$this->request->data['banned'];
@@ -5284,7 +5284,7 @@ $this->layout='session';
 			$reminder_status = 0;
 			}
 			$this->loadmodel('society');
-			$this->society->updateAll(array('signup'=>$signup_auto,'help_desk'=>$help_desk,'notice'=>$notice,'document'=>$document,'discussion_forum'=>$discussion_forum,'discussion_forum_email'=>$discussion_forum_email,'poll'=>$poll,'account_email'=>$account_email,'account_sms'=>$account_sms,'account_zero_ammount'=>$account_zero_ammount,'content_moderation'=>$banned_word,'family_member'=>$family_member,'merge_receipt'=>$merge_receipt,"reminder_status"=>$reminder_status,'access_tenant'=>$access_tenant,'family_member_tenant'=>$family_member_tenant),array('society_id'=>$s_society_id));
+			$this->society->updateAll(array('signup'=>$signup_auto,'help_desk'=>$help_desk,'notice'=>$notice,'document'=>$document,'discussion_forum'=>$discussion_forum,'discussion_forum_email'=>$discussion_forum_email,'poll'=>$poll,'account_email'=>$account_email,'account_sms'=>$account_sms,'account_zero_ammount'=>$account_zero_ammount,'content_moderation'=>$banned_word,'family_member'=>$family_member,"reminder_status"=>$reminder_status,'access_tenant'=>$access_tenant,'family_member_tenant'=>$family_member_tenant),array('society_id'=>$s_society_id));
 					
 	}
 	
@@ -30992,7 +30992,54 @@ function set_ledger_sub_acc_users(){
 	}
 
 //////////////end flash mesage////////////////////////
-function convert_number_to_words($number) {
+
+function convert_number_to_words($number){
+	
+
+   $no = round($number);
+   $point = round($number - $no, 2) * 100;
+   $hundred = null;
+   $digits_1 = strlen($no);
+   $i = 0;
+   $str = array();
+   $words = array('0' => '', '1' => 'one', '2' => 'two',
+    '3' => 'three', '4' => 'four', '5' => 'five', '6' => 'six',
+    '7' => 'seven', '8' => 'eight', '9' => 'nine',
+    '10' => 'ten', '11' => 'eleven', '12' => 'twelve',
+    '13' => 'thirteen', '14' => 'fourteen',
+    '15' => 'fifteen', '16' => 'sixteen', '17' => 'seventeen',
+    '18' => 'eighteen', '19' =>'nineteen', '20' => 'twenty',
+    '30' => 'thirty', '40' => 'forty', '50' => 'fifty',
+    '60' => 'sixty', '70' => 'seventy',
+    '80' => 'eighty', '90' => 'ninety');
+   $digits = array('', 'hundred', 'thousand', 'lakh', 'crore');
+   while ($i < $digits_1) {
+     $divider = ($i == 2) ? 10 : 100;
+     $number = floor($no % $divider);
+     $no = floor($no / $divider);
+     $i += ($divider == 10) ? 1 : 2;
+     if ($number) {
+        $plural = (($counter = count($str)) && $number > 9) ? 's' : null;
+        $hundred = ($counter == 1 && $str[0]) ? ' and ' : null;
+        $str [] = ($number < 21) ? $words[$number] .
+            " " . $digits[$counter] . $plural . " " . $hundred
+            :
+            $words[floor($number / 10) * 10]
+            . " " . $words[$number % 10] . " "
+            . $digits[$counter] . $plural . " " . $hundred;
+     } else $str[] = null;
+  }
+  $str = array_reverse($str);
+  $result = implode('', $str);
+  $points = ($point) ?
+    "." . $words[$point / 10] . " " . 
+          $words[$point = $point % 10] : '';
+  return $result ;	
+	
+	
+}
+
+function convert_number_to_words1($number) {
             $hyphen      = '-';
             $conjunction = ' and ';
             $separator   = '  ';
@@ -31029,6 +31076,7 @@ function convert_number_to_words($number) {
                 90                  => 'ninety',
                 100                 => 'hundred',
                 1000                => 'thousand',
+                100000             => 'lakh',
                 1000000             => 'million',
                 1000000000          => 'billion',
                 1000000000000       => 'trillion',
@@ -31081,6 +31129,7 @@ function convert_number_to_words($number) {
                         $string .= $conjunction . $this->convert_number_to_words($remainder);
                     }
                     break;
+					
                 default:
                     $baseUnit = pow(1000, floor(log($number, 1000)));
                     $numBaseUnits = (int) ($number / $baseUnit);

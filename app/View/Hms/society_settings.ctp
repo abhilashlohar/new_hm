@@ -35,10 +35,8 @@ foreach($result_society as $data)
 			@$user_id=$data['society']['user_id'];
 			@$society_pan=$data['society']['pan'];
 			@$society_tax=$data['society']['tex_number'];
-			@$merge_receipt=$data['society']['merge_receipt'];
+			//@$merge_receipt=$data['society']['merge_receipt'];
 			@$access_tenant=$data['society']['access_tenant'];
-
-
 
 
 }
@@ -138,17 +136,17 @@ margin-left: 13%;' >
 </tr>
 
 
-<tr>
+<!--<tr>
 <td>
 <span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>12. Should invoice & last receipt be merge on bill ? </span><br>
 <span style='font-size:12px;'> &nbsp &nbsp <p> <input type='checkbox' name='merge_receipt' value='1' <?php if($merge_receipt==1){?> checked <?php } ?>> Check this if you want to merge invoice & last receipt on bill .
  </p></span>
 </td>
-</tr>
+</tr>-->
 
 <tr>
 <td>
-<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>13. Should Reminder Send ? </span><br>
+<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>12. Should Reminder Send ? </span><br>
 <span style='font-size:12px;'> &nbsp &nbsp <p> <input type='checkbox' name='remndrr' value='1' <?php //if($account_zero_ammount==1){?>  <?php //} ?>>Reminder for Income Tracker and Fixed Deposit 
  </p></span>
 </td>
@@ -156,7 +154,7 @@ margin-left: 13%;' >
 
 <tr>
 <td>
-<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>14. Should notify zero amount invoice ? </span><br>
+<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>13. Should notify zero amount invoice ? </span><br>
 <span style='font-size:12px;'> &nbsp &nbsp <p> <input type='checkbox' name='account3' value='1' <?php if($account_zero_ammount==1){?> checked <?php } ?>> Check this if you want notifications (SMS and/or Email) to be sent to members when an invoice with zero outstanding and zero charges is raised.
 
  </p></span>
@@ -166,7 +164,7 @@ margin-left: 13%;' >
 
 <tr style='background-color:#fafafa !important;'>
 <td>
-<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>15. Should Tenants be given access to society portal. ? </span><br>
+<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>14. Should Tenants be given access to society portal. ? </span><br>
 <span style='font-size:12px;'> &nbsp &nbsp <p> <input type='checkbox' name='access_tenant' value='1' <?php if($access_tenant==1){?> checked <?php } ?>> Check this if you want to give access to society portal.
  </p></span>
 
@@ -177,7 +175,7 @@ margin-left: 13%;' >
 
 <tr>
 <td>
-<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>16. Banned Words  </span><br><br>
+<span style='color:#3B6B96;font-size: 16px;font-weight: bold;'>15. Banned Words  </span><br><br>
 <span style='font-size:12px;'> &nbsp &nbsp  <textarea rows='5' cols='7' style='resize:none;' name='banned'><?php echo $banned_word ; ?></textarea>
 <p>Please specify the list of banned words seperated by commas. These words will not be allowed in input fields such as subject,descriptions of notices,forums,complaints etc. for your society.
 

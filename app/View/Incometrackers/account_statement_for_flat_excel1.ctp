@@ -29,8 +29,11 @@ foreach($result_ledger as $ledger_data){
 
 		<table border="1">
 			<thead>
+			 <tr>
+			<th colspan="6" style="text-align:center;"><?php echo $society_name; ?></th>
+			</tr>
             <tr>
-			<th colspan="6" style="text-align:center;">Account Statement <?php echo $society_name; ?> Register from : <?php echo date('d-m-Y',strtotime($from)); ?>-to:<?php echo date('d-m-Y',strtotime($to)); ?></th>
+			<th colspan="6" style="text-align:center;">Statement of Account : <?php echo $user_name; ?> (<?php echo $wing_flat; ?>) From <?php echo date('d-m-Y',strtotime($from)); ?>-to:<?php echo date('d-m-Y',strtotime($to)); ?></th>
 			</tr>
 			<tr>
 			<th colspan="6" style="text-align:right;">Opening Balance: <?php echo $opening_balance; ?></th>
@@ -66,15 +69,28 @@ foreach($result_ledger as $ledger_data){
 				$element_id=$ledger_data["ledger"]["element_id"];
 				$debit=$ledger_data["ledger"]["debit"];
 				$credit=$ledger_data["ledger"]["credit"];
-				
+				@$intrest_on_arrears=@$ledger_data['ledger']['intrest_on_arrears'];
 				if($table_name=="opening_balance"){
-					$description="Opening Balance/Arrears";
-					$source="Opening balance";
-					$refrence_no="";
 					
+					@$intrest_on_arrears=@$ledger_data['ledger']['intrest_on_arrears'];
+					if(@$intrest_on_arrears=="YES"){
+						$description="Opening Balance/Penalty";
+					}else{
+						$description="Opening Balance/Arrears";
+					}
+					 $source="Opening balance";
+					 $refrence_no="";
+														
 				}
 				if($table_name=="regular_bill"){
-					$source="Regular Bill";
+					
+					if($intrest_on_arrears=="YES"){
+						$source="Regular Bill (interest)";
+					}else{
+						$source="Regular Bill";
+					}
+					
+					//$source="Regular Bill";
 					$result_regular_bill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'regular_bill_info_via_auto_id'), array('pass' => array($element_id)));
 					if(sizeof($result_regular_bill)>0){
 						 $refrence_no=$result_regular_bill[0]["regular_bill"]["bill_number"];

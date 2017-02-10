@@ -37,7 +37,7 @@
 		?>
 		<div class="span6" align="right">
 			<a href="regular_bill_report_excel?period=<?php echo $period; ?>" class="btn mini green tooltips" data-original-title="Download in excel"><i class="fa fa-file-excel-o"></i></a>
-			<a href="print_all_bill/<?php echo $period; ?>" class="btn mini blue tooltips"   data-original-title="Print All Bills"><i class="fa fa-print"></i> Print All Bills</a>
+			<a href="print_all_bill/<?php echo $period; ?>" class="btn mini blue tooltips"   data-original-title="Print All Bills" target="_blank"><i class="fa fa-print"></i> Print All Bills</a>
 			<input type="text" id="search" class="m-wrap medium" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" placeholder="Search">
 		</div>
 		</div>

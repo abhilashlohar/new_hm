@@ -18,9 +18,10 @@
 							 
 							  $ledger_sub_ac_id=$data['ledger_sub_account']['auto_id'];
 							  $bank_name=$data['ledger_sub_account']['name'];
+							  $bank_account=$data['ledger_sub_account']['bank_account'];
 							 ?>
                           
-								<option value="<?php echo $ledger_sub_ac_id; ?>"><?php echo $bank_name; ?> </option>
+								<option value="<?php echo $ledger_sub_ac_id; ?>"><?php echo $bank_name; ?> <?php echo $bank_account; ?> </option>
 						  
 						  <?php } ?>
 						</select>

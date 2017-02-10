@@ -459,8 +459,10 @@ function substrwords($text, $maxchar, $end='...') {
 	</tbody>
 </table>
 
+<a class="btn blue button-next" id="continue" >Continue <i class="m-icon-swapright m-icon-white"></i></a>
 
 
+<div id="reconciliation_form" style="display:none;"> 
 
 <!---- reconciliation form --->
 <h3>Reconciliation Form</h3>
@@ -548,7 +550,9 @@ function substrwords($text, $maxchar, $end='...') {
 
 <!-----  end ---->
 
+</div>
 
+<div id="reconciliation_report_main" style="display:none;">
 
 <!-- reconciliation report --->
 <br>
@@ -592,7 +596,7 @@ function substrwords($text, $maxchar, $end='...') {
 <div id="ledger_view" style="width:100%;">
 </div>
 
-
+</div>
 
 
 <!-- end code --->
@@ -615,6 +619,13 @@ $(document).ready(function() {
 		});
 		
 	});
+	
+	$("#continue").bind('click',function(){
+		$(this).hide();
+		$("#reconciliation_form").show();
+	});
+	
+	
 	
 	var $rows = $('#receiptmain tbody tr');
 	$('#search').keyup(function() {

@@ -1696,7 +1696,7 @@ function final_import_bank_receipt_ajax(){
 					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$date." against Unit ".$wing_flat."";
 					
 
-					$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'donotreply@housingmatters.in');
+					$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'accounts@housingmatters.in');
 				}
 			}
 			
@@ -3408,7 +3408,7 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 			    	if(!empty($user_email_id)){
 					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$transaction_date." against Unit ".$wing_flat."";
 				
-					$this->send_email($user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$email_message,'donotreply@housingmatters.in');
+					$this->send_email($user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$email_message,'accounts@housingmatters.in');
 				}
 			}		
 				
@@ -3416,7 +3416,7 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 			    	if(!empty($user_email_id)){
 					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$transaction_date." against Unit ".$wing_flat."";
 				
-					$this->send_email($user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'donotreply@housingmatters.in');
+					$this->send_email($user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'accounts@housingmatters.in');
 				}
 			}	
 		
@@ -3662,7 +3662,7 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 			    	if(!empty($old_user_email_id)){
 					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$transaction_date." against Unit ".$old_wing_flat."";
 				
-					$this->send_email($old_user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$email_message,'donotreply@housingmatters.in');
+					$this->send_email($old_user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$email_message,'accounts@housingmatters.in');
 				}
 			}		 
 				   
@@ -3673,7 +3673,7 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 			    	if(!empty($user_email_id)){
 					$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$transaction_date." against Unit ".$wing_flat."";
 				
-					$this->send_email($user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'donotreply@housingmatters.in');
+					$this->send_email($user_email_id,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'accounts@housingmatters.in');
 				}
 			}	
 		
@@ -6964,7 +6964,7 @@ function new_bank_receipt(){
 					if(!empty($email)){
 						
 								$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$date." against Unit ".$wing_flat."";
-								$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'donotreply@housingmatters.in');
+								$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$html_receipt,'accounts@housingmatters.in');
 						
 					}
 			}	

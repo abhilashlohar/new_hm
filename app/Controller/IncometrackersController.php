@@ -625,7 +625,7 @@ function individual_send_email($auto_id=null){
 				if(!empty($email)){
 						
 						$subject="[".$society_name."]- Maintenance e-bill, ".date('d-M',$start_date)." to ".date('d-M-Y',$end_date)."";
-						$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$bill_html,'donotreply@housingmatters.in');
+						$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$bill_html,'accounts@housingmatters.in');
 				}
 			}				
 	echo"done";			
@@ -1526,7 +1526,7 @@ function generate_bills(){
 					if(!empty($email)){
 						
 							$subject="[".$society_name."]- Maintenance e-bill, ".date('d-M',$start_date)." to ".date('d-M-Y',$end_date)."";
-							$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$bill_html,'donotreply@housingmatters.in');
+							$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$bill_html,'accounts@housingmatters.in');
 						
 					}
 				}
@@ -8339,7 +8339,7 @@ function regular_bill_edit2($auto_id=null){
 							
 
 							 $subject="[".$society_name."]- Revised Maintenance e-bill, ".date('d-M',$start_date)." to ".date('d-M-Y',$end_date)."";
-							$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$bill_html,'donotreply@housingmatters.in');
+							$this->send_email($email,'accounts@housingmatters.in','HousingMatters',$subject,$bill_html,'accounts@housingmatters.in');
 					}
 				}
 ////SMS CODE//

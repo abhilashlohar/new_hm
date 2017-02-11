@@ -186,7 +186,7 @@ foreach($result_ledger as $ledger_data){
 			
 				?>
 					<tr>
-						<td><?php echo date("d-m-Y",$transaction_date); ?></td>
+						<td align="left"><?php echo date("d-m-Y",$transaction_date); ?></td>
 						<td align="left"><?php echo $refrence_no; ?></td>
 						<td><?php echo $description; ?></td>
 						<td><?php echo $source; ?></td>

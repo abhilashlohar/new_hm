@@ -490,8 +490,11 @@ function substrwords($text, $maxchar, $end='...') {
 	</form>
 		<!--<a href="#" role="button" id="add_row" class="btn"><i class="icon-plus"></i> Add Row</a>-->
 	</div>
+
 </div>
 
+<a class="btn blue button-next" id="continue_report" >Continue <i class="m-icon-swapright m-icon-white"></i></a>
+</div>
 <table id="sample" style="display:none;">
 <tbody>
 	<tr>
@@ -546,12 +549,9 @@ function substrwords($text, $maxchar, $end='...') {
 </table>
 
 
-
-
 <!-----  end ---->
 
-</div>
-
+<div id="message"></div>
 <div id="reconciliation_report_main" style="display:none;">
 
 <!-- reconciliation report --->
@@ -591,11 +591,13 @@ function substrwords($text, $maxchar, $end='...') {
 </table>
 </div>
 </form>
+
+
 </center>
 
 <div id="ledger_view" style="width:100%;">
 </div>
-
+<br/>
 </div>
 
 
@@ -604,7 +606,7 @@ function substrwords($text, $maxchar, $end='...') {
 </div>
 
 <script>
-$(document).ready(function() {
+$(document).ready(function() { 
 	$(".move_match").bind('click',function(){
 		var z=$(this);
 		var date=$(this).closest('tr').find('input').val();
@@ -622,10 +624,21 @@ $(document).ready(function() {
 	
 	$("#continue").bind('click',function(){
 		$(this).hide();
+		var z =$("#reconciliation_form").html();
 		$("#reconciliation_form").show();
 	});
 	
+	$("#continue_report").bind('click',function(){ 
+		$(this).hide();
+		$("#reconciliation_report_main").show();
+	});
 	
+	$(".new_sub").die().live('click',function(){
+		$("#main tbody").html('');
+		$("#reconciliation_form").show();
+		 add_row();
+		$("#message").hide();
+	});
 	
 	var $rows = $('#receiptmain tbody tr');
 	$('#search').keyup(function() {
@@ -715,9 +728,24 @@ $(document).ready(function() {
 		
 		
 		if(allow=="no"){
-			e.preventDefault();
+			e.preventDefault(); 
 		}else{
-			$("button[name=submit]").hide();	
+			//$("button[name=submit]").hide();	
+			e.preventDefault();
+			$.ajax({
+				url: 'bank_reconciliation_submit',
+				type: 'POST',
+				data: $(this).serialize(), // it will serialize the form data
+				dataType: 'html'
+			}).done(function(data){
+				if(data=="ok"){
+					$("#reconciliation_form").hide();
+					
+					$("#message").html("<div class='alert alert-block alert-success fade in'><p><h4 class='alert-heading'> Reconciliation form is successfully submitted. <a class='btn green new_sub'  role='button'>Ok</a></h4></p></div>");
+					
+				}
+			});
+			
 		}
 		
 	});

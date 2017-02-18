@@ -10127,7 +10127,7 @@ $s_society_id = $this->Session->read('hm_society_id');
 function bank_receipt_date_validation($transaction_date=null,$ledger_sub_account_id=null)
 {
 	$this->ath();
-$s_society_id = $this->Session->read('hm_society_id');	
+    $s_society_id = $this->Session->read('hm_society_id');	
 
 		$this->loadmodel('financial_year');
 		$conditions=array("society_id" => $s_society_id,"status"=>1);

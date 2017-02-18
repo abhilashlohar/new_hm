@@ -129,12 +129,13 @@
 							</a>
 							<ul class="dropdown-menu" style="min-width:80px !important;left:-53px;padding: 3px 0px; box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3); font-size: 12px;">
 							<li><a href="bank_receipt_html_view/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i>View</a></li>
+								<li><a href="b_receipt_edit/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i>Edit</a></li>
 				<?php
 				$result_date=$this->requestAction(array('controller'=>'Fns','action'=>'bank_receipt_cancel_button_show_or_hide'),array('pass'=>array($transaction_date_for_cancel,(int)$ledger_sub_account_id)));
 				if($result_date=="not_match"){
      			?>
 							
-							<li><a href="b_receipt_edit/<?php echo $auto_id; ?>" target="_blank"><i class="icon-search"></i>Edit</a></li>
+						
 					
 				<li><a href="#" target="_blank" role="button" onclick="cancel_receipt(<?php echo $auto_id; ?>)"><i class="icon-search"></i>Cancel</a></li>
 				<?php } ?>		

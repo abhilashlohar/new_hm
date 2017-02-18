@@ -283,8 +283,8 @@ $("form").on("submit",function(e){
 		
 			$(".date").html('Not in financial year');	
 		}else if(result=="match"){
-		 allow="no";
-			$(".date").html('Regular bill date error');
+		// allow="no";
+		//	$(".date").html('Regular bill date error');
 		}else{
 			$(".date").html('');
 		}

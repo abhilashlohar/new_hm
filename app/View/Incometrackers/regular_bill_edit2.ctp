@@ -12,7 +12,7 @@ input[readonly=""]{
 </style>
 <a href="<?php echo $webroot_path; ?>Incometrackers/in_head_report" role="button" rel="tab" class="btn"><i class="icon-arrow-left"></i> Back</a>
 <?php if($count>0){
-	echo "<br/>You can not edit this bill."; exit;
+	//echo "<br/>You can not edit this bill."; exit;
 } ?>
 <?php 
 

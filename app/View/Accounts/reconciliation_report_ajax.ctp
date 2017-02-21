@@ -18,15 +18,17 @@ Bank Reconciliation Statement as on <?php echo $to; ?><br>
 <?php echo $bank_name; ?> Bank
 
 </div>
+
 <div class="pull-right">
-Closing balance as  per passbook <input class="m-wrap small call_calculation  hide_at_print" placeholder="" id="opening_balance" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text" value="0">
+Closing balance as  per passbook <i class="icon-info-sign tooltips" data-placement="top" data-original-title="Enter Credit amount with minus sign" ></i>
+<input class="m-wrap small call_calculation  hide_at_print" placeholder="Amount" id="opening_balance" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text" value="">
 </div>
 <table width="100%" class="table table-bordered " id="receiptmain">
 	<thead>
 		<tr>
-			<th>ADD</th>
-			<th>Withdrawals not entered in Bank Ledger/Bank Receipt(System)</th>
-			<th>Source</th>
+			<th width='120px'>Add</th>
+			<th>Withdrawals not entered in Bank Ledger</th>
+			<th width='120px'>Source</th>
            	<th>Amount</th>
 			<th width='112px'></th>
 		</tr>
@@ -35,7 +37,7 @@ Closing balance as  per passbook <input class="m-wrap small call_calculation  hi
 	
 	<?php  
 	$i=0; $total_debit=0; $total_credit=0; // pr($result_bank_reconciliation_debit); 
-	foreach($result_bank_reconciliation_debit as $data){ $i++;
+	foreach($result_bank_reconciliation_debit_receipt as $data){ $i++;
 	$auto_id=(int)$data["bank_reconciliation"]["auto_id"];
 	$flag=(int)$data["bank_reconciliation"]["flag"];
 	$debit=$data["bank_reconciliation"]["debit"];
@@ -63,12 +65,7 @@ Closing balance as  per passbook <input class="m-wrap small call_calculation  hi
 		  $description = @$result_cash_bank[0]["cash_bank"]["narration"];
 		  //$description=substrwords($description,200,'...');
 		} 
-	}elseif($table_name=="reconciliation"){ 
-			 $transection_type=$data["bank_reconciliation"]["transection_type"];
-			 $description=$data["bank_reconciliation"]["narration"];
-			//$description=substrwords($description,200,'...');
-			$source=$transection_type; 
-		}
+	}
 		
 		?>
 		<tr>
@@ -83,18 +80,61 @@ Closing balance as  per passbook <input class="m-wrap small call_calculation  hi
 			
 		</tr>
 	<?php } ?>
+	
 	<tr>
 			<td colspan="5" style="text-align:right;"><b><?php echo $total_debit; ?></b></td>
 			
 	</tr>
 	<tr>
+	<td><strong>Add </strong></td>
+	<td colspan="4"><strong> Bank Payments/debits entries in Pass book </strong> </td>
+	</tr>
+<?php	
+$total_debit_bank_payment=0;
+	foreach($result_bank_reconciliation_debit_bank_payment as $data){ $i++;
+	$auto_id=(int)$data["bank_reconciliation"]["auto_id"];
+	$flag=(int)$data["bank_reconciliation"]["flag"];
+	$debit=$data["bank_reconciliation"]["debit"];
+	//$credit=$data["bank_reconciliation"]["credit"];
+	$transaction_date=$data["bank_reconciliation"]["transaction_date"];
+	$source="";$description="";
+	$table_name=$data["bank_reconciliation"]["table_name"]; 
+	
+	
+	$total_debit_bank_payment=$total_debit_bank_payment+$debit;
+	//$total_credit=$total_credit+$credit;
+	if($table_name=="reconciliation"){ 
+			 $transection_type=$data["bank_reconciliation"]["transection_type"];
+			 $description=$data["bank_reconciliation"]["narration"];
+			//$description=substrwords($description,200,'...');
+			$source=$transection_type; 
+		}
+		
+		?>
+	<tr>
+			<td><?php echo date("d-m-Y",$transaction_date); ?></td>
+		    
+            <td><?php echo $description; ?></td>
+			<td><?php echo $source; ?></td>
+            
+			<td style="text-align:right;"><?php echo $debit; ?></td>
+			
+			<td></td>
+			
+		</tr>
+	<?php } ?>
+	<tr>
+			<td colspan="5" style="text-align:right;"><b><?php echo $total_debit_bank_payment; ?></b></td>
+			
+	</tr>
+	<tr>
 	<td><strong>Less </strong></td>
-	<td colspan="4"><strong> Deposit not entered in Bank Ledger/Bank Payment(system)</strong> </td>
+	<td colspan="4"><strong> Deposit not entered in Bank Ledger</strong> </td>
 	</tr>
 		
 		
 		<?php 
-		foreach($result_bank_reconciliation_credit as $data){ $i++;
+		foreach($result_bank_reconciliation_credit_bank_payment as $data){ $i++;
 	$auto_id=(int)$data["bank_reconciliation"]["auto_id"];
 	$flag=(int)$data["bank_reconciliation"]["flag"];
 	//$debit=$data["bank_reconciliation"]["debit"];
@@ -122,7 +162,47 @@ Closing balance as  per passbook <input class="m-wrap small call_calculation  hi
 		  $description = @$result_cash_bank[0]["cash_bank"]["narration"];
 		  //$description=substrwords($description,200,'...');
 		} 
-	}elseif($table_name=="reconciliation"){ 
+	}
+		
+		?>
+		<tr>
+			<td><?php echo date("d-m-Y",$transaction_date); ?></td>
+		    
+            <td><?php echo $description; ?></td>
+			<td><?php echo $source; ?></td>
+            
+			<td style="text-align:right;"><?php echo $credit; ?></td>
+			
+			<td></td>
+			
+		</tr>
+	<?php } ?>
+	<tr>
+		<td colspan="5" style="text-align:right;"><b><?php echo $total_credit; ?></b></td>
+
+	</tr>
+	
+	
+	<tr>
+	<td><strong>Less </strong></td>
+	<td colspan="4"><strong> Deposits/Credit entries in Pass book </strong> </td>
+	</tr>
+	
+<?php 
+	$total_deposite_credit=0;
+	foreach($result_bank_reconciliation_credit_deposite as $data){ $i++;
+	$auto_id=(int)$data["bank_reconciliation"]["auto_id"];
+	$flag=(int)$data["bank_reconciliation"]["flag"];
+	//$debit=$data["bank_reconciliation"]["debit"];
+	$credit=$data["bank_reconciliation"]["credit"];
+	$transaction_date=$data["bank_reconciliation"]["transaction_date"];
+	$source="";$description="";
+	$table_name=$data["bank_reconciliation"]["table_name"]; 
+	
+	
+	//$total_debit=$total_debit+$debit;
+	$total_deposite_credit=$total_deposite_credit+$credit;
+	if($table_name=="reconciliation"){ 
 			 $transection_type=$data["bank_reconciliation"]["transection_type"];
 			 $description=$data["bank_reconciliation"]["narration"];
 			//$description=substrwords($description,200,'...');
@@ -143,12 +223,13 @@ Closing balance as  per passbook <input class="m-wrap small call_calculation  hi
 		</tr>
 	<?php } ?>
 	<tr>
-		<td colspan="5" style="text-align:right;"><b><?php echo $total_credit; ?></b></td>
+		<td colspan="5" style="text-align:right;"><b><?php echo $total_deposite_credit; ?></b></td>
 
 	</tr>
+	
 	<tr>
-		<td colspan="4" style="text-align:right;"><b>Total</b></td>
-		<td style="text-align:right;"><b><span id="total_diff_amount"><?php echo $total_debit-$total_credit; ?> </span></b></td>
+		<td colspan="4" style="text-align:right;"><b>Total  <?php  $total_debit_amount=$total_debit+$total_debit_bank_payment; $total_credit_amount=$total_credit+$total_deposite_credit; ?> </b></td>
+		<td style="text-align:right;"><b><span id="total_diff_amount"><?php  echo $total_debit_amount-$total_credit_amount; ?> </span></b></td>
 	</tr>
 	<tr>
 		<td colspan="4" style="text-align:right;"><b>Closing balance as per system</b></td>
@@ -172,6 +253,9 @@ $(document).ready(function() {
 	function total_calculation(){
 		var total=0; var grant_total=0;
 			var opening_balance=$('#opening_balance').val();
+			if(!opening_balance){
+				opening_balance=0;
+			}
 			var total_diff_amount=$('#total_diff_amount').html();
 			var closing_balance=$('#closing_balance').html();
 			total=parseInt(opening_balance)+parseInt(total_diff_amount);

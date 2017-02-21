@@ -31575,11 +31575,11 @@ function menus_as_per_user_rights(){
 				</a>					
 			</li>
 			
-			<li>
+			<!--<li>
 				<a href="<?php echo $webroot_path; ?>Hms/bank_reconciliation" rel='tab'>
 				<i class="icon-phone"></i> Bank Reconciliation
 				</a>					
-			</li>
+			</li>-->
 			
 			<?php
 		

@@ -11,7 +11,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	<a href="reconciliation_report"  rel='tab' class="btn blue  tooltips space-responsive" ><i class="icon-folder-close"></i> Reconciliation Report</a>-->
 </div>
 <form method="post" onSubmit="return valid()">
-<div  class="hide_at_print">
+<div  class="hide_at_print main_search">
         <table style="">
         <tr>
         
@@ -31,11 +31,10 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 						  <?php } ?>
 						</select>
 				</td>
-		
-				
+
 
 				<td>
-				<input type="text" placeholder="To" id="date2" class="date-picker medium m-wrap" data-date-format="dd-mm-yyyy" name="to" style="background-color:white !important; margin-top:7px;" value="<?php echo date("d-m-Y"); ?>">
+				<input type="text" placeholder="To" id="date2" class="date-picker medium m-wrap" data-date-format="dd-mm-yyyy" name="to" style="background-color:white !important; margin-top:7px;" value="<?php echo date("d-m-Y"); ?>" data-date-end-date="<?php echo date("d-m-Y"); ?>">
 				</td>
 		
 				<td valign="top">

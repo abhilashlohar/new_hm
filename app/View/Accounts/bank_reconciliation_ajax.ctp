@@ -51,6 +51,7 @@ function substrwords($text, $maxchar, $end='...') {
 
 //$opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_opening_balance_for_ledger'), array('pass' => array($ledger_account_id,$ledger_sub_account_id,strtotime($from))));
 ?>
+<div id="step_1">
 <input class="m-wrap medium pull-right hide_at_print" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
 <table width="100%" class="table table-bordered " id="receiptmain">
 	<thead>
@@ -411,7 +412,51 @@ function substrwords($text, $maxchar, $end='...') {
 		
 	
 	}
-}
+}elseif($table_name=="opening_balance" && $arrear_int_type=="YES"){
+			$source="Opening Balance (Penalty)";
+			$description='Interest arrears';
+		
+		 if($subledger_id != 0)
+		{
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
+			foreach($subleddger_detaill as $subledger_datttaa)
+			{
+			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
+			$ledger_id_forwingflat = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
+			}
+		}
+		else
+		{
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id)));
+			foreach($leddger_detaill as $ledger_datttaa)
+			{
+			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			}
+		}
+		
+		}elseif($table_name=="opening_balance"){
+			$source="Opening Balance";
+			$description='Opening balance migrated';
+		
+		 if($subledger_id != 0)
+		{
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
+			foreach($subleddger_detaill as $subledger_datttaa)
+			{
+			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
+			$ledger_id_forwingflat = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
+			}
+		}
+		else
+		{
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id)));
+			foreach($leddger_detaill as $ledger_datttaa)
+			{
+			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			}
+		}
+		
+		}
 		
 		
 		?>
@@ -440,10 +485,10 @@ function substrwords($text, $maxchar, $end='...') {
 			
 			<td>
 		
-			<input type="text" class="m-wrap span8 pull-left date-picker" placeholder="Date" name="pass_book" data-date-format="dd-mm-yyyy">
+			<input type="text" class="m-wrap span8 pull-left date-picker" placeholder="Date" name="pass_book" data-date-format="dd-mm-yyyy" data-date-end-date="<?php echo date("d-m-Y"); ?>">
 			<a href="#" class="btn blue icn-only move_match" role="button" bank_id="<?php echo $auto_id; ?>" >	 
 			<i class="m-icon-swapright m-icon-white"></i></a>
-		
+				<span style="color:red;"></span>
 		   </td>
 			
 			
@@ -458,7 +503,7 @@ function substrwords($text, $maxchar, $end='...') {
 		
 	</tbody>
 </table>
-
+</div>
 <a class="btn blue button-next" id="continue" >Continue <i class="m-icon-swapright m-icon-white"></i></a>
 
 
@@ -499,9 +544,9 @@ function substrwords($text, $maxchar, $end='...') {
 <tbody>
 	<tr>
 		<td>
-			<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy"  value="" name="passbook_date[]" placeholder="Passbook date">
+			<input type="text" class="date-picker m-wrap span12" data-date-format="dd-mm-yyyy"  value="" name="passbook_date[]" placeholder="Passbook date" data-date-end-date="<?php echo date("d-m-Y"); ?>">
 		</td>
-		<td>
+		<td> 
 				<select class="medium m-wrap"  name="bank_name[]" style="width:130px !important;">
 				<option value="" style="display:none;width:50px;">Select Bank</option>
 					<?php
@@ -511,7 +556,7 @@ function substrwords($text, $maxchar, $end='...') {
 							  $bank_name=$data['ledger_sub_account']['name'];
 							 ?>
 						  
-								<option value="<?php echo $ledger_sub_ac_id; ?>"><?php echo $bank_name; ?> </option>
+								<option value="<?php echo $ledger_sub_ac_id; ?>" <?php if($ledger_sub_ac_id==$ledger_sub_id){?> selected  <?php } ?>><?php echo $bank_name; ?> </option>
 						  
 					<?php } ?>
 				</select>
@@ -572,16 +617,17 @@ function substrwords($text, $maxchar, $end='...') {
 							 
 							  $ledger_sub_ac_id=$data['ledger_sub_account']['auto_id'];
 							  $bank_name=$data['ledger_sub_account']['name'];
+							  $bank_account=$data['ledger_sub_account']['bank_account'];
 							 ?>
                           
-								<option value="<?php echo $ledger_sub_ac_id; ?>"><?php echo $bank_name; ?> </option>
-						  
+								<option value="<?php echo $ledger_sub_ac_id; ?>" <?php if($ledger_sub_ac_id==$ledger_sub_id){?> selected  <?php } ?>><?php echo $bank_name; ?> <?php echo $bank_account; ?> </option>
+								
 						  <?php } ?>
 						</select>
 				</td>
 		
 				<td>
-				<input type="text" placeholder="To" id="date2" class="date-picker medium m-wrap" data-date-format="dd-mm-yyyy" name="to" style="background-color:white !important; margin-top:7px;" value="<?php echo date("d-m-Y"); ?>">
+				<input type="text" placeholder="To" id="date2" class="date-picker medium m-wrap" data-date-format="dd-mm-yyyy" name="to" style="background-color:white !important; margin-top:7px;" value="<?php echo $to1; ?>" data-date-end-date="<?php echo date("d-m-Y"); ?>">
 				</td>
 		
 				<td valign="top">
@@ -610,25 +656,34 @@ $(document).ready(function() {
 	$(".move_match").bind('click',function(){
 		var z=$(this);
 		var date=$(this).closest('tr').find('input').val();
-		var bank_id=$(this).attr("bank_id");
-		$.ajax({
-			url: "bank_reconciliation_update/"+bank_id+"/"+date,
-		}).done(function(response) { 
-			if(response=="done"){ 
-				z.closest('tr').remove();
-			}
-			
-		});
+		if(!date){
+			$(this).closest('tr').find('span').html("required");
+		}else{
+			$(this).closest('tr').find('span').html("");
+				var bank_id=$(this).attr("bank_id");
+				$.ajax({
+					url: "bank_reconciliation_update/"+bank_id+"/"+date,
+				}).done(function(response) { 
+					if(response=="done"){ 
+						z.closest('tr').remove();
+					}
+				});
+		}
+		
+		
 		
 	});
 	
 	$("#continue").bind('click',function(){
+	 $("#step_1").hide();
 		$(this).hide();
 		var z =$("#reconciliation_form").html();
 		$("#reconciliation_form").show();
 	});
 	
 	$("#continue_report").bind('click',function(){ 
+		$("#reconciliation_form").hide();
+		 $(".main_search").hide();
 		$(this).hide();
 		$("#reconciliation_report_main").show();
 	});

@@ -60,7 +60,7 @@ function substrwords($text, $maxchar, $end='...') {
 			<th>Corresponding a/c </th>
             <th>Description</th>
 			<th>Source</th>
-            <th>Reference</th>
+            <th>Cheque/Neft no.</th>
 			<th>Debit</th>
 			<th>Credit</th>
 			<th style="width: 200px;">Passbook Date</th>
@@ -74,6 +74,7 @@ function substrwords($text, $maxchar, $end='...') {
 	$auto_id=(int)$data["bank_reconciliation"]["auto_id"];
 	$debit=$data["bank_reconciliation"]["debit"];
 	$credit=$data["bank_reconciliation"]["credit"];
+	$cheque_number=$data["bank_reconciliation"]["cheque_number"];
 	$transaction_date=$data["bank_reconciliation"]["transaction_date"];
 	$table_name=$data["bank_reconciliation"]["table_name"]; 
 	$element_id=(int)$data["bank_reconciliation"]["element_id"];
@@ -465,7 +466,7 @@ function substrwords($text, $maxchar, $end='...') {
 		    <td><?php echo @$user_name; ?>  <?php echo @$wing_flat; ?></td>
             <td><?php echo @$description; ?></td>
 			<td><?php echo $source; ?></td>
-            <td>
+           <!-- <td>
 			<?php 
 			if($table_name=="cash_bank"){
 				if($receipt_source == "bank_receipt")
@@ -479,7 +480,8 @@ function substrwords($text, $maxchar, $end='...') {
 			}?>
 				
 			
-			</td>
+			</td>-->
+			<td><?php echo $cheque_number; ?></td>
 			<td style="text-align:right;"><?php echo $debit; ?></td>
 			<td style="text-align:right;"><?php echo $credit; ?></td>
 			

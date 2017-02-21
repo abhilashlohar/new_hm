@@ -96,7 +96,7 @@ function bank_reconciliation_submit(){
 				 $transection_type='Deposit';
 			 }elseif(empty($deposit_amount) and !empty($withdraw_amount)){
 				 $amount_debit=$withdraw_amount;
-				 $transection_type='Withdraw';
+				 $transection_type='Withdrawal';
 			  }
 			  			 
 				$this->loadmodel('bank_reconciliation');
@@ -138,13 +138,23 @@ function bank_reconciliation_ajax($ledger_sub_ac_id=null,$to1=null){
 			$credit=$data['ledger']['credit'];
 			$table_name=$data['ledger']['table_name'];
 			$element_id=(int)$data['ledger']['element_id'];
+			$this->loadmodel('cash_bank');
+			$result_cash_bank=$this->cash_bank->find('all',array('conditions'=>array('society_id'=>$s_society_id,'transaction_id'=>$element_id)));
+			$table=@$result_cash_bank[0]['cash_bank']['source'];
+			if($table=="bank_payment"){
+				$cheque_number=@$result_cash_bank[0]['cash_bank']['receipt_instruction'];
+			}elseif($table=="bank_receipt"){
+				$cheque_number=@$result_cash_bank[0]['cash_bank']['cheque_number'];
+			}
+			
+			
 			$this->loadmodel('bank_reconciliation');
 			$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$ledger_sub_ac_id,'transaction_date'=>$transaction_date,'element_id'=>$element_id);
 		     $count=$this->bank_reconciliation->find('count',array('conditions'=>$conditions)); 
 			if($count==0){
 				$this->loadmodel('bank_reconciliation');
 				$auto_id=$this->autoincrement('bank_reconciliation','auto_id');
-				$this->bank_reconciliation->saveAll(Array( Array("auto_id" => $auto_id, "table_name" => $table_name,"society_id" => $s_society_id, "transaction_date" => $transaction_date, "credit" =>$credit,"debit" =>$debit,"element_id" =>$element_id,"flag"=>0,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$ledger_sub_ac_id))); 
+				$this->bank_reconciliation->saveAll(Array( Array("auto_id" => $auto_id, "table_name" => $table_name,"society_id" => $s_society_id, "transaction_date" => $transaction_date, "credit" =>$credit,"debit" =>$debit,"element_id" =>$element_id,"flag"=>0,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$ledger_sub_ac_id,'cheque_number'=>$cheque_number))); 
 			}
 			
 		}

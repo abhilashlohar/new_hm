@@ -27,8 +27,9 @@ Closing balance as  per passbook <i class="icon-info-sign tooltips" data-placeme
 	<thead>
 		<tr>
 			<th width='120px'>Add</th>
-			<th>Withdrawals not entered in Bank Ledger</th>
+			<th>Cheques deposited but not clear in Bank Passbook </th>
 			<th width='120px'>Source</th>
+            <th>Cheque/Neft no.</th>
            	<th>Amount</th>
 			<th width='112px'></th>
 		</tr>
@@ -37,10 +38,12 @@ Closing balance as  per passbook <i class="icon-info-sign tooltips" data-placeme
 	
 	<?php  
 	$i=0; $total_debit=0; $total_credit=0; // pr($result_bank_reconciliation_debit); 
+	$debit_receipt=sizeof($result_bank_reconciliation_debit_receipt);
 	foreach($result_bank_reconciliation_debit_receipt as $data){ $i++;
 	$auto_id=(int)$data["bank_reconciliation"]["auto_id"];
 	$flag=(int)$data["bank_reconciliation"]["flag"];
 	$debit=$data["bank_reconciliation"]["debit"];
+	$cheque_number=$data["bank_reconciliation"]["cheque_number"];
 	//$credit=$data["bank_reconciliation"]["credit"];
 	$transaction_date=$data["bank_reconciliation"]["transaction_date"];
 	$source="";$description="";
@@ -73,25 +76,22 @@ Closing balance as  per passbook <i class="icon-info-sign tooltips" data-placeme
 		    
             <td><?php echo $description; ?></td>
 			<td><?php echo $source; ?></td>
-            
+			<td style="text-align:right;"><?php echo $cheque_number; ?></td>
 			<td style="text-align:right;"><?php echo $debit; ?></td>
 			
-			<td></td>
+			<td style="text-align:right;" ><b><?php if(sizeof($result_bank_reconciliation_debit_receipt)==$i){ echo $total_debit; } ?></b></td>
 			
 		</tr>
 	<?php } ?>
 	
-	<tr>
-			<td colspan="5" style="text-align:right;"><b><?php echo $total_debit; ?></b></td>
-			
-	</tr>
+	
 	<tr>
 	<td><strong>Add </strong></td>
-	<td colspan="4"><strong> Bank Payments/debits entries in Pass book </strong> </td>
+	<td colspan="5"><strong> Debit/Withdrawal entries appearing in Bank Passbook only  </strong> </td>
 	</tr>
 <?php	
-$total_debit_bank_payment=0;
-	foreach($result_bank_reconciliation_debit_bank_payment as $data){ $i++;
+$total_debit_bank_payment=0;$j=0;
+	foreach($result_bank_reconciliation_debit_bank_payment as $data){ $j++;
 	$auto_id=(int)$data["bank_reconciliation"]["auto_id"];
 	$flag=(int)$data["bank_reconciliation"]["flag"];
 	$debit=$data["bank_reconciliation"]["debit"];
@@ -99,7 +99,7 @@ $total_debit_bank_payment=0;
 	$transaction_date=$data["bank_reconciliation"]["transaction_date"];
 	$source="";$description="";
 	$table_name=$data["bank_reconciliation"]["table_name"]; 
-	
+	$cheque_number=$data["bank_reconciliation"]["cheque_number"];
 	
 	$total_debit_bank_payment=$total_debit_bank_payment+$debit;
 	//$total_credit=$total_credit+$credit;
@@ -117,24 +117,21 @@ $total_debit_bank_payment=0;
             <td><?php echo $description; ?></td>
 			<td><?php echo $source; ?></td>
             
+			<td style="text-align:right;"><?php echo $cheque_number; ?></td>
 			<td style="text-align:right;"><?php echo $debit; ?></td>
-			
-			<td></td>
+			<td style="text-align:right;" ><b><?php if(sizeof($result_bank_reconciliation_debit_bank_payment)==$j){ echo $total_debit_bank_payment; } ?></b></td>
 			
 		</tr>
 	<?php } ?>
-	<tr>
-			<td colspan="5" style="text-align:right;"><b><?php echo $total_debit_bank_payment; ?></b></td>
-			
-	</tr>
+	
 	<tr>
 	<td><strong>Less </strong></td>
-	<td colspan="4"><strong> Deposit not entered in Bank Ledger</strong> </td>
+	<td colspan="5"><strong>Cheques issued but NOT clear in Bank Passbook </strong> </td>
 	</tr>
 		
 		
-		<?php 
-		foreach($result_bank_reconciliation_credit_bank_payment as $data){ $i++;
+		<?php $k=0;
+		foreach($result_bank_reconciliation_credit_bank_payment as $data){ $k++;
 	$auto_id=(int)$data["bank_reconciliation"]["auto_id"];
 	$flag=(int)$data["bank_reconciliation"]["flag"];
 	//$debit=$data["bank_reconciliation"]["debit"];
@@ -142,7 +139,7 @@ $total_debit_bank_payment=0;
 	$transaction_date=$data["bank_reconciliation"]["transaction_date"];
 	$source="";$description="";
 	$table_name=$data["bank_reconciliation"]["table_name"]; 
-	
+	$cheque_number=$data["bank_reconciliation"]["cheque_number"];
 	
 	//$total_debit=$total_debit+$debit;
 	$total_credit=$total_credit+$credit;
@@ -170,27 +167,23 @@ $total_debit_bank_payment=0;
 		    
             <td><?php echo $description; ?></td>
 			<td><?php echo $source; ?></td>
-            
+			<td style="text-align:right;"><?php echo $cheque_number; ?></td>
 			<td style="text-align:right;"><?php echo $credit; ?></td>
 			
-			<td></td>
+			<td style="text-align:right;" ><b><?php if(sizeof($result_bank_reconciliation_credit_bank_payment)==$k){ echo $total_credit; } ?></b></td>
 			
 		</tr>
 	<?php } ?>
-	<tr>
-		<td colspan="5" style="text-align:right;"><b><?php echo $total_credit; ?></b></td>
-
-	</tr>
 	
 	
 	<tr>
 	<td><strong>Less </strong></td>
-	<td colspan="4"><strong> Deposits/Credit entries in Pass book </strong> </td>
+	<td colspan="5"><strong> Credit/Deposit entries appearing in Bank Passbook only  </strong> </td>
 	</tr>
 	
 <?php 
-	$total_deposite_credit=0;
-	foreach($result_bank_reconciliation_credit_deposite as $data){ $i++;
+	$total_deposite_credit=0; $l=0;
+	foreach($result_bank_reconciliation_credit_deposite as $data){ $l++;
 	$auto_id=(int)$data["bank_reconciliation"]["auto_id"];
 	$flag=(int)$data["bank_reconciliation"]["flag"];
 	//$debit=$data["bank_reconciliation"]["debit"];
@@ -198,7 +191,7 @@ $total_debit_bank_payment=0;
 	$transaction_date=$data["bank_reconciliation"]["transaction_date"];
 	$source="";$description="";
 	$table_name=$data["bank_reconciliation"]["table_name"]; 
-	
+	$cheque_number=$data["bank_reconciliation"]["cheque_number"];
 	
 	//$total_debit=$total_debit+$debit;
 	$total_deposite_credit=$total_deposite_credit+$credit;
@@ -215,29 +208,27 @@ $total_debit_bank_payment=0;
 		    
             <td><?php echo $description; ?></td>
 			<td><?php echo $source; ?></td>
-            
+            <td style="text-align:right;"><?php echo $cheque_number; ?></td>
 			<td style="text-align:right;"><?php echo $credit; ?></td>
 			
-			<td></td>
+			<td style="text-align:right;" ><b><?php if(sizeof($result_bank_reconciliation_credit_deposite)==$l){ echo $total_deposite_credit; } ?></b></td>
+			
 			
 		</tr>
 	<?php } ?>
-	<tr>
-		<td colspan="5" style="text-align:right;"><b><?php echo $total_deposite_credit; ?></b></td>
-
-	</tr>
+	
 	
 	<tr>
-		<td colspan="4" style="text-align:right;"><b>Total  <?php  $total_debit_amount=$total_debit+$total_debit_bank_payment; $total_credit_amount=$total_credit+$total_deposite_credit; ?> </b></td>
+		<td colspan="5" style="text-align:right;"><b>Total  <?php  $total_debit_amount=$total_debit+$total_debit_bank_payment; $total_credit_amount=$total_credit+$total_deposite_credit; ?> </b></td>
 		<td style="text-align:right;"><b><span id="total_diff_amount"><?php  echo $total_debit_amount-$total_credit_amount; ?> </span></b></td>
 	</tr>
 	<tr>
-		<td colspan="4" style="text-align:right;"><b>Closing balance as per system</b></td>
+		<td colspan="5" style="text-align:right;"><b>Closing balance as per system</b></td>
 		<td style="text-align:right;"><b><span id="closing_balance"><?php echo $closing_balance; ?> </span> </b></td>
 	</tr>	
 	
 	<tr>
-		<td colspan="4" style="text-align:right;"><b>Difference</b></td>
+		<td colspan="5" style="text-align:right;"><b>Difference</b></td>
 
 		<td style="text-align:right;"><b><span id="total_diff">0</span></b></td>
 	</tr>	

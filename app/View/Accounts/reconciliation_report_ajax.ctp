@@ -126,7 +126,7 @@ $total_debit_bank_payment=0;$j=0;
 	
 	<tr>
 	<td><strong>Less </strong></td>
-	<td colspan="5"><strong>Cheques issued but NOT clear in Bank Passbook </strong> </td>
+	<td colspan="5"><strong>Cheques issued but not clear in Bank Passbook </strong> </td>
 	</tr>
 		
 		

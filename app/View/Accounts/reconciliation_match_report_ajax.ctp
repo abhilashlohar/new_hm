@@ -58,7 +58,7 @@ function substrwords($text, $maxchar, $end='...') {
             <th>Reference</th>
 			<th>Debit</th>
 			<th>Credit</th>
-			
+			<th>action</th>
 		</tr>
 	</thead>
 	<tbody id="table">

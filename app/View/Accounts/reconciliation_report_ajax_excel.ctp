@@ -31,7 +31,7 @@ Bank Reconciliation Statement as on <?php echo $to; ?><br>
 		<td align="right"><span><?php echo $closing_pasbook;?></span> </td>
 	</tr>
 		<tr>
-			<th width='120px'>Add</th>
+			<th width='120px' align="left">Add</th>
 			<th>Cheques deposited but not cleared in Bank Passbook </th>
 			<th width='120px'>Source</th>
             <th>Cheque/Neft no.</th>

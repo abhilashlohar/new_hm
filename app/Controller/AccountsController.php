@@ -138,6 +138,7 @@ function bank_reconciliation_ajax($ledger_sub_ac_id=null,$to1=null){
 			$credit=$data['ledger']['credit'];
 			$table_name=$data['ledger']['table_name'];
 			$element_id=(int)$data['ledger']['element_id'];
+
 			$this->loadmodel('cash_bank');
 			$result_cash_bank=$this->cash_bank->find('all',array('conditions'=>array('society_id'=>$s_society_id,'transaction_id'=>$element_id)));
 			$table=@$result_cash_bank[0]['cash_bank']['source'];
@@ -148,13 +149,24 @@ function bank_reconciliation_ajax($ledger_sub_ac_id=null,$to1=null){
 			}
 			
 			
+		/*	$conditions_edit=array('society_id'=>$s_society_id,'transaction_id'=>$element_id,'edit_text'=>array('$ne' => ''));
+			$count_edit=$this->cash_bank->find('count',array('conditions'=>$conditions_edit));
+			if($count_edit==1){
+				$this->loadmodel('bank_reconciliation');
+				$this->bank_reconciliation->updateAll(array('flag'=>0),array('society_id'=>$s_society_id,'element_id'=>$element_id));
+			}
+		*/	
 			$this->loadmodel('bank_reconciliation');
 			$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$ledger_sub_ac_id,'transaction_date'=>$transaction_date,'element_id'=>$element_id);
-		     $count=$this->bank_reconciliation->find('count',array('conditions'=>$conditions)); 
+		      $count=$this->bank_reconciliation->find('count',array('conditions'=>$conditions)); 
 			if($count==0){
 				$this->loadmodel('bank_reconciliation');
 				$auto_id=$this->autoincrement('bank_reconciliation','auto_id');
 				$this->bank_reconciliation->saveAll(Array( Array("auto_id" => $auto_id, "table_name" => $table_name,"society_id" => $s_society_id, "transaction_date" => $transaction_date, "credit" =>$credit,"debit" =>$debit,"element_id" =>$element_id,"flag"=>0,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$ledger_sub_ac_id,'cheque_number'=>$cheque_number))); 
+			}else{
+				
+				$this->bank_reconciliation->updateAll(Array("table_name" => $table_name, "transaction_date" => $transaction_date, "credit" =>$credit,"debit" =>$debit,'cheque_number'=>$cheque_number),array('society_id'=>$s_society_id,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$ledger_sub_ac_id,'transaction_date'=>$transaction_date,'element_id'=>$element_id)); 
+				
 			}
 			
 		}
@@ -286,7 +298,8 @@ function reconciliation_report_ajax($ledger_sub_account_id=null,$to=null){
 	$this->layout="blank";
 	$this->ath();
 	$s_society_id = $this->Session->read('hm_society_id');
-	
+	$this->set('ledger_sub_id',$ledger_sub_account_id);
+	$this->set(compact('to'));
 	$this->loadmodel("ledger_sub_account");
 	$conditions=array("society_id"=>$s_society_id,"ledger_id"=>33,"auto_id"=>(int)$ledger_sub_account_id);
     $result_ledger_sub=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
@@ -346,6 +359,71 @@ function reconciliation_report_ajax($ledger_sub_account_id=null,$to=null){
 		$this->set(compact('result_bank_reconciliation_credit_deposite'));
 	
 }
+
+
+function reconciliation_report_ajax_excel($ledger_sub_account_id=null,$to=null,$closing_pasbook=null){
+	
+	$this->layout="blank";
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	$this->set('ledger_sub_id',$ledger_sub_account_id);
+	$this->set(compact('closing_pasbook'));
+	$this->loadmodel("ledger_sub_account");
+	$conditions=array("society_id"=>$s_society_id,"ledger_id"=>33,"auto_id"=>(int)$ledger_sub_account_id);
+    $result_ledger_sub=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$bank_name=$result_ledger_sub[0]['ledger_sub_account']['name'];
+	
+	$this->loadmodel("society");
+	$conditions=array("society_id"=>$s_society_id);
+    $result_society=$this->society->find('all',array('conditions'=>$conditions));
+	$society_name=$result_society[0]['society']['society_name'];
+	$this->set(compact('society_name'));
+	$this->set(compact('bank_name'));
+	$this->set(compact('to'));
+	
+	$debit=0;$credit=0;
+	$this->loadmodel('ledger');
+	$conditions=array("society_id"=>$s_society_id,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$ledger_sub_account_id,'transaction_date'=>array('$lte'=>strtotime($to)));
+    $result_ledger=$this->ledger->find('all',array('conditions'=>$conditions));
+	foreach($result_ledger as $data){
+		$debit+=$data['ledger']['debit'];
+		$credit+=$data['ledger']['credit'];
+	}
+	$closing_balance= $debit-$credit;
+	$this->set(compact('closing_balance'));
+	
+		$this->loadmodel('bank_reconciliation');
+	
+					
+		$conditions =array('society_id'=>$s_society_id,"flag"=>0,'ledger_sub_account_id'=>(int)$ledger_sub_account_id,'credit'=>null,'transaction_date'=>array('$lte'=>strtotime($to)));
+		$order=array('bank_reconciliation.transaction_date'=>'ASC');
+		$result_bank_reconciliation_debit_receipt=$this->bank_reconciliation->find('all',array('conditions'=>$conditions));
+		
+		$conditions =array('society_id'=>$s_society_id,"flag"=>2,'ledger_sub_account_id'=>(int)$ledger_sub_account_id,'credit'=>null,'transaction_date'=>array('$lte'=>strtotime($to)));
+		$order=array('bank_reconciliation.transaction_date'=>'ASC');
+		$result_bank_reconciliation_debit_bank_payment=$this->bank_reconciliation->find('all',array('conditions'=>$conditions));
+
+		
+		$conditions =array('society_id'=>$s_society_id,"flag"=>0,'ledger_sub_account_id'=>(int)$ledger_sub_account_id,'debit'=>null,'transaction_date'=>array('$lte'=>strtotime($to)));
+		$order=array('bank_reconciliation.transaction_date'=>'ASC');
+		$result_bank_reconciliation_credit_bank_payment=$this->bank_reconciliation->find('all',array('conditions'=>$conditions));
+		
+		$conditions =array('society_id'=>$s_society_id,"flag"=>2,'ledger_sub_account_id'=>(int)$ledger_sub_account_id,'debit'=>null,'transaction_date'=>array('$lte'=>strtotime($to)));
+		$order=array('bank_reconciliation.transaction_date'=>'ASC');
+		$result_bank_reconciliation_credit_deposite=$this->bank_reconciliation->find('all',array('conditions'=>$conditions));
+	
+		$this->set(compact('result_bank_reconciliation_debit_receipt'));
+		$this->set(compact('result_bank_reconciliation_debit_bank_payment'));
+		
+		$this->set(compact('result_bank_reconciliation_credit_bank_payment'));
+		$this->set(compact('result_bank_reconciliation_credit_deposite'));
+	
+}
+
+
+
+
+
 
 /// end bank reconciliation code 
 

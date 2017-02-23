@@ -1,33 +1,35 @@
-<style>
-#report_tb th{
-	font-size: 14px !important;background-color:#C8EFCE;padding:5px;border:solid 1px #55965F;
-}
-#report_tb td{
-	padding:5px;
-	font-size: 14px;border:solid 1px #55965F;background-color:#FFF;
-}
-table#report_tb tr:hover td {
-background-color: #E6ECE7;
-}
-</style>
+<?php 
+
+$filename="Reconciliation_Report";
+$filename = str_replace(' ', '_', $filename);
+$filename = str_replace(' ', '-', $filename);
+
+header ("Expires: 0");
+header ("border: 1");
+header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+header ("Cache-Control: no-cache, must-revalidate");
+header ("Pragma: no-cache");
+header ("Content-type: application/vnd.ms-excel");
+header ("Content-Disposition: attachment; filename=".$filename.".xls");
+header ("Content-Description: Generated Report" );
+
+?>
 
 <div style="background-color:#fff;" align="center">
 <div>
 <?php echo $society_name; ?><br>
 Bank Reconciliation Statement as on <?php echo $to; ?><br>
 <?php echo $bank_name; ?> Bank
-	<div style="float:right;">
 	
-		<a href=""  class="btn green mini tooltips add_excel " data-placement="left" data-original-title="Download in excel"><i class="fa fa-file-excel-o"></i></a>
-	</div>
 </div>
-<br/>
-<div class="pull-right">
-Closing balance as  per passbook <i class="icon-info-sign tooltips" data-placement="top" data-original-title="Enter Credit amount with minus sign" ></i>
-<input class="m-wrap small call_calculation  hide_at_print" placeholder="Amount" id="opening_balance" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text" value="">
+
 </div>
-<table width="100%" class="table table-bordered " id="receiptmain">
+<table width="100%" border="1">
 	<thead>
+	<tr>
+	<td colspan="5"  align="right"><strong> Closing balance as  per passbook  </strong>  </td>
+		<td align="right"><span><?php echo $closing_pasbook;?></span> </td>
+	</tr>
 		<tr>
 			<th width='120px'>Add</th>
 			<th>Cheques deposited but not cleared in Bank Passbook </th>
@@ -223,7 +225,7 @@ $total_debit_bank_payment=0;$j=0;
 	
 	<tr>
 		<td colspan="5" style="text-align:right;"><b>Total  <?php  $total_debit_amount=$total_debit+$total_debit_bank_payment; $total_credit_amount=$total_credit+$total_deposite_credit; ?> </b></td>
-		<td style="text-align:right;"><b><span id="total_diff_amount"><?php  echo $total_debit_amount-$total_credit_amount; ?> </span></b></td>
+		<td style="text-align:right;"><b><span id="total_diff_amount"><?php echo $actual=$total_debit_amount-$total_credit_amount; ?> </span></b></td>
 	</tr>
 	<tr>
 		<td colspan="5" style="text-align:right;"><b>Closing balance as per system</b></td>
@@ -233,41 +235,9 @@ $total_debit_bank_payment=0;$j=0;
 	<tr>
 		<td colspan="5" style="text-align:right;"><b>Difference</b></td>
 
-		<td style="text-align:right;"><b><span id="total_diff">0</span></b></td>
+		<td style="text-align:right;"><b><span id="total_diff"><?php echo $actual+$closing_pasbook-$closing_balance; ?></span></b></td>
 	</tr>	
 		
 	</tbody>
 </table>
 </div>
-
-<script>
-$(document).ready(function() {
-	total_calculation();
-	
-	function total_calculation(){
-		var total=0; var grant_total=0;
-			var opening_balance=$('#opening_balance').val();
-			if(!opening_balance){
-				opening_balance=0;
-			}
-			var total_diff_amount=$('#total_diff_amount').html();
-			var closing_balance=$('#closing_balance').html();
-			total=parseInt(opening_balance)+parseInt(total_diff_amount);
-			grant_total=parseInt(total)-parseInt(closing_balance);
-			$('#total_diff').html(grant_total);
-			$(".add_excel").attr("href", "reconciliation_report_ajax_excel/<?php echo $ledger_sub_id;?>/<?php echo $to; ?>/"+opening_balance+"");
-	};
-	   
-	$('.call_calculation').die().live('blur',function(){
-
-	   total_calculation();
-	});
-	   
-	   
-});
-
-
-
-</script>
-
-

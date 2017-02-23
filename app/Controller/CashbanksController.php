@@ -3181,7 +3181,7 @@ function b_receipt_edit($transaction_id=null){
 	
 	$edit_text=$ignore_receipt_number."-R";	
 	$this->loadmodel('cash_bank');
-	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number" =>@$cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"edit_text"=>$edit_text,"edited_by"=>$s_user_id,"edited_on"=>$edited_date),Array("transaction_id"=>$transaction_id)); 
+	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number" =>@$cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"edit_text"=>$edit_text,"edited_by"=>$s_user_id,"edited_on"=>$edited_date,'reconciliation_status'=>'pending'),Array("transaction_id"=>$transaction_id)); 
 					
 	$this->loadmodel('ledger');
 	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"debit"=>$amount, "credit"=>null,"ledger_account_id"=>33,"ledger_sub_account_id"=>$deposited_bank_id),Array("element_id"=>$transaction_id,"credit"=>null,"table_name"=>"cash_bank")); 

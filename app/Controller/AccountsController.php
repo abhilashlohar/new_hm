@@ -420,7 +420,12 @@ function reconciliation_report_ajax_excel($ledger_sub_account_id=null,$to=null,$
 	
 }
 
-
+function bank_reconciliation_move_ledger($id=null){
+	$this->layout=null;
+	$this->loadmodel('bank_reconciliation');
+	$this->bank_reconciliation->updateAll(array("flag"=>0),array("auto_id"=>(int)$id));
+	echo "done";
+}
 
 
 

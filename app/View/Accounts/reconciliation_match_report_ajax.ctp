@@ -479,7 +479,8 @@ if($table_name=="opening_balance"){
 </table>
 </div>
 <script>
-	$(".move_match").bind('click',function(){
+	$(".move_match").die().bind('click',function(){
+		var z=$(this);
 		var id=$(this).attr('bank_id');
 			$.ajax({
 					url: "bank_reconciliation_move_ledger/"+id,

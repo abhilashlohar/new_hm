@@ -414,6 +414,29 @@ function substrwords($text, $maxchar, $end='...') {
 	
 	}
 }
+if($table_name=="opening_balance"){
+			$source="Opening Balance";
+			$description='Opening balance migrated';
+		
+		 if($subledger_id != 0)
+		{
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
+			foreach($subleddger_detaill as $subledger_datttaa)
+			{
+			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
+			$ledger_id_forwingflat = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
+			}
+		}
+		else
+		{
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id)));
+			foreach($leddger_detaill as $ledger_datttaa)
+			{
+			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			}
+		}
+		
+		}
 		
 		
 		?>
@@ -440,7 +463,8 @@ function substrwords($text, $maxchar, $end='...') {
 			</td>
 			<td style="text-align:right;"><?php echo $debit; ?></td>
 			<td style="text-align:right;"><?php echo $credit; ?></td>
-			
+			<td> <a  class="btn blue icn-only move_match" role="button" bank_id="<?php echo $auto_id; ?>">	 
+			<i class="m-icon-swapleft m-icon-white"></i></a> </td>
 			
 		</tr>
 	<?php } ?>
@@ -448,14 +472,23 @@ function substrwords($text, $maxchar, $end='...') {
 			<td colspan="6" style="text-align:right;"><b>Total</b></td>
 			<td style="text-align:right;"><b><?php echo $total_debit; ?></b></td>
 			<td style="text-align:right;"><b><?php echo $total_credit; ?></b></td>
-			
+			<td></td>
 		</tr>
 		
 	</tbody>
 </table>
 </div>
 <script>
-	
+	$(".move_match").bind('click',function(){
+		var id=$(this).attr('bank_id');
+			$.ajax({
+					url: "bank_reconciliation_move_ledger/"+id,
+				}).done(function(response) { 
+					if(response=="done"){ 
+						z.closest('tr').remove();
+					}
+				});
+	});
 	var $rows = $('#receiptmain tbody tr');
 	$('#search').keyup(function() {
 		var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();

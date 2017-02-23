@@ -162,10 +162,10 @@ function bank_reconciliation_ajax($ledger_sub_ac_id=null,$to1=null){
 			if($count==0){
 				$this->loadmodel('bank_reconciliation');
 				$auto_id=$this->autoincrement('bank_reconciliation','auto_id');
-				$this->bank_reconciliation->saveAll(Array( Array("auto_id" => $auto_id, "table_name" => $table_name,"society_id" => $s_society_id, "transaction_date" => $transaction_date, "credit" =>$credit,"debit" =>$debit,"element_id" =>$element_id,"flag"=>0,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$ledger_sub_ac_id,'cheque_number'=>$cheque_number))); 
+				$this->bank_reconciliation->saveAll(Array( Array("auto_id" => $auto_id, "table_name" => $table_name,"society_id" => $s_society_id, "transaction_date" => $transaction_date, "credit" =>$credit,"debit" =>$debit,"element_id" =>$element_id,"flag"=>0,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$ledger_sub_ac_id,'cheque_number'=>@$cheque_number))); 
 			}else{
 				
-				$this->bank_reconciliation->updateAll(Array("table_name" => $table_name, "transaction_date" => $transaction_date, "credit" =>$credit,"debit" =>$debit,'cheque_number'=>$cheque_number),array('society_id'=>$s_society_id,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$ledger_sub_ac_id,'transaction_date'=>$transaction_date,'element_id'=>$element_id)); 
+				$this->bank_reconciliation->updateAll(Array("table_name" => $table_name, "transaction_date" => $transaction_date, "credit" =>$credit,"debit" =>$debit,'cheque_number'=>@$cheque_number),array('society_id'=>$s_society_id,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$ledger_sub_ac_id,'transaction_date'=>$transaction_date,'element_id'=>$element_id)); 
 				
 			}
 			

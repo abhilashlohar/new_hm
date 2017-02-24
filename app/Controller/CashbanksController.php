@@ -1817,9 +1817,12 @@ function bank_receipt_view()
     $transaction_date=date('d-m-Y',($transaction_date));
 	$this->loadmodel('cash_bank');
 	$this->cash_bank->updateAll(Array("amount"=>0,"narration"=>$narration),Array("transaction_id"=>$transaction_id));	
+	
+	$this->loadmodel('bank_reconciliation');
+	$this->bank_reconciliation->updateAll(array("debit"=>0),array('society_id'=>$s_society_id,'element_id'=>$transaction_id));
 		
 	$this->loadmodel('ledger');
-	$conditions4=array("element_id"=>(int)$transaction_id);
+	$conditions4=array("element_id"=>(int)$transaction_id,"society_id"=>$s_society_id,"table_name"=>"cash_bank");
 	$this->ledger->deleteAll($conditions4);
 	
 	

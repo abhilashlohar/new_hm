@@ -149,13 +149,17 @@ function bank_reconciliation_ajax($ledger_sub_ac_id=null,$to1=null){
 			}
 			
 			
-		/*	$conditions_edit=array('society_id'=>$s_society_id,'transaction_id'=>$element_id,'edit_text'=>array('$ne' => ''));
+			$conditions_edit=array('society_id'=>$s_society_id,'transaction_id'=>$element_id,'reconciliation_status'=>'pending');
 			$count_edit=$this->cash_bank->find('count',array('conditions'=>$conditions_edit));
 			if($count_edit==1){
 				$this->loadmodel('bank_reconciliation');
 				$this->bank_reconciliation->updateAll(array('flag'=>0),array('society_id'=>$s_society_id,'element_id'=>$element_id));
+				
+				$this->loadmodel('cash_bank');
+				$this->cash_bank->updateAll(array('reconciliation_status'=>'done'),array('society_id'=>$s_society_id,'transaction_id'=>$element_id));
+				
 			}
-		*/	
+	
 			$this->loadmodel('bank_reconciliation');
 			$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$ledger_sub_ac_id,'transaction_date'=>$transaction_date,'element_id'=>$element_id);
 		      $count=$this->bank_reconciliation->find('count',array('conditions'=>$conditions)); 

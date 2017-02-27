@@ -217,6 +217,9 @@ function reconciliation_match_report_ajax($from=null,$to=null,$ledger_sub_accoun
 	
 	    $this->ath();
 	    $s_society_id = $this->Session->read('hm_society_id');
+		$this->set(compact('from'));
+		$this->set(compact('to'));
+		$this->set(compact('ledger_sub_account_id'));
 		$this->loadmodel('bank_reconciliation');
 		$conditions=array('society_id'=>$s_society_id,"flag"=>1,'ledger_sub_account_id'=>(int)$ledger_sub_account_id,'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
 		$order=array('bank_reconciliation.transaction_date'=>'ASC');
@@ -431,7 +434,35 @@ function bank_reconciliation_move_ledger($id=null){
 	echo "done";
 }
 
-
+function reconciliation_match_report_excel($id=null,$to=null,$from=null){
+	$this->layout="blank";
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	
+	$this->loadmodel('bank_reconciliation');
+	$conditions=array('society_id'=>$s_society_id,"flag"=>1,'ledger_sub_account_id'=>(int)$id,'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
+	$order=array('bank_reconciliation.transaction_date'=>'ASC');
+	$result_bank_reconciliation=$this->bank_reconciliation->find('all',array('conditions'=>$conditions,'order'=>$order));
+	
+	$this->loadmodel("ledger_sub_account");
+	$conditions=array("society_id"=>$s_society_id,"ledger_id"=>33,"auto_id"=>(int)$id);
+    $result_ledger_sub=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+	$bank_name=$result_ledger_sub[0]['ledger_sub_account']['name'];
+	
+	$this->loadmodel("society");
+	$conditions=array("society_id"=>$s_society_id);
+    $result_society=$this->society->find('all',array('conditions'=>$conditions));
+	$society_name=$result_society[0]['society']['society_name'];
+	$this->set(compact('society_name'));
+	$this->set(compact('bank_name'));
+	$this->set(compact('id'));
+	$this->set(compact('to'));
+	$this->set(compact('from'));
+	
+	$this->set(compact('result_bank_reconciliation'));
+	
+	
+}
 
 
 /// end bank reconciliation code 

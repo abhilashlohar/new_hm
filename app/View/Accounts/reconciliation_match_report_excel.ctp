@@ -1,21 +1,18 @@
-
 <?php
-$webroot_path=$this->requestAction(array('controller' => 'Hms', 'action' => 'webroot_path'));
-?>
-<style>
-#report_tb th{
-	font-size: 14px !important;background-color:#C8EFCE;padding:5px;border:solid 1px #55965F;
-}
-#report_tb td{
-	padding:5px;
-	font-size: 14px;border:solid 1px #55965F;background-color:#FFF;
-}
-table#report_tb tr:hover td {
-background-color: #E6ECE7;
-}
-</style>
+$filename="Reconciliation_Match_Report";
+$filename = str_replace(' ', '_', $filename);
+$filename = str_replace(' ', '-', $filename);
 
-<?php 
+header ("Expires: 0");
+header ("border: 1");
+header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+header ("Cache-Control: no-cache, must-revalidate");
+header ("Pragma: no-cache");
+header ("Content-type: application/vnd.ms-excel");
+header ("Content-Disposition: attachment; filename=".$filename.".xls");
+header ("Content-Description: Generated Report" );
+
+
 function substrwords($text, $maxchar, $end='...') {
     if (strlen($text) > $maxchar || $text == '') {
         $words = preg_split('/\s/', $text);      
@@ -39,18 +36,22 @@ function substrwords($text, $maxchar, $end='...') {
     return $output;
 }
 
+
+
+
 ?>
+
+
 
 <div style="background-color:#fff;" align="center">
- 
-<?php
+ <div>
+<?php echo $society_name; ?><br>
+Bank Reconciliation match report as From: <?php echo $from; ?> To: <?php echo $to; ?> <br>
+<?php echo $bank_name; ?> Bank
+	
+</div>
 
-//$opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_opening_balance_for_ledger'), array('pass' => array($ledger_account_id,$ledger_sub_account_id,strtotime($from))));
-?>
-
-<input class="m-wrap medium pull-right hide_at_print" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text"> 
-<a  target="_blank" href="reconciliation_match_report_excel/<?php echo $ledger_sub_account_id; ?>/<?php echo $to; ?>/<?php echo $from ; ?>"  class="btn green mini tooltips add_excel pull-right" data-placement="left" data-original-title="Download in excel"><i class="fa fa-file-excel-o"></i></a>
-<table width="100%" class="table table-bordered " id="receiptmain">
+<table width="100%" class="" border="1" id="receiptmain">
 	<thead>
 		<tr>
 		    <th>Passbook Date </th>
@@ -61,7 +62,7 @@ function substrwords($text, $maxchar, $end='...') {
             <th>Reference</th>
 			<th>Debit</th>
 			<th>Credit</th>
-			<th>action</th>
+			
 		</tr>
 	</thead>
 	<tbody id="table">
@@ -382,7 +383,7 @@ function substrwords($text, $maxchar, $end='...') {
 				$description=$data['journal']['remark'];
 				$journal_id=$data['journal']['journal_id'];
 				$journal_voucher_id=$data['journal']['voucher_id'];
-			   
+			    $refrence_no=$journal_voucher_id;
 				$user_name1='';
 				$result_journal_voucher=$this->requestAction(array('controller' => 'Fns', 'action' => 'journal_info_via_voucher_id'), array('pass' => array($journal_voucher_id,$ledger_id)));
 				foreach($result_journal_voucher as $data){
@@ -444,65 +445,26 @@ if($table_name=="opening_balance"){
 		
 		?>
 		<tr> 
-		<td><?php echo $pass_book_date; ?></td>
-			<td><?php echo date("d-m-Y",$transaction_date); ?></td>
+		<td  align="left"><?php echo $pass_book_date; ?></td>
+			<td align="left"><?php echo date("d-m-Y",$transaction_date); ?></td>
 		    <td><?php echo @$user_name; ?>  <?php echo @$wing_flat; ?></td>
             <td><?php echo @$description; ?></td>
 			<td><?php echo $source; ?></td>
-            <td>
-			<?php 
-			if($table_name=="cash_bank"){
-				if($receipt_source == "bank_receipt")
-				{
-				echo '<a href="'.$this->webroot.'Cashbanks/bank_receipt_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>';
-			}else if($receipt_source == "bank_payment") { echo '<a href="'.$this->webroot.'Cashbanks/bank_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } else if($receipt_source == "petty_cash_payment") { echo '<a href="'.$this->webroot.'Cashbanks/petty_cash_payment_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; }else if($receipt_source == "petty_cash_receipt"){
-				 echo '<a href="'.$this->webroot.'Cashbanks/petty_cash_receipt_html_view/'.$trans_id.'" target="_blank">'.$refrence_no.'</a>'; } } ?>
-				 
-			<?php if($table_name=="journal"){
-				echo '<a href="'.$this->webroot.'Bookkeepings/journal_voucher_view/'.$journal_voucher_id.'" target="_blank">'.$journal_voucher_id.'</a>';
-			}?>
-				
-			
-			</td>
+            <td> <?php echo $refrence_no;?> </td>
 			<td style="text-align:right;"><?php echo $debit; ?></td>
 			<td style="text-align:right;"><?php echo $credit; ?></td>
-			<td> <a  class="btn blue icn-only move_match" role="button" bank_id="<?php echo $auto_id; ?>">	 
-			<i class="m-icon-swapleft m-icon-white"></i></a> </td>
-			
+					
 		</tr>
 	<?php } ?>
 		<tr>
 			<td colspan="6" style="text-align:right;"><b>Total</b></td>
 			<td style="text-align:right;"><b><?php echo $total_debit; ?></b></td>
 			<td style="text-align:right;"><b><?php echo $total_credit; ?></b></td>
-			<td></td>
+			
 		</tr>
 		
 	</tbody>
 </table>
 </div>
-<script>
-	$(".move_match").die().bind('click',function(){
-		var z=$(this);
-		var id=$(this).attr('bank_id');
-			$.ajax({
-					url: "bank_reconciliation_move_ledger/"+id,
-				}).done(function(response) { 
-					if(response=="done"){ 
-						z.closest('tr').remove();
-					}
-				});
-	});
-	var $rows = $('#receiptmain tbody tr');
-	$('#search').keyup(function() {
-		var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-
-		$rows.show().filter(function() {
-			var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-			return !~text.indexOf(val);
-		}).hide();
-	});
-
-</script>
 
 

@@ -1069,6 +1069,12 @@ $ledger_sub_account2=null;
 				$this->loadmodel('ledger');
 				$conditions4=array('society_id'=>$s_society_id,"table_name"=>"journal",'element_id'=>$j_id);
 				$this->ledger->deleteAll($conditions4);
+				
+				$this->loadmodel('bank_reconciliation');
+				$conditions5=array('society_id'=>$s_society_id,"table_name"=>"journal",'element_id'=>$j_id);
+				$this->bank_reconciliation->deleteAll($conditions5);
+				
+				
 			}
 			
 			$this->loadmodel('journal');

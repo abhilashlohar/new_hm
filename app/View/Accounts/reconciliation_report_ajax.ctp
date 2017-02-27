@@ -51,12 +51,12 @@ Closing balance as  per passbook <i class="icon-info-sign tooltips" data-placeme
 	$transaction_date=$data["bank_reconciliation"]["transaction_date"];
 	$source="";$description="";
 	$table_name=$data["bank_reconciliation"]["table_name"]; 
-	
+	$element_id=(int)@$data["bank_reconciliation"]["element_id"];
 	
 	$total_debit=$total_debit+$debit;
 	//$total_credit=$total_credit+$credit;
 	 if($table_name=="cash_bank"){ 
-		$element_id=(int)@$data["bank_reconciliation"]["element_id"];
+		
 	    $subledger_id = (int)@$data["bank_reconciliation"]["ledger_sub_account_id"];
 	    $ledger_id = (int)@$data["bank_reconciliation"]["ledger_account_id"];
 		$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array((int)$element_id)));
@@ -71,7 +71,16 @@ Closing balance as  per passbook <i class="icon-info-sign tooltips" data-placeme
 		  $description = @$result_cash_bank[0]["cash_bank"]["narration"];
 		  //$description=substrwords($description,200,'...');
 		} 
-	}
+	}elseif($table_name=="journal"){
+		
+				$source="Journal";
+				$result_journal=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_journal_table'), array('pass' => array($element_id)));
+				
+				foreach($result_journal as $data){
+						 $description=$data['journal']['remark'];
+				
+					}
+			}
 		
 		?>
 		<tr>
@@ -143,11 +152,11 @@ $total_debit_bank_payment=0;$j=0;
 	$source="";$description="";
 	$table_name=$data["bank_reconciliation"]["table_name"]; 
 	$cheque_number=$data["bank_reconciliation"]["cheque_number"];
-	
+	$element_id=(int)@$data["bank_reconciliation"]["element_id"];
 	//$total_debit=$total_debit+$debit;
 	$total_credit=$total_credit+$credit;
 	 if($table_name=="cash_bank"){ 
-		$element_id=(int)@$data["bank_reconciliation"]["element_id"];
+		
 	    $subledger_id = (int)@$data["bank_reconciliation"]["ledger_sub_account_id"];
 	    $ledger_id = (int)@$data["bank_reconciliation"]["ledger_account_id"];
 		$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array((int)$element_id)));
@@ -162,7 +171,16 @@ $total_debit_bank_payment=0;$j=0;
 		  $description = @$result_cash_bank[0]["cash_bank"]["narration"];
 		  //$description=substrwords($description,200,'...');
 		} 
-	}
+	}elseif($table_name=="journal"){
+		
+				$source="Journal";
+				$result_journal=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_journal_table'), array('pass' => array($element_id)));
+				
+				foreach($result_journal as $data){
+						 $description=$data['journal']['remark'];
+				
+					}
+			}
 		
 		?>
 		<tr>

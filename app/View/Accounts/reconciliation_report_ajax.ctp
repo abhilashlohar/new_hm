@@ -123,15 +123,17 @@ $total_debit_bank_payment=0;$j=0;
 		}
 		
 		?>
-	<tr>
+	<tr class="last_tr">
 			<td><?php echo date("d-m-Y",$transaction_date); ?></td>
 		    
             <td><?php echo $description; ?></td>
 			<td><?php echo $source; ?></td>
             
 			<td style="text-align:right;"><?php echo $cheque_number; ?></td>
-			<td style="text-align:right;"><?php echo $debit; ?></td>
-			<td style="text-align:right;" ><b><?php if(sizeof($result_bank_reconciliation_debit_bank_payment)==$j){ echo $total_debit_bank_payment; } ?></b></td>
+			<td style="text-align:right;" class="Withdrawal"><?php echo $debit; ?></td>
+			<td style="text-align:right;" >
+			<a style="" role="button" class="btn mini pull-left remove_row" remove_id="<?php echo $auto_id; ?>" amount="<?php echo $debit; ?>" sourc="Withdrawal"  href="#"><i class="icon-trash"></i></a>
+			<b><?php if(sizeof($result_bank_reconciliation_debit_bank_payment)==$j){ echo $total_debit_bank_payment; } ?></b></td>
 			
 		</tr>
 	<?php } ?>
@@ -224,15 +226,17 @@ $total_debit_bank_payment=0;$j=0;
 		}
 		
 		?>
-		<tr>
+		<tr class="last_tr_deposite">
 			<td><?php echo date("d-m-Y",$transaction_date); ?></td>
 		    
             <td><?php echo $description; ?></td>
 			<td><?php echo $source; ?></td>
             <td style="text-align:right;"><?php echo $cheque_number; ?></td>
-			<td style="text-align:right;"><?php echo $credit; ?></td>
+			<td style="text-align:right;" class="deposite"><?php echo $credit; ?></td>
 			
-			<td style="text-align:right;" ><b><?php if(sizeof($result_bank_reconciliation_credit_deposite)==$l){ echo $total_deposite_credit; } ?></b></td>
+			<td style="text-align:right;" >
+			<a style="" role="button" class="btn mini pull-left remove_row" remove_id="<?php echo $auto_id; ?>" amount="<?php echo $credit; ?>" sourc="deposite" href="#"><i class="icon-trash"></i></a>
+			<b><?php if(sizeof($result_bank_reconciliation_credit_deposite)==$l){ echo $total_deposite_credit; } ?></b></td>
 			
 			
 		</tr>
@@ -281,7 +285,51 @@ $(document).ready(function() {
 	   total_calculation();
 	});
 	   
-	   
+  $('.remove_row').die().live('click',function(){ 
+      var grant_total=0; var grant_diff=0;
+	 
+	    var closing_balance=$('#closing_balance').html();
+	    var total= $("#total_diff_amount").html();
+		var id=$(this).attr('remove_id');
+		var amount=$(this).attr('amount');
+		var source=$(this).attr('sourc');
+		
+		$(this).closest('tr').remove();
+			
+		if(source=="Withdrawal"){
+			
+			grant_total=parseInt(total)-parseInt(amount);
+			$("#total_diff_amount").html(grant_total);
+			grant_diff=parseInt(grant_total)-parseInt(closing_balance);
+			$("#total_diff").html(grant_diff);
+			
+			var actual=0;
+			$(".Withdrawal").die().each(function(ii, obj){
+				var td_amount=$(this).html();
+				actual=parseInt(actual)+parseInt(td_amount);
+			});
+			$(".last_tr:last").find("td b").html(actual);
+		}else{
+			
+			grant_total=parseInt(total)+parseInt(amount);
+			$("#total_diff_amount").html(grant_total);
+			grant_diff=parseInt(grant_total)-parseInt(closing_balance);
+			$("#total_diff").html(grant_diff);
+			var actual=0;
+			$(".deposite").die().each(function(ii, obj){
+				var td_amount=$(this).html();
+				actual=parseInt(actual)+parseInt(td_amount);
+			});
+			$(".last_tr_deposite:last").find("td b").html(actual);
+			
+		}
+		$.ajax({
+			url: "bank_reconciliation_delete_record/"+id,
+		}).done(function(response) { 
+			
+		});
+		
+	});
 });
 
 

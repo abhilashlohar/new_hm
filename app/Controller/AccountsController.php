@@ -148,6 +148,19 @@ function bank_reconciliation_ajax($ledger_sub_ac_id=null,$to1=null){
 				$cheque_number=@$result_cash_bank[0]['cash_bank']['cheque_number'];
 			}
 			
+	// delete entry 
+	
+				
+				$this->loadmodel('bank_reconciliation');
+				$this->bank_reconciliation->updateAll(array("flag"=>3),array('society_id'=>$s_society_id,"flag"=>2,'ledger_sub_account_id'=>(int)$ledger_sub_ac_id,'credit'=>$credit,'transaction_date'=>$transaction_date,'cheque_number'=>$cheque_number));
+				
+				$this->loadmodel('bank_reconciliation');
+				$this->bank_reconciliation->updateAll(array("flag"=>3),array('society_id'=>$s_society_id,"flag"=>2,'ledger_sub_account_id'=>(int)$ledger_sub_ac_id,'debit'=>$debit,'transaction_date'=>$transaction_date,'cheque_number'=>$cheque_number));
+								
+			
+	// end code
+			
+			
 			
 			$conditions_edit=array('society_id'=>$s_society_id,'transaction_id'=>$element_id,'reconciliation_status'=>'pending');
 			$count_edit=$this->cash_bank->find('count',array('conditions'=>$conditions_edit));
@@ -464,6 +477,13 @@ function reconciliation_match_report_excel($id=null,$to=null,$from=null){
 	
 }
 
+function bank_reconciliation_delete_record($id=null){
+	$this->layout=null;
+	$this->loadmodel('bank_reconciliation');
+	$this->bank_reconciliation->updateAll(array("flag"=>3),array("auto_id"=>(int)$id));
+	echo "done";
+	
+}
 
 /// end bank reconciliation code 
 

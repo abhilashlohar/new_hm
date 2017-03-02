@@ -132,14 +132,14 @@ if($date_renge_from<=$transaction_date && $date_renge_to>=$transaction_date)
 $i++;
 $grand_total=$grand_total+$total_amount;
 ?>
-<tr>
-<td><?php echo $i;?></td>
+<tr class="search_data">
+<td><?php echo $i;?> </td>
 <td><?php echo $receipt_id;?></td>
 <td><?php echo $current_date;?></td>
 <td><?php echo $supplimentry_bill_type_for_view;?></td>
 <td><?php echo @$user_name;?>&nbsp;&nbsp;<?php echo @$wing_flat;?> </td>
 <td><?php echo $transaction_date_for_view;?></td>
-<td style="text-align:right;"><?php $g_total=$this->Currency->formatCurrency( $total_amount, "INR"); echo $g_total;?></td>
+<td style="text-align:right;"><span style="display:none"><?php echo $total_amount; ?></span><?php $g_total=$this->Currency->formatCurrency( $total_amount, "INR"); echo $g_total;?></td>
 <td><?php echo $description;?></td>
 <td class="hide_at_print" style="text-align:left;">
 <div class="btn-group">
@@ -188,7 +188,7 @@ $grand_total=$grand_total+$total_amount;
 <th class="hide_at_print">View</th>
 </tr>
 </thead>
-<tbody id="table">
+<tbody id="table" >
 <?php
 $grand_total = 0;
 $i=0;
@@ -240,13 +240,13 @@ $grand_total = $grand_total + $total_amount;
 
 
 ?>
-<tr>
+<tr class="search_data">
 <td><?php echo $i;?></td>
 <td><?php echo $receipt_id;?></td>
 <td><?php echo $current_date;?></td>
 <td><?php echo @$user_name;?>&nbsp;&nbsp;<?php echo @$wing_flat;?> </td>
 <td><?php echo $transaction_date_for_view;?></td>
-<td style="text-align:right;"><?php $g_total=number_format($total_amount); echo $g_total;?></td>
+<td style="text-align:right;"><span style="display:none"><?php echo $total_amount; ?></span><?php $g_total=number_format($total_amount); echo $g_total;?></td>
 <td><?php echo $description;?></td>
 <td class="hide_at_print" style="text-align:left;">
 <div class="btn-group">
@@ -296,7 +296,7 @@ echo $grand_total; ?></b></td>
 <th class="hide_at_print">View</th>
 </tr>
 </thead>
-<tbody id="table">	
+<tbody id="table" class="search_data">	
 <?php
 $grand_total = 0;
 $i=0;
@@ -334,13 +334,13 @@ if($date_renge_from <= $transaction_date && $date_renge_to >= $transaction_date)
 $i++;
 $date = date('d-m-Y',strtotime($date));
 $grand_total = $grand_total + $g_total; ?>
-<tr>
-<td><?php echo $i; ?></td>
+<tr class="search_data">
+<td><?php echo $i; ?> </td>
 <td><?php echo $receipt_id; ?></td>
 <td><?php echo $date; ?></td>
 <td><?php echo $user_name; ?>&nbsp;&nbsp;<?php echo $wing_flat; ?> </td>
 <td><?php echo $transaction_date_for_view; ?></td>
-<td style="text-align:right;"><?php $g_total = number_format($g_total); echo $g_total; ?></td>
+<td style="text-align:right;"><span style="display:none"><?php echo $g_total; ?></span><?php $g_total = number_format($g_total); echo $g_total; ?></td>
 <td><?php echo $description; ?></td>
 <td class="hide_at_print" style="text-align:left;">
 <div class="btn-group">
@@ -385,7 +385,7 @@ if($nnn == 55) { ?>
 
 <script>
 jQuery('.popovers').popover({html: true});
-var $rows = $('#table tr');
+var $rows = $('.search_data');
 $('#search').keyup(function() {
 var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
 $rows.show().filter(function() {

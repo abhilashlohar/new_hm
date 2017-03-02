@@ -100,7 +100,7 @@ $prepaired_by = $data['user']['user_name'];
 <td><?php echo $description; ?></td>
 <td><?php echo $purchase_date; ?></td>
 
-<td align="right"><?php echo $this->Currency->formatCurrency( $amount, "INR"); ?><?php $total_amount+=$amount; ?></td>
+<td align="right"><span style="display:none;"><?php echo $amount; ?></span><?php echo $this->Currency->formatCurrency( $amount, "INR"); ?><?php $total_amount+=$amount; ?></td>
 
 <td><?php echo @$asset_supplier_name; ?></td>
 <td><?php echo $warranty_period_from; ?></td>

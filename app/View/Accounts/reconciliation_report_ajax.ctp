@@ -15,7 +15,7 @@ background-color: #E6ECE7;
 <div>
 <?php echo $society_name; ?><br>
 Bank Reconciliation Statement as on <?php echo $to; ?><br>
-<?php echo $bank_name; ?> Bank
+<?php echo $bank_name; ?> Bank Account Number: <?php echo $bank_account; ?>
 	<div style="float:right;">
 	
 		<a href=""  class="btn green mini tooltips add_excel " data-placement="left" data-original-title="Download in excel"><i class="fa fa-file-excel-o"></i></a>
@@ -29,12 +29,17 @@ Closing balance as  per passbook <i class="icon-info-sign tooltips" data-placeme
 <table width="100%" class="table table-bordered " id="receiptmain">
 	<thead>
 		<tr>
-			<th width='120px'>Add</th>
-			<th>Cheques deposited but not cleared in Bank Passbook </th>
+			<th width='120px'></th>
+			<th></th>
 			<th width='120px'>Source</th>
             <th>Cheque/Neft no.</th>
            	<th>Amount</th>
 			<th width='112px'></th>
+		</tr>
+		<tr>
+			<th width='120px'>Add</th>
+			<th colspan="5">Cheques deposited but not cleared in Bank Passbook </th>
+			
 		</tr>
 	</thead>
 	<tbody id="table">
@@ -285,7 +290,10 @@ $(document).ready(function() {
 	   total_calculation();
 	});
 	   
-  $('.remove_row').die().live('click',function(){ 
+  $('.remove_row').die().live('click',function(){
+	 
+	if (confirm('Are you sure you want to delete? Press ok else cancel') == true) {
+	
       var grant_total=0; var grant_diff=0;
 	 
 	    var closing_balance=$('#closing_balance').html();
@@ -323,12 +331,13 @@ $(document).ready(function() {
 			$(".last_tr_deposite:last").find("td b").html(actual);
 			
 		}
+	
 		$.ajax({
 			url: "bank_reconciliation_delete_record/"+id,
 		}).done(function(response) { 
 			
 		});
-		
+	}	
 	});
 });
 

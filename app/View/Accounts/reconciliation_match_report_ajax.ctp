@@ -42,7 +42,12 @@ function substrwords($text, $maxchar, $end='...') {
 ?>
 
 <div style="background-color:#fff;" align="center">
- 
+ <div>
+<?php echo $society_name; ?><br>
+Bank Reconciliation match report as From: <?php echo $from; ?> To: <?php echo $to; ?> <br>
+<?php echo $bank_name; ?> Bank Account Number <?php echo $bank_account; ?>
+	
+</div>
 <?php
 
 //$opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_opening_balance_for_ledger'), array('pass' => array($ledger_account_id,$ledger_sub_account_id,strtotime($from))));

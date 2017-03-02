@@ -230,6 +230,22 @@ function reconciliation_match_report_ajax($from=null,$to=null,$ledger_sub_accoun
 	
 	    $this->ath();
 	    $s_society_id = $this->Session->read('hm_society_id');
+		
+		$this->loadmodel("society");
+		$conditions=array("society_id"=>$s_society_id);
+		$result_society=$this->society->find('all',array('conditions'=>$conditions));
+		$society_name=$result_society[0]['society']['society_name'];
+		$this->set(compact('society_name'));
+		
+		$this->loadmodel("ledger_sub_account");
+		$conditions=array("society_id"=>$s_society_id,"ledger_id"=>33,"auto_id"=>(int)$ledger_sub_account_id);
+		$result_ledger_sub=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+		$bank_name=$result_ledger_sub[0]['ledger_sub_account']['name'];
+		$bank_account=$result_ledger_sub[0]['ledger_sub_account']['bank_account'];
+		
+		
+		$this->set(compact('bank_name'));
+		$this->set(compact('bank_account'));
 		$this->set(compact('from'));
 		$this->set(compact('to'));
 		$this->set(compact('ledger_sub_account_id'));
@@ -324,13 +340,14 @@ function reconciliation_report_ajax($ledger_sub_account_id=null,$to=null){
 	$conditions=array("society_id"=>$s_society_id,"ledger_id"=>33,"auto_id"=>(int)$ledger_sub_account_id);
     $result_ledger_sub=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 	$bank_name=$result_ledger_sub[0]['ledger_sub_account']['name'];
-	
+	$bank_account=$result_ledger_sub[0]['ledger_sub_account']['bank_account'];
 	$this->loadmodel("society");
 	$conditions=array("society_id"=>$s_society_id);
     $result_society=$this->society->find('all',array('conditions'=>$conditions));
 	$society_name=$result_society[0]['society']['society_name'];
 	$this->set(compact('society_name'));
 	$this->set(compact('bank_name'));
+	$this->set(compact('bank_account'));
 	$this->set(compact('to'));
 	
 	$debit=0;$credit=0;
@@ -392,13 +409,20 @@ function reconciliation_report_ajax_excel($ledger_sub_account_id=null,$to=null,$
 	$conditions=array("society_id"=>$s_society_id,"ledger_id"=>33,"auto_id"=>(int)$ledger_sub_account_id);
     $result_ledger_sub=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 	$bank_name=$result_ledger_sub[0]['ledger_sub_account']['name'];
-	
+	$bank_account=$result_ledger_sub[0]['ledger_sub_account']['bank_account'];
 	$this->loadmodel("society");
 	$conditions=array("society_id"=>$s_society_id);
     $result_society=$this->society->find('all',array('conditions'=>$conditions));
 	$society_name=$result_society[0]['society']['society_name'];
+	$excel=$society_name;
+	
+	$excel_society_name=explode(' ',$excel);
+	$so_name=$excel_society_name[0].'_'.$excel_society_name[1];
+	$this->set(compact('so_name'));
+	
 	$this->set(compact('society_name'));
 	$this->set(compact('bank_name'));
+	$this->set(compact('bank_account'));
 	$this->set(compact('to'));
 	
 	$debit=0;$credit=0;
@@ -461,13 +485,19 @@ function reconciliation_match_report_excel($id=null,$to=null,$from=null){
 	$conditions=array("society_id"=>$s_society_id,"ledger_id"=>33,"auto_id"=>(int)$id);
     $result_ledger_sub=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
 	$bank_name=$result_ledger_sub[0]['ledger_sub_account']['name'];
-	
+	$bank_account=$result_ledger_sub[0]['ledger_sub_account']['bank_account'];
 	$this->loadmodel("society");
 	$conditions=array("society_id"=>$s_society_id);
     $result_society=$this->society->find('all',array('conditions'=>$conditions));
 	$society_name=$result_society[0]['society']['society_name'];
+	$excel=$society_name;
+	
+	$excel_society_name=explode(' ',$excel);
+	$so_name=$excel_society_name[0].'_'.$excel_society_name[1];
+	$this->set(compact('so_name'));
 	$this->set(compact('society_name'));
 	$this->set(compact('bank_name'));
+	$this->set(compact('bank_account'));
 	$this->set(compact('id'));
 	$this->set(compact('to'));
 	$this->set(compact('from'));

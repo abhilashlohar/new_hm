@@ -1,6 +1,7 @@
 <?php 
 
-$filename="Reconciliation_Report";
+$filename=''.$so_name.'_Reco_'.$bank_name.'_'.$bank_account.'_'.$to.'_Report';
+
 $filename = str_replace(' ', '_', $filename);
 $filename = str_replace(' ', '-', $filename);
 
@@ -19,7 +20,7 @@ header ("Content-Description: Generated Report" );
 <div>
 <?php echo $society_name; ?><br>
 Bank Reconciliation Statement as on <?php echo $to; ?><br>
-<?php echo $bank_name; ?> Bank
+<?php echo $bank_name; ?> Bank  Account Number: <?php echo $bank_account; ?>
 	
 </div>
 
@@ -31,12 +32,16 @@ Bank Reconciliation Statement as on <?php echo $to; ?><br>
 		<td align="right"><span><?php echo $closing_pasbook;?></span> </td>
 	</tr>
 		<tr>
-			<th width='120px' align="left">Add</th>
-			<th>Cheques deposited but not cleared in Bank Passbook </th>
+			<th width='120px' align="left"></th>
+			<th> </th>
 			<th width='120px'>Source</th>
             <th>Cheque/Neft no.</th>
            	<th>Amount</th>
 			<th width='112px'></th>
+		</tr>
+		<tr>
+			<th width='120px'>Add</th>
+			<th colspan="5" align="left">Cheques deposited but not cleared in Bank Passbook </th>
 		</tr>
 	</thead>
 	<tbody id="table">

@@ -1,5 +1,7 @@
 <?php
-$filename="Reconciliation_Match_Report";
+
+$filename=''.$so_name.'_Reco_'.$bank_name.'_'.$bank_account.'_From_'.$from.'_To_'.$to.'_Match_Report';
+
 $filename = str_replace(' ', '_', $filename);
 $filename = str_replace(' ', '-', $filename);
 
@@ -47,15 +49,15 @@ function substrwords($text, $maxchar, $end='...') {
  <div>
 <?php echo $society_name; ?><br>
 Bank Reconciliation match report as From: <?php echo $from; ?> To: <?php echo $to; ?> <br>
-<?php echo $bank_name; ?> Bank
+<?php echo $bank_name; ?> Bank  Account Number <?php echo $bank_account; ?>
 	
 </div>
 
 <table width="100%" class="" border="1" id="receiptmain">
 	<thead>
 		<tr>
-		    <th>Passbook Date </th>
-			<th>Transaction Date</th>
+		    <th align="left">Passbook Date </th>
+			<th align="left">Transaction Date</th>
 			<th>Corresponding a/c </th>
             <th>Description</th>
 			<th>Source</th>

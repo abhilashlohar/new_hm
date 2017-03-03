@@ -202,9 +202,13 @@ function bank_reconciliation_ajax($ledger_sub_ac_id=null,$to1=null){
 }
 
 function bank_reconciliation_update($auto_id=null,$date=null){
+	$this->ath();
 	$this->layout=null;
+	
+	$to = date("Y-m-d",strtotime($date));
+	$to=strtotime($to);
 	$this->loadmodel('bank_reconciliation');
-	$this->bank_reconciliation->updateAll(array("pass_book_date"=>$date,"flag"=>1),array("auto_id"=>(int)$auto_id));
+	$this->bank_reconciliation->updateAll(array("pass_book_date"=>$date,"pass_book_transaction_date"=>$to,"flag"=>1),array("auto_id"=>(int)$auto_id));
 	echo "done";
 }
 
@@ -363,8 +367,11 @@ function reconciliation_report_ajax($ledger_sub_account_id=null,$to=null){
 	
 		$this->loadmodel('bank_reconciliation');
 	
+	
+//$conditions =array( '$or' => array(array('society_id'=>$s_society_id,"flag"=>0,'ledger_sub_account_id'=>(int)$ledger_sub_account_id,'credit'=>null,'transaction_date'=>array('$lte'=>strtotime($to))),array('society_id'=>$s_society_id,"flag"=>1,'ledger_sub_account_id'=>(int)$ledger_sub_account_id,'pass_book_transaction_date'=>array('$lte'=>strtotime($to)),'credit'=>null,'transaction_date'=>array('$lte'=>strtotime($to)))));
 					
-		$conditions =array('society_id'=>$s_society_id,"flag"=>0,'ledger_sub_account_id'=>(int)$ledger_sub_account_id,'credit'=>null,'transaction_date'=>array('$lte'=>strtotime($to)));
+$conditions =array('society_id'=>$s_society_id,"flag"=>0,'ledger_sub_account_id'=>(int)$ledger_sub_account_id,'credit'=>null,'transaction_date'=>array('$lte'=>strtotime($to)));
+
 		$order=array('bank_reconciliation.transaction_date'=>'ASC');
 		$result_bank_reconciliation_debit_receipt=$this->bank_reconciliation->find('all',array('conditions'=>$conditions));
 		

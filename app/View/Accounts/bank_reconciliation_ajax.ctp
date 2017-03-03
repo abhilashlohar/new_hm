@@ -46,12 +46,13 @@ function substrwords($text, $maxchar, $end='...') {
 ?>
 
 <div style="background-color:#fff;" align="center">
- 
+
 <?php
 
 //$opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_opening_balance_for_ledger'), array('pass' => array($ledger_account_id,$ledger_sub_account_id,strtotime($from))));
 ?>
 <div id="step_1">
+ <div> <h5><b>Step-1 Matching Passbook with Ledger entries</b> </h5> </div>
 <input class="m-wrap medium pull-right hide_at_print" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
 <table width="100%" class="table table-bordered " id="receiptmain">
 	<thead>
@@ -506,13 +507,13 @@ function substrwords($text, $maxchar, $end='...') {
 	</tbody>
 </table>
 </div>
-<a class="btn blue button-next" id="continue" >Continue <i class="m-icon-swapright m-icon-white"></i></a>
+<a class="btn blue button-next" id="continue" > Continue <i class="m-icon-swapright m-icon-white"></i>    Step 2 </a>
 
 
 <div id="reconciliation_form" style="display:none;"> 
 
 <!---- reconciliation form --->
-<h3>Reconciliation Form</h3>
+<h5> <b> Step-2 Enter unmatched items appearing in Passbook ONLY </b></h5>
 
 <div class="portlet box">
 	<div class="portlet-body">
@@ -540,7 +541,7 @@ function substrwords($text, $maxchar, $end='...') {
 
 </div>
 
-<a class="btn blue button-next" id="continue_report" >Continue <i class="m-icon-swapright m-icon-white"></i></a>
+<a class="btn blue button-next" id="continue_report" >Continue <i class="m-icon-swapright m-icon-white"></i> Step 3</a>
 </div>
 <table id="sample" style="display:none;">
 <tbody>
@@ -605,14 +606,14 @@ function substrwords($text, $maxchar, $end='...') {
 <br>
 
 <center>
-<h3>Reconciliation Report</h3>
+<h5><b> Reconciliation Report </b></h5>
 <form method="post" onSubmit="return valid()">
 <div  class="hide_at_print">
         <table style="">
         <tr>
         
-				<td>
-						<select class="medium m-wrap chosen" id="ledger_account1">
+				<td valign="bottom">
+						<select class="medium m-wrap " id="ledger_account1" disabled >
 						<option value="" style="display:none;">Select Bank A/c</option>
 						<?php
 						 foreach($result_ledger_sub_account as $data){
@@ -622,18 +623,18 @@ function substrwords($text, $maxchar, $end='...') {
 							  $bank_account=$data['ledger_sub_account']['bank_account'];
 							 ?>
                           
-								<option value="<?php echo $ledger_sub_ac_id; ?>" <?php if($ledger_sub_ac_id==$ledger_sub_id){?> selected  <?php } ?>><?php echo $bank_name; ?> <?php echo $bank_account; ?> </option>
+								<option  value="<?php echo $ledger_sub_ac_id; ?>" <?php if($ledger_sub_ac_id==$ledger_sub_id){?> selected  <?php } ?>><?php echo $bank_name; ?> <?php echo $bank_account; ?> </option>
 								
 						  <?php } ?>
 						</select>
 				</td>
 		
 				<td>
-				<input type="text" placeholder="To" id="date2" class="date-picker medium m-wrap" data-date-format="dd-mm-yyyy" name="to" style="background-color:white !important; margin-top:7px;" value="<?php echo $to1; ?>" data-date-end-date="<?php echo date("d-m-Y"); ?>">
+				<input type="text" placeholder="To" id="date2" class="date-picker medium m-wrap" data-date-format="dd-mm-yyyy" name="to" style="background-color:white !important; margin-top:7px;" disable value="<?php echo $to1; ?>" data-date-end-date="<?php echo date("d-m-Y"); ?>" disabled>
 				</td>
 		
 				<td valign="top">
-				<button type="button" id="go_1" name="sub" class="btn yellow" style="margin-top:7px;">Search</button>
+				<button  disabled type="button" id="go_1" name="sub" class="btn yellow" style="margin-top:7px;">Search</button>
 				</td>
 		</tr>
 </table>
@@ -679,6 +680,7 @@ $(document).ready(function() {
 	$("#continue").bind('click',function(){
 	 $("#step_1").hide();
 		$(this).hide();
+		 $(".main_search").hide();
 		var z =$("#reconciliation_form").html();
 		$("#reconciliation_form").show();
 	});
@@ -688,6 +690,8 @@ $(document).ready(function() {
 		 $(".main_search").hide();
 		$(this).hide();
 		$("#reconciliation_report_main").show();
+		$("#go_1").click();
+		//$("#reconciliation_report_main").hide();
 	});
 	
 	$(".new_sub").die().live('click',function(){
@@ -875,7 +879,6 @@ $(document).ready(function() {
 		    var to=$('#date2').val();
 			$("#ledger_view").html('<div align="center" style="padding:10px;"><img src="<?php echo $webroot_path; ?>as/loding.gif" />Loading....</div>').load("reconciliation_report_ajax/" +ledger_account_id+ "/" +to+"");
 		});
- 
  
  
  

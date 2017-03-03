@@ -90,6 +90,8 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 				<?php if($trail_balance["opening_balance"][1]=="Dr"){
 					?>
 					<td style="text-align: right;">
+					<span style="display:none"> <?php echo $trail_balance["opening_balance"][0]; ?></span>
+			
 						<?php echo $this->Currency->formatCurrency( $trail_balance["opening_balance"][0], "INR"); 
 						$total_ob_debit+=$trail_balance["opening_balance"][0]; ?>
 					</td>
@@ -99,6 +101,8 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 					?>
 					<td style="text-align: right;">0</td>
 					<td style="text-align: right;">
+					<span style="display:none"> <?php echo $trail_balance["opening_balance"][0]; ?></span>
+			
 						<?php echo $this->Currency->formatCurrency( $trail_balance["opening_balance"][0], "INR"); 
 						$total_ob_credit+=$trail_balance["opening_balance"][0]; ?>
 					</td>
@@ -112,16 +116,24 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 				}
 				?>
 				
-				<td style="text-align: right;"><?php echo $this->Currency->formatCurrency( $trail_balance["debit"], "INR"); 
+				<td style="text-align: right;">
+				<span style="display:none"> <?php echo $trail_balance["debit"]; ?></span>
+			
+				<?php echo $this->Currency->formatCurrency( $trail_balance["debit"], "INR"); 
 				$total_debit+=$trail_balance["debit"];
 				?></td>
-				<td style="text-align: right;"><?php echo $this->Currency->formatCurrency( $trail_balance["credit"], "INR"); 
+				<td style="text-align: right;">
+				<span style="display:none"> <?php echo $trail_balance["credit"]; ?></span>
+			
+				<?php echo $this->Currency->formatCurrency( $trail_balance["credit"], "INR"); 
 				$total_credit+=$trail_balance["credit"];
 				?></td>
 				
 				<?php if($trail_balance["closing_balance"][1]=="Dr"){
 					?>
 					<td style="text-align: right;">
+					<span style="display:none"> <?php echo $trail_balance["closing_balance"][0]; ?></span>
+			
 						<?php echo $this->Currency->formatCurrency( $trail_balance["closing_balance"][0], "INR"); 
 						$total_cb_debit+=$trail_balance["closing_balance"][0]; ?>
 					</td>
@@ -131,6 +143,8 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 					?>
 					<td style="text-align: right;">0</td>
 					<td style="text-align: right;">
+					<span style="display:none"> <?php echo $trail_balance["closing_balance"][0]; ?></span>
+			
 						<?php echo $this->Currency->formatCurrency( $trail_balance["closing_balance"][0], "INR"); 
 						$total_cb_credit+=$trail_balance["closing_balance"][0]; ?>
 					</td>
@@ -234,6 +248,8 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 				<?php if($trail_balance["opening_balance"][1]=="Dr"){
 					?>
 					<td style="text-align: right;">
+					<span style="display:none"> <?php echo $trail_balance["opening_balance"][0]; ?></span>
+			
 						<?php echo $this->Currency->formatCurrency( $trail_balance["opening_balance"][0], "INR"); 
 						$total_ob_debit+=$trail_balance["opening_balance"][0]; ?>
 					</td>
@@ -243,6 +259,8 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 					?>
 					<td style="text-align: right;">0</td>
 					<td style="text-align: right;">
+					<span style="display:none"> <?php echo $trail_balance["opening_balance"][0]; ?></span>
+			
 						<?php echo $this->Currency->formatCurrency( $trail_balance["opening_balance"][0], "INR"); 
 						$total_ob_credit+=$trail_balance["opening_balance"][0]; ?>
 					</td>
@@ -256,16 +274,24 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 				}
 				?>
 				
-				<td style="text-align: right;"><?php echo $this->Currency->formatCurrency( $trail_balance["debit"], "INR"); 
+				<td style="text-align: right;">
+				<span style="display:none"> <?php echo $trail_balance["debit"]; ?></span>
+			
+				<?php echo $this->Currency->formatCurrency( $trail_balance["debit"], "INR"); 
 				$total_debit+=$trail_balance["debit"];
 				?></td>
-				<td style="text-align: right;"><?php echo $this->Currency->formatCurrency( $trail_balance["credit"], "INR"); 
+				<td style="text-align: right;">
+				<span style="display:none"> <?php echo $trail_balance["credit"]; ?></span>
+			
+				<?php echo $this->Currency->formatCurrency( $trail_balance["credit"], "INR"); 
 				$total_credit+=$trail_balance["credit"];
 				?></td>
 				
 				<?php if($trail_balance["closing_balance"][1]=="Dr"){
 					?>
 					<td style="text-align: right;">
+					<span style="display:none"> <?php echo $trail_balance["closing_balance"][0]; ?></span>
+			
 						<?php echo $this->Currency->formatCurrency( $trail_balance["closing_balance"][0], "INR"); 
 						$total_cb_debit+=$trail_balance["closing_balance"][0]; ?>
 					</td>
@@ -275,6 +301,8 @@ From: <?php echo $from; ?> To: <?php echo $to; ?>
 					?>
 					<td style="text-align: right;">0</td>
 					<td style="text-align: right;">
+					<span style="display:none"> <?php echo $trail_balance["closing_balance"][0]; ?></span>
+			
 						<?php echo $this->Currency->formatCurrency( $trail_balance["closing_balance"][0], "INR"); 
 						$total_cb_credit+=$trail_balance["closing_balance"][0]; ?>
 					</td>

@@ -5,7 +5,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 </div>
 <center>
 <div align="center" class="mobile-align">
-	<a href="bank_reconciliation"  rel='tab' class="btn red tooltips space-responsive"  ><i class="icon-folder-open"></i> Ledger Matching </a>
+	<a href="bank_reconciliation"  rel='tab' class="btn red tooltips space-responsive"  ><i class="icon-folder-open"></i> Steps 1-2-3 </a>
 	<a href="reconciliation_match_report"  rel='tab' class="btn blue  tooltips space-responsive" ><i class="icon-folder-close"></i> Reconciliation Match Report</a>
 	<!--<a href="reconciliation_form"  rel='tab' class="btn blue  tooltips space-responsive" ><i class="icon-folder-close"></i> Reconciliation Form</a>
 	<a href="reconciliation_report"  rel='tab' class="btn blue  tooltips space-responsive" ><i class="icon-folder-close"></i> Reconciliation Report</a>-->
@@ -38,7 +38,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				</td>
 		
 				<td valign="top">
-				<button type="button" id="go" name="sub" class="btn yellow" style="margin-top:7px;">Search</button>
+				<button type="button" id="go" name="sub" class="btn yellow" style="margin-top:7px;">Submit</button>
 				</td>
 		</tr>
 </table>

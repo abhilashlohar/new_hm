@@ -22,9 +22,9 @@ Bank Reconciliation Statement as on <?php echo $to; ?><br>
 	</div>
 </div>
 <br/>
-<div class="pull-right">
+<div class="pull-right" style="color:red;">
 Closing balance as  per passbook <i class="icon-info-sign tooltips" data-placement="top" data-original-title="Enter Credit amount with minus sign" ></i>
-<input class="m-wrap small call_calculation  hide_at_print" placeholder="Amount" id="opening_balance" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text" value="">
+<input class="m-wrap small call_calculation  hide_at_print" placeholder="Amount" id="opening_balance" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;border: 1px solid rgb(7, 185, 214);" type="text" value="">
 </div>
 <table width="100%" class="table table-bordered " id="receiptmain">
 	<thead>

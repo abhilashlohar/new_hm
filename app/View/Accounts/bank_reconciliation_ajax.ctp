@@ -52,7 +52,7 @@ function substrwords($text, $maxchar, $end='...') {
 //$opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_opening_balance_for_ledger'), array('pass' => array($ledger_account_id,$ledger_sub_account_id,strtotime($from))));
 ?>
 <div id="step_1">
- <div> <h5><b>Step-1 Matching Passbook with Ledger entries</b> </h5> </div>
+ <div> <h5><b style="font-weight: 600;">Step-1 Matching Passbook with Ledger entries</b> </h5> </div>
 <input class="m-wrap medium pull-right hide_at_print" placeholder="Search" id="search" style="height: 15px; margin-bottom: 4px; font-size: 12px;padding: 4px !important;" type="text">
 <table width="100%" class="table table-bordered " id="receiptmain">
 	<thead>
@@ -513,7 +513,7 @@ function substrwords($text, $maxchar, $end='...') {
 <div id="reconciliation_form" style="display:none;"> 
 
 <!---- reconciliation form --->
-<h5> <b> Step-2 Enter unmatched items appearing in Passbook ONLY </b></h5>
+<h5> <b style="font-weight: 600;"> Step-2 Enter unmatched items appearing in Passbook ONLY </b></h5>
 
 <div class="portlet box">
 	<div class="portlet-body">
@@ -644,11 +644,11 @@ function substrwords($text, $maxchar, $end='...') {
 
 </center>
 
-<div id="ledger_view" style="width:100%;">
-</div>
+
 <br/>
 </div>
-
+<div id="ledger_view" style="width:100%;">
+</div>
 
 <!-- end code --->
 
@@ -689,7 +689,7 @@ $(document).ready(function() {
 		$("#reconciliation_form").hide();
 		 $(".main_search").hide();
 		$(this).hide();
-		$("#reconciliation_report_main").show();
+		//$("#reconciliation_report_main").show();
 		$("#go_1").click();
 		//$("#reconciliation_report_main").hide();
 	});
@@ -873,7 +873,7 @@ $(document).ready(function() {
  
  <!-- Reconciliation report code --->
  
-		$("#go_1").bind('click',function(){
+		$("#go_1").bind('click',function(){ 
 			var ledger_account_id = $('#ledger_account').val();
 			//var from=$('#date1').val();
 		    var to=$('#date2').val();

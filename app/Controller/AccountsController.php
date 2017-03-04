@@ -193,8 +193,7 @@ function bank_reconciliation_ajax($ledger_sub_ac_id=null,$to1=null){
 		"ledger_sub_account_id"=>(int)$ledger_sub_ac_id,"flag"=>0,
 		'transaction_date'=>array('$lte'=>strtotime($to)));
 		
-		//$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>33,"ledger_sub_account_id"=>(int)$ledger_sub_ac_id,"flag"=>0,'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
-		
+				
 		$order=array('bank_reconciliation.transaction_date'=>'ASC');
 		$result_bank_reconciliation=$this->bank_reconciliation->find('all',array('conditions'=>$conditions,'order'=>$order));
 		$this->set(compact('result_bank_reconciliation'));
@@ -278,41 +277,7 @@ function reconciliation_form(){
 	
 	
 	if(isset($this->request->data['submit'])){
-		/*
-		 $deposit_amounts=$this->request->data['deposit_amount'];
-		 
-		 $bank_names=$this->request->data['bank_name'];
-		 $passbook_dates=$this->request->data['passbook_date'];
-		 $cheque_numbers=$this->request->data['cheque_number'];
-		 $withdraw_amounts=$this->request->data['withdraw_amount'];
-		 $narrations=$this->request->data['narration'];
 		
-		 $i=0;
-		 foreach($passbook_dates as $passbook_date){ 
-			  $amount_credit=null;$amount_debit=null; $transection_type="";
-			  $passbook_date=date('Y-m-d',strtotime($passbook_date));
-			  $passbook_date=strtotime($passbook_date);
-			  $bank_name=(int)$bank_names[$i];
-			  $cheque_number=$cheque_numbers[$i];
-			  $deposit_amount=$deposit_amounts[$i];
-			  $withdraw_amount=$withdraw_amounts[$i];
-			  $narration=$narrations[$i];
-			  
-			 if(!empty($deposit_amount) and empty($withdraw_amount)){
-				 $amount_credit=$deposit_amount; 
-				 $transection_type='Deposit';
-			 }elseif(empty($deposit_amount) and !empty($withdraw_amount)){
-				 $amount_debit=$withdraw_amount;
-				 $transection_type='Withdraw';
-			  }
-			  			 
-				$this->loadmodel('bank_reconciliation');
-				$auto_id=$this->autoincrement('bank_reconciliation','auto_id');
-				$this->bank_reconciliation->saveAll(Array( Array("auto_id" => $auto_id, "transection_type" => $transection_type,"society_id" => $s_society_id, "transaction_date" => $passbook_date, "cheque_number" =>$cheque_number,"narration" =>$narration,"ledger_sub_account_id"=>$bank_name,'table_name'=>'reconciliation','flag'=>2,'credit'=>@$amount_credit,'debit'=>@$amount_debit))); 
-			$i++;	
-		 }
-		 
-    	*/
 	}
 
 }

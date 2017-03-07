@@ -1196,6 +1196,253 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 }
 
 
+function calculate_arrears_and_interest_edit_test($ledger_sub_account_id,$start_date){
+	$s_society_id=$this->Session->read('hm_society_id');
+	
+	$this->requestAction(array('controller' => 'Hms', 'action' => 'ath'));
+	
+	$this->loadmodel('society');
+	$condition=array('society_id'=>$s_society_id);
+	$society_result=$this->society->find('all',array('conditions'=>$condition));
+	$tax=(float)$society_result[0]["society"]["tax"];
+	$tax_factor=$tax/100;
+	
+	$this->loadmodel('regular_bill');
+	//$conditions =array('society_id' =>$s_society_id,'ledger_sub_account_id' =>(int)$ledger_sub_account_id);
+	$conditions =array('society_id' =>$s_society_id,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'start_date'=>array('$lt'=>strtotime($start_date)));
+	$bill_count=$this->regular_bill->find('count',array('conditions'=>$conditions));
+	
+	//$start_date=date('Y-m-d', strtotime('-1 day', strtotime($start_date)));
+	$current_bill_start_date=strtotime($start_date);
+	$current_bill_start_date_financial_year=strtotime($start_date);
+	$current_bill_start_date_opening_balance=strtotime($start_date);
+	$current_bill_start_date=date('Y-m-d', strtotime('-1 day', strtotime($start_date)));
+	$current_bill_start_date=strtotime($current_bill_start_date);
+	
+	if($bill_count==0){
+		$this->loadmodel('financial_year');
+		$conditions =array('society_id' =>$s_society_id,'status' =>1,'financial_year.from'=>array('$lte'=>$current_bill_start_date_financial_year),'financial_year.to'=>array('$gte'=>$current_bill_start_date_financial_year));
+		$financial_years=$this->financial_year->find('all',array('conditions'=>$conditions));
+		$last_bill_start_date=$financial_years[0]["financial_year"]["from"];
+		$last_bill_start_date_for_ledger=$last_bill_start_date;
+		$last_bill_start_date_for_ledger_ob=date('Y-m-d', strtotime('+1 day', $last_bill_start_date_for_ledger));
+		$last_bill_start_date_for_ledger_ob=strtotime($last_bill_start_date_for_ledger_ob);
+		
+		$last_bill_amount=0;
+		$last_bill_maint_arrear=0;
+		$last_bill_non_maint_arrear=0;
+		$last_bill_arrear_intrest=0;
+		$last_bill_intrest_on_arrears=0;
+		$credit_stock=0;
+	}else{
+		
+		$this->loadmodel('regular_bill');
+		//$conditions =array('society_id' =>$s_society_id,'ledger_sub_account_id' =>(int)$ledger_sub_account_id);
+		$conditions =array('society_id' =>$s_society_id,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'start_date'=>array('$lt'=>strtotime($start_date)));
+		$order=array('regular_bill.auto_id'=>'DESC');
+		$last_bill_info=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1));
+
+		$last_bill_start_date=$last_bill_info[0]["regular_bill"]["start_date"];
+		//$last_bill_start_date_for_ledger=date('Y-m-d', strtotime('+1 day', $last_bill_start_date));
+		$last_bill_start_date_for_ledger=date('Y-m-d', $last_bill_start_date);
+		$last_bill_start_date_for_ledger=strtotime($last_bill_start_date_for_ledger);
+		$last_bill_start_date_for_ledger_ob=date('Y-m-d', strtotime('+1 day', $last_bill_start_date_for_ledger));
+		$last_bill_start_date_for_ledger_ob=strtotime($last_bill_start_date_for_ledger_ob);
+		$last_bill_due_date=$last_bill_info[0]["regular_bill"]["due_date"];
+		
+		 $last_bill_amount=$last_bill_info[0]["regular_bill"]["total"];
+		 $last_bill_maint_arrear=@$last_bill_info[0]["regular_bill"]["maint_arrear"];
+		$last_bill_non_maint_arrear=@$last_bill_info[0]["regular_bill"]["non_maint_arrear"];
+		$last_bill_arrear_intrest=$last_bill_info[0]["regular_bill"]["arrear_intrest"];
+		$last_bill_intrest_on_arrears=$last_bill_info[0]["regular_bill"]["intrest_on_arrears"];
+		$last_bill_credit_stock=$last_bill_info[0]["regular_bill"]["credit_stock"];
+		$last_bill_maint_arrear=$last_bill_maint_arrear+$last_bill_credit_stock;
+	}
+	
+	$bill_amount=$last_bill_amount;
+	$maint_arrear=$last_bill_maint_arrear;
+	$non_maint_arrear=$last_bill_non_maint_arrear;
+	$arrear_intrest=$last_bill_arrear_intrest;
+	$intrest_on_arrears=$last_bill_intrest_on_arrears;
+	
+	$new_interest=0;
+	//$new_n=array();
+	$this->loadmodel('ledger');
+	//$conditions =array('society_id' =>$s_society_id,'ledger_account_id' =>34,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'ledger.transaction_date'=>array('$gte'=>$last_bill_start_date_for_ledger,'$lte'=>$current_bill_start_date),"table_name"=>array('$ne'=>"regular_bill"));
+	$conditions =array( '$or' => array( 
+	array('society_id' =>$s_society_id,'ledger_account_id' =>34,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'ledger.transaction_date'=>array('$gte'=>$last_bill_start_date_for_ledger,'$lte'=>$current_bill_start_date),"table_name"=>array('$ne'=>"opening_balance")),
+	array('society_id' =>$s_society_id,'ledger_account_id' =>34,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'ledger.transaction_date'=>array('$gte'=>$current_bill_start_date_opening_balance),"table_name"=>"opening_balance")
+	));
+	
+	$order=array('ledger.transaction_date'=>'ASC');
+	$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order));
+	if(sizeof($result_ledger)>0){
+		$new_result_ledger=array();
+		foreach($result_ledger as $result_ledgerqq){
+			$table_name=$result_ledgerqq["ledger"]["table_name"];
+			if($table_name!="regular_bill"){
+				$new_result_ledger[]=$result_ledgerqq;
+			}
+		}
+	}else{
+		$new_result_ledger=array();
+	}
+	
+	 $last_trasanction_date=$last_bill_start_date;
+	 $last_trasanction_date=date('Y-m-d', strtotime('-1 day', $last_trasanction_date));
+	 $last_trasanction_date=strtotime($last_trasanction_date);
+
+	
+	$last_due_date=@$last_bill_due_date;
+	if(sizeof($new_result_ledger)==0){
+		$current_transaction_date=$current_bill_start_date;
+	}
+	
+	foreach($new_result_ledger as $transaction){
+		
+		$current_transaction_date=$transaction["ledger"]["transaction_date"];
+		$table_name=$transaction["ledger"]["table_name"];
+		$ledger_intrest=@$transaction["ledger"]["intrest_on_arrears"];
+		
+		$debit=$transaction["ledger"]["debit"];
+		$credit=$transaction["ledger"]["credit"];
+		
+		if(empty($debit) && !empty($credit)){
+		$current_transaction_date=date('Y-m-d', strtotime('-1 day', $current_transaction_date));
+		$current_transaction_date=strtotime($current_transaction_date);
+		}
+		
+		if($last_bill_maint_arrear>0){ 
+		    $days=abs(floor(($last_trasanction_date-$current_transaction_date)/(60*60*24))); 
+		    $new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
+			$new_n[]=array('day'=>$days,'amount'=>$last_bill_maint_arrear,'interest'=>$new_interest,'due_date'=>$last_trasanction_date,'current_transaction_date'=>$current_transaction_date);
+		}else{
+			if(!empty($last_bill_amount)){
+				$last_bill_amount=$last_bill_amount-abs($last_bill_maint_arrear);
+				$last_bill_maint_arrear=0;
+				
+			}
+		}
+				
+
+		//echo date("d-m-Y",$last_trasanction_date); echo"<br>";
+		//echo date("d-m-Y",$current_transaction_date); echo"<br>";
+		  //$days=abs(floor(($last_trasanction_date-$current_transaction_date)/(60*60*24)));
+		 //$new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365;
+	
+		if($current_transaction_date>$last_due_date && $bill_count>0){ 
+			$last_due_date=date('Y-m-d', strtotime('0 day', $last_due_date));
+			$last_due_date=strtotime($last_due_date);
+			$days=abs(floor(($last_due_date-$current_transaction_date)/(60*60*24)));
+			$new_interest+=($last_bill_amount*$days*$tax_factor)/365;
+			$new_n[]=array('day'=>$days,'amount'=>$last_bill_amount,'interest'=>$new_interest,'due_date'=>$last_due_date,'current_transaction_date'=>$current_transaction_date);
+			$last_due_date=$current_transaction_date;
+		}
+			
+		$last_trasanction_date=$current_transaction_date;
+		
+		//Allocation
+		if($table_name=="opening_balance"){
+			if($ledger_intrest=="YES"){
+				$arrear_intrest+=$debit;
+			}else{
+				if(!empty($debit) && empty($credit)){
+					$maint_arrear+=$debit;
+				}
+				if(empty($debit) && !empty($credit)){
+					$maint_arrear-=$credit;
+				}
+			}
+			
+		}else{
+			if(!empty($debit) && empty($credit)){
+				$non_maint_arrear+=$debit;
+			}
+			if(empty($debit) && !empty($credit)){
+				$reminder=$last_bill_non_maint_arrear-$credit;
+				if($reminder>=0){
+					$non_maint_arrear=$reminder;
+				}else{
+					$non_maint_arrear=0;
+					$reminder=abs($reminder);
+					$reminder=$last_bill_arrear_intrest-$reminder;
+					if($reminder>=0){
+						$arrear_intrest=$reminder;
+					}else{
+						$arrear_intrest=0;
+						$reminder=abs($reminder);
+						$reminder=$last_bill_intrest_on_arrears-$reminder;
+						if($reminder>=0){
+							$intrest_on_arrears=$reminder;
+						}else{
+							$intrest_on_arrears=0;
+							$reminder=abs($reminder);
+							$reminder=$last_bill_maint_arrear-$reminder;
+							if($reminder>=0){
+								$maint_arrear=$reminder;
+							}else{
+								$maint_arrear=0;
+								$reminder=abs($reminder);
+								$reminder=$last_bill_amount-$reminder;
+								if($reminder>=0){
+									$bill_amount=$reminder;
+								}else{
+									$bill_amount=0;
+									$maint_arrear=$maint_arrear+$reminder;
+								}
+							}
+						}
+					}
+				}
+				
+				
+			}
+		}
+		
+		
+		$last_bill_non_maint_arrear=$non_maint_arrear;
+		$last_bill_arrear_intrest=$arrear_intrest+$intrest_on_arrears;
+		$last_bill_intrest_on_arrears=$intrest_on_arrears;
+		$last_bill_maint_arrear=$maint_arrear; 
+		$last_bill_amount=$bill_amount;
+	}
+	
+	
+	
+		
+	
+		$last_bill_arrear_intrest=$arrear_intrest+$intrest_on_arrears;
+		 if($last_bill_maint_arrear>0){ 
+			 $days=abs(floor(($last_trasanction_date-$current_bill_start_date)/(60*60*24))); 
+			
+			 $new_interest+=($last_bill_maint_arrear*$days*$tax_factor)/365; 
+			 $new_n[]=array('day'=>$days,'amount'=>$last_bill_maint_arrear,'interest'=>$new_interest,'due_date'=>$last_trasanction_date,'current_transaction_date'=>$current_bill_start_date);
+		 }else{
+			 //$last_bill_maint_arrear=$last_bill_maint_arrear+$last_bill_arrear_intrest;
+			if(!empty($last_bill_amount)){ 
+				 $last_bill_amount=$last_bill_amount-abs($last_bill_maint_arrear);
+				$last_bill_maint_arrear=0;
+			}
+		}
+		if($current_bill_start_date>$last_due_date && $bill_count>0){ 
+			$last_due_date=date('Y-m-d', strtotime('0 day', $last_due_date));
+			$last_due_date=strtotime($last_due_date);
+			
+			$days=abs(floor(($last_due_date-$current_bill_start_date)/(60*60*24)));
+			$new_interest+=($last_bill_amount*$days*$tax_factor)/365; 
+			$new_n[]=array('day'=>$days,'amount'=>$last_bill_amount,'interest'=>$new_interest,'due_date'=>$last_due_date,'current_transaction_date'=>$current_bill_start_date);
+			$last_due_date=$current_transaction_date;
+			
+		}
+		
+		return $new_n;
+		
+	
+}
+
+
+
+
 function calculate_arrears_and_without_interest_edit($ledger_sub_account_id,$start_date){
 	
 		$maint_arrear=0;$non_maint_arrear=0;$arrear_interest=0;$total_credit=0;

@@ -5462,6 +5462,89 @@ $this->set('flats_for_bill',$flats_for_bill);
 //////////////////////// End It Reports Regular (Accounts)//////////////////////
 
 ///////////////////////// Start In head report (Accounts)//////////////////////////
+
+function interest_statement(){
+	
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+		}else{
+		$this->layout='session';
+		}
+	
+		$this->ath();
+		$this->check_user_privilages();
+
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');	
+	
+	$this->loadmodel('regular_bill');
+	$condition=array('society_id'=>$s_society_id);
+	$order=array('regular_bill.auto_id'=>'DESC');
+	$regular_bills=$this->regular_bill->find('all',array('conditions'=>$condition,'order'=>$order)); 
+	foreach($regular_bills as $regular_bill){
+		$start_date=$regular_bill["regular_bill"]["start_date"];
+		$end_date=$regular_bill["regular_bill"]["end_date"];
+		$periods[]=$start_date.'-'.$end_date;
+	}
+	if(empty($periods)){ $periods=array(); }
+	$periods=array_unique($periods);
+	$this->set(compact('periods'));
+
+	
+	
+	$this->loadmodel('ledger_sub_account');
+	$condition=array('society_id'=>$s_society_id,'ledger_id'=>34);
+	$members=$this->ledger_sub_account->find('all',array('conditions'=>$condition));
+	foreach($members as $data3){
+	$ledger_sub_account_ids[]=$data3["ledger_sub_account"]["auto_id"];
+	}
+		$this->loadmodel('wing');
+        $condition=array('society_id'=>$s_society_id);
+        $order=array('wing.wing_name'=>'ASC');
+        $wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+        foreach($wings as $data){
+			$wing_id=$data["wing"]["wing_id"];
+			$this->loadmodel('flat');
+			$condition=array('society_id'=>$s_society_id,'wing_id'=>$wing_id);
+			$order=array('flat.flat_name'=>'ASC');
+			$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+			foreach($flats as $data2){
+				$flat_id=$data2["flat"]["flat_id"];
+				$ledger_sub_account_id = $this->requestAction(array('controller' => 'Fns', 'action' => 'ledger_sub_account_id_via_wing_id_and_flat_id_report'),array('pass'=>array($wing_id,$flat_id)));
+				if(!empty($ledger_sub_account_id)){
+					if (in_array($ledger_sub_account_id, $ledger_sub_account_ids)){
+						$members_for_billing[]=$ledger_sub_account_id;
+					}
+				}
+			}
+		}
+		$this->set(compact("members_for_billing"));	
+	
+}
+
+function interest_statement_ajax($period=null,$led_sub_id=null){
+	
+	$this->ath();
+	
+	$period_show=date("d-m-Y",$period); 
+	$period=date("Y-m-d",$period); 
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$this->loadmodel('society');
+	$condition=array('society_id'=>$s_society_id);
+	$society_result=$this->society->find('all',array('conditions'=>$condition));
+    $tax=(float)$society_result[0]["society"]["tax"];
+	
+	$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array($led_sub_id))); 
+				
+	$this->set(compact("period_show"));
+	$this->set(compact("result_member_info"));	
+	$this->set(compact("tax"));	
+	$this->set(compact("period"));	
+	$this->set(compact("led_sub_id"));	
+}
+
+
+
 function in_head_report(){
 		if($this->RequestHandler->isAjax()){
 		$this->layout='blank';

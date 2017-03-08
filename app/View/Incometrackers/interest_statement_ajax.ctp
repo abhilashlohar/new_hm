@@ -2,8 +2,8 @@
 
 
  $result_interest = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrears_and_interest_edit_test'),array('pass'=>array($led_sub_id,$period)));
-	pr($result_interest); 
-	pr($result_member_info);
+	//pr($result_interest); 
+	//pr($result_member_info);
 	
 	
 ?>

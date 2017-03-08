@@ -5374,6 +5374,14 @@ $this->layout='session';
 	
 	$s_society_id=$this->Session->read('hm_society_id');	
 	
+	$this->loadmodel('bank_reconciliation');
+	$conditions=array('flag'=>1);
+	$result_bank_reconciliation=$this->bank_reconciliation->find('all',array('conditions'=>$conditions));
+	pr($result_bank_reconciliation);
+	exit;
+	
+	
+	
 		if(isset($this->request->data['sub'])){ 
 		
 			 $password = $this->request->data['password'];
@@ -5646,7 +5654,7 @@ $this->layout='session';
                    
             </div>';
 						
-	*/
+	
 		
 
 	//exit; 
@@ -6350,7 +6358,7 @@ $bill='<div style="margin: 0px;">
 	//$this->smtpmailer($to,$from,$from_name,$subject,$bill,$reply);
 	
 	
-	
+	*/
 	
 	
 	

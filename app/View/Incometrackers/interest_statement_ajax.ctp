@@ -63,7 +63,7 @@ if($interest<0){
 <?php } } ?>
 <tr>
 <td colspan="4"></td>
-<td style="text-align: right;"><b>Total Interest</b></td>
-<td style="text-align: right;"><?php echo round($total_interest); ?></td>
+<td style="text-align: right;"><b>Total Interest (Round Off)</b></td>
+<td style="text-align: right;"><b><?php echo round($total_interest); ?></b></td>
 </tr>
 </table>

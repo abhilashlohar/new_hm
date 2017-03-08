@@ -1,10 +1,10 @@
 <?php
 
-
+if($bill_count>0){
  $result_interest = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrears_and_interest_edit_test'),array('pass'=>array($led_sub_id,$period)));
 	//pr($result_interest); 
 	//pr($result_member_info);
-	
+}
 	
 ?>
 
@@ -21,24 +21,27 @@
 <table class="table table-striped table-bordered dataTable">
 <thead>
 <tr>
-<th>Date</th>
+<th>Due Since</th>
 <th>Paid/Pending on Date</th>
 <th>Days delayed</th>
-<th>Amount</th>
+<th>Principal Amount</th>
 <th>Interest Rate</th>
 <th>Interest</th>
 </tr>
 </thead>
 <?php  
-	//exit; 
+
 $total_interest=0;
+if(sizeof(@$result_interest)>0){
 foreach($result_interest as $data){
 $amount= $data['amount'];
 $due_date= $data['due_date'];
 $current_transaction_date= $data['current_transaction_date'];
 $day= $data['day'];
 $interest=$data['interest'];
-
+if($interest<0){
+	$interest=0;
+}
 ?>
 <tr>
 	
@@ -47,7 +50,7 @@ $interest=$data['interest'];
 	<td> <?php echo $day; ?> </td>
 	<td> <?php echo $amount;  ?> </td>
 	<td> <?php echo $tax; ?>% </td>
-	<td> 
+	<td style="text-align: right;"> 
 		<?php if($interest>0){
 				echo number_format((float)$interest, 2, '.', ''); 
 			}else{
@@ -57,10 +60,10 @@ $interest=$data['interest'];
 	</td>
 </tr>
 
-<?php } ?>
+<?php } } ?>
 <tr>
 <td colspan="4"></td>
-<td><b>Total</b></td>
-<td><?php echo round($total_interest); ?></td>
+<td style="text-align: right;"><b>Total Interest</b></td>
+<td style="text-align: right;"><?php echo round($total_interest); ?></td>
 </tr>
 </table>

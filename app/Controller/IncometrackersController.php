@@ -5535,7 +5535,12 @@ function interest_statement_ajax($period=null,$led_sub_id=null){
     $tax=(float)$society_result[0]["society"]["tax"];
 	
 	$result_member_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'), array('pass' => array((int)$led_sub_id))); 
-				
+		
+	$this->loadmodel('regular_bill');
+	$conditions =array('society_id' =>$s_society_id,'ledger_sub_account_id' =>(int)$led_sub_id,'start_date'=>array('$lt'=>strtotime($period)));
+	$bill_count=$this->regular_bill->find('count',array('conditions'=>$conditions));
+    
+	$this->set(compact("bill_count"));
 	$this->set(compact("period_show"));
 	$this->set(compact("result_member_info"));	
 	$this->set(compact("tax"));	

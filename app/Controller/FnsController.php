@@ -1311,7 +1311,7 @@ function calculate_arrears_and_interest_edit_test($ledger_sub_account_id,$start_
 		$current_transaction_date=date('Y-m-d', strtotime('-1 day', $current_transaction_date));
 		$current_transaction_date=strtotime($current_transaction_date);
 		}
-		
+		echo $last_bill_maint_arrear;
 		if($last_bill_maint_arrear>0){ 
 		    $days=abs(floor(($last_trasanction_date-$current_transaction_date)/(60*60*24))); 
 		    $new_interest=($last_bill_maint_arrear*$days*$tax_factor)/365;

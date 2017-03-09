@@ -52,7 +52,7 @@ if($interest<0){
 	<td> <?php echo $tax; ?>% </td>
 	<td style="text-align: right;"> 
 		<?php if($interest>0){
-				echo number_format((float)$interest, 2, '.', ''); 
+				echo $interest= number_format((float)$interest, 2, '.', ''); 
 			}else{
 				echo $interest;
 				}  
@@ -63,7 +63,7 @@ if($interest<0){
 <?php } } ?>
 <tr>
 <td colspan="4"></td>
-<td style="text-align: right;"><b>Total Interest (Round Off)</b></td>
-<td style="text-align: right;"><b><?php echo round($total_interest); ?></b></td>
+<td style="text-align: right;"><b>Total (Rounded Off)</b></td>
+<td style="text-align: right;"><b><?php  echo number_format((float)$total_interest, 2, '.', ''); ?></b></td>
 </tr>
 </table>

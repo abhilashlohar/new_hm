@@ -1,4 +1,18 @@
 <?php
+$filename='Interest_statement_Report';
+
+$filename = str_replace(' ', '_', $filename);
+$filename = str_replace(' ', '-', $filename);
+
+header ("Expires: 0");
+header ("border: 1");
+header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+header ("Cache-Control: no-cache, must-revalidate");
+header ("Pragma: no-cache");
+header ("Content-type: application/vnd.ms-excel");
+header ("Content-Disposition: attachment; filename=".$filename.".xls");
+header ("Content-Description: Generated Report" );
+
 
 if($bill_count>0){
  $result_interest = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrears_and_interest_edit_test'),array('pass'=>array($led_sub_id,$period)));
@@ -17,9 +31,9 @@ if($bill_count>0){
 			<br/>
 			Interest calculation for Bill of <?php echo $period_show; ?>
 	</div> 
-	<a href="interest_statement_excel/<?php echo $period_show;?>/<?php echo $led_sub_id; ?>" class="btn green mini pull-right tooltips " data-placement="left" target="_btn" data-original-title="Download in excel"><i class="fa fa-file-excel-o"></i></a>
+	
 <br>
-<table class="table table-striped table-bordered dataTable">
+<table border="1">
 <thead>
 <tr>
 <th>Due Since</th>
@@ -62,9 +76,9 @@ if($interest<0){
 </tr>
 
 <?php } } ?>
-<tr> 
+<tr>
 <td colspan="4"></td>
 <td style="text-align: right;"><b>Total (Rounded Off)</b></td>
-<td style="text-align: right;"><b><?php $total= round($total_interest);  echo  number_format((float)$total, 2, '.', ''); ?></b></td>
+<td style="text-align: right;"><b><?php $total= round($total_interest);  echo number_format((float)$total, 2, '.', ''); ?></b></td>
 </tr>
 </table>

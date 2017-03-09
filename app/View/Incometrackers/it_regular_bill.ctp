@@ -180,7 +180,9 @@ font-size: 11px;"></p>
 				</div>
 				<div id="flat_empty" style="color: rgb(198, 4, 4);font-size: 11px;" align="center"> </div>
 				<div class="control-group">
-				  <label class="control-label">Billing Description</label>
+				  <label class="control-label">Billing Description 
+				  <i style="color:red;" class=" icon-info-sign tooltips" data-placement="right" data-original-title="(Maximum 35 characters.)"> </i>
+				  </label>
 				  <div class="controls">
 					<input type="text" name="description" class="m-wrap span12" placeholder="Billing Description" maxlength="35">
 				  </div>

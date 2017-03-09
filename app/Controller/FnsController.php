@@ -1241,7 +1241,7 @@ function calculate_arrears_and_interest_edit_test($ledger_sub_account_id,$start_
 		$conditions =array('society_id' =>$s_society_id,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'start_date'=>array('$lt'=>strtotime($start_date)));
 		$order=array('regular_bill.auto_id'=>'DESC');
 		$last_bill_info=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1));
-pr($last_bill_info);
+
 		$last_bill_start_date=$last_bill_info[0]["regular_bill"]["start_date"];
 		//$last_bill_start_date_for_ledger=date('Y-m-d', strtotime('+1 day', $last_bill_start_date));
 		$last_bill_start_date_for_ledger=date('Y-m-d', $last_bill_start_date);
@@ -1311,7 +1311,7 @@ pr($last_bill_info);
 		$current_transaction_date=date('Y-m-d', strtotime('-1 day', $current_transaction_date));
 		$current_transaction_date=strtotime($current_transaction_date);
 		}
-		echo $last_bill_maint_arrear;
+		
 		if($last_bill_maint_arrear>0){ 
 		    $days=abs(floor(($last_trasanction_date-$current_transaction_date)/(60*60*24))); 
 		    $new_interest=($last_bill_maint_arrear*$days*$tax_factor)/365;

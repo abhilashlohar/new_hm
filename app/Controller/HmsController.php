@@ -5377,8 +5377,17 @@ $this->layout='session';
 	$this->loadmodel('bank_reconciliation');
 	$conditions=array('flag'=>1);
 	$result_bank_reconciliation=$this->bank_reconciliation->find('all',array('conditions'=>$conditions));
-	pr($result_bank_reconciliation);
-	exit;
+	//pr($result_bank_reconciliation);
+	
+	foreach($result_bank_reconciliation as $data){
+		 $auto_id=$data['bank_reconciliation']['auto_id'];
+		 $pass_book_date=$data['bank_reconciliation']['pass_book_date'];
+		 $pass_book_date1 = date("Y-m-d",strtotime($pass_book_date));
+		 $pass_book_date2=strtotime($pass_book_date1);
+		 $this->bank_reconciliation->updateAll(array('pass_book_transaction_date'=>$pass_book_date2),array('auto_id'=>$auto_id));
+			
+	}
+	//exit;
 	
 	
 	
@@ -22667,8 +22676,8 @@ function society_member_view(){
 					$flat_info=$this->flat->find('all',array('conditions'=>$conditions));
 					$flat_name=ltrim(@$flat_info[0]["flat"]["flat_name"],'0');
 					$flat_name_new=@$flat_info[0]["flat"]["flat_name"];
-					$flats[$user_flat_id]=$wing_name.' - '.$flat_name;
-					$flats1[$user_flat_id]=$wing_name.' - '.$flat_name_new;
+					$flats[$user_flat_id]=$wing_name.'-'.$flat_name;
+					$flats1[$user_flat_id]=$wing_name.'-'.$flat_name_new;
 					if($owner=="yes" && (!empty($wing) && !empty($flat))){
 								$this->loadmodel('flat');
 								$conditions=array("wing_id"=>$wing,"flat_id"=>$flat);

@@ -113,7 +113,7 @@
 					<td><?php echo $receipt_type; ?></td>
 					<td>
 					<?php if($received_from == "residential"){ ?>
-					<?php echo $user_name.' ('.$wing_name.' - '.$flat_name.')'; ?> <?php }else { ?>
+					<?php echo $user_name.' ('.$wing_name.'-'.$flat_name.')'; ?> <?php }else { ?>
 					<?php echo $user_name; ?>
 					<?php } ?>
 					</td>

@@ -17,7 +17,9 @@ if($bill_count>0){
 			<br/>
 			Interest calculation for Bill of <?php echo $period_show; ?>
 	</div> 
-	<a href="interest_statement_excel/<?php echo $period_show;?>/<?php echo $led_sub_id; ?>" class="btn green mini pull-right tooltips " data-placement="left" target="_btn" data-original-title="Download in excel"><i class="fa fa-file-excel-o"></i></a>
+	<a href="interest_statement_excel/<?php echo $period_show;?>/<?php echo $led_sub_id; ?>" class="btn green mini pull-right tooltips hide_at_print" data-placement="left" target="_btn" data-original-title="Download in excel"><i class="fa fa-file-excel-o"></i></a>
+	<a class="btn blue mini hide_at_print pull-right" style="margin-right: 2px;" onclick="window.print()"><i class="icon-print"></i></a>
+	
 <br>
 <table class="table table-striped table-bordered dataTable">
 <thead>

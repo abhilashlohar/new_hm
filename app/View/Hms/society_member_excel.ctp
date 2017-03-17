@@ -16,7 +16,7 @@ foreach ($result_society as $collection){
 					<th>Roles</th>
 					<th>Email</th>
 					<th>Mobile</th>
-					
+					<th>Mapping</th>
 					<th>Portal Enrollment date</th>
 					
 				</tr>
@@ -27,6 +27,9 @@ foreach ($result_society as $collection){
 				$user_name=$user_info["user_name"];
 				$user_flat_id=$user_info["user_flat_id"];
 				$wing_flats=$user_info["wing_flat"];
+				$representator_info=@$user_info["representator_info"];
+				$wing_name=@$representator_info['wing_name']; 
+			    $flat_name=@$representator_info['flat_name'];
 				$roles=$user_info["roles"];
 				$email=$user_info["email"];
 				$mobile=$user_info["mobile"];
@@ -44,8 +47,8 @@ foreach ($result_society as $collection){
 							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $email; ?></td>
 							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $mobile; ?></td>
 							
+							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php if(!empty($wing_name)){ echo "".$wing_name."-".$flat_name.""; } ?></td>
 							<td rowspan="<?php echo sizeof($wing_flats); ?>"><?php echo $date; ?></td>
-							
 						</tr>
 					<?php }else{ ?>
 						<tr>
@@ -63,7 +66,7 @@ foreach ($result_society as $collection){
 						<td><?php echo $roles; ?></td>
 						<td><?php echo $email; ?></td>
 						<td><?php echo $mobile; ?></td>
-						
+						<td><?php if(!empty($wing_name)){ echo "".$wing_name."-".$flat_name.""; } ?></td>
 						<td><?php echo $date; ?></td>
 						
 					</tr>

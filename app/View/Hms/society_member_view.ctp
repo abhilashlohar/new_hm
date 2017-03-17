@@ -18,7 +18,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	
 	<span style="color:red; font-size:10px;"><i class=" icon-star"></i></span> <span class="tex-col"> Resident </span> -  <span id="resident">  0 </span> |
 	<span class="tex-col"> Awaiting User Validation </span> - <span id="awa_count"> 0 </span> 
-	&nbsp;
+	
+	<!--<span class="tex-col"> <i class=" icon-star"></i> Represntative </span>-->
 	</div>
 	<a href="society_member_excel" class="blue mini btn" download="download"><i class="fa fa-file-excel-o"></i></a> 
 
@@ -45,7 +46,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			</thead>
 			<tbody>
 			<?php $sr_no=0;
-			//pr($arranged_users); 
+			
 			
 			$count_owner=0; $count_tenant=0; $count_family_owner=0;$resident_count=0;$count_family_tenant=0;$awating_count=0;
 			foreach($arranged_users as $user_id=>$user_info){ 
@@ -53,7 +54,9 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				$user_flat_id=$user_info["user_flat_id"];
 				$user_id=$user_info["user_id"];
 				$wing_flats=$user_info["wing_flat"];
-				//$wing_name=$user_info["wing_name"];
+				$representator_info=@$user_info["representator_info"];
+				$wing_name=@$representator_info['wing_name']; 
+			    $flat_name=@$representator_info['flat_name'];
 				$roles=$user_info["roles"];
 				$resident_member=$user_info["resident_member"];
 						$flat_ascs=$user_info["flat_asc"];	
@@ -94,7 +97,11 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 							}else{
 								echo '<td><a class="btn green mini">'.ucfirst($validation_status).'</a></td>';
 							} ?>
-							<td><?php echo $date; ?></td>
+							<td><?php echo $date; ?> 
+							<?php if(!empty($wing_name)){ ?>
+							<i style="color:red;" class=" icon-info-sign tooltips pull-right" data-placement="top" data-original-title="Mapping: (<?php echo "".$wing_name."-".$flat_name.""; ?>)" > </i>
+							<?php } ?>
+							</td>
 							<td>
 								<div class="btn-group" style="margin: 0px !important;">
 								<a class="btn blue mini" href="#" data-toggle="dropdown">
@@ -131,7 +138,12 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 						}else{
 							echo '<td><a class="btn green mini">'.ucfirst($validation_status).'</a></td>';
 						} ?>
-						<td><?php echo $date; ?></td>
+						<td><?php echo $date; ?>
+						<?php if(!empty($wing_name)){ ?>
+							<i style="color:red;" class=" icon-info-sign tooltips pull-right" data-placement="top" data-original-title="Mapping: (<?php echo "".$wing_name."-".$flat_name.""; ?>)" > </i>
+							<?php } ?>
+											
+						</td>
 						<td>
 							<div class="btn-group" style="margin: 0px !important;">
 							<a class="btn blue mini" href="#" data-toggle="dropdown">
@@ -173,10 +185,10 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 
 <script>
 
-$(document).ready(function(){
-
+$(document).ready(function(){ 
+$('.tooltips').tooltip();
 	setTimeout(
-	function(){
+	function(){ 
 		$("#unit_number").click();
 		var i=0;
 		$('#sample_1 tbody tr').each(function(){ 

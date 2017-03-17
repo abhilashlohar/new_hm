@@ -3348,7 +3348,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -22661,6 +22661,18 @@ function society_member_view(){
 			$flats=array(); $resident=array();	$flats1=array();
 			foreach($user_flat_info as $user_flat){
 				$user_flat_id=$user_flat["user_flat"]["user_flat_id"];
+				
+			// represntive code
+				$this->loadmodel('ledger_sub_account');
+				$conditions=array("society_id" => $s_society_id,"representative" => "yes","user_flat_id"=>$user_flat_id);
+				$ledger_sub_accounts=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+			
+				$representator=@$ledger_sub_accounts[0]["ledger_sub_account"]["representator"];
+
+				$representator_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($representator)));
+				
+			/// end 	
+			
 				$wing=$user_flat["user_flat"]["wing"];
 				$flat=$user_flat["user_flat"]["flat"];
 				$owner=@$user_flat["user_flat"]["owner"];
@@ -22742,7 +22754,7 @@ function society_member_view(){
 		}
 		$roles=implode(',',$roles);
 		
-		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id,"count_member_owner"=>$count_member_owner,"count_member_tenant"=>$count_member_tenant,"count_member_family_owner"=>$count_member_family_owner,"count_member_family_tenant"=>$count_member_family_tenant,'resident_member'=>$resident,'user_id'=>$user_id,'flat_asc'=>$flats1,);
+		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id,"count_member_owner"=>$count_member_owner,"count_member_tenant"=>$count_member_tenant,"count_member_family_owner"=>$count_member_family_owner,"count_member_family_tenant"=>$count_member_family_tenant,'resident_member'=>$resident,'user_id'=>$user_id,'flat_asc'=>$flats1,'representator_info'=>$representator_info);
 	}
 	
 	$this->set(compact("arranged_users"));
@@ -22887,6 +22899,19 @@ $arranged_users=array();
 			$flats=array();
 			foreach($user_flat_info as $user_flat){
 				$user_flat_id=$user_flat["user_flat"]["user_flat_id"];
+				
+				// represntive code
+				$this->loadmodel('ledger_sub_account');
+				$conditions=array("society_id" => $s_society_id,"representative" => "yes","user_flat_id"=>$user_flat_id);
+				$ledger_sub_accounts=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+			
+				$representator=@$ledger_sub_accounts[0]["ledger_sub_account"]["representator"];
+
+				$representator_info = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($representator)));
+				
+			/// end 	
+				
+				
 				$wing=$user_flat["user_flat"]["wing"];
 				$flat=$user_flat["user_flat"]["flat"];
 				$exited=$user_flat["user_flat"]["exited"];
@@ -22925,7 +22950,7 @@ $arranged_users=array();
 		}
 		$roles=implode(',',$roles);
 		
-		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id);
+		$arranged_users[$user_id]=array("user_name"=>$user_name,"wing_flat"=>$flats,"roles"=>$roles,"mobile"=>$mobile,"email"=>$email,"validation_status"=>$validation_status,"date"=>$date,"user_flat_id"=>$user_flat_id,'representator_info'=>$representator_info);
 	}
 	$this->set(compact("arranged_users"));
 

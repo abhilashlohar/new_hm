@@ -3990,6 +3990,9 @@ function balance_sheet_ajax($from=null){
 	$this->layout='ajax_blank';
 	$this->ath();
 		
+		 $prev_from=strtotime("-1 year", strtotime($from)); 
+		 $prev_from=date('d-m-Y',$prev_from);
+				
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$this->set('s_society_id',$s_society_id);
 	$s_user_id=$this->Session->read('hm_user_id');	
@@ -3998,6 +4001,7 @@ function balance_sheet_ajax($from=null){
 		echo "<center style='color:red;'>Fill above fields.</center>"; exit;
 	}
 	$this->set('from',$from);
+	$this->set('prev_from',$prev_from);
 	$this->loadmodel('accounts_group');
 	$conditions2=array("accounts_id" => 1);
 	$result_accounts_group=$this->accounts_group->find('all',array('conditions'=>$conditions2));

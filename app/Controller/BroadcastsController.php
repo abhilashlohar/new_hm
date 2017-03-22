@@ -146,7 +146,8 @@ $sms_allow=(int)$r_sms->sms_allow;
 		}
 	pr($payload['GID']); echo"<br/>";
 	pr($payload->GID); echo"<br/>";
-echo $payload;
+	pr($payload->Message->GID); echo"<br/>";
+	echo $payload;
 	exit;
 		$store_time=$time_h.':'.$time_m;
 		$sms_id=$this->autoincrement('sms','sms_id');

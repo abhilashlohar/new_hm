@@ -142,19 +142,16 @@ $sms_allow=(int)$r_sms->sms_allow;
 			if($allow=='no'){
 				goto a;
 			}
-		//$payload =file_get_contents('http://URL/api/v3/index.php?method=sms&api_key=Ad9e5XXXXXXXXXXXXX&to=997XXXXXXX,997XXXXXXX&sender=INFXXX&message=testing&time=2014-08-26 04:45pm');
 		
-		//$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m.'&format=json');
 		
-		$payload = file_get_contents('http://alerts.sinfini.com/api/v3/index.php?method=sms&api_key='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$y_date.$time_h.$time_m);
+		$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m.'&format=json');
+		
+	//new sms api $payload = file_get_contents('http://alerts.sinfini.com/api/v3/index.php?method=sms&api_key='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$y_date.$time_h.$time_m);
 				
 		}
 			
 		pr($payload);
-	//	$z=implode(' ',$payload);
-//pr($z);
-		var_dump($payload);
-		echo $payload;
+	
 	exit;
 		$store_time=$time_h.':'.$time_m;
 		$sms_id=$this->autoincrement('sms','sms_id');

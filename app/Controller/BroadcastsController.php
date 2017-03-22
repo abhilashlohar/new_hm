@@ -95,7 +95,7 @@ $s_date_ex1=$d[1];
 $s_date_ex2=$d[2];
  $time_h=$this->request->data['time_h'];
  $time_m=$this->request->data['time_m'];
-$ti="04:45pm";
+$ti="05:00pm";
 $date=date("d-m-y");
 $time=date('h:i:a',time());
 

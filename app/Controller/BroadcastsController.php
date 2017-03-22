@@ -146,6 +146,7 @@ $sms_allow=(int)$r_sms->sms_allow;
 		}
 		$g[]=$payload;
 		pr($g);
+		pr($payload);
 	pr($payload['GID']); echo"<br/>";
 	pr($payload->GID); echo"<br/>";
 	pr($payload->Message->GID); echo"<br/>";

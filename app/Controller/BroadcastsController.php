@@ -150,7 +150,8 @@ $sms_allow=(int)$r_sms->sms_allow;
 	$payload = file_get_contents('http://alerts.sinfini.com/api/v3/index.php?method=sms&api_key='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$y_date.$ti);
 				
 		}
-			
+		$ttt=json_decode($payload);	
+		pr($ttt);
 		pr($payload);
 	
 	exit;

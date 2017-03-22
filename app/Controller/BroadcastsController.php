@@ -148,6 +148,7 @@ $sms_allow=(int)$r_sms->sms_allow;
 		$test=json_decode($payload);
 		pr($payload);
 		pr($test);
+		var_dump($payload);
 	echo $payload;
 	exit;
 		$store_time=$time_h.':'.$time_m;

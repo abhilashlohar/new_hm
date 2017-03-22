@@ -95,7 +95,7 @@ $s_date_ex1=$d[1];
 $s_date_ex2=$d[2];
  $time_h=$this->request->data['time_h'];
  $time_m=$this->request->data['time_m'];
-
+$ti="04:45pm";
 $date=date("d-m-y");
 $time=date('h:i:a',time());
 
@@ -144,9 +144,10 @@ $sms_allow=(int)$r_sms->sms_allow;
 			}
 		
 		
-		$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m.'&format=json');
+		//$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m.'&format=json');
 		
-	//new sms api $payload = file_get_contents('http://alerts.sinfini.com/api/v3/index.php?method=sms&api_key='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$y_date.$time_h.$time_m);
+	//new sms api
+	$payload = file_get_contents('http://alerts.sinfini.com/api/v3/index.php?method=sms&api_key='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$y_date.$ti);
 				
 		}
 			

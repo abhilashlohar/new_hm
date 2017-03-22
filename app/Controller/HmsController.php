@@ -5389,6 +5389,9 @@ $this->layout='session';
 	}
 	
 			$ge=file_get_contents('http://api-alerts.solutionsinfini.com/v4/?method=sms.schedule&api_key=149981t853o14262m1119&groupid=4676752233&format=xml');
+			
+			$test=json_decode($ge);
+			pr($test);
 			pr($ge);
 	exit;
 		if(isset($this->request->data['sub'])){ 

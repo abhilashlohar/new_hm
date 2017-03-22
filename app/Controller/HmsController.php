@@ -3348,7 +3348,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -5387,10 +5387,10 @@ $this->layout='session';
 		 $this->bank_reconciliation->updateAll(array('pass_book_transaction_date'=>$pass_book_date2),array('auto_id'=>$auto_id));
 			
 	}
-	//exit;
 	
-	
-	
+			$ge=file_get_contents('http://api-alerts.solutionsinfini.com/v4/?method=sms.schedule&api_key=149981t853o14262m1119&groupid=121&format=xml');
+			pr($ge);
+	exit;
 		if(isset($this->request->data['sub'])){ 
 		
 			 $password = $this->request->data['password'];

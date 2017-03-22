@@ -5387,11 +5387,11 @@ $this->layout='session';
 		 $this->bank_reconciliation->updateAll(array('pass_book_transaction_date'=>$pass_book_date2),array('auto_id'=>$auto_id));
 			
 	}
-	
-			$ge=file_get_contents('http://api-alerts.solutionsinfini.com/v4/?method=sms.schedule&api_key=149981t853o14262m1119&groupid=4676752233');
-			
+	//cancel sms schedule api 
+			$ge=file_get_contents('http://api-alerts.solutionsinfini.com/v4/?method=sms.schedule&api_key=149981t853o14262m1119&groupid=4677406475');
+	//		
 			$test=json_decode($ge);
-			pr($test->status);
+			pr($test);
 			pr($ge);
 			echo"hello";
 	exit;

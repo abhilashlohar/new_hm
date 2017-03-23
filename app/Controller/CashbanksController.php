@@ -3146,7 +3146,7 @@ function b_receipt_edit($transaction_id=null){
 		$ledger_sub_account_id = null;
 		if($member_type=='residential'){
 			//$receipt_type = @$this->request->data['receipt_type'];
-		$ledger_sub_account_id=(int)@$this->request->data['ledger_sub_account'];
+			$ledger_sub_account_id=(int)@$this->request->data['ledger_sub_account'];
 		}
 		if($member_type=='non_residential'){
 			 $non_member_ledger_sub_account_id=(int)@$this->request->data['non_member_ledger_sub_account'];
@@ -3155,7 +3155,7 @@ function b_receipt_edit($transaction_id=null){
 		 $amount = @$this->request->data['amount'];
 		 $narration = @$this->request->data['description'];
 		 $current_date = date('Y-m-d');
-				
+			
 	if($member_type=='residential'){
 		
 	$this->loadmodel('cash_bank');
@@ -3185,12 +3185,38 @@ function b_receipt_edit($transaction_id=null){
 	$edit_text=$ignore_receipt_number."-R";	
 	$this->loadmodel('cash_bank');
 	$this->cash_bank->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"deposited_in"=>$deposited_bank_id,"receipt_mode"=>$receipt_mode,"cheque_number" =>@$cheque_number,"date"=>@$cheque_date,"drown_in_which_bank"=>@$drawn_on_which_bank,"branch_of_bank"=>@$branch_of_bank,"received_from"=>$member_type,"ledger_sub_account_id"=>$ledger_sub_account_id,"amount"=>$amount,"narration"=>@$narration,"edit_text"=>$edit_text,"edited_by"=>$s_user_id,"edited_on"=>$edited_date,'reconciliation_status'=>'pending'),Array("transaction_id"=>$transaction_id)); 
+	
+	// Cancel receipt ledger posting
+
+	$this->loadmodel('ledger');
+	$conditions=Array("element_id"=>$transaction_id,"credit"=>null,"table_name"=>"cash_bank","society_id" => $s_society_id);
+	$result_ledger_count=$this->ledger->find('count',array('conditions'=>$conditions));
+	
+	$this->loadmodel('ledger');
+	$conditions=Array("element_id"=>$transaction_id,"debit"=>null,"table_name"=>"cash_bank","society_id" => $s_society_id);
+	$result_ledger_count1=$this->ledger->find('count',array('conditions'=>$conditions));
+	
+	if($result_ledger_count==0 and $result_ledger_count1==0){
+		
+		$this->loadmodel('ledger');
+		$ledger_id=$this->autoincrement('ledger','auto_id');
+		$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($tranjection_date), "debit" => $amount, "credit" =>null, "ledger_account_id" => 33, "ledger_sub_account_id" => $deposited_bank_id,"table_name" => "cash_bank","element_id" => $transaction_id, "society_id" => $s_society_id))); 
+		
+		
+		$ledger_id=$this->autoincrement('ledger','auto_id');
+		$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($tranjection_date), "credit" => $amount,"debit" =>null,"ledger_account_id" => 34, "ledger_sub_account_id" => $ledger_sub_account_id,"table_name"=>"cash_bank","element_id" => $transaction_id, "society_id" => $s_society_id)));
+		
+		
+	}else{
+		
+		$this->loadmodel('ledger');
+		$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"debit"=>$amount, "credit"=>null,"ledger_account_id"=>33,"ledger_sub_account_id"=>$deposited_bank_id),Array("element_id"=>$transaction_id,"credit"=>null,"table_name"=>"cash_bank")); 
 					
-	$this->loadmodel('ledger');
-	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"debit"=>$amount, "credit"=>null,"ledger_account_id"=>33,"ledger_sub_account_id"=>$deposited_bank_id),Array("element_id"=>$transaction_id,"credit"=>null,"table_name"=>"cash_bank")); 
+		$this->loadmodel('ledger');
+		$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"credit"=>$amount,"ledger_account_id"=>34,"ledger_sub_account_id"=>$ledger_sub_account_id),Array("element_id"=>$transaction_id,"debit"=>null,"table_name"=>"cash_bank"));
 				
-	$this->loadmodel('ledger');
-	$this->ledger->updateAll(Array("transaction_date"=>strtotime($tranjection_date),"credit"=>$amount,"ledger_account_id"=>34,"ledger_sub_account_id"=>$ledger_sub_account_id),Array("element_id"=>$transaction_id,"debit"=>null,"table_name"=>"cash_bank"));
+	}
+	
 	
 	if($ledger_sub_account_id_old == $ledger_sub_account_id){
 	   $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'));

@@ -3348,7 +3348,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -5369,33 +5369,65 @@ $this->layout='blank';
 $this->layout='session';
 }
 	$this->ath();
-	
-	
-	
+		
 	$s_society_id=$this->Session->read('hm_society_id');	
+
 	
-	$this->loadmodel('bank_reconciliation');
-	$conditions=array('flag'=>1);
-	$result_bank_reconciliation=$this->bank_reconciliation->find('all',array('conditions'=>$conditions));
-	//pr($result_bank_reconciliation);
+//cancel sms schedule api 
 	
-	foreach($result_bank_reconciliation as $data){
-		 $auto_id=$data['bank_reconciliation']['auto_id'];
-		 $pass_book_date=$data['bank_reconciliation']['pass_book_date'];
-		 $pass_book_date1 = date("Y-m-d",strtotime($pass_book_date));
-		 $pass_book_date2=strtotime($pass_book_date1);
-		 $this->bank_reconciliation->updateAll(array('pass_book_transaction_date'=>$pass_book_date2),array('auto_id'=>$auto_id));
-			
-	}
-	//cancel sms schedule api 
-			$ge=file_get_contents('http://api-alerts.solutionsinfini.com/v4/?method=sms.schedule&api_key=149981t853o14262m1119&groupid=4643913769');
-	//		
-	
+			/* $ge=file_get_contents('http://api-alerts.solutionsinfini.com/v4/?method=sms.schedule&api_key=149981t853o14262m1119&groupid=4643913769'); 	
+
 			$test=json_decode($ge);
 			pr($test);
 			pr($ge);
 			echo"hello";
-	exit;
+			*/	
+///
+	// ledger posting check code//
+	
+		$this->loadmodel('regular_bill');
+		$conditions=array('edited'=>'no');
+		$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>array('auto_id'=>'ASC')));	
+//pr($result_regular_bill); 
+		foreach($result_regular_bill as $data){
+			$element_id=$data['regular_bill']['auto_id'];
+			$bill_number=$data['regular_bill']['bill_number'];
+			$society_id=$data['regular_bill']['society_id'];
+			$start_date=$data['regular_bill']['start_date'];
+			$quarter_bill= date("d-m-Y",$start_date); 
+			
+			$this->loadmodel('society');
+			$result_society=$this->society->find('all',array('conditions'=>array('society_id'=>$society_id)));
+			$society_name=$result_society[0]['society']['society_name'];
+			
+			$this->loadmodel('ledger');
+			$conditions=array('element_id'=>$element_id,'table_name'=>'regular_bill','society_id'=>$society_id);
+			$ledger_posting=$this->ledger->find('count',array('conditions'=>$conditions));
+
+			if($ledger_posting==0){
+				
+					$this->loadmodel('regular_ledger_posting');
+					$conditions=array('element_id'=>$element_id,'table_name'=>'regular_bill','society_id'=>$society_id);
+					$regular_ledger_posting=$this->regular_ledger_posting->find('count',array('conditions'=>$conditions));
+						if($regular_ledger_posting==0){	
+							$this->loadmodel('regular_ledger_posting');
+							$auto_id=$this->autoincrement('regular_ledger_posting','auto_id');
+							$this->regular_ledger_posting->saveAll(Array( Array("auto_id" => $auto_id, "table_name" => "regular_bill","society_id" => $society_id,"bill_number" => $bill_number, "quarter_bill"=>$quarter_bill,"element_id" =>$element_id,"status"=>"NO",'society_name'=>$society_name))); 
+						}
+			}
+				
+			
+		}
+		
+		$this->loadmodel('regular_ledger_posting');
+		//$conditions=array('element_id'=>$element_id,'table_name'=>'regular_bill','society_id'=>$society_id);
+		$regular_ledger_posting=$this->regular_ledger_posting->find('all');
+		$this->set('regular_ledger_posting',$regular_ledger_posting);
+		
+		
+	//end code 	
+	
+	
 		if(isset($this->request->data['sub'])){ 
 		
 			 $password = $this->request->data['password'];

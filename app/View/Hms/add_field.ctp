@@ -1,28 +1,25 @@
 <form method="post">
 <table class="table" border="1">
 <tr>
-	<td>User Name</td>
-	<td>Email</td>
-	<td>Mobile</td>
-	<td>Password</td>
-	<td>validation status</td>
+	<td>Sr.no</td>
+	<td>Society Name</td>
+	<td>Quarter Bill</td>
+	<td>Bill Number</td>
+	<td>Status</td>
 </tr>
-<?php 
-foreach($result_user as $data){
-
+<?php $i=0;
+foreach($regular_ledger_posting as $data){
+$i++;
 ?>
 <tr>
-	<td><?php echo $data['user']['user_name']; ?></td>
-	<td><?php echo $data['user']['email']; ?></td>
-	<td><?php echo $data['user']['mobile']; ?></td>
-	<td><input type="text" name="password[]" value="<?php echo $data['user']['password']; ?>" ></td>
-	<td>
-		<input type="hidden" name="user_dat_id[]" value="<?php echo $data['user']['user_id']; ?>">
-		<input type="text" name="validation_status[]" value="<?php echo @$data['user']['validation_status']; ?>">
+	<td><?php echo $i; ?></td>
+	<td><?php echo $data['regular_ledger_posting']['society_name']; ?></td>
+	<td><?php echo $data['regular_ledger_posting']['quarter_bill']; ?></td>
+	<td><?php echo $data['regular_ledger_posting']['bill_number']; ?></td>
+	<td><?php echo $data['regular_ledger_posting']['status']; ?></td>
 	
-	</td>
 </tr>
 <?php } ?>
 </table>
-<input type="submit" name="sub" class="btn blue" >
+
 </form>

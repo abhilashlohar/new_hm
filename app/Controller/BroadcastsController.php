@@ -32,7 +32,7 @@ function message()
 		$this->loadmodel('society');
 		$conditions=array("society_id"=>$s_society_id);
 		$result_society=$this->society->find('all',array('conditions'=>$conditions));
-		$sms_s_count=(int)$result_society[0]['society']['sms_credit'];
+		$sms_s_count=(int)@$result_society[0]['society']['sms_credit'];
 		$count_sms=(int)@$result_society[0]['society']['sms_credit'];
 		$sms_limit=(int)@$result_society[0]['society']['sms_limit'];
 		$this->set(compact('count_sms'));
@@ -85,22 +85,40 @@ $this->set('result_template7',$this->template->find('all',array('conditions'=>$c
 $sms_sount_total=0;
 if(isset($this->request->data['send'])) 
 {
-$radio=$this->request->data['radio'];
+ $radio=$this->request->data['radio'];
  $s_date=$this->request->data['date'];
-$y_date=date("Y-m-d",strtotime($s_date));
  
-$d=explode("-", $s_date);
-$s_date_ex0=$d[0];
-$s_date_ex1=$d[1];
-$s_date_ex2=$d[2];
- $time_h=$this->request->data['time_h'];
- $time_m=$this->request->data['time_m'];
-//$ti="05:00pm";
+  $ti=$this->request->data['time'];
+ 
+$store_time=$ti;
+exit;
+
 $date=date("d-m-y");
+$date_new=date("d-m-Y");
 $time=date('h:i:a',time());
+
+/// validation 
+
+  $y_date=date("Y-m-d",strtotime($s_date));
+ 
+   $y_date2=date("Y-m-d h:i A",strtotime($s_date ." ".$ti));
+  $date_fill=strtotime($y_date2);
+
+  $time_plus=date('h:i A',strtotime('+15 minutes'));
+ 
+    $y_datef=date("Y-m-d h:i A",strtotime($date_new ." ".$time_plus));
+
+ $current= strtotime($y_datef);
+
+ if($current<$date_fill){
+	
+ }else{
+	goto z; 
+ }
 
 $massage=$this->request->data['massage'];
 $massage_str=str_replace(' ', '+', $massage);
+
 
 $result_user_info=$this->requestAction(array('controller'=>'Fns','action'=>'user_info_via_user_id'), array('pass'=>array((int)$s_user_id)));
 foreach ($result_user_info as $collection2){
@@ -134,7 +152,7 @@ $sms_allow=(int)$r_sms->sms_allow;
 		}
 		 $mobile_im=implode(",", $mobile);
 		
-		$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m;
+		//$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m;
 		if($sms_allow==1){ 
 			$sms_count=$this->check_sms_count($massage_str,$multi);
 			
@@ -144,17 +162,17 @@ $sms_allow=(int)$r_sms->sms_allow;
 			}
 		
 		
-		$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m.'&format=json');
+		//$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m.'&format=json');
 		
-	//new sms api $payload = file_get_contents('http://alerts.sinfini.com/api/v3/index.php?method=sms&api_key='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$y_date.$ti);
+		$payload = file_get_contents('http://alerts.sinfini.com/api/v3/index.php?method=sms&api_key='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$y_date.$ti);
 				
 		}
-		//$ttt=json_decode($payload);	
-		
-		$store_time=$time_h.':'.$time_m;
+		$find_froup=json_decode($payload);	
+		//pr($find_froup);
+	//	exit;
 		$sms_id=$this->autoincrement('sms','sms_id');
 		$this->loadmodel('sms');
-		$multipleRowData=Array( Array("sms_id"=>$sms_id,"text"=>$massage,"user_id"=>$user,"date"=>$date,"time"=>$time,"society_id"=>$s_society_id,"type"=>1,"deleted"=>0,"send_sms_time"=>$store_time,"send_sms_count"=>$sms_count));
+		$multipleRowData=Array( Array("sms_id"=>$sms_id,"text"=>$massage,"user_id"=>$user,"date"=>$date,"time"=>$time,"society_id"=>$s_society_id,"type"=>1,"deleted"=>0,"send_sms_time"=>$store_time,"send_sms_count"=>$sms_count,'send_sms_date'=>$s_date,"group_id"=>$group_id,"s_user_id"=>$s_user_id));
 		$this->sms->saveAll($multipleRowData);
 		}
 
@@ -205,12 +223,15 @@ $mobile_array_implode = implode(',',$mobile_array);
 			}
 		
 	
-	$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_array_implode.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m);
+	//$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_array_implode.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m);
+	
+	$payload = file_get_contents('http://alerts.sinfini.com/api/v3/index.php?method=sms&api_key='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_array_implode.'&message='.$massage_str.'&time='.$y_date.$ti);
 	}
-
+   $find_froup=json_decode($payload);	
+		//pr($find_froup);
 $sms_id=$this->autoincrement('sms','sms_id');
 $this->loadmodel('sms');
-$multipleRowData = Array( Array("sms_id" => $sms_id,"text"=>$massage,"user_id"=>$user_id_array,"date"=>$date,"time"=>$time,"type"=>1,"society_id"=>$s_society_id,"deleted"=>0,"send_sms_count"=>$sms_count));	
+$multipleRowData = Array( Array("sms_id" => $sms_id,"text"=>$massage,"user_id"=>$user_id_array,"date"=>$date,"time"=>$time,"type"=>1,"society_id"=>$s_society_id,"deleted"=>0,"send_sms_count"=>$sms_count,'send_sms_date'=>$s_date,"send_sms_time"=>$store_time,"group_id"=>$group_id,"s_user_id"=>$s_user_id));	
 $this->sms->saveAll($multipleRowData);
 }
 	 $sms_s_count+=$sms_count;
@@ -247,7 +268,7 @@ a:
 	<!----alert-------------->
 
 <?php	}
-
+z: 
 }
 
 

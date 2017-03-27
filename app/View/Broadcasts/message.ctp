@@ -4,7 +4,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 
 <div style="padding:5px;" align="center" class="mobile-align">
 <a href="message_view" class="btn blue" rel='tab'>SMS History</a>
-<a href="message" class="btn red" rel='tab'>Send SMS</a>
+<a href="message" class="btn red" rel='tab'>Compose SMS</a>
 </div>
 
 <span class="btn mini purple" style="padding: 5px;font-size: 12px;margin-left:10%;margin-bottom: 2px;" ><b> Sms limit  : <?php echo @$sms_limit; ?> </b></span> <span class="btn mini red" style="padding: 5px;font-size: 12px;margin-bottom: 2px;" ><b> Sms remaining  : <?php echo @$sms_limit-@$count_sms;  ?> </b></span>
@@ -228,12 +228,12 @@ $time=time();
 		<div class="control-group">
 			<label style="font-size:14px; font-weight:bold;">Date</label>
 			<div class="controls">
-			<input class="m-wrap m-ctrl-medium date-picker" readonly name="date" size="16" data-date-format="dd-mm-yyyy" type="text" data-date-start-date="<?php echo $date; ?>" value="<?php echo $date; ?>">
+			<input class="m-wrap m-ctrl-medium date-picker" readonly name="date" size="16" data-date-format="dd-mm-yyyy" id="sel_date" type="text" data-date-start-date="<?php echo $date; ?>" value="<?php echo $date; ?>">
 			</div>
 		</div>
 	</div>
 <div class="span6">
-<div class="control-group">		
+<!--<div class="control-group">		
 		<label style="font-size:14px; font-weight:bold;">Time <i class=" icon-info-sign tooltips" data-placement="right" data-original-title="Please select 15 minutes or later from your current time" style="color:#d84a38;"> </i></label>
 		<select class="span2 m-wrap" name="time_h">
 		<?php for($w=1;$w<=24;$w++) { ?>
@@ -247,13 +247,23 @@ $time=time();
 		<option value="30" <?php if($m==30) { ?> selected <?php } ?>>30</option>
 		 <option value="45" <?php if($m==45) { ?> selected <?php } ?>>45</option>
 		</select>
-</div>		
-		
+</div>	-->	
+	
+<div class="control-group">
+ <label style="font-size:14px; font-weight:bold;">Time <i class=" icon-info-sign tooltips" data-placement="right" data-original-title="Please select 15 minutes or later from your current time" style="color:#d84a38;"> </i></label>
+  <div class="controls">
+	 <div class="input-append bootstrap-timepicker-component">
+		<input class="m-wrap m-ctrl-small timepicker-default" type="text" name="time" id="time" value="">
+		<span class="add-on"><i class="icon-time"></i></span>
+	 </div>
+  </div>
+</div>
+<label id="time"></label>	
 </div>
 </div>
 
 <div class="form-actions" style="margin-bottom:0px !important;">
-<button type="submit" name="send" class="btn blue"><i class=" icon-share-alt"></i> Send</button>
+<button type="submit" name="send" class="btn blue"><i class=" icon-share-alt"></i> SEND SMS</button>
 </div>
 </form>
 </div>
@@ -383,8 +393,16 @@ function hello(){
 	}
 	
 	
-}
+} 
 
+jQuery.validator.addMethod("specialChar", function(value, element) {
+        return this.optional(element) || /^[a-zA-Z0-9-{}.:/_ ]*$/.test(value);
+},"Please remove specialcharacter."); 
+
+ /*jQuery.validator.addMethod("specialChar", function(value, element) {
+     return this.optional(element) || /([0-9a-zA-Z\s])$/.test(value);
+  }, "Please remove specialcharacter.");
+*/
 
 $.validator.addMethod('requirecheck1', function (value, element) {
 	 return $('.requirecheck1:checked').size() > 0;
@@ -444,7 +462,8 @@ rules: {
 	required: true,
   },
    massage: {
-	required: true
+	required: true,
+	specialChar: true
   },
   notice_visible_to: {
    
@@ -454,6 +473,17 @@ rules: {
 		accept: "png,jpg",
 		filesize: 1048576
 	  },
+ time: {
+	required: true,
+	remote: {
+			url: "check_sms_schedule_time",
+			type: "post",
+		data: {
+			date: function() { return $("#sel_date").val();},
+		
+		}
+	}
+  },
   
   
 
@@ -467,6 +497,9 @@ messages: {
 					accept: "File extension must be png or jpg",
 					filesize: "File size must be less than 1MB."
 				},
+				 time: {
+	                    remote: "Please select 15 minutes later from your current time"
+	                }
 		},
 	highlight: function(element) {
 		$(element).closest('.control-group').removeClass('success').addClass('error');
@@ -476,7 +509,7 @@ messages: {
 		.text('OK!').addClass('valid')
 		.closest('.control-group').removeClass('error').addClass('success');
 	},
-	submitHandler: function () {
+	submitHandler: function (form) {
 				
 				$("button[name=send]").attr('disabled','disabled');
 			    form.submit();

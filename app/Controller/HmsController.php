@@ -5383,42 +5383,7 @@ $this->layout='session';
 			echo"hello";
 			*/	
 ///
-	// ledger posting check code//
 	
-		$this->loadmodel('regular_bill');
-		$conditions=array('edited'=>'no');
-		$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>array('auto_id'=>'ASC')));	
-//pr($result_regular_bill); 
-		foreach($result_regular_bill as $data){
-			$element_id=$data['regular_bill']['auto_id'];
-			$bill_number=$data['regular_bill']['bill_number'];
-			$society_id=$data['regular_bill']['society_id'];
-			$start_date=$data['regular_bill']['start_date'];
-			$quarter_bill= date("d-m-Y",$start_date); 
-			
-			$this->loadmodel('society');
-			$result_society=$this->society->find('all',array('conditions'=>array('society_id'=>$society_id)));
-			$society_name=$result_society[0]['society']['society_name'];
-			
-			$this->loadmodel('ledger');
-			$conditions=array('element_id'=>$element_id,'table_name'=>'regular_bill','society_id'=>$society_id);
-			$ledger_posting=$this->ledger->find('count',array('conditions'=>$conditions));
-
-			if($ledger_posting==0){
-				
-					$this->loadmodel('regular_ledger_posting');
-					$conditions=array('element_id'=>$element_id,'table_name'=>'regular_bill','society_id'=>$society_id);
-					$regular_ledger_posting=$this->regular_ledger_posting->find('count',array('conditions'=>$conditions));
-						if($regular_ledger_posting==0){	
-							$this->loadmodel('regular_ledger_posting');
-							$auto_id=$this->autoincrement('regular_ledger_posting','auto_id');
-							$this->regular_ledger_posting->saveAll(Array( Array("auto_id" => $auto_id, "table_name" => "regular_bill","society_id" => $society_id,"bill_number" => $bill_number, "quarter_bill"=>$quarter_bill,"element_id" =>$element_id,"status"=>"NO",'society_name'=>$society_name))); 
-						}
-			}
-				
-			
-		}
-		
 		$this->loadmodel('regular_ledger_posting');
 		//$conditions=array('element_id'=>$element_id,'table_name'=>'regular_bill','society_id'=>$society_id);
 		$regular_ledger_posting=$this->regular_ledger_posting->find('all');
@@ -28450,21 +28415,46 @@ return $this->flat_master->find('all',array('conditions'=>$conditions));
 
 function add_ac_field()
 {
- $this->layout="session";
- $this->loadmodel('ledger_sub_account');	
- $result=$this->ledger_sub_account->find('all');
+ $this->ath();
+ $this->layout=null;
+  $s_society_id = $this->Session->read('hm_society_id'); 
+ // ledger posting check code//
 	
-	foreach($result as $data)
-	{
-		 $user_id=(int)@$data['ledger_sub_account']['user_id'];
-		if(!empty($user_id))
-		{
-			$this->loadmodel('ledger_sub_account');
-			$this->ledger_sub_account->updateAll(array('deactive'=>0),array('user_id'=>$user_id));
+		$this->loadmodel('regular_bill');
+		$conditions=array('edited'=>'no','society_id'=>$s_society_id);
+		$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>array('auto_id'=>'ASC')));	
+//pr($result_regular_bill); 
+		foreach($result_regular_bill as $data){
+			$element_id=$data['regular_bill']['auto_id'];
+			$bill_number=$data['regular_bill']['bill_number'];
+			$society_id=$data['regular_bill']['society_id'];
+			$start_date=$data['regular_bill']['start_date'];
+			$quarter_bill= date("d-m-Y",$start_date); 
+			
+			$this->loadmodel('society');
+			$result_society=$this->society->find('all',array('conditions'=>array('society_id'=>$society_id)));
+			$society_name=$result_society[0]['society']['society_name'];
+			
+			$this->loadmodel('ledger');
+			$conditions=array('element_id'=>$element_id,'table_name'=>'regular_bill','society_id'=>$society_id);
+			$ledger_posting=$this->ledger->find('count',array('conditions'=>$conditions));
+
+			if($ledger_posting==0){
+				
+					$this->loadmodel('regular_ledger_posting');
+					$conditions=array('element_id'=>$element_id,'table_name'=>'regular_bill','society_id'=>$society_id);
+					$regular_ledger_posting=$this->regular_ledger_posting->find('count',array('conditions'=>$conditions));
+						if($regular_ledger_posting==0){	
+							$this->loadmodel('regular_ledger_posting');
+							$auto_id=$this->autoincrement('regular_ledger_posting','auto_id');
+							$this->regular_ledger_posting->saveAll(Array( Array("auto_id" => $auto_id, "table_name" => "regular_bill","society_id" => $society_id,"bill_number" => $bill_number, "quarter_bill"=>$quarter_bill,"element_id" =>$element_id,"status"=>"NO",'society_name'=>$society_name))); 
+						}
+			}
+				
+			
 		}
 		
-	}
-	
+ echo"done";
 }
 
 ////////////////////////////// End add_ac_field //////////////////////////////////

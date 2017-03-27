@@ -10,7 +10,36 @@ public $components = array(
 
 var $name = 'Broadcasts';
 
+function check_sms_schedule_time(){
+	
+date_default_timezone_set('Asia/Kolkata');		
+ $time=$this->request->data['time']; 
+ $date=$this->request->data['date'];
 
+$date_new=date("d-m-Y");
+
+/// validation 
+
+  $y_date=date("Y-m-d",strtotime($date));
+ 
+   $y_date2=date("Y-m-d h:i A",strtotime($date ." ".$time));
+  $date_fill=strtotime($y_date2);
+
+  $time_plus=date('h:i A',strtotime('+15 minutes'));
+ 
+    $y_datef=date("Y-m-d h:i A",strtotime($date_new ." ".$time_plus));
+
+ $current= strtotime($y_datef);
+
+ if($current<$date_fill){
+	echo"true";
+ }else{
+	echo"false"; 
+ }	
+ exit;
+
+	
+}
 
 //start Message//
 function message()

@@ -1,5 +1,6 @@
+<br>
 <form method="post">
-<table class="table" border="1">
+<table class="table table-condensed table-bordered" >
 <tr>
 	<td>Sr.no</td>
 	<td>Society Name</td>
@@ -21,5 +22,17 @@ $i++;
 </tr>
 <?php } ?>
 </table>
-
+<button class="btn blue ledger_posting" type="button">Check ledger posting</button>
 </form>
+<div id="echo_flat"></div>
+<script>
+$(document).ready(function(){
+	$(".ledger_posting").bind('click',function(){
+		$('#echo_flat').html("Loading...").load('add_ac_field');
+
+	});
+});
+
+
+</script>
+

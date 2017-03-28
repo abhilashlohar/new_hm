@@ -117,8 +117,8 @@ if(isset($this->request->data['send']))
  $radio=$this->request->data['radio'];
  $s_date=$this->request->data['date'];
  
-  $ti=$this->request->data['time'];
- 
+   $ti=$this->request->data['time']; 
+  $t2=date('h:ia',strtotime($ti)); 
 $store_time=$ti;
 
 
@@ -161,7 +161,7 @@ foreach($result_user_flat as $data)
 @$wing=@$data["user_flat"]["wing"];
 @$flat=@$data["user_flat"]["flat"];	
 }
-$ti="05:00pm";
+//$ti="05:00pm";
 $r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
 $working_key=$r_sms->working_key;
 $sms_sender=$r_sms->sms_sender; 
@@ -193,7 +193,7 @@ $sms_allow=(int)$r_sms->sms_allow;
 		
 		//$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m.'&format=json');
 		
-		$payload = file_get_contents('http://alerts.sinfini.com/api/v3/index.php?method=sms&api_key='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$y_date.$ti);
+		$payload = file_get_contents('http://alerts.sinfini.com/api/v3/index.php?method=sms&api_key='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_im.'&message='.$massage_str.'&time='.$y_date.$t2);
 				
 		}
 		$find_froup=json_decode($payload);	

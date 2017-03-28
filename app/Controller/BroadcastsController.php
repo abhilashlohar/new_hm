@@ -197,9 +197,9 @@ $sms_allow=(int)$r_sms->sms_allow;
 				
 		}
 		$find_froup=json_decode($payload);	
-		pr($find_froup);
-		pr($find_froup->data->group_id);
-		exit;
+		//pr($find_froup);
+		$group_id-$find_froup->data->group_id;
+		
 		$sms_id=$this->autoincrement('sms','sms_id');
 		$this->loadmodel('sms');
 		$multipleRowData=Array( Array("sms_id"=>$sms_id,"text"=>$massage,"user_id"=>$user,"date"=>$date,"time"=>$time,"society_id"=>$s_society_id,"type"=>1,"deleted"=>0,"send_sms_time"=>$store_time,"send_sms_count"=>$sms_count,'send_sms_date'=>$s_date,"group_id"=>$group_id,"s_user_id"=>$s_user_id));
@@ -254,12 +254,14 @@ $mobile_array_implode = implode(',',$mobile_array);
 		
 	
 	//$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_array_implode.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m);
+		
 	
-	$payload = file_get_contents('http://alerts.sinfini.com/api/v3/index.php?method=sms&api_key='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_array_implode.'&message='.$massage_str.'&time='.$y_date.$ti);
+	$payload = file_get_contents('http://alerts.sinfini.com/api/v3/index.php?method=sms&api_key='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_array_implode.'&message='.$massage_str.'&time='.$y_date.$t2);
+	
 	}
    $find_froup=json_decode($payload);	
-		pr($find_froup);  exit;
-$sms_id=$this->autoincrement('sms','sms_id');
+   $group_id-$find_froup->data->group_id;
+	$sms_id=$this->autoincrement('sms','sms_id');
 $this->loadmodel('sms');
 $multipleRowData = Array( Array("sms_id" => $sms_id,"text"=>$massage,"user_id"=>$user_id_array,"date"=>$date,"time"=>$time,"type"=>1,"society_id"=>$s_society_id,"deleted"=>0,"send_sms_count"=>$sms_count,'send_sms_date'=>$s_date,"send_sms_time"=>$store_time,"group_id"=>$group_id,"s_user_id"=>$s_user_id));	
 $this->sms->saveAll($multipleRowData);

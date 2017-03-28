@@ -5375,7 +5375,7 @@ $this->layout='session';
 	
 //cancel sms schedule api 
 	
-			$ge=file_get_contents('http://api-alerts.solutionsinfini.com/v4/?method=sms.schedule&api_key=149981t853o14262m1119&groupid=4709823565'); 	
+			$ge=file_get_contents('http://api-alerts.solutionsinfini.com/v4/?method=sms.schedule&api_key=149981t853o14262m1119&groupid=4710044894'); 	
 
 			$test=json_decode($ge);
 			pr($test->status);

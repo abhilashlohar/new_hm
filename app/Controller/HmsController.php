@@ -5378,7 +5378,7 @@ $this->layout='session';
 			$ge=file_get_contents('http://api-alerts.solutionsinfini.com/v4/?method=sms.schedule&api_key=149981t853o14262m1119&groupid=4710044894'); 	
 
 			$test=json_decode($ge);
-			pr($test->status);
+			echo $test->status;
 			pr($ge);
 			echo"hello";
 			exit;

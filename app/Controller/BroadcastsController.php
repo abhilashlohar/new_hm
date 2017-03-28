@@ -198,7 +198,7 @@ $sms_allow=(int)$r_sms->sms_allow;
 		}
 		$find_froup=json_decode($payload);	
 		//pr($find_froup);
-		$group_id-$find_froup->data->group_id;
+		$group_id=$find_froup->data->group_id;
 		
 		$sms_id=$this->autoincrement('sms','sms_id');
 		$this->loadmodel('sms');
@@ -260,7 +260,7 @@ $mobile_array_implode = implode(',',$mobile_array);
 	
 	}
    $find_froup=json_decode($payload);	
-   $group_id-$find_froup->data->group_id;
+   $group_id=$find_froup->data->group_id;
 	$sms_id=$this->autoincrement('sms','sms_id');
 $this->loadmodel('sms');
 $multipleRowData = Array( Array("sms_id" => $sms_id,"text"=>$massage,"user_id"=>$user_id_array,"date"=>$date,"time"=>$time,"type"=>1,"society_id"=>$s_society_id,"deleted"=>0,"send_sms_count"=>$sms_count,'send_sms_date'=>$s_date,"send_sms_time"=>$store_time,"group_id"=>$group_id,"s_user_id"=>$s_user_id));	

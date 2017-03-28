@@ -48,10 +48,10 @@ function sms_schedule_cancel($g_id=null){
 		$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
 		$working_key=$r_sms->working_key;
 		$sms_sender=$r_sms->sms_sender; 
-		$ge=file_get_contents('http://api-alerts.solutionsinfini.com/v4/?method=sms.schedule&api_key='.$working_key.'&groupid='.$g_id); 
-pr($ge);		
-	exit;
-	$this->response->header('Location', 'message_view');
+		if(!empty($g_id)){
+			$ge=file_get_contents('http://api-alerts.solutionsinfini.com/v4/?method=sms.schedule&api_key='.$working_key.'&groupid='.$g_id); 
+		}
+	    $this->response->header('Location', 'message_view');
 	
 }
 

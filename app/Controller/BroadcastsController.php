@@ -197,8 +197,8 @@ $sms_allow=(int)$r_sms->sms_allow;
 				
 		}
 		$find_froup=json_decode($payload);	
-		//pr($find_froup);
-	//	exit;
+		pr($find_froup);
+		exit;
 		$sms_id=$this->autoincrement('sms','sms_id');
 		$this->loadmodel('sms');
 		$multipleRowData=Array( Array("sms_id"=>$sms_id,"text"=>$massage,"user_id"=>$user,"date"=>$date,"time"=>$time,"society_id"=>$s_society_id,"type"=>1,"deleted"=>0,"send_sms_time"=>$store_time,"send_sms_count"=>$sms_count,'send_sms_date'=>$s_date,"group_id"=>$group_id,"s_user_id"=>$s_user_id));

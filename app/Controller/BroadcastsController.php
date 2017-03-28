@@ -161,7 +161,7 @@ foreach($result_user_flat as $data)
 @$wing=@$data["user_flat"]["wing"];
 @$flat=@$data["user_flat"]["flat"];	
 }
-
+$ti="05:00pm";
 $r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
 $working_key=$r_sms->working_key;
 $sms_sender=$r_sms->sms_sender; 

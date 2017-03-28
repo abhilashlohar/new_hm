@@ -15,6 +15,7 @@ foreach($result_smsview as $collection)
 $sms_id=$collection["sms"]["sms_id"];
 $user_id=$collection["sms"]["user_id"];
 $groups_id=@$collection["sms"]["groups_id"];
+$sms_schedule_g_id=@$collection["sms"]["group_id"];
 $type=$collection["sms"]["type"];
 $text=$collection["sms"]["text"];
 $date=$collection["sms"]["date"];
@@ -34,6 +35,7 @@ if($type==2) { $count_user='sent to: '.sizeof($groups_id).'&nbsp;groups';}
 <a href="sms_view_pdf?con=<?php echo $sms_id; ?>" class="btn red mini hide_at_print ">pdf</i></a> 
 <a class="btn blue mini hide_at_print" onclick="window.print()">print</a>
 <a href="sms_delete?id=<?php echo $sms_id; ?>" class="btn red mini hide_at_print ">Delete</i></a> 
+<a href="sms_schedule_cancel/<?php echo $sms_schedule_g_id; ?>" class="btn red mini hide_at_print ">cancel</a> 
 </div>
 <!------------->
 <span class="label label-info">To:</span>

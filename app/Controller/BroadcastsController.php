@@ -120,7 +120,7 @@ if(isset($this->request->data['send']))
   $ti=$this->request->data['time'];
  
 $store_time=$ti;
-exit;
+
 
 $date=date("d-m-y");
 $date_new=date("d-m-Y");
@@ -257,7 +257,7 @@ $mobile_array_implode = implode(',',$mobile_array);
 	$payload = file_get_contents('http://alerts.sinfini.com/api/v3/index.php?method=sms&api_key='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_array_implode.'&message='.$massage_str.'&time='.$y_date.$ti);
 	}
    $find_froup=json_decode($payload);	
-		//pr($find_froup);
+		pr($find_froup);  exit;
 $sms_id=$this->autoincrement('sms','sms_id');
 $this->loadmodel('sms');
 $multipleRowData = Array( Array("sms_id" => $sms_id,"text"=>$massage,"user_id"=>$user_id_array,"date"=>$date,"time"=>$time,"type"=>1,"society_id"=>$s_society_id,"deleted"=>0,"send_sms_count"=>$sms_count,'send_sms_date'=>$s_date,"send_sms_time"=>$store_time,"group_id"=>$group_id,"s_user_id"=>$s_user_id));	

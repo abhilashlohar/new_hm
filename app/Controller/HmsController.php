@@ -5375,13 +5375,13 @@ $this->layout='session';
 	
 //cancel sms schedule api 
 	
-			/* $ge=file_get_contents('http://api-alerts.solutionsinfini.com/v4/?method=sms.schedule&api_key=149981t853o14262m1119&groupid=4643913769'); 	
+			$ge=file_get_contents('http://api-alerts.solutionsinfini.com/v4/?method=sms.schedule&api_key=149981t853o14262m1119&groupid=4643913769'); 	
 
 			$test=json_decode($ge);
 			pr($test);
 			pr($ge);
 			echo"hello";
-			*/	
+			
 ///
 	
 		$this->loadmodel('regular_ledger_posting');

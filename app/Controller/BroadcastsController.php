@@ -42,8 +42,9 @@ $date_new=date("d-m-Y");
 }
 
 
-function sms_schedule_cancel($g_id=null){
+function sms_schedule_cancel(){
 	
+		$g_id=$this->request->query('g_id');
 	
 		$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
 		$working_key=$r_sms->working_key;

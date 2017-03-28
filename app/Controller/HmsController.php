@@ -5375,7 +5375,9 @@ $this->layout='session';
 	
 //cancel sms schedule api 
 	
-			$ge=file_get_contents('http://api-alerts.solutionsinfini.com/v4/?method=sms.schedule&api_key=149981t853o14262m1119&groupid=4710044894'); 	
+	/*	
+	
+	$ge=file_get_contents('http://api-alerts.solutionsinfini.com/v4/?method=sms.schedule&api_key=149981t853o14262m1119&groupid=4710044894'); 	
 
 			$test=json_decode($ge);
 			echo $test->status;
@@ -5383,7 +5385,7 @@ $this->layout='session';
 			echo"hello";
 			exit;
 ///
-	
+	*/
 		$this->loadmodel('regular_ledger_posting');
 		//$conditions=array('element_id'=>$element_id,'table_name'=>'regular_bill','society_id'=>$society_id);
 		$regular_ledger_posting=$this->regular_ledger_posting->find('all');

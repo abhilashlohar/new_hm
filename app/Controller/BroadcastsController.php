@@ -198,6 +198,7 @@ $sms_allow=(int)$r_sms->sms_allow;
 		}
 		$find_froup=json_decode($payload);	
 		pr($find_froup);
+		pr($find_froup->data->group_id);
 		exit;
 		$sms_id=$this->autoincrement('sms','sms_id');
 		$this->loadmodel('sms');

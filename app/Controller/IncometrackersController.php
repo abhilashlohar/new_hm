@@ -665,8 +665,7 @@ function it_regular_bill(){
 	$result_society = $this->society->find('all',array('conditions'=>$condition));
 	$this->set(compact("result_society"));
 	
-	echo $penalty_interest_type=(int)$result_society[0]['society']['penalty_interest_type'];
-	exit;
+	 $penalty_interest_type=(int)$result_society[0]['society']['penalty_interest_type'];
 	
 	$this->loadmodel('wing');
 	$condition=array('society_id'=>$s_society_id);

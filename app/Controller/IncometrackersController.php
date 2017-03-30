@@ -7870,7 +7870,7 @@ function regular_bill_edit2($auto_id=null){
 	$created_by=$regular_bill_info[0]["regular_bill"]["created_by"];
 	$created_on=$regular_bill_info[0]["regular_bill"]["current_date"];
 	$terms_condition_id=(int)$regular_bill_info[0]["regular_bill"]["terms_condition_id"];
-	$penalty_interest_type=(int)$regular_bill_info[0]["regular_bill"]["penalty_interest_type"];
+	$penalty_interest_type=(int)@$regular_bill_info[0]["regular_bill"]["penalty_interest_type"];
 
 	$income_head_for_rate=@$regular_bill_info[0]["regular_bill"]["income_head_for_rate"];
 	$terms_condition_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_terms_condition'), array('pass' => array($terms_condition_id)));

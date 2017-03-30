@@ -1079,6 +1079,7 @@ function calculate_arrears_and_interest_edit_bill_date($ledger_sub_account_id,$s
 		}
 		
 		if($last_bill_maint_arrear>0){
+			echo $last_bill_maint_arrear; echo"<br/>";
 		    echo $days=abs(floor(($last_trasanction_date-$current_transaction_date)/(60*60*24)));echo"<br/>"; 
 		    echo $new_interest=($last_bill_maint_arrear*$days*$tax_factor)/365; 
 		}else{
@@ -1097,6 +1098,7 @@ echo"<br/>";
 			if($delay==0){
 				$last_due_date=$bill_date;
 			}
+			echo $last_bill_amount; echo"<br/>";
 			$last_due_date=date('Y-m-d', strtotime('0 day', $last_due_date));
 			$last_due_date=strtotime($last_due_date);
 			echo $days=abs(floor(($last_due_date-$current_transaction_date)/(60*60*24))); echo"<br/>"; 
@@ -1181,6 +1183,7 @@ echo"<br/>";
 	
 		$last_bill_arrear_intrest=$arrear_intrest+$intrest_on_arrears;
 		 if($last_bill_maint_arrear>0){
+			 echo $last_bill_maint_arrear; echo"<br/>";
 echo $days=abs(floor(($last_trasanction_date-$current_bill_start_date)/(60*60*24)));echo"<br/>"; 
 			
 echo $new_interest=($last_bill_maint_arrear*$days*$tax_factor)/365; 
@@ -1199,7 +1202,7 @@ echo $new_interest=($last_bill_maint_arrear*$days*$tax_factor)/365;
 			
 			$last_due_date=date('Y-m-d', strtotime('0 day', $last_due_date));
 			$last_due_date=strtotime($last_due_date);
-			
+			 echo $last_bill_amount; echo"<br/>";
 			echo  $days=abs(floor(($last_due_date-$current_bill_start_date)/(60*60*24))); echo"<br/>"; 
 echo $new_interest=($last_bill_amount*$days*$tax_factor)/365; 
 			

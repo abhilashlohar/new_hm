@@ -665,6 +665,9 @@ function it_regular_bill(){
 	$result_society = $this->society->find('all',array('conditions'=>$condition));
 	$this->set(compact("result_society"));
 	
+	$penalty_interest_type=(int)$result_society[0]['society']['penalty_interest_type'];
+	
+	
 	$this->loadmodel('wing');
 	$condition=array('society_id'=>$s_society_id);
 	$order=array('wing.wing_name'=>'ASC');
@@ -765,7 +768,13 @@ function it_regular_bill(){
 			
 			//Arrears & interest//
 			$result = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrears_and_interest_new'),array('pass'=>array($ledger_sub_account_id,$start_date)));
-			$result_interest_cal = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrears_and_interest'),array('pass'=>array($ledger_sub_account_id,$start_date)));
+			
+			if($penalty_interest_type==0){
+				$result_interest_cal = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrears_and_interest'),array('pass'=>array($ledger_sub_account_id,$start_date)));
+			}else{ 
+				$result_interest_cal = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrears_and_interest_bill_date'),array('pass'=>array($ledger_sub_account_id,$start_date)));
+			}
+			
 			$maint_arrear=$result["maint_arrear"];
 		
 			$non_maint_arrear=$result["non_maint_arrear"];
@@ -796,11 +805,9 @@ function it_regular_bill(){
 			$intrest_on_arrears=round($intrest_on_arrears);
 			$due_for_payment=round($due_for_payment);
 			
-			
-			
 			$this->loadmodel('regular_bill_temp');
 			$auto_id=$this->autoincrement('regular_bill_temp','auto_id');
-			$this->regular_bill_temp->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => (int)$ledger_sub_account_id,"income_head_array" => $income_head_array,"income_head_for_rate" => $income_head_for_rate,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_principle"=> $arrear_principle,"maint_arrear"=> $maint_arrear,"non_maint_arrear"=> $non_maint_arrear, "arrear_intrest" => $arrear_interest, "intrest_on_arrears" => $intrest_on_arrears,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>strtotime($start_date),"due_date"=>strtotime($due_date),"credit_stock"=>0,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$s_user_flat_id,"current_date"=>strtotime($current_date),"sent_for_approval"=>"no","approved"=>"no","end_date"=>strtotime($end_date),"terms_condition_id"=>$terms_condition_id));
+			$this->regular_bill_temp->saveAll(array("auto_id" => $auto_id, "ledger_sub_account_id" => (int)$ledger_sub_account_id,"income_head_array" => $income_head_array,"income_head_for_rate" => $income_head_for_rate,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_principle"=> $arrear_principle,"maint_arrear"=> $maint_arrear,"non_maint_arrear"=> $non_maint_arrear, "arrear_intrest" => $arrear_interest, "intrest_on_arrears" => $intrest_on_arrears,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>strtotime($start_date),"due_date"=>strtotime($due_date),"credit_stock"=>0,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$s_user_flat_id,"current_date"=>strtotime($current_date),"sent_for_approval"=>"no","approved"=>"no","end_date"=>strtotime($end_date),"terms_condition_id"=>$terms_condition_id,"penalty_interest_type"=>$penalty_interest_type));
 		
 		}  
 
@@ -1053,7 +1060,7 @@ function generate_bills(){
 		$created_by=$regular_bill["regular_bill_temp"]["created_by"];
 		$billing_cycle=$regular_bill["regular_bill_temp"]["billing_cycle"];
 		$terms_condition_id=$regular_bill["regular_bill_temp"]["terms_condition_id"];
-		
+		$penalty_interest_type=(int)$regular_bill["regular_bill_temp"]["penalty_interest_type"];
 		$this->loadmodel('terms_condition');
 		$conditions=array("auto_id"=>$terms_condition_id,"society_id" => $s_society_id);
 		$terms_conditions=$this->terms_condition->find('all',array('conditions'=>$conditions));
@@ -1063,7 +1070,7 @@ function generate_bills(){
 		$this->loadmodel('regular_bill');
 		$regular_bill_id=$this->autoincrement('regular_bill','auto_id');
 		$bill_number=$this->autoincrement_with_society_ticket('regular_bill','bill_number');
-		$this->regular_bill->saveAll(array("auto_id" => $regular_bill_id,"bill_number"=>$bill_number, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_principle"=> $arrear_principle,"maint_arrear"=> $maint_arrear,"non_maint_arrear"=> $non_maint_arrear, "arrear_intrest" => $arrear_intrest, "intrest_on_arrears" => $intrest_on_arrears,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"credit_stock"=>$credit_stock,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by,"current_date"=>$current_date,"edited"=>"no","end_date"=>$end_date,"terms_condition_id"=>$terms_condition_id,"income_head_for_rate"=>$income_head_for_rate));
+		$this->regular_bill->saveAll(array("auto_id" => $regular_bill_id,"bill_number"=>$bill_number, "ledger_sub_account_id" => $ledger_sub_account_id,"income_head_array" => $income_head_array,"noc_charge" => $noc_charge,"other_charge" => $other_charge,"total" => $total,"arrear_principle"=> $arrear_principle,"maint_arrear"=> $maint_arrear,"non_maint_arrear"=> $non_maint_arrear, "arrear_intrest" => $arrear_intrest, "intrest_on_arrears" => $intrest_on_arrears,"due_for_payment" => $due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"credit_stock"=>$credit_stock,"description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by,"current_date"=>$current_date,"edited"=>"no","end_date"=>$end_date,"terms_condition_id"=>$terms_condition_id,"income_head_for_rate"=>$income_head_for_rate,"penalty_interest_type"=>$penalty_interest_type));
 		
 	//LEDGER CODE START//
 		foreach($income_head_array as $income_head_id=>$income_head_amount){
@@ -6900,10 +6907,10 @@ $cursor=$this->society->find('all',array('conditions'=>$conditions));
 foreach($cursor as $collection)
 {
 $tax = @$collection['society']['tax'];
-$tax_type = @$collection['society']['tax_type'];
+$penalty_interest_type = (int)@$collection['society']['penalty_interest_type']; 
 }
 $this->set("tax",$tax);
-$this->set("tax_type",$tax_type);
+$this->set("penalty_interest_type",$penalty_interest_type);
 }
 
 ///////////////////// End IT Penalty (Accounts)///////////////////////////////////
@@ -7864,6 +7871,8 @@ function regular_bill_edit2($auto_id=null){
 	$created_by=$regular_bill_info[0]["regular_bill"]["created_by"];
 	$created_on=$regular_bill_info[0]["regular_bill"]["current_date"];
 	$terms_condition_id=(int)$regular_bill_info[0]["regular_bill"]["terms_condition_id"];
+	$penalty_interest_type=(int)$regular_bill_info[0]["regular_bill"]["penalty_interest_type"];
+
 	$income_head_for_rate=@$regular_bill_info[0]["regular_bill"]["income_head_for_rate"];
 	$terms_condition_info=$this->requestAction(array('controller' => 'Fns', 'action' => 'fetch_terms_condition'), array('pass' => array($terms_condition_id)));
 	$terms_conditions=@$terms_condition_info[0]["terms_condition"]["terms_conditions"];
@@ -7965,7 +7974,7 @@ function regular_bill_edit2($auto_id=null){
 		$current_date = date('Y-m-d');
 		
 		$reg_auto_id=$this->autoincrement('regular_bill','auto_id');
-		$this->regular_bill->saveAll(array("auto_id"=>$reg_auto_id,"bill_number"=>$bill_number,"ledger_sub_account_id"=>$ledger_sub_account_id,"income_head_array"=>$income_head_array,"noc_charge"=>$non_occupancy_charges,"other_charge"=>$other_charges_array,"total"=>$total,"arrear_principle"=>$arrear_principle,"maint_arrear"=> $maint_arrear,"non_maint_arrear"=> $non_maint_arrear,"arrear_intrest"=>$arrear_intrest,"intrest_on_arrears"=>$interest_on_arrears,"credit_stock"=>$credit_stock,"due_for_payment"=>$due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"end_date"=>$end_date,"edited"=>"no","description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by,"current_date"=>$created_on,'edit_text'=>"-R","edited_by"=>$s_user_id,"edited_on"=>$current_date,"terms_condition_id"=>$terms_condition_id,"income_head_for_rate"=>$income_head_for_rate));
+		$this->regular_bill->saveAll(array("auto_id"=>$reg_auto_id,"bill_number"=>$bill_number,"ledger_sub_account_id"=>$ledger_sub_account_id,"income_head_array"=>$income_head_array,"noc_charge"=>$non_occupancy_charges,"other_charge"=>$other_charges_array,"total"=>$total,"arrear_principle"=>$arrear_principle,"maint_arrear"=> $maint_arrear,"non_maint_arrear"=> $non_maint_arrear,"arrear_intrest"=>$arrear_intrest,"intrest_on_arrears"=>$interest_on_arrears,"credit_stock"=>$credit_stock,"due_for_payment"=>$due_for_payment,"society_id"=>$s_society_id,"start_date"=>$start_date,"due_date"=>$due_date,"end_date"=>$end_date,"edited"=>"no","description"=>$description,"billing_cycle"=>$billing_cycle,"created_by"=>$created_by,"current_date"=>$created_on,'edit_text'=>"-R","edited_by"=>$s_user_id,"edited_on"=>$current_date,"terms_condition_id"=>$terms_condition_id,"income_head_for_rate"=>$income_head_for_rate,"penalty_interest_type"=>$penalty_interest_type));
 		
 		$edit_text="-R";
 		//LEDGER CODE START//
@@ -9935,12 +9944,18 @@ die($output);
 		}
 //End Supplimentry Bill Json //
 //Start auto_save_penalty//
-function auto_save_penalty($penalty=null)
+function auto_save_penalty($penalty=null,$field=null)
 {
 $s_society_id=(int)$this->Session->read('hm_society_id');
-	
-$this->loadmodel('society');
-$this->society->updateAll(array("tax"=>$penalty),array('society_id'=>$s_society_id));
+	if($field=='interest'){
+		$this->loadmodel('society');
+		$this->society->updateAll(array("penalty_interest_type"=>(int)$penalty),array('society_id'=>$s_society_id));		
+	}
+	if($field=='tax'){
+		$this->loadmodel('society');
+		$this->society->updateAll(array("tax"=>$penalty),array('society_id'=>$s_society_id));	
+	}
+
 }
 //End auto_save_penalty//
 

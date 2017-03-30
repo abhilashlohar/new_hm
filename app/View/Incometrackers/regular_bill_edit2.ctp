@@ -69,7 +69,7 @@ foreach($regular_bill_info as $regular_bill){
 	$result = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrears_and_without_interest_edit'),array('pass'=>array($ledger_sub_account_id,$start_date)));
 	
 	 $result_interest = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrears_and_interest_edit'),array('pass'=>array($ledger_sub_account_id,$start_date)));
-	
+	//pr($result_interest); exit;
 	$maint_arrear=$result["maint_arrear"];
 			
 	$non_maint_arrear=$result["non_maint_arrear"];

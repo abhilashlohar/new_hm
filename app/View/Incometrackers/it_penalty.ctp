@@ -36,19 +36,19 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 <h5 style="color:red"><b>Enter Penalty in Percentage</b></h5>
 <table border="0">
 <tr>
-<td colspan="2"><!--
+<td colspan="2">
 <label class="radio">
-<div class="radio" id="uniform-undefined"><span><input type="radio" name="type" value="1" style="opacity: 0;" id="type" <?php //if($tax_type == 1) { ?> checked="checked" <?php //} ?>></span></div>
-From Due Date
+<div class="radio" id="uniform-undefined"><span><input type="radio" name="interest_type" value="0" style="opacity: 0;" id="type" field="interest" <?php if($penalty_interest_type==0){ ?>checked="checked" <?php } ?> class="interest" ></span></div>
+Bill Due Date
 </label>
 
 
 <label class="radio">
-<div class="radio" id="uniform-undefined"><span><input type="radio" name="type" value="2" style="opacity: 0;" id="type" <?php //if($tax_type == 2) { ?> checked="checked" <?php //} ?>></span></div>
-From First day
+<div class="radio" id="uniform-undefined"><span><input type="radio"  class="interest" name="interest_type" value="1" field="interest" <?php if($penalty_interest_type==1){ ?>checked="checked" <?php } ?> style="opacity: 0;" id="type"></span></div>
+Bill Date
 </label>
 <label id="type"></label>
-<br />-->
+<br />
 <input type="hidden" value="1" name="type" />
 </td>
 </tr>
@@ -56,7 +56,7 @@ From First day
 <td>Percentage in Number:</td>
 <td>
 <div class="input-append">
-   <input type="text" name="tax" class="m-wrap span4" style="background-color:white !important;" id="tax" value="<?php echo $tax; ?>"/><button class="btn" type="button">%</button>
+   <input type="text" name="tax" class="m-wrap span4" style="background-color:white !important;" id="tax" value="<?php echo $tax; ?>" field="tax"/><button class="btn" type="button">%</button>
 </div>
 </td>
 </tr>
@@ -85,17 +85,32 @@ $('input[name="tax"]').die().live("keyup",function(){
 </script>
 
 <script>
-$(document).ready(function(){
-	$("input").bind("blur keyup",function(){
+$(document).ready(function(){ 
+	$("input[name='tax']").die().bind("blur keyup",function(){ 
 		var penalty=$(this).val();
+		var field=$(this).attr('field');
 			$("#output").html("Saving changes...");
 			$.ajax({
-				url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_penalty/"+penalty,
-			}).done(function(response){
+				url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_penalty/"+penalty+"/"+field,
+			}).done(function(response){ 
 				$("#output").html("<span class='label label-important'>NOTE</span><span> No need to save this form. The system will automatically save updated data. </span>");
 			});
 		
 		
+	});
+	
+	
+	$("input[name='interest_type']").die().bind("click",function(){ 
+		var penalty=$(this).val();
+		var field=$(this).attr('field');
+		
+			$("#output").html("Saving changes...");
+			$.ajax({
+				url: "<?php echo $webroot_path; ?>Incometrackers/auto_save_penalty/"+penalty+"/"+field,
+			}).done(function(response){ 
+				$("#output").html("<span class='label label-important'>NOTE</span><span> No need to save this form. The system will automatically save updated data. </span>");
+			});
+				
 	});
 });
 

@@ -858,6 +858,7 @@ function calculate_arrears_and_interest_bill_date($ledger_sub_account_id,$start_
 			  $new_interest+=($last_bill_amount*$days*$tax_factor)/365;
 			
 			$last_due_date=$current_transaction_date;
+			$one_time_run_code++;
 		}
 			
 		$last_trasanction_date=$current_transaction_date;
@@ -924,7 +925,7 @@ function calculate_arrears_and_interest_bill_date($ledger_sub_account_id,$start_
 		$last_bill_intrest_on_arrears=$intrest_on_arrears;
 		$last_bill_maint_arrear=$maint_arrear;
 		$last_bill_amount=$bill_amount;
-		$one_time_run_code++;
+		
 	}
 	
 		$last_bill_arrear_intrest=$arrear_intrest+$intrest_on_arrears;
@@ -940,7 +941,7 @@ function calculate_arrears_and_interest_bill_date($ledger_sub_account_id,$start_
 		}
 		if($current_bill_start_date>$last_due_date && $bill_count>0){
 			
-			if(sizeof($new_result_ledger)==0){
+			if($one_time_run_code==0){
 				
 				$last_due_date=$bill_date_interest;
 			}

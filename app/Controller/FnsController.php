@@ -762,8 +762,8 @@ function calculate_arrears_and_interest_bill_date($ledger_sub_account_id,$start_
 		// bill date 
 		$last_bill_start_date=$last_bill_info[0]["regular_bill"]["start_date"];
 		$bill_date_interest=$last_bill_start_date;
-		//$bill_date_interest=date('Y-m-d', strtotime('-1 day', $bill_date_interest));
-		//$bill_date_interest=strtotime($bill_date_interest);
+		$bill_date_interest=date('Y-m-d', strtotime('-1 day', $bill_date_interest));
+		$bill_date_interest=strtotime($bill_date_interest);
 		
 		
 	

@@ -1102,6 +1102,7 @@ echo"<br/>";
 			echo $new_interest=($last_bill_amount*$days*$tax_factor)/365;
 			
 			$last_due_date=$current_transaction_date;
+			$delay++;
 		}
 		echo"<br/>"; 	
 		$last_trasanction_date=$current_transaction_date;
@@ -1170,7 +1171,7 @@ echo"<br/>";
 		$last_bill_intrest_on_arrears=$intrest_on_arrears;
 		$last_bill_maint_arrear=$maint_arrear; 
 		$last_bill_amount=$bill_amount;
-		$delay++;
+		
 	}
 	
 	
@@ -1191,7 +1192,7 @@ echo $new_interest=($last_bill_maint_arrear*$days*$tax_factor)/365;
 		} echo"<br/>"; 
 		if($current_bill_start_date>$last_due_date && $bill_count>0){
 			
-			if(sizeof($new_result_ledger)==0){
+			if($delay==0){
 				$last_due_date=$bill_date;
 			}
 			

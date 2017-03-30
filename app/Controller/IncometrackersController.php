@@ -770,7 +770,7 @@ function it_regular_bill(){
 			
 			if($penalty_interest_type==0){
 				$result_interest_cal = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrears_and_interest'),array('pass'=>array($ledger_sub_account_id,$start_date)));
-			}else{ 
+			}elseif($penalty_interest_type==1){ 
 				$result_interest_cal = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrears_and_interest_bill_date'),array('pass'=>array($ledger_sub_account_id,$start_date)));
 			}
 			

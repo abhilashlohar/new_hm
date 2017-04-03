@@ -1,5 +1,5 @@
 <?php
-$filename="".$socc_namm."_Supplimentry_Report_Register_".$fdddd."_".$tdddd."";
+$filename="".$socc_namm."_Supplimentry_Report_Register_".$fdddd."_to_".$tdddd."";
 header ("Expires: 0");
 header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
 header ("Cache-Control: no-cache, must-revalidate");

@@ -7226,8 +7226,8 @@ $from = $this->request->query('f');
 $to = $this->request->query('t');
 $tp = $this->request->query('tp');
 
-$fdddd = date('d-M-Y',strtotime($from));
-$tdddd = date('d-M-Y',strtotime($to));
+$fdddd = date('d-m-Y',strtotime($from));
+$tdddd = date('d-m-Y',strtotime($to));
 
 
 $this->loadmodel('society');

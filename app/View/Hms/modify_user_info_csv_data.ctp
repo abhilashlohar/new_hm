@@ -63,7 +63,7 @@ for($ii=1;$ii<=$loop;$ii++){ ?>
 <br/>
 
 <button type="button" id="submit" class="btn blue">UPDATE</button>
-<a href="user_info_delete_all" class="btn cancel_user">Cancel Process</a>
+<a href="<?php echo $webroot_path; ?>Hms/user_info_delete_all" class="btn cancel_user">Cancel Process</a>
 <script>
 $( document ).ready(function() {
 	

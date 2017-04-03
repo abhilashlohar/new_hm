@@ -137,7 +137,7 @@ foreach($result_journal as $data) { $cq++;
 			</div>
 		</div>
 	</td>
-	<td width="2%">  <?php  if($cq!=1){ ?> <a href="#" role="button" class="btn mini delete_ledger" update_id="<?php echo $journal_id; ?>"><i class="icon-trash"></i></a><?php } ?></td>
+	<td width="2%">  <?php  if($cq!=1 and $cq!=2){ ?> <a href="#" role="button" class="btn mini delete_ledger" update_id="<?php echo $journal_id; ?>"><i class="icon-trash"></i></a><?php } ?></td>
 </tr>
 <?php } ?>
 

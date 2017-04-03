@@ -700,8 +700,8 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			
 
 			
-			if($subledger_id != 0)
-		{
+		if($subledger_id != 0)
+		{ 
 			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
 			foreach($subleddger_detaill as $subledger_datttaa)
 			{
@@ -710,16 +710,14 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			}
 		}
 		else
-		{
+		{ 
 			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id)));
 			foreach($leddger_detaill as $ledger_datttaa)
 			{
 			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
 			}
 		}		
-			
-			
-			
+
 			
 		}
 	

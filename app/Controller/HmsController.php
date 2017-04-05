@@ -5371,7 +5371,90 @@ $this->layout='session';
 	$this->ath();
 		
 	$s_society_id=$this->Session->read('hm_society_id');	
+	//$actual_data=array();
+	$this->loadmodel('cash_bank');
+	$conditions=array('amount'=>0,'society_id'=>$s_society_id);
+	$result_cash_bank=$this->cash_bank->find('all',array('conditions'=>$conditions));
+	//pr($result_cash_bank);
+	foreach($result_cash_bank as $data){
+		$element_id=$data['cash_bank']['transaction_id'];
+		
+		// regular bill
+		$this->loadmodel('regular_bill');
+		$conditions=array('auto_id'=>$element_id,'society_id'=>$s_society_id);
+		$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions));
+		if(sizeof($result_regular_bill)>0){
+			
+			$auto_id=$result_regular_bill[0]['regular_bill']['auto_id'];
+			$bill_number=$result_regular_bill[0]['regular_bill']['bill_number'];
+			$start_date=$result_regular_bill[0]['regular_bill']['start_date'];
+			$start_date=date('d-m-Y',$start_date);
+			$this->loadmodel('ledger');
+			$conditions=array('element_id'=>$element_id,'society_id'=>$s_society_id,'table_name'=>'regular_bill');
+			$result_ledger=$this->ledger->find('count',array('conditions'=>$conditions));
+			if($result_ledger==0){
+				
+				$actual_data[]=array('Number'=>$bill_number,'source'=>'Regular bill','transaction_date'=>$start_date,'status'=>'No');
+			}
+			
+		}
+		// regular code 
+		
+		
+		// journal code//
+		
+		$this->loadmodel('journal');
+		$conditions=array('journal_id'=>$element_id,'society_id'=>$s_society_id);
+		$result_journal=$this->journal->find('all',array('conditions'=>$conditions));
+			if(sizeof($result_journal)>0){ 
+			
+				$journal_id=$result_journal[0]['journal']['journal_id'];
+				$transaction_date=$result_journal[0]['journal']['transaction_date'];
+				$voucher_id=$result_journal[0]['journal']['voucher_id'];
+				$start_date=date('d-m-Y',$transaction_date);
+				
+				$this->loadmodel('ledger');
+				$conditions=array('element_id'=>$journal_id,'society_id'=>$s_society_id,'table_name'=>'journal');
+				$result_ledger=$this->ledger->find('count',array('conditions'=>$conditions));
+				if($result_ledger==0){
+					
+					$actual_data[]=array('Number'=>$voucher_id,'source'=>'journal','transaction_date'=>$start_date,'status'=>'No');
+				}
+			
 
+			
+			}
+			
+			/// expense tracker
+			
+				
+		$this->loadmodel('expense_tracker');
+		$conditions=array('expense_tracker_id'=>$element_id,'society_id'=>$s_society_id);
+		$result_expense_tracker=$this->expense_tracker->find('all',array('conditions'=>$conditions));
+		//pr($result_expense_tracker);
+			if(sizeof($result_expense_tracker)>0){
+				
+				$expense_tracker_id=$result_expense_tracker[0]['expense_tracker']['expense_tracker_id'];
+				$transaction_date=$result_expense_tracker[0]['expense_tracker']['posting_date'];
+				$expense_id=$result_expense_tracker[0]['expense_tracker']['expense_id'];
+				$start_date=date('d-m-Y',$transaction_date);
+				
+				$this->loadmodel('ledger');
+				$conditions=array('element_id'=>$expense_tracker_id,'society_id'=>$s_society_id,'table_name'=>'expense_tracker');
+				$result_ledger=$this->ledger->find('count',array('conditions'=>$conditions));
+				if($result_ledger==0){
+					
+					$actual_data[]=array('Number'=>$expense_id,'source'=>'expense tracker','transaction_date'=>$start_date,'status'=>'No');
+				}
+			
+
+			
+			}
+			
+	}
+	
+	$this->set('actual_data',@$actual_data);
+//pr($actual_data); exit;
 	
 //cancel sms schedule api 
 	
@@ -5387,14 +5470,14 @@ $this->layout='session';
 ///
 	*/
 		$this->loadmodel('regular_ledger_posting');
-		//$conditions=array('element_id'=>$element_id,'table_name'=>'regular_bill','society_id'=>$society_id);
+		//$conditions=array('element_id'=>$element_id,'table_name'=>'regular_bill','society_id'=>$s_society_id);
 		$regular_ledger_posting=$this->regular_ledger_posting->find('all');
 		$this->set('regular_ledger_posting',$regular_ledger_posting);
 		
 		
 	//end code 	
 	
-	
+	/*
 		if(isset($this->request->data['sub'])){ 
 		
 			 $password = $this->request->data['password'];
@@ -5420,7 +5503,7 @@ $this->layout='session';
 		$result_user=$this->user->find('all',array('conditions'=>$conditions));
 		$this->set('result_user',$result_user);
 		 
-		/*this code to run production system 
+		this code to run production system 
 		 $multiple_flat=@$data['user']['multiple_flat'];
 		if(!empty($multiple_flat)){
 			
@@ -28421,9 +28504,13 @@ function add_ac_field()
  $this->layout=null;
   $s_society_id = $this->Session->read('hm_society_id'); 
  // ledger posting check code//
+	 $start_date=$this->request->query('date');
+	 $to=$this->request->query('to');
+	 $to= date('Y-m-d',strtotime($to));
+	 $start_date= date('Y-m-d',strtotime($start_date));
 	
 		$this->loadmodel('regular_bill');
-		$conditions=array('edited'=>'no','society_id'=>$s_society_id);
+		$conditions=array('edited'=>'no','society_id'=>$s_society_id,'start_date'=>array('$lte'=>strtotime($to)),'start_date'=>array('$gte'=>strtotime($start_date)));
 		$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>array('auto_id'=>'ASC')));	
 //pr($result_regular_bill); 
 		foreach($result_regular_bill as $data){

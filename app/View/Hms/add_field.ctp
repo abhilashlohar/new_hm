@@ -3,6 +3,7 @@
 <table class="table table-condensed table-bordered" >
 <tr>
 	<td>Sr.no</td>
+	<td>Society Name</td>
 	<td>source</td>
 	<td>Date</td>
 	<td>Number</td>
@@ -14,6 +15,7 @@ $i++;
 ?>
 <tr>
 	<td><?php echo $i; ?></td>
+	<td><?php echo $data['society_name']; ?></td>
 	<td><?php echo $data['source']; ?></td>
 	<td><?php echo $data['transaction_date']; ?></td>
 	<td><?php echo $data['Number']; ?></td>

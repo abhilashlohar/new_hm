@@ -5373,7 +5373,7 @@ $this->layout='session';
 	$s_society_id=$this->Session->read('hm_society_id');	
 	//$actual_data=array();
 	$this->loadmodel('cash_bank');
-	$conditions=array('amount'=>0,'society_id'=>$s_society_id);
+	$conditions=array('amount'=>0);
 	$result_cash_bank=$this->cash_bank->find('all',array('conditions'=>$conditions));
 	//pr($result_cash_bank);
 	foreach($result_cash_bank as $data){
@@ -5381,20 +5381,28 @@ $this->layout='session';
 		
 		// regular bill
 		$this->loadmodel('regular_bill');
-		$conditions=array('auto_id'=>$element_id,'society_id'=>$s_society_id);
+		$conditions=array('auto_id'=>$element_id);
 		$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions));
 		if(sizeof($result_regular_bill)>0){
 			
 			$auto_id=$result_regular_bill[0]['regular_bill']['auto_id'];
 			$bill_number=$result_regular_bill[0]['regular_bill']['bill_number'];
+			$society_id=$result_regular_bill[0]['regular_bill']['society_id'];
+			
+				$this->loadmodel('society');
+				$conditions=array('society_id'=>$society_id);
+				$result_society=$this->society->find('all',array('conditions'=>$conditions));
+				$society_name=$result_society[0]['society']['society_name'];
+
+			
 			$start_date=$result_regular_bill[0]['regular_bill']['start_date'];
 			$start_date=date('d-m-Y',$start_date);
 			$this->loadmodel('ledger');
-			$conditions=array('element_id'=>$element_id,'society_id'=>$s_society_id,'table_name'=>'regular_bill');
+			$conditions=array('element_id'=>$element_id,'table_name'=>'regular_bill');
 			$result_ledger=$this->ledger->find('count',array('conditions'=>$conditions));
 			if($result_ledger==0){
 				
-				$actual_data[]=array('Number'=>$bill_number,'source'=>'Regular bill','transaction_date'=>$start_date,'status'=>'No');
+				$actual_data[]=array('Number'=>$bill_number,'source'=>'Regular bill','transaction_date'=>$start_date,'status'=>'No','society_name'=>$society_name);
 			}
 			
 		}
@@ -5404,21 +5412,28 @@ $this->layout='session';
 		// journal code//
 		
 		$this->loadmodel('journal');
-		$conditions=array('journal_id'=>$element_id,'society_id'=>$s_society_id);
+		$conditions=array('journal_id'=>$element_id);
 		$result_journal=$this->journal->find('all',array('conditions'=>$conditions));
 			if(sizeof($result_journal)>0){ 
 			
 				$journal_id=$result_journal[0]['journal']['journal_id'];
+				$society_id=$result_journal[0]['journal']['society_id'];
+				
+				$this->loadmodel('society');
+				$conditions=array('society_id'=>$society_id);
+				$result_society=$this->society->find('all',array('conditions'=>$conditions));
+				$society_name=$result_society[0]['society']['society_name'];
+
 				$transaction_date=$result_journal[0]['journal']['transaction_date'];
 				$voucher_id=$result_journal[0]['journal']['voucher_id'];
 				$start_date=date('d-m-Y',$transaction_date);
 				
 				$this->loadmodel('ledger');
-				$conditions=array('element_id'=>$journal_id,'society_id'=>$s_society_id,'table_name'=>'journal');
+				$conditions=array('element_id'=>$journal_id,'table_name'=>'journal');
 				$result_ledger=$this->ledger->find('count',array('conditions'=>$conditions));
 				if($result_ledger==0){
 					
-					$actual_data[]=array('Number'=>$voucher_id,'source'=>'journal','transaction_date'=>$start_date,'status'=>'No');
+					$actual_data[]=array('Number'=>$voucher_id,'source'=>'journal','transaction_date'=>$start_date,'status'=>'No','society_name'=>$society_name);
 				}
 			
 
@@ -5429,7 +5444,7 @@ $this->layout='session';
 			
 				
 		$this->loadmodel('expense_tracker');
-		$conditions=array('expense_tracker_id'=>$element_id,'society_id'=>$s_society_id);
+		$conditions=array('expense_tracker_id'=>$element_id);
 		$result_expense_tracker=$this->expense_tracker->find('all',array('conditions'=>$conditions));
 		//pr($result_expense_tracker);
 			if(sizeof($result_expense_tracker)>0){
@@ -5437,14 +5452,23 @@ $this->layout='session';
 				$expense_tracker_id=$result_expense_tracker[0]['expense_tracker']['expense_tracker_id'];
 				$transaction_date=$result_expense_tracker[0]['expense_tracker']['posting_date'];
 				$expense_id=$result_expense_tracker[0]['expense_tracker']['expense_id'];
+				$society_id=$result_expense_tracker[0]['expense_tracker']['society_id'];
+				
+				$this->loadmodel('society');
+				$conditions=array('society_id'=>$society_id);
+				$result_society=$this->society->find('all',array('conditions'=>$conditions));
+				$society_name=$result_society[0]['society']['society_name'];
+
+				
+				
 				$start_date=date('d-m-Y',$transaction_date);
 				
 				$this->loadmodel('ledger');
-				$conditions=array('element_id'=>$expense_tracker_id,'society_id'=>$s_society_id,'table_name'=>'expense_tracker');
+				$conditions=array('element_id'=>$expense_tracker_id,'table_name'=>'expense_tracker');
 				$result_ledger=$this->ledger->find('count',array('conditions'=>$conditions));
 				if($result_ledger==0){
 					
-					$actual_data[]=array('Number'=>$expense_id,'source'=>'expense tracker','transaction_date'=>$start_date,'status'=>'No');
+					$actual_data[]=array('Number'=>$expense_id,'source'=>'expense tracker','transaction_date'=>$start_date,'status'=>'No','society_name'=>$society_name);
 				}
 			
 

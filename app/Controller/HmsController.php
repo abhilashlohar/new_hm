@@ -5381,7 +5381,7 @@ $this->layout='session';
 		
 		// regular bill
 		$this->loadmodel('regular_bill');
-		$conditions=array('auto_id'=>$element_id);
+		$conditions=array('auto_id'=>$element_id,'edited'=>'no');
 		$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions));
 		if(sizeof($result_regular_bill)>0){
 			

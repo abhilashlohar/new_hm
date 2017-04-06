@@ -5888,8 +5888,8 @@ function bank_payment_update($auto_id=null)
           $ledger_account_id=(int)$ledger_account_array[0];
 		    $ledger_account_type=(int)$ledger_account_array[1];
 				$edited_on=date('Y-m-d');
-		 $this->loadmodel('ledger');
-		 $this->ledger->deleteAll(array());
+//$this->loadmodel('ledger');
+//$this->ledger->deleteAll(array());
 		   
 	$this->loadmodel('cash_bank');
 	$this->cash_bank->updateAll(array("transaction_date"=>strtotime($transaction_date),"sundry_creditor_id"=>$ledger_account_id,"invoice_reference"=>@$invoice_reference,"narration"=>$narration,"receipt_mode"=>$mode_of_payment,"receipt_instruction"=>$instrument_utr,"account_head"=>$bank_account,"amount"=>$amount,"account_type"=>$ledger_account_type,"tds_tax_amount"=>$tds_id,"edited_by"=>$s_user_id,"edited_on"=>$edited_on,"reconciliation_status"=>"pending"),array("society_id"=>$s_society_id,"transaction_id"=>$element_id));

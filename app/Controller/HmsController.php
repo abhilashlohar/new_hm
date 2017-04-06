@@ -28533,7 +28533,7 @@ function add_ac_field()
 	 $to= date('Y-m-d',strtotime($to));
 	 $start_date= date('Y-m-d',strtotime($start_date));
 	
-		$this->loadmodel('regular_bill');
+	/*	$this->loadmodel('regular_bill');
 		$conditions=array('edited'=>'no','society_id'=>$s_society_id,'start_date'=>array('$lte'=>strtotime($to)),'start_date'=>array('$gte'=>strtotime($start_date)));
 		$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>array('auto_id'=>'ASC')));	
 //pr($result_regular_bill); 
@@ -28565,9 +28565,37 @@ function add_ac_field()
 			}
 				
 			
-		}
+		} */
 		
- echo"done";
+		$this->loadmodel('journal');
+		$conditions=array('society_id'=>$s_society_id);
+		$result_journals=$this->journal->find('all',array('conditions'=>$conditions));
+		if(sizeof($result_journals)>0){ 
+			foreach($result_journals as $result_journal){
+				$journal_id=$result_journal['journal']['journal_id'];
+				$society_id=$result_journal['journal']['society_id'];
+				
+				$this->loadmodel('society');
+				$conditions=array('society_id'=>$society_id);
+				$result_society=$this->society->find('all',array('conditions'=>$conditions));
+				$society_name=$result_society[0]['society']['society_name'];
+
+				$transaction_date=$result_journal['journal']['transaction_date'];
+				$voucher_id=$result_journal['journal']['voucher_id'];
+				$start_date=date('d-m-Y',$transaction_date);
+				
+				$this->loadmodel('ledger');
+				$conditions=array('element_id'=>$journal_id,'table_name'=>'journal');
+				$result_ledger=$this->ledger->find('count',array('conditions'=>$conditions));
+				if($result_ledger==0){
+					
+					$actual_data[]=array('Number'=>$voucher_id,'source'=>'Journal','transaction_date'=>$start_date,'status'=>'No','society_name'=>$society_name,'auto_id'=>$journal_id);
+				}else{
+					$actual_data[]=array('Number'=>$voucher_id,'source'=>'Journal','transaction_date'=>$start_date,'status'=>'Yes','society_name'=>$society_name,'auto_id'=>$journal_id);
+				}
+			}
+		}	
+	$this->set('actual_data',$actual_data);
 }
 
 ////////////////////////////// End add_ac_field //////////////////////////////////

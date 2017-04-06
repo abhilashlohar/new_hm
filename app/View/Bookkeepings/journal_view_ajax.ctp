@@ -176,8 +176,8 @@ $prepaired_by = $dataaaa['user']['user_name'];
 <div class="pagination pagination-medium hide_at_print">
 <ul>
 <?php 
-$loop=(int)($count_bank_receipt_converted/10);
-if($count_bank_receipt_converted%10>0){
+$loop=(int)($count_bank_receipt_converted/100);
+if($count_bank_receipt_converted%100>0){
 	$loop++;
 }
 for($ii=1;$ii<=$loop;$ii++){ ?>

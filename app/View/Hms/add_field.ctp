@@ -25,7 +25,7 @@ $i++;
 <?php }  ?>
 </table>
 <br/>
-<table class="table table-condensed table-bordered" >
+<!--<table class="table table-condensed table-bordered" >
 <tr>
 	<td>Sr.no</td>
 	<td>Society Name</td>
@@ -46,7 +46,9 @@ $i++;
 	
 </tr>
 <?php }  ?>
-</table> 
+</table>-->
+
+<br/>
 
 
 <input type="text" class="date-picker m-wrap small" id="date1" data-date-format="dd-mm-yyyy" name="from" placeholder="From" style="background-color:white !important;" value="">

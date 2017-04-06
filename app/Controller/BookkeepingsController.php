@@ -315,7 +315,7 @@ if($this->RequestHandler->isAjax()){
 		
 		$conditions=array("society_id" => $s_society_id,'journal.transaction_date'=>array('$gte'=>$from1,'$lte'=>$to1));
 		$order=array('journal.transaction_date'=> 'ASC');
-		$result_journal=$this->journal->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>10,"page"=>$page));
+		$result_journal=$this->journal->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>100,"page"=>$page));
 		$this->set('result_journal',$result_journal);
 
 		

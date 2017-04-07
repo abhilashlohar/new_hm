@@ -28530,77 +28530,137 @@ function add_ac_field()
  // ledger posting check code//
 		$from=$this->request->query('date');
 		$to=$this->request->query('to');
+		$type=$this->request->query('type'); 
 		$to= date('Y-m-d',strtotime($to));
 		$from= date('Y-m-d',strtotime($from));
-	//exit;
 	
-	
-	/*
-		$this->loadmodel('regular_bill');
-		$conditions=array('edited'=>'no','society_id'=>$s_society_id,'start_date'=>array('$lte'=>strtotime($to),'$gte'=>strtotime($from)));
-	
-		$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>array('auto_id'=>'ASC')));	
+  if($type=="journal"){
+				$this->loadmodel('journal');
+				$conditions=array('society_id'=>$s_society_id,'transaction_date'=>array('$lte'=>strtotime($to),'$gte'=>strtotime($from)));
 
-		foreach($result_regular_bill as $data){
-			$element_id=$data['regular_bill']['auto_id'];
-			$bill_number=$data['regular_bill']['bill_number'];
-			$society_id=$data['regular_bill']['society_id'];
-			$start_date=$data['regular_bill']['start_date'];
-			$quarter_bill= date("d-m-Y",$start_date); 
-			
-			$this->loadmodel('society');
-			$result_society=$this->society->find('all',array('conditions'=>array('society_id'=>$society_id)));
-			$society_name=$result_society[0]['society']['society_name'];
-			
-			$this->loadmodel('ledger');
-			$conditions=array('element_id'=>$element_id,'table_name'=>'regular_bill','society_id'=>$society_id);
-			$ledger_posting=$this->ledger->find('count',array('conditions'=>$conditions));
+				$result_journals=$this->journal->find('all',array('conditions'=>$conditions));
 
-			if($ledger_posting==0){
+			if(sizeof($result_journals)>0){ 
+				foreach($result_journals as $result_journal){
+						$journal_id=$result_journal['journal']['journal_id'];
+						$society_id=$result_journal['journal']['society_id'];
+						$remark=$result_journal['journal']['remark'];
 
-				$actual_data[]=array('Number'=>$bill_number,'source'=>'Regular Bill','transaction_date'=>$quarter_bill,'status'=>'No','society_name'=>$society_name,'auto_id'=>$element_id);
+						$this->loadmodel('society');
+						$conditions=array('society_id'=>$society_id);
+						$result_society=$this->society->find('all',array('conditions'=>$conditions));
+						$society_name=$result_society[0]['society']['society_name'];
 
-			}else{
+						$transaction_date=$result_journal['journal']['transaction_date'];
+						$voucher_id=$result_journal['journal']['voucher_id'];
+						$start_date=date('d-m-Y',$transaction_date);
 
-				$actual_data[]=array('Number'=>$bill_number,'source'=>'Regular Bill','transaction_date'=>$quarter_bill,'status'=>'Yes','society_name'=>$society_name,'auto_id'=>$element_id);
-
-			}
-			
-		} 
-*/
-
-		
-		$this->loadmodel('journal');
-		$conditions=array('society_id'=>$s_society_id,'transaction_date'=>array('$lte'=>strtotime($to),'$gte'=>strtotime($from)));
-		
-		$result_journals=$this->journal->find('all',array('conditions'=>$conditions));
-
-		if(sizeof($result_journals)>0){ 
-			foreach($result_journals as $result_journal){
-				$journal_id=$result_journal['journal']['journal_id'];
-				$society_id=$result_journal['journal']['society_id'];
-				$remark=$result_journal['journal']['remark'];
-				
-				$this->loadmodel('society');
-				$conditions=array('society_id'=>$society_id);
-				$result_society=$this->society->find('all',array('conditions'=>$conditions));
-				$society_name=$result_society[0]['society']['society_name'];
-
-				$transaction_date=$result_journal['journal']['transaction_date'];
-				$voucher_id=$result_journal['journal']['voucher_id'];
-				$start_date=date('d-m-Y',$transaction_date);
-				
-				$this->loadmodel('ledger');
-				$conditions=array('element_id'=>$journal_id,'table_name'=>'journal');
-				$result_ledger=$this->ledger->find('count',array('conditions'=>$conditions));
-				if($result_ledger==0){
+						$this->loadmodel('ledger');
+						$conditions=array('element_id'=>$journal_id,'table_name'=>'journal');
+						$result_ledger=$this->ledger->find('count',array('conditions'=>$conditions));
+						if($result_ledger==0){
 					
-					$actual_data[]=array('Number'=>$voucher_id,'source'=>'Journal','transaction_date'=>$start_date,'status'=>'No','society_name'=>$society_name,'auto_id'=>$journal_id,'remark'=>$remark);
-				}else{
-					$actual_data[]=array('Number'=>$voucher_id,'source'=>'Journal','transaction_date'=>$start_date,'status'=>'Yes','society_name'=>$society_name,'auto_id'=>$journal_id,'remark'=>$remark);
+							$actual_data[]=array('Number'=>$voucher_id,'source'=>'Journal','transaction_date'=>$start_date,'status'=>'No','society_name'=>$society_name,'auto_id'=>$journal_id,'remark'=>$remark);
+						}else{
+							$actual_data[]=array('Number'=>$voucher_id,'source'=>'Journal','transaction_date'=>$start_date,'status'=>'Yes','society_name'=>$society_name,'auto_id'=>$journal_id,'remark'=>$remark);
+						}
 				}
+			}	
+		}elseif($type=="regular_bill"){
+			
+					$this->loadmodel('regular_bill');
+					$conditions=array('edited'=>'no','society_id'=>$s_society_id,'start_date'=>array('$lte'=>strtotime($to),'$gte'=>strtotime($from)));
+
+					$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>array('auto_id'=>'ASC')));	
+
+					foreach($result_regular_bill as $data){
+						$element_id=$data['regular_bill']['auto_id'];
+						$description=$data['regular_bill']['description'];
+						$bill_number=$data['regular_bill']['bill_number'];
+						$society_id=$data['regular_bill']['society_id'];
+						$start_date=$data['regular_bill']['start_date'];
+						$quarter_bill= date("d-m-Y",$start_date); 
+						
+						$this->loadmodel('society');
+						$result_society=$this->society->find('all',array('conditions'=>array('society_id'=>$society_id)));
+						$society_name=$result_society[0]['society']['society_name'];
+						
+						$this->loadmodel('ledger');
+						$conditions=array('element_id'=>$element_id,'table_name'=>'regular_bill','society_id'=>$society_id);
+						$ledger_posting=$this->ledger->find('count',array('conditions'=>$conditions));
+
+						if($ledger_posting==0){
+
+							$actual_data[]=array('Number'=>$bill_number,'source'=>'Regular Bill','transaction_date'=>$quarter_bill,'status'=>'No','society_name'=>$society_name,'auto_id'=>$element_id,'remark'=>$description);
+
+						}else{
+
+							$actual_data[]=array('Number'=>$bill_number,'source'=>'Regular Bill','transaction_date'=>$quarter_bill,'status'=>'Yes','society_name'=>$society_name,'auto_id'=>$element_id,'remark'=>$description);
+
+						}
+						
+					} 
+
+			
+		}elseif($type=="expense_tracker"){
+			
+			$this->loadmodel('expense_tracker');
+			$conditions=array('society_id'=>$s_society_id,'posting_date'=>array('$lte'=>strtotime($to),'$gte'=>strtotime($from)));
+			$result_expense_tracker=$this->expense_tracker->find('all',array('conditions'=>$conditions));
+			//pr($result_expense_tracker);
+			
+			foreach($result_expense_tracker as $data){
+				$expense_tracker_id=$data['expense_tracker']['expense_tracker_id'];
+				$posting_date=$data['expense_tracker']['posting_date'];
+				$description=$data['expense_tracker']['description'];
+				$society_id=$data['expense_tracker']['society_id'];
+				$voucher_id=$data['expense_tracker']['expense_id'];
+				
+				$quarter_bill= date("d-m-Y",$posting_date); 
+						
+					$this->loadmodel('society');
+					$result_society=$this->society->find('all',array('conditions'=>array('society_id'=>$society_id)));
+					$society_name=$result_society[0]['society']['society_name'];
+					
+					$this->loadmodel('ledger');
+					$conditions=array('element_id'=>$expense_tracker_id,'table_name'=>'expense_tracker','society_id'=>$society_id);
+					$ledger_posting=$this->ledger->find('count',array('conditions'=>$conditions));
+					
+					if($ledger_posting==0){
+
+						$actual_data[]=array('Number'=>$voucher_id,'source'=>'Expense Tracker','transaction_date'=>$quarter_bill,'status'=>'No','society_name'=>$society_name,'auto_id'=>$expense_tracker_id,'remark'=>$description);
+
+					}else{
+
+						$actual_data[]=array('Number'=>$voucher_id,'source'=>'Expense Tracker','transaction_date'=>$quarter_bill,'status'=>'Yes','society_name'=>$society_name,'auto_id'=>$expense_tracker_id,'remark'=>$description);
+
+					}
+				
+				
 			}
-		}	
+			
+			
+		}elseif($type=="bank_receipt"){
+			
+			
+			
+			
+			
+			
+			
+			
+		}elseif($type=="bank_payment"){
+			
+		}elseif($type=="petty_cash_receipt"){
+			
+		}elseif($type=="petty_cash_payment"){
+			
+		}
+	
+	
+
+		
+		
 	$this->set('actual_data',$actual_data);
 }
 

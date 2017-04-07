@@ -2,10 +2,11 @@
 <tr>
 	<td>Auto id</td>
 	<td>Society Name</td>
-	<td>type of transction</td>
-	<td>transction date</td>
-	<td>vouchar id</td>
-	<td>ledger posting</td>
+	<td>Type of transction</td>
+	<td>Transction date</td>
+	<td>Vouchar id</td>
+	<td>Description</td>
+	<td>Ledger posting</td>
 </tr>
 <?php $i=0; 
 foreach($actual_data as $data){
@@ -17,6 +18,7 @@ $i++;
 	<td><?php echo $data['source']; ?></td>
 	<td><?php echo $data['transaction_date']; ?></td>
 	<td><?php echo $data['Number']; ?></td>
+	<td><?php echo $data['remark']; ?></td>
 	<td><?php echo $data['status']; ?></td>
 	
 </tr>

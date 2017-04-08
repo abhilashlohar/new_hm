@@ -28643,6 +28643,39 @@ function add_ac_field()
 		}elseif($type=="bank_receipt"){
 			
 			
+			$this->loadmodel('cash_bank');
+			$conditions=array('society_id'=>$s_society_id,'source'=>'bank_receipt','transaction_date'=>array('$lte'=>strtotime($to),'$gte'=>strtotime($from)));
+			$result_cash_bank=$this->cash_bank->find('all',array('conditions'=>$conditions));
+			//pr($result_expense_tracker);
+			
+			foreach($result_cash_bank as $data){
+				$transaction_id=$data['cash_bank']['transaction_id'];
+				$posting_date=$data['cash_bank']['transaction_date'];
+				$description=$data['cash_bank']['narration'];
+				$society_id=$data['cash_bank']['society_id'];
+				$voucher_id=$data['cash_bank']['receipt_number'];
+				
+				$quarter_bill= date("d-m-Y",$posting_date); 
+						
+					$this->loadmodel('society');
+					$result_society=$this->society->find('all',array('conditions'=>array('society_id'=>$society_id)));
+					$society_name=$result_society[0]['society']['society_name'];
+					
+					$this->loadmodel('ledger');
+					$conditions=array('element_id'=>$transaction_id,'table_name'=>'cash_bank','society_id'=>$society_id);
+					$ledger_posting=$this->ledger->find('count',array('conditions'=>$conditions));
+					
+					if($ledger_posting==0){
+
+						$actual_data[]=array('Number'=>$voucher_id,'source'=>'Bank Receipt','transaction_date'=>$quarter_bill,'status'=>'No','society_name'=>$society_name,'auto_id'=>$transaction_id,'remark'=>$description);
+
+					}else{
+
+						$actual_data[]=array('Number'=>$voucher_id,'source'=>'Bank Receipt','transaction_date'=>$quarter_bill,'status'=>'Yes','society_name'=>$society_name,'auto_id'=>$transaction_id,'remark'=>$description);
+					}
+				
+				
+			}
 			
 			
 			
@@ -28650,6 +28683,44 @@ function add_ac_field()
 			
 			
 		}elseif($type=="bank_payment"){
+			
+		/*	$this->loadmodel('cash_bank');
+			$conditions=array('society_id'=>$s_society_id,'source'=>'bank_payment','transaction_date'=>array('$lte'=>strtotime($to),'$gte'=>strtotime($from)));
+			$result_cash_bank=$this->cash_bank->find('all',array('conditions'=>$conditions));
+			//pr($result_expense_tracker);
+			
+			foreach($result_cash_bank as $data){
+				$transaction_id=$data['cash_bank']['transaction_id'];
+				$posting_date=$data['cash_bank']['transaction_date'];
+				$description=$data['cash_bank']['narration'];
+				$society_id=$data['cash_bank']['society_id'];
+				$voucher_id=$data['cash_bank']['receipt_number'];
+				
+				$quarter_bill= date("d-m-Y",$posting_date); 
+						
+					$this->loadmodel('society');
+					$result_society=$this->society->find('all',array('conditions'=>array('society_id'=>$society_id)));
+					$society_name=$result_society[0]['society']['society_name'];
+					
+					$this->loadmodel('ledger');
+					$conditions=array('element_id'=>$transaction_id,'table_name'=>'cash_bank','society_id'=>$society_id);
+					$ledger_posting=$this->ledger->find('count',array('conditions'=>$conditions));
+					
+					if($ledger_posting==0){
+
+						$actual_data[]=array('Number'=>$voucher_id,'source'=>'Bank Payment','transaction_date'=>$quarter_bill,'status'=>'No','society_name'=>$society_name,'auto_id'=>$transaction_id,'remark'=>$description);
+
+					}else{
+
+						$actual_data[]=array('Number'=>$voucher_id,'source'=>'Bank Payment','transaction_date'=>$quarter_bill,'status'=>'Yes','society_name'=>$society_name,'auto_id'=>$transaction_id,'remark'=>$description);
+					}
+				
+				
+			}
+			
+		*/
+			
+			
 			
 		}elseif($type=="petty_cash_receipt"){
 			

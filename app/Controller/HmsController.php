@@ -28684,7 +28684,7 @@ function add_ac_field()
 			
 		}elseif($type=="bank_payment"){
 			
-		/*	$this->loadmodel('cash_bank');
+			$this->loadmodel('cash_bank');
 			$conditions=array('society_id'=>$s_society_id,'source'=>'bank_payment','transaction_date'=>array('$lte'=>strtotime($to),'$gte'=>strtotime($from)));
 			$result_cash_bank=$this->cash_bank->find('all',array('conditions'=>$conditions));
 			//pr($result_expense_tracker);
@@ -28718,13 +28718,14 @@ function add_ac_field()
 				
 			}
 			
-		*/
-			
-			
 			
 		}elseif($type=="petty_cash_receipt"){
 			
+			
+			
 		}elseif($type=="petty_cash_payment"){
+			
+			
 			
 		}
 	

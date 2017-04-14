@@ -628,7 +628,7 @@ function calculate_arrears_and_interest_new($ledger_sub_account_id,$start_date){
 			$credit=$data2["ledger"]["credit"];
 			$table_name=$data2["ledger"]["table_name"];
 			$arrear_int_type=@$data2["ledger"]["intrest_on_arrears"];
-			if(empty($credit) && $debit>0){
+			if(empty($credit) && !empty($debit)){
 				if($table_name=="opening_balance" or $table_name=="regular_bill"){
 					if($arrear_int_type=="YES"){
 						$arrear_interest+=$debit;
@@ -1679,6 +1679,7 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 				$last_bill_maint_arrear=0;
 			}
 		}
+		
 		if($current_bill_start_date>$last_due_date && $bill_count>0){
 			$last_due_date=date('Y-m-d', strtotime('0 day', $last_due_date));
 			$last_due_date=strtotime($last_due_date);
@@ -1689,7 +1690,7 @@ function calculate_arrears_and_interest_edit($ledger_sub_account_id,$start_date)
 			$last_due_date=$current_transaction_date;
 			
 		}
-		
+			
 		return array("intrest_on_arrears"=>$new_interest);
 		
 	
@@ -1951,23 +1952,17 @@ function calculate_arrears_and_without_interest_edit($ledger_sub_account_id,$sta
 		$s_society_id=$this->Session->read('hm_society_id');
 	    $this->loadmodel('ledger');
 		
-			/*$conditions1 =array('society_id' =>$s_society_id,'ledger_sub_account_id' =>(int)$ledger_sub_account_id,'transaction_date'=>array('$lt'=>strtotime($start_date)));
-			$ledger_count = $this->ledger->find('count',array('conditions'=>$conditions1));
-			if($ledger_count==0){
-			$conditions=array("ledger_account_id" =>34,"ledger_sub_account_id" => (int)$ledger_sub_account_id,'transaction_date'=>array('$lte'=>strtotime($start_date)),"table_name"=>array('$ne'=>"regular_bill"));
-			}else{
-			$conditions=array("ledger_account_id" =>34,"ledger_sub_account_id" => (int)$ledger_sub_account_id,'transaction_date'=>array('$lt'=>strtotime($start_date)));	
-			} */
 		$conditions=array("ledger_account_id" =>34,"ledger_sub_account_id" => (int)$ledger_sub_account_id,'transaction_date'=>array('$lt'=>strtotime($start_date)));
 		$this->loadmodel('ledger');
 		$order=array('transaction_date'=>'ASC');
 		$ledgers = $this->ledger->find('all',array('conditions'=>$conditions,"order"=>$order));
+		 
 	   foreach($ledgers as $data2){
 			$debit=$data2["ledger"]["debit"];
 			$credit=$data2["ledger"]["credit"];
 			$table_name=$data2["ledger"]["table_name"];
 			$arrear_int_type=@$data2["ledger"]["intrest_on_arrears"];
-			if(empty($credit) && $debit>0){
+			if(empty($credit) && !empty($debit)){
 				if($table_name=="opening_balance" or $table_name=="regular_bill"){
 					if($arrear_int_type=="YES"){
 						$arrear_interest+=$debit;

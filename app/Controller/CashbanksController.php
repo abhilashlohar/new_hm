@@ -204,8 +204,8 @@ function individual_send_email($auto_id=null){
 											</td>
 											<td align="center" style="font-size: 10px;"></td>
 										   
-											<td align="right" width="50"><b><a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end"><img src="'.$ip.$this->webroot.'/as/hm/whatsup.png"  width="18px" /></a></b></td>
-											<td width="104" style="color:#FFF !important;text-decoration: none;"><b>+91-9869157561</b></td>
+											<td align="right" width="50"><b style="display:none;visibility: hidden !important;"><a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end"><img src="'.$ip.$this->webroot.'/as/hm/whatsup.png"  width="18px" /></a></b></td>
+											<td width="104" style="color:#FFF !important;text-decoration: none;"><b style="display:none;visibility: hidden !important;">+91-9887779123</b></td>
 											<td align="center" style="font-size: 10px;"></td>
 											<td width="100" style="padding-right:10px;text-decoration:none"> <a href="http://www.housingmatters.in" style="color:#fff!important" target="_blank"><b>www.housingmatters.in</b></a></td>
 										</tr>
@@ -226,6 +226,7 @@ function individual_send_email($auto_id=null){
 
 	if($email_is_on_off==1){
 	////email code//
+	//$email="rohitkumarjoshi43@gmail.com";
 			if(!empty($email)){
 				
 				$subject="[".$society_name."]- e-Receipt of Rs ".$amount." on ".$date." against Unit ".$wing_flat."";
@@ -1670,8 +1671,8 @@ function final_import_bank_receipt_ajax(){
 											</td>
 											<td align="center" style="font-size: 10px;"></td>
 										   
-											<td align="right" width="50"><b><a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end"><img src="'.$ip.$this->webroot.'/as/hm/whatsup.png"  width="18px" /></a></b></td>
-											<td width="104" style="color:#FFF !important;text-decoration: none;"><b>+91-9869157561</b></td>
+											<td align="right" width="50"><b style="display:none;visibility: hidden !important;"><a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end"><img src="'.$ip.$this->webroot.'/as/hm/whatsup.png"  width="18px" /></a></b></td>
+											<td width="104" style="color:#FFF !important;text-decoration: none;"><b style="display:none;visibility: hidden !important;">+91-9869157561</b></td>
 											<td align="center" style="font-size: 10px;"></td>
 											<td width="100" style="padding-right:10px;text-decoration:none"> <a href="http://www.housingmatters.in" style="color:#fff!important" target="_blank"><b>www.housingmatters.in</b></a></td>
 										</tr>
@@ -3412,8 +3413,8 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 											</td>
 											<td align="center" style="font-size: 10px;"></td>
 										   
-											<td align="right" width="50"><b><a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end"><img src="'.$ip.$this->webroot.'/as/hm/whatsup.png"  width="18px" /></a></b></td>
-											<td width="104" style="color:#FFF !important;text-decoration: none;"><b>+91-9869157561</b></td>
+											<td align="right" width="50"><b style="display:none;visibility: hidden !important;"><a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end"><img src="'.$ip.$this->webroot.'/as/hm/whatsup.png"  width="18px" /></a></b></td>
+											<td width="104" style="color:#FFF !important;text-decoration: none;"><b style="display:none;visibility: hidden !important;">+91-9869157561</b></td>
 											<td align="center" style="font-size: 10px;"></td>
 											<td width="100" style="padding-right:10px;text-decoration:none"> <a href="http://www.housingmatters.in" style="color:#fff!important" target="_blank"><b>www.housingmatters.in</b></a></td>
 										</tr>
@@ -6966,8 +6967,8 @@ function new_bank_receipt(){
 											</td>
 											<td align="center" style="font-size: 10px;"></td>
 										   
-											<td align="right" width="50"><b><a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end"><img src="'.$ip.$this->webroot.'/as/hm/whatsup.png"  width="18px" /></a></b></td>
-											<td width="104" style="color:#FFF !important;text-decoration: none;"><b>+91-9869157561</b></td>
+											<td align="right" width="50"><b style="display:none;visibility: hidden !important;"><a href="intent://send/+919869157561#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end"><img src="'.$ip.$this->webroot.'/as/hm/whatsup.png"  width="18px" /></a></b></td>
+											<td width="104" style="color:#FFF !important;text-decoration: none;"><b style="display:none;visibility: hidden !important;">+91-9869157561</b></td>
 											<td align="center" style="font-size: 10px;"></td>
 											<td width="100" style="padding-right:10px;text-decoration:none"> <a href="http://www.housingmatters.in" style="color:#fff!important" target="_blank"><b>www.housingmatters.in</b></a></td>
 										</tr>

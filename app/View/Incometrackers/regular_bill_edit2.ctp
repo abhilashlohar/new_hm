@@ -69,7 +69,7 @@ foreach($regular_bill_info as $regular_bill){
 	$result = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrears_and_without_interest_edit'),array('pass'=>array($ledger_sub_account_id,$start_date)));
 	
 	 $result_interest = $this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_arrears_and_interest_edit'),array('pass'=>array($ledger_sub_account_id,$start_date)));
-	//pr($result_interest); exit;
+//	pr($result_interest); //exit;
 	$maint_arrear=$result["maint_arrear"];
 			
 	$non_maint_arrear=$result["non_maint_arrear"];
@@ -79,14 +79,15 @@ foreach($regular_bill_info as $regular_bill){
 	//$maint_arrear=$maint_arrear+$bill_amount;
 	$maint_arrear=$maint_arrear;
 	$arrear_interest=$result["arrear_intrest"];
-	
-	$intrest_on_arrears=round($result_interest["intrest_on_arrears"]);
+	$intrest_on_arrears=$result_interest["intrest_on_arrears"];
+	if($intrest_on_arrears<0){$intrest_on_arrears=0; }
+	$intrest_on_arrears=round($intrest_on_arrears);
 	$intrest_on_arrears=$intrest_on_arrears;
 	$due_for_payment+=$arrear_principle;
 	$due_for_payment+=$arrear_interest;
 	$due_for_payment+=$intrest_on_arrears;
 	
-	if($intrest_on_arrears<0){$intrest_on_arrears=0; }
+	//if($intrest_on_arrears<0){$intrest_on_arrears=0; }
 }; ?>
 <div class="portlet box blue">
 	<div class="portlet-title">

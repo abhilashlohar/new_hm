@@ -333,7 +333,7 @@ function reconciliation_report_ajax($ledger_sub_account_id=null,$to=null){
 		$this->loadmodel('bank_reconciliation');
 	
 	
-		$conditions =array( '$or' => array(array('society_id'=>$s_society_id,"flag"=>0,'ledger_sub_account_id'=>(int)$ledger_sub_account_id,'credit'=>null,'transaction_date'=>array('$lte'=>strtotime($to))),array('society_id'=>$s_society_id,"flag"=>1,'ledger_sub_account_id'=>(int)$ledger_sub_account_id,'pass_book_transaction_date'=>array('$gte'=>strtotime($to)),'credit'=>null,'transaction_date'=>array('$lte'=>strtotime($to)))));
+		$conditions =array( '$or' => array(array('society_id'=>$s_society_id,"flag"=>0,'ledger_sub_account_id'=>(int)$ledger_sub_account_id,'credit'=>null,'transaction_date'=>array('$lte'=>strtotime($to))),array('society_id'=>$s_society_id,"flag"=>1,'ledger_sub_account_id'=>(int)$ledger_sub_account_id,'pass_book_transaction_date'=>array('$gt'=>strtotime($to)),'credit'=>null,'transaction_date'=>array('$lte'=>strtotime($to)))));
 					
 
 		$order=array('bank_reconciliation.transaction_date'=>'ASC');
@@ -344,7 +344,7 @@ function reconciliation_report_ajax($ledger_sub_account_id=null,$to=null){
 		$result_bank_reconciliation_debit_bank_payment=$this->bank_reconciliation->find('all',array('conditions'=>$conditions));
 	
 			
-		$conditions =array( '$or' => array(array('society_id'=>$s_society_id,"flag"=>0,'ledger_sub_account_id'=>(int)$ledger_sub_account_id,'debit'=>null,'transaction_date'=>array('$lte'=>strtotime($to))),array('society_id'=>$s_society_id,"flag"=>1,'ledger_sub_account_id'=>(int)$ledger_sub_account_id,'pass_book_transaction_date'=>array('$gte'=>strtotime($to)),'debit'=>null,'transaction_date'=>array('$lte'=>strtotime($to)))));
+		$conditions =array( '$or' => array(array('society_id'=>$s_society_id,"flag"=>0,'ledger_sub_account_id'=>(int)$ledger_sub_account_id,'debit'=>null,'transaction_date'=>array('$lte'=>strtotime($to))),array('society_id'=>$s_society_id,"flag"=>1,'ledger_sub_account_id'=>(int)$ledger_sub_account_id,'pass_book_transaction_date'=>array('$gt'=>strtotime($to)),'debit'=>null,'transaction_date'=>array('$lte'=>strtotime($to)))));
 		
 		$order=array('bank_reconciliation.transaction_date'=>'ASC');
 		$result_bank_reconciliation_credit_bank_payment=$this->bank_reconciliation->find('all',array('conditions'=>$conditions));

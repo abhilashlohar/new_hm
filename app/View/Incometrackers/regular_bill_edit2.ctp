@@ -269,11 +269,10 @@ foreach($regular_bill_info as $regular_bill){
 $(document).ready(function() {
 	
 $("form").validate({
-  submitHandler: function(form) {
- 
-   $(".form_des").attr('disabled','disabled');
-  form.submit();
-  }
+	  submitHandler: function(form) {
+		  $(".form_des").attr('disabled','disabled');
+		  form.submit();
+	  }
 });
 	
 	$(".add_row").die().live("click",function(){

@@ -105,7 +105,7 @@ function event_submit(){
 	if($visible=='0'){
 		$report[]=array('label'=>'visible', 'text' => 'Please select visible');
 	}elseif($visible=='role_wise' and $sub_visible==0){
-		//$report[]=array('label'=>'visible_role', 'text' => 'Please select role.');
+		$report[]=array('label'=>'visible_role', 'text' => 'Please select role.');
 		$sub_visible=explode(",",$sub_visible);
 	}elseif($visible=='wing_wise' and $sub_visible==0){
 		$report[]=array('label'=>'visible_wing', 'text' => 'Please select wing.');

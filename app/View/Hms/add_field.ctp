@@ -59,6 +59,7 @@ $i++;
 <option value="bank_payment"> Bank Payment</option>
 <option value="petty_cash_receipt"> Petty Cash Receipt </option>
 <option value="petty_cash_payment"> Petty Cash Payment</option>
+<option value="bill_double"> Bill Double</option>
 </select> 
 <input type="text" class="date-picker m-wrap small" id="date1" data-date-format="dd-mm-yyyy" name="from" placeholder="From" style="background-color:white !important;" value="">
 <input type="text" class="date-picker m-wrap small" id="date2" data-date-format="dd-mm-yyyy" name="from" placeholder="To" style="background-color:white !important;" value="">

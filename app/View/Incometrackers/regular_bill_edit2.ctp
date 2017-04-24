@@ -114,7 +114,7 @@ foreach($regular_bill_info as $regular_bill){
 				<td><?php echo date("d-M-Y",$due_date); ?></td>
 			</tr>
 		</table>
-		<form method="post">
+		<form method="post" class="submit_actual">
 		<div class="portlet-body span6">
 			<table class="table table-bordered" id="table_bill">
 				<thead>
@@ -245,7 +245,7 @@ foreach($regular_bill_info as $regular_bill){
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn" id="close_button">CLOSE</button>
-				<button type="submit" name="edit_bill" class="btn red">UPDATE BILL</button>
+				<button type="submit" name="edit_bill" class="btn red form_des ">UPDATE BILL</button>
 			</div>
 			</div>
 		</div>
@@ -268,7 +268,13 @@ foreach($regular_bill_info as $regular_bill){
 <script>
 $(document).ready(function() {
 	
-	
+$("form").validate({
+  submitHandler: function(form) {
+ 
+   $(".form_des").attr('disabled','disabled');
+  form.submit();
+  }
+});
 	
 	$(".add_row").die().live("click",function(){
 		var len=$(".add_row").length;

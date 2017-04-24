@@ -28790,6 +28790,38 @@ function add_ac_field()
 				
 			}
 			
+		}elseif($type=="bill_double"){
+			
+					$this->loadmodel('regular_bill');
+					$conditions=array('edited'=>'no','society_id'=>$s_society_id,'start_date'=>array('$lte'=>strtotime($to),'$gte'=>strtotime($from)));
+
+					$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions,'order'=>array('auto_id'=>'ASC')));	
+
+					foreach($result_regular_bill as $data){
+						$element_id=$data['regular_bill']['auto_id'];
+						$ledger_sub_account_id=$data['regular_bill']['ledger_sub_account_id'];
+						$description=$data['regular_bill']['description'];
+						$bill_number=$data['regular_bill']['bill_number'];
+						$society_id=$data['regular_bill']['society_id'];
+						$start_date=$data['regular_bill']['start_date']; 
+						$quarter_bill= date("d-m-Y",$start_date); 
+												
+						$this->loadmodel('society');
+						$result_society=$this->society->find('all',array('conditions'=>array('society_id'=>$society_id)));
+						$society_name=$result_society[0]['society']['society_name'];
+						
+												
+						$this->loadmodel('regular_bill');
+						$conditions=array('edited'=>'no','society_id'=>$society_id,'ledger_sub_account_id'=>$ledger_sub_account_id,'start_date'=>$start_date);
+						$count_double=$this->regular_bill->find('count',array('conditions'=>$conditions));	
+							if($count_double>1){
+								
+									$actual_data[]=array('Number'=>$bill_number,'source'=>'Regular Bill','transaction_date'=>$quarter_bill,'status'=>'double entry','society_name'=>$society_name,'auto_id'=>$element_id,'remark'=>$description);
+							}
+						
+					} 
+
+			
 		}
 	
 	

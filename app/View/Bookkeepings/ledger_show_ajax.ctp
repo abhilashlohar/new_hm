@@ -110,7 +110,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 	</thead>
 	<tbody id="table">
 	<?php 
-	$i=0; $total_debit=0; $total_credit=0;
+	$i=0; $total_debit=0; $total_credit=0; //pr($result_ledger); //exit;
 	foreach($result_ledger as $data){ $i++;
 	$created_by = "";
 	$created_on = "";
@@ -679,13 +679,15 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 
 		}
 		if($table_name=="supplimentry_bill"){
-		
+		$wing_flat="";
           $source="Supplimentry Bill";
 		  
 	$result_supplimentry_bill=$this->requestAction(array('controller' => 'Hms', 'action'=>'supplimentry_bill_detail_via_supplimentry_bill_id'), array('pass' => array($element_id)));
 		foreach($result_supplimentry_bill as $result_supplimentry_bill_data){
 		$description=$result_supplimentry_bill_data['supplimentry_bill']['description'];
 		$supplimentry_receipt=$result_supplimentry_bill_data['supplimentry_bill']['receipt_id'];
+		 $supplimentry_ledger_sub_account_id=$result_supplimentry_bill_data['supplimentry_bill']['ledger_sub_account_id'];
+		  $supplimentry_ledger_income_head=$result_supplimentry_bill_data['supplimentry_bill']['income_head'];
 		$adhoc_id= (int)$result_supplimentry_bill_data['supplimentry_bill']['supplimentry_bill_id'];
 		$date=$result_supplimentry_bill_data['supplimentry_bill']["date"];
 		$creater_id = (int)$result_supplimentry_bill_data['supplimentry_bill']['created_by'];
@@ -701,25 +703,32 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 
 			
 		if($subledger_id != 0)
-		{ 
-			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
-			foreach($subleddger_detaill as $subledger_datttaa)
-			{
-			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
-			$ledger_id_forwingflat = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
-			}
-		}
-		else
-		{ 
-			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id)));
+		{   
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($supplimentry_ledger_income_head)));
 			foreach($leddger_detaill as $ledger_datttaa)
 			{
 			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
-			}
-		}		
-
+			} 
+			
 			
 		}
+		else
+		{  
+	
+			$user_id1 = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array((int)$supplimentry_ledger_sub_account_id)));
+
+			$user_id=$user_id1['user_id'];
+			$user_name=$user_id1['user_name'];
+			$wing_id=(int)$user_id1['wing_id'];
+			$flat_id=(int)$user_id1['flat_id'];
+
+
+			$wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'wing_flat'), array('pass' => array($wing_id,$flat_id)));
+
+			
+		}		
+
+	}
 	
 		
 		if(($table_name=="regular_bill"  &&  $bill_approved=="yes") || $table_name=="cash_bank" || $table_name=="opening_balance" || $table_name=="expense_tracker" || $table_name=="journal" || $table_name=="fix_asset" || $table_name=="supplimentry_bill"){

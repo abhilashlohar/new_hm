@@ -3348,7 +3348,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	//Configure::write('debug', 0);
+	Configure::write('debug', 0);
 }
 
 
@@ -5371,8 +5371,74 @@ $this->layout='session';
 	$this->ath();
 		
 	$s_society_id=$this->Session->read('hm_society_id');	
+	
+		$this->loadmodel('regular_bill');
+		$conditions=array('created_by'=>650);
+		$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions));
+		//pr($result_regular_bill);
+		foreach($result_regular_bill as $data){
+			$auto_id=(int)$data['regular_bill']['auto_id'];
+			$this->regular_bill->updateAll(array('created_by'=>575),array('auto_id'=>$auto_id));
+		}
+		
+		$this->loadmodel('regular_bill');
+		$conditions=array('created_by'=>866);
+		$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions));
+		//pr($result_regular_bill);
+		foreach($result_regular_bill as $data){
+			$auto_id=(int)$data['regular_bill']['auto_id'];
+			$this->regular_bill->updateAll(array('created_by'=>786),array('auto_id'=>$auto_id));
+		}
+		
+		$this->loadmodel('regular_bill');
+		$conditions=array('created_by'=>338);
+		$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions));
+		//pr($result_regular_bill);
+		foreach($result_regular_bill as $data){
+			$auto_id=(int)$data['regular_bill']['auto_id'];
+			$this->regular_bill->updateAll(array('created_by'=>324),array('auto_id'=>$auto_id));
+		}
+		
+		$this->loadmodel('regular_bill');
+		$conditions=array('created_by'=>87);
+		$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions));
+		//pr($result_regular_bill);
+		foreach($result_regular_bill as $data){
+			$auto_id=(int)$data['regular_bill']['auto_id'];
+			$this->regular_bill->updateAll(array('created_by'=>2),array('auto_id'=>$auto_id));
+		}
+		
+		$this->loadmodel('regular_bill');
+		$conditions=array('created_by'=>106);
+		$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions));
+		//pr($result_regular_bill);
+		foreach($result_regular_bill as $data){
+			$auto_id=(int)$data['regular_bill']['auto_id'];
+			$this->regular_bill->updateAll(array('created_by'=>41),array('auto_id'=>$auto_id));
+		}
+		
+		$this->loadmodel('regular_bill');
+		$conditions=array('created_by'=>133);
+		$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions));
+		//pr($result_regular_bill);
+		foreach($result_regular_bill as $data){
+			$auto_id=(int)$data['regular_bill']['auto_id'];
+			$this->regular_bill->updateAll(array('created_by'=>141),array('auto_id'=>$auto_id));
+		}
+		
+		$this->loadmodel('regular_bill');
+		$conditions=array('created_by'=>54);
+		$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions));
+		//pr($result_regular_bill);
+		foreach($result_regular_bill as $data){
+			$auto_id=(int)$data['regular_bill']['auto_id'];
+			$this->regular_bill->updateAll(array('created_by'=>85),array('auto_id'=>$auto_id));
+		}
+		
+		exit;
+	
 	//$actual_data=array();
-	$this->loadmodel('cash_bank');
+	/*$this->loadmodel('cash_bank');
 	$conditions=array('amount'=>0);
 	$result_cash_bank=$this->cash_bank->find('all',array('conditions'=>$conditions));
 	//pr($result_cash_bank);
@@ -5475,7 +5541,7 @@ $this->layout='session';
 			
 			}
 			
-	}
+	} */
 	
 	$this->set('actual_data',@$actual_data);
 //pr($actual_data); exit;

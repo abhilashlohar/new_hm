@@ -187,9 +187,6 @@ function bank_reconciliation_ajax($ledger_sub_ac_id=null,$to1=null){
 			}
 			
 		}
-		echo $to; echo"<br/>";
-		
-		echo strtotime($to);
 		
 		$this->loadmodel('bank_reconciliation');
 		$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>33,

@@ -187,7 +187,7 @@ function bank_reconciliation_ajax($ledger_sub_ac_id=null,$to1=null){
 			}
 			
 		}
-		
+		echo $to;
 		$this->loadmodel('bank_reconciliation');
 		$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>33,
 		"ledger_sub_account_id"=>(int)$ledger_sub_ac_id,"flag"=>0,

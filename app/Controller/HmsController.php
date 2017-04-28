@@ -28053,10 +28053,10 @@ $s_role_id = (int)$this->Session->read('hm_role_id');
 $s_society_id = (int)$this->Session->read('hm_society_id');
 $s_user_id = (int)$this->Session->read('hm_user_id');
 
-//$conditions =array( '$or' => array(array("user_id" => $user_id,"society_id"=>$s_society_id),array("user_id" => $user_id)));
+$conditions =array( '$or' => array(array("user_id" => $user_id,"society_id"=>$s_society_id),array("user_id" => $user_id)));
 
 $this->loadmodel('user');
-$conditions=array("user_id" => $user_id,"society_id"=>$s_society_id);
+//$conditions=array("user_id" => $user_id,"society_id"=>$s_society_id);
 
 return $this->user->find('all',array('conditions'=>$conditions));
 }

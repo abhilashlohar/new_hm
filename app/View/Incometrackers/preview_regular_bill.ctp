@@ -368,7 +368,7 @@ $(document).ready(function(){
 			url: "<?php echo $webroot_path; ?>Incometrackers/send_bills_for_approval",
 			}).done(function(response){
 				if(response=="ok"){
-					window.location.href="<?php echo $webroot_path; ?>Incometrackers/it_regular_bill";
+					window.location.href="<?php echo $webroot_path; ?>Incometrackers/aprrove_bill";
 				}
 			});
 		}

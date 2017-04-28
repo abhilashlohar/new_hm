@@ -5372,7 +5372,7 @@ $this->layout='session';
 		
 	$s_society_id=$this->Session->read('hm_society_id');	
 	
-		$this->loadmodel('regular_bill');
+	/*	$this->loadmodel('regular_bill');
 		$conditions=array('created_by'=>650);
 		$result_regular_bill=$this->regular_bill->find('all',array('conditions'=>$conditions));
 		//pr($result_regular_bill);
@@ -5436,7 +5436,7 @@ $this->layout='session';
 		}
 		
 		exit;
-	
+	*/
 	//$actual_data=array();
 	/*$this->loadmodel('cash_bank');
 	$conditions=array('amount'=>0);

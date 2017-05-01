@@ -125,7 +125,7 @@ width: 500px !important;
 
 				
 				
-				  <script>
+<script>
 $(document).ready(function(){
 		$('#contact-form').validate({
 			 ignore: 'null', 

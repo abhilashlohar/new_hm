@@ -1815,11 +1815,11 @@ function allow_user_enrollment(){
 				$empty_validate=1;	
 			}	
 			$this->loadmodel('user');
-				$result_user=$this->user->find('all');
+				$result_user=$this->user->find('all',array('conditions'=>array('active'=>'yes')));
 					foreach($result_user as $data){
 						$email_id=$data['user']['email'];
 							if($email_id==$email){
-								$empty_validate=1;	
+								 $empty_validate=1;	
 						}					  
 					}
 					$n=0;
@@ -1842,7 +1842,7 @@ function allow_user_enrollment(){
 					} 
 				
 				$this->loadmodel('user');
-					$result_user=$this->user->find('all');
+					$result_user=$this->user->find('all',array('conditions'=>array('active'=>'yes')));
 						foreach($result_user as $dataa){
 							$mobile_number=$dataa['user']['mobile'];
 								if($mobile_number==$mobile){
@@ -1872,14 +1872,14 @@ function allow_user_enrollment(){
 						}
 					}
 			$this->loadmodel('user_flat');
-			$conditions=array("flat"=>$flat,"owner"=>array('$ne'=>null));
+			$conditions=array("flat"=>$flat,"owner"=>array('$ne'=>null),"exited"=>'no');
 			$result_user_flat=$this->user_flat->find('all',array('conditions'=>$conditions));
 				$n4 = sizeof($result_user_flat); 
 					if($n4==1){
 						$tenant=$result_user_flat[0]['user_flat']['owner'];
 							if($tenant=='yes'){
 								if($tenant==$owner){
-									$empty_validate=1; 	
+									echo $empty_validate=1; 	
 								}
 								}else{
 									if($tenant==$owner){
@@ -1891,6 +1891,7 @@ function allow_user_enrollment(){
 							{
 							$empty_validate=1;	
 					}
+					
         $g=0;
 		for($j=0; $j<sizeof($wing_flat_array); $j++){
 	       $wing_flat_sub_array=$wing_flat_array[$j];
@@ -9371,7 +9372,7 @@ $conditions=array("email" => $email,'reject'=>0);
 $result3 = $this->user_temp->find('all',array('conditions'=>$conditions));
 $n3 = sizeof($result3);
 $this->loadmodel('user');
-$conditions=array("email" => $email);
+$conditions=array("email" => $email,"active"=>"yes");
 $result4 = $this->user->find('all',array('conditions'=>$conditions));
 $n4 = sizeof($result4);
 $e=$n3+$n4;
@@ -9391,7 +9392,7 @@ $conditions=array("mobile" => $mobile,'reject'=>0);
 $result3 = $this->user_temp->find('all',array('conditions'=>$conditions));
 $n3 = sizeof($result3);
 $this->loadmodel('user');
-$conditions=array("mobile" => $mobile,"user_id"=>array('$ne'=>1));
+$conditions=array("mobile" => $mobile,"user_id"=>array('$ne'=>1),"active"=>"yes");
 $result4 = $this->user->find('all',array('conditions'=>$conditions));
 $n4 = sizeof($result4);
 $e=$n4;
@@ -30152,7 +30153,7 @@ foreach($myArray as $child){
 		$result3 = $this->user_temp->find('all',array('conditions'=>$conditions));
 		$n3 = sizeof($result3);
 		$this->loadmodel('user');
-		$conditions=array("email" => $child[3]);
+		$conditions=array("email" => $child[3],"active"=> "yes");
 		$result4 = $this->user->find('all',array('conditions'=>$conditions));
 		$n4 = sizeof($result4);
 		$e=$n3+$n4;
@@ -30168,7 +30169,7 @@ foreach($myArray as $child){
 		$result3 = $this->user_temp->find('all',array('conditions'=>$conditions));
 		$n3 = sizeof($result3);
 		$this->loadmodel('user');
-		$conditions=array("mobile" => $child[4],'user_id'=>array('$ne'=>1));
+		$conditions=array("mobile" => $child[4],'user_id'=>array('$ne'=>1),"active"=> "yes");
 		$result4 = $this->user->find('all',array('conditions'=>$conditions));
 		$n4 = sizeof($result4);
 		$e=$n3+$n4;
@@ -32906,7 +32907,7 @@ function user_enrolment_validation_with_table($email=null)
 	$s_society_id=$this->Session->read('hm_society_id');
 	$result="not_match";
 		$this->loadmodel('user');
-		$result_user=$this->user->find('all');
+		$result_user=$this->user->find('all',array('conditions'=>array('active'=>'yes')));
 		foreach($result_user as $data){
 				$email_id=$data['user']['email'];
                   if($email_id==$email){
@@ -32953,7 +32954,7 @@ function mobile_validation_with_table($mobile=null)
 	 $s_society_id=$this->Session->read('hm_society_id');
 $result="not_match";
 		$this->loadmodel('user');
-		$result_user=$this->user->find('all');
+		$result_user=$this->user->find('all',array('conditions'=>array('active'=>'yes')));
 		foreach($result_user as $data){
 				$mobile_number=$data['user']['mobile'];
                   if($mobile_number==$mobile){

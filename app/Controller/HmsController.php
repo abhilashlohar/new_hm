@@ -503,7 +503,6 @@ function check_sms_count($str,$member){
 	if($value>=153 && $value<306) { $c = 2; }
 	if($value>=306 && $value<=459) { $c = 3; }
 	return $c*$mem;
-	
 }
 
 
@@ -3349,7 +3348,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 

@@ -246,8 +246,11 @@ $recieve_info=$this->requestAction(array('controller'=>'Fns','action'=>'sending_
 $mobile_array=array();	
 $user_id_array=array();
 foreach($recieve_info as $user_id=>$data){
-$mobile_array[]=@$data['mobile'];	
-$user_id_array[]=$user_id;
+	$mobile_new=@$data['mobile'];
+	if(!empty($mobile_new)){
+		$mobile_array[]=@$mobile_new;	
+		$user_id_array[]=$user_id;
+	}
 }
 $user_id_array=array_unique($user_id_array);	
 $mobile_array=array_unique($mobile_array);	
@@ -260,20 +263,20 @@ $mobile_array_implode = implode(',',$mobile_array);
 	$sms_sender=$r_sms->sms_sender; 
 	$sms_allow=(int)$r_sms->sms_allow;
 	if($sms_allow==1){
-	   $sms_count=$this->check_sms_count($massage_str,$user_id_array);
+	    $sms_count=$this->check_sms_count($massage_str,$user_id_array);
 	
     	$allow= $this->check_sms_allow_for_generate($sms_limit,$sms_s_count,$sms_count);
 			if($allow=='no'){
 				goto a;
 			}
 		
-	
 	//$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_array_implode.'&message='.$massage_str.'&time='.$s_date_ex0.$s_date_ex1.$s_date_ex2.$time_h.$time_m);
 		
 	
 	$payload = file_get_contents('http://alerts.sinfini.com/api/v3/index.php?method=sms&api_key='.$working_key.'&sender='.$sms_sender.'&to='.$mobile_array_implode.'&message='.$massage_str.'&time='.$y_date.$t2);
 	
 	}
+	
    $find_froup=json_decode($payload);	
    $group_id=$find_froup->data->group_id;
 	$sms_id=$this->autoincrement('sms','sms_id');

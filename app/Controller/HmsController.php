@@ -9000,7 +9000,7 @@ $working_key=$r->working_key;
 $sms_sender=$r->sms_sender; 
 $sms_allow=(int)$r->sms_allow;
 if($sms_allow==1){
-$sms='New Request for Society registration into HousingMatters. Kindly approve the request.';
+$sms='New Society registration '.$society_name.' for approval.';
 $sms1=str_replace(' ', '+', $sms);
 $payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');
 }
@@ -9670,7 +9670,7 @@ if($forget_type=='email'){
 			$sms_allow=(int)$r_sms->sms_allow; 
 			if($sms_allow==1){
 			
-					$sms="Your 5 digit random code is ".$random." for verification";
+					$sms="Your one time password ".$random." to reset new password";
 					$sms1=str_replace(" ", '+', $sms);
 					$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');
 
@@ -15335,7 +15335,7 @@ function send_sms_for_verify_mobile(){
 	$sms_allow=(int)$r_sms->sms_allow;
 	if($sms_allow==1){	
 
-	$sms='Hi ! '.$user_name.', Use '.$random_otp.' as one time passcode and continue your Housing Matters registration process. ';
+	$sms='Hi ! '.$user_name.', Use '.$random_otp.' as one time passcode and continue your HousingMatters registration process. ';
 
 	$sms1=str_replace(' ', '+', $sms);
 
@@ -15426,7 +15426,7 @@ function verify_mobile_ajax()
  $sms_allow=(int)$r_sms->sms_allow; 
 if($sms_allow==1){
 
-$sms='Hi ! '.$user_name.', Use '.$random_otp.' as one time passcode and continue your Housing Matters registration process. ';
+$sms='Hi ! '.$user_name.', Use '.$random_otp.' as one time passcode and continue your HousingMatters registration process. ';
 $sms1=str_replace(' ', '+', $sms);
 $payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.'');
 }

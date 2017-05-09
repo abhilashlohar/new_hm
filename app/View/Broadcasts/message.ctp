@@ -542,7 +542,7 @@ rules: {
   },
    massage: {
 	required: true,
-	specialChar: true
+	//specialChar: true
   },
   notice_visible_to: {
    

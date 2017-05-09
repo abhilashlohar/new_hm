@@ -202,7 +202,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
  <table width="100%">
  <tr>
  <td>
- <div id="count_result" style="float:right;"><span style="font-size:14px; color:#666; font-weight:bold;">No. of Messages</span><input  type="text" style="width:80px; background-color:#008000; color:#FFF;" value="0 / 1 SMS" readonly class="count_pre" ></div>
+ <div id="count_result" style="float:right;"><span style="font-size:14px; color:#666; font-weight:bold;">No. of Messages </span><input  type="text" style="width:80px; background-color:#008000; color:#FFF;" value="0 / 1 SMS" readonly class="count_pre" ></div>
  </td>
  <td>
 	

@@ -10,6 +10,7 @@ public $components = array(
 var $name = 'Hms';
 
 
+
 function member_search(){
 	if($this->RequestHandler->isAjax()){
 		$this->layout='blank';

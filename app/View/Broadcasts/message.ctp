@@ -202,7 +202,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
  <table width="100%">
  <tr>
  <td>
- <div id="count_result" style="float:right;"><span style="font-size:14px; color:#666; font-weight:bold;">No. of Messages</span><input type="text" style="width:80px; background-color:#008000; color:#FFF;" value="0 / 1 SMS" readonly ></div>
+ <div id="count_result" style="float:right;"><span style="font-size:14px; color:#666; font-weight:bold;">No. of Messages</span><input  type="text" style="width:80px; background-color:#008000; color:#FFF;" value="0 / 1 SMS" readonly class="count_pre" ></div>
  </td>
  <td>
 	
@@ -264,7 +264,49 @@ $time=time();
 
 <div class="form-actions" style="margin-bottom:0px !important;">
 <button type="submit" name="send" class="btn blue"><i class=" icon-share-alt"></i> SEND SMS</button>
+<a href="#myModal1" role="button" class="btn yellow" id="preview" data-toggle="modal">Preview</a>
 </div>
+
+
+	<!--preview-------->
+	<div id="myModal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true" style="display: none;">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+			<span style="color:#3B6B96;font-weight: bold; ">Preview of Sms </span>
+		</div>
+		<div class="modal-body">
+		<table width="100%" class="table  table-bordered dataTable">
+		<tr>
+			<td width="25%"><span style="color:#3B6B96;font-weight: bold; ">Send SMS to: </span></td><td><span id="get_question"></span></td>
+		</tr>
+		
+		<tr>
+			<td valign="top"><span style="color:#3B6B96;font-size: 14px;font-weight: bold;">Message: </span> </td><td><span id="message_pre"></span></td>
+		</tr>
+		
+		<tr>
+			<td><span style="color:#3B6B96;font-size: 14px;font-weight: bold;">Date: </span> </td><td><span id="date"></span></td>
+		</tr>
+		
+		<tr>
+			<td><span style="color:#3B6B96;font-size: 14px;font-weight: bold;">Time: </span> </td><td><span id="time_pre"></span></td>
+		</tr>
+		
+		<tr>
+			<td><span style="color:#3B6B96;font-size: 14px;font-weight: bold;">No. of Messages</span> </td><td><span id="sms_count"></span></td>
+		</tr>
+		
+		</table>
+		
+			
+		</div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		</div>
+	</div>
+	<!--preview-------->
+
+
 </form>
 </div>
 </div>
@@ -289,9 +331,9 @@ function count_msg()
 	var l=len+ ' / ' + c + ' SMS';
 
 	
-	document.getElementById("count_result").innerHTML='<span style="font-size:14px; color:#666;font-weight:bold;">No. of Messages</span><input type="text" style="width:80px; background-color:#008000; color:#FFF; " value="'+l+'" readonly id="count_result">';
+	document.getElementById("count_result").innerHTML='<span style="font-size:14px; color:#666;font-weight:bold;">No. of Messages</span><input type="text" style="width:80px; background-color:#008000; color:#FFF; " value="'+l+'" readonly id="count_result" class="count_pre">';
 	if(len==459) {
-		document.getElementById("count_result").innerHTML='<span style="font-size:14px; color:#666;font-weight:bold;">No. of Messages</span><input type="text" style="width:80px;background-color:#d84a38; color:#FFF; " value="'+l+'" readonly id="count_result">';
+		document.getElementById("count_result").innerHTML='<span style="font-size:14px; color:#666;font-weight:bold;">No. of Messages</span><input type="text" style="width:80px;background-color:#d84a38; color:#FFF; " value="'+l+'" readonly id="count_result" class="count_pre">';
 	}
 
 }
@@ -299,6 +341,43 @@ function count_msg()
 
 <script>
 $(document).ready(function(){
+	
+	 $("#preview").bind('click',function(){
+			var send="";
+			var count_sms= $('.count_pre').val();
+			//var co=(count_sms.split('SMS'));
+			//var z=co[0].split('/');
+			//$("#sms_count").text(z[1]);
+			$("#sms_count").text(count_sms);
+
+		var radio=$('input[name=radio]:checked').val();
+		if(radio==1){
+			
+			send="Individual";
+		}else{
+			send="Default Groups";
+			var visible=$('input:radio[name=send_to]:checked').val();
+			if(visible=="role_wise"){
+			var allVals = [];
+			$('.requirecheck1:checked').each(function() {
+				allVals.push($(this).closest('label').text());
+			});
+			
+		}
+				
+		}
+		
+		var message=$("#massage").val();
+		var date=$("#sel_date").val();
+		var time=$("#time").val();
+		
+		$("#get_question").text(send);
+		$("#message_pre").text(message);
+		$("#date").text(date);
+		$("#time_pre").text(time);
+	 });
+	
+	
   $("#r1").click(function(){
     $("#d2").hide();
     $("#d1").show();

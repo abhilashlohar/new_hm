@@ -331,9 +331,9 @@ function count_msg()
 	var l=len+ ' / ' + c + ' SMS';
 
 	
-	document.getElementById("count_result").innerHTML='<span style="font-size:14px; color:#666;font-weight:bold;">No. of Messages</span><input type="text" style="width:80px; background-color:#008000; color:#FFF; " value="'+l+'" readonly id="count_result" class="count_pre">';
+	document.getElementById("count_result").innerHTML='<span style="font-size:14px; color:#666;font-weight:bold;">No. of Messages </span><input type="text" style="width:80px; background-color:#008000; color:#FFF; " value="'+l+'" readonly id="count_result" class="count_pre">';
 	if(len==459) {
-		document.getElementById("count_result").innerHTML='<span style="font-size:14px; color:#666;font-weight:bold;">No. of Messages</span><input type="text" style="width:80px;background-color:#d84a38; color:#FFF; " value="'+l+'" readonly id="count_result" class="count_pre">';
+		document.getElementById("count_result").innerHTML='<span style="font-size:14px; color:#666;font-weight:bold;">No. of Messages </span><input type="text" style="width:80px;background-color:#d84a38; color:#FFF; " value="'+l+'" readonly id="count_result" class="count_pre">';
 	}
 
 }

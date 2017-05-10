@@ -45,7 +45,7 @@ $date_new=date("d-m-Y");
 function sms_schedule_cancel(){
 	
 		$g_id=$this->request->query('g_id');
-		$id=$this->request->query('id');
+		$id=(int)$this->request->query('id');
 		$this->ath();
 		$s_user_id=$this->Session->read('hm_user_id'); 
 		$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
@@ -57,6 +57,7 @@ function sms_schedule_cancel(){
 	
 	 
 	   $find_froup=json_decode($ge);	
+	  
 		if($find_froup->status=='OK'){
 			$current_date=date('d-m-Y');
 			$current_time=date('h:i:a',time());

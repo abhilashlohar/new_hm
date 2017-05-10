@@ -59,7 +59,10 @@ function sms_schedule_cancel(){
 	   $find_froup=json_decode($ge);	
 		pr($find_froup);
 		pr($find_froup->status);
-		pr($find_froup->message);
+		if($find_froup->status=='OK'){
+			echo "done";
+		}
+	//	pr($find_froup->message);
 		//$group_id=$find_froup->data->group_id;
 	exit;
 }

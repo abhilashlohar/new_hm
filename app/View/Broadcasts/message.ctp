@@ -263,6 +263,7 @@ $time=time();
 </div>
 
 <div class="form-actions" style="margin-bottom:0px !important;">
+<button type="submit" name="send"  class="btn blue"> Preview </button>
 <a href="#myModal1" role="button" style="display:none;" class="btn yellow" id="preview" data-toggle="modal">Preview</a>
 </div>
 

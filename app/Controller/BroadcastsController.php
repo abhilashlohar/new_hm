@@ -64,7 +64,7 @@ function sms_schedule_cancel(){
 			$this->loadmodel('sms');
 			$this->sms->updateAll(array('cancel_sms_date'=>$current_date,'cancel_sms_time'=>$current_time,'cancel_sms_status'=>'done','cancel_sms_message'=>$find_froup->message,'cancel_sms_by'=>$s_user_id),array('sms_id'=>$id));
 		 }
-	$this->response->header('Location', 'message_view');
+	     $this->response->header('Location', 'message_view');
 	
 }
 

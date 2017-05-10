@@ -263,8 +263,7 @@ $time=time();
 </div>
 
 <div class="form-actions" style="margin-bottom:0px !important;">
-<button type="submit" name="send" class="btn blue"><i class=" icon-share-alt"></i> SEND SMS</button>
-<a href="#myModal1" role="button" class="btn yellow" id="preview" data-toggle="modal">Preview</a>
+<a href="#myModal1" role="button" style="display:none;" class="btn yellow" id="preview" data-toggle="modal">Preview</a>
 </div>
 
 
@@ -301,7 +300,9 @@ $time=time();
 			
 		</div>
 		<div class="modal-footer">
+		<input type="hidden" id="sub_check" value="0" >
 			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+			<button type="submit" name="send" id="submit_data" class="btn blue"><i class=" icon-share-alt"></i> SEND SMS</button>
 		</div>
 	</div>
 	<!--preview-------->
@@ -590,8 +591,19 @@ messages: {
 	},
 	submitHandler: function (form) {
 				
-				$("button[name=send]").attr('disabled','disabled');
-			    form.submit();
+				var z=$("#sub_check").val();
+				$("#preview").click();
+				$("#submit_data").live('click',function(){
+					$("#sub_check").val(1);
+				});
+							
+				if(z==1){
+					$("button[name=send]").attr('disabled','disabled');
+					 form.submit();
+				}
+				
+				//$("button[name=send]").attr('disabled','disabled');
+			   // form.submit();
 			}
 	
 });

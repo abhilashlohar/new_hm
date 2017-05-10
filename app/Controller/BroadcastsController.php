@@ -48,6 +48,10 @@ function sms_schedule_cancel(){
 		$id=(int)$this->request->query('id');
 		$this->ath();
 		$s_user_id=$this->Session->read('hm_user_id'); 
+		$s_society_id=$this->Session->read('hm_society_id'); 
+		$this->loadmodel('society');
+		
+		
 		$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
 		$working_key=$r_sms->working_key;
 		$sms_sender=$r_sms->sms_sender; 
@@ -141,12 +145,14 @@ $this->set('result_template7',$this->template->find('all',array('conditions'=>$c
 $sms_sount_total=0;
 if(isset($this->request->data['send'])) 
 {
- $radio=$this->request->data['radio'];
- $s_date=$this->request->data['date'];
- 
-   $ti=$this->request->data['time']; 
-  $t2=date('h:ia',strtotime($ti)); 
-$store_time=$ti;
+	
+	
+	$radio=$this->request->data['radio'];
+	$s_date=$this->request->data['date'];
+
+	$ti=$this->request->data['time']; 
+	$t2=date('h:ia',strtotime($ti)); 
+	$store_time=$ti;
 
 
 $date=date("d-m-y");

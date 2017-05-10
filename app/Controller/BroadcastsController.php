@@ -45,15 +45,23 @@ $date_new=date("d-m-Y");
 function sms_schedule_cancel(){
 	
 		$g_id=$this->request->query('g_id');
-	
+		$id=$this->request->query('id');
+		$s_user_id=$this->Session->read('hm_user_id'); 
 		$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
 		$working_key=$r_sms->working_key;
 		$sms_sender=$r_sms->sms_sender; 
 		if(!empty($g_id)){
 			$ge=file_get_contents('http://api-alerts.solutionsinfini.com/v4/?method=sms.schedule&api_key='.$working_key.'&groupid='.$g_id); 
 		}
-	    $this->response->header('Location', 'message_view');
-	
+		pr($ge);
+	   // $this->response->header('Location', 'message_view');
+	   
+	   $find_froup=json_decode($ge);	
+		pr($find_froup);
+		pr($find_froup->status);
+		pr($find_froup->message);
+		//$group_id=$find_froup->data->group_id;
+	exit;
 }
 
 //start Message//

@@ -35,7 +35,7 @@ if($type==2) { $count_user='sent to: '.sizeof($groups_id).'&nbsp;groups';}
 <a href="sms_view_pdf?con=<?php echo $sms_id; ?>" class="btn red mini hide_at_print ">pdf</i></a> 
 <a class="btn blue mini hide_at_print" onclick="window.print()">print</a>
 <a href="sms_delete?id=<?php echo $sms_id; ?>" class="btn red mini hide_at_print ">Delete</i></a> 
-<a href="sms_schedule_cancel?g_id=<?php echo $sms_schedule_g_id; ?>" class="btn red mini hide_at_print ">cancel</a> 
+<a href="sms_schedule_cancel?g_id=<?php echo $sms_schedule_g_id; ?>&id=<?php echo $sms_id; ?>" class="btn red mini hide_at_print ">cancel</a> 
 </div>
 <!------------->
 <span class="label label-info">To:</span>

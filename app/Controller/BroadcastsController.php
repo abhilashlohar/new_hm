@@ -44,14 +44,23 @@ $date_new=date("d-m-Y");
 
 function sms_schedule_cancel(){
 	
-		$g_id=$this->request->query('g_id');
+		 $g_id=$this->request->query('g_id');
 		$id=(int)$this->request->query('id');
 		$this->ath();
 		$s_user_id=$this->Session->read('hm_user_id'); 
 		$s_society_id=$this->Session->read('hm_society_id'); 
 		$this->loadmodel('society');
+		$conditions=array('society_id'=>$s_society_id);
+		$result_society=$this->society->find('all',array('conditions'=>$conditions));
 		
+		$this->loadmodel('sms');
+		$conditions=array('sms_id'=>$id);
+		$result_sms=$this->sms->find('all',array('conditions'=>$conditions));
 		
+		$send_sms_count=$result_sms[0]['sms']['send_sms_count'];
+		$sms_credit=$result_society[0]['society']['sms_credit'];
+		$remaining_sms=$sms_credit-$send_sms_count;
+				
 		$r_sms=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_sms_ip')); 
 		$working_key=$r_sms->working_key;
 		$sms_sender=$r_sms->sms_sender; 
@@ -67,7 +76,10 @@ function sms_schedule_cancel(){
 			$current_time=date('h:i:a',time());
 			$this->loadmodel('sms');
 			$this->sms->updateAll(array('cancel_sms_date'=>$current_date,'cancel_sms_time'=>$current_time,'cancel_sms_status'=>'done','cancel_sms_message'=>$find_froup->message,'cancel_sms_by'=>$s_user_id),array('sms_id'=>$id));
+						
+			$this->society->updateAll(array('sms_credit'=>$remaining_sms),array('society_id'=>$s_society_id));
 		 }
+		 
 	     $this->response->header('Location', 'message_view');
 	
 }

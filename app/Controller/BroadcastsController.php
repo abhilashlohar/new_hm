@@ -78,6 +78,7 @@ function sms_schedule_cancel(){
 			$this->sms->updateAll(array('cancel_sms_date'=>$current_date,'cancel_sms_time'=>$current_time,'cancel_sms_status'=>'done','cancel_sms_message'=>$find_froup->message,'cancel_sms_by'=>$s_user_id),array('sms_id'=>$id));
 						
 			$this->society->updateAll(array('sms_credit'=>$remaining_sms),array('society_id'=>$s_society_id));
+			$this->sms->updateAll(array('send_sms_count'=>0),array('sms_id'=>$id));
 		 }
 		 
 	     $this->response->header('Location', 'message_view');

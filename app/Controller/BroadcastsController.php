@@ -69,11 +69,11 @@ function sms_schedule_cancel(){
 		}
 	
 	 
-	   $find_froup=json_decode($ge);	
+	  $find_froup=json_decode($ge);	
 	 
-	 /*  if($find_froup->status=='A432'){
-		  $status='completed';
-	  } */
+		  if($find_froup->status=='A432'){
+			  $status='completed';
+		  }
 		if($find_froup->status=='OK'){
 			$current_date=date('d-m-Y');
 			$current_time=date('h:i:a',time());
@@ -248,7 +248,7 @@ $sms_allow=(int)$r_sms->sms_allow;
 				
 		}
 		$find_froup=json_decode($payload);	
-		pr($find_froup); exit;
+		//pr($find_froup);
 		$group_id=$find_froup->data->group_id;
 		
 		$sms_id=$this->autoincrement('sms','sms_id');

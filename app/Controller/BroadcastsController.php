@@ -70,15 +70,20 @@ function sms_schedule_cancel(){
 	
 	 
 	   $find_froup=json_decode($ge);	
-	  pr($find_froup); exit;
+	 
+	 /*  if($find_froup->status=='A432'){
+		  $status='completed';
+	  } */
 		if($find_froup->status=='OK'){
 			$current_date=date('d-m-Y');
 			$current_time=date('h:i:a',time());
 			$this->loadmodel('sms');
-			$this->sms->updateAll(array('cancel_sms_date'=>$current_date,'cancel_sms_time'=>$current_time,'cancel_sms_status'=>'done','cancel_sms_message'=>$find_froup->message,'cancel_sms_by'=>$s_user_id,'send_sms_count'=>0),array('sms_id'=>$id));
+			$this->sms->updateAll(array('cancel_sms_date'=>$current_date,'cancel_sms_time'=>$current_time,'cancel_sms_status'=>'done','cancel_sms_message'=>$find_froup->message,'cancel_sms_by'=>$s_user_id,'send_sms_count'=>0,'status'=>'Canceled'),array('sms_id'=>$id));
 						
 			$this->society->updateAll(array('sms_credit'=>$remaining_sms),array('society_id'=>$s_society_id));
 			
+		 }else{
+			$this->sms->updateAll(array('status'=>$status),array('sms_id'=>$id)); 
 		 }
 		 
 	     $this->response->header('Location', 'message_view');
@@ -243,7 +248,7 @@ $sms_allow=(int)$r_sms->sms_allow;
 				
 		}
 		$find_froup=json_decode($payload);	
-		//pr($find_froup);
+		pr($find_froup); exit;
 		$group_id=$find_froup->data->group_id;
 		
 		$sms_id=$this->autoincrement('sms','sms_id');

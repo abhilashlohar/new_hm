@@ -54,7 +54,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	}
 	
 		if($cancel_sms_status=='done'){
-		
+		echo"hello";
 			$cancel_sms_date=@$data["sms"]["cancel_sms_date"];
 			$cancel_sms_time=@$data["sms"]["cancel_sms_time"];
 			$cancel_sms_by=@$data["sms"]["cancel_sms_by"];

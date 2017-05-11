@@ -20,6 +20,7 @@ $type=$collection["sms"]["type"];
 $text=$collection["sms"]["text"];
 $date=$collection["sms"]["date"];
 $time=$collection["sms"]["time"];
+$cancel_sms_status=@$collection["sms"]["cancel_sms_status"];
 }
 
 if($type==1) { $count_user='sent to: '.sizeof($user_id).'&nbsp;users'; }
@@ -35,7 +36,11 @@ if($type==2) { $count_user='sent to: '.sizeof($groups_id).'&nbsp;groups';}
 <a href="sms_view_pdf?con=<?php echo $sms_id; ?>" class="btn red mini hide_at_print ">pdf</i></a> 
 <a class="btn blue mini hide_at_print" onclick="window.print()">print</a>
 <a href="sms_delete?id=<?php echo $sms_id; ?>" class="btn red mini hide_at_print ">Delete</i></a> 
-<a href="sms_schedule_cancel?g_id=<?php echo $sms_schedule_g_id; ?>&id=<?php echo $sms_id; ?>" class="btn red mini hide_at_print ">cancel</a> 
+<?php
+if($cancel_sms_status!='done'){
+?>
+<a href="sms_schedule_cancel?g_id=<?php echo $sms_schedule_g_id; ?>&id=<?php echo $sms_id; ?>" class="btn red mini hide_at_print ">cancel</a> <?php }else{ ?>
+<a class="btn yellow mini hide_at_print ">Canceled</a> <?php } ?>
 </div>
 <!------------->
 <span class="label label-info">To:</span>

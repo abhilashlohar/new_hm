@@ -290,6 +290,7 @@
 							///................ Receipt code start..................... /// 
 			
 							$result_last_receipt=$this->requestAction(array('controller' => 'Incometrackers', 'action' => 'print_show_last_receipt'), array('pass' => array($ledger_sub_account_id,$start_date)));
+							//pr($result_last_receipt); exit;
 							if(sizeof($result_last_receipt)>0){ 
 							$bill_html.='<table style="font-size:12px;" width="100%" cellspacing="0">
 									<tbody><tr>

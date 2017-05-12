@@ -40,7 +40,7 @@ Bank Reconciliation Statement as on <?php echo $to; ?><br>
 			<th width='112px'></th>
 		</tr>
 		<tr>
-			<th width='120px'>Add</th>
+			<th><strong> Add </strong></th>
 			<th colspan="5" align="left">Cheques deposited but not cleared in Bank Passbook </th>
 		</tr>
 	</thead>

@@ -5570,7 +5570,7 @@ if(isset($this->request->data['dep_slip']))
 
 $current_date= date('d-m-Y');	
 $current_date = strtotime($current_date);
-$current_date = date("d-m-Y", strtotime("-3 month", $current_date));
+$current_date = date("d-m-Y", strtotime("-1 month", $current_date)); 
 $current_date=date("Y-m-d",strtotime($current_date));
 $current_date=strtotime($current_date);
 $this->loadmodel('cash_bank');
@@ -5593,6 +5593,7 @@ $this->loadmodel('cash_bank');
 $conditions=array('society_id'=>$s_society_id,"source"=>"bank_receipt","deposite_slip"=>0);
 $cursor1=$this->cash_bank->find('all',array('conditions'=>$conditions));
 $this->set('cursor1',$cursor1);
+
 }
 //End Bank Receipt Deposit Slip//
 //Start print_deposit_slip//

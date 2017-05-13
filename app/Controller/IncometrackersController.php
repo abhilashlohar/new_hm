@@ -8508,7 +8508,7 @@ function print_show_last_receipt($led_sub_id,$start_date){
 	
 	$s_society_id = (int)$this->Session->read('hm_society_id');
 	$this->loadmodel('cash_bank');
-	$conditions=array("ledger_sub_account_id"=>$led_sub_id,"society_id"=>$s_society_id,"source"=>"bank_receipt","transaction_date"=>array('$lt'=>$start_date));
+	$conditions=array("ledger_sub_account_id"=>$led_sub_id,"society_id"=>$s_society_id,"source"=>"bank_receipt",'amount'=> array('$ne'=>0),"transaction_date"=>array('$lt'=>$start_date));
 	$order=array("transaction_date"=>"DESC");
 	return $this->cash_bank->find('all',array('conditions'=>$conditions,"order"=>$order,"limit"=>3));
 	

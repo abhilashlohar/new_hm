@@ -3243,7 +3243,7 @@ function cronjob()
 	$this->layout=null;
 	$this->loadmodel('email_request');
 	$conditions=array('flag'=>0);
-	$result1_email=$this->email_request->find('all',array('conditions'=>$conditions,'limit'=>2));
+	$result1_email=$this->email_request->find('all',array('conditions'=>$conditions,'limit'=>3));
 	foreach($result1_email as $data)
 	{
 		$e_id=(int)$data['email_request']['e_id'];

@@ -220,7 +220,7 @@ $(document).ready(function() {
 	    background-color:hsla(16, 25%, 38%, 0.89);
 }
 	#parent {
-		height: 500px;
+		height: 584px;
 	}
 	#parent > div { 
 	  height:0px !important;

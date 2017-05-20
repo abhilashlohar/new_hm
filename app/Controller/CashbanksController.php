@@ -1713,7 +1713,7 @@ function final_import_bank_receipt_ajax(){
 								
 								$receipt_mode_title="";
 								if($receipt_mode=="cheque"){
-									$receipt_mode_title='Cheques are subject to realization';
+									$receipt_mode_title='Cheques are subject to realization ';
 								}
 
 								
@@ -7031,7 +7031,7 @@ function new_bank_receipt(){
 									
 										$receipt_mode_title="";
 										if($receipt_mode=="cheque"){
-											$receipt_mode_title='Cheques are subject to realization';
+											$receipt_mode_title='Cheques are subject to realization ';
 										}
 											$user_name_short=$this->check_charecter_name($user_name);
 
@@ -9427,12 +9427,12 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 									
 									$receipt_mode_title="";
 									if($receipt_mode=="cheque" || $receipt_mode=="Cheque"){
-										$receipt_mode_title='Cheques are subject to realization';
+										$receipt_mode_title='Cheques are subject to realization ';
 									}
 									
 									$user_name_short=$this->check_charecter_name($user_name);
 									
-									$sms="Dear ".$user_name_short." ,we have received Rs ".$amount." on ".$date." towards Society Maint. dues.".$receipt_mode_title."".$society_name;
+									$sms="Dear ".$user_name_short." ,we have received Rs ".$amount." on ".$date." towards Society Maint. dues. ".$receipt_mode_title."".$society_name;
 									$sms1=str_replace(' ', '+', $sms);
 
 									$payload = file_get_contents('http://alerts.sinfini.com/api/web2sms.php?workingkey='.$working_key.'&sender='.$sms_sender.'&to='.$mobile.'&message='.$sms1.''); 

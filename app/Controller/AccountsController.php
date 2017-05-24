@@ -8,7 +8,143 @@ public $components = array(
 );                     
 var $name = 'Accounts';
 
+// Closing Process
 
+function closing_process(){
+	
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	
+	
+	if(isset($this->request->data['closing_process'])){
+			
+			
+			$accounts_category_id=$this->request->data['accounts_category_id'];
+			$transaction_date=$this->request->data['transaction_date'];
+			//$transaction_date=strtotime($transaction_date);
+			$income_expenditure=$this->request->data['income_expenditure'];
+
+			$amounts=$this->request->data['amount'];
+			$ledger_account_ids=$this->request->data['ledger_account_id'];
+			
+			if($accounts_category_id==3){
+				
+				$i=0;
+				foreach($ledger_account_ids as $ledger_account_id){
+					
+					$amount=$amounts[$i];
+					
+					if($amount>0){
+						
+					$this->loadmodel('ledger');
+					$ledger_id=$this->autoincrement('ledger','auto_id');
+					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" =>$amount, "credit" =>null, "ledger_account_id" => (int)$ledger_account_id, "ledger_sub_account_id" =>null,"table_name" => "closing_process","element_id" =>null, "society_id" => $s_society_id))); 
+						
+						
+						
+					}elseif($amount<0){
+						
+					}
+					
+					
+					
+					$i++;
+				}
+					$this->loadmodel('ledger');
+					$ledger_id=$this->autoincrement('ledger','auto_id');
+					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" =>null, "credit" =>$income_expenditure, "ledger_account_id" =>4, "ledger_sub_account_id" =>null,"table_name" => "closing_process","element_id" =>null, "society_id" => $s_society_id))); 
+								
+			}else{
+						
+				$i=0;
+				foreach($ledger_account_ids as $ledger_account_id){
+					
+					$amount=$amounts[$i];
+					
+					if($amount>0){
+						
+					$this->loadmodel('ledger');
+					$ledger_id=$this->autoincrement('ledger','auto_id');
+					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" =>null, "credit" =>$amount, "ledger_account_id" => (int)$ledger_account_id, "ledger_sub_account_id" =>null,"table_name" => "closing_process","element_id" =>null, "society_id" => $s_society_id))); 
+						
+						
+						
+					}elseif($amount<0){
+						
+					}
+					
+					
+					
+					$i++;
+				}
+					$this->loadmodel('ledger');
+					$ledger_id=$this->autoincrement('ledger','auto_id');
+					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" =>$income_expenditure, "credit" =>null, "ledger_account_id" =>4, "ledger_sub_account_id" =>null,"table_name" => "closing_process","element_id" =>null, "society_id" => $s_society_id))); 
+			}
+			
+		
+			
+		}
+	
+	
+
+}
+
+function closing_process_ajax($accounts_category_id=null,$to1=null){
+		$this->layout="blank";	
+		$this->ath();
+		//$from = date("Y-m-d",strtotime($from));
+		 $to = date("Y-m-d",strtotime($to1));
+		 $this->set('to',$to);
+		 $to=strtotime($to);
+	    $s_society_id = $this->Session->read('hm_society_id');
+		$this->set('accounts_category_id',$accounts_category_id);	
+		
+		
+		$this->loadmodel('accounts_group');
+		$conditions=array("accounts_id" => (int)$accounts_category_id);
+		$result_accounts_group = $this->accounts_group->find('all',array('conditions'=>$conditions));
+		
+	foreach($result_accounts_group as $data){
+		 $accounts_ids=(int)$data["accounts_group"]["auto_id"];
+		
+		$this->loadmodel('ledger_account');
+		$conditions=array("group_id" => (int)$accounts_ids);
+		$result_ledger_accounts = $this->ledger_account->find('all',array('conditions'=>$conditions));
+	
+		foreach($result_ledger_accounts as $result_ledger_account){
+				$ledger_account_id=(int)$result_ledger_account['ledger_account']['auto_id'];
+				$ledger_account_name=$result_ledger_account['ledger_account']['ledger_name'];
+			 
+			$this->loadmodel('ledger');
+			$conditions=array("society_id" => (int)$s_society_id,"transaction_date"=>array('$lte'=>$to),"ledger_account_id"=>$ledger_account_id);
+			//pr($conditions);
+			$result_ledgers = $this->ledger->find('all',array('conditions'=>$conditions));
+			$total_credit=0;$total_debit=0;
+				foreach($result_ledgers as $result_ledger){
+					$debit=$result_ledger['ledger']['debit'];
+					$credit=$result_ledger['ledger']['credit'];
+					$total_debit+=$debit;
+					$total_credit+=$credit;
+				}
+				
+				if((!empty($total_debit) or !empty($total_credit)) and ($total_debit!=$total_credit)){
+				
+				 $closing_process[]=array('ledger_account_name'=>$ledger_account_name,'ledger_account_id'=>$ledger_account_id,'total_debit'=>$total_debit,'total_credit'=>$total_credit);
+				}
+			}
+		
+		}
+		$this->set('closing_process',$closing_process);
+}
+
+
+// end 
 
 ////  Bank reconciliation code start
 
@@ -4150,7 +4286,7 @@ function calculate_balance_sheet_credit($from,$ledger_account_id,$to){
 	$to=date('Y-m-d',strtotime($to));
 	$from=date('Y-m-d',strtotime($from));
 	$this->loadmodel('ledger');
-	$conditions=array('society_id'=>$s_society_id,'ledger_account_id'=>$ledger_account_id,'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
+	$conditions=array('society_id'=>$s_society_id,'ledger_account_id'=>$ledger_account_id,'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)),'table_name'=>array('$ne'=>'closing_process'));
 	
 	$ledger_result_b=$this->ledger->find('all',array('conditions'=>$conditions));
 	$credit_b=0; $debit_b=0;
@@ -4189,7 +4325,7 @@ function calculate_balance_sheet_debit($from,$ledger_account_id,$to){
 	$to=date('Y-m-d',strtotime($to));
 	$this->loadmodel('ledger');
 	
-	$conditions=array('society_id'=>$s_society_id,'ledger_account_id'=>$ledger_account_id,'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)));
+	$conditions=array('society_id'=>$s_society_id,'ledger_account_id'=>$ledger_account_id,'transaction_date'=>array('$gte'=>strtotime($from),'$lte'=>strtotime($to)),'table_name'=>array('$ne'=>'closing_process'));
 	$ledger_result_b=$this->ledger->find('all',array('conditions'=>$conditions));
 	$credit_b=0; $debit_b=0;
 	foreach($ledger_result_b as $data_b){

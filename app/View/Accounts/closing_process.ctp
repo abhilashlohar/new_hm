@@ -20,7 +20,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 
 
 				<td>
-				<input type="text" placeholder="To" id="date2" class="date-picker medium m-wrap" data-date-format="dd-mm-yyyy" name="to" style="background-color:white !important; margin-top:7px;" value="<?php echo date("d-m-Y"); ?>" data-date-end-date="<?php echo date("d-m-Y"); ?>">
+				<input type="text" placeholder="To" id="date2" class="date-picker medium m-wrap" data-date-format="dd-mm-yyyy" name="to" style="background-color:white !important; margin-top:7px;" value="<?php echo date("d-m-Y"); ?>" >
 				</td>
 		
 				<td valign="top">

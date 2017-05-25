@@ -1,4 +1,4 @@
-<form method="post" >
+<form method="post" id="myform">
 <table width="100%" class="table table-bordered " id="receiptmain">
 	<thead>
 		<tr>
@@ -49,4 +49,44 @@
 	</table>
 	
 	<button type="submit" name="closing_process" class="btn blue" >Submit</button>
+	
+		<!--preview-------->
+	<div id="myModal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true" style="display: none;">
+		
+		<div class="modal-body">
+		 Are you sure you want to closing process ?
+		</div>
+		<div class="modal-footer">
+		<input type="hidden" id="sub_check" value="0" >
+			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+			<button type="submit" name="closing_process" id="submit_data" class="btn blue"> Submit</button>
+		</div>
+	</div>
+	<!--preview-------->
+	<a href="#myModal1" role="button" style="display:none;" class="btn yellow" id="preview" data-toggle="modal">Preview</a>
+	
 </form>
+<script>
+$(document).ready(function() {
+$("#myform").validate({
+  submitHandler: function(form) { 
+    // do other things for a valid form
+   // form.submit();
+   
+		var z=$("#sub_check").val();
+		$("#preview").click();
+		$("#submit_data").live('click',function(){ alert(z);
+			$("#sub_check").val(1);
+		});
+
+		if(z==1){
+		//$("button[name=send]").attr('disabled','disabled');
+		 form.submit();
+		}
+   
+  
+  }
+});
+	
+});
+</script>

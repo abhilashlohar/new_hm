@@ -45,5 +45,7 @@ $(document).ready(function() {
 		    var to=$('#date2').val();
 			$("#ledger_view_1").html('<div align="center" style="padding:10px;"><img src="<?php echo $webroot_path; ?>as/loding.gif" />Loading....</div>').load("closing_process_ajax/" +account_category+ "/" +to+"");
 	});
+	
+	
 });
 </script>

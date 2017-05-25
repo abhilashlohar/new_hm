@@ -110,7 +110,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 	</thead>
 	<tbody id="table">
 	<?php 
-	$i=0; $total_debit=0; $total_credit=0; //pr($result_ledger); //exit;
+	$i=0; $total_debit=0; $total_credit=0; // pr($result_ledger); exit;
 	foreach($result_ledger as $data){ $i++;
 	$created_by = "";
 	$created_on = "";
@@ -518,6 +518,13 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 		
 		}
 		
+		if($table_name=="closing_process"){
+			
+			$source="JV for Closing process";
+			$description='Year Closing JV';
+	    	$user_name=" ";
+			$wing_flat="";
+		}
 		if($table_name=="expense_tracker"){
 			
 			$source="Expenses";
@@ -731,7 +738,7 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 	}
 	
 		
-		if(($table_name=="regular_bill"  &&  $bill_approved=="yes") || $table_name=="cash_bank" || $table_name=="opening_balance" || $table_name=="expense_tracker" || $table_name=="journal" || $table_name=="fix_asset" || $table_name=="supplimentry_bill"){
+		if(($table_name=="regular_bill"  &&  $bill_approved=="yes") || $table_name=="cash_bank" || $table_name=="opening_balance" || $table_name=="expense_tracker" || $table_name=="journal" || $table_name=="fix_asset" || $table_name=="supplimentry_bill" || $table_name=="closing_process"){
 		
 		if($tds_ledger_id == 15)
 		{

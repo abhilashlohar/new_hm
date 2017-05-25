@@ -19,11 +19,11 @@ function closing_process(){
 	}
 	$this->ath();
 	$s_society_id = $this->Session->read('hm_society_id');
-	
+	$s_user_id = $this->Session->read('hm_user_id');
 	
 	if(isset($this->request->data['closing_process'])){
 			
-			
+			$current_date = date("d-m-Y");
 			$accounts_category_id=$this->request->data['accounts_category_id'];
 			$transaction_date=$this->request->data['transaction_date'];
 			//$transaction_date=strtotime($transaction_date);
@@ -43,7 +43,7 @@ function closing_process(){
 						
 					$this->loadmodel('ledger');
 					$ledger_id=$this->autoincrement('ledger','auto_id');
-					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" =>$amount, "credit" =>null, "ledger_account_id" => (int)$ledger_account_id, "ledger_sub_account_id" =>null,"table_name" => "closing_process","element_id" =>null, "society_id" => $s_society_id))); 
+					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" =>$amount, "credit" =>null, "ledger_account_id" => (int)$ledger_account_id, "ledger_sub_account_id" =>null,"table_name" => "closing_process","element_id" =>null, "society_id" => $s_society_id,'user_id'=>$s_user_id,'current_date'=>$current_date))); 
 						
 						
 						
@@ -57,7 +57,7 @@ function closing_process(){
 				}
 					$this->loadmodel('ledger');
 					$ledger_id=$this->autoincrement('ledger','auto_id');
-					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" =>null, "credit" =>$income_expenditure, "ledger_account_id" =>4, "ledger_sub_account_id" =>null,"table_name" => "closing_process","element_id" =>null, "society_id" => $s_society_id))); 
+					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" =>null, "credit" =>$income_expenditure, "ledger_account_id" =>4, "ledger_sub_account_id" =>null,"table_name" => "closing_process","element_id" =>null, "society_id" => $s_society_id,'user_id'=>$s_user_id,'current_date'=>$current_date))); 
 								
 			}else{
 						
@@ -70,7 +70,7 @@ function closing_process(){
 						
 					$this->loadmodel('ledger');
 					$ledger_id=$this->autoincrement('ledger','auto_id');
-					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" =>null, "credit" =>$amount, "ledger_account_id" => (int)$ledger_account_id, "ledger_sub_account_id" =>null,"table_name" => "closing_process","element_id" =>null, "society_id" => $s_society_id))); 
+					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" =>null, "credit" =>$amount, "ledger_account_id" => (int)$ledger_account_id, "ledger_sub_account_id" =>null,"table_name" => "closing_process","element_id" =>null, "society_id" => $s_society_id,'user_id'=>$s_user_id,'current_date'=>$current_date))); 
 						
 						
 						
@@ -84,7 +84,7 @@ function closing_process(){
 				}
 					$this->loadmodel('ledger');
 					$ledger_id=$this->autoincrement('ledger','auto_id');
-					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" =>$income_expenditure, "credit" =>null, "ledger_account_id" =>4, "ledger_sub_account_id" =>null,"table_name" => "closing_process","element_id" =>null, "society_id" => $s_society_id))); 
+					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" =>$income_expenditure, "credit" =>null, "ledger_account_id" =>4, "ledger_sub_account_id" =>null,"table_name" => "closing_process","element_id" =>null, "society_id" => $s_society_id,'user_id'=>$s_user_id,'current_date'=>$current_date))); 
 			}
 			
 		

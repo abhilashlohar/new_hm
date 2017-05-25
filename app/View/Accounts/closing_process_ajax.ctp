@@ -40,10 +40,10 @@
 	<tr>
 	<td>Income & Expenditure A/c </td>
 	<td > <?php if($accounts_category_id==3){ $total =$total_credit-$total_debit;   }else{ $total =$total_debit-$total_credit; } ?>
-	<?php echo $total; ?>
+	<?php if($accounts_category_id==4){ echo $total; } ?>
 	<input type="hidden" name="income_expenditure" value="<?php echo $total; ?>">
 	</td>
-	<td><input type="hidden" name="accounts_category_id" value="<?php echo $accounts_category_id; ?>"></td>
+	<td> <?php if($accounts_category_id==3){ echo $total; } ?><input type="hidden" name="accounts_category_id" value="<?php echo $accounts_category_id; ?>"></td>
 	</tr>
 	</tfoot>
 	</table>

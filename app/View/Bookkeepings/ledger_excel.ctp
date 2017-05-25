@@ -684,6 +684,11 @@ $ledger_id = (int)@$data["ledger"]["ledger_account_id"];
 			$description='Year Closing JV';
 			$user_name=" ";
 			$wing_flat="";
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id)));
+			foreach($leddger_detaill as $ledger_datttaa)
+			{
+				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			}
 		}
 		
 		if(($table_name=="regular_bill"  &&  $bill_approved=="yes") || $table_name=="cash_bank" || $table_name=="opening_balance" || $table_name=="expense_tracker" || $table_name=="journal" || $table_name=="fix_asset" || $table_name=="supplimentry_bill" || $table_name=="closing_process"){

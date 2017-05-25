@@ -24,7 +24,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				</td>
 		
 				<td valign="top">
-				<button type="button" id="go" name="sub" class="btn yellow" style="margin-top:7px;">Submit</button>
+				<button type="button" id="go" name="sub" class="btn yellow" style="margin-top:7px;">Go</button>
 				</td>
 		</tr>
 </table>

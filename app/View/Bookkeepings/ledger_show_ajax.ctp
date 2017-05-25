@@ -519,11 +519,23 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 		}
 		
 		if($table_name=="closing_process"){
-			
+			echo $creater_id=(int)$data["ledger"]["user_id"];
+			echo $current_datttt=$data["ledger"]["current_date"];
 			$source="JV for Closing process";
 			$description='Year Closing JV';
 	    	$user_name=" ";
 			$wing_flat="";
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id)));
+			foreach($leddger_detaill as $ledger_datttaa)
+			{
+				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			}
+			$user_dataaaa = $this->requestAction(array('controller' => 'hms', 'action' => 'user_fetch'),array('pass'=>array($creater_id)));
+			foreach ($user_dataaaa as $user_detailll) 
+			{
+				$creater_name = $user_detailll['user']['user_name'];
+			}	
+			
 		}
 		if($table_name=="expense_tracker"){
 			

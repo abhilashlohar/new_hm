@@ -13,8 +13,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				<td>
 						<select class="medium m-wrap chosen" id="account_category">
 						<option value="" style="display:none;">Select A/c</option>
-						<option value="3"> Income </option>
-						<option value="4"> Expenditure  </option>
+						<option value="3"> Income A/c </option>
+						<option value="4"> Expenditure A/c  </option>
 						</select>
 				</td>
 

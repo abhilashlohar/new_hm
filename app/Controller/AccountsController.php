@@ -23,7 +23,7 @@ function closing_process(){
 	
 	if(isset($this->request->data['closing_process'])){
 			
-			echo"hello"; exit;
+			
 			$accounts_category_id=$this->request->data['accounts_category_id'];
 			$transaction_date=$this->request->data['transaction_date'];
 			//$transaction_date=strtotime($transaction_date);

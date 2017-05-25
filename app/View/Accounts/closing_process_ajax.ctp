@@ -75,12 +75,12 @@ $("#myform").validate({
    
 		var z=$("#sub_check").val();
 		$("#preview").click();
-		$("#submit_data").live('click',function(){ alert(z);
+		$("#submit_data").live('click',function(){ 
 			$("#sub_check").val(1);
 		});
 
 		if(z==1){
-		//$("button[name=send]").attr('disabled','disabled');
+		$("button[name=closing_process]").attr('disabled','disabled');
 		 form.submit();
 		}
    

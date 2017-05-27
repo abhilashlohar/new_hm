@@ -477,6 +477,7 @@ function auto_backup_data(){
 	}
 	$mail->addAddress($to);
 	$mail->addBCC('ankit@phppoets.com');
+	$mail->addBCC('rohit@phppoets.in');
 	$mail->addBCC('ankit.sisodiya27@gmail.com');
 		if(!$mail->Send()) {
 			$error = 'Mail error: '.$mail->ErrorInfo;

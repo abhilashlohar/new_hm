@@ -85,10 +85,22 @@ function closing_process(){
 					$this->loadmodel('ledger');
 					$ledger_id=$this->autoincrement('ledger','auto_id');
 					$this->ledger->saveAll(Array( Array("auto_id" => $ledger_id, "transaction_date"=> strtotime($transaction_date), "debit" =>$income_expenditure, "credit" =>null, "ledger_account_id" =>4, "ledger_sub_account_id" =>null,"table_name" => "closing_process","element_id" =>null, "society_id" => $s_society_id,'user_id'=>$s_user_id,'current_date'=>$current_date))); 
-			}
-			
-		
-			
+			} 
+	?>		
+<!----alert-------------->
+<div class="modal-backdrop fade in"></div>
+<div   class="modal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+<div class="modal-body" style="font-size:16px;">
+Are you sure you want to close financial year.<br/>
+</div> 
+<div class="modal-footer">
+<a href="<?php echo $this->webroot;?>Accounts/master_financial_period_status" class="btn green">Yes</a>
+<a href="" class="btn block">No</a>
+</div>
+</div>
+<!----alert-------------->
+
+<?php			
 		}
 	
 	

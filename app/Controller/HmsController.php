@@ -19,6 +19,9 @@ function member_search(){
 	}
 }
 
+
+
+
 function member_search_ajax($value=null,$field=null){
 	$this->layout=null;
 	if(!empty($value) and !empty($field)){ 
@@ -3233,7 +3236,16 @@ function webroot_path() {
 
 
 
-
+function add_cron_job(){
+	
+	$this->layout=null;
+	$this->loadmodel('test_cron_job');
+	$conditions=array('status'=>0);
+	$result_test_cron_job=$this->test_cron_job->find('all',array('conditions'=>$conditions,'limit'=>1));	
+		
+	$cron_job_id=(int)$result_test_cron_job[0]['test_cron_job']['cron_job_id'];
+	$this->test_cron_job->updateAll(array('status'=>1),array('cron_job_id'=>$cron_job_id));
+}
 
 
 
@@ -5372,6 +5384,13 @@ $this->layout='session';
 	$this->ath();
 		
 	$s_society_id=$this->Session->read('hm_society_id');	
+	$s_user_id=$this->Session->read('hm_user_id');
+	
+	for($j=0;$j<=10;$j++){
+	    $this->loadmodel('test_cron_job');
+		$i=$this->autoincrement('test_cron_job','cron_job_id');
+		$this->test_cron_job->saveAll(array('cron_job_id'=>$i,'user_id'=>$s_user_id,'society_id'=>$s_society_id,'status'=>0));
+	}
 	
 	/*	$this->loadmodel('regular_bill');
 		$conditions=array('created_by'=>650);

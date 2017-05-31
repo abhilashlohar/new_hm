@@ -519,8 +519,8 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 		}
 		
 		if($table_name=="closing_process"){
-			echo $creater_id=(int)$data["ledger"]["user_id"];
-			echo $current_datttt=$data["ledger"]["current_date"];
+			 $creater_id=(int)$data["ledger"]["user_id"];
+			 $current_datttt=$data["ledger"]["current_date"];
 			$source="JV for Closing process";
 			$description='Year Closing JV';
 	    	$user_name=" ";

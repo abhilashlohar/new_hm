@@ -32112,6 +32112,12 @@ function menus_as_per_user_rights(){
 				</a>					
 			</li>
 			
+			<li>
+				<a href="<?php echo $webroot_path; ?>Accounts/ledger_yearly" rel='tab'>
+				<i class="icon-phone"></i> Ledger Yearly
+				</a>					
+			</li>
+			
 			<!--<li>
 				<a href="<?php echo $webroot_path; ?>Hms/bank_reconciliation" rel='tab'>
 				<i class="icon-phone"></i> Bank Reconciliation

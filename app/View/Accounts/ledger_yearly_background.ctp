@@ -23,12 +23,12 @@ echo $process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
 	<span style="padding-left: 10px; font-weight: bold; color: red;">Do Not Close Window, Reading report file...</span>
 </div>
 <script> 
-$( document ).ready(function() { alert();
+$( document ).ready(function() { 
     $.ajax({
 		url: "ledger_yearly_read",
 		dataType: 'json'
 	}).done(function(response){
-	
+	//alert(response);
 		if(response=="READ"){
 			change_page_automatically("<?php echo $webroot_path; ?>Accounts/ledger_yearly_background");
 		}
@@ -54,7 +54,7 @@ $( document ).ready(function() { alert();
 	<span style="padding-left: 35px; color: rgb(114, 113, 113);"><b id="text_per_im"></b> Report prepared.</span>
 </div>
 <script>
-$( document ).ready(function() {
+$( document ).ready(function() { 
 	convert_csv_data_ajax();
 });
 function convert_csv_data_ajax(){
@@ -63,7 +63,7 @@ function convert_csv_data_ajax(){
 			url: "ledger_yearly_converted",
 			dataType: 'json'
 		}).done(function(response){
-			
+			//alert(response);
 			if(response.again_call_ajax=="YES"){ 
 				$("#progress").css("width",response.converted_per+"%");
 				$("#text_per_im").html(response.converted_per.toFixed(2)+"%");

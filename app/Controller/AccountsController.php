@@ -7163,7 +7163,7 @@ function ledger_report_cron_job(){
 	$from=$result_trial_report[0]['ledger_yearly']['from'];
 	$society_id=$result_trial_report[0]['ledger_yearly']['society_id'];
 	$account_category_id=$result_trial_report[0]['ledger_yearly']['account_category_id'];
-	
+	$id=(int)$result_trial_report[0]['ledger_yearly']['ledger_yearly_id'];
 	$to=$result_trial_report[0]['ledger_yearly']['to'];
 	$date=$result_trial_report[0]['ledger_yearly']['request_date'];
 	
@@ -7193,7 +7193,7 @@ function ledger_report_cron_job(){
 		
 	
 	$this->loadmodel('ledger_yearly');
-	$this->ledger_yearly->updateAll(array("status" => 1),array("module_name" => "ledger_yearly"));
+	$this->ledger_yearly->updateAll(array("status" => 1),array("module_name" => "ledger_yearly",'ledger_yearly_id'=>$id));
 }	
 	
 }
@@ -7847,12 +7847,20 @@ if($this->RequestHandler->isAjax()){
 		$this->layout='session';
 	}
 	$this->ath();
- 	$s_society_id = (int)$this->Session->read('hm_society_id');
+ 	//$s_society_id = (int)$this->Session->read('hm_society_id');
 	
 	$this->loadmodel('ledger_yearly');
-	$conditions=array("module_name" => "ledger_yearly",'society_id'=>$s_society_id);
-	$result_import_record = $this->ledger_yearly->find('all',array('conditions'=>$conditions));
-		
+	$conditions=array("module_name" => "ledger_yearly",'flag'=>0,'status'=>0);
+	$conditions =array( '$or' => array( 
+		array("module_name" => "ledger_yearly",'flag'=>0,'status'=>0),
+		array("module_name" => "ledger_yearly",'flag'=>0,'status'=>1),
+	));
+	
+	
+	$order=array('ledger_yearly_id'=>"ASC");
+	$result_import_record = $this->ledger_yearly->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1));
+	
+	$s_society_id=$result_import_record[0]['ledger_yearly']['society_id']; 
 	$this->set('result_import_record',$result_import_record);
 	foreach($result_import_record as $data_import){
 		$step1=(int)@$data_import["ledger_yearly"]["step1"];
@@ -7886,12 +7894,27 @@ if($this->RequestHandler->isAjax()){
 		$this->layout='session';
 	}
 	$s_society_id = (int)$this->Session->read('hm_society_id');
+	
 	$this->loadmodel('ledger_yearly');
+	$conditions=array("module_name" => "ledger_yearly",'flag'=>0,'status'=>0);
+	
+
+	
+	
+	$order=array('ledger_yearly_id'=>"ASC");
+	$result_trial_report = $this->ledger_yearly->find('all',array('conditions'=>$conditions,'order'=>$order,'limit'=>1));
+	
+	$s_society_id=$result_trial_report[0]['ledger_yearly']['society_id'];
+	
+	
+	
+	/* $this->loadmodel('ledger_yearly');
     $conditions=array("module_name" => "ledger_yearly",'society_id'=>$s_society_id);
-	$result_trial_report=$this->ledger_yearly->find('all',array("conditions"=>$conditions));
+	$result_trial_report=$this->ledger_yearly->find('all',array("conditions"=>$conditions)); */
+	
 	$from=$result_trial_report[0]['ledger_yearly']['from'];
 	$account_category_id=$result_trial_report[0]['ledger_yearly']['account_category_id'];
-	
+	$ledger_yearly_id=(int)$result_trial_report[0]['ledger_yearly']['ledger_yearly_id'];
 	$to=$result_trial_report[0]['ledger_yearly']['to'];
 	$date=$result_trial_report[0]['ledger_yearly']['request_date'];
 	
@@ -7916,13 +7939,13 @@ if($this->RequestHandler->isAjax()){
 		
 					$this->loadmodel('ledger_yearly_read');
 					$auto_id=$this->autoincrement('ledger_yearly_read','auto_id');
-					$this->ledger_yearly_read->saveAll(Array(Array("auto_id" => $auto_id,"society_id"=> $s_society_id,"is_converted"=>"NO","from"=>$from,"to"=>$to,"date"=>$date,'ledger_account_name'=>$ledger_sub_account_name,'ledger_sub_account_id'=>$ledger_sub_account_id,'ledger_account_id'=>34,'account_category_id'=>$account_category_id)));
+					$this->ledger_yearly_read->saveAll(Array(Array("auto_id" => $auto_id,"society_id"=> $s_society_id,"is_converted"=>"NO","from"=>$from,"to"=>$to,"date"=>$date,'ledger_account_name'=>$ledger_sub_account_name,'ledger_sub_account_id'=>$ledger_sub_account_id,'ledger_account_id'=>34,'account_category_id'=>$account_category_id,'ledger_yearly_id'=>$ledger_yearly_id)));
 				
 			}
 		
 	
 	$this->loadmodel('ledger_yearly');
-	$this->ledger_yearly->updateAll(array("step2" => 1),array("module_name" => "ledger_yearly"));
+	$this->ledger_yearly->updateAll(array("step2" => 1,"status"=>1),array("module_name" => "ledger_yearly","ledger_yearly_id"=>$ledger_yearly_id));
 	die(json_encode("READ"));	
 }
 
@@ -7941,9 +7964,26 @@ function ledger_yearly_converted(){
 	$current_date = date("d-m-Y");
 	$time=date('h:i:A');
 	
+	
+	$this->loadmodel('ledger_yearly');
+	$conditions=array("module_name" => "ledger_yearly",'flag'=>0,'status'=>1);
+	$order=array('ledger_yearly_id'=>"ASC");
+	$result_trial_report=$this->ledger_yearly->find('all',array("conditions"=>$conditions,'order'=>$order,'limit'=>1));
+	$ledger_yearly_id=(int)$result_trial_report[0]['ledger_yearly']['ledger_yearly_id'];
+	$society_id=(int)$result_trial_report[0]['ledger_yearly']['society_id'];
+	$s_society_id=$society_id;
+	$account_category_id=(int)$result_trial_report[0]['ledger_yearly']['account_category_id'];
+	
 	$this->loadmodel('ledger_yearly_read');
-	$conditions=array("is_converted" => "NO","society_id"=>$s_society_id);
+	$conditions=array("is_converted" => "NO","society_id"=>$society_id,'account_category_id'=>$account_category_id,'ledger_yearly_id'=>$ledger_yearly_id);
+	$order=array('auto_id'=>"ASC");
 	$result_import_record = $this->ledger_yearly_read->find('all',array('conditions'=>$conditions,'limit'=>1));
+
+		
+	/* $this->loadmodel('ledger_yearly_read');
+	$conditions=array("is_converted" => "NO","society_id"=>$s_society_id);
+	$result_import_record = $this->ledger_yearly_read->find('all',array('conditions'=>$conditions,'limit'=>1)); */
+	
 	//pr($result_import_record); 
 	foreach($result_import_record as $import_record){
 		
@@ -7955,6 +7995,11 @@ function ledger_yearly_converted(){
 		 $to=$import_record['ledger_yearly_read']['to'];
 		 $date=$import_record['ledger_yearly_read']['date'];
 		 $account_category_id=$import_record['ledger_yearly_read']['account_category_id'];
+		
+		$ledger_account_id_op=$ledger_account_id;
+		$ledger_sub_account_id_op =$ledger_sub_account_id;
+	
+		
 		
 		$this->loadmodel('ledger');
 		$conditions=array('society_id'=>$s_society_id,"ledger_sub_account_id"=>$ledger_sub_account_id,'transaction_date'=>array('$gte'=>$from,'$lte'=>$to));
@@ -8528,24 +8573,43 @@ if($table_name=="supplimentry_bill"){
 				$this->ledger_yearly_converted->saveAll(Array(Array("auto_id" => $auto_id_n,"is_imported"=>"NO",'debit'=>$debit,'credit'=>$credit,'ledger_account_name'=>$ledger_account_name,'society_id'=>$s_society_id,'transaction_date'=>$transaction_date,'corresponding'=>@$corresponding,'account_category_id'=>$account_category_id,'description'=>$description,'source'=>$source,'reference'=>$refrence_no,'ledger_yearly_id'=>$auto_id)));
 		}
 		
+				
+			//calculate_opening_balance_for_cron_job_for_sub_account
+
+			$trail_balance=$this->requestAction(array('controller' => 'Accounts', 'action' => 'calculate_opening_balance_for_cron_job_for_sub_account'),array('pass'=>array($from,$to,$ledger_account_id_op,$ledger_sub_account_id_op,$s_society_id)));
+
+			$opening_amount=@$trail_balance['opening_balance'][0];
+			$opening_amount_type=@$trail_balance['opening_balance'][1];
+
+			$closing_amount=@$trail_balance['closing_balance'][0];
+			$closing_amount_type=@$trail_balance['closing_balance'][1];
+
+
+		
+		
+		
+		
+		
+		
+		
 			$this->loadmodel('ledger_yearly_read');
-			$this->ledger_yearly_read->updateAll(array("is_converted" => "YES","society_id"=>$s_society_id),array("auto_id" => $auto_id));
+			$this->ledger_yearly_read->updateAll(array("is_converted" => "YES","society_id"=>$s_society_id,'opening_amount'=>$opening_amount,'opening_amount_type'=>$opening_amount_type,'closing_amount'=>$closing_amount,'closing_amount_type'=>$closing_amount_type),array("auto_id" => $auto_id));
 		
 		}
 	
 	
 	$this->loadmodel('ledger_yearly_read');
-	$conditions=array("is_converted" => "YES","society_id"=>$s_society_id);
+	$conditions=array("is_converted" => "YES","society_id"=>$s_society_id,'account_category_id'=>$account_category_id,'ledger_yearly_id'=>$ledger_yearly_id);
 	$total_converted_records = $this->ledger_yearly_read->find('count',array('conditions'=>$conditions));
 	
 	$this->loadmodel('ledger_yearly_read');
-	$conditions=array("society_id" => $s_society_id);
+	$conditions=array("society_id" => $s_society_id,'account_category_id'=>$account_category_id,'ledger_yearly_id'=>$ledger_yearly_id);
 	$total_records = $this->ledger_yearly_read->find('count',array('conditions'=>$conditions));
 	
 	$converted_per=($total_converted_records*100)/$total_records;
 	if($converted_per==100){ $again_call_ajax="NO"; 
 		$this->loadmodel('ledger_yearly');
-		$this->ledger_yearly->updateAll(array("step3" => 1,'flag'=>1,'prepared_date'=>$current_date,'prepared_time'=>$time),array("module_name" => "ledger_yearly","society_id"=>$s_society_id));
+		$this->ledger_yearly->updateAll(array("step3" => 1,'flag'=>1,'prepared_date'=>$current_date,'prepared_time'=>$time),array("module_name" => "ledger_yearly","society_id"=>$s_society_id,'account_category_id'=>$account_category_id,'ledger_yearly_id'=>$ledger_yearly_id));
 	}else{
 		$again_call_ajax="YES"; 
 			

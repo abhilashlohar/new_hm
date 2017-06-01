@@ -1,5 +1,5 @@
 <?php 
-/* 
+
 //$filename=$society_name.'_balance_sheet_'.$from ;
 //$filename = str_replace(' ', '_', $filename);
 //$filename = str_replace(' ', '-', $filename);
@@ -12,7 +12,7 @@ header ("Pragma: no-cache");
 header ("Content-type: application/vnd.ms-excel");
 header ("Content-Disposition: attachment; filename=".$filename.".xls");
 header ("Content-Description: Generated Report" );
- */
+
 
 
 

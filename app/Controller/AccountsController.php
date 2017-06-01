@@ -7863,13 +7863,13 @@ if($this->RequestHandler->isAjax()){
 	$process_status= @$step1+@$step2+@$step3+@$step4;
 
 	if(@$process_status==2){
-		$this->loadmodel('ledger_yearly');
+		$this->loadmodel('ledger_yearly_read');
 		$conditions=array("is_converted" => "YES","society_id"=>$s_society_id);
-		$total_converted_records = $this->ledger_yearly->find('count',array('conditions'=>$conditions));
+		$total_converted_records = $this->ledger_yearly_read->find('count',array('conditions'=>$conditions));
 		
-		$this->loadmodel('ledger_yearly');
+		$this->loadmodel('ledger_yearly_read');
 		$conditions=array("society_id" => $s_society_id);
-		$total_records = $this->ledger_yearly->find('count',array('conditions'=>$conditions));
+		$total_records = $this->ledger_yearly_read->find('count',array('conditions'=>$conditions));
 		
 		$this->set("converted_per",($total_converted_records*100)/$total_records);
 	}

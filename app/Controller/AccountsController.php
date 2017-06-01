@@ -5023,6 +5023,81 @@ function calculate_opening_balance_for_trail_balance_for_sub_account($from=null,
 	return $trail_balance; 
 	
 }
+
+
+function calculate_opening_balance_for_cron_job_for_sub_account($from=null,$to=null,$ledger_account_id=null,$ledger_sub_account_id=null,$s_society_id=null){
+	$this->ath();
+	
+	/*	$s_role_id=$this->Session->read('role_id');
+	$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');	
+	$from=date('Y-m-d',strtotime($from));
+	*/
+	
+	$this->loadmodel('ledger');
+	$conditions=array('society_id'=>$s_society_id,'ledger_account_id'=>$ledger_account_id,'ledger_sub_account_id'=>$ledger_sub_account_id,'transaction_date'=>array('$lt'=>$from));
+	$ledger_result_ob=$this->ledger->find('all',array('conditions'=>$conditions));
+	
+	$credit_ob=0; $debit_ob=0;
+	foreach($ledger_result_ob as $data_ob){
+		$debit_ob+=$data_ob["ledger"]["debit"];
+		$credit_ob+=$data_ob["ledger"]["credit"];
+	}
+	$difference_ob=$debit_ob-$credit_ob;
+	if($difference_ob>0){
+		$type_ob="Dr";
+	}
+	if($difference_ob<0){
+		$type_ob="Cr";
+	}
+	if($difference_ob==0){
+		$type_ob=null;
+	}
+	
+	$this->loadmodel('ledger');
+	$conditions2=array('society_id'=>$s_society_id,'ledger_account_id'=>$ledger_account_id,'ledger_sub_account_id'=>$ledger_sub_account_id,'transaction_date'=>array('$gte'=>$from,'$lte'=>$to));	
+		
+	
+	$ledger_result_dc=$this->ledger->find('all',array('conditions'=>$conditions2));
+	$credit_dc=0; $debit_dc=0;
+	foreach($ledger_result_dc as $data_dc){
+		$debit_dc+=$data_dc["ledger"]["debit"];
+		$credit_dc+=$data_dc["ledger"]["credit"];
+	}
+	
+	
+	$difference_cb=$debit_dc-$credit_dc;
+	
+	
+	
+	$close_bal=$difference_ob+$difference_cb;
+	
+	if($close_bal>0){
+		$type_cb="Dr";
+	}
+	if($close_bal<0){
+		$type_cb="Cr";
+	}
+	if($close_bal==0){
+		$type_cb=null;
+	}
+	
+	$trail_balance=array(
+		"opening_balance"=>array(abs($difference_ob),$type_ob),
+		"debit"=>$debit_dc,
+		"credit"=>$credit_dc,
+		"closing_balance"=>array(abs($close_bal),$type_cb)
+		);
+		
+	
+	return $trail_balance; 
+	
+}
+
+
+
+
+
 //End calculate_opening_balance_for_trail_balance_for_sub_account// 
 //Start fetch_sub_accounts_from_ledger_account_id//
 function fetch_sub_accounts_from_ledger_account_id($ledger_account_id){
@@ -7137,9 +7212,9 @@ function ledger_report_converted_cron(){
 	$order=array('ledger_yearly_id'=>"ASC");
 	$result_trial_report=$this->ledger_yearly->find('all',array("conditions"=>$conditions,'order'=>$order,'limit'=>1));
 	
-	$society_id=(int)$result_trial_report[0]['ledger_yearly']['society_id'];
-	$s_society_id=$society_id;
-	$account_category_id=(int)$result_trial_report[0]['ledger_yearly']['account_category_id'];
+	 $society_id=(int)$result_trial_report[0]['ledger_yearly']['society_id'];
+	 $s_society_id=$society_id;
+	 $account_category_id=(int)$result_trial_report[0]['ledger_yearly']['account_category_id'];
 	
 		$this->loadmodel('ledger_yearly_read');
 		$conditions=array("is_converted" => "NO","society_id"=>$society_id,'account_category_id'=>$account_category_id);
@@ -7156,6 +7231,9 @@ function ledger_report_converted_cron(){
 		 $to=$import_record['ledger_yearly_read']['to'];
 		 $date=$import_record['ledger_yearly_read']['date'];
 		 $account_category_id=$import_record['ledger_yearly_read']['account_category_id'];
+		$ledger_account_id_op=$ledger_account_id;
+		$ledger_sub_account_id_op =$ledger_sub_account_id;
+		
 		
 		$this->loadmodel('ledger');
 		$conditions=array('society_id'=>$s_society_id,"ledger_sub_account_id"=>$ledger_sub_account_id,'transaction_date'=>array('$gte'=>$from,'$lte'=>$to));
@@ -7729,8 +7807,20 @@ if($table_name=="supplimentry_bill"){
 				$this->ledger_yearly_converted->saveAll(Array(Array("auto_id" => $auto_id_n,"is_imported"=>"NO",'debit'=>$debit,'credit'=>$credit,'ledger_account_name'=>$ledger_account_name,'society_id'=>$s_society_id,'transaction_date'=>$transaction_date,'corresponding'=>@$corresponding,'account_category_id'=>$account_category_id,'description'=>$description,'source'=>$source,'reference'=>$refrence_no,'ledger_yearly_id'=>$auto_id)));
 		}
 		
+		
+		//calculate_opening_balance_for_cron_job_for_sub_account
+		
+				$trail_balance=$this->requestAction(array('controller' => 'Accounts', 'action' => 'calculate_opening_balance_for_cron_job_for_sub_account'),array('pass'=>array($from,$to,$ledger_account_id_op,$ledger_sub_account_id_op,$s_society_id)));
+				
+				$opening_amount=@$trail_balance['opening_balance'][0];
+				$opening_amount_type=@$trail_balance['opening_balance'][1];
+				
+				$closing_amount=@$trail_balance['closing_balance'][0];
+				$closing_amount_type=@$trail_balance['closing_balance'][1];
+		
+		
 			$this->loadmodel('ledger_yearly_read');
-			$this->ledger_yearly_read->updateAll(array("is_converted" => "YES","society_id"=>$s_society_id),array("auto_id" => $auto_id));
+			$this->ledger_yearly_read->updateAll(array("is_converted" => "YES","society_id"=>$s_society_id,'opening_amount'=>$opening_amount,'opening_amount_type'=>$opening_amount_type,'closing_amount'=>$closing_amount,'closing_amount_type'=>$closing_amount_type),array("auto_id" => $auto_id));
 		
 		}
 	

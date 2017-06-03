@@ -7230,8 +7230,8 @@ function ledger_report_converted_cron(){
 		 $to=$import_record['ledger_yearly_read']['to'];
 		 $date=$import_record['ledger_yearly_read']['date'];
 		 $account_category_id=$import_record['ledger_yearly_read']['account_category_id'];
-		$ledger_account_id_op=$ledger_account_id;
-		$ledger_sub_account_id_op =$ledger_sub_account_id;
+		 $ledger_account_id_op=$ledger_account_id;
+		 $ledger_sub_account_id_op =$ledger_sub_account_id;
 		
 		
 		$this->loadmodel('ledger');

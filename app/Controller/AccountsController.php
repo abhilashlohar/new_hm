@@ -7712,6 +7712,7 @@ function ledger_report_converted_cron(){
 			foreach($result_fix_asset as $data){
 			$description=$data['fix_asset']['description'];
 			$expense_id=$data['fix_asset']['fix_receipt_id'];
+			$refrence_no=$expense_id;
 			$prepaired_by_id = (int)$data['fix_asset']['user_id'];	
 		    $current_datttt = $data['fix_asset']['current_date'];
             $ledger_id_for_view=$data['fix_asset']['asset_supplier_id'];
@@ -7755,6 +7756,7 @@ if($table_name=="supplimentry_bill"){
 		foreach($result_supplimentry_bill as $result_supplimentry_bill_data){
 			$description=$result_supplimentry_bill_data['supplimentry_bill']['description'];
 			$supplimentry_receipt=$result_supplimentry_bill_data['supplimentry_bill']['receipt_id'];
+			$refrence_no=$supplimentry_receipt;
 			$supplimentry_ledger_sub_account_id=$result_supplimentry_bill_data['supplimentry_bill']['ledger_sub_account_id'];
 			$supplimentry_ledger_income_head=$result_supplimentry_bill_data['supplimentry_bill']['income_head'];
 			$adhoc_id= (int)$result_supplimentry_bill_data['supplimentry_bill']['supplimentry_bill_id'];

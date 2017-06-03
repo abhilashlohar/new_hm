@@ -15,8 +15,9 @@ header ("Content-Description: Generated Report" );
 
 
 
-
+$z=0;
 foreach($ledger_yearly_read as $data){
+	$z++;
 	$ledger_all_report='';
 	$auto_id=$data['ledger_yearly_read']['auto_id'];
 	$ledger_account_name=$data['ledger_yearly_read']['ledger_account_name'];
@@ -33,7 +34,10 @@ foreach($ledger_yearly_read as $data){
 	if($account_category_id==34){
 		$account_name="Members Control A/c";
 	}
-	echo"<center><p>Ledger Report <br/> $account_name > $ledger_account_name <br/> From :$from To :$to </p></center>";
+	if($z==1){
+		echo"<center>Ledger Report <br/> From :$from To :$to </center>";	
+	}
+	echo"<center><p> $account_name > $ledger_account_name <br/> </p></center>";
 	
 	
 	$ledger_all_report=$ledger_yearly_all[$auto_id]; 

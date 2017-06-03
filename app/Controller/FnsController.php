@@ -2993,10 +2993,11 @@ function calculate_opening_balance_for_ledger($ledger_account_id=null,$ledger_su
 	$accounts_id=(int)$result_accounts_group[0]["accounts_group"]["accounts_id"];
 	
 	if($accounts_id==1 or $accounts_id==2){ 
+	
 		$this->loadmodel('ledger');
-		$conditions=array("society_id"=>$s_society_id,"ledger_account_id"=>(int)$ledger_account_id,"ledger_sub_account_id"=>(int)$ledger_sub_account_id,"transaction_date"=>array('$lt'=>$date));
+		$conditions=array("society_id"=>$s_society_id,"ledger_account_id"=>(int)$ledger_account_id,"ledger_sub_account_id"=>$ledger_sub_account_id,"transaction_date"=>array('$lt'=>$date));
 		$result_ledger = $this->ledger->find('all',array('conditions'=>$conditions));
-		
+		//pr($result_ledger); exit;
 		$total_debit=0; $total_credit=0;
 		foreach($result_ledger as $data){
 			$total_debit+=$data["ledger"]["debit"];

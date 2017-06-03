@@ -7219,7 +7219,7 @@ function ledger_report_converted_cron(){
 		$this->loadmodel('ledger_yearly_read');
 		$conditions=array("is_converted" => "NO","society_id"=>$society_id,'account_category_id'=>$account_category_id,'ledger_yearly_id'=>$ledger_yearly_id);
 		$order=array('auto_id'=>"ASC");
-		$result_import_record = $this->ledger_yearly_read->find('all',array('conditions'=>$conditions,'limit'=>1));
+		$result_import_record = $this->ledger_yearly_read->find('all',array('conditions'=>$conditions,'limit'=>5));
 	
     foreach($result_import_record as $import_record){
 		 $auto_id=(int)$import_record['ledger_yearly_read']['auto_id'];
@@ -7674,7 +7674,7 @@ function ledger_report_converted_cron(){
 				$description=$data['journal']['remark'];
 				$journal_id=$data['journal']['journal_id'];
 				$journal_voucher_id=$data['journal']['voucher_id'];
-			   
+			    $refrence_no=$journal_voucher_id;
 				$user_name1='';
 				$result_journal_voucher=$this->requestAction(array('controller' => 'Fns', 'action' => 'journal_info_via_voucher_id'), array('pass' => array($journal_voucher_id,$ledger_id)));
 				foreach($result_journal_voucher as $data){

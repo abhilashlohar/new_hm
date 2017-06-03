@@ -7561,7 +7561,7 @@ function ledger_report_converted_cron(){
 		if($table_name=="opening_balance" && $arrear_int_type=="YES"){
 			$source="Opening Balance (Penalty)";
 			$description='Interest arrears';
-		
+		    $refrence_no="";
 		 if($subledger_id != 0)
 		{
 			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
@@ -7584,7 +7584,7 @@ function ledger_report_converted_cron(){
 		}elseif($table_name=="opening_balance"){
 			$source="Opening Balance";
 			$description='Opening balance migrated';
-		
+			$refrence_no="";
 		 if($subledger_id != 0)
 		{
 			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
@@ -7607,7 +7607,7 @@ function ledger_report_converted_cron(){
 		}
 			
 	if($table_name=="closing_process"){
-			
+			$refrence_no="";
 			$source="JV for Closing process";
 			$description='Year Closing JV';
 	    	$user_name=" ";

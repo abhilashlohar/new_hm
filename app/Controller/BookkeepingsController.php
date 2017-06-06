@@ -525,8 +525,12 @@ $this->set('socc_namm',$socc_namm);
 
 $account_name = "";
 $ledger_account_id=(int)$this->request->query('l');
-$ledger_sub_account_id=(int)$this->request->query('sl');
-
+$ledger_sub_account_id=$this->request->query('sl');
+if(!empty($ledger_sub_account_id)){
+	$ledger_sub_account_id=(int)$ledger_sub_account_id;
+}else{
+	$ledger_sub_account_id=null;
+}
 $this->set('ledger_account_id',$ledger_account_id);
 $this->set('ledger_sub_account_id',$ledger_sub_account_id);
 

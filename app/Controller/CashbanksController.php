@@ -519,10 +519,12 @@ function convert_imported_data_pcp(){
 			$account_type=3;
 		}
 		
-		if($paid_from=="Cash-in-hand"){
+		$account_head=32;
+		
+		/* if($paid_from=="Cash-in-hand"){
 			$account_head=32;
 		}
-		
+		 */
 		
 		if($account_type==1){
 		

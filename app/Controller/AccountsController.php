@@ -7219,7 +7219,7 @@ function ledger_report_converted_cron(){
 		$this->loadmodel('ledger_yearly_read');
 		$conditions=array("is_converted" => "NO","society_id"=>$society_id,'account_category_id'=>$account_category_id,'ledger_yearly_id'=>$ledger_yearly_id);
 		$order=array('auto_id'=>"ASC");
-		$result_import_record = $this->ledger_yearly_read->find('all',array('conditions'=>$conditions,'limit'=>5));
+		$result_import_record = $this->ledger_yearly_read->find('all',array('conditions'=>$conditions,'limit'=>4));
 	
     foreach($result_import_record as $import_record){
 		 $auto_id=(int)$import_record['ledger_yearly_read']['auto_id'];

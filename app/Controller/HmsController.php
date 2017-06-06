@@ -32112,11 +32112,7 @@ function menus_as_per_user_rights(){
 				</a>					
 			</li>
 			
-			<li>
-				<a href="<?php echo $webroot_path; ?>Accounts/ledger_yearly" rel='tab'>
-				<i class="icon-phone"></i> Ledger Yearly
-				</a>					
-			</li>
+			
 			
 			<!--<li>
 				<a href="<?php echo $webroot_path; ?>Hms/bank_reconciliation" rel='tab'>
@@ -32129,7 +32125,11 @@ function menus_as_per_user_rights(){
 		}else{
 			echo '<li style="color:#FFF; padding: 5px;">There is no any module assigned to you.</li>';
 		}
-		
+		echo '<li>
+				<a href="'.$webroot_path.'Accounts/ledger_yearly" rel="tab">
+				<i class="icon-phone"></i> Ledger Yearly
+				</a>					
+			</li>';
 	}
 	if($user_type=="hm"){
 		?>

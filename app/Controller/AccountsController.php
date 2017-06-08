@@ -7801,7 +7801,7 @@ if($table_name=="supplimentry_bill"){
 		
 		
 		
-		echo $corresponding;exit;
+	
 		
 	
 				$this->loadmodel('ledger_yearly_converted');

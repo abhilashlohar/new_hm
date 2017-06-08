@@ -7323,7 +7323,7 @@ function ledger_report_converted_cron(){
 		}
 		}else{
 		
-		$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass'=> array($bank_id)));
+		$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass'=> array($bank_id,$society_id)));
 		foreach($subleddger_detaill as $subledger_datttaa){
 		$user_name = $subledger_datttaa['ledger_sub_account']['name'];
 		}	
@@ -7349,15 +7349,459 @@ function ledger_report_converted_cron(){
 		
 		}
 		
-		 echo $corresponding=$user_name." ".$wing_flat;
+		 $corresponding=$user_name." ".$wing_flat;
     } 
 	
-}
+	if($receipt_source == "bank_payment")
+	{
+		$tds_amount=0;
+		$tds_array_for_bank_payment = array();
+		$source="Bank payment";
+		$trans_id = (int)$result_cash_bank[0]["cash_bank"]["transaction_id"];  
+		$description = @$result_cash_bank[0]["cash_bank"]["narration"];
+		
+		$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_number"]; 
+		$vendor_id = (int)$result_cash_bank[0]["cash_bank"]["sundry_creditor_id"];
+		$account_type = (int)$result_cash_bank[0]["cash_bank"]["account_type"];	
+		$amttt = $result_cash_bank[0]["cash_bank"]["amount"];			
+		$tds_amount = $result_cash_bank[0]["cash_bank"]["tds_tax_amount"];		
+		
+		$bank_id=(int)$result_cash_bank[0]['cash_bank']['account_head'];
+	
+		if($subledger_id != 0){
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 
+			'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($bank_id,$society_id)));
+			foreach($subleddger_detaill as $subledger_datttaa){
+			$user_name=$subledger_datttaa['ledger_sub_account']['name'];
+		}
+
+		$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 
+		'action'=>'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($subledger_id,$society_id)));
+		foreach($subleddger_detaill as $subledger_datttaa){
+		$tds_ledger_id = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
+		}
+             if($tds_ledger_id == 33)
+			 {
+			   if($account_type==2){
+					$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($vendor_id,$society_id)));
+					foreach($leddger_detaill as $ledger_datttaa)
+					{
+					$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+					}
+				 }else{
+					$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 
+					'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($vendor_id,$society_id)));
+					foreach($subleddger_detaill as $subledger_datttaa){
+					$user_name=$subledger_datttaa['ledger_sub_account']['name'];
+					} }
+			}
+			if($tds_ledger_id == 15)
+			{
+						
+			$total_tds_amount=$debit-$tds_amount;				
+						
+			if(!empty($tds_amount)){
+			$tds_array_for_bank_payment[] = array($tds_amount,"tds payable",$creater_name,$current_datttt);
+			}
+		   $tds_array_for_bank_payment[] = array($total_tds_amount,$description,$creater_name,$current_datttt);			
+							
+			}
+			}
+			else
+			{
+		
+				   if($ledger_id == 16)
+					 {
+						 if($account_type == 1)
+						 {
+		$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($vendor_id,$society_id)));
+						foreach($subleddger_detaill as $subledger_datttaa)
+						{
+						$user_name = $subledger_datttaa['ledger_sub_account']['name'];
+						}
+					
+						}
+	            		else
+						{
+						$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($vendor_id,$society_id)));
+						foreach($leddger_detaill as $ledger_datttaa)
+						{
+						$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+						}	
+						}
+
+			        }
+					else{
+
+			$tds_ledger_id = 15;
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array((int)$ledger_id,$society_id)));
+			foreach($leddger_detaill as $ledger_datttaa)
+			{
+			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			}
+			
+			$total_tds_amount=$debit-$tds_amount;	
+				
+			if(!empty($tds_amount)){
+			$tds_array_for_bank_payment[] = array($tds_amount,"tds payable",$creater_name,$current_datttt);
+			}
+            $tds_array_for_bank_payment[] = array($total_tds_amount,$description,$creater_name,$current_datttt);	
+			}
+		}
+	$corresponding=$user_name." ".$wing_flat;	
+		
+	}
+	if($receipt_source == "petty_cash_receipt")
+	{
+		$source="Petty Cash Receipt";
+		$trans_id=(int)$result_cash_bank[0]["cash_bank"]["transaction_id"]; 
+		$description=@$result_cash_bank[0]["cash_bank"]["narration"];
+		
+		$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_number"]; 
+		$prepaired_by=(int)$result_cash_bank[0]['cash_bank']['created_by'];   
+        $current_date=$result_cash_bank[0]['cash_bank']['created_on'];	
+		$ledger_id_for_party_name=(int)$result_cash_bank[0]['cash_bank']['ledger_sub_account_id'];
+        $ledger_id_type=(int)$result_cash_bank[0]['cash_bank']['account_type'];
+        $ledger_account_id=(int)$result_cash_bank[0]['cash_bank']['account_head'];
+
+		
+			
+			
+			
+			if($subledger_id != 0)
+			{
+				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_account_id,$society_id)));
+				foreach($leddger_detaill as $ledger_datttaa)
+				{
+				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+				}
+			}
+		else
+		{
+			if($credit==null){
+			 if($ledger_id_type==1){
+				$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id_for_party_name,$society_id)));
+				foreach($subleddger_detaill as $subledger_datttaa)
+				{
+				$user_name = $subledger_datttaa['ledger_sub_account']['name'];
+				}
+		   }else{
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id_for_party_name,$society_id)));
+			foreach($leddger_detaill as $ledger_datttaa)
+			{
+			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			}
+			
+		}
+			}else{
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_account_id,$society_id)));
+			foreach($leddger_detaill as $ledger_datttaa)
+			{
+			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			}	
+				
+			}
+		}
+		$corresponding=$user_name." ".$wing_flat;	
+	
+	}
+	if($receipt_source == "petty_cash_payment")
+	{
+		$source="Petty Cash Payment";
+		$trans_id = (int)$result_cash_bank[0]["cash_bank"]["transaction_id"]; 
+			$description = @$result_cash_bank[0]["cash_bank"]["narration"];
+			
+			$refrence_no=$result_cash_bank[0]["cash_bank"]["receipt_number"]; 
+			$prepaired_by = (int)$result_cash_bank[0]['cash_bank']['created_by'];
+			$current_date = $result_cash_bank[0]['cash_bank']['created_on'];
+            $ledger_account_id_for_view=(int)$result_cash_bank[0]['cash_bank']['sundry_creditor_id']; 
+	        $ledger_id_type=(int)$result_cash_bank[0]['cash_bank']['account_type'];
+		    $ledger_id_for_view=(int)$result_cash_bank[0]['cash_bank']['account_head'];
+		
+			
+			if($subledger_id != 0)
+			{
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id_for_view,$society_id)));
+			foreach($leddger_detaill as $ledger_datttaa)
+			{
+			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			}
+			}
+			else
+			{
+			 if($debit==null){
+				if($ledger_id_type==1){
+				$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_account_id_for_view,$society_id)));
+				foreach($subleddger_detaill as $subledger_datttaa)
+				{
+				$user_name = $subledger_datttaa['ledger_sub_account']['name'];
+				}
+				}else{
+				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_account_id_for_view,$society_id)));
+				foreach($leddger_detaill as $ledger_datttaa)
+				{
+				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+				}
+				}
+			 }else
+			 {
+				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id_for_view,$society_id)));
+				foreach($leddger_detaill as $ledger_datttaa)
+				{
+				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+				}	 
+				 
+			 }
+			}
+		$corresponding=$user_name." ".$wing_flat;	
+	
+	}
+		
+  }
+		
+		if($table_name=="opening_balance" && $arrear_int_type=="YES"){
+			$source="Opening Balance (Penalty)";
+			$description='Interest arrears';
+		    $refrence_no="";
+		 if($subledger_id != 0)
+		{
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($subledger_id,$society_id)));
+			foreach($subleddger_detaill as $subledger_datttaa)
+			{
+			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
+			$ledger_id_forwingflat = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
+			}
+		}
+		else
+		{
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id,$society_id)));
+			foreach($leddger_detaill as $ledger_datttaa)
+			{
+			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			}
+		}
+		$corresponding=$user_name." ".$wing_flat;	
+	
+		}elseif($table_name=="opening_balance"){
+			$source="Opening Balance";
+			$description='Opening balance migrated';
+			$refrence_no="";
+		 if($subledger_id != 0)
+		{
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($subledger_id,$society_id)));
+			foreach($subleddger_detaill as $subledger_datttaa)
+			{
+			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
+			$ledger_id_forwingflat = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
+			}
+		}
+		else
+		{
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id,$society_id)));
+			foreach($leddger_detaill as $ledger_datttaa)
+			{
+			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			}
+		}
+		$corresponding=$user_name." ".$wing_flat;	
+	
+		}
+			
+	if($table_name=="closing_process"){
+			$refrence_no="";
+			$source="JV for Closing process";
+			$description='Year Closing JV';
+	    	$user_name=" ";
+			$wing_flat="";
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id,$society_id)));
+			foreach($leddger_detaill as $ledger_datttaa)
+			{
+				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			}
+			
+			$corresponding=$user_name." ".$wing_flat;	
+	
+		}
+			
+	if($table_name=="expense_tracker"){
+			
+			$source="Expenses";
+			 
+			
+		$result_expense_tracker=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_expense_tracker'), array('pass' => array($element_id)));
+		foreach($result_expense_tracker as $data){
+		$description=$data['expense_tracker']['description'];
+		$refrence_no=$data['expense_tracker']['expense_id'];
+		//$refrence_no=$data['expense_tracker']['expense_id'];
+		$expense_user_id = (int)$data['expense_tracker']['party_ac_head'];
+		
+		$ledger_id_for_view=$data['expense_tracker']['expense_head'];	
+		
+			
+             if($subledger_id != 0)
+			 {
+				
+				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id_for_view,$society_id)));
+				foreach($leddger_detaill as $ledger_datttaa)
+				{
+				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+				}
+ 
+			 }
+			 else{
+				 
+					$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($expense_user_id,$society_id)));
+					foreach($subleddger_detaill as $subledger_datttaa)
+					{
+						$user_name = $subledger_datttaa['ledger_sub_account']['name'];
+					} 	 
+			 
+			 }
+				$subledger_id = (int)@$data["ledger"]["ledger_sub_account_id"];
+				$ledger_id = (int)@$data["ledger"]["ledger_account_id"];
+
+			}
+		$corresponding=$user_name." ".$wing_flat;	
+		
+		}
+		
+			
+		if($table_name=="journal"){
+			
+			$source="Journal";
+			
+			$result_journal=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_journal_table'), array('pass' => array($element_id)));
+			foreach($result_journal as $data){
+				$description=$data['journal']['remark'];
+				$journal_id=$data['journal']['journal_id'];
+				$journal_voucher_id=$data['journal']['voucher_id'];
+			    $refrence_no=$journal_voucher_id;
+				$user_name1='';
+				$result_journal_voucher=$this->requestAction(array('controller' => 'Fns', 'action' => 'journal_info_via_voucher_id'), array('pass' => array($journal_voucher_id,$ledger_id)));
+				foreach($result_journal_voucher as $data){
+					$subledger_id=$data['journal']['ledger_sub_account_id'];
+					$ledger_id=$data['journal']['ledger_account_id'];
+					$wing_flat='';
+					if($ledger_id==34 or $ledger_id==33 or $ledger_id==15 or $ledger_id==112){
+							$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($subledger_id,$society_id)));
+							foreach($subleddger_detaill as $subledger_datttaa)
+							{
+							 $user_name1[] = $subledger_datttaa['ledger_sub_account']['name'];
+							
+							}
+						
+					}else{
+						$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id,$society_id)));
+						foreach($leddger_detaill as $ledger_datttaa)
+						{
+						$user_name1[] = $ledger_datttaa['ledger_account']['ledger_name'];
+						
+						}	
+					}
+				}
+				$user_name=implode(', ',$user_name1);
+			$corresponding=$user_name;	
+	}
+}	
+			
+	
+
+	if($table_name=="fix_asset"){
+			
+			$source="Fixed Asset";
+			$result_fix_asset=$this->requestAction(array('controller' => 'Hms', 'action' => 'fetch_fix_asset_table'), array('pass' => array($element_id)));
+			foreach($result_fix_asset as $data){
+			$description=$data['fix_asset']['description'];
+			$expense_id=$data['fix_asset']['fix_receipt_id'];
+			$refrence_no=$expense_id;
+			$prepaired_by_id = (int)$data['fix_asset']['user_id'];	
+		    $current_datttt = $data['fix_asset']['current_date'];
+            $ledger_id_for_view=$data['fix_asset']['asset_supplier_id'];
+			$ledger_id_for_view2=(int)$data['fix_asset']['asset_category_id'];
+		
+		if($subledger_id != 0)
+		{
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id_for_view2,$society_id)));
+			foreach($leddger_detaill as $ledger_datttaa)
+			{
+			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			}
+		}
+		else
+		{
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id_for_view,$society_id)));
+			foreach($subleddger_detaill as $subledger_datttaa)
+			{
+			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
+			$ledger_id_forwingflat = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
+			}
+		}		
+				
+				
+				
+				
+				
+				
+				
+			}
+			
+			$corresponding=$user_name;
+		}
+		
+		
+if($table_name=="supplimentry_bill"){
+	$wing_flat="";
+	$source="Supplimentry Bill";
+
+	$result_supplimentry_bill=$this->requestAction(array('controller' => 'Hms', 'action'=>'supplimentry_bill_detail_via_supplimentry_bill_id'), array('pass' => array($element_id)));
+		foreach($result_supplimentry_bill as $result_supplimentry_bill_data){
+			$description=$result_supplimentry_bill_data['supplimentry_bill']['description'];
+			$supplimentry_receipt=$result_supplimentry_bill_data['supplimentry_bill']['receipt_id'];
+			$refrence_no=$supplimentry_receipt;
+			$supplimentry_ledger_sub_account_id=$result_supplimentry_bill_data['supplimentry_bill']['ledger_sub_account_id'];
+			$supplimentry_ledger_income_head=$result_supplimentry_bill_data['supplimentry_bill']['income_head'];
+			$adhoc_id= (int)$result_supplimentry_bill_data['supplimentry_bill']['supplimentry_bill_id'];
+			$date=$result_supplimentry_bill_data['supplimentry_bill']["date"];
+			
+		
+			}
+			
+
+			
+		if($subledger_id != 0)
+		{   
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($supplimentry_ledger_income_head,$society_id)));
+			foreach($leddger_detaill as $ledger_datttaa)
+			{
+			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
+			} 
+			
+			
+		}
+		else
+		{  
+	
+			$user_id1 = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array((int)$supplimentry_ledger_sub_account_id)));
+
+			$user_id=$user_id1['user_id'];
+			$user_name=$user_id1['user_name'];
+			$wing_id=(int)$user_id1['wing_id'];
+			$flat_id=(int)$user_id1['flat_id'];
+
+
+			$wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'wing_flat'), array('pass' => array($wing_id,$flat_id)));
+
+			
+		}		
+		$corresponding=$user_name." ".$wing_flat;	
+		
+	}
 	
 		
 		
 		
-		//echo $corresponding;exit;
+		
+		
 		
 	
 				$this->loadmodel('ledger_yearly_converted');

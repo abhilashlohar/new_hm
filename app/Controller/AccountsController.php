@@ -7349,9 +7349,9 @@ function ledger_report_converted_cron(){
 		
 		}
 		
-		echo $corresponding=$user_name." ".$wing_flat;
+		 $corresponding=$user_name." ".$wing_flat;
     } 
-	exit;
+	
 	if($receipt_source == "bank_payment")
 	{
 		$tds_amount=0;

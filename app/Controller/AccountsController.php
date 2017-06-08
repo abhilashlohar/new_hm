@@ -7349,7 +7349,7 @@ function ledger_report_converted_cron(){
 		
 		}
 		
-		 $corresponding=$user_name." ".$wing_flat;
+		 echo $corresponding=$user_name." ".$wing_flat;
     } 
 	
 	if($receipt_source == "bank_payment")
@@ -7801,7 +7801,7 @@ if($table_name=="supplimentry_bill"){
 		
 		
 		
-		
+		echo $corresponding;exit;
 		
 	
 				$this->loadmodel('ledger_yearly_converted');

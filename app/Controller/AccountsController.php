@@ -7303,20 +7303,20 @@ function ledger_report_converted_cron(){
 	if($subledger_id != 0){
 			
 			if($credit==null){
-			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($subledger_id,$society_id)));
 			foreach($subleddger_detaill as $subledger_datttaa){
 			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
 			$ledger_id_forwingflat = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
 			}
 			if($ledger_id_forwingflat != 34){
 			
-			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass'=> array($ledger_id_for_view)));
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass'=> array($ledger_id_for_view,$society_id)));
 			foreach($subleddger_detaill as $subledger_datttaa){
 			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
 			$ledger_id_forwingflat = (int)$subledger_datttaa['ledger_sub_account']['ledger_id'];
 			}
 			}else{
-			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass'=> array($bank_id)));
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass'=> array($bank_id,$society_id)));
 			foreach($subleddger_detaill as $subledger_datttaa){
 			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
 			}
@@ -7369,7 +7369,7 @@ function ledger_report_converted_cron(){
 	
 		if($subledger_id != 0){
 			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 
-			'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($bank_id)));
+			'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($bank_id,$society_id)));
 			foreach($subleddger_detaill as $subledger_datttaa){
 			$user_name=$subledger_datttaa['ledger_sub_account']['name'];
 		}
@@ -7382,7 +7382,7 @@ function ledger_report_converted_cron(){
              if($tds_ledger_id == 33)
 			 {
 			   if($account_type==2){
-					$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($vendor_id)));
+					$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($vendor_id,$society_id)));
 					foreach($leddger_detaill as $ledger_datttaa)
 					{
 					$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
@@ -7413,7 +7413,7 @@ function ledger_report_converted_cron(){
 					 {
 						 if($account_type == 1)
 						 {
-		$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($vendor_id)));
+		$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($vendor_id,$society_id)));
 						foreach($subleddger_detaill as $subledger_datttaa)
 						{
 						$user_name = $subledger_datttaa['ledger_sub_account']['name'];
@@ -7422,7 +7422,7 @@ function ledger_report_converted_cron(){
 						}
 	            		else
 						{
-						$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($vendor_id)));
+						$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($vendor_id,$society_id)));
 						foreach($leddger_detaill as $ledger_datttaa)
 						{
 						$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
@@ -7433,7 +7433,7 @@ function ledger_report_converted_cron(){
 					else{
 
 			$tds_ledger_id = 15;
-			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array((int)$ledger_id)));
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array((int)$ledger_id,$society_id)));
 			foreach($leddger_detaill as $ledger_datttaa)
 			{
 			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
@@ -7469,7 +7469,7 @@ function ledger_report_converted_cron(){
 			
 			if($subledger_id != 0)
 			{
-				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_account_id)));
+				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_account_id,$society_id)));
 				foreach($leddger_detaill as $ledger_datttaa)
 				{
 				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
@@ -7479,13 +7479,13 @@ function ledger_report_converted_cron(){
 		{
 			if($credit==null){
 			 if($ledger_id_type==1){
-				$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($ledger_id_for_party_name)));
+				$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id_for_party_name,$society_id)));
 				foreach($subleddger_detaill as $subledger_datttaa)
 				{
 				$user_name = $subledger_datttaa['ledger_sub_account']['name'];
 				}
 		   }else{
-			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id_for_party_name)));
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id_for_party_name,$society_id)));
 			foreach($leddger_detaill as $ledger_datttaa)
 			{
 			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
@@ -7493,7 +7493,7 @@ function ledger_report_converted_cron(){
 			
 		}
 			}else{
-			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_account_id)));
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_account_id,$society_id)));
 			foreach($leddger_detaill as $ledger_datttaa)
 			{
 			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
@@ -7520,7 +7520,7 @@ function ledger_report_converted_cron(){
 			
 			if($subledger_id != 0)
 			{
-			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id_for_view)));
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id_for_view,$society_id)));
 			foreach($leddger_detaill as $ledger_datttaa)
 			{
 			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
@@ -7530,13 +7530,13 @@ function ledger_report_converted_cron(){
 			{
 			 if($debit==null){
 				if($ledger_id_type==1){
-				$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($ledger_account_id_for_view)));
+				$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_account_id_for_view,$society_id)));
 				foreach($subleddger_detaill as $subledger_datttaa)
 				{
 				$user_name = $subledger_datttaa['ledger_sub_account']['name'];
 				}
 				}else{
-				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_account_id_for_view)));
+				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_account_id_for_view,$society_id)));
 				foreach($leddger_detaill as $ledger_datttaa)
 				{
 				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
@@ -7544,7 +7544,7 @@ function ledger_report_converted_cron(){
 				}
 			 }else
 			 {
-				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id_for_view)));
+				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id_for_view,$society_id)));
 				foreach($leddger_detaill as $ledger_datttaa)
 				{
 				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
@@ -7564,7 +7564,7 @@ function ledger_report_converted_cron(){
 		    $refrence_no="";
 		 if($subledger_id != 0)
 		{
-			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($subledger_id,$society_id)));
 			foreach($subleddger_detaill as $subledger_datttaa)
 			{
 			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
@@ -7573,7 +7573,7 @@ function ledger_report_converted_cron(){
 		}
 		else
 		{
-			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id)));
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id,$society_id)));
 			foreach($leddger_detaill as $ledger_datttaa)
 			{
 			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
@@ -7587,7 +7587,7 @@ function ledger_report_converted_cron(){
 			$refrence_no="";
 		 if($subledger_id != 0)
 		{
-			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($subledger_id,$society_id)));
 			foreach($subleddger_detaill as $subledger_datttaa)
 			{
 			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
@@ -7596,7 +7596,7 @@ function ledger_report_converted_cron(){
 		}
 		else
 		{
-			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id)));
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id,$society_id)));
 			foreach($leddger_detaill as $ledger_datttaa)
 			{
 			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
@@ -7612,7 +7612,7 @@ function ledger_report_converted_cron(){
 			$description='Year Closing JV';
 	    	$user_name=" ";
 			$wing_flat="";
-			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id)));
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id,$society_id)));
 			foreach($leddger_detaill as $ledger_datttaa)
 			{
 				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
@@ -7640,7 +7640,7 @@ function ledger_report_converted_cron(){
              if($subledger_id != 0)
 			 {
 				
-				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id_for_view)));
+				$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id_for_view,$society_id)));
 				foreach($leddger_detaill as $ledger_datttaa)
 				{
 				$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
@@ -7649,7 +7649,7 @@ function ledger_report_converted_cron(){
 			 }
 			 else{
 				 
-					$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($expense_user_id)));
+					$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($expense_user_id,$society_id)));
 					foreach($subleddger_detaill as $subledger_datttaa)
 					{
 						$user_name = $subledger_datttaa['ledger_sub_account']['name'];
@@ -7682,7 +7682,7 @@ function ledger_report_converted_cron(){
 					$ledger_id=$data['journal']['ledger_account_id'];
 					$wing_flat='';
 					if($ledger_id==34 or $ledger_id==33 or $ledger_id==15 or $ledger_id==112){
-							$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($subledger_id)));
+							$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($subledger_id,$society_id)));
 							foreach($subleddger_detaill as $subledger_datttaa)
 							{
 							 $user_name1[] = $subledger_datttaa['ledger_sub_account']['name'];
@@ -7690,7 +7690,7 @@ function ledger_report_converted_cron(){
 							}
 						
 					}else{
-						$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id)));
+						$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id,$society_id)));
 						foreach($leddger_detaill as $ledger_datttaa)
 						{
 						$user_name1[] = $ledger_datttaa['ledger_account']['ledger_name'];
@@ -7720,7 +7720,7 @@ function ledger_report_converted_cron(){
 		
 		if($subledger_id != 0)
 		{
-			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($ledger_id_for_view2)));
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id_for_view2,$society_id)));
 			foreach($leddger_detaill as $ledger_datttaa)
 			{
 			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];
@@ -7728,7 +7728,7 @@ function ledger_report_converted_cron(){
 		}
 		else
 		{
-			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id'), array('pass' => array($ledger_id_for_view)));
+			$subleddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_sub_account_detail_via_auto_id_for_cron'), array('pass' => array($ledger_id_for_view,$society_id)));
 			foreach($subleddger_detaill as $subledger_datttaa)
 			{
 			$user_name = $subledger_datttaa['ledger_sub_account']['name'];
@@ -7769,7 +7769,7 @@ if($table_name=="supplimentry_bill"){
 			
 		if($subledger_id != 0)
 		{   
-			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id'), array('pass' => array($supplimentry_ledger_income_head)));
+			$leddger_detaill=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'ledger_account_detail_via_auto_id_for_cron'), array('pass' => array($supplimentry_ledger_income_head,$society_id)));
 			foreach($leddger_detaill as $ledger_datttaa)
 			{
 			$user_name = $ledger_datttaa['ledger_account']['ledger_name'];

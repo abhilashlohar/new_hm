@@ -65,6 +65,7 @@ function adhoc_info_via_auto_id($auto_id){
 	
   function ledger_sub_account_detail_via_auto_id_for_cron($auto_id,$s_society_id){
 		//$s_society_id = (int)$this->Session->read('hm_society_id');
+		$s_society_id=(int)$s_society_id;
 		$auto_id=(int)$auto_id;
 		$this->loadmodel('ledger_sub_account');
 		$conditions=array('auto_id'=>$auto_id,"society_id"=>$s_society_id);
@@ -73,6 +74,7 @@ function adhoc_info_via_auto_id($auto_id){
 	
 	function ledger_account_detail_via_auto_id_for_cron($auto_id,$s_society_id){
 	//$s_society_id = (int)$this->Session->read('hm_society_id');
+	$s_society_id=(int)$s_society_id;
 	$auto_id=(int)$auto_id;
 	$this->loadmodel('ledger_account');
 	$conditions=array('$or'=>array( 

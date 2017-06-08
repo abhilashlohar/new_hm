@@ -66,6 +66,15 @@ function journal_info_via_voucher_id($voucher_id,$ledger_id){
 	
 }
 
+function journal_info_via_voucher_id_for_cron($voucher_id,$ledger_id,$s_society_id){
+	$this->loadmodel('journal');
+	//$s_society_id=$this->Session->read('hm_society_id');
+	$conditions=array("voucher_id"=>$voucher_id,"society_id"=>$s_society_id,"ledger_account_id"=>array('$ne'=>$ledger_id));
+	return $this->journal->find('all',array('conditions'=>$conditions));
+	
+}
+
+
 function check_approve_receipt_count(){
 	$s_society_id=$this->Session->read('hm_society_id');
 	$this->loadmodel('temp_cash_bank');

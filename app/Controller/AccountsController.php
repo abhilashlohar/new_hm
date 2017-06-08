@@ -7677,7 +7677,7 @@ function ledger_report_converted_cron(){
 				$journal_voucher_id=$data['journal']['voucher_id'];
 			    $refrence_no=$journal_voucher_id;
 				$user_name1='';
-				$result_journal_voucher=$this->requestAction(array('controller' => 'Fns', 'action' => 'journal_info_via_voucher_id'), array('pass' => array($journal_voucher_id,$ledger_id)));
+				$result_journal_voucher=$this->requestAction(array('controller' => 'Fns', 'action' => 'journal_info_via_voucher_id_for_cron'), array('pass' => array($journal_voucher_id,$ledger_id,$society_id)));
 				foreach($result_journal_voucher as $data){
 					$subledger_id=$data['journal']['ledger_sub_account_id'];
 					$ledger_id=$data['journal']['ledger_account_id'];

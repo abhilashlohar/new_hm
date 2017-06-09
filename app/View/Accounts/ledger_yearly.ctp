@@ -13,6 +13,7 @@
 				<td>
 						<select class="medium m-wrap chosen" id="account_category">
 						<option value="" style="display:none;">Select A/c</option>
+						<option value="2">Asset accounts </option>
 						<option value="34"> Member control accounts </option>
 						
 						</select>
@@ -66,6 +67,8 @@
 		if($account_category_id==34){
 			$account_name="Member control accounts";
 			
+		}elseif($account_category_id==2){
+			$account_name="Asset accounts";
 		}
 		
 		$flag=$data['ledger_yearly']['flag'];

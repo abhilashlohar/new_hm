@@ -29,6 +29,8 @@
 		if($account_category_id==34){
 			$account_name="Member control accounts";
 			
+		}elseif($account_category_id==2){
+			$account_name="Asset accounts";
 		}
 		
 		$flag=$data['ledger_yearly']['flag'];

@@ -33,6 +33,8 @@ foreach($ledger_yearly_read as $data){
 	$account_category_id=$data['ledger_yearly_read']['account_category_id'];
 	if($account_category_id==34){
 		$account_name="Members Control A/c";
+	}elseif($account_category_id==2){
+		$account_name="Asset Accounts";
 	}
 	if($z==1){
 		echo"<center>Ledger Report <br/> From :$from To :$to </center>";	

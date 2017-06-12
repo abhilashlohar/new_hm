@@ -3362,7 +3362,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	//Configure::write('debug', 0);
+	Configure::write('debug', 0);
 }
 
 
@@ -32112,11 +32112,7 @@ function menus_as_per_user_rights(){
 				</a>					
 			</li>
 			
-			<li>
-				<a href="<?php echo $webroot_path; ?>Accounts/ledger_yearly" rel='tab'>
-				<i class="icon-phone"></i> Ledger Yearly
-				</a>					
-			</li>
+			
 			
 			<!--<li>
 				<a href="<?php echo $webroot_path; ?>Hms/bank_reconciliation" rel='tab'>
@@ -32271,11 +32267,7 @@ function menus_as_per_user_rights(){
 			}
 		}
 		
-		echo '<li>
-				<a href="'.$webroot_path.'Accounts/ledger_yearly" rel="tab">
-				<i class="icon-phone"></i> Ledger Yearly
-				</a>					
-			</li>';
+		
 		
 	}
 }

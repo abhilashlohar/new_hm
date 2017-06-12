@@ -1,6 +1,6 @@
 <div class="hide_at_print">	
 <?php
-//echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'));
+echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
 </div>
 <center>

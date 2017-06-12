@@ -7221,6 +7221,39 @@ function ledger_report_cron_job(){
 						}
 			}
 						
+		}elseif($account_category_id==3){
+			
+			$this->loadmodel('accounts_group');
+			$conditions=array('accounts_id'=>3);
+			$result_account_group=$this->accounts_group->find('all',array('conditions'=>$conditions));
+		
+			foreach($result_account_group as $data){
+					$auto_id=(int)$data['accounts_group']['auto_id'];
+					$this->loadmodel('ledger_account');
+					$conditions =array( '$or' => array(array("group_id" => (int)$auto_id, "society_id" =>$society_id),array("group_id" => (int)$auto_id, "society_id" =>0)));
+					$result_ledger_accounts=$this->ledger_account->find('all',array('conditions'=>$conditions));
+					foreach($result_ledger_accounts as $data){
+						$result_ledger_account[]=$data;
+
+					}
+				}
+			
+			//pr($result_ledger_account); exit;
+			
+			foreach($result_ledger_account as $ledger_accounts){ 
+				 $ledger_account_id=(int)$ledger_accounts["ledger_account"]["auto_id"];
+				 $ledger_account_name=$ledger_accounts["ledger_account"]["ledger_name"];
+					
+						if($ledger_account_id!=34 and $ledger_account_id!=33 and $ledger_account_id!=15 and $ledger_account_id!=112 ){
+
+							$this->loadmodel('ledger_yearly_read');
+							$auto_id=$this->autoincrement('ledger_yearly_read','auto_id');
+							$this->ledger_yearly_read->saveAll(Array(Array("auto_id" => $auto_id,"society_id"=> $society_id,"is_converted"=>"NO","from"=>$from,"to"=>$to,"date"=>$date,'ledger_account_name'=>$ledger_account_name,'ledger_sub_account_id'=>null,'ledger_account_id'=>$ledger_account_id,'account_category_id'=>$account_category_id,'ledger_yearly_id'=>$id)));
+						}
+			}
+			
+			
+		
 		}
 	
 	$this->loadmodel('ledger_yearly');
@@ -7279,15 +7312,15 @@ function ledger_report_converted_cron(){
 			$conditions=array('society_id'=>$s_society_id,"ledger_sub_account_id"=>$ledger_sub_account_id,'transaction_date'=>array('$gte'=>$from,'$lte'=>$to));
 			$order=array('ledger.transaction_date'=>'ASC');
 			$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order)); 
-		}elseif($account_category_id==2){ 
+		}elseif($account_category_id==2 or $account_category_id==3 or $account_category_id==4){ 
 			$this->loadmodel('ledger');
 			$conditions=array('society_id'=>$s_society_id,"ledger_account_id"=>$ledger_account_id,'transaction_date'=>array('$gte'=>$from,'$lte'=>$to));
-			pr($conditions);
+		
 			$order=array('ledger.transaction_date'=>'ASC');
 			$result_ledger=$this->ledger->find('all',array('conditions'=>$conditions,'order'=>$order)); 
 
 		}
-		pr($result_ledger); 
+	
 		foreach($result_ledger as $data){ 
 	
 				 

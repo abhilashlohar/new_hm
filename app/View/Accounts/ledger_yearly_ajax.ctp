@@ -31,6 +31,10 @@
 			
 		}elseif($account_category_id==2){
 			$account_name="Asset accounts";
+		}elseif($account_category_id==3){
+			$account_name="Income Accounts";
+		}elseif($account_category_id==4){
+			$account_name=" Expenditure accounts";
 		}
 		
 		$flag=$data['ledger_yearly']['flag'];

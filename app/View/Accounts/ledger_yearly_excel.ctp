@@ -35,7 +35,12 @@ foreach($ledger_yearly_read as $data){
 		$account_name="Members Control A/c";
 	}elseif($account_category_id==2){
 		$account_name="Asset Accounts";
-	}
+	}elseif($account_category_id==3){
+		$account_name="Income Accounts";
+	}elseif($account_category_id==4){
+			$account_name=" Expenditure accounts";
+		}
+	
 	if($z==1){
 		echo"<center>Ledger Report <br/> From :$from To :$to </center>";	
 	}

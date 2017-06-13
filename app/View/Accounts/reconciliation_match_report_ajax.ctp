@@ -57,12 +57,14 @@ Bank Reconciliation match report as From: <?php echo $from; ?> To: <?php echo $t
 <a  target="_blank" href="reconciliation_match_report_excel/<?php echo $ledger_sub_account_id; ?>/<?php echo $to; ?>/<?php echo $from ; ?>"  class="btn green mini tooltips add_excel pull-right" data-placement="left" data-original-title="Download in excel"><i class="fa fa-file-excel-o"></i></a>
 <table width="100%" class="table table-bordered " id="receiptmain">
 	<thead>
+	
 		<tr>
 		    <th>Passbook Date </th>
 			<th>Transaction Date</th>
 			<th>Corresponding a/c </th>
             <th>Description</th>
 			<th>Source</th>
+			<th>Cheque/Neft no.</th>
             <th>Reference</th>
 			<th>Debit</th>
 			<th>Credit</th>
@@ -83,7 +85,7 @@ Bank Reconciliation match report as From: <?php echo $from; ?> To: <?php echo $t
 	$element_id=(int)$data["bank_reconciliation"]["element_id"];
 	$subledger_id = (int)@$data["bank_reconciliation"]["ledger_sub_account_id"];
 	$ledger_id = (int)@$data["bank_reconciliation"]["ledger_account_id"];
-	
+	$cheque_number=@$data["bank_reconciliation"]["cheque_number"]; 
 	$total_debit=$total_debit+$debit;
 	$total_credit=$total_credit+$credit;
 	if($table_name=="cash_bank"){  
@@ -454,6 +456,7 @@ if($table_name=="opening_balance"){
 		    <td><?php echo @$user_name; ?>  <?php echo @$wing_flat; ?></td>
             <td><?php echo @$description; ?></td>
 			<td><?php echo $source; ?></td>
+			<td><?php echo $cheque_number; ?></td>
             <td>
 			<?php 
 			if($table_name=="cash_bank"){
@@ -477,7 +480,7 @@ if($table_name=="opening_balance"){
 		</tr>
 	<?php } ?>
 		<tr>
-			<td colspan="6" style="text-align:right;"><b>Total</b></td>
+			<td colspan="7" style="text-align:right;"><b>Total</b></td>
 			<td style="text-align:right;"><b><?php echo $total_debit; ?></b></td>
 			<td style="text-align:right;"><b><?php echo $total_credit; ?></b></td>
 			<td></td>

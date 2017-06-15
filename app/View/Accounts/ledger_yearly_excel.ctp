@@ -1,9 +1,21 @@
 <?php 
 
-//$filename=$society_name.'_balance_sheet_'.$from ;
-//$filename = str_replace(' ', '_', $filename);
-//$filename = str_replace(' ', '-', $filename);
-$filename="Ledger_Yearly_Report";
+if($account_category==34){
+		$account_name="Members Control A/c";
+	}elseif($account_category==2){
+		$account_name="Asset Accounts";
+	}elseif($account_category==3){
+		$account_name="Income Accounts";
+	}elseif($account_category==4){
+			$account_name=" Expenditure accounts";
+		}
+
+$filename= $society_name.'_'.$account_name.'_'.$from1.'_To_'.$to1;
+
+
+$filename = str_replace(' ', '_', $filename);
+$filename = str_replace(' ', '-', $filename);
+
 header ("Expires: 0");
 header ("border: 1");
 header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");

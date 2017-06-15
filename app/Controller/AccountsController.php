@@ -58,8 +58,20 @@ function ledger_yearly_excel(){
 	$s_society_id = $this->Session->read('hm_society_id');
 	$s_user_id = $this->Session->read('hm_user_id');
 	$from=(int)$this->request->query('from');
+	
+	
 	$to=(int)$this->request->query('to');
 	$account_category_id=(int)$this->request->query('account_category_id');
+	
+	$this->set('from1',date("d-m-Y",$from));
+	$this->set('account_category',$account_category_id);
+	$this->set('to1',date("d-m-Y",$to));
+	
+	$this->loadmodel('society');
+	$result_society=$this->society->find('all',array('conditions'=>array('society_id'=>$s_society_id)));
+	$this->set('society_name',$result_society[0]['society']['society_name']);
+	
+	
 	
 	$this->loadmodel('ledger_yearly_read');
 	$ledger_yearly_reads=$this->ledger_yearly_read->find('all',array('conditions'=>array('society_id'=>$s_society_id,'from'=>$from,'to'=>$to,'account_category_id'=>$account_category_id)));

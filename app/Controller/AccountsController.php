@@ -7338,6 +7338,11 @@ function ledger_report_cron_job(){
 			}
 			
 			
+		}elseif($account_category_id==1){
+			
+			
+			
+			
 		}
 	
 	$this->loadmodel('ledger_yearly');

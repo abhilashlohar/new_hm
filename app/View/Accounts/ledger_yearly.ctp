@@ -13,7 +13,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 				<td>
 						<select class="medium m-wrap chosen" id="account_category">
 						<option value="" style="display:none;">Select A/c</option>
-						<!--<option value="1">Liability accounts </option>-->
+						<option value="1">Liability accounts </option>
 						<option value="2">Asset accounts </option>
 						<option value="3"> Income accounts </option>
 						<option value="4"> Expenditure accounts </option>
@@ -51,6 +51,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			<th>Requested</th>
 			<th>Prepared</th>
 			<th>Status</th>
+			<th>Action</th>
 		</tr>
 	</thead>
 	<tbody id="table">
@@ -59,6 +60,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 	
 	foreach($ledger_yearly as $data){
 	$i++;	
+	$ledger_yearly_id=$data['ledger_yearly']['ledger_yearly_id'];
 		$account_category_id=$data['ledger_yearly']['account_category_id'];
 		$from=$data['ledger_yearly']['from'];
 		$to=$data['ledger_yearly']['to'];
@@ -75,7 +77,9 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		}elseif($account_category_id==3){
 			$account_name="Income Accounts";
 		}elseif($account_category_id==4){
-			$account_name=" Expenditure accounts";
+			$account_name="Expenditure accounts";
+		}elseif($account_category_id==1){
+			$account_name="Liability accounts";
 		}
 		
 		$flag=$data['ledger_yearly']['flag'];
@@ -93,7 +97,9 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 		<td><?php echo $request_date; echo "  ".$request_time; ?></td>
 		<td><?php echo $prepared_date; echo "  ".$prepared_time; ?></td>
 		<td><?php echo $status; ?></td>
-		
+		<td>
+		<a style="" role="button" class="btn mini pull-left remove_row" remove_id="<?php echo $ledger_yearly_id; ?>"  href="#"><i class="icon-trash"></i></a>
+		</td>
 	</tr>
 	<?php } ?>
 	</tbody>
@@ -115,7 +121,32 @@ $(document).ready(function() {
 			$("#ledger_view_1").html('<div align="center" style="padding:10px;"><img src="<?php echo $webroot_path; ?>as/loding.gif" />Loading....</div>').load("ledger_yearly_ajax/" +account_category+ "/" +to+"/"+from);
 		
 	});
+	
+	
+	 $('.remove_row').die().live('click',function(){
+		var tr_find= $(this).closest('tr');
+		var id=$(this).attr('remove_id');
+	
+			if (confirm('Are you sure you want to delete? Press ok else cancel') == true) {
 
+				$.ajax({
+					url: "ledger_yearly_delete/"+id,
+				}).done(function(response) { 
+					tr_find.remove();
+					serial_number();
+				});
+			
+			}	
+	});
+
+	function serial_number(){
+		var i=0;
+			$('#receiptmain tbody tr').each(function(){  i++ ; 
+			$(this).find("td").eq(0).html(i);
+
+		});
+
+	}
 
 });
 </script>

@@ -106,6 +106,19 @@ function ledger_yearly_excel(){
 	$this->set('ledger_yearly_all',$ledger_yearly_all);
 }
 
+
+function ledger_yearly_delete($id){
+	$id=(int)$id;
+	$s_society_id = $this->Session->read('hm_society_id');
+	$this->loadmodel('ledger_yearly'); 
+	$this->ledger_yearly->deleteAll(array('society_id'=>$s_society_id,'ledger_yearly_id'=>$id));
+	$this->loadmodel('ledger_yearly_read');
+	$this->ledger_yearly_read->deleteAll(array('society_id'=>$s_society_id,'ledger_yearly_id'=>$id));
+	$this->loadmodel('ledger_yearly_converted');
+	$this->ledger_yearly_converted->deleteAll(array('society_id'=>$s_society_id,'main_id'=>$id));
+	 
+}
+
 // Closing Process
 
 function closing_process(){

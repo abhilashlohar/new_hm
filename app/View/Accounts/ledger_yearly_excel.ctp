@@ -7,10 +7,10 @@ if($account_category==34){
 	}elseif($account_category==3){
 		$account_name="Income Accounts";
 	}elseif($account_category==4){
-			$account_name=" Expenditure accounts";
-		}elseif($account_category==1){
-			$account_name="Liability accounts";
-		}
+		$account_name=" Expenditure accounts";
+	}elseif($account_category==1){
+		$account_name="Liability accounts";
+	}
 
 $filename= $society_name.'_'.$account_name.'_'.$from1.'_To_'.$to1;
 

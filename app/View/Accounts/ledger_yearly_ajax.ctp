@@ -40,6 +40,8 @@
 			$account_name=" Expenditure accounts";
 		}elseif($account_category_id==1){
 			$account_name="Liability accounts";
+		}elseif($account_category_id==33){
+			$account_name="Bank accounts";
 		}
 		
 		$flag=$data['ledger_yearly']['flag'];

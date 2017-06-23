@@ -7385,6 +7385,26 @@ function ledger_report_cron_job(){
 			}
 			
 			
+		}elseif($account_category_id==33){
+			
+			
+			$this->loadmodel('ledger_sub_account');
+			$conditions=array('society_id'=>$society_id,'ledger_id'=>33);
+			$order=array('ledger_sub_account.name'=> 'ASC');
+			$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions,'order' =>$order));
+			foreach($result_ledger_sub_account as $ledger_sub_account){ 
+				 $ledger_sub_account_id=(int)$ledger_sub_account["ledger_sub_account"]["auto_id"];
+				 $ledger_sub_account_name=$ledger_sub_account["ledger_sub_account"]["name"];
+				
+				 $bank_account=$ledger_sub_account["ledger_sub_account"]["bank_account"];
+			 
+				 $ledger_sub_account_name.=' '.@$bank_account;
+
+					$this->loadmodel('ledger_yearly_read');
+					$auto_id=$this->autoincrement('ledger_yearly_read','auto_id');
+					$this->ledger_yearly_read->saveAll(Array(Array("auto_id" => $auto_id,"society_id"=> $society_id,"is_converted"=>"NO","from"=>$from,"to"=>$to,"date"=>$date,'ledger_account_name'=>$ledger_sub_account_name,'ledger_sub_account_id'=>$ledger_sub_account_id,'ledger_account_id'=>33,'account_category_id'=>$account_category_id,'ledger_yearly_id'=>$id)));
+			}
+		
 		}
 	
 	$this->loadmodel('ledger_yearly');
@@ -7430,14 +7450,14 @@ function ledger_report_converted_cron(){
 			
 			$ledger_sub_account_id=null;
 		 }else{
-			 $ledger_sub_account_id=(int)$$ledger_sub_account_id;
+			 $ledger_sub_account_id=(int)$ledger_sub_account_id;
 		 }
 		 
 		
 		 $ledger_account_id_op=$ledger_account_id;
 		 $ledger_sub_account_id_op =$ledger_sub_account_id;
 		
-		if($account_category_id==34){
+		if($account_category_id==34 or $account_category_id==33){
 		
 			$this->loadmodel('ledger');
 			$conditions=array('society_id'=>$s_society_id,"ledger_sub_account_id"=>$ledger_sub_account_id,'transaction_date'=>array('$gte'=>$from,'$lte'=>$to));

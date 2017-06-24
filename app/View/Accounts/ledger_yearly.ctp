@@ -19,7 +19,7 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 						<option value="4"> Expenditure accounts </option>
 						<option value="34"> Member control accounts </option>
 						<option value="33"> Bank accounts </option>
-						
+						<option value="15"> Sundry creditors accounts</option>
 						</select>
 				</td>
 
@@ -83,6 +83,8 @@ echo $this->requestAction(array('controller' => 'hms', 'action' => 'submenu_as_p
 			$account_name="Liability accounts";
 		}elseif($account_category_id==33){
 			$account_name="Bank accounts";
+		}elseif($account_category_id==15){
+			$account_name="Sundry creditors accounts";
 		}
 		
 		$flag=$data['ledger_yearly']['flag'];

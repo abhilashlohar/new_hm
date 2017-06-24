@@ -42,6 +42,8 @@
 			$account_name="Liability accounts";
 		}elseif($account_category_id==33){
 			$account_name="Bank accounts";
+		}elseif($account_category_id==15){
+			$account_name="Sundry creditors accounts";
 		}
 		
 		$flag=$data['ledger_yearly']['flag'];

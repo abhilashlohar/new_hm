@@ -12,7 +12,9 @@ if($account_category==34){
 		$account_name="Liability accounts";
 	}elseif($account_category==33){
 			$account_name="Bank accounts";
-	}
+	}elseif($account_category==15){
+			$account_name="Sundry creditors accounts";
+		}
 
 $filename= $society_name.'_'.$account_name.'_'.$from1.'_To_'.$to1;
 

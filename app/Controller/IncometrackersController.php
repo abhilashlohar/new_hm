@@ -490,7 +490,7 @@ function individual_send_email($auto_id=null){
 										<span style="color:rgb(100,100,99)">
 										Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b>
 										 <br/>
-										Details of last three payments received before '.date("d-m-Y",$start_date).'
+										Details of last four payments received before '.date("d-m-Y",$start_date).'
 										</span>
 										</td>
 									</tr>
@@ -1398,7 +1398,7 @@ function generate_bills(){
 										<span style="color:rgb(100,100,99)">
 										Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b>
 										 <br/>
-										Details of last three payments received before '.date("d-m-Y",$start_date).'
+										Details of last four payments received before '.date("d-m-Y",$start_date).'
 										</span>
 										</td>
 									</tr>
@@ -8321,7 +8321,7 @@ function regular_bill_edit2($auto_id=null){
 										<span style="color:rgb(100,100,99)">
 										Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b>
 										 <br/>
-										Details of last three payments received before '.date("d-m-Y",$start_date).'
+										Details of last four payments received before '.date("d-m-Y",$start_date).'
 										</span>
 										</td>
 									</tr>
@@ -8510,7 +8510,7 @@ function print_show_last_receipt($led_sub_id,$start_date){
 	$this->loadmodel('cash_bank');
 	$conditions=array("ledger_sub_account_id"=>$led_sub_id,"society_id"=>$s_society_id,"source"=>"bank_receipt",'amount'=> array('$ne'=>0),"transaction_date"=>array('$lt'=>$start_date));
 	$order=array("transaction_date"=>"DESC");
-	return $this->cash_bank->find('all',array('conditions'=>$conditions,"order"=>$order,"limit"=>3));
+	return $this->cash_bank->find('all',array('conditions'=>$conditions,"order"=>$order,"limit"=>4));
 	
 }
 

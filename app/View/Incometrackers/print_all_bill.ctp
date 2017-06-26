@@ -305,7 +305,7 @@ foreach($regular_bills as $data){
 										<span style="color:rgb(100,100,99)">
 										Received with thanks from: <b>'.$user_name.' '.$wing_flat.'</b>
 										 <br/>
-										Details of last three payments received before '.date("d-m-Y",$start_date).'
+										Details of last four payments received before '.date("d-m-Y",$start_date).'
 										</span>
 										</td>
 									</tr>

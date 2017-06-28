@@ -3361,7 +3361,7 @@ $ip=$this->requestAction(array('controller' => 'Fns', 'action' => 'hms_email_ip'
 										
 									</tr>';
 									
-								if($receipt_mode=="cheque"){
+								if($receipt_mode=="cheque" || $receipt_mode=="Cheque" ){
 								$receipt_type='Via '.$receipt_mode.'-'.$cheque_number.' drawn on '.$drown_in_which_bank.' dated '.$cheque_date;
 								}
 								else{

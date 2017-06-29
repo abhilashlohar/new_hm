@@ -117,9 +117,9 @@ $prepaired_by = $data['user']['user_name'];
 	<ul class="dropdown-menu" style="min-width:80px !important;left:-53px;padding: 3px 0px; box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3); font-size: 12px;">
 
 		<li>
-			<a href="fix_asset_edit/<?php echo $fix_asset_id; ?>" ><i class="icon-edit"></i>Edit</a>
+			<a href="fix_asset_edit/<?php echo $fix_asset_id; ?>" ><i class="icon-edit"></i> Edit</a>
 		</li>
-		<!--<li><a href="#" target="_blank" role="button" onclick="cancel_receipt(<?php echo $fix_asset_id; ?>)"><i class="icon-search"></i>Cancel</a></li>-->
+		<li><a href="#" target="_blank" role="button" onclick="cancel_receipt(<?php echo $fix_asset_id; ?>)"><i class="icon-remove-sign"></i> Cancel</a></li>
 	</ul>
 </div>
   

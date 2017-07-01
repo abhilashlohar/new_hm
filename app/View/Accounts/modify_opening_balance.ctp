@@ -2,7 +2,7 @@
 <input type="hidden" id="ti" value="<?php echo $datet1; ?>" />
 <input type="hidden" id="cn" value="<?php echo $count; ?>" />
 
-<input type="text" class="date-picker m-wrap span4" data-date-format="dd-mm-yyyy" value="<?php echo $tra_date; ?>" style="background-color:white !important; margin-top:2.5px;" field="transaction_date" record_id="1" placeholder="Transaction Date" id="date">
+<input type="text" class="date-picker m-wrap span4" data-date-format="dd-mm-yyyy" value="<?php echo $tra_date; ?>" style="background-color:white !important; margin-top:2.5px;" field="transaction_date" record_id="<?php echo $auto_ob_id; ?>" placeholder="Transaction Date" id="date">
 
 <div style="background-color: #FFF;"> 
 <table class="table table-bordered table-condensed" style="width:100%; background-color:white;" id="open_bal">
@@ -218,7 +218,7 @@ $( document ).ready(function() {
 		$.ajax({
 			url: "<?php echo $webroot_path; ?>Accounts/auto_save_opening_balance_date/"+record_id+"/"+field+"/"+value,
 		}).done(function(response){
-			
+			alert(response);
 			if(response=="F"){
 				$("#main_table tr#"+record_id+" td").each(function(){
 					$(this).find('input[field="'+field+'"]').parent("div").css("border", "solid 1px red");
@@ -295,7 +295,7 @@ $("#check_validation_result").html('<img src="<?php echo $webroot_path; ?>as/lod
 $.ajax({
 url: "<?php echo $webroot_path; ?>Accounts/allow_import_opening_balance",
 }).done(function(response){
-	
+	alert(response);
 response = response.replace(/\s+/g,' ').trim();
 if(response=="F"){
 $("#check_validation_result").html("");

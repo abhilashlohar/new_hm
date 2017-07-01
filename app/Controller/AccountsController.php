@@ -1085,10 +1085,12 @@ $result_import_record = $this->import_ob_record->find('all',array('conditions'=>
 $this->set('result_import_record',$result_import_record);
 foreach($result_import_record as $data_import){
 $step1=(int)@$data_import["import_ob_record"]["step1"];
+$auto_ob_id=(int)@$data_import["import_ob_record"]["auto_id"];
 $step2=(int)@$data_import["import_ob_record"]["step2"];
 $step3=(int)@$data_import["import_ob_record"]["step3"];
 $tra_date = @$data_import["import_ob_record"]["tra_date"];
 }
+$this->set('auto_ob_id',$auto_ob_id);
 $this->set('tra_date',$tra_date);
 $process_status= @$step1+@$step2+@$step3;
 if($process_status==3){

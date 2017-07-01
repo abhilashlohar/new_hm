@@ -26408,12 +26408,28 @@ $purchase_date2 = date('Y-m-d',strtotime($purchase_date));
 	
 	
 $this->loadmodel('ledger');
+$conditions_led=array("table_name"=>"fix_asset","element_id"=>$fix_asset_id,"society_id"=>$s_society_id);
+$result_count=$this->ledger->find('count',array('conditions'=>$conditions_led));
+if($result_count==0){
+		$auto_id=$this->autoincrement('ledger','auto_id');
+		$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => $asset_category_id,
+		"ledger_sub_account_id" => null,"debit"=>$cost_of_purchase,"credit"=>null,
+		"table_name"=>"fix_asset","element_id"=>$fix_asset_id,"society_id"=>$s_society_id,
+		"transaction_date"=>strtotime($purchase_date2)));
 
-$this->ledger->updateAll(array("ledger_account_id" => $asset_category_id,"ledger_sub_account_id" => null,"debit"=>$cost_of_purchase,"transaction_date"=>strtotime($purchase_date2)),array("credit"=>null,"table_name"=>"fix_asset","element_id"=>$fix_asset_id,"society_id"=>$s_society_id));
+		$auto_id=$this->autoincrement('ledger','auto_id');
+		$this->ledger->saveAll(array("auto_id" => $auto_id,"ledger_account_id" => 15,
+		"ledger_sub_account_id" => $assert_supplier_id,"debit"=>null,"credit"=>$cost_of_purchase,
+		"table_name"=>"fix_asset","element_id"=>$fix_asset_id,"society_id"=>$s_society_id,
+		"transaction_date"=>strtotime($purchase_date2)));
+	
+}else{
 
-$this->ledger->updateAll(array("ledger_account_id" => 15,
-"ledger_sub_account_id" => $assert_supplier_id,"credit"=>$cost_of_purchase,"transaction_date"=>strtotime($purchase_date2)),array("table_name"=>"fix_asset","element_id"=>$fix_asset_id,"society_id"=>$s_society_id,"debit"=>null));
+	$this->ledger->updateAll(array("ledger_account_id" => $asset_category_id,"ledger_sub_account_id" => null,"debit"=>$cost_of_purchase,"transaction_date"=>strtotime($purchase_date2)),array("credit"=>null,"table_name"=>"fix_asset","element_id"=>$fix_asset_id,"society_id"=>$s_society_id));
 
+	$this->ledger->updateAll(array("ledger_account_id" => 15,
+	"ledger_sub_account_id" => $assert_supplier_id,"credit"=>$cost_of_purchase,"transaction_date"=>strtotime($purchase_date2)),array("table_name"=>"fix_asset","element_id"=>$fix_asset_id,"society_id"=>$s_society_id,"debit"=>null));
+}
 
 
 }

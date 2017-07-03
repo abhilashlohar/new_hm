@@ -9,6 +9,72 @@ public $components = array(
 var $name = 'Accounts';
 
 
+function budget_import(){
+	
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id = $this->Session->read('hm_user_id');
+	
+
+
+}
+
+function budget_sample($status=null){
+	
+$this->layout=null;
+
+	/*  $filename="Budget_Import";
+	header ("Expires: 0");
+	header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+	header ("Cache-Control: no-cache, must-revalidate");
+	header ("Pragma: no-cache");
+	header ("Content-type: application/vnd.ms-excel");
+	header ("Content-Disposition: attachment; filename=".$filename.".csv");
+	header ("Content-Description: Generated Report" );
+ */
+ 
+$s_role_id=$this->Session->read('hm_role_id');
+$s_society_id = (int)$this->Session->read('hm_society_id');
+$s_user_id = (int)$this->Session->read('hm_user_id');
+
+if($status=="yearly"){
+	$excel = "Expens head,Amount \n";
+}elseif($status=="month"){
+	$excel = "Expens head,April,May,June,July,August,September,October,November,December,January,February,March \n";
+}elseif($status=="quarter"){
+	$excel = "Expens head,April-June,July-September,October-December,January-March \n";
+}
+echo $excel;	exit;
+	
+		$this->loadmodel('accounts_group');
+		$conditions=array('accounts_id'=>4);
+		$result_account_group=$this->accounts_group->find('all',array('conditions'=>$conditions));
+
+		foreach($result_account_group as $data){
+			$auto_id=(int)$data['accounts_group']['auto_id'];
+			$this->loadmodel('ledger_account');
+			$conditions =array( '$or' => array(array("group_id" => (int)$auto_id, "society_id" =>$s_society_id),array("group_id" => (int)$auto_id, "society_id" =>0)));
+			$result_ledger_accounts=$this->ledger_account->find('all',array('conditions'=>$conditions));
+			
+			foreach($result_ledger_accounts as $data){
+				$result_ledger_account[]=$data;
+
+			}
+		}
+	//	pr($result_ledger_accounts); 
+		foreach($result_ledger_account as $data){
+			$ledger_name=$data['ledger_account']['ledger_name'];
+			$excel.="$ledger_name,\n";
+		}
+		
+	echo $excel;
+}
+
 // full year Ledger 
 
 
@@ -75,9 +141,9 @@ function ledger_yearly_excel(){
 	$this->set('society_name',$result_society[0]['society']['society_name']);
 	
 	
-	
+	$order=array('ledger_yearly_read.auto_id'=>'ASC');
 	$this->loadmodel('ledger_yearly_read');
-	$ledger_yearly_reads=$this->ledger_yearly_read->find('all',array('conditions'=>array('society_id'=>$s_society_id,'from'=>$from,'to'=>$to,'account_category_id'=>$account_category_id)));
+	$ledger_yearly_reads=$this->ledger_yearly_read->find('all',array('conditions'=>array('society_id'=>$s_society_id,'from'=>$from,'to'=>$to,'account_category_id'=>$account_category_id),'order'=>$order));
 	//pr($ledger_yearly_reads);
 	$this->set('ledger_yearly_read',$ledger_yearly_reads);
 	//exit;
@@ -7238,28 +7304,51 @@ function ledger_report_cron_job(){
 		
 	
 	if($account_category_id==34){	
-			$this->loadmodel('ledger_sub_account');
-			$conditions=array('society_id'=>$society_id,'ledger_id'=>34);
-			$order=array('ledger_sub_account.name'=> 'ASC');
-			$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions,'order' =>$order));
-			foreach($result_ledger_sub_account as $ledger_sub_account){ 
-				$ledger_sub_account_id=(int)$ledger_sub_account["ledger_sub_account"]["auto_id"];
-				$ledger_sub_account_name=$ledger_sub_account["ledger_sub_account"]["name"];
-				$ledger_account_id_new=(int)$ledger_sub_account["ledger_sub_account"]["ledger_id"];
-			 
-					$result_member = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
-					$ledger_sub_account_name=@$result_member['user_name'];
-					$wing_name=@$result_member['wing_name'];
-					$flat_name=@$result_member['flat_name'];
-					$wing_flat=@$wing_name.'-'.$flat_name;
-					$ledger_extra_info=@$wing_flat;
-					
-					 $ledger_sub_account_name.=' '.@$ledger_extra_info;
+		
+		$this->loadmodel('wing');
+		$condition=array('society_id'=>$society_id);
+		$order=array('wing.wing_name'=>'ASC');
+		$wings=$this->wing->find('all',array('conditions'=>$condition,'order'=>$order));
+		foreach($wings as $data){
+			$wing_id=$data["wing"]["wing_id"];
 
-					$this->loadmodel('ledger_yearly_read');
-					$auto_id=$this->autoincrement('ledger_yearly_read','auto_id');
-					$this->ledger_yearly_read->saveAll(Array(Array("auto_id" => $auto_id,"society_id"=> $society_id,"is_converted"=>"NO","from"=>$from,"to"=>$to,"date"=>$date,'ledger_account_name'=>$ledger_sub_account_name,'ledger_sub_account_id'=>$ledger_sub_account_id,'ledger_account_id'=>34,'account_category_id'=>$account_category_id,'ledger_yearly_id'=>$id)));
+				$this->loadmodel('flat');
+				$condition=array('society_id'=>$society_id,'wing_id'=>$wing_id);
+				$order=array('flat.flat_name'=>'ASC');
+				$flats=$this->flat->find('all',array('conditions'=>$condition,'order'=>$order));
+				foreach($flats as $data2){
+					$flat_id=$data2["flat"]["flat_id"];
+						$this->loadmodel('user_flat');
+						$conditions=array("wing" => (int)$wing_id,"flat" =>(int) $flat_id,"owner" =>"yes","exited" =>"no");
+						$result=$this->user_flat->find('all',array('conditions'=>$conditions));
+						$user_flat_id=(int)@$result[0]["user_flat"]["user_flat_id"];
+
+						$this->loadmodel('ledger_sub_account');
+						$conditions=array("user_flat_id" => $user_flat_id);
+						$result_ledger_sub_account=$this->ledger_sub_account->find('all',array('conditions'=>$conditions));
+					if(!empty($result_ledger_sub_account)){
+						foreach($result_ledger_sub_account as $ledger_sub_account){ 
+							$ledger_sub_account_id=(int)$ledger_sub_account["ledger_sub_account"]["auto_id"];
+							$ledger_sub_account_name=$ledger_sub_account["ledger_sub_account"]["name"];
+							$ledger_account_id_new=(int)$ledger_sub_account["ledger_sub_account"]["ledger_id"];
+
+							$result_member = $this->requestAction(array('controller' => 'Fns', 'action' => 'member_info_via_ledger_sub_account_id'),array('pass'=>array($ledger_sub_account_id)));
+							$ledger_sub_account_name=@$result_member['user_name'];
+							$wing_name=@$result_member['wing_name'];
+							$flat_name=@$result_member['flat_name'];
+							$wing_flat=@$wing_name.'-'.$flat_name;
+							$ledger_extra_info=@$wing_flat;
+
+							$ledger_sub_account_name.=' '.@$ledger_extra_info;
+
+							$this->loadmodel('ledger_yearly_read');
+							$auto_id=$this->autoincrement('ledger_yearly_read','auto_id');
+							$this->ledger_yearly_read->saveAll(Array(Array("auto_id" => $auto_id,"society_id"=> $society_id,"is_converted"=>"NO","from"=>$from,"to"=>$to,"date"=>$date,'ledger_account_name'=>$ledger_sub_account_name,'ledger_sub_account_id'=>$ledger_sub_account_id,'ledger_account_id'=>34,'account_category_id'=>$account_category_id,'ledger_yearly_id'=>$id)));
+						}
+					}
+				}
 			}
+		
 		}elseif($account_category_id==2){
 			
 			$this->loadmodel('accounts_group');

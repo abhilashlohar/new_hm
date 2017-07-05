@@ -9,6 +9,7 @@ public $components = array(
 var $name = 'Accounts';
 
 
+
 function budget_import(){
 	
 	if($this->RequestHandler->isAjax()){
@@ -21,6 +22,11 @@ function budget_import(){
 	$s_user_id = $this->Session->read('hm_user_id');
 	
 
+				
+	$this->loadmodel('budget_import');
+	$conditions=array("society_id" => $s_society_id,"module_name" => "Budget");
+	$result_import_record = $this->budget_import->find('all',array('conditions'=>$conditions));
+	$this->set('result_import_record',$result_import_record);
 
 }
 
@@ -28,7 +34,7 @@ function budget_sample($status=null){
 	
 $this->layout=null;
 
-	/*  $filename="Budget_Import";
+	$filename="Budget_Import";
 	header ("Expires: 0");
 	header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
 	header ("Cache-Control: no-cache, must-revalidate");
@@ -36,7 +42,7 @@ $this->layout=null;
 	header ("Content-type: application/vnd.ms-excel");
 	header ("Content-Disposition: attachment; filename=".$filename.".csv");
 	header ("Content-Description: Generated Report" );
- */
+
  
 $s_role_id=$this->Session->read('hm_role_id');
 $s_society_id = (int)$this->Session->read('hm_society_id');
@@ -49,7 +55,7 @@ if($status=="yearly"){
 }elseif($status=="quarter"){
 	$excel = "Expens head,April-June,July-September,October-December,January-March \n";
 }
-echo $excel;	exit;
+
 	
 		$this->loadmodel('accounts_group');
 		$conditions=array('accounts_id'=>4);
@@ -75,8 +81,134 @@ echo $excel;	exit;
 	echo $excel;
 }
 
+
+function upload_budget_csv_file()
+{
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$this->ath();
+	
+	 $from=$this->request->data['from'];
+	 $to=$this->request->data['to'];
+	 $status=$this->request->data['status'];
+	 $from=date("Y-m-d",strtotime($from));
+	 $to=date("Y-m-d",strtotime($to));
+	
+	if(isset($_FILES['file'])){
+		$file_name=$s_society_id.".csv";
+		$file_tmp_name =$_FILES['file']['tmp_name'];
+		$target = "budget_csv_file/";
+		$target=@$target.basename($file_name);
+		move_uploaded_file($file_tmp_name,@$target);
+				
+		$today = date("d-M-Y");
+		
+		$this->loadmodel('budget_import');
+		$auto_id=$this->autoincrement('budget_import','auto_id');
+		$this->budget_import->saveAll(Array( Array("auto_id" => $auto_id, "file_name" => $file_name,"society_id" => $s_society_id, "user_id" => $s_user_id, "module_name" => "Budget","step1" => 1,"date"=>$today,"from"=>strtotime($from),"to"=>strtotime($to),"status"=>$status))); 
+		
+		die(json_encode("UPLOADED"));
+	}
+}
+
+function read_csv_file_budget($id=null){
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id=$this->Session->read('hm_user_id');
+	$this->ath();
+	
+	 $this->loadmodel('budget_import');
+	 $conditions=array('society_id'=>$s_society_id,'auto_id'=>(int)$id);
+	 $result_budget=$this->budget_import->find('all',array('conditions'=>$conditions));
+	 $status=$result_budget[0]['budget_import']['status'];
+	 $from=$result_budget[0]['budget_import']['from'];
+	 $to=$result_budget[0]['budget_import']['to'];
+	 $b_auto_id=(int)$result_budget[0]['budget_import']['auto_id'];
+	 
+	$f = fopen('budget_csv_file/'.$s_society_id.'.csv', 'r') or die("ERROR OPENING DATA");
+	$batchcount=0;
+	$records=0;
+	while(($line = fgetcsv($f, 4096, ',')) !== false) {
+	$line = implode(";", $line);
+	$numcols = count($line);
+	$test[]=$line;
+	++$records;
+	}
+	$i=0;
+	
+//	pr($test);
+	if($status=="yearly"){
+		foreach($test as $data){
+			$i++;
+			if($i>1){
+			$z=explode(";",$data);
+			$expense_head=$z[0];
+			$amount=$z[1];
+			
+			$this->loadmodel('ledger_account');
+			$conditions =array( '$or' => array(array("ledger_name" => $expense_head, "society_id" =>$s_society_id),array("ledger_name" => $expense_head, "society_id" =>0)));
+			$result_ledger_accounts=$this->ledger_account->find('all',array('conditions'=>$conditions));
+			$expense_head_id=$result_ledger_accounts[0]['ledger_account']['auto_id'];
+			
+			$this->loadmodel('budget');
+			$auto_id=$this->autoincrement('budget','auto_id');
+			$this->budget->saveAll(Array( Array("auto_id" => $auto_id, "expense_head" => $expense_head,"society_id" =>$s_society_id, "user_id" => $s_user_id, "module_name" => "Budget","expense_head_id" =>$expense_head_id,"from"=>$from,"to"=>$to,"status"=>$status,'budget_im_id'=>$b_auto_id,'amount'=>$amount))); 
+		
+			}	
+		}
+	}else{
+		
+	}
+	
+		$this->loadmodel('budget_import');
+		$this->budget_import->updateAll(array("step2" => 1),array("society_id" => $s_society_id, "auto_id" => $b_auto_id));
+		die(json_encode("READ"));	
+	
+}
+
+function budget_update_data($id=null,$status=null,$field_name=null,$amount=null){
+	$this->layout=null;
+
+	$this->loadmodel('budget');
+	$this->budget->updateAll(array("".$field_name.""=>$amount),array("auto_id"=>(int)$id));
+	exit;
+	
+}
+
+function budget_delete_data($id=null){
+	$this->layout=null;
+	$this->loadmodel('budget');
+	$this->budget->deleteAll(array("auto_id"=>(int)$id));
+	echo"ok";
+	exit;
+}
 // full year Ledger 
 
+function modify_budget_import($id=null){
+	
+	if($this->RequestHandler->isAjax()){
+		$this->layout='blank';
+	}else{
+		$this->layout='session';
+	}
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	$s_user_id = $this->Session->read('hm_user_id');
+	
+	$this->loadmodel('budget_import');
+	$conditions=array('auto_id'=>(int)$id,'society_id'=>$s_society_id);
+	$result_budget_import=$this->budget_import->find('all',array('conditions'=>$conditions));
+	$this->set('result_budget_import',$result_budget_import);
+	
+	$this->loadmodel('society');
+	$conditions=array('society_id'=>$s_society_id);
+	$result_society=$this->society->find('all',array('conditions'=>$conditions));
+	$this->set('result_society',$result_society);
+
+	$this->loadmodel('budget');
+	$conditions=array('budget_im_id'=>(int)$id,'society_id'=>$s_society_id);
+	$result_budget=$this->budget->find('all',array('conditions'=>$conditions));
+	$this->set('result_budget',$result_budget);
+}
 
 function ledger_yearly(){
 	

@@ -199,7 +199,7 @@ function budget_update_data($id=null,$status=null,$field_name=null,$amount=null)
 	$this->layout=null;
 	$s_society_id = $this->Session->read('hm_society_id');
 	$this->loadmodel('budget');
-	$this->budget->updateAll(array("".$field_name.""=>$amount),array("auto_id"=>(int)$id,"society_id"=>$s_society_id);
+	$this->budget->updateAll(array("".$field_name.""=>$amount),array("auto_id"=>(int)$id,"society_id"=>$s_society_id));
 	exit;
 	
 }

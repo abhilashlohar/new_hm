@@ -236,9 +236,9 @@ $('.date_change').on("change",function(){
 	$('.save').on("click",function(){ 
 		var current=$(this);
 		var id=$(this).attr("save_id");
-		 
+		
 			$.ajax({
-				url: "<?php echo $webroot_path; ?>Accounts/budget_save_data/"+del,
+				url: "<?php echo $webroot_path; ?>Accounts/budget_save_data/"+id,
 				//dataType: 'json'
 			}).done(function(response){
 				

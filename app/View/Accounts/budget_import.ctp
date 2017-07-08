@@ -15,7 +15,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 	}
 	 $process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
 <div id="first_div">
-<?php if(sizeof(@$result_import_record)==0){ ?>
+<?php if(sizeof(@$result_import_record)==0 or $process_status==3 ){ ?>
 <div class="portlet box green" style="width: 50%; margin: auto;">
 	<div class="portlet-title">
 		<h4><i class="icon-cogs"></i> Import Budget</h4>

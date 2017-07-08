@@ -223,10 +223,11 @@ function budget_deleteall_data($id=null){
 	exit;
 }
 function budget_save_data($id=null){
+	$this->layout=null;
 	$s_society_id = $this->Session->read('hm_society_id');
 	$this->loadmodel('budget_import');
-	$this->budget_import->updateAll(array("step3" => 1),array("society_id" => $s_society_id, "auto_id" => $id));
-	
+	$this->budget_import->updateAll(array("step3" => 1),array("society_id" => $s_society_id, "auto_id" => (int)$id));
+	exit;
 }
 
 function budget_update_date($id=null,$field_name=null,$date=null){

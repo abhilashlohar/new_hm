@@ -155,7 +155,37 @@ function read_csv_file_budget($id=null){
 		
 			}	
 		}
-	}else{
+	}elseif($status=="month"){
+		
+		foreach($test as $data){
+			$i++;
+			if($i>1){
+				$z=explode(";",$data);
+				$expense_head=$z[0];
+				$April=$z[1];
+				$May=$z[2];
+				$June=$z[3];
+				$July=$z[4];
+				$August=$z[5];
+				$September=$z[6];
+				$October=$z[7];
+				$November=$z[8];
+				$December=$z[9];
+				$January=$z[10];
+				$February=$z[11];
+				$March=$z[12];
+				
+				$this->loadmodel('ledger_account');
+				$conditions =array( '$or' => array(array("ledger_name" => $expense_head, "society_id" =>$s_society_id),array("ledger_name" => $expense_head, "society_id" =>0)));
+				$result_ledger_accounts=$this->ledger_account->find('all',array('conditions'=>$conditions));
+				$expense_head_id=$result_ledger_accounts[0]['ledger_account']['auto_id'];
+				
+				$this->loadmodel('budget');
+				$auto_id=$this->autoincrement('budget','auto_id');
+				$this->budget->saveAll(Array( Array("auto_id" => $auto_id, "expense_head" => $expense_head,"society_id" =>$s_society_id, "user_id" => $s_user_id, "module_name" => "Budget","expense_head_id" =>$expense_head_id,"from"=>$from,"to"=>$to,"status"=>$status,'budget_im_id'=>$b_auto_id,'April'=>$April,'May'=>$May,'June'=>$June,'July'=>$July,'August'=>$August,'September'=>$September,'October'=>$October,'November'=>$November,'December'=>$December,'January'=>$January,'February'=>$February,'March'=>$March))); 
+				
+			}
+		}
 		
 	}
 	
@@ -167,18 +197,48 @@ function read_csv_file_budget($id=null){
 
 function budget_update_data($id=null,$status=null,$field_name=null,$amount=null){
 	$this->layout=null;
-
+	$s_society_id = $this->Session->read('hm_society_id');
 	$this->loadmodel('budget');
-	$this->budget->updateAll(array("".$field_name.""=>$amount),array("auto_id"=>(int)$id));
+	$this->budget->updateAll(array("".$field_name.""=>$amount),array("auto_id"=>(int)$id,"society_id"=>$s_society_id);
 	exit;
 	
 }
 
 function budget_delete_data($id=null){
 	$this->layout=null;
+	$s_society_id = $this->Session->read('hm_society_id');
 	$this->loadmodel('budget');
-	$this->budget->deleteAll(array("auto_id"=>(int)$id));
+	$this->budget->deleteAll(array("auto_id"=>(int)$id,"society_id"=>$s_society_id));
 	echo"ok";
+	exit;
+}
+
+function budget_deleteall_data($id=null){
+	$this->layout=null;
+	$s_society_id = $this->Session->read('hm_society_id');
+	$this->loadmodel('budget_import');
+	$this->budget_import->deleteAll(array("auto_id"=>(int)$id,"society_id"=>$s_society_id));
+	$this->loadmodel('budget');
+	$this->budget->deleteAll(array("budget_im_id"=>(int)$id,"society_id"=>$s_society_id));
+	exit;
+}
+function budget_save_data($id=null){
+	$s_society_id = $this->Session->read('hm_society_id');
+	$this->loadmodel('budget_import');
+	$this->budget_import->updateAll(array("step3" => 1),array("society_id" => $s_society_id, "auto_id" => $id));
+	
+}
+
+function budget_update_date($id=null,$field_name=null,$date=null){
+	$this->layout=null;
+	$this->ath();
+	$s_society_id = $this->Session->read('hm_society_id');
+	$date=date("Y-m-d",strtotime($date));
+	$date=strtotime($date);
+	$this->loadmodel('budget_import');
+	$this->budget_import->updateAll(array("".$field_name.""=>$date),array("auto_id"=>(int)$id,"society_id"=>$s_society_id));
+	$this->loadmodel('budget');
+	$this->budget->updateAll(array("".$field_name.""=>$date),array("budget_im_id"=>(int)$id,"society_id"=>$s_society_id));
 	exit;
 }
 // full year Ledger 

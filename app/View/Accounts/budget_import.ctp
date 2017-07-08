@@ -13,7 +13,7 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 	$date=@$data_import["budget_import"]["date"];
 	$file_name=@$data_import["budget_import"]["file_name"];
 	}
-	echo $process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
+	 $process_status= @$step1+@$step2+@$step3+@$step4+@$step5; ?>
 <div id="first_div">
 <?php if(sizeof(@$result_import_record)==0){ ?>
 <div class="portlet box green" style="width: 50%; margin: auto;">
@@ -69,7 +69,8 @@ $( document ).ready(function() {
 		url: "read_csv_file_budget/<?php echo $auto_id; ?>",
 		dataType: 'json'
 	}).done(function(response){
-		alert(response);
+		//$("#change").html(response);
+		//alert(response);
 		if(response=="READ"){
 			change_page_automatically("<?php echo $webroot_path; ?>Accounts/budget_import");
 		}
@@ -97,7 +98,7 @@ $( document ).ready(function() {
 
 </div>
 
-
+<div id="change"></div>
 <script>
 $(document).ready(function() {
 	$('#budget_status').change(function(){

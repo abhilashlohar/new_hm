@@ -1,6 +1,10 @@
 <?php
 echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_per_role_privilage'));
 ?>
+<center>
+<a href="budget_import"  rel='tab' class="btn red tooltips space-responsive"  ><i class="icon-folder-open"></i> Budget Import </a>
+<a href="budget_report"  rel='tab' class="btn blue  tooltips space-responsive" ><i class="icon-folder-close"></i> Report </a>
+</center>
 <br>
 	<?php 
 	foreach($result_import_record as $data_import){

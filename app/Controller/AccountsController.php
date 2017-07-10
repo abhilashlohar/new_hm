@@ -276,19 +276,34 @@ function budget_report_ajax($from=null,$to=null){
 	}else{
 		$this->layout='session';
 	}
-	$this->ath();
-	$s_society_id = $this->Session->read('hm_society_id');
-	$s_user_id = $this->Session->read('hm_user_id');
+		$this->ath();
+		$s_society_id = $this->Session->read('hm_society_id');
+		$s_user_id = $this->Session->read('hm_user_id');
 		
-	
-	 $from=date("Y-m-d",strtotime($from));
-	 $to=date("Y-m-d",strtotime($to));
-	 
-	 
+		$this->loadmodel('society');
+	    $condition=array('society_id'=>$s_society_id);
+	    $result_society=$this->society->find('all',array('conditions'=>$condition));
+	    $society_name=$result_society[0]['society']['society_name'];
+		
+		$this->set('society_name',$society_name);	
+		$this->set('from',$from);	
+		$this->set('to',$to);
+		$from=date("Y-m-d",strtotime($from));
+		$to=date("Y-m-d",strtotime($to));
+		
 	$this->loadmodel("budget");
 	$conditions=array("society_id"=>$s_society_id,"from"=>strtotime($from),"to"=>strtotime($to));
 	$result_budget= $this->budget->find('all',array('conditions'=>$conditions));
 	$this->set('result_budget',$result_budget);
+	$user_id=$result_budget[0]['budget']['user_id'];
+	$creted_on=$result_budget[0]['budget']['creted_on'];
+	$user_infos = $this->requestAction(array('controller'=>'hms','action'=>'user_fetch'),array('pass'=>array($user_id)));
+	foreach ($user_infos as $user_info){
+		$created_by = @$user_info['user']['user_name'];
+	}	
+	
+	$this->set('created_by',$created_by);	
+	$this->set('created_on',$creted_on);	
 	// pr($result_budget);
 	//exit;
 	
@@ -298,18 +313,65 @@ function budget_report_ajax($from=null,$to=null){
 function fetch_ledger_posting_expens_head($expense_id=null,$from=null,$to=null){
 	$this->ath();
 	$s_society_id = $this->Session->read('hm_society_id');
+	$ledger_account_id=(int)$expense_id;
+		
+	
 	$this->loadmodel('ledger');
-	$conditions=array("ledger_account_id" =>(int)$expense_id,'society_id'=>$s_society_id,'transaction_date'=>array('$lte'=>$to,'$gte'=>$from));
-	$this->loadmodel('ledger');
-	$order=array('transaction_date'=>'ASC');
-	$ledgers = $this->ledger->find('all',array('conditions'=>$conditions,"order"=>$order));
-	$total_debit=0;
-	foreach($ledgers as $data){
-		$debit=$data['ledger']['debit'];
-		$credit=$data['ledger']['credit'];
-		$total_debit+=$debit;
+	$conditions=array('society_id'=>$s_society_id,'ledger_account_id'=>$ledger_account_id,'transaction_date'=>array('$lt'=>$from));
+	$ledger_result_ob=$this->ledger->find('all',array('conditions'=>$conditions));
+	
+	$credit_ob=0; $debit_ob=0;
+	foreach($ledger_result_ob as $data_ob){
+		$debit_ob+=$data_ob["ledger"]["debit"];
+		$credit_ob+=$data_ob["ledger"]["credit"];
 	}
-	return $total_debit;
+	$difference_ob=$debit_ob-$credit_ob;
+	if($difference_ob>0){
+		$type_ob="Dr";
+	}
+	if($difference_ob<0){
+		$type_ob="Cr";
+	}
+	if($difference_ob==0){
+		$type_ob=null;
+	}
+	
+	$this->loadmodel('ledger');
+	$conditions2=array('society_id'=>$s_society_id,'ledger_account_id'=>$ledger_account_id,'transaction_date'=>array('$gte'=>$from,'$lte'=>$to));	
+	$ledger_result_dc=$this->ledger->find('all',array('conditions'=>$conditions2));
+	$credit_dc=0; $debit_dc=0;
+	foreach($ledger_result_dc as $data_dc){
+		$debit_dc+=$data_dc["ledger"]["debit"];
+		$credit_dc+=$data_dc["ledger"]["credit"];
+	}
+	
+	
+	$difference_cb=$debit_dc-$credit_dc;
+	
+	
+	
+	$close_bal=$difference_ob+$difference_cb;
+	
+	if($close_bal>0){
+		$type_cb="Dr";
+	}
+	if($close_bal<0){
+		$type_cb="Cr";
+	}
+	if($close_bal==0){
+		$type_cb=null;
+	}
+	
+	$trail_balance=array(
+		"opening_balance"=>array(abs($difference_ob),$type_ob),
+		"debit"=>$debit_dc,
+		"credit"=>$credit_dc,
+		"closing_balance"=>array(abs($close_bal),$type_cb)
+		);
+	return $trail_balance; 
+	
+	
+	
 }
 // full year Ledger 
 

@@ -3362,7 +3362,7 @@ $this->redirect(array('action' => 'index'));
 
 
 function beforeFilter(){
-	Configure::write('debug', 0);
+	//Configure::write('debug', 0);
 }
 
 
@@ -32490,11 +32490,7 @@ function menus_as_per_user_rights(){
 		
 		
 	}
-	echo '<li>
-				<a href="'.$webroot_path.'Accounts/budget_import" rel="tab">
-				<i class="icon-phone"></i> Budget
-				</a>					
-			</li>';
+	
 }
 
 function assign_default_modules_to_society($society_id=null){

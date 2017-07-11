@@ -30,6 +30,7 @@
 	<div>
 	<?php
 	$opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_opening_balance'), array('pass' => array(34,$ledger_sub_account_id,strtotime($from))));
+	
 	?>
 	<div class="pull-right" style="text-align:right;font-size:15px;padding:5px;background-color: antiquewhite;">Opening Balance: <?php echo $opening_balance; ?></div>
 		<table width="100%" class="table table-bordered table-condensed">

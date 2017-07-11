@@ -202,6 +202,13 @@ $('.date_change').on("change",function(){
 		total_count();
 	});
 
+	$('.amount').on("keyup blur",function(){ 
+		var amount=$(this).val();
+		if(!$.isNumeric(amount)){ 
+			$(this).val('');
+		}
+	});
+	
 	
 	$('.remove_row').on("click",function(){ 
 		var current=$(this);

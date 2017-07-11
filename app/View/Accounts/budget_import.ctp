@@ -29,8 +29,8 @@ echo $this->requestAction(array('controller' => 'Hms', 'action' => 'submenu_as_p
 			
 			<select id="budget_status">
 				<option value="yearly">Yearly</option>
-				<option value="month">Monthly</option>
-				<option value="quarter">Quarterly</option>
+				<!--<option value="month">Monthly</option>
+				<option value="quarter">Quarterly</option>-->
 			</select>
 			<br/>
 			<div>

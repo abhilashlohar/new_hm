@@ -1,3 +1,23 @@
+<?php
+
+$filename= $society_name.'_'.$from.'_To_'.$to;
+
+
+$filename = str_replace(' ', '_', $filename);
+$filename = str_replace(' ', '-', $filename);
+
+header ("Expires: 0");
+header ("border: 1");
+header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+header ("Cache-Control: no-cache, must-revalidate");
+header ("Pragma: no-cache");
+header ("Content-type: application/vnd.ms-excel");
+header ("Content-Disposition: attachment; filename=".$filename.".xls");
+header ("Content-Description: Generated Report" );
+
+?>
+
+
 <center>
 	<div>
 		<?php echo $society_name; ?> <br/>
@@ -9,7 +29,7 @@
 		</div>
 	</div>
 </center>
-<table class="table table-condensed table-bordered">
+<table border="1">
 			
 		<tr>
 			<th> Expenditure Head</th>
@@ -57,8 +77,7 @@
 					<span style="float:right;">  <?php echo $percentage; ?> % </span>
 				</td>
 				
-				
-				
+			
 			</tr>
 
 			<?php  } ?>

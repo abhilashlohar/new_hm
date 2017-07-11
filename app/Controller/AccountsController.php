@@ -309,6 +309,40 @@ function budget_report_ajax($from=null,$to=null){
 	
 }
 
+function budget_report_excel($from=null,$to=null){
+	
+		$this->layout=null;
+		$this->ath();
+		$s_society_id = $this->Session->read('hm_society_id');
+		$s_user_id = $this->Session->read('hm_user_id');
+		
+		$this->loadmodel('society');
+	    $condition=array('society_id'=>$s_society_id);
+	    $result_society=$this->society->find('all',array('conditions'=>$condition));
+	    $society_name=$result_society[0]['society']['society_name'];
+		
+		$this->set('society_name',$society_name);	
+		$this->set('from',$from);	
+		$this->set('to',$to);
+		$from=date("Y-m-d",strtotime($from));
+		$to=date("Y-m-d",strtotime($to));
+		
+		$this->loadmodel("budget");
+		$conditions=array("society_id"=>$s_society_id,"from"=>strtotime($from),"to"=>strtotime($to));
+		$result_budget= $this->budget->find('all',array('conditions'=>$conditions));
+		$this->set('result_budget',$result_budget);
+		$user_id=$result_budget[0]['budget']['user_id'];
+		$creted_on=$result_budget[0]['budget']['creted_on'];
+		$user_infos = $this->requestAction(array('controller'=>'hms','action'=>'user_fetch'),array('pass'=>array($user_id)));
+		foreach ($user_infos as $user_info){
+			$created_by = @$user_info['user']['user_name'];
+		}	
+		
+		$this->set('created_by',$created_by);	
+		$this->set('created_on',$creted_on);
+	
+	
+}
 
 function fetch_ledger_posting_expens_head($expense_id=null,$from=null,$to=null){
 	$this->ath();

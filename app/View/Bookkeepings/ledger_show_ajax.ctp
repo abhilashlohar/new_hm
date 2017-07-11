@@ -91,7 +91,7 @@ $wing_flat=$this->requestAction(array('controller' => 'Bookkeepings', 'action' =
 </div>
  
 <?php
-$ledger_account_id;
+$ledger_account_id; 
 $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => 'calculate_opening_balance_for_ledger'), array('pass' => array($ledger_account_id,$ledger_sub_account_id,strtotime($from))));
 ?>
 <div class="pull-right" style="text-align:right;font-size:15px;padding:5px;background-color: antiquewhite;">Opening Balance: <?php echo $opening_balance; ?></div>
@@ -165,7 +165,7 @@ $opening_balance=$this->requestAction(array('controller' => 'Fns', 'action' => '
 		
 		}
 		}
-		if($table_name=="cash_bank"){  
+		if($table_name=="cash_bank"){ $wing_flat="";  
 				$element_id=$element_id;
 			$result_cash_bank=$this->requestAction(array('controller' => 'Bookkeepings', 'action' => 'receipt_info_via_auto_id'), array('pass' => array((int)$element_id)));
 			$receipt_source = $result_cash_bank[0]["cash_bank"]["source"];  
